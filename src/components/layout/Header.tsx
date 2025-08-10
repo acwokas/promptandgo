@@ -4,12 +4,12 @@ import { Button } from "@/components/ui/button";
 const Header = () => {
   return (
     <header className="sticky top-0 z-40 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
-      <nav className="container flex items-center justify-between h-16">
+      <nav className="container flex items-center justify-between h-24">
         <Link to="/" className="flex items-center gap-2" aria-label="PromptAndGo.ai home">
           <img
             src="/lovable-uploads/00a8a6c7-da53-4583-8f5d-f1ee4a899501.png"
             alt="PromptAndGo.ai logo"
-            className="h-6 md:h-7 w-auto align-middle"
+            className="h-[4.5rem] md:h-[5.25rem] w-auto align-middle"
             loading="eager"
             fetchPriority="high"
             decoding="async"
