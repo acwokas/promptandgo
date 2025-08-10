@@ -8,8 +8,8 @@ const Blog = () => {
   const { user } = useSupabaseAuth();
   return (
   <main className="container py-10">
-    <SEO title="The Prompt Pulse – Prompt tips, tricks & examples" description="Tips, tricks and examples to get the most out of your prompting." />
-    <h1 className="text-3xl font-bold mb-2">The Prompt Pulse</h1>
+    <SEO title="Prompt Pulse – Prompt tips, tricks & examples" description="Tips, tricks and examples to get the most out of your prompting." />
+    <h1 className="text-3xl font-bold mb-2">Prompt Pulse</h1>
     <p className="text-muted-foreground">Tips, tricks and examples to get the most of our your prompting.</p>
 
     <section className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
