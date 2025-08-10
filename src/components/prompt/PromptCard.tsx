@@ -46,15 +46,6 @@ export const PromptCard = ({ prompt, categories }: PromptCardProps) => {
             Copy Prompt
           </Button>
         </div>
-        <div>
-          <div className="text-xs font-medium mb-1">Image Prompt</div>
-          <pre className="whitespace-pre-wrap bg-muted/50 p-3 rounded-md text-sm">
-            {prompt.imagePrompt}
-          </pre>
-          <Button size="sm" variant="outline" className="mt-2" onClick={() => copy(prompt.imagePrompt, "Image prompt")}>
-            Copy Image Prompt
-          </Button>
-        </div>
         <p className="text-sm text-muted-foreground">{prompt.excerpt}</p>
       </CardContent>
     </Card>
