@@ -40,6 +40,9 @@ const Header = () => {
           
           <li><NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Resources</NavLink></li>
           <li><NavLink to="/contact" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Contact</NavLink></li>
+          {user && (
+            <li><NavLink to="/admin/upload" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Admin</NavLink></li>
+          )}
         </ul>
         <div className="flex items-center gap-2">
           {/* Mobile menu */}
@@ -58,6 +61,9 @@ const Header = () => {
                   <NavLink to="/packs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Premium Packs</NavLink>
                   <NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Resources</NavLink>
                   <NavLink to="/contact" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Contact</NavLink>
+                  {user && (
+                    <NavLink to="/admin/upload" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Admin</NavLink>
+                  )}
                   {user ? (
                     <Button variant="secondary" onClick={handleLogout} className="mt-2">Log out</Button>
                   ) : (

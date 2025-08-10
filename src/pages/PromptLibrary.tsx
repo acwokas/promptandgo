@@ -120,7 +120,7 @@ const PromptLibrary = () => {
         if (promptIds.length > 0) {
           const tagsJoin = await supabase
             .from("prompt_tags")
-            .select("prompt_id, tags(name)")
+            .select("prompt_id, tags:tag_id(name)")
             .in("prompt_id", promptIds);
           if (tagsJoin.error) throw tagsJoin.error;
           (tagsJoin.data || []).forEach((r: any) => {
