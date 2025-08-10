@@ -62,7 +62,11 @@ const AdminBulkUpload = () => {
   };
 
   const uploadCategories = async (rows: any[]) => {
-    const payload = rows.map((r) => ({ name: r.name, slug: r.slug })).filter((r) => r.name && r.slug);
+    // Deduplicate by slug to avoid ON CONFLICT affecting the same row twice
+    const seen = new Set<string>();
+    const payload = rows
+      .map((r) => ({ name: r.name, slug: r.slug }))
+      .filter((r) => r.name && r.slug && !seen.has(r.slug) && (seen.add(r.slug), true));
     if (payload.length === 0) return { inserted: 0 };
     const { error } = await supabase.from("categories").upsert(payload, { onConflict: "slug" });
     if (error) throw error;
@@ -75,9 +79,17 @@ const AdminBulkUpload = () => {
     if (catErr) throw catErr;
     const catMap = new Map<string, string>((cats || []).map((c: any) => [c.slug, c.id]));
 
-    const payload = rows
+    const raw = rows
       .map((r) => ({ category_id: catMap.get(r.category_slug), name: r.name, slug: r.slug }))
       .filter((r) => r.category_id && r.name && r.slug);
+
+    // Deduplicate by composite key category_id + slug
+    const byKey = new Map<string, { category_id: string; name: string; slug: string }>();
+    raw.forEach((r) => {
+      const key = `${r.category_id}:${r.slug}`;
+      if (!byKey.has(key)) byKey.set(key, r);
+    });
+    const payload = Array.from(byKey.values());
 
     if (payload.length === 0) return { inserted: 0 };
     const { error } = await supabase.from("subcategories").upsert(payload, { onConflict: "category_id,slug" });
@@ -136,15 +148,18 @@ const AdminBulkUpload = () => {
 
     const promptIds = (inserted || []).map((r: any) => r.id);
 
-    // Re-fetch last inserted prompts with titles to map tags; a more robust way is to insert one-by-one but we batch here
-    // We'll map by index order as the database preserves order for single-table inserts
+    // Map tag links while de-duplicating any repeated tags per prompt
     const tagLinks: { prompt_id: string; tag_id: string }[] = [];
     toInsert.forEach((p, idx) => {
       const pid = promptIds[idx];
       if (!pid) return;
+      const seenTagIds = new Set<string>();
       p._tag_names.forEach((name: string) => {
         const tagId = tagMap.get(name);
-        if (tagId) tagLinks.push({ prompt_id: pid, tag_id: tagId });
+        if (tagId && !seenTagIds.has(tagId)) {
+          seenTagIds.add(tagId);
+          tagLinks.push({ prompt_id: pid, tag_id: tagId });
+        }
       });
     });
 
@@ -157,7 +172,10 @@ const AdminBulkUpload = () => {
   };
 
   const uploadTags = async (rows: any[]) => {
-    const payload = rows.map((r) => ({ name: r.name })).filter((r) => r.name);
+    const seen = new Set<string>();
+    const payload = rows
+      .map((r) => ({ name: r.name }))
+      .filter((r) => r.name && !seen.has(r.name) && (seen.add(r.name), true));
     if (payload.length === 0) return { inserted: 0 };
     const { error } = await supabase.from("tags").upsert(payload, { onConflict: "name" });
     if (error) throw error;
@@ -262,7 +280,7 @@ const AdminBulkUpload = () => {
         const catIdBySlug = new Map<string, string>((cats || []).map((c: any) => [c.slug, c.id]));
 
         // Prepare and upsert subcategories
-        const subPayload = rows
+        const rawSubs = rows
           .map((r) => {
             const cslug = String(r.category_slug ?? "").trim();
             const sslug = String(r.subcategory_slug ?? "").trim();
@@ -276,6 +294,14 @@ const AdminBulkUpload = () => {
             };
           })
           .filter(Boolean) as { category_id: string; slug: string; name: string }[];
+
+        // Deduplicate by composite key category_id + slug
+        const subKeyed = new Map<string, { category_id: string; slug: string; name: string }>();
+        rawSubs.forEach((s) => {
+          const key = `${s.category_id}:${s.slug}`;
+          if (!subKeyed.has(key)) subKeyed.set(key, s);
+        });
+        const subPayload = Array.from(subKeyed.values());
 
         if (subPayload.length) {
           const { error: subUpErr } = await supabase
@@ -341,10 +367,10 @@ const AdminBulkUpload = () => {
       }));
 
       // DELETE in dependency order
-      await supabase.from("prompt_tags").delete().neq("prompt_id", "");
-      await supabase.from("prompts").delete().neq("id", "");
-      await supabase.from("subcategories").delete().neq("id", "");
-      await supabase.from("categories").delete().neq("id", "");
+      await supabase.from("prompt_tags").delete().not("prompt_id", "is", null);
+      await supabase.from("prompts").delete().not("id", "is", null);
+      await supabase.from("subcategories").delete().not("id", "is", null);
+      await supabase.from("categories").delete().not("id", "is", null);
 
       // Recreate categories and subcategories from CSV using provided names when present
       const catMapInput = new Map<string, { slug: string; name: string }>();
