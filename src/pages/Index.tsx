@@ -99,8 +99,7 @@ const Index = () => {
         {/* Audience Cards */}
         <section className="container py-6">
           <h2 className="text-2xl font-semibold mb-2">Who it's for</h2>
-          <p className="text-muted-foreground max-w-3xl">Explore Tailor-made prompts for Every Subject</p>
-          <p className="text-muted-foreground max-w-3xl mb-8">Find the perfect starting point with curated AI prompts designed to help you learn, create, and do more — faster.</p>
+          <p className="text-muted-foreground max-w-3xl mb-8">Explore tailor-made prompts for every subject and find the perfect starting point with curated AI prompts designed to help you learn, create, and do more, faster.</p>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             <article className="group rounded-xl border bg-card p-6 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
               <h3 className="text-xl font-semibold">💼 Career &amp; Job Prompts</h3>
