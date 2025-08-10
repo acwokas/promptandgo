@@ -11,12 +11,12 @@ const Footer = () => {
         <div className="md:col-span-2">
           <nav className="grid grid-cols-2 lg:grid-cols-3 gap-2">
             <Link to="/" className="text-muted-foreground hover:text-foreground">Welcome</Link>
-            <Link to="/library" className="text-muted-foreground hover:text-foreground">Prompt Library</Link>
-            <Link to="/packs" className="text-muted-foreground hover:text-foreground">Prompt Packs</Link>
             <Link to="/how-it-works" className="text-muted-foreground hover:text-foreground">How it Works</Link>
-            <Link to="/submit" className="text-muted-foreground hover:text-foreground">Submit a Prompt</Link>
+            <Link to="/library" className="text-muted-foreground hover:text-foreground">Free Library</Link>
+            <Link to="/packs" className="text-muted-foreground hover:text-foreground">Premium Packs</Link>
             <Link to="/blog" className="text-muted-foreground hover:text-foreground">Blog</Link>
             <Link to="/contact" className="text-muted-foreground hover:text-foreground">Contact</Link>
+            <Link to="/submit" className="text-muted-foreground hover:text-foreground">Submit a Prompt</Link>
             <Link to="/terms" className="text-muted-foreground hover:text-foreground">Terms & Conditions</Link>
             <Link to="/privacy" className="text-muted-foreground hover:text-foreground">Privacy Policy</Link>
             <Link to="/refunds" className="text-muted-foreground hover:text-foreground">Refunds Policy</Link>
