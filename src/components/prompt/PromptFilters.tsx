@@ -31,7 +31,6 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, on
             <SelectValue placeholder="All" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All</SelectItem>
             {categoriesSorted.map((c) => (
               <SelectItem key={c.id} value={c.id}>
                 {c.name}
@@ -51,7 +50,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, on
             <SelectValue placeholder="All" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All</SelectItem>
+            
             {subcategoriesSorted.map((s) => (
               <SelectItem key={s.id} value={s.id}>
                 {s.name}
