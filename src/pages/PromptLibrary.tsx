@@ -57,8 +57,18 @@ const PromptLibrary = () => {
       />
 
       <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-6">
-        {visible.map(p => (
-          <PromptCard key={p.id} prompt={p} categories={categories} />
+        {visible.map((p) => (
+          <PromptCard
+            key={p.id}
+            prompt={p}
+            categories={categories}
+            onTagClick={(t) => {
+              setQuery(t);
+              setCategoryId(undefined);
+              setSubcategoryId(undefined);
+              setPage(1);
+            }}
+          />
         ))}
       </section>
 
