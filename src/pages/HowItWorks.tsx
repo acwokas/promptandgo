@@ -3,6 +3,7 @@ import PageHero from "@/components/layout/PageHero";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
+import { ShieldCheck, Zap, Clock, BadgeCheck, Globe, Scale } from "lucide-react";
 
 const HowItWorks = () => {
   const { user } = useSupabaseAuth();
@@ -69,26 +70,32 @@ const HowItWorks = () => {
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <ShieldCheck className="h-6 w-6 text-primary mb-2" aria-hidden="true" />
               <h4 className="font-semibold">Human Curated Prompts</h4>
               <p className="mt-1 text-muted-foreground">Each prompt is crafted for real use cases — not generic fluff.</p>
             </div>
             <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <Zap className="h-6 w-6 text-primary mb-2" aria-hidden="true" />
               <h4 className="font-semibold">Instant Use, No Learning Curve</h4>
               <p className="mt-1 text-muted-foreground">Copy into your AI tool and run instantly — no setup required.</p>
             </div>
             <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <Clock className="h-6 w-6 text-primary mb-2" aria-hidden="true" />
               <h4 className="font-semibold">Built for Busy People</h4>
               <p className="mt-1 text-muted-foreground">Made for educators, creators, jobseekers, and more.</p>
             </div>
             <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <BadgeCheck className="h-6 w-6 text-primary mb-2" aria-hidden="true" />
               <h4 className="font-semibold">Free + Pro Options</h4>
               <p className="mt-1 text-muted-foreground">Choose what you need. Upgrade only when it’s worth it.</p>
             </div>
             <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <Globe className="h-6 w-6 text-primary mb-2" aria-hidden="true" />
               <h4 className="font-semibold">Works with All AI Platforms</h4>
               <p className="mt-1 text-muted-foreground">Use with ChatGPT, GPT-4, Claude, Gemini, and more.</p>
             </div>
             <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <Scale className="h-6 w-6 text-primary mb-2" aria-hidden="true" />
               <h4 className="font-semibold">Ethically Created</h4>
               <p className="mt-1 text-muted-foreground">No fake personas. No scraped content. Always clear, honest use.</p>
             </div>
