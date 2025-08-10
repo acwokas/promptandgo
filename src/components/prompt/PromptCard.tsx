@@ -105,7 +105,7 @@ export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) 
           <div className="flex items-center gap-2 mt-2">
             <Button
               size="sm"
-              variant="outline"
+              variant="hero"
               onClick={() => copy(prompt.prompt, "Prompt")}
             >
               Copy Prompt
