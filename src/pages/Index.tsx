@@ -2,7 +2,7 @@ import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
-import { Sparkles, Zap, ShieldCheck, ListChecks, Wand2, Rocket } from "lucide-react";
+import { Sparkles, Zap, ShieldCheck, ListChecks, Wand2, Rocket, Check } from "lucide-react";
 
 const Index = () => {
   return (
@@ -71,7 +71,7 @@ const Index = () => {
                 <ShieldCheck className="h-5 w-5 text-primary" />
                 <div>
                   <h3 className="font-semibold">Curated by humans</h3>
-                  <p className="text-sm text-muted-foreground">Every prompt is reviewed for clarity and usefulness.</p>
+                  <p className="text-sm text-muted-foreground flex items-start gap-2"><Check className="h-4 w-4 text-primary mt-0.5" /><span>Every prompt is reviewed for clarity and usefulness.</span></p>
                 </div>
               </div>
             </article>
@@ -80,7 +80,7 @@ const Index = () => {
                 <Zap className="h-5 w-5 text-primary" />
                 <div>
                   <h3 className="font-semibold">Works everywhere</h3>
-                  <p className="text-sm text-muted-foreground">Use with ChatGPT, Claude, Gemini, or your AI of choice.</p>
+                  <p className="text-sm text-muted-foreground flex items-start gap-2"><Check className="h-4 w-4 text-primary mt-0.5" /><span>Use with ChatGPT, Claude, Gemini, or your AI of choice.</span></p>
                 </div>
               </div>
             </article>
@@ -89,7 +89,7 @@ const Index = () => {
                 <ListChecks className="h-5 w-5 text-primary" />
                 <div>
                   <h3 className="font-semibold">No fluff, just results</h3>
-                  <p className="text-sm text-muted-foreground">Practical outputs you can ship, not buzzwords.</p>
+                  <p className="text-sm text-muted-foreground flex items-start gap-2"><Check className="h-4 w-4 text-primary mt-0.5" /><span>Practical outputs you can ship, not buzzwords.</span></p>
                 </div>
               </div>
             </article>
