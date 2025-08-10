@@ -52,18 +52,18 @@ const AccountPage = () => {
 
       <main className="container py-8">
         <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          <article className="rounded-xl border bg-card p-5">
+          <Link to="/account/profile" className="rounded-xl border bg-card p-5 block group hover:shadow-md transition-all">
             <h2 className="font-semibold">Profile</h2>
-            <p className="text-muted-foreground text-sm mt-1">Update your display name and avatar. (Coming soon)</p>
-          </article>
-          <article className="rounded-xl border bg-card p-5">
+            <p className="text-muted-foreground text-sm mt-1">Update your display name and avatar.</p>
+          </Link>
+          <Link to="/account/notifications" className="rounded-xl border bg-card p-5 block group hover:shadow-md transition-all">
             <h2 className="font-semibold">Notifications</h2>
-            <p className="text-muted-foreground text-sm mt-1">Choose email preferences for updates. (Coming soon)</p>
-          </article>
-          <article className="rounded-xl border bg-card p-5">
+            <p className="text-muted-foreground text-sm mt-1">Choose what emails you receive.</p>
+          </Link>
+          <Link to="/account/security" className="rounded-xl border bg-card p-5 block group hover:shadow-md transition-all">
             <h2 className="font-semibold">Security</h2>
-            <p className="text-muted-foreground text-sm mt-1">Change password and secure your account. (Coming soon)</p>
-          </article>
+            <p className="text-muted-foreground text-sm mt-1">Change your password and log out.</p>
+          </Link>
         </section>
       </main>
     </>

@@ -23,6 +23,9 @@ import AdminBulkUpload from "./pages/AdminBulkUpload";
 import FavoritesPage from "./pages/account/Favorites";
 import AccountPage from "./pages/account/Account";
 import PurchasesPage from "./pages/account/Purchases";
+import ProfilePage from "./pages/account/Profile";
+import NotificationsPage from "./pages/account/Notifications";
+import SecurityPage from "./pages/account/Security";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +52,9 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/admin/upload" element={<AdminBulkUpload />} />
             <Route path="/account" element={<AccountPage />} />
+            <Route path="/account/profile" element={<ProfilePage />} />
+            <Route path="/account/notifications" element={<NotificationsPage />} />
+            <Route path="/account/security" element={<SecurityPage />} />
             <Route path="/account/purchases" element={<PurchasesPage />} />
             <Route path="/account/favorites" element={<FavoritesPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
