@@ -307,8 +307,10 @@ const FavoritesPage = () => {
                 setPage(1);
                 // useEffect triggers refresh
               }}
-              searchLabel="Search My Prompts"
+              searchLabel="Search My Prompts:"
               searchPlaceholder="Search My Prompts..."
+              categoryLabel="My Prompt Categories:"
+              subcategoryLabel="My Prompt Sub-Categories:"
             />
 
             <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-6">

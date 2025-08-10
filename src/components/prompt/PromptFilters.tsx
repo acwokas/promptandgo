@@ -14,9 +14,11 @@ interface FiltersProps {
   onClear?: () => void;
   searchLabel?: string;
   searchPlaceholder?: string;
+  categoryLabel?: string;
+  subcategoryLabel?: string;
 }
 
-export const PromptFilters = ({ categories, categoryId, subcategoryId, query, onChange, onSearch, onClear, searchLabel, searchPlaceholder }: FiltersProps) => {
+export const PromptFilters = ({ categories, categoryId, subcategoryId, query, onChange, onSearch, onClear, searchLabel, searchPlaceholder, categoryLabel, subcategoryLabel }: FiltersProps) => {
   const categoriesSorted = [...categories].sort((a, b) => a.name.localeCompare(b.name));
   const currentCat = categories.find((c) => c.id === categoryId || c.name === categoryId);
   const subcategoriesSorted = [...(currentCat?.subcategories || [])].sort((a, b) => a.name.localeCompare(b.name));
@@ -25,7 +27,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, on
   return (
     <div className="grid gap-4 md:grid-cols-3 items-end">
       <div className="space-y-1">
-        <Label htmlFor="category-select">Category:</Label>
+        <Label htmlFor="category-select">{categoryLabel ?? "Category:"}</Label>
         <Select
           value={categoryId ?? ""}
           onValueChange={(v) => onChange({ categoryId: v || undefined, subcategoryId: undefined })}
@@ -44,7 +46,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, on
       </div>
 
       <div className="space-y-1">
-        <Label htmlFor="subcategory-select">Sub-Category:</Label>
+        <Label htmlFor="subcategory-select">{subcategoryLabel ?? "Sub-Category:"}</Label>
         <Select
           value={subcategoryId ?? ""}
           onValueChange={(v) => onChange({ subcategoryId: v || undefined })}
