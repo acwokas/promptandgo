@@ -6,8 +6,13 @@ const Header = () => {
     <header className="sticky top-0 z-40 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
       <nav className="container flex items-center justify-between h-16">
         <Link to="/" className="flex items-center gap-2" aria-label="PromptAndGo.ai home">
-          {/* TODO: Replace with exact brand logo asset when provided */}
-          <span className="text-lg font-semibold tracking-tight">prompt<span className="text-brand">and</span>go.ai</span>
+          <img
+            src="/lovable-uploads/00a8a6c7-da53-4583-8f5d-f1ee4a899501.png"
+            alt="PromptAndGo.ai logo"
+            className="h-8 md:h-9 w-auto"
+            width={144}
+            height={36}
+          />
         </Link>
         <ul className="hidden md:flex items-center gap-6 text-sm">
           <li><NavLink to="/" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Welcome</NavLink></li>
