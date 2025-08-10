@@ -3,7 +3,7 @@ import { PromptFilters } from "@/components/prompt/PromptFilters";
 import { PromptCard } from "@/components/prompt/PromptCard";
 import { Button } from "@/components/ui/button";
 import PageHero from "@/components/layout/PageHero";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useCallback, useEffect, useState } from "react";
@@ -55,6 +55,8 @@ const PromptLibrary = () => {
   const [subcategoryId, setSubcategoryId] = useState<string | undefined>();
   const [query, setQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | undefined>();
+  const [searchParams] = useSearchParams();
+  const [randomMode, setRandomMode] = useState<boolean>(false);
 
   const [page, setPage] = useState(1);
   const [items, setItems] = useState<PromptUI[]>([]);
@@ -195,6 +197,63 @@ const PromptLibrary = () => {
     [categoryId, subcategoryId, query, selectedTag]
   );
 
+  const fetchRandomPrompt = useCallback(async () => {
+    setLoading(true);
+    try {
+      const first = await supabase
+        .from("prompts")
+        .select("id", { count: "exact" })
+        .range(0, 0);
+      const total = first.count || 0;
+      if (!total) {
+        setItems([]);
+        setHasMore(false);
+        return;
+      }
+      const index = Math.floor(Math.random() * total);
+      const oneRes = await supabase
+        .from("prompts")
+        .select(
+          "id, category_id, subcategory_id, title, what_for, prompt, image_prompt, excerpt"
+        )
+        .range(index, index);
+      if (oneRes.error) throw oneRes.error;
+      const row: any = (oneRes.data || [])[0];
+      if (!row) {
+        setItems([]);
+        setHasMore(false);
+        return;
+      }
+      const tagsJoin = await supabase
+        .from("prompt_tags")
+        .select("prompt_id, tags:tag_id(name)")
+        .eq("prompt_id", row.id);
+      if (tagsJoin.error) throw tagsJoin.error;
+      const tagNames = (tagsJoin.data || [])
+        .map((r: any) => r.tags?.name as string)
+        .filter(Boolean);
+      const mapped: PromptUI = {
+        id: row.id,
+        categoryId: row.category_id,
+        subcategoryId: row.subcategory_id,
+        title: row.title,
+        whatFor: row.what_for,
+        prompt: row.prompt,
+        imagePrompt: row.image_prompt,
+        excerpt: row.excerpt,
+        tags: tagNames,
+      };
+      setItems([mapped]);
+      setHasMore(false);
+      setPage(1);
+    } catch (e) {
+      console.error(e);
+      toast({ title: "Failed to load random prompt" });
+    } finally {
+      setLoading(false);
+    }
+  }, [toast]);
+
 
   const refresh = useCallback(async () => {
     setPage(1);
@@ -219,15 +278,23 @@ const PromptLibrary = () => {
     window.scrollTo({ top: 0, behavior: 'auto' });
   }, []);
 
+  useEffect(() => {
+    setRandomMode(!!searchParams.get('random'));
+  }, [searchParams]);
+
   // Initial loads
   useEffect(() => {
     loadCategories();
   }, [loadCategories]);
 
-  // Refresh when filters change
+  // Refresh when filters or mode change
   useEffect(() => {
-    refresh();
-  }, [categoryId, subcategoryId, query, selectedTag, refresh]);
+    if (randomMode) {
+      fetchRandomPrompt();
+    } else {
+      refresh();
+    }
+  }, [categoryId, subcategoryId, query, selectedTag, randomMode, refresh, fetchRandomPrompt]);
 
   return (
     <>

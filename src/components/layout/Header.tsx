@@ -69,7 +69,7 @@ const Header = () => {
                     <NavLink to="/auth" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Log in</NavLink>
                   )}
                   <Button asChild variant="hero" className="mt-4">
-                    <Link to="#cta">Try a Prompt</Link>
+                    <Link to="/library?random=1">Try a Random Prompt</Link>
                   </Button>
                 </nav>
               </SheetContent>
@@ -77,7 +77,7 @@ const Header = () => {
           </div>
           {/* Desktop CTA */}
           <Button asChild variant="hero" className="px-5 hidden md:inline-flex">
-            <Link to="#cta">Try a Prompt</Link>
+            <Link to="/library?random=1">Try a Random Prompt</Link>
           </Button>
           {!user && (
             <Button asChild variant="ghost" className="hidden md:inline-flex">
