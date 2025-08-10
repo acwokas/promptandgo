@@ -105,7 +105,7 @@ const Index = () => {
               <h3 className="text-xl font-semibold">💼 Career &amp; Job Prompts</h3>
               <p className="text-muted-foreground mt-2">Write better resumes, prep smarter for interviews, and land your next role with AI prompts designed for real-world results.</p>
               <div className="mt-4">
-                <Button asChild variant="secondary" size="sm">
+                <Button asChild variant="hero" size="sm">
                   <Link to="/library">Learn More</Link>
                 </Button>
               </div>
@@ -114,7 +114,7 @@ const Index = () => {
               <h3 className="text-xl font-semibold">🧠 Self &amp; Growth</h3>
               <p className="text-muted-foreground mt-2">Build better habits, sharpen your focus, and reflect more deeply with prompts designed to unlock your best self.</p>
               <div className="mt-4">
-                <Button asChild variant="secondary" size="sm">
+                <Button asChild variant="hero" size="sm">
                   <Link to="/library">Learn More</Link>
                 </Button>
               </div>
@@ -123,7 +123,7 @@ const Index = () => {
               <h3 className="text-xl font-semibold">💬 Comms &amp; Messaging</h3>
               <p className="text-muted-foreground mt-2">Write clearer emails, sharper responses, and better internal docs — with AI prompts that get the tone right.</p>
               <div className="mt-4">
-                <Button asChild variant="secondary" size="sm">
+                <Button asChild variant="hero" size="sm">
                   <Link to="/library">Learn More</Link>
                 </Button>
               </div>
@@ -132,7 +132,7 @@ const Index = () => {
               <h3 className="text-xl font-semibold">🎨 Creativity &amp; Writing</h3>
               <p className="text-muted-foreground mt-2">From idea to finished story — overcome writer’s block and generate concepts, hooks, and poetry with ease.</p>
               <div className="mt-4">
-                <Button asChild variant="secondary" size="sm">
+                <Button asChild variant="hero" size="sm">
                   <Link to="/library">Learn More</Link>
                 </Button>
               </div>
@@ -141,7 +141,7 @@ const Index = () => {
               <h3 className="text-xl font-semibold">🎯 Sales &amp; Marketing</h3>
               <p className="text-muted-foreground mt-2">Craft high-converting ads, persuasive emails, compelling landing pages, and effective sales messages — designed to move people to act, not just skim.</p>
               <div className="mt-4">
-                <Button asChild variant="secondary" size="sm">
+                <Button asChild variant="hero" size="sm">
                   <Link to="/library">Learn More</Link>
                 </Button>
               </div>
@@ -150,7 +150,7 @@ const Index = () => {
               <h3 className="text-xl font-semibold">🎓 Education &amp; Teachers</h3>
               <p className="text-muted-foreground mt-2">Generate lesson plans, explain complex concepts, and create classroom-ready activities — all with teacher-friendly, ethical AI prompts.</p>
               <div className="mt-4">
-                <Button asChild variant="secondary" size="sm">
+                <Button asChild variant="hero" size="sm">
                   <Link to="/library">Learn More</Link>
                 </Button>
               </div>
