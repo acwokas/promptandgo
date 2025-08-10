@@ -19,16 +19,16 @@ const Header = () => {
         </Link>
         <ul className="hidden md:flex items-center gap-6 text-sm">
           <li><NavLink to="/" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Welcome</NavLink></li>
+          <li><NavLink to="/how-it-works" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>How it Works</NavLink></li>
           <li><NavLink to="/library" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Prompt Library</NavLink></li>
           <li><NavLink to="/packs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Prompt Packs</NavLink></li>
-          <li><NavLink to="/how-it-works" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>How it Works</NavLink></li>
           
-          <li><NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Blog</NavLink></li>
+          <li><NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Resources</NavLink></li>
           <li><NavLink to="/contact" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Contact</NavLink></li>
         </ul>
         <div className="flex gap-2">
           <Button asChild variant="hero" className="px-5">
-            <Link to="#cta">Get 3 Free Prompts Weekly</Link>
+            <Link to="#cta">Try a Prompt</Link>
           </Button>
         </div>
       </nav>
