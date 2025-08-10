@@ -1,6 +1,7 @@
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import PageHero from "@/components/layout/PageHero";
 
 const Index = () => {
   return (
@@ -12,24 +13,20 @@ const Index = () => {
 
       <main>
         {/* Hero */}
-        <section className="relative bg-hero hero-grid">
-          <div className="container min-h-[62vh] flex flex-col items-center justify-center text-center py-20 text-primary-foreground">
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight max-w-4xl">
-              Find your perfect <span className="text-gradient-brand">AI</span> <span className="text-gradient-brand">prompt</span>, fast.
-            </h1>
-            <p className="text-lg md:text-xl text-primary-foreground/80 mt-4 max-w-3xl">
-              Browse hundreds of human-curated prompts to help you write better, work smarter, and think bigger.
-            </p>
-            <div className="mt-8 flex flex-col sm:flex-row gap-3">
-              <Button asChild size="lg" variant="hero" className="px-6">
-                <Link to="/library">Browse by Category</Link>
-              </Button>
-              <Button asChild size="lg" variant="secondary">
-                <Link to="/packs">Explore Prompt Packs</Link>
-              </Button>
-            </div>
-          </div>
-        </section>
+        <PageHero
+          title={<>
+            Find your perfect <span className="text-gradient-brand">AI</span> <span className="text-gradient-brand">prompt</span>, fast.
+          </>}
+          subtitle={<>Browse hundreds of human-curated prompts to help you write better, work smarter, and think bigger.</>}
+        >
+          <Button asChild size="lg" variant="hero" className="px-6">
+            <Link to="/library">Browse by Category</Link>
+          </Button>
+          <Button asChild size="lg" variant="secondary">
+            <Link to="/packs">Explore Prompt Packs</Link>
+          </Button>
+        </PageHero>
+
 
         {/* Intro */}
         <section className="container py-16">

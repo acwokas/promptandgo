@@ -4,6 +4,7 @@ import { PromptCard } from "@/components/prompt/PromptCard";
 import { categories, prompts } from "@/data/prompts";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
+import PageHero from "@/components/layout/PageHero";
 
 const PAGE_SIZE = 6;
 
@@ -28,12 +29,11 @@ const PromptLibrary = () => {
 
   return (
     <>
-      <section className="relative bg-hero hero-grid">
-        <div className="container py-16 text-center text-primary-foreground">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight">Prompt Library</h1>
-          <p className="text-primary-foreground/80 mt-3 max-w-2xl mx-auto">Search and filter prompts across all categories and subcategories.</p>
-        </div>
-      </section>
+      <PageHero
+        title={<span>Prompt Library</span>}
+        subtitle={<>Search and filter prompts across all categories and subcategories.</>}
+        minHeightClass="min-h-[36vh]"
+      />
       <main className="container py-10">
         <SEO
           title="Prompt Library – Ready-to-use AI Prompts"
