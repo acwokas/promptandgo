@@ -7,7 +7,7 @@ const WelcomeToPromptAndGo = () => {
   const title = "Welcome to PromptAndGo.ai: Your Shortcut to Smarter AI Prompts";
   const seoTitle = "Welcome to PromptAndGo.ai – Smarter AI Prompts Fast";
   const description = "Ready-to-use, field-tested prompts for ChatGPT, Claude, and Gemini to get high-quality results instantly.";
-  const imagePath = "/lovable-uploads/0a94080e-fece-41b4-adbe-f01337551bdb.png";
+  const imagePath = "/lovable-uploads/0d60754a-943c-420b-9b4c-ee1718135377.png";
   const origin = typeof window !== "undefined" ? window.location.origin : "";
   const canonical = typeof window !== "undefined" ? window.location.href : undefined;
 
@@ -16,6 +16,12 @@ const WelcomeToPromptAndGo = () => {
     "@type": "BlogPosting",
     headline: title,
     description,
+    articleSection: "PromtpAndGo",
+    keywords: [
+      "AI productivity", "AI tools", "ChatGPT", "Claude", "Gemini",
+      "prompt library", "AI workflow", "AI tips", "AI writing",
+      "startup tools", "marketing AI", "productivity tools", "welcome"
+    ],
     image: origin ? `${origin}${imagePath}` : imagePath,
     author: {
       "@type": "Organization",
@@ -37,15 +43,15 @@ const WelcomeToPromptAndGo = () => {
       <article className="mx-auto max-w-3xl">
         <header>
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight">{title}</h1>
-          <p className="mt-3 text-muted-foreground">
-            When you open a blank AI chat window, it’s like standing in front of a rocket with the keys in your hand. The potential is huge, but only if you know what to type.
-          </p>
           <img
             src={imagePath}
             alt="PromptAndGo.ai – ready-to-use prompts for better AI results"
-            className="mt-6 w-full rounded-lg border aspect-[16/9] object-cover"
+            className="mt-4 w-full rounded-lg border aspect-[16/9] object-cover"
             loading="lazy"
           />
+          <p className="mt-3 text-muted-foreground">
+            When you open a blank AI chat window, it’s like standing in front of a rocket with the keys in your hand. The potential is huge, but only if you know what to type.
+          </p>
         </header>
 
         <section className="mt-8 space-y-6">
@@ -64,6 +70,12 @@ const WelcomeToPromptAndGo = () => {
           </p>
 
           <h2 className="text-2xl font-semibold">How the Prompt Library Works</h2>
+          <img
+            src="/lovable-uploads/f78e24df-2952-481d-8924-76e902ee2000.png"
+            alt="How the PromptAndGo.ai prompt library works – AI prompts overview"
+            className="mt-4 w-full rounded-lg border aspect-[16/9] object-cover"
+            loading="lazy"
+          />
           <p>
             At the heart of PromptAndGo.ai is our query loop, a database of categorised prompts you can search and filter in different ways.
           </p>

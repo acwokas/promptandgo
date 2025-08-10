@@ -13,7 +13,7 @@ const Blog = () => (
         <Link to="/blog/welcome-to-promptandgo-ai" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
           <Card className="overflow-hidden">
             <img
-              src="/lovable-uploads/0a94080e-fece-41b4-adbe-f01337551bdb.png"
+              src="/lovable-uploads/66b1134b-1d55-416b-b7ea-2719a1a22ec1.png"
               alt="Welcome to PromptAndGo.ai: Your Shortcut to Smarter AI Prompts"
               loading="lazy"
               className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
@@ -21,7 +21,7 @@ const Blog = () => (
             <CardContent className="pt-4">
               <h2 className="text-xl font-semibold leading-snug">Welcome to PromptAndGo.ai: Your Shortcut to Smarter AI Prompts</h2>
               <p className="mt-2 text-muted-foreground">
-                Ready-to-use, field-tested prompts for real work. Drop them into ChatGPT, Claude, or Gemini and get high-quality results immediately.
+                Welcome to a platform which has ready-to-use, field-tested prompts for the likes of ChatGPT, Claude, Gemini, Ideogram, Midjourney and others. Get high-quality results immediately.
               </p>
               <span className="mt-3 inline-block font-medium text-primary">Read more →</span>
             </CardContent>
