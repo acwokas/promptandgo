@@ -7,7 +7,7 @@ import PageHero from "@/components/layout/PageHero";
 import { Link } from "react-router-dom";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Category as CategoryType } from "@/data/prompts";
 import { toast } from "@/hooks/use-toast";
 
@@ -65,6 +65,7 @@ const PromptLibrary = () => {
   // Prompts of the Day state (two distinct categories)
   const [featuredList, setFeaturedList] = useState<PromptUI[]>([]);
   const [featuredLoading, setFeaturedLoading] = useState(false);
+  const featuredTitleSet = useMemo(() => new Set(featuredList.map((f) => normalizeTitle(f.title))), [featuredList]);
 
   // Load categories + subcategories and compose to existing UI shape
   const loadCategories = useCallback(async () => {
@@ -283,18 +284,30 @@ const PromptLibrary = () => {
         if (a) results.push(a);
       }
 
+      const titleSeen = new Set(results.map((r) => normalizeTitle(r.title)));
+
       if (secondCat) {
         const b = await fetchOneForCategory(secondCat, "-b");
-        if (b && !results.some((r) => r.categoryId === b.categoryId)) {
+        if (
+          b &&
+          !results.some((r) => r.categoryId === b.categoryId) &&
+          !titleSeen.has(normalizeTitle(b.title))
+        ) {
           results.push(b);
+          titleSeen.add(normalizeTitle(b.title));
         } else if (pool.length > 0) {
           // fallback search other categories
           const seed = hashStr(dayKey + "-c");
           for (let i = 0; i < pool.length && results.length < 2; i++) {
             const fallbackCat = pool[(i + seed) % pool.length];
             const alt = await fetchOneForCategory(fallbackCat, `-c${i}`);
-            if (alt && !results.some((r) => r.categoryId === alt.categoryId)) {
+            if (
+              alt &&
+              !results.some((r) => r.categoryId === alt.categoryId) &&
+              !titleSeen.has(normalizeTitle(alt.title))
+            ) {
               results.push(alt);
+              titleSeen.add(normalizeTitle(alt.title));
             }
           }
         }
@@ -313,21 +326,25 @@ const PromptLibrary = () => {
     setPage(1);
     const res = await fetchPromptsPage(1);
     const data = res.data || [];
-    const excluded = data.filter((p) => !featuredList.some((f) => f.id === p.id));
+    const excluded = data.filter(
+      (p) => !featuredList.some((f) => f.id === p.id) && !featuredTitleSet.has(normalizeTitle(p.title))
+    );
     setItems(dedupeByTitle(excluded));
     setHasMore(!!res.hasMore);
-  }, [fetchPromptsPage, featuredList]);
+  }, [fetchPromptsPage, featuredList, featuredTitleSet]);
 
   const loadMore = useCallback(async () => {
     if (loading || !hasMore) return;
     const next = page + 1;
     const res = await fetchPromptsPage(next);
-    const data = res.data || [];
-    const excluded = data.filter((p) => !featuredList.some((f) => f.id === p.id));
+  const data = res.data || [];
+    const excluded = data.filter(
+      (p) => !featuredList.some((f) => f.id === p.id) && !featuredTitleSet.has(normalizeTitle(p.title))
+    );
     setItems((prev) => dedupeByTitle([...prev, ...excluded]));
     setHasMore(!!res.hasMore);
     setPage(next);
-  }, [page, hasMore, loading, fetchPromptsPage, featuredList]);
+  }, [page, hasMore, loading, fetchPromptsPage, featuredList, featuredTitleSet]);
 
   // Always land at top when visiting Library
   useEffect(() => {
@@ -349,8 +366,12 @@ const PromptLibrary = () => {
   // When featured changes, remove them from the main list to avoid duplicates
   useEffect(() => {
     if (featuredList.length === 0) return;
-    setItems((prev) => prev.filter((p) => !featuredList.some((f) => f.id === p.id)));
-  }, [featuredList]);
+    setItems((prev) =>
+      prev.filter(
+        (p) => !featuredList.some((f) => f.id === p.id) && !featuredTitleSet.has(normalizeTitle(p.title))
+      )
+    );
+  }, [featuredList, featuredTitleSet]);
 
   // Refresh when filters change
   useEffect(() => {
