@@ -15,22 +15,44 @@ const HowItWorks = () => (
     />
 
     <main className="container py-12">
-      <section aria-labelledby="how-to-steps" className="max-w-3xl mx-auto">
-        <h2 id="how-to-steps" className="sr-only">Steps</h2>
-        <ol className="list-decimal pl-6 text-muted-foreground space-y-4">
-          <li>
-            <h3 className="text-foreground font-semibold">1. Browse Prompts</h3>
-            <p>Explore by category or prompt pack — from career writing to creativity, productivity, and more.</p>
-          </li>
-          <li>
-            <h3 className="text-foreground font-semibold">2. Paste into ChatGPT</h3>
-            <p>Copy the prompt and paste it into ChatGPT, GPT-4, Claude, Gemini, or your AI of choice.</p>
-          </li>
-          <li>
-            <h3 className="text-foreground font-semibold">3. Tweak &amp; Go</h3>
-            <p>Edit, regenerate, or stack prompts as needed. Get better results without starting from scratch.</p>
-          </li>
-        </ol>
+      <section aria-labelledby="how-it-works-diagram" className="max-w-5xl mx-auto">
+        <h2 id="how-it-works-diagram" className="text-2xl font-semibold tracking-tight mb-8">How it Works</h2>
+        <div className="relative">
+          {/* connector line for larger screens */}
+          <div aria-hidden className="hidden md:block absolute left-0 right-0 top-6 h-px bg-border" />
+          <div className="grid gap-8 md:grid-cols-3">
+            {/* Step 1 */}
+            <article className="relative">
+              <div className="flex items-start gap-4">
+                <div className="shrink-0 w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold">1</div>
+                <div>
+                  <h3 className="text-lg font-semibold">Browse Prompts</h3>
+                  <p className="mt-1 text-muted-foreground">Explore by category or prompt pack — from career writing to creativity, productivity, and more.</p>
+                </div>
+              </div>
+            </article>
+            {/* Step 2 */}
+            <article className="relative">
+              <div className="flex items-start gap-4">
+                <div className="shrink-0 w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold">2</div>
+                <div>
+                  <h3 className="text-lg font-semibold">Paste into ChatGPT</h3>
+                  <p className="mt-1 text-muted-foreground">Copy the prompt and paste it into ChatGPT, GPT-4, Claude, Gemini, or your AI of choice.</p>
+                </div>
+              </div>
+            </article>
+            {/* Step 3 */}
+            <article className="relative">
+              <div className="flex items-start gap-4">
+                <div className="shrink-0 w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold">3</div>
+                <div>
+                  <h3 className="text-lg font-semibold">Tweak &amp; Go</h3>
+                  <p className="mt-1 text-muted-foreground">Edit, regenerate, or stack prompts as needed. Get better results without starting from scratch.</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
       </section>
 
       {/* Additional About content from promptandgo.ai/about */}
