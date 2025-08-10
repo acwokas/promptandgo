@@ -22,6 +22,18 @@ interface PromptUI {
   tags: string[];
 }
 
+// Deduplicate prompts by normalized title to avoid showing near-identical entries
+const normalizeTitle = (t?: string | null) => (t || "").trim().toLowerCase();
+const dedupeByTitle = (arr: PromptUI[]) => {
+  const seen = new Set<string>();
+  return arr.filter((p) => {
+    const key = normalizeTitle(p.title);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+};
+
 const PromptLibrary = () => {
   const [categories, setCategories] = useState<CategoryType[]>([]);
   const [categoryId, setCategoryId] = useState<string | undefined>();
@@ -170,7 +182,8 @@ const PromptLibrary = () => {
   const refresh = useCallback(async () => {
     setPage(1);
     const res = await fetchPromptsPage(1);
-    setItems(res.data || []);
+    const data = res.data || [];
+    setItems(dedupeByTitle(data));
     setHasMore(!!res.hasMore);
   }, [fetchPromptsPage]);
 
@@ -178,7 +191,8 @@ const PromptLibrary = () => {
     if (loading || !hasMore) return;
     const next = page + 1;
     const res = await fetchPromptsPage(next);
-    setItems((prev) => [...prev, ...(res.data || [])]);
+    const data = res.data || [];
+    setItems((prev) => dedupeByTitle([...prev, ...data]));
     setHasMore(!!res.hasMore);
     setPage(next);
   }, [page, hasMore, loading, fetchPromptsPage]);
