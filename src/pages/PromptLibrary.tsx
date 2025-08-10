@@ -222,6 +222,14 @@ const PromptLibrary = () => {
               setSelectedTag(undefined); // typing a query clears tag filter
             }
           }}
+          onSearch={refresh}
+          onClear={() => {
+            setCategoryId(undefined);
+            setSubcategoryId(undefined);
+            setQuery("");
+            setSelectedTag(undefined);
+            refresh();
+          }}
         />
 
         <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-6">
