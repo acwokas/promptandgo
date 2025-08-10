@@ -1,5 +1,7 @@
 import SEO from "@/components/SEO";
 import PageHero from "@/components/layout/PageHero";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const HowItWorks = () => (
   <>
@@ -106,6 +108,17 @@ const HowItWorks = () => (
             <p className="mt-2 text-muted-foreground">Most people don’t want to become prompt engineers — they just want better results. We built a simple way to skip the struggle and get to the output.</p>
           </div>
         </article>
+      </section>
+      <section aria-labelledby="cta-tail" className="max-w-5xl mx-auto mt-16">
+        <div className="rounded-2xl border bg-gradient-to-br from-primary/10 to-transparent p-8 md:p-12 text-center">
+          <h2 id="cta-tail" className="text-2xl md:text-3xl font-semibold tracking-tight">Whatever you’re working on, someone’s already used PromptAndGo to do it faster.</h2>
+          <p className="mt-3 text-muted-foreground text-base md:text-lg">✨ Ready to Start Prompting Smarter? Try your first prompt or explore a pack — no sign-up required.</p>
+          <div className="mt-6 flex justify-center">
+            <Button asChild variant="hero">
+              <Link to="/library">Browse Prompt Library</Link>
+            </Button>
+          </div>
+        </div>
       </section>
 
       <script
