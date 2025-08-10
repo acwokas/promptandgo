@@ -60,12 +60,6 @@ const WelcomeToPromptAndGo = () => {
           <p className="mt-3 text-muted-foreground">
             When you open a blank AI chat window, it’s like standing in front of a rocket with the keys in your hand. The potential is huge, but only if you know what to type.
           </p>
-          <div className="mt-3 flex flex-wrap items-center gap-2">
-            <Badge variant="secondary">{category}</Badge>
-            {tags.map((t) => (
-              <Badge key={t} variant="outline">{t}</Badge>
-            ))}
-          </div>
         </header>
 
         <section className="mt-8 space-y-6">
@@ -129,6 +123,14 @@ const WelcomeToPromptAndGo = () => {
             </Button>
           </div>
         </section>
+        <footer className="mt-10 border-t pt-6">
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge variant="secondary">{category}</Badge>
+            {tags.map((t) => (
+              <Badge key={t} variant="outline">{t}</Badge>
+            ))}
+          </div>
+        </footer>
       </article>
     </main>
   );
