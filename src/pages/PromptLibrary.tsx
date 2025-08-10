@@ -37,8 +37,8 @@ const PromptLibrary = () => {
   // Load categories + subcategories and compose to existing UI shape
   const loadCategories = useCallback(async () => {
     const [catRes, subRes] = await Promise.all([
-      supabase.from("categories").select("id,name").order("name"),
-      supabase.from("subcategories").select("id,name,category_id").order("name"),
+      supabase.from("categories").select("id,name,slug").order("name"),
+      supabase.from("subcategories").select("id,name,slug,category_id").order("name"),
     ]);
 
     if (catRes.error) {
@@ -50,12 +50,15 @@ const PromptLibrary = () => {
       return;
     }
 
-    const built: CategoryType[] = (catRes.data || []).map((c) => ({
+    const subSlugs = new Set((subRes.data || []).map((s: any) => s.slug as string));
+    const validCategories = (catRes.data || []).filter((c: any) => !subSlugs.has(c.slug as string));
+
+    const built: CategoryType[] = validCategories.map((c: any) => ({
       id: c.id as string,
       name: c.name as string,
       subcategories: (subRes.data || [])
-        .filter((s) => s.category_id === c.id)
-        .map((s) => ({ id: s.id as string, name: s.name as string })),
+        .filter((s: any) => s.category_id === c.id)
+        .map((s: any) => ({ id: s.id as string, name: s.name as string })),
     }));
 
     setCategories(built);
