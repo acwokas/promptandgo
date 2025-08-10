@@ -38,19 +38,63 @@ const Index = () => {
 
         {/* Audience Cards */}
         <section className="container py-12">
-          <h2 className="text-2xl font-semibold mb-6">Who it's for</h2>
-          <div className="grid gap-6 md:grid-cols-3">
-            <article className="rounded-lg border bg-card p-6 shadow-sm hover:shadow-lg transition-shadow">
-              <h3 className="text-xl font-semibold">Founders & Solopreneurs</h3>
-              <p className="text-muted-foreground mt-2">Streamline startup tasks and communications.</p>
+          <h2 className="text-2xl font-semibold mb-2">Who it's for</h2>
+          <p className="text-muted-foreground max-w-3xl">Explore Tailor-made prompts for Every Subject</p>
+          <p className="text-muted-foreground max-w-3xl mb-8">Find the perfect starting point with curated AI prompts designed to help you learn, create, and do more — faster.</p>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <article className="group rounded-xl border bg-card p-6 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <h3 className="text-xl font-semibold">💼 Career &amp; Job Prompts</h3>
+              <p className="text-muted-foreground mt-2">Write better resumes, prep smarter for interviews, and land your next role with AI prompts designed for real-world results.</p>
+              <div className="mt-4">
+                <Button asChild variant="secondary" size="sm">
+                  <Link to="/library">Learn More</Link>
+                </Button>
+              </div>
             </article>
-            <article className="rounded-lg border bg-card p-6 shadow-sm hover:shadow-lg transition-shadow">
-              <h3 className="text-xl font-semibold">Marketers & Copywriters</h3>
-              <p className="text-muted-foreground mt-2">Craft compelling copy and strategies.</p>
+            <article className="group rounded-xl border bg-card p-6 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <h3 className="text-xl font-semibold">🧠 Self &amp; Growth</h3>
+              <p className="text-muted-foreground mt-2">Build better habits, sharpen your focus, and reflect more deeply with prompts designed to unlock your best self.</p>
+              <div className="mt-4">
+                <Button asChild variant="secondary" size="sm">
+                  <Link to="/library">Learn More</Link>
+                </Button>
+              </div>
             </article>
-            <article className="rounded-lg border bg-card p-6 shadow-sm hover:shadow-lg transition-shadow">
-              <h3 className="text-xl font-semibold">Productivity Nerds</h3>
-              <p className="text-muted-foreground mt-2">Automate and accelerate your workflow.</p>
+            <article className="group rounded-xl border bg-card p-6 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <h3 className="text-xl font-semibold">💬 Comms &amp; Messaging</h3>
+              <p className="text-muted-foreground mt-2">Write clearer emails, sharper responses, and better internal docs — with AI prompts that get the tone right.</p>
+              <div className="mt-4">
+                <Button asChild variant="secondary" size="sm">
+                  <Link to="/library">Learn More</Link>
+                </Button>
+              </div>
+            </article>
+            <article className="group rounded-xl border bg-card p-6 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <h3 className="text-xl font-semibold">🎨 Creativity &amp; Writing</h3>
+              <p className="text-muted-foreground mt-2">From idea to finished story — overcome writer’s block and generate concepts, hooks, and poetry with ease.</p>
+              <div className="mt-4">
+                <Button asChild variant="secondary" size="sm">
+                  <Link to="/library">Learn More</Link>
+                </Button>
+              </div>
+            </article>
+            <article className="group rounded-xl border bg-card p-6 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <h3 className="text-xl font-semibold">🎯 Sales &amp; Marketing</h3>
+              <p className="text-muted-foreground mt-2">Craft high-converting ads, persuasive emails, compelling landing pages, and effective sales messages — designed to move people to act, not just skim.</p>
+              <div className="mt-4">
+                <Button asChild variant="secondary" size="sm">
+                  <Link to="/library">Learn More</Link>
+                </Button>
+              </div>
+            </article>
+            <article className="group rounded-xl border bg-card p-6 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <h3 className="text-xl font-semibold">🎓 Education &amp; Teachers</h3>
+              <p className="text-muted-foreground mt-2">Generate lesson plans, explain complex concepts, and create classroom-ready activities — all with teacher-friendly, ethical AI prompts.</p>
+              <div className="mt-4">
+                <Button asChild variant="secondary" size="sm">
+                  <Link to="/library">Learn More</Link>
+                </Button>
+              </div>
             </article>
           </div>
         </section>
