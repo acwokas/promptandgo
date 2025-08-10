@@ -12,6 +12,7 @@ import SubmitPrompt from "./pages/SubmitPrompt";
 import Blog from "./pages/Blog";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
+import FAQs from "./pages/FAQs";
 
 import HowItWorks from "./pages/HowItWorks";
 import Contact from "./pages/Contact";
@@ -42,11 +43,11 @@ const App = () => (
             <Route path="/library" element={<PromptLibrary />} />
             <Route path="/packs" element={<PromptPacks />} />
             <Route path="/submit" element={<SubmitPrompt />} />
+            <Route path="/faqs" element={<FAQs />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/welcome-to-promptandgo-ai" element={<WelcomeToPromptAndGo />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
-            
             <Route path="/how-it-works" element={<HowItWorks />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/auth" element={<Auth />} />
