@@ -66,38 +66,38 @@ const HowItWorks = () => (
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="rounded-lg border p-5 bg-card/50">
+            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
               <h4 className="font-semibold">Human Curated Prompts</h4>
               <p className="mt-1 text-muted-foreground">Each prompt is crafted for real use cases — not generic fluff.</p>
             </div>
-            <div className="rounded-lg border p-5 bg-card/50">
+            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
               <h4 className="font-semibold">Instant Use, No Learning Curve</h4>
               <p className="mt-1 text-muted-foreground">Copy into your AI tool and run instantly — no setup required.</p>
             </div>
-            <div className="rounded-lg border p-5 bg-card/50">
+            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
               <h4 className="font-semibold">Built for Busy People</h4>
               <p className="mt-1 text-muted-foreground">Made for educators, creators, jobseekers, and more.</p>
             </div>
-            <div className="rounded-lg border p-5 bg-card/50">
+            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
               <h4 className="font-semibold">Free + Pro Options</h4>
               <p className="mt-1 text-muted-foreground">Choose what you need. Upgrade only when it’s worth it.</p>
             </div>
-            <div className="rounded-lg border p-5 bg-card/50">
+            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
               <h4 className="font-semibold">Works with All AI Platforms</h4>
               <p className="mt-1 text-muted-foreground">Use with ChatGPT, GPT-4, Claude, Gemini, and more.</p>
             </div>
-            <div className="rounded-lg border p-5 bg-card/50">
+            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
               <h4 className="font-semibold">Ethically Created</h4>
               <p className="mt-1 text-muted-foreground">No fake personas. No scraped content. Always clear, honest use.</p>
             </div>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 mt-2">
-            <div className="rounded-lg border p-6 text-center bg-card/50">
+            <div className="rounded-xl border p-6 text-center bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10 shadow-sm hover:shadow-md transition-all duration-200">
               <div className="text-3xl font-bold tracking-tight">12+</div>
               <div className="text-muted-foreground">Prompt Categories</div>
             </div>
-            <div className="rounded-lg border p-6 text-center bg-card/50">
+            <div className="rounded-xl border p-6 text-center bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10 shadow-sm hover:shadow-md transition-all duration-200">
               <div className="text-3xl font-bold tracking-tight">1600+</div>
               <div className="text-muted-foreground">Prompts</div>
             </div>
