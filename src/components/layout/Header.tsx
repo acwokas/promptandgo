@@ -9,9 +9,12 @@ const Header = () => {
           <img
             src="/lovable-uploads/00a8a6c7-da53-4583-8f5d-f1ee4a899501.png"
             alt="PromptAndGo.ai logo"
-            className="h-8 md:h-9 w-auto"
-            width={144}
-            height={36}
+            className="h-10 md:h-12 w-auto"
+            width={192}
+            height={48}
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
           />
         </Link>
         <ul className="hidden md:flex items-center gap-6 text-sm">
