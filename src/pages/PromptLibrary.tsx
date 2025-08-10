@@ -3,6 +3,8 @@ import { PromptFilters } from "@/components/prompt/PromptFilters";
 import { PromptCard } from "@/components/prompt/PromptCard";
 import { Button } from "@/components/ui/button";
 import PageHero from "@/components/layout/PageHero";
+import { Link } from "react-router-dom";
+import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useCallback, useEffect, useState } from "react";
 import type { Category as CategoryType } from "@/data/prompts";
@@ -35,6 +37,7 @@ const dedupeByTitle = (arr: PromptUI[]) => {
 };
 
 const PromptLibrary = () => {
+  const { user } = useSupabaseAuth();
   const [categories, setCategories] = useState<CategoryType[]>([]);
   const [categoryId, setCategoryId] = useState<string | undefined>();
   const [subcategoryId, setSubcategoryId] = useState<string | undefined>();
@@ -215,37 +218,55 @@ const PromptLibrary = () => {
             <span className="text-gradient-brand">Prompt</span> Library
           </>
         }
-        subtitle={<>Search and filter prompts across all categories and subcategories.</>}
-      />
+        subtitle={<>Find the perfect prompt fast: browse by category or subcategory, then save your favourites for free to use later.</>}
+      >
+        <Button asChild size="lg" variant="hero" className="px-6">
+          <a href="#library-filters">Browse Prompt Library</a>
+        </Button>
+        {user ? (
+          <Button asChild size="lg" variant="secondary">
+            <Link to="/account/favorites">My Prompts</Link>
+          </Button>
+        ) : (
+          <Button asChild size="lg" variant="secondary">
+            <Link to="/auth">Login</Link>
+          </Button>
+        )}
+        <Button asChild size="lg" variant="inverted">
+          <Link to="/packs">Explore Premium Packs</Link>
+        </Button>
+      </PageHero>
       <main className="container py-10">
         <SEO
           title="Prompt Library – Ready-to-use AI Prompts"
           description="Browse prompts by category and subcategory with fast search. Copy-ready cards for marketing, productivity, and sales."
         />
 
-        <PromptFilters
-          categories={categories}
-          categoryId={categoryId}
-          subcategoryId={subcategoryId}
-          query={query}
-          onChange={(n) => {
-            if (n.categoryId !== undefined) setCategoryId(n.categoryId || undefined);
-            if (n.subcategoryId !== undefined) setSubcategoryId(n.subcategoryId || undefined);
-            if (n.query !== undefined) {
-              setQuery(n.query);
-              setSelectedTag(undefined); // typing a query clears tag filter
-            }
-          }}
-          onSearch={refresh}
-          onClear={() => {
-            setCategoryId(undefined);
-            setSubcategoryId(undefined);
-            setQuery("");
-            setSelectedTag(undefined);
-            setPage(1);
-            // No manual refresh here; useEffect will trigger once state updates propagate
-          }}
-        />
+        <section id="library-filters">
+          <PromptFilters
+            categories={categories}
+            categoryId={categoryId}
+            subcategoryId={subcategoryId}
+            query={query}
+            onChange={(n) => {
+              if (n.categoryId !== undefined) setCategoryId(n.categoryId || undefined);
+              if (n.subcategoryId !== undefined) setSubcategoryId(n.subcategoryId || undefined);
+              if (n.query !== undefined) {
+                setQuery(n.query);
+                setSelectedTag(undefined); // typing a query clears tag filter
+              }
+            }}
+            onSearch={refresh}
+            onClear={() => {
+              setCategoryId(undefined);
+              setSubcategoryId(undefined);
+              setQuery("");
+              setSelectedTag(undefined);
+              setPage(1);
+              // No manual refresh here; useEffect will trigger once state updates propagate
+            }}
+          />
+        </section>
 
         <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-6">
           {items.map((p) => (
