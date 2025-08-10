@@ -26,6 +26,9 @@ const Index = () => {
           <Button asChild size="lg" variant="secondary">
             <Link to="/packs">Explore Prompt Packs</Link>
           </Button>
+          <p className="text-sm text-muted-foreground mt-2">
+            Already have an account? <Link to="/auth" className="underline text-primary">Log in</Link>
+          </p>
         </PageHero>
 
 

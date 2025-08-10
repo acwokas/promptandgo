@@ -2,8 +2,21 @@ import { Link, NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
+import { useToast } from "@/components/ui/use-toast";
 
 const Header = () => {
+  const { user } = useSupabaseAuth();
+  const { toast } = useToast();
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      toast({ title: "Logout failed", description: error.message, variant: "destructive" });
+    } else {
+      toast({ title: "Signed out" });
+    }
+  };
   return (
     <header className="sticky top-0 z-40 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
       <nav className="container flex items-center justify-between h-24">
@@ -43,6 +56,11 @@ const Header = () => {
                   <NavLink to="/packs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Premium Packs</NavLink>
                   <NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Resources</NavLink>
                   <NavLink to="/contact" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Contact</NavLink>
+                  {user ? (
+                    <Button variant="secondary" onClick={handleLogout} className="mt-2">Log out</Button>
+                  ) : (
+                    <NavLink to="/auth" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Log in</NavLink>
+                  )}
                   <Button asChild variant="hero" className="mt-4">
                     <Link to="#cta">Try a Prompt</Link>
                   </Button>
@@ -51,6 +69,13 @@ const Header = () => {
             </Sheet>
           </div>
           {/* Desktop CTA */}
+          {user ? (
+            <Button variant="secondary" onClick={handleLogout} className="hidden md:inline-flex">Log out</Button>
+          ) : (
+            <Button asChild variant="ghost" className="hidden md:inline-flex">
+              <Link to="/auth">Log in</Link>
+            </Button>
+          )}
           <Button asChild variant="hero" className="px-5 hidden md:inline-flex">
             <Link to="#cta">Try a Prompt</Link>
           </Button>
