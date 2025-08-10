@@ -25,7 +25,19 @@ interface PromptUI {
 }
 
 // Deduplicate prompts by normalized title to avoid showing near-identical entries
-const normalizeTitle = (t?: string | null) => (t || "").trim().toLowerCase();
+const normalizeTitle = (t?: string | null) => {
+  let s = (t || "").toLowerCase().trim();
+
+  // Strip common "variant" suffixes so "Title (variant)" and "Title v2" dedupe
+  s = s.replace(/\s*\((?:variant|variants?|alt|alternate|alternat(?:e|ive)|v\d+|ver(?:sion)?\s*\d+|rev(?:ision)?\s*[a-z0-9]+)\)\s*$/g, "");
+  s = s.replace(/\s*[-–—|]\s*(?:variant|alt|alternate|v\d+|ver(?:sion)?\s*\d+|rev(?:ision)?\s*[a-z0-9]+)\s*$/g, "");
+  s = s.replace(/\s+(?:v|ver(?:sion)?)\s*\d+\s*$/g, "");
+  s = s.replace(/\s*#\d+\s*$/g, "");
+
+  // Collapse extra whitespace
+  s = s.replace(/\s+/g, " ").trim();
+  return s;
+};
 const dedupeByTitle = (arr: PromptUI[]) => {
   const seen = new Set<string>();
   return arr.filter((p) => {

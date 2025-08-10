@@ -25,8 +25,19 @@ interface PromptUI {
 
 const PAGE_SIZE = 6;
 
-// Deduplicate prompts by normalized title
-const normalizeTitle = (t?: string | null) => (t || "").trim().toLowerCase();
+// Deduplicate prompts by normalized title (strip common variant suffixes)
+const normalizeTitle = (t?: string | null) => {
+  let s = (t || "").toLowerCase().trim();
+
+  // Remove trailing variant markers like (variant), (v2), - v2, #2, etc.
+  s = s.replace(/\s*\((?:variant|variants?|alt|alternate|alternat(?:e|ive)|v\d+|ver(?:sion)?\s*\d+|rev(?:ision)?\s*[a-z0-9]+)\)\s*$/g, "");
+  s = s.replace(/\s*[-–—|]\s*(?:variant|alt|alternate|v\d+|ver(?:sion)?\s*\d+|rev(?:ision)?\s*[a-z0-9]+)\s*$/g, "");
+  s = s.replace(/\s+(?:v|ver(?:sion)?)\s*\d+\s*$/g, "");
+  s = s.replace(/\s*#\d+\s*$/g, "");
+
+  s = s.replace(/\s+/g, " ").trim();
+  return s;
+};
 const dedupeByTitle = (arr: PromptUI[]) => {
   const seen = new Set<string>();
   return arr.filter((p) => {
