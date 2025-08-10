@@ -121,7 +121,7 @@ All colors MUST be HSL. */
 
 @layer utilities {
   .bg-gradient-primary { background-image: var(--gradient-primary); }
-  .bg-hero { background-image: var(--gradient-hero), linear-gradient(#0000, #0000); position: relative; }
+  .bg-hero { position: relative; background-image: linear-gradient(180deg, hsl(220 60% 3% / 0.4), hsl(220 60% 3% / 0.4)), url('/lovable-uploads/0a94080e-fece-41b4-adbe-f01337551bdb.png'), var(--gradient-hero); background-size: cover; background-position: center; background-repeat: no-repeat; }
   .hero-grid::before {
     content: ""; position: absolute; inset: 0;
     background-image:
