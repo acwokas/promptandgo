@@ -268,6 +268,9 @@ const FavoritesPage = () => {
         title={<><span className="text-gradient-brand">My</span> Prompts</>}
         subtitle={<>All the prompts you've saved in one place.</>}
       >
+        <Button asChild variant="hero" className="px-6">
+          <a href="#favorites-filters">Browse My Prompts</a>
+        </Button>
         <Button asChild variant="secondary">
           <Link to="/library">Back to Library</Link>
         </Button>
@@ -285,33 +288,35 @@ const FavoritesPage = () => {
           </div>
         ) : (
           <>
-            <PromptFilters
-              categories={categories}
-              categoryId={categoryId}
-              subcategoryId={subcategoryId}
-              query={query}
-              onChange={(n) => {
-                if (n.categoryId !== undefined) setCategoryId(n.categoryId || undefined);
-                if (n.subcategoryId !== undefined) setSubcategoryId(n.subcategoryId || undefined);
-                if (n.query !== undefined) {
-                  setQuery(n.query);
-                  setSelectedTag(undefined); // typing a query clears tag filter
-                }
-              }}
-              onSearch={refresh}
-              onClear={() => {
-                setCategoryId(undefined);
-                setSubcategoryId(undefined);
-                setQuery("");
-                setSelectedTag(undefined);
-                setPage(1);
-                // useEffect triggers refresh
-              }}
-              searchLabel="Search My Prompts:"
-              searchPlaceholder="Search My Prompts..."
-              categoryLabel="My Prompt Categories:"
-              subcategoryLabel="My Prompt Sub-Categories:"
-            />
+            <section id="favorites-filters" className="scroll-mt-28 md:scroll-mt-28">
+              <PromptFilters
+                categories={categories}
+                categoryId={categoryId}
+                subcategoryId={subcategoryId}
+                query={query}
+                onChange={(n) => {
+                  if (n.categoryId !== undefined) setCategoryId(n.categoryId || undefined);
+                  if (n.subcategoryId !== undefined) setSubcategoryId(n.subcategoryId || undefined);
+                  if (n.query !== undefined) {
+                    setQuery(n.query);
+                    setSelectedTag(undefined); // typing a query clears tag filter
+                  }
+                }}
+                onSearch={refresh}
+                onClear={() => {
+                  setCategoryId(undefined);
+                  setSubcategoryId(undefined);
+                  setQuery("");
+                  setSelectedTag(undefined);
+                  setPage(1);
+                  // useEffect triggers refresh
+                }}
+                searchLabel="Search My Prompts:"
+                searchPlaceholder="Search My Prompts..."
+                categoryLabel="My Prompt Categories:"
+                subcategoryLabel="My Prompt Sub-Categories:"
+              />
+            </section>
 
             <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-6">
               {items.map((p) => (
