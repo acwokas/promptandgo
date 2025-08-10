@@ -391,7 +391,7 @@ const AdminBulkUpload = () => {
       if (catSelErr) throw catSelErr;
       const catIdBySlug = new Map<string, string>((cats || []).map((c: any) => [c.slug, c.id]));
 
-      const subPayload = rows
+      const rawSubs = rows
         .map((r) => {
           const cslug = String(r.category_slug ?? "").trim();
           const sslug = String(r.subcategory_slug ?? "").trim();
@@ -401,6 +401,14 @@ const AdminBulkUpload = () => {
           return { category_id, slug: sslug, name: String((r.subcategory_name ?? sslug)).trim() };
         })
         .filter(Boolean) as { category_id: string; slug: string; name: string }[];
+
+      // Deduplicate by composite key category_id + slug to avoid ON CONFLICT hitting same row twice
+      const subKeyed = new Map<string, { category_id: string; slug: string; name: string }>();
+      rawSubs.forEach((s) => {
+        const key = `${s.category_id}:${s.slug}`;
+        if (!subKeyed.has(key)) subKeyed.set(key, s);
+      });
+      const subPayload = Array.from(subKeyed.values());
 
       if (subPayload.length) {
         const { error: subUpErr } = await supabase.from("subcategories").upsert(subPayload, { onConflict: "category_id,slug" });
