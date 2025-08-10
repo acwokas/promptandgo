@@ -3,8 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
 import { Sparkles, Zap, ShieldCheck, ListChecks, Wand2, Rocket, Check } from "lucide-react";
+import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 
 const Index = () => {
+  const { user } = useSupabaseAuth();
   return (
     <>
       <SEO
@@ -26,9 +28,15 @@ const Index = () => {
           <Button asChild size="lg" variant="secondary">
             <Link to="/packs">Explore Prompt Packs</Link>
           </Button>
-          <p className="text-sm text-muted-foreground mt-2">
-            Already have an account? <Link to="/auth" className="underline text-primary">Log in</Link>
-          </p>
+          {user ? (
+            <Button asChild size="lg" variant="secondary">
+              <Link to="/account/favorites">See My Favourite Prompts</Link>
+            </Button>
+          ) : (
+            <p className="text-sm text-muted-foreground mt-2">
+              Already have an account? <Link to="/auth" className="underline text-primary">Log in</Link>
+            </p>
+          )}
         </PageHero>
 
 

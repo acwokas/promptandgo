@@ -20,6 +20,7 @@ import Footer from "@/components/layout/Footer";
 import WelcomeToPromptAndGo from "./pages/blog/WelcomeToPromptAndGo";
 import Auth from "./pages/Auth";
 import AdminBulkUpload from "./pages/AdminBulkUpload";
+import FavoritesPage from "./pages/account/Favorites";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,7 @@ const App = () => (
             <Route path="/contact" element={<Contact />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/admin/upload" element={<AdminBulkUpload />} />
+            <Route path="/account/favorites" element={<FavoritesPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
