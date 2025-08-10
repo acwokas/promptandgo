@@ -111,10 +111,10 @@ const HowItWorks = () => {
           </div>
         </article>
       </section>
-      <section aria-labelledby="cta-tail" className="max-w-5xl mx-auto mt-16">
-        <div className="rounded-2xl border bg-gradient-to-br from-primary/10 to-transparent p-8 md:p-12 text-center">
+      <section aria-labelledby="cta-tail" className="relative bg-hero hero-grid mt-16">
+        <div className="container p-8 md:p-12 text-center text-primary-foreground">
           <h2 id="cta-tail" className="text-2xl md:text-3xl font-semibold tracking-tight">Whatever you’re working on, someone’s already used PromptAndGo to do it faster.</h2>
-          <p className="mt-3 text-muted-foreground text-base md:text-lg">✨ Ready to Start Prompting Smarter? Try your first prompt or explore a pack, no sign-up required.</p>
+          <p className="mt-3 text-primary-foreground/85 text-base md:text-lg">✨ Ready to Start Prompting Smarter? Try your first prompt or explore a pack, no sign-up required.</p>
           <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
             <Button asChild variant="hero" className="px-6">
               <Link to="/library">Browse Prompt Library</Link>
