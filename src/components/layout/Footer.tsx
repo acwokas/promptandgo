@@ -22,7 +22,7 @@ const Footer = () => {
             <Link to="/submit" className="text-muted-foreground hover:text-foreground">Submit a Prompt</Link>
             <Link to="/terms" className="text-muted-foreground hover:text-foreground">Terms & Conditions</Link>
             <Link to="/privacy" className="text-muted-foreground hover:text-foreground">Privacy Policy</Link>
-            <Link to="/refunds" className="text-muted-foreground hover:text-foreground">Refunds Policy</Link>
+            
             {user && (
               <Link to="/account" className="text-muted-foreground hover:text-foreground" title="My Account" aria-label="My Account">
                 <span className="inline-flex items-center gap-2"><UserIcon className="h-4 w-4" aria-hidden="true" /> My Account</span>
