@@ -25,18 +25,18 @@ const Index = () => {
           <Button asChild size="lg" variant="hero" className="px-6">
             <Link to="/library">Browse Prompt Library</Link>
           </Button>
-          <Button asChild size="lg" variant="secondary">
-            <Link to="/packs">Explore Premium Packs</Link>
-          </Button>
           {user ? (
-            <Button asChild size="lg" variant="inverted">
+            <Button asChild size="lg" variant="secondary">
               <Link to="/account/favorites">My Prompts</Link>
             </Button>
           ) : (
-            <Button asChild size="lg" variant="inverted">
+            <Button asChild size="lg" variant="secondary">
               <Link to="/auth">Login</Link>
             </Button>
           )}
+          <Button asChild size="lg" variant="inverted">
+            <Link to="/packs">Explore Premium Packs</Link>
+          </Button>
         </PageHero>
 
 
