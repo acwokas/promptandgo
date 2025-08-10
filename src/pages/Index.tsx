@@ -1,17 +1,14 @@
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <>
       <SEO
         title="Ready-to-use prompts for real-world work"
         description="PromptAndGo.ai gives you ready-to-use prompts designed for real-world work — writing pitches, planning launches, or automating outreach."
       />
-      <Header />
 
       <main>
         {/* Hero */}
@@ -72,9 +69,7 @@ const Index = () => {
           </ul>
         </section>
       </main>
-
-      <Footer />
-    </div>
+    </>
   );
 };
 
