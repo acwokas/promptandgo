@@ -6,9 +6,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useToast } from "@/components/ui/use-toast";
 import { useEnsureProfile } from "@/hooks/useEnsureProfile";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 const Header = () => {
   const { user } = useSupabaseAuth();
+  const { isAdmin } = useIsAdmin();
   const { toast } = useToast();
   useEnsureProfile();
   const handleLogout = async () => {
@@ -40,7 +42,7 @@ const Header = () => {
           
           <li><NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Resources</NavLink></li>
           
-          {user && (
+          {isAdmin && (
             <li><NavLink to="/admin/upload" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Admin</NavLink></li>
           )}
         </ul>
@@ -61,7 +63,7 @@ const Header = () => {
                   <NavLink to="/packs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Premium Packs</NavLink>
                   <NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Resources</NavLink>
                   
-                  {user && (
+                  {isAdmin && (
                     <NavLink to="/admin/upload" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Admin</NavLink>
                   )}
                   {user ? (
