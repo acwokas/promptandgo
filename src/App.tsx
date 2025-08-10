@@ -17,6 +17,7 @@ import HowItWorks from "./pages/HowItWorks";
 import Contact from "./pages/Contact";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import WelcomeToPromptAndGo from "./pages/blog/WelcomeToPromptAndGo";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,7 @@ const App = () => (
             <Route path="/packs" element={<PromptPacks />} />
             <Route path="/submit" element={<SubmitPrompt />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/welcome-to-promptandgo-ai" element={<WelcomeToPromptAndGo />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/refunds" element={<Refunds />} />
