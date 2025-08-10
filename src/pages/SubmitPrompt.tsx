@@ -22,8 +22,8 @@ const SubmitPrompt = () => {
         <Textarea required name="whatFor" placeholder="What it's for (short description)" />
         <Textarea required name="prompt" placeholder="Prompt (copyable block)" />
         <Textarea name="excerpt" placeholder="Excerpt (short summary)" />
-        <p className="text-sm text-muted-foreground">
-          PromptAndGo.ai reserves the right to use, edit and review any portion of this prompt.
+        <p className="text-sm italic text-muted-foreground">
+          PromptAndGo.ai reserves the right to use, edit and revise any portion of this prompt.
         </p>
         <Button variant="cta" className="w-fit">Submit Prompt</Button>
       </form>
