@@ -10,6 +10,7 @@ const Header = () => {
           <span className="text-lg font-semibold tracking-tight">prompt<span className="text-brand">and</span>go.ai</span>
         </Link>
         <ul className="hidden md:flex items-center gap-6 text-sm">
+          <li><NavLink to="/" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Welcome</NavLink></li>
           <li><NavLink to="/library" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Prompt Library</NavLink></li>
           <li><NavLink to="/packs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Prompt Packs</NavLink></li>
           <li><NavLink to="/how-it-works" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>How it Works</NavLink></li>

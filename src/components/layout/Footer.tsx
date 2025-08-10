@@ -9,6 +9,7 @@ const Footer = () => {
           <p className="text-muted-foreground">Ready-to-use prompts for real-world work.</p>
         </div>
         <nav className="grid gap-2">
+          <Link to="/" className="text-muted-foreground hover:text-foreground">Welcome</Link>
           <Link to="/terms" className="text-muted-foreground hover:text-foreground">Terms & Conditions</Link>
           <Link to="/privacy" className="text-muted-foreground hover:text-foreground">Privacy Policy</Link>
           <Link to="/refunds" className="text-muted-foreground hover:text-foreground">Refunds Policy</Link>
