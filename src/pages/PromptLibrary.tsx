@@ -242,7 +242,11 @@ const PromptLibrary = () => {
             setSubcategoryId(undefined);
             setQuery("");
             setSelectedTag(undefined);
-            refresh();
+            setPage(1);
+            // Ensure we refresh after state updates are committed
+            setTimeout(() => {
+              refresh();
+            }, 0);
           }}
         />
 
