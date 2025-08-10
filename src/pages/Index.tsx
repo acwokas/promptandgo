@@ -29,7 +29,7 @@ const Index = () => {
 
 
         {/* Intro */}
-        <section className="container py-16">
+        <section className="container py-12">
           <h2 className="text-2xl font-semibold mb-3">What is PromptAndGo.ai?</h2>
           <p className="text-muted-foreground max-w-3xl">
             PromptAndGo.ai gives you ready-to-use prompts designed for real-world work. Whether you're writing a pitch, planning a launch, or automating outreach — we've got a prompt for that.
@@ -37,7 +37,7 @@ const Index = () => {
         </section>
 
         {/* Audience Cards */}
-        <section className="container py-12">
+        <section className="container py-8">
           <h2 className="text-2xl font-semibold mb-2">Who it's for</h2>
           <p className="text-muted-foreground max-w-3xl">Explore Tailor-made prompts for Every Subject</p>
           <p className="text-muted-foreground max-w-3xl mb-8">Find the perfect starting point with curated AI prompts designed to help you learn, create, and do more — faster.</p>
@@ -100,7 +100,7 @@ const Index = () => {
         </section>
 
         {/* Why Our Prompts Work */}
-        <section className="container py-12">
+        <section className="container py-8">
           <h2 className="text-2xl font-semibold mb-6">Why Our Prompts Work</h2>
           <ul className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
             <li className="rounded-lg border bg-card p-5">Built from real marketing and startup tasks</li>
@@ -109,7 +109,7 @@ const Index = () => {
             <li className="rounded-lg border bg-card p-5">No “prompt engineering” required</li>
           </ul>
         </section>
-        <section aria-labelledby="cta-tail" className="max-w-5xl mx-auto mt-16">
+        <section aria-labelledby="cta-tail" className="max-w-5xl mx-auto mt-12">
           <div className="rounded-2xl border bg-gradient-to-br from-primary/10 to-transparent p-8 md:p-12 text-center">
             <h2 id="cta-tail" className="text-2xl md:text-3xl font-semibold tracking-tight">Whatever you’re working on, someone’s already used PromptAndGo to do it faster.</h2>
             <p className="mt-3 text-muted-foreground text-base md:text-lg">✨ Ready to Start Prompting Smarter? Try your first prompt or explore a pack, no sign-up required.</p>
