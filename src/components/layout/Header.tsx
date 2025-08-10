@@ -6,11 +6,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useToast } from "@/components/ui/use-toast";
 import { useEnsureProfile } from "@/hooks/useEnsureProfile";
-import { useIsAdmin } from "@/hooks/useIsAdmin";
+
 
 const Header = () => {
   const { user } = useSupabaseAuth();
-  const { isAdmin } = useIsAdmin();
+  
   const { toast } = useToast();
   useEnsureProfile();
   const handleLogout = async () => {
@@ -42,9 +42,6 @@ const Header = () => {
           
           <li><NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Prompt Pulse</NavLink></li>
           
-          {isAdmin && (
-            <li><NavLink to="/admin/upload" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Admin</NavLink></li>
-          )}
         </ul>
         <div className="flex items-center gap-2">
           {/* Mobile menu */}
@@ -65,9 +62,6 @@ const Header = () => {
                   
                   {user && (
                     <NavLink to="/account" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>My Account</NavLink>
-                  )}
-                  {isAdmin && (
-                    <NavLink to="/admin/upload" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Admin</NavLink>
                   )}
                   {user ? (
                     <Button variant="secondary" onClick={handleLogout} className="mt-2">Log out</Button>
