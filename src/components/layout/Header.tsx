@@ -39,7 +39,7 @@ const Header = () => {
           <li><NavLink to="/packs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Premium Packs</NavLink></li>
           
           <li><NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Resources</NavLink></li>
-          <li><NavLink to="/contact" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Contact</NavLink></li>
+          
           {user && (
             <li><NavLink to="/admin/upload" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Admin</NavLink></li>
           )}
@@ -60,7 +60,7 @@ const Header = () => {
                   <NavLink to="/library" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Prompt Library</NavLink>
                   <NavLink to="/packs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Premium Packs</NavLink>
                   <NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Resources</NavLink>
-                  <NavLink to="/contact" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Contact</NavLink>
+                  
                   {user && (
                     <NavLink to="/admin/upload" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Admin</NavLink>
                   )}
