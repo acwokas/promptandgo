@@ -27,13 +27,18 @@ const PromptLibrary = () => {
   const hasMore = filtered.length > visible.length;
 
   return (
-    <main className="container py-10">
-      <SEO
-        title="Prompt Library – Ready-to-use AI Prompts"
-        description="Browse prompts by category and subcategory with fast search. Copy-ready cards for marketing, productivity, and sales."
-      />
-      <h1 className="text-3xl font-bold mb-2">Prompt Library</h1>
-      <p className="text-muted-foreground mb-6">Search and filter prompts across all categories.</p>
+    <>
+      <section className="relative bg-hero hero-grid">
+        <div className="container py-16 text-center text-primary-foreground">
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight">Prompt Library</h1>
+          <p className="text-primary-foreground/80 mt-3 max-w-2xl mx-auto">Search and filter prompts across all categories and subcategories.</p>
+        </div>
+      </section>
+      <main className="container py-10">
+        <SEO
+          title="Prompt Library – Ready-to-use AI Prompts"
+          description="Browse prompts by category and subcategory with fast search. Copy-ready cards for marketing, productivity, and sales."
+        />
 
       <PromptFilters
         categories={categories}
@@ -59,7 +64,8 @@ const PromptLibrary = () => {
           <Button variant="secondary" onClick={() => setPage((x) => x + 1)}>Load more</Button>
         </div>
       )}
-    </main>
+      </main>
+    </>
   );
 };
 

@@ -16,19 +16,19 @@ const Index = () => {
       <main>
         {/* Hero */}
         <section className="relative bg-hero hero-grid">
-          <div className="container min-h-[62vh] flex flex-col items-center justify-center text-center py-20">
+          <div className="container min-h-[62vh] flex flex-col items-center justify-center text-center py-20 text-primary-foreground">
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight max-w-4xl">
-              Ready-to-use prompts for real-world work
+              Find your perfect <span className="text-gradient-brand">AI</span> <span className="text-gradient-brand">prompt</span>, fast.
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mt-4 max-w-3xl">
-              Whether you're writing a pitch, planning a launch, or automating outreach — we've got a prompt for that.
+            <p className="text-lg md:text-xl text-primary-foreground/80 mt-4 max-w-3xl">
+              Browse hundreds of human-curated prompts to help you write better, work smarter, and think bigger.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <Button asChild size="lg" variant="hero" className="px-6">
-                <Link to="#cta">Get 3 Free Prompts Weekly</Link>
+                <Link to="/library">Browse by Category</Link>
               </Button>
               <Button asChild size="lg" variant="secondary">
-                <Link to="/library">Browse Prompt Library</Link>
+                <Link to="/packs">Explore Prompt Packs</Link>
               </Button>
             </div>
           </div>
