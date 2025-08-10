@@ -21,6 +21,8 @@ import WelcomeToPromptAndGo from "./pages/blog/WelcomeToPromptAndGo";
 import Auth from "./pages/Auth";
 import AdminBulkUpload from "./pages/AdminBulkUpload";
 import FavoritesPage from "./pages/account/Favorites";
+import AccountPage from "./pages/account/Account";
+import PurchasesPage from "./pages/account/Purchases";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +48,8 @@ const App = () => (
             <Route path="/contact" element={<Contact />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/admin/upload" element={<AdminBulkUpload />} />
+            <Route path="/account" element={<AccountPage />} />
+            <Route path="/account/purchases" element={<PurchasesPage />} />
             <Route path="/account/favorites" element={<FavoritesPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

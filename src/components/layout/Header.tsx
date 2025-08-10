@@ -64,7 +64,7 @@ const Header = () => {
                   <NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>The Prompt Pulse</NavLink>
                   
                   {user && (
-                    <NavLink to="/account/favorites" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>My Account</NavLink>
+                    <NavLink to="/account" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>My Account</NavLink>
                   )}
                   {isAdmin && (
                     <NavLink to="/admin/upload" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Admin</NavLink>
@@ -95,7 +95,7 @@ const Header = () => {
           )}
           {user && (
             <Button asChild variant="ghost" size="icon" className="hidden md:inline-flex" title="My Account" aria-label="My Account">
-              <Link to="/account/favorites">
+              <Link to="/account">
                 <User className="h-5 w-5" aria-hidden="true" />
               </Link>
             </Button>

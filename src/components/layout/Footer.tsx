@@ -24,7 +24,7 @@ const Footer = () => {
             <Link to="/privacy" className="text-muted-foreground hover:text-foreground">Privacy Policy</Link>
             <Link to="/refunds" className="text-muted-foreground hover:text-foreground">Refunds Policy</Link>
             {user && (
-              <Link to="/account/favorites" className="text-muted-foreground hover:text-foreground" title="My Account" aria-label="My Account">
+              <Link to="/account" className="text-muted-foreground hover:text-foreground" title="My Account" aria-label="My Account">
                 <span className="inline-flex items-center gap-2"><UserIcon className="h-4 w-4" aria-hidden="true" /> My Account</span>
               </Link>
             )}
