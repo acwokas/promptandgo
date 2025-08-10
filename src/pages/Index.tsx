@@ -36,7 +36,7 @@ const Index = () => {
               <div>
                 <h2 className="text-2xl font-semibold mb-3">What is PromptAndGo.ai?</h2>
                 <p className="text-muted-foreground max-w-prose">
-                  PromptAndGo.ai gives you ready-to-use prompts designed for real-world work. Whether you're writing a pitch, planning a launch, or automating outreach — we've got a prompt for that.
+                  Ready-to-use prompts designed for real-world work. Whether you're writing a pitch, planning a launch, creating some social media assets or creating an image, we've got a prompt for that.
                 </p>
                 <ul className="mt-6 grid grid-cols-2 gap-3 text-sm text-muted-foreground">
                   <li className="flex items-center gap-2"><ShieldCheck className="h-5 w-5 text-primary" /> Human-curated</li>
