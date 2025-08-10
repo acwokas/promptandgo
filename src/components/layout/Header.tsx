@@ -82,16 +82,17 @@ const Header = () => {
             </Sheet>
           </div>
           {/* Desktop CTA */}
-          {user ? (
+          {user && (
             <Button variant="secondary" onClick={handleLogout} className="hidden md:inline-flex">Log out</Button>
-          ) : (
-            <Button asChild variant="ghost" className="hidden md:inline-flex">
-              <Link to="/auth">Log in</Link>
-            </Button>
           )}
           <Button asChild variant="hero" className="px-5 hidden md:inline-flex">
             <Link to="#cta">Try a Prompt</Link>
           </Button>
+          {!user && (
+            <Button asChild variant="ghost" className="hidden md:inline-flex">
+              <Link to="/auth">Log in</Link>
+            </Button>
+          )}
           {user && (
             <Button asChild variant="ghost" size="icon" className="hidden md:inline-flex" title="My Account" aria-label="My Account">
               <Link to="/account/favorites">
