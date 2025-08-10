@@ -2,6 +2,7 @@ import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
+import { Sparkles, Zap, ShieldCheck, ListChecks, Wand2, Rocket } from "lucide-react";
 
 const Index = () => {
   return (
@@ -30,10 +31,69 @@ const Index = () => {
 
         {/* Intro */}
         <section className="container py-12">
-          <h2 className="text-2xl font-semibold mb-3">What is PromptAndGo.ai?</h2>
-          <p className="text-muted-foreground max-w-3xl">
-            PromptAndGo.ai gives you ready-to-use prompts designed for real-world work. Whether you're writing a pitch, planning a launch, or automating outreach — we've got a prompt for that.
-          </p>
+          <div className="rounded-2xl border overflow-hidden bg-gradient-to-br from-primary/10 to-transparent p-8 md:p-10 animate-fade-in">
+            <div className="grid gap-8 md:grid-cols-2 items-center">
+              <div>
+                <h2 className="text-2xl font-semibold mb-3">What is PromptAndGo.ai?</h2>
+                <p className="text-muted-foreground max-w-prose">
+                  PromptAndGo.ai gives you ready-to-use prompts designed for real-world work. Whether you're writing a pitch, planning a launch, or automating outreach — we've got a prompt for that.
+                </p>
+                <ul className="mt-6 grid grid-cols-2 gap-3 text-sm text-muted-foreground">
+                  <li className="flex items-center gap-2"><ShieldCheck className="h-5 w-5 text-primary" /> Human-curated</li>
+                  <li className="flex items-center gap-2"><ListChecks className="h-5 w-5 text-primary" /> Practical results</li>
+                  <li className="flex items-center gap-2"><Wand2 className="h-5 w-5 text-primary" /> Copy-and-go</li>
+                  <li className="flex items-center gap-2"><Zap className="h-5 w-5 text-primary" /> Works everywhere</li>
+                </ul>
+              </div>
+              <div className="grid grid-cols-3 gap-4 justify-items-center">
+                <div className="rounded-xl border bg-card p-6 text-center hover-scale">
+                  <Sparkles className="h-8 w-8 text-primary mx-auto" />
+                  <p className="mt-2 text-sm text-muted-foreground">Ideas</p>
+                </div>
+                <div className="rounded-xl border bg-card p-6 text-center hover-scale">
+                  <Rocket className="h-8 w-8 text-primary mx-auto" />
+                  <p className="mt-2 text-sm text-muted-foreground">Launches</p>
+                </div>
+                <div className="rounded-xl border bg-card p-6 text-center hover-scale">
+                  <ShieldCheck className="h-8 w-8 text-primary mx-auto" />
+                  <p className="mt-2 text-sm text-muted-foreground">Reliable</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Feature Strip */}
+        <section className="container py-8">
+          <div className="grid gap-4 md:grid-cols-3">
+            <article className="rounded-xl border p-6 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent">
+              <div className="flex items-start gap-3">
+                <ShieldCheck className="h-5 w-5 text-primary" />
+                <div>
+                  <h3 className="font-semibold">Curated by humans</h3>
+                  <p className="text-sm text-muted-foreground">Every prompt is reviewed for clarity and usefulness.</p>
+                </div>
+              </div>
+            </article>
+            <article className="rounded-xl border p-6 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent">
+              <div className="flex items-start gap-3">
+                <Zap className="h-5 w-5 text-primary" />
+                <div>
+                  <h3 className="font-semibold">Works everywhere</h3>
+                  <p className="text-sm text-muted-foreground">Use with ChatGPT, Claude, Gemini, or your AI of choice.</p>
+                </div>
+              </div>
+            </article>
+            <article className="rounded-xl border p-6 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent">
+              <div className="flex items-start gap-3">
+                <ListChecks className="h-5 w-5 text-primary" />
+                <div>
+                  <h3 className="font-semibold">No fluff, just results</h3>
+                  <p className="text-sm text-muted-foreground">Practical outputs you can ship, not buzzwords.</p>
+                </div>
+              </div>
+            </article>
+          </div>
         </section>
 
         {/* Audience Cards */}
