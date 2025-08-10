@@ -7,8 +7,6 @@ import { useState } from "react";
 
 const Contact = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [webhookUrl, setWebhookUrl] = useState(""); // Optional Zapier webhook
-
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -32,36 +30,21 @@ const Contact = () => {
       return;
     }
 
-    if (!webhookUrl) {
-      toast({
-        title: "Connect sending",
-        description: "Add a Zapier webhook URL below or connect Supabase to enable sending.",
-        variant: "destructive",
-      });
-      return;
-    }
-
     setIsLoading(true);
     try {
-      await fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        mode: "no-cors",
-        body: JSON.stringify({
-          name,
-          email,
-          message,
-          to: "adrian@watkinsworks.asia",
-          source: window.location.href,
-          timestamp: new Date().toISOString(),
-        }),
-      });
+      const subject = `Contact from ${name}`;
+      const body = [
+        `Name: ${name}`,
+        `Email: ${email}`,
+        "",
+        "Message:",
+        message,
+      ].join("\n");
 
-      toast({ title: "Your message has been sent" });
+      const mailto = `mailto:hey@promptandgo.ai?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailto;
+      toast({ title: "Compose email", description: "Your email client should open with your message pre-filled." });
       form.reset();
-    } catch (error) {
-      console.error("Contact form error:", error);
-      toast({ title: "Error", description: "Failed to send. Please try again.", variant: "destructive" });
     } finally {
       setIsLoading(false);
     }
@@ -93,17 +76,6 @@ const Contact = () => {
           </Button>
         </div>
 
-        {/* Optional: Zapier webhook to enable sending immediately */}
-        <div className="mt-2">
-          <Input
-            value={webhookUrl}
-            onChange={(e) => setWebhookUrl(e.target.value)}
-            placeholder="Optional: Zapier webhook URL to enable sending"
-          />
-          <p className="text-xs text-muted-foreground mt-1">
-            No backend yet? Paste a Zapier webhook URL here and we'll POST your message to it.
-          </p>
-        </div>
       </form>
     </main>
   );
