@@ -31,8 +31,9 @@ export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) 
           <span>›</span>
           <span>{sub?.name}</span>
         </div>
-        <p className="text-sm text-muted-foreground">✅ {prompt.whatFor}</p>
         <CardTitle className="text-xl leading-tight">{prompt.title}</CardTitle>
+        <p className="text-sm text-muted-foreground">🤓 {prompt.whatFor}</p>
+        <p className="text-sm text-muted-foreground">✅ {prompt.excerpt}</p>
       </CardHeader>
       <CardContent className="space-y-4">
         <div>
@@ -52,7 +53,7 @@ export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) 
 
         {prompt.tags.length > 0 && (
           <div className="space-y-2">
-            <div className="text-xs font-medium">Similar Prompts:</div>
+            <div className="text-xs font-medium">Related Prompts:</div>
             <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
               {prompt.tags.map((t) => (
                 <Badge
@@ -72,7 +73,7 @@ export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) 
           </div>
         )}
 
-        <p className="text-sm text-muted-foreground">{prompt.excerpt}</p>
+        
       </CardContent>
     </Card>
   );
