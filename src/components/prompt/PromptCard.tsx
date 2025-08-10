@@ -87,13 +87,29 @@ export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) 
   return (
     <Card className="h-full">
       <CardHeader>
-        <div className="flex items-start justify-between gap-2">
-          <div className="flex items-center gap-2 flex-wrap text-xs text-muted-foreground">
-            <span>{category?.name}</span>
-            <span>›</span>
-            <span>{sub?.name}</span>
-          </div>
-          <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap text-xs text-muted-foreground">
+          <span>{category?.name}</span>
+          <span>›</span>
+          <span>{sub?.name}</span>
+        </div>
+        <CardTitle className="text-xl leading-tight">{prompt.title}</CardTitle>
+        <p className="text-sm text-muted-foreground">🤓 {prompt.whatFor}</p>
+        <p className="text-sm text-muted-foreground">✅ {prompt.excerpt}</p>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div>
+          <div className="text-xs font-medium mb-1">Prompt:</div>
+          <pre className="whitespace-pre-wrap bg-muted/50 p-3 rounded-md text-sm">
+            {prompt.prompt}
+          </pre>
+          <div className="flex items-center gap-2 mt-2">
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => copy(prompt.prompt, "Prompt")}
+            >
+              Copy Prompt
+            </Button>
             {user ? (
               <TooltipProvider>
                 <Tooltip>
@@ -135,25 +151,6 @@ export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) 
               </TooltipProvider>
             )}
           </div>
-        </div>
-        <CardTitle className="text-xl leading-tight">{prompt.title}</CardTitle>
-        <p className="text-sm text-muted-foreground">🤓 {prompt.whatFor}</p>
-        <p className="text-sm text-muted-foreground">✅ {prompt.excerpt}</p>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div>
-          <div className="text-xs font-medium mb-1">Prompt:</div>
-          <pre className="whitespace-pre-wrap bg-muted/50 p-3 rounded-md text-sm">
-            {prompt.prompt}
-          </pre>
-          <Button
-            size="sm"
-            variant="outline"
-            className="mt-2"
-            onClick={() => copy(prompt.prompt, "Prompt")}
-          >
-            Copy Prompt
-          </Button>
         </div>
 
         {prompt.tags.length > 0 && (
