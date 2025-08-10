@@ -4,10 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/components/ui/use-toast";
 
 const AccountPage = () => {
   const { user } = useSupabaseAuth();
   const { isAdmin } = useIsAdmin();
+  const { toast } = useToast();
 
   return (
     <>
@@ -31,8 +34,18 @@ const AccountPage = () => {
           </Button>
         )}
         {user && (
-          <Button asChild variant="ghost">
-            <Link to="/auth">Log out</Link>
+          <Button
+            variant="inverted"
+            onClick={async () => {
+              const { error } = await supabase.auth.signOut();
+              if (error) {
+                toast({ title: "Logout failed", description: error.message, variant: "destructive" });
+              } else {
+                toast({ title: "Signed out" });
+              }
+            }}
+          >
+            Log out
           </Button>
         )}
       </PageHero>
