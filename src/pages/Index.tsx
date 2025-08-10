@@ -31,7 +31,7 @@ const Index = () => {
 
         {/* Intro */}
         <section className="container py-8">
-          <div className="rounded-2xl border overflow-hidden bg-gradient-to-br from-primary/10 to-transparent p-6 md:p-8 animate-fade-in">
+          <div className="rounded-2xl border bg-card p-6 md:p-8 animate-fade-in">
             <div className="grid gap-8 md:grid-cols-2 items-center">
               <div>
                 <h2 className="text-2xl font-semibold mb-3">What is PromptAndGo.ai?</h2>
