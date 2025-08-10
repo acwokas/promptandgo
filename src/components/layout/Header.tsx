@@ -1,7 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { Menu, User } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useToast } from "@/components/ui/use-toast";
@@ -63,6 +63,9 @@ const Header = () => {
                   <NavLink to="/packs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Premium Packs</NavLink>
                   <NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Resources</NavLink>
                   
+                  {user && (
+                    <NavLink to="/account/favorites" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>My Account</NavLink>
+                  )}
                   {isAdmin && (
                     <NavLink to="/admin/upload" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Admin</NavLink>
                   )}
@@ -79,6 +82,13 @@ const Header = () => {
             </Sheet>
           </div>
           {/* Desktop CTA */}
+          {user && (
+            <Button asChild variant="ghost" size="icon" className="hidden md:inline-flex" title="My Account" aria-label="My Account">
+              <Link to="/account/favorites">
+                <User className="h-5 w-5" aria-hidden="true" />
+              </Link>
+            </Button>
+          )}
           {user ? (
             <Button variant="secondary" onClick={handleLogout} className="hidden md:inline-flex">Log out</Button>
           ) : (
