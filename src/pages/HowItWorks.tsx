@@ -34,11 +34,7 @@ const HowItWorks = () => (
       </section>
 
       {/* Additional About content from promptandgo.ai/about */}
-      <section aria-labelledby="about-intro" className="max-w-4xl mx-auto mt-12">
-        <header className="mb-6">
-          <h2 id="about-intro" className="text-2xl font-semibold tracking-tight">Welcome to PromptAndGo.ai</h2>
-          <p className="mt-2 text-muted-foreground">We help real people do more with AI, without the fluff and without needing to be technical, trendy, or trained.</p>
-        </header>
+      <section className="max-w-4xl mx-auto mt-12">
         <article className="space-y-6">
           <div>
             <h3 className="text-xl font-semibold">Built for Real Tasks. Used by Real People.</h3>
