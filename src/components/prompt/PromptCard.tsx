@@ -14,19 +14,26 @@ import { cn } from "@/lib/utils";
 // Clean display title by removing common variant markers
 const cleanTitle = (t?: string | null) => {
   let s = (t || "").trim();
-  // Remove parenthetical variant markers anywhere
-  s = s.replace(/\s*\((?:variant|variants?|alt|alternate|alternat(?:e|ive)|v\d+|ver(?:sion)?\s*\d+|rev(?:ision)?\s*[a-z0-9]+)\)\s*/gi, " ");
+  
+  // Remove parenthetical content that contains variant-like words
+  s = s.replace(/\s*\([^)]*(?:variant|alt|alternate|ver|version|rev|revision|v\d+)\b[^)]*\)\s*/gi, " ");
+  
   // Remove trailing separators with variant markers
-  s = s.replace(/\s*[-–—|]\s*(?:variant|variants?|alt|alternate)\s*$/gi, "");
-  // Remove trailing version/revision patterns like v2, version 3, rev a1, #2
-  s = s.replace(/\s+(?:v|ver(?:sion)?)\s*\d+\s*$/gi, "");
-  s = s.replace(/\s*rev(?:ision)?\s*[a-z0-9]+\s*$/gi, "");
-  s = s.replace(/\s*#\d+\s*$/gi, "");
-  // Remove dangling 'variant' at the end
-  s = s.replace(/\s*variant\s*$/gi, "");
-  // Collapse whitespace and trim punctuation
+  s = s.replace(/\s*[-–—|]\s*(?:variant|variants?|alt|alternate|ver|version|rev|revision)\b.*$/gi, "");
+  
+  // Remove trailing version/revision patterns more aggressively
+  s = s.replace(/\s+(?:v|ver|version)\s*\d+.*$/gi, "");
+  s = s.replace(/\s*(?:rev|revision)\s*[a-z0-9]+.*$/gi, "");
+  s = s.replace(/\s*#\d+.*$/gi, "");
+  
+  // Remove standalone "variant" and numbers at the end
+  s = s.replace(/\s+variant\b.*$/gi, "");
+  s = s.replace(/\s+\d+\s*$/g, "");
+  
+  // Clean up whitespace and punctuation
   s = s.replace(/\s+/g, " ").trim();
   s = s.replace(/[\s,:;.-]+$/g, "");
+  
   return s;
 };
 
