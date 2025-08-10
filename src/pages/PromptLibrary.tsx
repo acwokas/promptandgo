@@ -200,6 +200,11 @@ const PromptLibrary = () => {
     setPage(next);
   }, [page, hasMore, loading, fetchPromptsPage]);
 
+  // Always land at top when visiting Library
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, []);
+
   // Initial loads
   useEffect(() => {
     loadCategories();
