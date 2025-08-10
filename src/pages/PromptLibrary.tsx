@@ -243,10 +243,7 @@ const PromptLibrary = () => {
             setQuery("");
             setSelectedTag(undefined);
             setPage(1);
-            // Ensure we refresh after state updates are committed
-            setTimeout(() => {
-              refresh();
-            }, 0);
+            // No manual refresh here; useEffect will trigger once state updates propagate
           }}
         />
 
