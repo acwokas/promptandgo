@@ -50,16 +50,21 @@ const PromptLibrary = () => {
       return;
     }
 
-    const subSlugs = new Set((subRes.data || []).map((s: any) => s.slug as string));
-    const validCategories = (catRes.data || []).filter((c: any) => !subSlugs.has(c.slug as string));
+    // Only keep categories that actually have at least one subcategory row
+    const subcatByCategory = new Map<string, { id: string; name: string }[]>();
+    (subRes.data || []).forEach((s: any) => {
+      const list = subcatByCategory.get(s.category_id as string) || [];
+      list.push({ id: s.id as string, name: s.name as string });
+      subcatByCategory.set(s.category_id as string, list);
+    });
 
-    const built: CategoryType[] = validCategories.map((c: any) => ({
-      id: c.id as string,
-      name: c.name as string,
-      subcategories: (subRes.data || [])
-        .filter((s: any) => s.category_id === c.id)
-        .map((s: any) => ({ id: s.id as string, name: s.name as string })),
-    }));
+    const built: CategoryType[] = (catRes.data || [])
+      .filter((c: any) => subcatByCategory.has(c.id as string))
+      .map((c: any) => ({
+        id: c.id as string,
+        name: c.name as string,
+        subcategories: subcatByCategory.get(c.id as string) || [],
+      }));
 
     setCategories(built);
   }, []);
