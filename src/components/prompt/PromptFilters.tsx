@@ -6,15 +6,17 @@ import type { Category } from "@/data/prompts";
 
 interface FiltersProps {
   categories: Category[];
-  categoryId: string | undefined;
+  categoryId: Category["id"] | undefined;
   subcategoryId: string | undefined;
   query: string;
   onChange: (next: { categoryId?: string; subcategoryId?: string; query?: string }) => void;
   onSearch?: () => void;
   onClear?: () => void;
+  searchLabel?: string;
+  searchPlaceholder?: string;
 }
 
-export const PromptFilters = ({ categories, categoryId, subcategoryId, query, onChange, onSearch, onClear }: FiltersProps) => {
+export const PromptFilters = ({ categories, categoryId, subcategoryId, query, onChange, onSearch, onClear, searchLabel, searchPlaceholder }: FiltersProps) => {
   const categoriesSorted = [...categories].sort((a, b) => a.name.localeCompare(b.name));
   const currentCat = categories.find((c) => c.id === categoryId || c.name === categoryId);
   const subcategoriesSorted = [...(currentCat?.subcategories || [])].sort((a, b) => a.name.localeCompare(b.name));
@@ -62,14 +64,14 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, on
       </div>
 
       <div className="space-y-1">
-        <Label htmlFor="search-input">Search</Label>
+        <Label htmlFor="search-input">{searchLabel ?? "Search"}</Label>
         <div className="flex gap-2">
           <Input
             id="search-input"
             value={query}
             onChange={(e) => onChange({ query: e.target.value })}
-            placeholder="Search prompts..."
-            aria-label="Search prompts"
+            placeholder={searchPlaceholder ?? "Search prompts..."}
+            aria-label={searchLabel ?? "Search prompts"}
           />
           <Button variant="cta" onClick={onSearch} aria-label="Run search">
             Search

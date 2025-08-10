@@ -265,7 +265,7 @@ const FavoritesPage = () => {
         description="Your saved favourite prompts — quick access to what you use most."
       />
       <PageHero
-        title={<><span className="text-gradient-brand">My</span> Favourites</>}
+        title={<><span className="text-gradient-brand">My</span> Prompts</>}
         subtitle={<>All the prompts you've saved in one place.</>}
       >
         <Button asChild variant="secondary">
@@ -307,6 +307,8 @@ const FavoritesPage = () => {
                 setPage(1);
                 // useEffect triggers refresh
               }}
+              searchLabel="Search My Prompts"
+              searchPlaceholder="Search My Prompts..."
             />
 
             <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-6">
