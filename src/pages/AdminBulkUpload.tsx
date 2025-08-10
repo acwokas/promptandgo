@@ -6,6 +6,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useState, useMemo } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { Input } from "@/components/ui/input";
+import Papa from "papaparse";
 
 // Expected JSON formats:
 // categories: [{ name: string, slug: string }]
@@ -44,6 +46,7 @@ const AdminBulkUpload = () => {
   const [entity, setEntity] = useState<"categories" | "subcategories" | "tags" | "prompts">("categories");
   const [jsonText, setJsonText] = useState("");
   const [loading, setLoading] = useState(false);
+  const [csvFile, setCsvFile] = useState<File | null>(null);
 
   const placeholder = useMemo(() => samples[entity], [entity]);
 
@@ -180,6 +183,74 @@ const AdminBulkUpload = () => {
     }
   };
 
+  const handleUploadCsv = async () => {
+    if (!csvFile) {
+      toast({ title: "No file selected", description: "Please choose a CSV file.", variant: "destructive" });
+      return;
+    }
+    setLoading(true);
+    try {
+      const rows = await new Promise<any[]>((resolve, reject) => {
+        Papa.parse(csvFile, {
+          header: true,
+          skipEmptyLines: true,
+          complete: (results) => resolve(results.data as any[]),
+          error: (err) => reject(err),
+        });
+      });
+
+      let data: any[] = [];
+      const splitTags = (val: any) => {
+        if (Array.isArray(val)) return val;
+        if (typeof val === "string") {
+          return val.split(/[,;]+/).map((t) => t.trim()).filter(Boolean);
+        }
+        return [];
+      };
+
+      switch (entity) {
+        case "categories":
+          data = rows.map((r) => ({ name: String(r.name ?? "").trim(), slug: String(r.slug ?? "").trim() }));
+          break;
+        case "subcategories":
+          data = rows.map((r) => ({
+            category_slug: String(r.category_slug ?? r.category ?? "").trim(),
+            name: String(r.name ?? "").trim(),
+            slug: String(r.slug ?? "").trim(),
+          }));
+          break;
+        case "tags":
+          data = rows.map((r) => ({ name: String(r.name ?? "").trim() }));
+          break;
+        case "prompts":
+          data = rows.map((r) => ({
+            title: String(r.title ?? "").trim(),
+            what_for: r.what_for ? String(r.what_for).trim() : undefined,
+            prompt: String(r.prompt ?? "").trim(),
+            image_prompt: r.image_prompt ? String(r.image_prompt).trim() : undefined,
+            excerpt: r.excerpt ? String(r.excerpt).trim() : undefined,
+            category_slug: String(r.category_slug ?? "").trim(),
+            subcategory_slug: r.subcategory_slug ? String(r.subcategory_slug).trim() : undefined,
+            tags: splitTags(r.tags),
+          }));
+          break;
+      }
+
+      let res;
+      if (entity === "categories") res = await uploadCategories(data);
+      if (entity === "subcategories") res = await uploadSubcategories(data);
+      if (entity === "tags") res = await uploadTags(data);
+      if (entity === "prompts") res = await uploadPrompts(data);
+
+      toast({ title: "CSV upload complete", description: `${res?.inserted || 0} ${entity} processed.` });
+    } catch (e: any) {
+      console.error(e);
+      toast({ title: "CSV upload failed", description: e.message || String(e), variant: "destructive" });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <PageHero
@@ -223,6 +294,17 @@ const AdminBulkUpload = () => {
           <div className="flex gap-3">
             <Button variant="secondary" onClick={() => setJsonText(samples[entity])}>Load sample</Button>
             <Button onClick={handleUpload} disabled={loading}>{loading ? "Uploading..." : "Upload"}</Button>
+          </div>
+
+          <div className="grid gap-2 pt-6">
+            <label className="text-sm font-medium">CSV File</label>
+            <Input type="file" accept=".csv" onChange={(e) => setCsvFile(e.target.files?.[0] ?? null)} aria-label="CSV file input" />
+            <p className="text-xs text-muted-foreground">
+              CSV headers should match the selected entity. For prompts: title, prompt, category_slug, [subcategory_slug], [tags]
+            </p>
+          </div>
+          <div className="flex gap-3">
+            <Button onClick={handleUploadCsv} disabled={loading || !csvFile}>{loading ? "Uploading..." : "Upload CSV"}</Button>
           </div>
 
           <aside className="text-sm text-muted-foreground">
