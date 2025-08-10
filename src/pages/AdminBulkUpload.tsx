@@ -240,7 +240,53 @@ const AdminBulkUpload = () => {
       if (entity === "categories") res = await uploadCategories(data);
       if (entity === "subcategories") res = await uploadSubcategories(data);
       if (entity === "tags") res = await uploadTags(data);
-      if (entity === "prompts") res = await uploadPrompts(data);
+      if (entity === "prompts") {
+        // Auto-create categories and subcategories from CSV when names are provided
+        const catMapInput = new Map<string, { slug: string; name: string }>();
+        rows.forEach((r) => {
+          const slug = String(r.category_slug ?? "").trim();
+          if (!slug) return;
+          const name = String((r.category_name ?? slug)).trim();
+          if (!catMapInput.has(slug)) catMapInput.set(slug, { slug, name });
+        });
+        const catPayload = Array.from(catMapInput.values()).filter((c) => c.slug);
+        if (catPayload.length) {
+          const { error: catUpErr } = await supabase.from("categories").upsert(catPayload, { onConflict: "slug" });
+          if (catUpErr) throw catUpErr;
+        }
+
+        // Fetch category ids for subcategory linkage
+        const catSlugs = Array.from(catMapInput.keys());
+        const { data: cats, error: catSelErr } = await supabase.from("categories").select("id,slug").in("slug", catSlugs);
+        if (catSelErr) throw catSelErr;
+        const catIdBySlug = new Map<string, string>((cats || []).map((c: any) => [c.slug, c.id]));
+
+        // Prepare and upsert subcategories
+        const subPayload = rows
+          .map((r) => {
+            const cslug = String(r.category_slug ?? "").trim();
+            const sslug = String(r.subcategory_slug ?? "").trim();
+            if (!cslug || !sslug) return null;
+            const category_id = catIdBySlug.get(cslug);
+            if (!category_id) return null;
+            return {
+              category_id,
+              slug: sslug,
+              name: String((r.subcategory_name ?? sslug)).trim(),
+            };
+          })
+          .filter(Boolean) as { category_id: string; slug: string; name: string }[];
+
+        if (subPayload.length) {
+          const { error: subUpErr } = await supabase
+            .from("subcategories")
+            .upsert(subPayload, { onConflict: "category_id,slug" });
+          if (subUpErr) throw subUpErr;
+        }
+
+        // Now insert prompts and link tags
+        res = await uploadPrompts(data);
+      }
 
       toast({ title: "CSV upload complete", description: `${res?.inserted || 0} ${entity} processed.` });
     } catch (e: any) {
