@@ -37,7 +37,7 @@ export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) 
       </CardHeader>
       <CardContent className="space-y-4">
         <div>
-          <div className="text-xs font-medium mb-1">Prompt</div>
+          <div className="text-xs font-medium mb-1">Prompt:</div>
           <pre className="whitespace-pre-wrap bg-muted/50 p-3 rounded-md text-sm">
             {prompt.prompt}
           </pre>
