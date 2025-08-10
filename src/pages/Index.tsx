@@ -23,19 +23,19 @@ const Index = () => {
           subtitle={<>Browse hundreds of human-curated prompts to help you write better, work smarter, and think bigger.</>}
         >
           <Button asChild size="lg" variant="hero" className="px-6">
-            <Link to="/library">Browse by Category</Link>
+            <Link to="/library">Browse Prompt Library</Link>
           </Button>
           <Button asChild size="lg" variant="secondary">
-            <Link to="/packs">Explore Prompt Packs</Link>
+            <Link to="/packs">Explore Premium Packs</Link>
           </Button>
           {user ? (
-            <Button asChild size="lg" variant="secondary">
-              <Link to="/account/favorites">See My Favourite Prompts</Link>
+            <Button asChild size="lg" variant="inverted">
+              <Link to="/account/favorites">My Prompts</Link>
             </Button>
           ) : (
-            <p className="text-sm text-muted-foreground mt-2">
-              Already have an account? <Link to="/auth" className="underline text-primary">Log in</Link>
-            </p>
+            <Button asChild size="lg" variant="inverted">
+              <Link to="/auth">Login</Link>
+            </Button>
           )}
         </PageHero>
 
