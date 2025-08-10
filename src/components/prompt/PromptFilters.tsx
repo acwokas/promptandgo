@@ -11,7 +11,7 @@ interface FiltersProps {
 }
 
 export const PromptFilters = ({ categories, categoryId, subcategoryId, query, onChange }: FiltersProps) => {
-  const currentCat = categories.find(c => c.id === categoryId);
+  const currentCat = categories.find(c => c.id === categoryId || c.name === categoryId);
 
   return (
     <div className="grid gap-3 md:grid-cols-3">
