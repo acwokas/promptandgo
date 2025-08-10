@@ -30,9 +30,12 @@ const PromptLibrary = () => {
   return (
     <>
       <PageHero
-        title={<span>Prompt Library</span>}
+        title={
+          <>
+            <span className="text-gradient-brand">Prompt</span> Library
+          </>
+        }
         subtitle={<>Search and filter prompts across all categories and subcategories.</>}
-        minHeightClass="min-h-[36vh]"
       />
       <main className="container py-10">
         <SEO
