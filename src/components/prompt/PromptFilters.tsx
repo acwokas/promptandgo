@@ -18,6 +18,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, on
   const categoriesSorted = [...categories].sort((a, b) => a.name.localeCompare(b.name));
   const currentCat = categories.find((c) => c.id === categoryId || c.name === categoryId);
   const subcategoriesSorted = [...(currentCat?.subcategories || [])].sort((a, b) => a.name.localeCompare(b.name));
+  const isCategorySelected = Boolean(categoryId);
 
   return (
     <div className="grid gap-4 md:grid-cols-3 items-end">
@@ -45,13 +46,13 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, on
         <Select
           value={subcategoryId ?? ""}
           onValueChange={(v) => onChange({ subcategoryId: v || undefined })}
+          disabled={!isCategorySelected}
         >
           <SelectTrigger id="subcategory-select" aria-label="Filter by subcategory">
-            <SelectValue placeholder="All" />
+            <SelectValue placeholder={isCategorySelected ? "All" : "Please select a category or search prompts"} />
           </SelectTrigger>
           <SelectContent>
-            
-            {subcategoriesSorted.map((s) => (
+            {isCategorySelected && subcategoriesSorted.map((s) => (
               <SelectItem key={s.id} value={s.id}>
                 {s.name}
               </SelectItem>
