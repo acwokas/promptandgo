@@ -242,7 +242,7 @@ const PromptLibrary = () => {
           description="Browse prompts by category and subcategory with fast search. Copy-ready cards for marketing, productivity, and sales."
         />
 
-        <section id="library-filters">
+        <section id="library-filters" className="scroll-mt-28 md:scroll-mt-28">
           <PromptFilters
             categories={categories}
             categoryId={categoryId}
