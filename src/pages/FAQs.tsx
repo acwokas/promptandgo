@@ -3,7 +3,7 @@ import PageHero from "@/components/layout/PageHero";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-
+import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 interface FAQItem {
   question: string;
   answer: string;
@@ -149,6 +149,7 @@ const faqSchema = {
 };
 
 const FAQs = () => {
+  const { user } = useSupabaseAuth();
   return (
     <>
       <SEO
@@ -171,7 +172,7 @@ const FAQs = () => {
         </Button>
       </PageHero>
 
-      <main className="container py-10">
+      <main className="container py-10 max-w-4xl">
         {/* Structured data for SEO */}
         <script
           type="application/ld+json"
@@ -179,18 +180,18 @@ const FAQs = () => {
         />
 
         {sections.map((section, idx) => (
-          <section key={section.title} className={idx === 0 ? "mb-8" : "mt-8 mb-8"} aria-labelledby={`heading-${idx}`}>
-            <h2 id={`heading-${idx}`} className="text-2xl md:text-3xl font-semibold tracking-tight mb-4">
+          <section key={section.title} className={idx === 0 ? "mb-6" : "mt-6 mb-6"} aria-labelledby={`heading-${idx}`}>
+            <h2 id={`heading-${idx}`} className="text-xl md:text-2xl font-semibold tracking-tight mb-3">
               {section.title}
             </h2>
-            <div className="rounded-xl border bg-card text-card-foreground shadow-sm">
+            <div className="rounded-2xl border bg-card text-card-foreground shadow-sm overflow-hidden animate-fade-in">
               <Accordion type="single" collapsible className="divide-y">
                 {section.items.map((qa, i) => (
-                  <AccordionItem key={qa.question} value={`item-${idx}-${i}`} className="px-4 md:px-6">
-                    <AccordionTrigger className="text-base md:text-lg text-foreground">
+                  <AccordionItem key={qa.question} value={`item-${idx}-${i}`} className="px-3 md:px-5">
+                    <AccordionTrigger className="text-[15px] md:text-base text-foreground">
                       {qa.question}
                     </AccordionTrigger>
-                    <AccordionContent className="text-muted-foreground">
+                    <AccordionContent className="text-sm md:text-base text-muted-foreground max-w-prose">
                       {qa.answer}
                     </AccordionContent>
                   </AccordionItem>
@@ -199,6 +200,30 @@ const FAQs = () => {
             </div>
           </section>
         ))}
+
+        <section aria-labelledby="cta-tail" className="relative bg-hero hero-grid mt-12">
+          <div className="container p-8 md:p-12 text-center text-primary-foreground">
+            <h2 id="cta-tail" className="text-2xl md:text-3xl font-semibold tracking-tight">Whatever you’re working on, someone’s already used PromptAndGo to do it faster.</h2>
+            <p className="mt-3 text-primary-foreground/85 text-base md:text-lg">✨ Ready to Start Prompting Smarter? Try your first prompt or explore a pack, no sign-up required.</p>
+            <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+              <Button asChild variant="hero" className="px-6">
+                <Link to="/library">Browse Prompt Library</Link>
+              </Button>
+              {user ? (
+                <Button asChild size="lg" variant="secondary">
+                  <Link to="/account/favorites">My Prompts</Link>
+                </Button>
+              ) : (
+                <Button asChild size="lg" variant="secondary">
+                  <Link to="/auth">Login</Link>
+                </Button>
+              )}
+              <Button asChild size="lg" variant="inverted">
+                <Link to="/packs">Explore Premium Packs</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
       </main>
     </>
   );
