@@ -30,7 +30,7 @@ const Footer = () => {
             )}
           </nav>
         </div>
-        <div className="md:col-span-3 col-span-full justify-self-center text-center text-muted-foreground">© 2025 PromptAndGo.ai  |  <Link to="/terms" className="hover:text-foreground">Terms & Conditions</Link>  |  <Link to="/privacy" className="hover:text-foreground">Privacy Policy</Link></div>
+        <div className="md:col-span-3 col-span-full justify-self-end text-right text-muted-foreground">© 2025 PromptAndGo.ai  |  <Link to="/terms" className="hover:text-foreground">Terms & Conditions</Link>  |  <Link to="/privacy" className="hover:text-foreground">Privacy Policy</Link></div>
       </div>
     </footer>
   );
