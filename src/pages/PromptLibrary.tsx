@@ -62,8 +62,8 @@ const PromptLibrary = () => {
   const [hasMore, setHasMore] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Prompt of the Day state
-  const [featured, setFeatured] = useState<PromptUI | null>(null);
+  // Prompts of the Day state (two distinct categories)
+  const [featuredList, setFeaturedList] = useState<PromptUI[]>([]);
   const [featuredLoading, setFeaturedLoading] = useState(false);
 
   // Load categories + subcategories and compose to existing UI shape
@@ -199,77 +199,115 @@ const PromptLibrary = () => {
     [categoryId, subcategoryId, query, selectedTag]
   );
 
-  // Daily deterministic featured prompt
-  const fetchPromptOfTheDay = useCallback(async () => {
+  // Daily deterministic "Prompts of the Day" (two, different categories)
+  const fetchPromptsOfTheDay = useCallback(async () => {
     setFeaturedLoading(true);
     try {
-      // Count total prompts
-      const countRes = await supabase
-        .from("prompts")
-        .select("id", { count: "exact", head: true });
-      if (countRes.error) throw countRes.error;
-      const total = countRes.count || 0;
-      if (total === 0) {
-        setFeatured(null);
+      const catIds = categories.map((c) => c.id);
+      if (catIds.length === 0) {
+        setFeaturedList([]);
         return;
       }
 
-      // Deterministic index based on UTC date
       const dayKey = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
-      let hash = 0;
-      for (let i = 0; i < dayKey.length; i++) {
-        hash = (hash << 5) - hash + dayKey.charCodeAt(i);
-        hash |= 0;
-      }
-      const idx = Math.abs(hash) % total;
-
-      // Fetch single row at computed offset
-      const { data: one, error: oneErr } = await supabase
-        .from("prompts")
-        .select(
-          "id, category_id, subcategory_id, title, what_for, prompt, image_prompt, excerpt"
-        )
-        .order("created_at", { ascending: false })
-        .range(idx, idx);
-      if (oneErr) throw oneErr;
-      const row = one?.[0];
-      if (!row) {
-        setFeatured(null);
-        return;
-      }
-
-      // Fetch tags for this prompt
-      const tagsJoin = await supabase
-        .from("prompt_tags")
-        .select("prompt_id, tags:tag_id(name)")
-        .eq("prompt_id", row.id);
-
-      const tags: string[] = [];
-      if (!tagsJoin.error) {
-        (tagsJoin.data || []).forEach((r: any) => {
-          const name = (r.tags?.name as string) || undefined;
-          if (name) tags.push(name);
-        });
-      }
-
-      const mapped: PromptUI = {
-        id: row.id,
-        categoryId: row.category_id,
-        subcategoryId: row.subcategory_id,
-        title: row.title,
-        whatFor: row.what_for,
-        prompt: row.prompt,
-        imagePrompt: row.image_prompt,
-        excerpt: row.excerpt,
-        tags,
+      const hashStr = (s: string) => {
+        let h = 0;
+        for (let i = 0; i < s.length; i++) {
+          h = (h << 5) - h + s.charCodeAt(i);
+          h |= 0;
+        }
+        return Math.abs(h);
       };
-      setFeatured(mapped);
+
+      const pool = [...catIds];
+      const firstIdx = hashStr(dayKey + "-a") % pool.length;
+      const firstCat = pool.splice(firstIdx, 1)[0];
+
+      let secondCat: string | undefined;
+      if (pool.length > 0) {
+        const secondIdx = hashStr(dayKey + "-b") % pool.length;
+        secondCat = pool[secondIdx];
+      }
+
+      const results: PromptUI[] = [];
+
+      const fetchOneForCategory = async (catId: string, salt: string) => {
+        const countRes = await supabase
+          .from("prompts")
+          .select("id", { count: "exact", head: true })
+          .eq("category_id", catId);
+        if (countRes.error) return null;
+        const total = countRes.count || 0;
+        if (total === 0) return null;
+
+        const idx = hashStr(dayKey + salt + catId) % total;
+        const { data, error } = await supabase
+          .from("prompts")
+          .select("id, category_id, subcategory_id, title, what_for, prompt, image_prompt, excerpt")
+          .eq("category_id", catId)
+          .order("created_at", { ascending: false })
+          .range(idx, idx);
+
+        if (error) return null;
+        const row = data?.[0];
+        if (!row) return null;
+
+        const tagsJoin = await supabase
+          .from("prompt_tags")
+          .select("prompt_id, tags:tag_id(name)")
+          .eq("prompt_id", row.id);
+
+        const tags: string[] = [];
+        if (!tagsJoin.error) {
+          (tagsJoin.data || []).forEach((r: any) => {
+            const name = (r.tags?.name as string) || undefined;
+            if (name) tags.push(name);
+          });
+        }
+
+        return {
+          id: row.id,
+          categoryId: row.category_id,
+          subcategoryId: row.subcategory_id,
+          title: row.title,
+          whatFor: row.what_for,
+          prompt: row.prompt,
+          imagePrompt: row.image_prompt,
+          excerpt: row.excerpt,
+          tags,
+        } as PromptUI;
+      };
+
+      if (firstCat) {
+        const a = await fetchOneForCategory(firstCat, "-a");
+        if (a) results.push(a);
+      }
+
+      if (secondCat) {
+        const b = await fetchOneForCategory(secondCat, "-b");
+        if (b && !results.some((r) => r.categoryId === b.categoryId)) {
+          results.push(b);
+        } else if (pool.length > 0) {
+          // fallback search other categories
+          const seed = hashStr(dayKey + "-c");
+          for (let i = 0; i < pool.length && results.length < 2; i++) {
+            const fallbackCat = pool[(i + seed) % pool.length];
+            const alt = await fetchOneForCategory(fallbackCat, `-c${i}`);
+            if (alt && !results.some((r) => r.categoryId === alt.categoryId)) {
+              results.push(alt);
+            }
+          }
+        }
+      }
+
+      setFeaturedList(results);
     } catch (e) {
       console.error(e);
+      setFeaturedList([]);
     } finally {
       setFeaturedLoading(false);
     }
-  }, []);
+  }, [categories]);
 
   const refresh = useCallback(async () => {
     setPage(1);
@@ -297,8 +335,14 @@ const PromptLibrary = () => {
   // Initial loads
   useEffect(() => {
     loadCategories();
-    fetchPromptOfTheDay();
-  }, [loadCategories, fetchPromptOfTheDay]);
+  }, [loadCategories]);
+
+  // Load Prompts of the Day when categories are ready
+  useEffect(() => {
+    if (categories.length > 0) {
+      fetchPromptsOfTheDay();
+    }
+  }, [categories, fetchPromptsOfTheDay]);
 
   // Refresh when filters change
   useEffect(() => {
@@ -340,24 +384,30 @@ const PromptLibrary = () => {
         <section aria-labelledby="potd-heading" className="mb-8">
           <div className="relative overflow-hidden rounded-2xl border bg-gradient-to-br from-primary/10 via-primary/5 to-secondary/10 p-4 md:p-6">
             <div className="mb-4 flex items-center justify-between">
-              <h2 id="potd-heading" className="text-xl md:text-2xl font-semibold">Prompt of the Day</h2>
+              <h2 id="potd-heading" className="text-xl md:text-2xl font-semibold">Prompts of the Day:</h2>
             </div>
-            <div className="max-w-3xl mx-auto">
-              {featuredLoading ? (
+            {featuredLoading ? (
+              <div className="grid gap-4 md:grid-cols-2">
                 <Skeleton className="h-40 w-full" />
-              ) : featured ? (
-                <PromptCard
-                  prompt={featured as any}
-                  categories={categories}
-                  onTagClick={(t) => {
-                    setSelectedTag(t);
-                    setQuery(t);
-                    setCategoryId(undefined);
-                    setSubcategoryId(undefined);
-                  }}
-                />
-              ) : null}
-            </div>
+                <Skeleton className="h-40 w-full" />
+              </div>
+            ) : featuredList.length > 0 ? (
+              <div className="grid gap-6 md:grid-cols-2">
+                {featuredList.map((p) => (
+                  <PromptCard
+                    key={p.id}
+                    prompt={p as any}
+                    categories={categories}
+                    onTagClick={(t) => {
+                      setSelectedTag(t);
+                      setQuery(t);
+                      setCategoryId(undefined);
+                      setSubcategoryId(undefined);
+                    }}
+                  />
+                ))}
+              </div>
+            ) : null}
           </div>
         </section>
 
