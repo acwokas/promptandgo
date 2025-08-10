@@ -11,6 +11,25 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
+// Clean display title by removing common variant markers
+const cleanTitle = (t?: string | null) => {
+  let s = (t || "").trim();
+  // Remove parenthetical variant markers anywhere
+  s = s.replace(/\s*\((?:variant|variants?|alt|alternate|alternat(?:e|ive)|v\d+|ver(?:sion)?\s*\d+|rev(?:ision)?\s*[a-z0-9]+)\)\s*/gi, " ");
+  // Remove trailing separators with variant markers
+  s = s.replace(/\s*[-–—|]\s*(?:variant|variants?|alt|alternate)\s*$/gi, "");
+  // Remove trailing version/revision patterns like v2, version 3, rev a1, #2
+  s = s.replace(/\s+(?:v|ver(?:sion)?)\s*\d+\s*$/gi, "");
+  s = s.replace(/\s*rev(?:ision)?\s*[a-z0-9]+\s*$/gi, "");
+  s = s.replace(/\s*#\d+\s*$/gi, "");
+  // Remove dangling 'variant' at the end
+  s = s.replace(/\s*variant\s*$/gi, "");
+  // Collapse whitespace and trim punctuation
+  s = s.replace(/\s+/g, " ").trim();
+  s = s.replace(/[\s,:;.-]+$/g, "");
+  return s;
+};
+
 interface PromptCardProps {
   prompt: Prompt;
   categories: Category[];
@@ -20,6 +39,7 @@ interface PromptCardProps {
 export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) => {
   const category = categories.find((c) => c.id === prompt.categoryId);
   const sub = category?.subcategories.find((s) => s.id === prompt.subcategoryId);
+  const displayTitle = cleanTitle(prompt.title);
 
   const copy = async (text: string, label: string) => {
     try {
@@ -92,7 +112,7 @@ export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) 
           <span>›</span>
           <span>{sub?.name}</span>
         </div>
-        <CardTitle className="text-xl leading-tight">{prompt.title}</CardTitle>
+        <CardTitle className="text-xl leading-tight">{displayTitle}</CardTitle>
         <p className="text-sm text-muted-foreground">🤓 {prompt.whatFor}</p>
         <p className="text-sm text-muted-foreground">✅ {prompt.excerpt}</p>
       </CardHeader>
