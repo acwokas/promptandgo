@@ -22,7 +22,7 @@ const Header = () => {
           <li><NavLink to="/library" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Prompt Library</NavLink></li>
           <li><NavLink to="/packs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Prompt Packs</NavLink></li>
           <li><NavLink to="/how-it-works" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>How it Works</NavLink></li>
-          <li><NavLink to="/submit" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Submit a Prompt</NavLink></li>
+          
           <li><NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Blog</NavLink></li>
           <li><NavLink to="/contact" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Contact</NavLink></li>
         </ul>
