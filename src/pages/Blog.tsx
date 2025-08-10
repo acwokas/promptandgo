@@ -1,8 +1,12 @@
 import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 
-const Blog = () => (
+const Blog = () => {
+  const { user } = useSupabaseAuth();
+  return (
   <main className="container py-10">
     <SEO title="Resources – Prompt tips, tricks & examples" description="Tips, tricks and examples to get the most out of your prompting." />
     <h1 className="text-3xl font-bold mb-2">Resources</h1>
@@ -29,7 +33,32 @@ const Blog = () => (
         </Link>
       </article>
     </section>
+
+    <section aria-labelledby="cta-tail" className="max-w-5xl mx-auto mt-16">
+      <div className="rounded-2xl border bg-gradient-to-br from-primary/10 to-transparent p-8 md:p-12 text-center">
+        <h2 id="cta-tail" className="text-2xl md:text-3xl font-semibold tracking-tight">Whatever you’re working on, someone’s already used PromptAndGo to do it faster.</h2>
+        <p className="mt-3 text-muted-foreground text-base md:text-lg">✨ Ready to Start Prompting Smarter? Try your first prompt or explore a pack, no sign-up required.</p>
+        <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+          <Button asChild variant="hero" className="px-6">
+            <Link to="/library">Browse Prompt Library</Link>
+          </Button>
+          {user ? (
+            <Button asChild size="lg" variant="secondary">
+              <Link to="/account/favorites">My Prompts</Link>
+            </Button>
+          ) : (
+            <Button asChild size="lg" variant="secondary">
+              <Link to="/auth">Login</Link>
+            </Button>
+          )}
+          <Button asChild size="lg" variant="inverted">
+            <Link to="/packs">Explore Premium Packs</Link>
+          </Button>
+        </div>
+      </div>
+    </section>
   </main>
-);
+  );
+};
 
 export default Blog;

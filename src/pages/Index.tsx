@@ -183,9 +183,21 @@ const Index = () => {
           <div className="rounded-2xl border bg-gradient-to-br from-primary/10 to-transparent p-6 md:p-8 text-center">
             <h2 id="cta-tail" className="text-2xl md:text-3xl font-semibold tracking-tight">Whatever you’re working on, someone’s already used PromptAndGo to do it faster.</h2>
             <p className="mt-3 text-muted-foreground text-base md:text-lg">✨ Ready to Start Prompting Smarter? Try your first prompt or explore a pack, no sign-up required.</p>
-            <div className="mt-6 flex justify-center">
-              <Button asChild variant="hero">
+            <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+              <Button asChild variant="hero" className="px-6">
                 <Link to="/library">Browse Prompt Library</Link>
+              </Button>
+              {user ? (
+                <Button asChild size="lg" variant="secondary">
+                  <Link to="/account/favorites">My Prompts</Link>
+                </Button>
+              ) : (
+                <Button asChild size="lg" variant="secondary">
+                  <Link to="/auth">Login</Link>
+                </Button>
+              )}
+              <Button asChild size="lg" variant="inverted">
+                <Link to="/packs">Explore Premium Packs</Link>
               </Button>
             </div>
           </div>
