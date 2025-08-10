@@ -297,6 +297,101 @@ const AdminBulkUpload = () => {
     }
   };
 
+  const handleResetAndImportCsv = async () => {
+    if (entity !== "prompts") {
+      toast({ title: "Reset requires Prompts CSV", description: "Switch entity to Prompts and select your CSV.", variant: "destructive" });
+      return;
+    }
+    if (!csvFile) {
+      toast({ title: "No file selected", description: "Please choose a CSV file.", variant: "destructive" });
+      return;
+    }
+    const confirmed = window.confirm(
+      "This will DELETE all categories, subcategories, prompts and their links, then re-import from this CSV. Continue?"
+    );
+    if (!confirmed) return;
+
+    setLoading(true);
+    try {
+      // Parse CSV rows
+      const rows = await new Promise<any[]>((resolve, reject) => {
+        Papa.parse(csvFile, {
+          header: true,
+          skipEmptyLines: true,
+          complete: (results) => resolve(results.data as any[]),
+          error: (err) => reject(err),
+        });
+      });
+
+      // Map to prompts data shape
+      const splitTags = (val: any) => {
+        if (Array.isArray(val)) return val;
+        if (typeof val === "string") return val.split(/[,;]+/).map((t) => t.trim()).filter(Boolean);
+        return [];
+      };
+      const data = rows.map((r) => ({
+        title: String(r.title ?? "").trim(),
+        what_for: r.what_for ? String(r.what_for).trim() : undefined,
+        prompt: String(r.prompt ?? "").trim(),
+        image_prompt: r.image_prompt ? String(r.image_prompt).trim() : undefined,
+        excerpt: r.excerpt ? String(r.excerpt).trim() : undefined,
+        category_slug: String(r.category_slug ?? "").trim(),
+        subcategory_slug: r.subcategory_slug ? String(r.subcategory_slug).trim() : undefined,
+        tags: splitTags(r.tags),
+      }));
+
+      // DELETE in dependency order
+      await supabase.from("prompt_tags").delete().neq("prompt_id", "");
+      await supabase.from("prompts").delete().neq("id", "");
+      await supabase.from("subcategories").delete().neq("id", "");
+      await supabase.from("categories").delete().neq("id", "");
+
+      // Recreate categories and subcategories from CSV using provided names when present
+      const catMapInput = new Map<string, { slug: string; name: string }>();
+      rows.forEach((r) => {
+        const slug = String(r.category_slug ?? "").trim();
+        if (!slug) return;
+        const name = String((r.category_name ?? slug)).trim();
+        if (!catMapInput.has(slug)) catMapInput.set(slug, { slug, name });
+      });
+      const catPayload = Array.from(catMapInput.values()).filter((c) => c.slug);
+      if (catPayload.length) {
+        const { error: catUpErr } = await supabase.from("categories").upsert(catPayload, { onConflict: "slug" });
+        if (catUpErr) throw catUpErr;
+      }
+
+      const catSlugs = Array.from(catMapInput.keys());
+      const { data: cats, error: catSelErr } = await supabase.from("categories").select("id,slug").in("slug", catSlugs);
+      if (catSelErr) throw catSelErr;
+      const catIdBySlug = new Map<string, string>((cats || []).map((c: any) => [c.slug, c.id]));
+
+      const subPayload = rows
+        .map((r) => {
+          const cslug = String(r.category_slug ?? "").trim();
+          const sslug = String(r.subcategory_slug ?? "").trim();
+          if (!cslug || !sslug) return null;
+          const category_id = catIdBySlug.get(cslug);
+          if (!category_id) return null;
+          return { category_id, slug: sslug, name: String((r.subcategory_name ?? sslug)).trim() };
+        })
+        .filter(Boolean) as { category_id: string; slug: string; name: string }[];
+
+      if (subPayload.length) {
+        const { error: subUpErr } = await supabase.from("subcategories").upsert(subPayload, { onConflict: "category_id,slug" });
+        if (subUpErr) throw subUpErr;
+      }
+
+      // Insert prompts and link tags
+      const res = await uploadPrompts(data);
+      toast({ title: "Reset complete", description: `${res?.inserted || 0} prompts imported from CSV.` });
+    } catch (e: any) {
+      console.error(e);
+      toast({ title: "Reset failed", description: e.message || String(e), variant: "destructive" });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <PageHero
@@ -351,6 +446,15 @@ const AdminBulkUpload = () => {
           </div>
           <div className="flex gap-3">
             <Button onClick={handleUploadCsv} disabled={loading || !csvFile}>{loading ? "Uploading..." : "Upload CSV"}</Button>
+          </div>
+          <div className="pt-4">
+            <h3 className="text-sm font-medium text-destructive">Danger zone</h3>
+            <p className="text-xs text-muted-foreground">Deletes all categories, subcategories, prompts, then imports from the selected CSV.</p>
+            <div className="mt-2">
+              <Button variant="destructive" onClick={handleResetAndImportCsv} disabled={loading || !csvFile}>
+                {loading ? "Resetting..." : "Reset and Import from CSV"}
+              </Button>
+            </div>
           </div>
 
           <aside className="text-sm text-muted-foreground">
