@@ -313,19 +313,21 @@ const PromptLibrary = () => {
     setPage(1);
     const res = await fetchPromptsPage(1);
     const data = res.data || [];
-    setItems(dedupeByTitle(data));
+    const excluded = data.filter((p) => !featuredList.some((f) => f.id === p.id));
+    setItems(dedupeByTitle(excluded));
     setHasMore(!!res.hasMore);
-  }, [fetchPromptsPage]);
+  }, [fetchPromptsPage, featuredList]);
 
   const loadMore = useCallback(async () => {
     if (loading || !hasMore) return;
     const next = page + 1;
     const res = await fetchPromptsPage(next);
     const data = res.data || [];
-    setItems((prev) => dedupeByTitle([...prev, ...data]));
+    const excluded = data.filter((p) => !featuredList.some((f) => f.id === p.id));
+    setItems((prev) => dedupeByTitle([...prev, ...excluded]));
     setHasMore(!!res.hasMore);
     setPage(next);
-  }, [page, hasMore, loading, fetchPromptsPage]);
+  }, [page, hasMore, loading, fetchPromptsPage, featuredList]);
 
   // Always land at top when visiting Library
   useEffect(() => {
@@ -343,6 +345,12 @@ const PromptLibrary = () => {
       fetchPromptsOfTheDay();
     }
   }, [categories, fetchPromptsOfTheDay]);
+
+  // When featured changes, remove them from the main list to avoid duplicates
+  useEffect(() => {
+    if (featuredList.length === 0) return;
+    setItems((prev) => prev.filter((p) => !featuredList.some((f) => f.id === p.id)));
+  }, [featuredList]);
 
   // Refresh when filters change
   useEffect(() => {
