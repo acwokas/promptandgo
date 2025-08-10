@@ -40,7 +40,7 @@ const Header = () => {
           <li><NavLink to="/library" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Prompt Library</NavLink></li>
           <li><NavLink to="/packs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Premium Packs</NavLink></li>
           
-          <li><NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Resources</NavLink></li>
+          <li><NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>The Prompt Pulse</NavLink></li>
           
           {isAdmin && (
             <li><NavLink to="/admin/upload" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Admin</NavLink></li>
@@ -61,7 +61,7 @@ const Header = () => {
                   <NavLink to="/how-it-works" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>How it Works</NavLink>
                   <NavLink to="/library" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Prompt Library</NavLink>
                   <NavLink to="/packs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Premium Packs</NavLink>
-                  <NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Resources</NavLink>
+                  <NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>The Prompt Pulse</NavLink>
                   
                   {user && (
                     <NavLink to="/account/favorites" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>My Account</NavLink>
