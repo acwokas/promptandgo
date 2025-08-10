@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
 import { Sparkles, Zap, ShieldCheck, ListChecks, Wand2, Rocket, Check } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
+import PromptsOfTheDay from "@/components/prompt/PromptsOfTheDay";
 
 const Index = () => {
   const { user } = useSupabaseAuth();
@@ -38,8 +39,6 @@ const Index = () => {
             <Link to="/packs">Explore Premium Packs</Link>
           </Button>
         </PageHero>
-
-
         {/* Intro */}
         <section className="container pt-8 pb-4">
           <div className="rounded-2xl border bg-card p-6 md:p-8 animate-fade-in">
@@ -178,6 +177,14 @@ const Index = () => {
             <li className="rounded-lg border bg-card p-5">Easy to adapt for your own brand or client</li>
             <li className="rounded-lg border bg-card p-5">No “prompt engineering” required</li>
           </ul>
+        </section>
+
+        {/* Prompts of the Day (moved from Library) */}
+        <section>
+          <div>
+            {/* The component includes its own container */}
+            <PromptsOfTheDay />
+          </div>
         </section>
         <section aria-labelledby="cta-tail" className="relative bg-hero hero-grid mt-8" id="cta">
           <div className="container p-6 md:p-8 text-center text-primary-foreground">
