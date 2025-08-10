@@ -5,10 +5,12 @@ import { Menu } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useToast } from "@/components/ui/use-toast";
+import { useEnsureProfile } from "@/hooks/useEnsureProfile";
 
 const Header = () => {
   const { user } = useSupabaseAuth();
   const { toast } = useToast();
+  useEnsureProfile();
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) {
