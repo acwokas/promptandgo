@@ -2,6 +2,7 @@ import SEO from "@/components/SEO";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 const WelcomeToPromptAndGo = () => {
   const title = "Welcome to PromptAndGo.ai: Your Shortcut to Smarter AI Prompts";
@@ -10,18 +11,20 @@ const WelcomeToPromptAndGo = () => {
   const imagePath = "/lovable-uploads/0d60754a-943c-420b-9b4c-ee1718135377.png";
   const origin = typeof window !== "undefined" ? window.location.origin : "";
   const canonical = typeof window !== "undefined" ? window.location.href : undefined;
+  const category = "PromtpAndGo";
+  const tags = [
+    "AI productivity", "AI tools", "ChatGPT", "Claude", "Gemini",
+    "prompt library", "AI workflow", "AI tips", "AI writing",
+    "startup tools", "marketing AI", "productivity tools", "welcome"
+  ];
 
   const schema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: title,
     description,
-    articleSection: "PromtpAndGo",
-    keywords: [
-      "AI productivity", "AI tools", "ChatGPT", "Claude", "Gemini",
-      "prompt library", "AI workflow", "AI tips", "AI writing",
-      "startup tools", "marketing AI", "productivity tools", "welcome"
-    ],
+    articleSection: category,
+    keywords: tags,
     image: origin ? `${origin}${imagePath}` : imagePath,
     author: {
       "@type": "Organization",
@@ -38,6 +41,11 @@ const WelcomeToPromptAndGo = () => {
       <SEO title={seoTitle} description={description} />
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(schema)}</script>
+        <meta name="keywords" content={tags.join(", ")} />
+        <meta property="article:section" content={category} />
+        {tags.map((t) => (
+          <meta key={t} property="article:tag" content={t} />
+        ))}
       </Helmet>
 
       <article className="mx-auto max-w-3xl">
@@ -52,6 +60,12 @@ const WelcomeToPromptAndGo = () => {
           <p className="mt-3 text-muted-foreground">
             When you open a blank AI chat window, it’s like standing in front of a rocket with the keys in your hand. The potential is huge, but only if you know what to type.
           </p>
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            <Badge variant="secondary">{category}</Badge>
+            {tags.map((t) => (
+              <Badge key={t} variant="outline">{t}</Badge>
+            ))}
+          </div>
         </header>
 
         <section className="mt-8 space-y-6">
