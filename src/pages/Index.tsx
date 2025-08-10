@@ -30,7 +30,7 @@ const Index = () => {
 
 
         {/* Intro */}
-        <section className="container py-8">
+        <section className="container pt-8 pb-4">
           <div className="rounded-2xl border bg-card p-6 md:p-8 animate-fade-in">
             <div className="grid gap-8 md:grid-cols-2 items-center">
               <div>
@@ -64,7 +64,7 @@ const Index = () => {
         </section>
 
         {/* Feature Strip */}
-        <section className="container py-6">
+        <section className="container pt-4 pb-6">
           <div className="grid gap-4 md:grid-cols-3">
             <article className="rounded-xl border p-6 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent">
               <div className="flex items-start gap-3">
