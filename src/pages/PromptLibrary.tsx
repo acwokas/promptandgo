@@ -2,6 +2,7 @@ import SEO from "@/components/SEO";
 import { PromptFilters } from "@/components/prompt/PromptFilters";
 import { PromptCard } from "@/components/prompt/PromptCard";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import PageHero from "@/components/layout/PageHero";
 import { Link } from "react-router-dom";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
@@ -60,6 +61,10 @@ const PromptLibrary = () => {
   const [items, setItems] = useState<PromptUI[]>([]);
   const [hasMore, setHasMore] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // Prompt of the Day state
+  const [featured, setFeatured] = useState<PromptUI | null>(null);
+  const [featuredLoading, setFeaturedLoading] = useState(false);
 
   // Load categories + subcategories and compose to existing UI shape
   const loadCategories = useCallback(async () => {
@@ -194,6 +199,78 @@ const PromptLibrary = () => {
     [categoryId, subcategoryId, query, selectedTag]
   );
 
+  // Daily deterministic featured prompt
+  const fetchPromptOfTheDay = useCallback(async () => {
+    setFeaturedLoading(true);
+    try {
+      // Count total prompts
+      const countRes = await supabase
+        .from("prompts")
+        .select("id", { count: "exact", head: true });
+      if (countRes.error) throw countRes.error;
+      const total = countRes.count || 0;
+      if (total === 0) {
+        setFeatured(null);
+        return;
+      }
+
+      // Deterministic index based on UTC date
+      const dayKey = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+      let hash = 0;
+      for (let i = 0; i < dayKey.length; i++) {
+        hash = (hash << 5) - hash + dayKey.charCodeAt(i);
+        hash |= 0;
+      }
+      const idx = Math.abs(hash) % total;
+
+      // Fetch single row at computed offset
+      const { data: one, error: oneErr } = await supabase
+        .from("prompts")
+        .select(
+          "id, category_id, subcategory_id, title, what_for, prompt, image_prompt, excerpt"
+        )
+        .order("created_at", { ascending: false })
+        .range(idx, idx);
+      if (oneErr) throw oneErr;
+      const row = one?.[0];
+      if (!row) {
+        setFeatured(null);
+        return;
+      }
+
+      // Fetch tags for this prompt
+      const tagsJoin = await supabase
+        .from("prompt_tags")
+        .select("prompt_id, tags:tag_id(name)")
+        .eq("prompt_id", row.id);
+
+      const tags: string[] = [];
+      if (!tagsJoin.error) {
+        (tagsJoin.data || []).forEach((r: any) => {
+          const name = (r.tags?.name as string) || undefined;
+          if (name) tags.push(name);
+        });
+      }
+
+      const mapped: PromptUI = {
+        id: row.id,
+        categoryId: row.category_id,
+        subcategoryId: row.subcategory_id,
+        title: row.title,
+        whatFor: row.what_for,
+        prompt: row.prompt,
+        imagePrompt: row.image_prompt,
+        excerpt: row.excerpt,
+        tags,
+      };
+      setFeatured(mapped);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setFeaturedLoading(false);
+    }
+  }, []);
+
   const refresh = useCallback(async () => {
     setPage(1);
     const res = await fetchPromptsPage(1);
@@ -220,7 +297,8 @@ const PromptLibrary = () => {
   // Initial loads
   useEffect(() => {
     loadCategories();
-  }, [loadCategories]);
+    fetchPromptOfTheDay();
+  }, [loadCategories, fetchPromptOfTheDay]);
 
   // Refresh when filters change
   useEffect(() => {
@@ -258,6 +336,30 @@ const PromptLibrary = () => {
           title="Prompt Library – Ready-to-use AI Prompts"
           description="Browse prompts by category and subcategory with fast search. Copy-ready cards for marketing, productivity, and sales."
         />
+
+        <section aria-labelledby="potd-heading" className="mb-8">
+          <div className="relative overflow-hidden rounded-2xl border bg-gradient-to-br from-primary/10 via-primary/5 to-secondary/10 p-4 md:p-6">
+            <div className="mb-4 flex items-center justify-between">
+              <h2 id="potd-heading" className="text-xl md:text-2xl font-semibold">Prompt of the Day</h2>
+            </div>
+            <div className="max-w-3xl mx-auto">
+              {featuredLoading ? (
+                <Skeleton className="h-40 w-full" />
+              ) : featured ? (
+                <PromptCard
+                  prompt={featured as any}
+                  categories={categories}
+                  onTagClick={(t) => {
+                    setSelectedTag(t);
+                    setQuery(t);
+                    setCategoryId(undefined);
+                    setSubcategoryId(undefined);
+                  }}
+                />
+              ) : null}
+            </div>
+          </div>
+        </section>
 
         <section id="library-filters" className="scroll-mt-28 md:scroll-mt-28">
           <PromptFilters
