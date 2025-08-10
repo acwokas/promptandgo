@@ -12,7 +12,7 @@ const Footer = () => {
           <nav className="grid grid-cols-2 lg:grid-cols-3 gap-2">
             <Link to="/" className="text-muted-foreground hover:text-foreground">Welcome</Link>
             <Link to="/how-it-works" className="text-muted-foreground hover:text-foreground">How it Works</Link>
-            <Link to="/library" className="text-muted-foreground hover:text-foreground">Free Library</Link>
+            <Link to="/library" className="text-muted-foreground hover:text-foreground">Prompt Library</Link>
             <Link to="/packs" className="text-muted-foreground hover:text-foreground">Premium Packs</Link>
             <Link to="/blog" className="text-muted-foreground hover:text-foreground">Blog</Link>
             <Link to="/contact" className="text-muted-foreground hover:text-foreground">Contact</Link>
