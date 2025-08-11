@@ -49,18 +49,18 @@ const dedupeByTitle = (arr: PromptUI[]) => {
   });
 };
 
-// Ensure at most 2 locked (pro) prompts are shown across the list
-const applyLockedLimit = (arr: PromptUI[]) => {
-  let proCount = 0;
-  const out: PromptUI[] = [];
-  for (const item of arr) {
-    if (item.isPro) {
-      if (proCount >= 2) continue;
-      proCount++;
-    }
-    out.push(item);
-  }
-  return out;
+// Reorder results: first up to 2 locked (PRO), then all free, then remaining locked
+const reorderByLockedBuckets = (arr: PromptUI[]) => {
+  const orderIndex = new Map<string, number>();
+  arr.forEach((p, i) => orderIndex.set(p.id, i));
+
+  const pro = arr.filter((p) => !!p.isPro).sort((a, b) => (orderIndex.get(a.id)! - orderIndex.get(b.id)!));
+  const free = arr.filter((p) => !p.isPro).sort((a, b) => (orderIndex.get(a.id)! - orderIndex.get(b.id)!));
+
+  const topTwoPro = pro.slice(0, 2);
+  const restPro = pro.slice(2);
+
+  return [...topTwoPro, ...free, ...restPro];
 };
 
 const PromptLibrary = () => {
@@ -73,7 +73,7 @@ const PromptLibrary = () => {
   const [searchParams] = useSearchParams();
   const [randomMode, setRandomMode] = useState<boolean>(false);
   const [includePro, setIncludePro] = useState(true);
-  const [proOnly, setProOnly] = useState(false);
+  
 
   const [page, setPage] = useState(1);
   const [items, setItems] = useState<PromptUI[]>([]);
@@ -155,7 +155,6 @@ const PromptLibrary = () => {
             "id, category_id, subcategory_id, title, what_for, prompt, image_prompt, excerpt, is_pro",
             { count: "exact" }
           )
-          .order("is_pro", { ascending: false })
           .order("created_at", { ascending: false });
 
         if (categoryId) q = q.eq("category_id", categoryId);
@@ -280,7 +279,7 @@ const PromptLibrary = () => {
     setPage(1);
     const res = await fetchPromptsPage(1);
     const data = res.data || [];
-    setItems(applyLockedLimit(dedupeByTitle(data)));
+    setItems(reorderByLockedBuckets(dedupeByTitle(data)));
     setHasMore(!!res.hasMore);
   }, [fetchPromptsPage]);
 
@@ -289,7 +288,7 @@ const PromptLibrary = () => {
     const next = page + 1;
     const res = await fetchPromptsPage(next);
     const data = res.data || [];
-    setItems((prev) => applyLockedLimit(dedupeByTitle([...prev, ...data])));
+    setItems((prev) => reorderByLockedBuckets(dedupeByTitle([...prev, ...data])));
     setHasMore(!!res.hasMore);
     setPage(next);
   }, [page, hasMore, loading, fetchPromptsPage]);
