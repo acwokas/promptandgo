@@ -234,7 +234,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   };
 
   return (
-    <Card className={cn("relative overflow-hidden h-full with-category-accent card-surface", accentClass)} style={{ ['--category-accent' as any]: `var(--accent-${accentIndex})` }}>
+    <Card className={cn("relative overflow-hidden h-full with-category-accent", accentClass)} style={{ ['--category-accent' as any]: `var(--accent-${accentIndex})` }}>
       <CardHeader>
         {isPro && !hasAccess && (
           <div className="mb-2 flex gap-2">
