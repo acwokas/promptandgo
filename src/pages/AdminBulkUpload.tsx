@@ -108,6 +108,9 @@ const AdminBulkUpload = () => {
   };
 
   const uploadPrompts = async (rows: any[]) => {
+    const slugify = (s: string) =>
+      s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+
     // Resolve categories/subcategories
     const catSlugs = Array.from(new Set(rows.map((r) => r.category_slug).filter(Boolean)));
     const subSlugs = Array.from(new Set(rows.map((r) => r.subcategory_slug).filter(Boolean)));
@@ -127,6 +130,32 @@ const AdminBulkUpload = () => {
     const allTagNames = rows.flatMap((r) => r.tags || []);
     const tagMap = await ensureTags(allTagNames);
 
+    // Prepare and upsert packs (default price $9.99)
+    const allPackNames = Array.from(new Set(rows.flatMap((r) => r.packs || []))).filter(Boolean);
+    let packIdBySlug = new Map<string, string>();
+    if (allPackNames.length) {
+      const packPayload = allPackNames.map((name) => ({
+        name,
+        slug: slugify(name),
+        price_cents: 999,
+        is_active: true,
+      }));
+      // dedupe by slug
+      const bySlug = new Map<string, { name: string; slug: string; price_cents: number; is_active: boolean }>();
+      packPayload.forEach((p) => {
+        if (!bySlug.has(p.slug)) bySlug.set(p.slug, p);
+      });
+      const uniquePayload = Array.from(bySlug.values());
+      const { error: upPackErr } = await supabase.from("packs").upsert(uniquePayload, { onConflict: "slug" });
+      if (upPackErr) throw upPackErr;
+      const { data: packsRows, error: selPackErr } = await supabase
+        .from("packs")
+        .select("id,slug")
+        .in("slug", uniquePayload.map((p) => p.slug));
+      if (selPackErr) throw selPackErr;
+      packIdBySlug = new Map<string, string>((packsRows || []).map((p: any) => [p.slug, p.id]));
+    }
+
     const toInsert = rows
       .map((r) => ({
         category_id: catMap.get(r.category_slug),
@@ -136,13 +165,15 @@ const AdminBulkUpload = () => {
         prompt: r.prompt,
         image_prompt: r.image_prompt ?? null,
         excerpt: r.excerpt ?? null,
+        is_pro: !!r.is_pro,
         _tag_names: r.tags || [],
+        _pack_names: r.packs || [],
       }))
       .filter((r) => r.category_id && r.title && r.prompt);
 
     if (toInsert.length === 0) return { inserted: 0 };
 
-    const insertPayload = toInsert.map(({ _tag_names, ...p }) => p);
+    const insertPayload = toInsert.map(({ _tag_names, _pack_names, ...p }) => p);
     const { data: inserted, error } = await supabase.from("prompts").insert(insertPayload).select("id");
     if (error) throw error;
 
@@ -166,6 +197,27 @@ const AdminBulkUpload = () => {
     if (tagLinks.length > 0) {
       const { error: linkErr } = await supabase.from("prompt_tags").insert(tagLinks);
       if (linkErr) throw linkErr;
+    }
+
+    // Map pack links
+    const packLinks: { pack_id: string; prompt_id: string }[] = [];
+    toInsert.forEach((p, idx) => {
+      const pid = promptIds[idx];
+      if (!pid) return;
+      const seenPackIds = new Set<string>();
+      (p._pack_names || []).forEach((name: string) => {
+        const slug = slugify(name);
+        const packId = packIdBySlug.get(slug);
+        if (packId && !seenPackIds.has(packId)) {
+          seenPackIds.add(packId);
+          packLinks.push({ pack_id: packId, prompt_id: pid });
+        }
+      });
+    });
+
+    if (packLinks.length > 0) {
+      const { error: packLinkErr } = await supabase.from("pack_prompts").insert(packLinks);
+      if (packLinkErr) throw packLinkErr;
     }
 
     return { inserted: toInsert.length };
@@ -241,16 +293,38 @@ const AdminBulkUpload = () => {
           data = rows.map((r) => ({ name: String(r.name ?? "").trim() }));
           break;
         case "prompts":
-          data = rows.map((r) => ({
-            title: String(r.title ?? "").trim(),
-            what_for: r.what_for ? String(r.what_for).trim() : undefined,
-            prompt: String(r.prompt ?? "").trim(),
-            image_prompt: r.image_prompt ? String(r.image_prompt).trim() : undefined,
-            excerpt: r.excerpt ? String(r.excerpt).trim() : undefined,
-            category_slug: String(r.category_slug ?? "").trim(),
-            subcategory_slug: r.subcategory_slug ? String(r.subcategory_slug).trim() : undefined,
-            tags: splitTags(r.tags),
-          }));
+          const parseBool = (v: any) => {
+            if (typeof v === "boolean") return v;
+            if (v == null) return false;
+            const s = String(v).trim().toLowerCase();
+            return ["1", "true", "yes", "y", "pro"].includes(s);
+          };
+          const splitMulti = (val: any) => {
+            if (Array.isArray(val)) return val;
+            if (typeof val === "string") {
+              return val
+                .split(/[,;|]+/)
+                .map((t) => t.trim())
+                .filter(Boolean);
+            }
+            return [] as string[];
+          };
+          data = rows.map((r) => {
+            const packs = splitMulti(r.pro_pack ?? r.Pro_Pack ?? r.pack ?? r.packs);
+            const is_pro = parseBool(r.is_pro ?? r.pro ?? r.Pro_Prompt ?? r.pro_prompt ?? r.Pro);
+            return {
+              title: String(r.title ?? "").trim(),
+              what_for: r.what_for ? String(r.what_for).trim() : undefined,
+              prompt: String(r.prompt ?? "").trim(),
+              image_prompt: r.image_prompt ? String(r.image_prompt).trim() : undefined,
+              excerpt: r.excerpt ? String(r.excerpt).trim() : undefined,
+              category_slug: String(r.category_slug ?? "").trim(),
+              subcategory_slug: r.subcategory_slug ? String(r.subcategory_slug).trim() : undefined,
+              tags: splitTags(r.tags),
+              is_pro,
+              packs,
+            };
+          });
           break;
       }
 
@@ -355,6 +429,17 @@ const AdminBulkUpload = () => {
         if (typeof val === "string") return val.split(/[,;]+/).map((t) => t.trim()).filter(Boolean);
         return [];
       };
+      const parseBool = (v: any) => {
+        if (typeof v === "boolean") return v;
+        if (v == null) return false;
+        const s = String(v).trim().toLowerCase();
+        return ["1", "true", "yes", "y", "pro"].includes(s);
+      };
+      const splitMulti = (val: any) => {
+        if (Array.isArray(val)) return val;
+        if (typeof val === "string") return val.split(/[,;|]+/).map((t) => t.trim()).filter(Boolean);
+        return [] as string[];
+      };
       const data = rows.map((r) => ({
         title: String(r.title ?? "").trim(),
         what_for: r.what_for ? String(r.what_for).trim() : undefined,
@@ -364,11 +449,16 @@ const AdminBulkUpload = () => {
         category_slug: String(r.category_slug ?? "").trim(),
         subcategory_slug: r.subcategory_slug ? String(r.subcategory_slug).trim() : undefined,
         tags: splitTags(r.tags),
+        is_pro: parseBool(r.is_pro ?? r.pro ?? r.Pro_Prompt ?? r.pro_prompt ?? r.Pro),
+        packs: splitMulti(r.pro_pack ?? r.Pro_Pack ?? r.pack ?? r.packs),
       }));
 
       // DELETE in dependency order
       await supabase.from("prompt_tags").delete().not("prompt_id", "is", null);
+      await supabase.from("pack_prompts").delete().not("pack_id", "is", null);
       await supabase.from("prompts").delete().not("id", "is", null);
+      await supabase.from("pack_access").delete().not("user_id", "is", null);
+      await supabase.from("packs").delete().not("id", "is", null);
       await supabase.from("subcategories").delete().not("id", "is", null);
       await supabase.from("categories").delete().not("id", "is", null);
 
@@ -475,7 +565,7 @@ const AdminBulkUpload = () => {
             <label className="text-sm font-medium">CSV File</label>
             <Input type="file" accept=".csv" onChange={(e) => setCsvFile(e.target.files?.[0] ?? null)} aria-label="CSV file input" />
             <p className="text-xs text-muted-foreground">
-              CSV headers should match the selected entity. For prompts: title, prompt, category_slug, [subcategory_slug], [tags]
+              CSV headers should match the selected entity. For prompts: title, prompt, category_slug, [subcategory_slug], [tags], [is_pro], [pro_pack]. Multiple packs can be comma/semicolon/pipe-separated. New packs auto-created at $9.99.
             </p>
           </div>
           <div className="flex gap-3">
@@ -483,7 +573,7 @@ const AdminBulkUpload = () => {
           </div>
           <div className="pt-4">
             <h3 className="text-sm font-medium text-destructive">Danger zone</h3>
-            <p className="text-xs text-muted-foreground">Deletes all categories, subcategories, prompts, then imports from the selected CSV.</p>
+            <p className="text-xs text-muted-foreground">Deletes all categories, subcategories, prompts, packs and their links, then imports from the selected CSV.</p>
             <div className="mt-2">
               <Button variant="destructive" onClick={handleResetAndImportCsv} disabled={loading || !csvFile}>
                 {loading ? "Resetting..." : "Reset and Import from CSV"}
@@ -496,8 +586,8 @@ const AdminBulkUpload = () => {
             <ul className="list-disc pl-5 mt-2 space-y-1">
               <li>Categories/subcategories are upserted by slug; tags by name.</li>
               <li>Prompts are inserted; ensure you don’t duplicate unless intended.</li>
-              <li>Prompts accept category_slug and optional subcategory_slug; tags can be provided as an array of names.</li>
-              <li>Only admins can write; if you see a permission error, ensure your user has the admin role.</li>
+              <li>Prompts accept category_slug, optional subcategory_slug; tags can be provided as an array or delimited string.</li>
+              <li>Optional fields: is_pro (boolean), pro_pack (one or many, comma/semicolon/pipe-separated). New packs default to $9.99.</li>
             </ul>
           </aside>
         </section>
