@@ -34,8 +34,9 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
     const bn = b.name.trim().toLowerCase();
     const isAdv = (n: string) => n === "advanced prompt engineering" || n === "advaced prompt engineering";
     const isAiFor = (n: string) => n.startsWith("ai for") && n !== "ai for business automation";
-    const aw = (isAdv(an) || isAiFor(an)) ? 1 : 0;
-    const bw = (isAdv(bn) || isAiFor(bn)) ? 1 : 0;
+    const isAiIn = (n: string) => n.startsWith("ai in");
+    const aw = (isAdv(an) || isAiFor(an) || isAiIn(an)) ? 1 : 0;
+    const bw = (isAdv(bn) || isAiFor(bn) || isAiIn(bn)) ? 1 : 0;
     if (aw !== bw) return aw - bw; // non-bottom first, bottom last
     return a.name.localeCompare(b.name);
   });
