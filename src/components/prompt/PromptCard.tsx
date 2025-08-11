@@ -211,16 +211,6 @@ export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) 
           <span>{sub?.name}</span>
         </div>
         <CardTitle className="text-xl leading-tight">{displayTitle}</CardTitle>
-        {isPro && !hasAccess && (
-          <div className="mt-1 text-xs text-muted-foreground space-y-0.5">
-            <div>
-              One-time: <span className="line-through">{fmtUSD(PROMPT_ORIGINAL_CENTS)}</span> <span className="text-primary font-medium">{fmtUSD(PROMPT_DISCOUNT_CENTS)}</span> for a limited time.
-            </div>
-            <div>
-              Monthly: <span className="line-through">{fmtUSD(SUB_ORIGINAL_CENTS)}</span> <span className="text-primary font-medium">{fmtUSD(SUB_DISCOUNT_CENTS)}</span>. Cancel any time.
-            </div>
-          </div>
-        )}
         <p className="text-sm text-muted-foreground">🤓 {prompt.whatFor}</p>
         <p className="text-sm text-muted-foreground">✅ {prompt.excerpt}</p>
       </CardHeader>
