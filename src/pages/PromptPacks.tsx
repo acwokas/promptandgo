@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { addToCart } from "@/lib/cart";
+import { addToCart, getCart } from "@/lib/cart";
 import { toast } from "@/hooks/use-toast";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
@@ -119,6 +119,15 @@ const PromptPacks = () => {
   }, [searchParams, user]);
 
   const handleAdd = (p: Pack) => {
+    if (ownedPackIds.has(p.id)) {
+      toast({ title: 'Already owned', description: `${p.name} is already in your library.` });
+      return;
+    }
+    const exists = getCart().some((i) => i.type === 'pack' && i.id === p.id);
+    if (exists) {
+      toast({ title: 'Already in cart', description: `${p.name} is already in your cart.` });
+      return;
+    }
     addToCart({ id: p.id, type: 'pack', title: p.name, unitAmountCents: PACK_DISCOUNT_CENTS, quantity: 1 });
     toast({ title: 'Added to cart', description: `${p.name} — ${fmtUSD(PACK_DISCOUNT_CENTS)}` });
   };
@@ -150,9 +159,9 @@ const PromptPacks = () => {
 
   return (
     <>
-      <PageHero title={<>Premium Packs</>} subtitle={<>Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results.</>} minHeightClass="min-h-[40vh]" />
+      <PageHero title={<>Prompt Powerpacks</>} subtitle={<>Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results.</>} minHeightClass="min-h-[40vh]" />
       <main className="container py-10">
-        <SEO title="Premium Packs – Save 50%" description="Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results." />
+        <SEO title="Prompt Powerpacks – Save 50%" description="Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results." />
         <div className="mb-6 max-w-xl">
           <Input
             placeholder="Search within pack contents..."
@@ -168,8 +177,8 @@ const PromptPacks = () => {
         ) : (
           <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filteredPacks.map((p) => {
-              const items = itemsForPack(p.id);
-              const packOwned = wellnessIds.includes(p.id) ? wellnessIds.some((id) => ownedPackIds.has(id)) : ownedPackIds.has(p.id);
+              const items = contents[p.id] || [];
+              const packOwned = ownedPackIds.has(p.id);
               const ownedCount = packOwned ? items.length : items.filter((it) => ownedPromptIds.has(it.id)).length;
               const freeCount = items.filter((it) => !it.is_pro).length;
               const proCount = items.filter((it) => it.is_pro).length;

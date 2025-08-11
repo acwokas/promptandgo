@@ -52,7 +52,7 @@ const Blog = () => {
             </Button>
           )}
           <Button asChild size="lg" variant="inverted">
-            <Link to="/packs">Explore Premium Packs</Link>
+            <Link to="/packs">Explore Prompt Powerpacks</Link>
           </Button>
         </div>
       </div>
