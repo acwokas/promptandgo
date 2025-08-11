@@ -68,8 +68,10 @@ export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) 
   const monthName = now.toLocaleString(undefined, { month: 'long' });
   const PACK_ORIGINAL_CENTS = 999;
   const PACK_DISCOUNT_CENTS = 499;
+  const PROMPT_ORIGINAL_CENTS = 199;
+  const PROMPT_DISCOUNT_CENTS = 96;
   const SUB_ORIGINAL_CENTS = 1499;
-  const SUB_DISCOUNT_CENTS = 999;
+  const SUB_DISCOUNT_CENTS = 749;
   const fmtUSD = (cents: number) => `$${(cents / 100).toFixed(2)}`;
   useEffect(() => {
     let ignore = false;
@@ -187,6 +189,11 @@ export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) 
     toast({ title: 'Pack added to cart', description: `${p.name} — ${fmtUSD(PACK_DISCOUNT_CENTS)}` });
   };
 
+  const addPromptToCart = () => {
+    addToCart({ id: prompt.id, type: 'prompt', title: displayTitle, unitAmountCents: PROMPT_DISCOUNT_CENTS, quantity: 1 });
+    toast({ title: 'Prompt added to cart', description: `${displayTitle} — ${fmtUSD(PROMPT_DISCOUNT_CENTS)}` });
+  };
+  
   const showLock = isPro && !hasAccess;
 
   return (
@@ -205,11 +212,13 @@ export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) 
         </div>
         <CardTitle className="text-xl leading-tight">{displayTitle}</CardTitle>
         {isPro && !hasAccess && (
-          <div className="mt-1 text-xs text-muted-foreground">
-            Subscription {fmtUSD(SUB_ORIGINAL_CENTS)} → <span className="text-primary font-medium">{fmtUSD(SUB_DISCOUNT_CENTS)}</span>
-            {packs.length > 0 && (
-              <> • Pack {fmtUSD(PACK_ORIGINAL_CENTS)} → <span className="text-primary font-medium">{fmtUSD(PACK_DISCOUNT_CENTS)}</span></>
-            )}
+          <div className="mt-1 text-xs text-muted-foreground space-y-0.5">
+            <div>
+              One-time: <span className="line-through">{fmtUSD(PROMPT_ORIGINAL_CENTS)}</span> <span className="text-primary font-medium">{fmtUSD(PROMPT_DISCOUNT_CENTS)}</span> for a limited time.
+            </div>
+            <div>
+              Monthly: <span className="line-through">{fmtUSD(SUB_ORIGINAL_CENTS)}</span> <span className="text-primary font-medium">{fmtUSD(SUB_DISCOUNT_CENTS)}</span>. Cancel any time.
+            </div>
           </div>
         )}
         <p className="text-sm text-muted-foreground">🤓 {prompt.whatFor}</p>
@@ -224,18 +233,21 @@ export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) 
             </pre>
             {showLock && (
               <div className="absolute inset-0 rounded-md bg-gradient-to-b from-background/60 to-background/80 backdrop-blur-sm flex items-center justify-center">
-                <div className="text-center p-4 space-y-3">
+                <div className="text-center p-4 space-y-4">
                   <div className="flex items-center justify-center gap-2 text-sm">
                     <Lock className="h-4 w-4" /> PRO content locked
                   </div>
-                  <div className="text-xs text-muted-foreground">
-                    Unlock with Subscription {fmtUSD(SUB_DISCOUNT_CENTS)} {packs.length > 0 && <>or buy the pack {fmtUSD(PACK_DISCOUNT_CENTS)}</>}
+                  <div className="text-xs text-muted-foreground space-y-1">
+                    <div>
+                      Access this prompt with a one-time payment of <span className="line-through">{fmtUSD(PROMPT_ORIGINAL_CENTS)}</span> <span className="text-primary font-medium">{fmtUSD(PROMPT_DISCOUNT_CENTS)}</span> for a limited time only.
+                    </div>
+                    <div>
+                      Or unlock with a Monthly Subscription of <span className="line-through">{fmtUSD(SUB_ORIGINAL_CENTS)}</span> <span className="text-primary font-medium">{fmtUSD(SUB_DISCOUNT_CENTS)}</span>. Cancel any time.
+                    </div>
                   </div>
                   <div className="flex gap-2 justify-center">
-                    <Button size="sm" onClick={handleSubscribeClick}>Subscribe {fmtUSD(SUB_DISCOUNT_CENTS)}</Button>
-                    {packs.length > 0 && (
-                      <Button size="sm" variant="secondary" onClick={addFirstPackToCart}>Add Pack {fmtUSD(PACK_DISCOUNT_CENTS)}</Button>
-                    )}
+                    <Button size="sm" onClick={addPromptToCart}>Buy Prompt {fmtUSD(PROMPT_DISCOUNT_CENTS)}</Button>
+                    <Button size="sm" variant="secondary" onClick={handleSubscribeClick}>Subscribe {fmtUSD(SUB_DISCOUNT_CENTS)}</Button>
                   </div>
                 </div>
               </div>
@@ -245,7 +257,9 @@ export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) 
             <Button
               size="sm"
               variant="hero"
-              onClick={() => copy(prompt.prompt, "Prompt")}
+              disabled={showLock}
+              title={showLock ? "Unlock to copy" : undefined}
+              onClick={() => hasAccess && copy(prompt.prompt, "Prompt")}
             >
               Copy Prompt
             </Button>
