@@ -5,7 +5,7 @@ import { toast } from "@/hooks/use-toast";
 import type { Prompt, Category } from "@/data/prompts";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { Heart } from "lucide-react";
+import { Heart, Lock } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -63,11 +63,14 @@ export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) 
   const [favLoading, setFavLoading] = useState(false);
   const isPro = (prompt as any).isPro || (prompt as any).is_pro || false;
   const [hasAccess, setHasAccess] = useState(false);
-  const [packNames, setPackNames] = useState<string[]>([]);
+  const [packs, setPacks] = useState<{ id: string; name: string }[]>([]);
   const now = new Date();
   const monthName = now.toLocaleString(undefined, { month: 'long' });
-  const PRO_ORIGINAL_CENTS = 199;
-  const PRO_DISCOUNT_CENTS = 99;
+  const PACK_ORIGINAL_CENTS = 999;
+  const PACK_DISCOUNT_CENTS = 499;
+  const SUB_ORIGINAL_CENTS = 1499;
+  const SUB_DISCOUNT_CENTS = 999;
+  const fmtUSD = (cents: number) => `$${(cents / 100).toFixed(2)}`;
   useEffect(() => {
     let ignore = false;
     const check = async () => {
@@ -98,9 +101,9 @@ export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) 
         const packIds = (pp.data || []).map((r: any) => r.pack_id);
         if (packIds.length) {
           const packsRes = await supabase.from('packs').select('id,name').in('id', packIds);
-          if (!cancelled && !packsRes.error) setPackNames((packsRes.data || []).map((p: any) => p.name));
+          if (!cancelled && !packsRes.error) setPacks((packsRes.data || []).map((p: any) => ({ id: p.id, name: p.name })));
         } else {
-          if (!cancelled) setPackNames([]);
+          if (!cancelled) setPacks([]);
         }
 
         if (!user) {
@@ -167,10 +170,33 @@ export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) 
     } finally {
       setFavLoading(false);
     }
+};
+
+  const handleSubscribeClick = async () => {
+    if (!user) {
+      window.location.assign('/auth');
+      return;
+    }
+    toast({ title: 'Subscription checkout', description: 'Stripe checkout will be enabled after keys are configured.' });
   };
 
+  const addFirstPackToCart = () => {
+    if (!packs.length) return;
+    const p = packs[0];
+    addToCart({ id: p.id, type: 'pack', title: p.name, unitAmountCents: PACK_DISCOUNT_CENTS, quantity: 1 });
+    toast({ title: 'Pack added to cart', description: `${p.name} — ${fmtUSD(PACK_DISCOUNT_CENTS)}` });
+  };
+
+  const showLock = isPro && !hasAccess;
+
   return (
-    <Card className="h-full">
+    <Card className="relative overflow-hidden h-full">
+      {isPro && !hasAccess && (
+        <div className="absolute top-3 right-3 z-10 flex gap-2">
+          <Badge variant="destructive">PRO</Badge>
+          <Badge variant="secondary">SALE</Badge>
+        </div>
+      )}
       <CardHeader>
         <div className="flex items-center gap-2 flex-wrap text-xs text-muted-foreground">
           <span>{category?.name}</span>
@@ -178,6 +204,14 @@ export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) 
           <span>{sub?.name}</span>
         </div>
         <CardTitle className="text-xl leading-tight">{displayTitle}</CardTitle>
+        {isPro && !hasAccess && (
+          <div className="mt-1 text-xs text-muted-foreground">
+            Subscription {fmtUSD(SUB_ORIGINAL_CENTS)} → <span className="text-primary font-medium">{fmtUSD(SUB_DISCOUNT_CENTS)}</span>
+            {packs.length > 0 && (
+              <> • Pack {fmtUSD(PACK_ORIGINAL_CENTS)} → <span className="text-primary font-medium">{fmtUSD(PACK_DISCOUNT_CENTS)}</span></>
+            )}
+          </div>
+        )}
         <p className="text-sm text-muted-foreground">🤓 {prompt.whatFor}</p>
         <p className="text-sm text-muted-foreground">✅ {prompt.excerpt}</p>
       </CardHeader>
