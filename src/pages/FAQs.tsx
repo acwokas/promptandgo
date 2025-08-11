@@ -159,7 +159,9 @@ const FAQs = () => {
 
       <PageHero
         minHeightClass="min-h-[48vh]"
-        title={<>Got Questions? We’ve Got You</>}
+        title={<>
+          <span className="text-gradient-brand">Got Questions?</span> We’ve Got You
+        </>}
         subtitle={
           <>New to prompting? Not sure where to start? Don’t worry, you’re in the right place. Here are quick answers to the things people ask us all the time (and a few they don’t, but probably should).</>
         }
