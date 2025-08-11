@@ -218,8 +218,25 @@ const Index = () => {
           </ul>
         </section>
 
-        {/* Feature Strip */}
-        <section className="container pt-4 pb-2">
+
+        {/* Featured Prompts Carousel */}
+        <section className="container py-6" aria-labelledby="featured-prompts">
+          <h2 id="featured-prompts" className="text-2xl font-semibold mb-4">Prompts of the Day</h2>
+          <Carousel setApi={setCarouselApi} opts={{ loop: true, align: "start" }}>
+            <CarouselContent>
+              {slides.map((p) => (
+                <CarouselItem key={p.id} className="md:basis-1/2 lg:basis-1/3">
+                  <PromptCard prompt={p as any} categories={[]} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="-left-6 md:-left-10" />
+            <CarouselNext className="-right-6 md:-right-10" />
+          </Carousel>
+        </section>
+
+        {/* Feature Strip (moved below carousel) */}
+        <section className="container pt-2 pb-6">
           <div className="grid gap-4 md:grid-cols-3">
             <article className="rounded-xl border p-6 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent">
               <div className="flex items-start gap-3">
@@ -251,21 +268,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Featured Prompts Carousel */}
-        <section className="container py-6" aria-labelledby="featured-prompts">
-          <h2 id="featured-prompts" className="text-2xl font-semibold mb-4">Prompts of the Day</h2>
-          <Carousel setApi={setCarouselApi} opts={{ loop: true, align: "start" }}>
-            <CarouselContent>
-              {slides.map((p) => (
-                <CarouselItem key={p.id} className="md:basis-1/2 lg:basis-1/3">
-                  <PromptCard prompt={p as any} categories={[]} />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="-left-6 md:-left-10" />
-            <CarouselNext className="-right-6 md:-right-10" />
-          </Carousel>
-        </section>
         <section aria-labelledby="cta-tail" className="relative bg-hero hero-grid mt-8" id="cta">
           <div className="container p-6 md:p-8 text-center text-primary-foreground">
             <h2 id="cta-tail" className="text-2xl md:text-3xl font-semibold tracking-tight">Whatever you’re working on, someone’s already used PromptAndGo to do it faster.</h2>
