@@ -38,6 +38,14 @@ const cleanTitle = (t?: string | null) => {
   return s;
 };
 
+// Map a category/subcategory name to a stable accent index (1..6)
+const categoryAccentIndex = (name?: string) => {
+  const s = name || "misc";
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  return (h % 6) + 1;
+};
+
 interface PromptCardProps {
   prompt: Prompt;
   categories: Category[];
@@ -51,6 +59,8 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   const category = categories.find((c) => c.id === prompt.categoryId);
   const sub = category?.subcategories.find((s) => s.id === prompt.subcategoryId);
   const displayTitle = cleanTitle(prompt.title);
+  const accentIndex = categoryAccentIndex(sub?.name || category?.name);
+  const accentClass = `category-accent-${accentIndex}`;
 
   const copy = async (text: string, label: string) => {
     try {
@@ -221,8 +231,14 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
     return <Tag className="h-3.5 w-3.5" aria-hidden />;
   };
 
+  const getAccentIndex = (name?: string) => {
+    const s = name || "misc";
+    let h = 0;
+    for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+    return (h % 6) + 1; // 1..6 matching CSS utilities in index.css
+  };
   return (
-    <Card className="relative overflow-hidden h-full">
+    <Card className={cn("relative overflow-hidden h-full with-category-accent card-surface", accentClass)}>
       <CardHeader>
         {isPro && !hasAccess && (
           <div className="mb-2 flex gap-2">
@@ -241,6 +257,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               title={`Filter by ${category.name}`}
             >
               <span className="inline-flex items-center gap-1.5">
+                <span className="inline-block h-1.5 w-1.5 rounded-full" style={{ backgroundColor: "hsl(var(--category-accent))" }} />
                 {getCategoryIcon(category.name)}
                 <span>{category.name}</span>
               </span>
