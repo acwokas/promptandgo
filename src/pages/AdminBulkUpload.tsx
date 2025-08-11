@@ -273,12 +273,12 @@ const AdminBulkUpload = () => {
           error: (err) => reject(err),
         });
       });
-      const parseBool = (v: any) => {
-        if (typeof v === "boolean") return v;
-        if (v == null) return false;
-        const s = String(v).trim().toLowerCase();
-        return ["1", "true", "yes", "y", "pro"].includes(s);
-      };
+       const parseBool = (v: any) => {
+         if (typeof v === "boolean") return v;
+         if (v == null) return false;
+         const s = String(v).trim().toLowerCase();
+         return ["1", "true", "tru", "t", "yes", "y", "on", "pro"].includes(s);
+       };
       const splitMulti = (val: any) => {
         if (Array.isArray(val)) return val;
         if (typeof val === "string") return val.split(/[,;|]+/).map((t) => t.trim()).filter(Boolean);
@@ -361,7 +361,7 @@ const AdminBulkUpload = () => {
             if (typeof v === "boolean") return v;
             if (v == null) return false;
             const s = String(v).trim().toLowerCase();
-            return ["1", "true", "yes", "y", "pro"].includes(s);
+            return ["1", "true", "tru", "t", "yes", "y", "on", "pro"].includes(s);
           };
           const splitMulti = (val: any) => {
             if (Array.isArray(val)) return val;
