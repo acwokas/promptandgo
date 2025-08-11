@@ -155,14 +155,14 @@ All colors MUST be HSL. */
   .text-gradient-brand { background: var(--gradient-primary); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
   /* Category accent helpers */
-  .with-category-accent { border-top: 4px solid hsl(var(--category-accent)); }
+  .with-category-accent { border-top: 5px solid hsl(var(--category-accent)); }
   .category-accent-1 { --category-accent: var(--accent-1); }
   .category-accent-2 { --category-accent: var(--accent-2); }
   .category-accent-3 { --category-accent: var(--accent-3); }
   .category-accent-4 { --category-accent: var(--accent-4); }
   .category-accent-5 { --category-accent: var(--accent-5); }
   .category-accent-6 { --category-accent: var(--accent-6); }
-  .card-surface { background-image: linear-gradient(180deg, hsl(var(--card) / 0.98), hsl(var(--category-accent) / 0.06)); }
+  .card-surface { background-image: linear-gradient(180deg, hsl(var(--card) / 0.98), hsl(var(--category-accent) / 0.12)); }
 }
 
 

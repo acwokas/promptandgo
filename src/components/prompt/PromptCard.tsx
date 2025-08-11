@@ -251,7 +251,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               title={`Filter by ${category.name}`}
             >
               <span className="inline-flex items-center gap-1.5">
-                <span className="inline-block h-2 w-2 rounded-full" style={{ backgroundColor: "hsl(var(--category-accent))" }} />
+                <span className="inline-block h-2 w-2 rounded-full" style={{ backgroundColor: "hsl(var(--category-accent, var(--primary)))" }} />
                 {getCategoryIcon(category.name)}
                 <span>{category.name}</span>
               </span>
