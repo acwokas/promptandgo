@@ -140,6 +140,7 @@ const PromptLibrary = () => {
             "id, category_id, subcategory_id, title, what_for, prompt, image_prompt, excerpt, is_pro",
             { count: "exact" }
           )
+          .order("is_pro", { ascending: false })
           .order("created_at", { ascending: false });
 
         if (categoryId) q = q.eq("category_id", categoryId);
