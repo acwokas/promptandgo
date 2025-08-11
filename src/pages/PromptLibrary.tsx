@@ -73,7 +73,8 @@ const PromptLibrary = () => {
   const [searchParams] = useSearchParams();
   const [randomMode, setRandomMode] = useState<boolean>(false);
   const [includePro, setIncludePro] = useState(true);
-  
+  const [proOnly, setProOnly] = useState(false);
+
 
   const [page, setPage] = useState(1);
   const [items, setItems] = useState<PromptUI[]>([]);
@@ -161,7 +162,8 @@ const PromptLibrary = () => {
         if (subcategoryId) q = q.eq("subcategory_id", subcategoryId);
         if (query.trim()) q = q.textSearch("search_vector", query.trim(), { type: "websearch" });
         if (promptIdsForTag) q = q.in("id", promptIdsForTag);
-        if (!includePro) q = q.eq("is_pro", false);
+        if (proOnly) q = q.eq("is_pro", true);
+        else if (!includePro) q = q.eq("is_pro", false);
 
         q = q.range(from, to);
 
@@ -213,7 +215,7 @@ const PromptLibrary = () => {
         setLoading(false);
       }
     },
-    [categoryId, subcategoryId, query, selectedTag, includePro]
+    [categoryId, subcategoryId, query, selectedTag, includePro, proOnly]
   );
 
   const fetchRandomPrompt = useCallback(async () => {
@@ -302,8 +304,10 @@ const PromptLibrary = () => {
     setRandomMode(!!searchParams.get('random'));
     const cid = searchParams.get('categoryId') || undefined;
     const sid = searchParams.get('subcategoryId') || undefined;
+    const po = searchParams.get('proOnly');
     if (cid !== undefined) setCategoryId(cid);
     if (sid !== undefined) setSubcategoryId(sid);
+    setProOnly(po === '1' || po === 'true');
   }, [searchParams]);
 
   // Initial loads
@@ -375,6 +379,7 @@ const PromptLibrary = () => {
               setSubcategoryId(undefined);
               setQuery("");
               setSelectedTag(undefined);
+              setProOnly(false);
               setPage(1);
               // No manual refresh here; useEffect will trigger once state updates propagate
             }}
@@ -397,12 +402,14 @@ const PromptLibrary = () => {
                 setCategoryId(cid);
                 setSubcategoryId(undefined);
                 setSelectedTag(undefined);
+                setProOnly(false);
                 setQuery("");
               }}
               onSubcategoryClick={(sid, cid) => {
                 setCategoryId(cid);
                 setSubcategoryId(sid);
                 setSelectedTag(undefined);
+                setProOnly(false);
                 setQuery("");
               }}
             />

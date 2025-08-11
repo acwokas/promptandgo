@@ -360,6 +360,13 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
             </div>
           </div>
         )}
+        {showLock && (
+          <div className="pt-2">
+            <Link to="/library?proOnly=1#library-filters">
+              <Button size="sm" variant="secondary">View all PRO prompts</Button>
+            </Link>
+          </div>
+        )}
 
       </CardContent>
     </Card>
