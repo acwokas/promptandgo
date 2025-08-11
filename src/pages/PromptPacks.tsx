@@ -159,7 +159,7 @@ const PromptPacks = () => {
 
   return (
     <>
-      <PageHero title={<>⚡️Power Packs</>} subtitle={<>Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results.</>} minHeightClass="min-h-[40vh]" />
+      <PageHero title={<>⚡️<span className="text-gradient-brand">Power</span> Packs</>} subtitle={<>Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results.</>} minHeightClass="min-h-[40vh]" />
       <main className="container py-10">
         <SEO title="⚡️Power Packs – Save 50%" description="Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results." />
         <div className="mb-6 max-w-xl">
