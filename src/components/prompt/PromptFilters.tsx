@@ -121,43 +121,6 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
         </div>
       </div>
 
-      <div className="mt-6">
-        <Label className="mb-3 block">Or select a popular category:</Label>
-        <TooltipProvider>
-          <div className="flex flex-wrap gap-2">
-            {quickButtons.map((btn) => {
-              const label = btn.label;
-              const searchTerm = (btn as any).search ?? btn.label;
-              const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "");
-              const ln = normalize(searchTerm);
-              const match = categories.find((c) => {
-                const cn = normalize(c.name);
-                return cn === ln || cn.includes(ln) || ln.includes(cn);
-              });
-              const catId = match?.id;
-              return (
-                <Tooltip key={label}>
-                  <TooltipTrigger asChild>
-                    <Button
-                      type="button"
-                      className="text-foreground hover:opacity-95 shadow-sm whitespace-nowrap border"
-                      aria-label={label}
-                      style={match ? ({ ['--category-accent' as any]: `var(--accent-${catAccentIndex(match.id)})`, backgroundColor: 'hsl(var(--category-accent) / 0.14)', borderColor: 'hsl(var(--category-accent) / 0.35)' }) : undefined}
-                      onClick={() => {
-                        if (catId) onChange({ categoryId: catId, subcategoryId: undefined, query: "" });
-                        else onChange({ query: searchTerm });
-                      }}
-                    >
-                      {label}
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>{label}</TooltipContent>
-                </Tooltip>
-              )
-            })}
-          </div>
-        </TooltipProvider>
-      </div>
     </section>
   );
 };
