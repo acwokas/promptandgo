@@ -6,7 +6,7 @@ import PageHero from "@/components/layout/PageHero";
 import { Link, useSearchParams } from "react-router-dom";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import type { Category as CategoryType } from "@/data/prompts";
 import { toast } from "@/hooks/use-toast";
 
@@ -80,7 +80,7 @@ const PromptLibrary = () => {
   const [items, setItems] = useState<PromptUI[]>([]);
   const [hasMore, setHasMore] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const listRef = useRef<HTMLDivElement>(null);
 
   // Load categories + subcategories and compose to existing UI shape
   const loadCategories = useCallback(async () => {
@@ -328,6 +328,18 @@ const PromptLibrary = () => {
     }
   }, [categoryId, subcategoryId, query, selectedTag, randomMode, refresh, fetchRandomPrompt]);
 
+  // Scroll to first prompt when in random mode after items load
+  useEffect(() => {
+    if (!randomMode) return;
+    if (loading) return;
+    if (items.length > 0 && listRef.current) {
+      const header = document.querySelector('header');
+      const headerHeight = header ? (header as HTMLElement).getBoundingClientRect().height : 0;
+      const y = listRef.current.getBoundingClientRect().top + window.scrollY - headerHeight - 8;
+      window.scrollTo({ top: y, behavior: 'auto' });
+    }
+  }, [items, loading, randomMode]);
+
   return (
     <>
       <PageHero
@@ -390,7 +402,7 @@ const PromptLibrary = () => {
           />
         </section>
 
-        <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-6">
+        <section ref={listRef} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-6">
           {items.map((p) => (
             <PromptCard
               key={p.id}
