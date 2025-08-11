@@ -211,10 +211,10 @@ const PromptPacks = () => {
                       <Badge variant="destructive">PRO</Badge>
                       <Badge variant="success">SALE</Badge>
                       {isBestseller && (
-                        <Badge className="border-transparent bg-[hsl(var(--accent-4))] text-primary-foreground hover:bg-[hsl(var(--accent-4))]/90">Bestseller</Badge>
+                        <Badge className="border-transparent bg-[hsl(var(--accent-4))] text-primary-foreground hover:bg-[hsl(var(--accent-4))]/90">BESTSELLER</Badge>
                       )}
                       {isRisingStar && (
-                        <Badge variant="secondary">Rising Star</Badge>
+                        <Badge className="border-transparent bg-[hsl(var(--accent-3))] text-primary-foreground hover:bg-[hsl(var(--accent-3))]/90">POPULAR</Badge>
                       )}
                     </div>
                     <CardTitle className="text-xl leading-tight">{p.name}</CardTitle>
