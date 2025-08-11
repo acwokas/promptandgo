@@ -60,7 +60,7 @@ const NotFound = () => {
   const navigate = useNavigate();
 
   const [index, setIndex] = useState(0);
-  const [seconds, setSeconds] = useState(10);
+  const [seconds, setSeconds] = useState(20);
   const timerRef = useRef<number | null>(null);
 
   const poem = useMemo(() => poems[index], [index]);
@@ -74,7 +74,7 @@ const NotFound = () => {
 
   useEffect(() => {
     // reset countdown whenever poem changes
-    setSeconds(10);
+    setSeconds(20);
 
     if (timerRef.current) window.clearInterval(timerRef.current);
     timerRef.current = window.setInterval(() => {
