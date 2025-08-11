@@ -49,6 +49,20 @@ const dedupeByTitle = (arr: PromptUI[]) => {
   });
 };
 
+// Ensure at most 2 locked (pro) prompts are shown across the list
+const applyLockedLimit = (arr: PromptUI[]) => {
+  let proCount = 0;
+  const out: PromptUI[] = [];
+  for (const item of arr) {
+    if (item.isPro) {
+      if (proCount >= 2) continue;
+      proCount++;
+    }
+    out.push(item);
+  }
+  return out;
+};
+
 const PromptLibrary = () => {
   const { user } = useSupabaseAuth();
   const [categories, setCategories] = useState<CategoryType[]>([]);
@@ -266,7 +280,7 @@ const PromptLibrary = () => {
     setPage(1);
     const res = await fetchPromptsPage(1);
     const data = res.data || [];
-    setItems(dedupeByTitle(data));
+    setItems(applyLockedLimit(dedupeByTitle(data)));
     setHasMore(!!res.hasMore);
   }, [fetchPromptsPage]);
 
@@ -275,7 +289,7 @@ const PromptLibrary = () => {
     const next = page + 1;
     const res = await fetchPromptsPage(next);
     const data = res.data || [];
-    setItems((prev) => dedupeByTitle([...prev, ...data]));
+    setItems((prev) => applyLockedLimit(dedupeByTitle([...prev, ...data])));
     setHasMore(!!res.hasMore);
     setPage(next);
   }, [page, hasMore, loading, fetchPromptsPage]);
