@@ -359,6 +359,7 @@ const PromptLibrary = () => {
   return (
     <>
       <PageHero
+        variant="prompt"
         title={
           <>
             <span className="text-gradient-brand">Prompt</span> Library

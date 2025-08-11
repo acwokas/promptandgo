@@ -140,6 +140,11 @@ All colors MUST be HSL. */
 @layer utilities {
   .bg-gradient-primary { background-image: var(--gradient-primary); }
   .bg-hero { position: relative; background-image: linear-gradient(180deg, hsl(220 60% 3% / 0.4), hsl(220 60% 3% / 0.4)), url('/lovable-uploads/0a94080e-fece-41b4-adbe-f01337551bdb.png'), var(--gradient-hero); background-size: cover; background-position: center; background-repeat: no-repeat; }
+  .bg-hero-prompt { position: relative; background-image:
+    radial-gradient(40% 60% at 8% 10%, hsl(var(--brand) / 0.16), transparent 60%),
+    radial-gradient(30% 50% at 85% 15%, hsl(var(--brand-2) / 0.14), transparent 60%),
+    linear-gradient(180deg, hsl(220 60% 6%), hsl(220 60% 3%));
+    background-size: cover; background-position: center; background-repeat: no-repeat; }
   .hero-grid::before {
     content: ""; position: absolute; inset: 0;
     background-image:
