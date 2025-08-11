@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { addToCart } from "@/lib/cart";
 import { toast } from "@/hooks/use-toast";
 import { useSearchParams } from "react-router-dom";
+import PageHero from "@/components/layout/PageHero";
 
 const PACK_ORIGINAL_CENTS = 999;
 const PACK_DISCOUNT_CENTS = 499;
@@ -45,10 +46,10 @@ const PromptPacks = () => {
   };
 
   return (
-    <main className="container py-10">
-      <SEO title="Prompt Packs – Save 50%" description="Unlock themed prompt bundles. Launch special: $9.99 → $4.99." />
-      <h1 className="text-3xl font-bold mb-2">Prompt Packs</h1>
-      <p className="text-muted-foreground mb-6">Curated bundles for specific goals. Limited-time launch pricing.</p>
+    <>
+      <PageHero title={<>Prompt Packs</>} subtitle={<>Curated bundles for specific goals. Limited-time launch pricing.</>} minHeightClass="min-h-[40vh]" />
+      <main className="container py-10">
+        <SEO title="Prompt Packs – Save 50%" description="Unlock themed prompt bundles. Launch special: $9.99 → $4.99." />
 
       {loading ? (
         <div className="text-muted-foreground">Loading packs…</div>
@@ -78,6 +79,7 @@ const PromptPacks = () => {
         </section>
       )}
     </main>
+    </>
   );
 };
 

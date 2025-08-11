@@ -9,7 +9,7 @@ interface PageHeroProps {
   variant?: "default" | "prompt";
 }
 
-const PageHero = ({ title, subtitle, children, minHeightClass = "min-h-[62vh]", variant = "default" }: PageHeroProps) => {
+const PageHero = ({ title, subtitle, children, minHeightClass = "min-h-[62vh]", variant = "prompt" }: PageHeroProps) => {
   const bgClass = variant === "prompt" ? "bg-hero-prompt" : "bg-hero";
   return (
     <section className={`relative ${bgClass} hero-grid`}>

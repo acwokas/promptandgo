@@ -1,9 +1,11 @@
 import SEO from "@/components/SEO";
+import PageHero from "@/components/layout/PageHero";
 
 const Terms = () => (
-  <main className="container py-10">
-    <SEO title="Terms & Conditions" description="PromptAndGo.ai Terms & Conditions (Singapore): usage rules, IP, payments, privacy, liability, and your rights." />
-    <h1 className="text-3xl font-bold mb-2">Terms & Conditions</h1>
+  <>
+    <PageHero title={<>Terms &amp; Conditions</>} subtitle={<>Usage rules, IP, payments, privacy, liability, and your rights.</>} minHeightClass="min-h-[40vh]" />
+    <main className="container py-10">
+      <SEO title="Terms & Conditions" description="PromptAndGo.ai Terms & Conditions (Singapore): usage rules, IP, payments, privacy, liability, and your rights." />
 
     <p className="text-sm text-muted-foreground">Effective Date: 01 January 2025</p>
     <p className="text-sm text-muted-foreground mb-6">Jurisdiction: Singapore</p>
@@ -90,6 +92,7 @@ const Terms = () => (
       <p>If a digital product is defective, inaccessible, or not as described, you must notify us within 7 days of purchase at <a href="mailto:legal@promptandgo.ai">legal@promptandgo.ai</a> so we can investigate and, if appropriate, provide a replacement or alternative remedy.</p>
     </section>
   </main>
+  </>
 );
 
 export default Terms;

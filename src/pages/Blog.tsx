@@ -2,15 +2,15 @@ import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import PageHero from "@/components/layout/PageHero";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
-
 const Blog = () => {
   const { user } = useSupabaseAuth();
   return (
-  <main className="container py-10">
-    <SEO title="Prompt Pulse – Prompt tips, tricks & examples" description="Tips, tricks and examples to get the most out of your prompting." />
-    <h1 className="text-3xl font-bold mb-2">Prompt Pulse</h1>
-    <p className="text-muted-foreground">Tips, tricks and examples to get the most of our your prompting.</p>
+  <>
+    <PageHero title={<>Prompt Pulse</>} subtitle={<>Tips, tricks and examples to get the most out of your prompting.</>} minHeightClass="min-h-[40vh]" />
+    <main className="container py-10">
+      <SEO title="Prompt Pulse – Prompt tips, tricks & examples" description="Tips, tricks and examples to get the most out of your prompting." />
 
     <section className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       <article>
@@ -57,7 +57,7 @@ const Blog = () => {
         </div>
       </div>
     </section>
-  </main>
+  </>
   );
 };
 

@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
-
+import PageHero from "@/components/layout/PageHero";
 const Contact = () => {
   const [isLoading, setIsLoading] = useState(false);
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -51,10 +51,10 @@ const Contact = () => {
   };
 
   return (
-    <main className="container py-10">
-      <SEO title="Contact PromptAndGo.ai" description="Send us a message — we'd love to hear from you." />
-      <h1 className="text-3xl font-bold mb-2">Contact</h1>
-      <p className="text-muted-foreground mb-6">We typically respond within 1–2 business days.</p>
+    <>
+      <PageHero title={<>Contact</>} subtitle={<>We typically respond within 1–2 business days.</>} minHeightClass="min-h-[40vh]" />
+      <main className="container py-10">
+        <SEO title="Contact PromptAndGo.ai" description="Send us a message — we'd love to hear from you." />
 
       <form onSubmit={onSubmit} className="grid gap-4 max-w-xl">
         <Input required name="name" placeholder="Name" />
@@ -78,6 +78,7 @@ const Contact = () => {
 
       </form>
     </main>
+    </>
   );
 };
 

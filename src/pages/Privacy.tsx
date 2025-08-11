@@ -1,9 +1,11 @@
 import SEO from "@/components/SEO";
+import PageHero from "@/components/layout/PageHero";
 
 const Privacy = () => (
-  <main className="container py-10">
-    <SEO title="Privacy Policy" description="Privacy Policy (PDPA, Singapore): how PromptAndGo.ai collects, uses, and protects your data." />
-    <h1 className="text-3xl font-bold mb-2">Privacy Policy</h1>
+  <>
+    <PageHero title={<>Privacy Policy</>} subtitle={<>How PromptAndGo.ai collects, uses, and protects your data.</>} minHeightClass="min-h-[40vh]" />
+    <main className="container py-10">
+      <SEO title="Privacy Policy" description="Privacy Policy (PDPA, Singapore): how PromptAndGo.ai collects, uses, and protects your data." />
 
     <p className="text-sm text-muted-foreground">Effective Date: 01 January 2025</p>
     <p className="text-sm text-muted-foreground mb-6">Jurisdiction: Singapore</p>
@@ -98,6 +100,7 @@ const Privacy = () => (
       </p>
     </section>
   </main>
+  </>
 );
 
 export default Privacy;

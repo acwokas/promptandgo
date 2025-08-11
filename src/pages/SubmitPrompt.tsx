@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
+import PageHero from "@/components/layout/PageHero";
 
 const SubmitPrompt = () => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -31,10 +32,10 @@ const SubmitPrompt = () => {
   };
 
   return (
-    <main className="container py-10">
-      <SEO title="Submit a Prompt" description="Share your best workflow prompts with the community." />
-      <h1 className="text-3xl font-bold mb-2">Submit a Prompt</h1>
-      <p className="text-muted-foreground mb-6">Have a great prompt? Share it and help others work smarter.</p>
+    <>
+      <PageHero title={<>Submit a Prompt</>} subtitle={<>Have a great prompt? Share it and help others work smarter.</>} minHeightClass="min-h-[40vh]" />
+      <main className="container py-10">
+        <SEO title="Submit a Prompt" description="Share your best workflow prompts with the community." />
 
       <form onSubmit={onSubmit} className="grid gap-4 max-w-2xl">
         <Input required name="title" placeholder="Title" />
@@ -47,6 +48,7 @@ const SubmitPrompt = () => {
         <Button variant="cta" className="w-fit">Submit Prompt</Button>
       </form>
     </main>
+    </>
   );
 };
 
