@@ -32,10 +32,6 @@ const PageHero = ({ title, subtitle, children, minHeightClass = "min-h-[62vh]", 
           {/* Ribbon */}
           <div className="absolute right-[-10%] top-[48%] w-[560px] h-24 bg-gradient-to-r from-primary/25 via-primary/10 to-transparent rounded-full blur-2xl -skew-y-6"></div>
 
-          {/* Prompt tokens */}
-          <div className="absolute left-[14%] top-[26%] px-3 py-1 rounded-full text-xs bg-card/70 border border-primary/20 shadow backdrop-blur-sm animate-fade-in">/imagine</div>
-          <div className="absolute right-[14%] top-[32%] px-3 py-1 rounded-full text-xs bg-card/70 border border-primary/20 shadow backdrop-blur-sm animate-fade-in delay-100">{`{topic}`}</div>
-          <div className="absolute left-[48%] bottom-[26%] px-3 py-1 rounded-full text-xs bg-card/70 border border-primary/20 shadow backdrop-blur-sm animate-fade-in delay-200">#prompt</div>
 
           {/* Minimal line icons */}
           <MessageSquare className="absolute text-primary/30 w-10 h-10 left-[12%] top-[18%] rotate-[-12deg]" />
