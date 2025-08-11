@@ -8,7 +8,7 @@ const Blog = () => {
   const { user } = useSupabaseAuth();
   return (
   <>
-    <PageHero title={<>Prompt Pulse</>} subtitle={<>Tips, tricks and examples to get the most out of your prompting.</>} minHeightClass="min-h-[40vh]" />
+    <PageHero title={<><span className="text-gradient-brand">Prompt</span> Pulse</>} subtitle={<>Tips, tricks and examples to get the most out of your prompting.</>} minHeightClass="min-h-[40vh]" />
     <main className="container py-10">
       <SEO title="Prompt Pulse – Prompt tips, tricks & examples" description="Tips, tricks and examples to get the most out of your prompting." />
 
