@@ -198,13 +198,24 @@ const PromptPacks = () => {
               const ownedCount = packOwned ? items.length : items.filter((it) => ownedPromptIds.has(it.id)).length;
               const freeCount = items.filter((it) => !it.is_pro).length;
               const proCount = items.filter((it) => it.is_pro).length;
+              const isBestseller = [
+                'Social Media Power Pack',
+                'Content Marketing Goldmine',
+              ].some((n) => normalize(p.name) === normalize(n));
+              const isRisingStar = normalize(p.name) === normalize('Career Accelerator Pack');
 
               return (
                 <Card key={p.id} id={`pack-${p.id}`} className={`relative ${highlight === p.id ? 'ring-2 ring-primary' : ''}`}>
                   <CardHeader>
-                    <div className="mb-2 flex gap-2">
+                    <div className="mb-2 flex gap-2 items-center">
                       <Badge variant="destructive">PRO</Badge>
                       <Badge variant="success">SALE</Badge>
+                      {isBestseller && (
+                        <Badge className="border-transparent bg-[hsl(var(--accent-4))] text-primary-foreground hover:bg-[hsl(var(--accent-4))]/90">Bestseller</Badge>
+                      )}
+                      {isRisingStar && (
+                        <Badge variant="secondary">Rising Star</Badge>
+                      )}
                     </div>
                     <CardTitle className="text-xl leading-tight">{p.name}</CardTitle>
                     {p.description && <p className="text-sm text-muted-foreground">{p.description}</p>}
