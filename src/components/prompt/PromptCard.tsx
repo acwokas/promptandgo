@@ -10,7 +10,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import { addToCart } from "@/lib/cart";
+import { addToCart, getCart } from "@/lib/cart";
 
 // Clean display title by removing common variant markers
 const cleanTitle = (t?: string | null) => {
@@ -192,10 +192,18 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   };
 
   const addPromptToCart = () => {
+    if (hasAccess) {
+      toast({ title: 'Prompt already purchased!' });
+      return;
+    }
+    const already = getCart().some((i) => i.type === 'prompt' && i.id === prompt.id);
+    if (already) {
+      toast({ title: 'Already added to cart' });
+      return;
+    }
     addToCart({ id: prompt.id, type: 'prompt', title: displayTitle, unitAmountCents: PROMPT_DISCOUNT_CENTS, quantity: 1 });
     toast({ title: 'Prompt added to cart', description: `${displayTitle} — ${fmtUSD(PROMPT_DISCOUNT_CENTS)}` });
   };
-  
   const showLock = isPro && !hasAccess;
 
   return (
