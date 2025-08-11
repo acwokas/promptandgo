@@ -8,7 +8,7 @@ const Footer = () => {
     <footer className="border-t mt-16">
       <div className="container py-10 grid gap-6 md:grid-cols-3 text-sm">
         <div>
-          <Link to="/" className="inline-flex items-center mb-2" aria-label="PromptAndGo.ai home">
+          <Link to="/" className="inline-flex items-center mb-1" aria-label="PromptAndGo.ai home">
             <img
               src="/lovable-uploads/9e8de25b-d91c-445a-b211-d156a28e4b33.png"
               alt="PromptAndGo.ai logo"
