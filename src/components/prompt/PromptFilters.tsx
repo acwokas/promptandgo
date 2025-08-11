@@ -109,7 +109,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
           <Button variant="cta" onClick={onSearch} aria-label="Run search">
             Search
           </Button>
-          <Button variant="secondary" onClick={onClear} aria-label="Clear filters and search">
+          <Button variant="inverted" onClick={onClear} aria-label="Clear filters and search">
             Clear Selections
           </Button>
         </div>
