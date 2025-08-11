@@ -8,7 +8,15 @@ const Footer = () => {
     <footer className="border-t mt-16">
       <div className="container py-10 grid gap-6 md:grid-cols-3 text-sm">
         <div>
-          <p className="font-semibold mb-2">PromptAndGo.ai</p>
+          <Link to="/" className="inline-flex items-center mb-2" aria-label="PromptAndGo.ai home">
+            <img
+              src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
+              alt="PromptAndGo.ai logo"
+              className="h-12 w-auto object-contain"
+              loading="lazy"
+              decoding="async"
+            />
+          </Link>
           <p className="text-muted-foreground">Ready-to-use prompts for real-world work.</p>
         </div>
         <div className="md:col-span-2 grid grid-cols-2 gap-4">
