@@ -105,7 +105,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
           />
         </div>
 
-        <div className="md:col-span-3 flex items-end gap-2 justify-end md:justify-start flex-wrap">
+        <div className="md:col-span-3 flex items-center gap-2 justify-end md:justify-start flex-wrap">
           <Button variant="cta" className="border border-foreground" onClick={onSearch} aria-label="Run search">
             Search
           </Button>
