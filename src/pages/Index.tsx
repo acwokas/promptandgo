@@ -207,16 +207,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Why Our Prompts Work */}
-        <section className="container py-6">
-          <h2 className="text-2xl font-semibold mb-6">Why Our Prompts Work</h2>
-          <ul className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-            <li className="rounded-lg border bg-card p-5">Built from real marketing and startup tasks</li>
-            <li className="rounded-lg border bg-card p-5">Tested with ChatGPT, Claude, and Gemini</li>
-            <li className="rounded-lg border bg-card p-5">Easy to adapt for your own brand or client</li>
-            <li className="rounded-lg border bg-card p-5">No “prompt engineering” required</li>
-          </ul>
-        </section>
 
 
         {/* Featured Prompts Carousel */}
@@ -236,7 +226,8 @@ const Index = () => {
         </section>
 
         {/* Feature Strip (moved below carousel) */}
-        <section className="container pt-2 pb-6">
+        <section className="container pt-2 pb-6" aria-labelledby="why-prompts-work">
+          <h2 id="why-prompts-work" className="text-2xl font-semibold mb-4">Why Our Prompts Work</h2>
           <div className="grid gap-4 md:grid-cols-3">
             <article className="rounded-xl border p-6 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent">
               <div className="flex items-start gap-3">
