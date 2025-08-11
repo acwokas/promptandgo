@@ -70,7 +70,7 @@ const PromptLibrary = () => {
   const [subcategoryId, setSubcategoryId] = useState<string | undefined>();
   const [query, setQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | undefined>();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [randomMode, setRandomMode] = useState<boolean>(false);
   const [includePro, setIncludePro] = useState(true);
   const [proOnly, setProOnly] = useState(false);
@@ -82,6 +82,17 @@ const PromptLibrary = () => {
   const [loading, setLoading] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
   const isRandomActiveRef = useRef<boolean>(false);
+  const clearRandom = () => {
+    if (randomMode || searchParams.get('random')) {
+      setRandomMode(false);
+      isRandomActiveRef.current = false;
+      const next = new URLSearchParams(searchParams);
+      if (next.has('random')) {
+        next.delete('random');
+        setSearchParams(next, { replace: true });
+      }
+    }
+  };
 
   // Load categories + subcategories and compose to existing UI shape
   const loadCategories = useCallback(async () => {
@@ -386,6 +397,7 @@ const PromptLibrary = () => {
             query={query}
             includePro={includePro}
             onChange={(n) => {
+              clearRandom();
               if (n.categoryId !== undefined) setCategoryId(n.categoryId || undefined);
               if (n.subcategoryId !== undefined) setSubcategoryId(n.subcategoryId || undefined);
               if (n.query !== undefined) {
@@ -394,8 +406,9 @@ const PromptLibrary = () => {
               }
               if (n.includePro !== undefined) setIncludePro(!!n.includePro);
             }}
-            onSearch={refresh}
+            onSearch={() => { clearRandom(); refresh(); }}
             onClear={() => {
+              clearRandom();
               setCategoryId(undefined);
               setSubcategoryId(undefined);
               setQuery("");
@@ -413,27 +426,27 @@ const PromptLibrary = () => {
               key={p.id}
               prompt={p as any}
               categories={categories}
-              onTagClick={(t) => {
+              onTagClick={(t) => { clearRandom();
                 setSelectedTag(t);
                 setQuery(t); // reflect in input
                 setCategoryId(undefined);
                 setSubcategoryId(undefined);
               }}
-              onCategoryClick={(cid) => {
+              onCategoryClick={(cid) => { clearRandom();
                 setCategoryId(cid);
                 setSubcategoryId(undefined);
                 setSelectedTag(undefined);
                 setProOnly(false);
                 setQuery("");
               }}
-              onSubcategoryClick={(sid, cid) => {
+              onSubcategoryClick={(sid, cid) => { clearRandom();
                 setCategoryId(cid);
                 setSubcategoryId(sid);
                 setSelectedTag(undefined);
                 setProOnly(false);
                 setQuery("");
               }}
-              onViewAllPro={() => {
+              onViewAllPro={() => { clearRandom();
                 setCategoryId(undefined);
                 setSubcategoryId(undefined);
                 setSelectedTag(undefined);
