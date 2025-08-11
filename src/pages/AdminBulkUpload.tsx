@@ -167,7 +167,7 @@ const AdminBulkUpload = () => {
       .map((r) => ({
         category_id: catMap.get(r.category_slug),
         subcategory_id: r.subcategory_slug ? subMap.get(r.subcategory_slug) : null,
-        title: r.title,
+        title: String(r.title ?? "").replace(/\s*\((?:SCET|ROSES|TREF|PECRA)\)\s*$/i, "").trim(),
         what_for: r.what_for ?? null,
         prompt: r.prompt,
         image_prompt: r.image_prompt ?? null,
