@@ -17,7 +17,7 @@ const Footer = () => {
               decoding="async"
             />
           </Link>
-          <p className="text-muted-foreground font-bold">Ready-to-use prompts for real-world work.</p>
+          <p className="text-muted-foreground ml-1.5">Ready-to-use prompts for real-world work.</p>
         </div>
         <div className="md:col-span-2 grid grid-cols-2 gap-4">
           <nav className="flex flex-col gap-2">
