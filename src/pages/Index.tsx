@@ -1,6 +1,6 @@
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
 import { Sparkles, Zap, ShieldCheck, ListChecks, Wand2, Rocket, Check } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
@@ -12,6 +12,7 @@ import type { Category as CategoryType } from "@/data/prompts";
 
 const Index = () => {
   const { user } = useSupabaseAuth();
+  const navigate = useNavigate();
 
   type HP = {
     id: string;
@@ -240,7 +241,13 @@ const Index = () => {
             <CarouselContent>
               {slides.map((p) => (
                 <CarouselItem key={p.id} className="md:basis-1/2 lg:basis-1/3">
-                  <PromptCard prompt={p as any} categories={homeCategories} />
+                  <PromptCard
+                    prompt={p as any}
+                    categories={homeCategories}
+                    onCategoryClick={(cid) => navigate(`/library?categoryId=${cid}`)}
+                    onSubcategoryClick={(sid, cid) => navigate(`/library?categoryId=${cid}&subcategoryId=${sid}`)}
+                    onCopyClick={() => navigate(`/library?categoryId=${p.categoryId || ""}${p.subcategoryId ? `&subcategoryId=${p.subcategoryId}` : ""}`)}
+                  />
                 </CarouselItem>
               ))}
             </CarouselContent>
