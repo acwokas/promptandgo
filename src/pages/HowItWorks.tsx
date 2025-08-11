@@ -10,14 +10,30 @@ const HowItWorks = () => {
   return (<>
     <SEO title="How Prompting Works" description="Browse, paste into ChatGPT or Claude, then tweak and go — fast, no jargon." />
     <PageHero
-      title={<>How Prompting Works</>}
+      title={<>How <span className="text-gradient-brand">Prompting</span> Works</>}
       subtitle={
         <>
           Using AI shouldn’t feel like a guessing game. At PromptAndGo, we make it easy to get great results, fast. Just pick a prompt, paste it into your favourite AI tool (like ChatGPT or Claude), and go. No engineering jargon. No wasted time. Just results.
         </>
       }
       minHeightClass="min-h-[56vh]"
-    />
+    >
+      <Button asChild size="lg" variant="hero" className="px-6">
+        <Link to="/library">Browse Prompt Library</Link>
+      </Button>
+      {user ? (
+        <Button asChild size="lg" variant="secondary">
+          <Link to="/account/favorites">My Prompts</Link>
+        </Button>
+      ) : (
+        <Button asChild size="lg" variant="secondary">
+          <Link to="/auth">Login</Link>
+        </Button>
+      )}
+      <Button asChild size="lg" variant="inverted">
+        <Link to="/packs">Explore ⚡️Power Packs</Link>
+      </Button>
+    </PageHero>
 
     <main className="container py-12">
       <section aria-labelledby="how-it-works-diagram" className="max-w-5xl mx-auto">
