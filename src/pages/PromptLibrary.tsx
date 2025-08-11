@@ -375,6 +375,18 @@ const PromptLibrary = () => {
                 setCategoryId(undefined);
                 setSubcategoryId(undefined);
               }}
+              onCategoryClick={(cid) => {
+                setCategoryId(cid);
+                setSubcategoryId(undefined);
+                setSelectedTag(undefined);
+                setQuery("");
+              }}
+              onSubcategoryClick={(sid, cid) => {
+                setCategoryId(cid);
+                setSubcategoryId(sid);
+                setSelectedTag(undefined);
+                setQuery("");
+              }}
             />
           ))}
         </section>

@@ -42,9 +42,11 @@ interface PromptCardProps {
   prompt: Prompt;
   categories: Category[];
   onTagClick?: (tag: string) => void;
+  onCategoryClick?: (categoryId: string) => void;
+  onSubcategoryClick?: (subcategoryId: string, categoryId: string) => void;
 }
 
-export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) => {
+export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, onSubcategoryClick }: PromptCardProps) => {
   const category = categories.find((c) => c.id === prompt.categoryId);
   const sub = category?.subcategories.find((s) => s.id === prompt.subcategoryId);
   const displayTitle = cleanTitle(prompt.title);
@@ -206,9 +208,29 @@ export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) 
       )}
       <CardHeader>
         <div className="flex items-center gap-2 flex-wrap text-xs text-muted-foreground">
-          <span>{category?.name}</span>
-          <span>›</span>
-          <span>{sub?.name}</span>
+          {category && (
+            <button
+              type="button"
+              className="text-primary hover:underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-ring rounded-sm"
+              onClick={() => onCategoryClick?.(category.id)}
+              aria-label={`Filter by category ${category.name}`}
+              title={`Filter by ${category.name}`}
+            >
+              {category.name}
+            </button>
+          )}
+          {category && sub && <span>›</span>}
+          {sub && (
+            <button
+              type="button"
+              className="text-primary hover:underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-ring rounded-sm"
+              onClick={() => onSubcategoryClick?.(sub.id, category?.id as string)}
+              aria-label={`Filter by subcategory ${sub.name}`}
+              title={`Filter by ${sub.name}`}
+            >
+              {sub.name}
+            </button>
+          )}
         </div>
         <CardTitle className="text-xl leading-tight">{displayTitle}</CardTitle>
         <p className="text-sm text-muted-foreground">🤓 {prompt.whatFor}</p>
