@@ -47,9 +47,9 @@ const PromptPacks = () => {
 
   return (
     <>
-      <PageHero title={<>Prompt Packs</>} subtitle={<>Curated bundles for specific goals. Limited-time launch pricing.</>} minHeightClass="min-h-[40vh]" />
+      <PageHero title={<>Premium Packs</>} subtitle={<>Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results.</>} minHeightClass="min-h-[40vh]" />
       <main className="container py-10">
-        <SEO title="Prompt Packs – Save 50%" description="Unlock themed prompt bundles. Launch special: $9.99 → $4.99." />
+        <SEO title="Premium Packs – Save 50%" description="Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results." />
 
       {loading ? (
         <div className="text-muted-foreground">Loading packs…</div>
