@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Share2, Briefcase, Bot, FileText, Megaphone, HeartPulse, ShoppingBag, Brain, Clock } from "lucide-react";
+
 import type { Category } from "@/data/prompts";
 
 interface FiltersProps {
@@ -29,16 +29,16 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
   const subcategoriesSorted = [...(currentCat?.subcategories || [])].sort((a, b) => a.name.localeCompare(b.name));
   const isCategorySelected = Boolean(categoryId);
 
-  const popularCats = [
-    { label: "Social Media Management", icon: Share2 },
-    { label: "Career Development", icon: Briefcase },
-    { label: "AI for Business Automation", icon: Bot },
-    { label: "Content Creation", icon: FileText },
-    { label: "Content Marketing", icon: Megaphone },
-    { label: "Health & Wellness", icon: HeartPulse },
-    { label: "E-commerce", icon: ShoppingBag },
-    { label: "Personal Growth & Mindfulness", icon: Brain },
-    { label: "Productivity & Time Management", icon: Clock },
+  const quickButtons = [
+    "Content Creation",
+    "Content Marketing",
+    "Social Media",
+    "Ecommerce",
+    "AI for Business Automation",
+    "Career Development",
+    "Lifestyle",
+    "Wellness",
+    "Productivity",
   ] as const;
 
   return (
@@ -105,7 +105,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
           />
         </div>
 
-        <div className="md:col-span-3 flex flex-wrap items-center gap-2">
+        <div className="md:col-span-3 flex flex-col items-start gap-2">
           <div className="flex items-center gap-2">
             <Checkbox
               id="include-pro"
@@ -116,10 +116,10 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
             <Label htmlFor="include-pro" className="text-sm">Include PRO Prompts</Label>
           </div>
           <Button variant="cta" onClick={onSearch} aria-label="Run search">
-            Search
+            Search Prompts
           </Button>
-          <Button variant="ghost" onClick={onClear} aria-label="Clear filters and search">
-            Clear
+          <Button variant="inverted" onClick={onClear} aria-label="Clear filters and search">
+            Clear Selections
           </Button>
         </div>
       </div>
@@ -127,27 +127,31 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
       <div className="mt-6">
         <p className="text-sm text-muted-foreground mb-3">Or select a popular category:</p>
         <TooltipProvider>
-          <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-2">
-            {popularCats.map((pc) => {
-              const catId = categories.find((c) => c.name.toLowerCase().trim() === pc.label.toLowerCase().trim())?.id;
-              const Icon = pc.icon;
-              const disabled = !catId;
+          <div className="flex flex-wrap gap-2">
+            {quickButtons.map((label) => {
+              const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "");
+              const ln = normalize(label);
+              const match = categories.find((c) => {
+                const cn = normalize(c.name);
+                return cn === ln || cn.includes(ln) || ln.includes(cn);
+              });
+              const catId = match?.id;
               return (
-                <Tooltip key={pc.label}>
+                <Tooltip key={label}>
                   <TooltipTrigger asChild>
                     <Button
                       type="button"
-                      className="h-10 w-10 p-0 bg-primary text-primary-foreground hover:opacity-90 shadow-sm"
-                      aria-label={pc.label}
+                      className="bg-primary text-primary-foreground hover:opacity-90 shadow-sm whitespace-nowrap"
+                      aria-label={label}
                       onClick={() => {
                         if (catId) onChange({ categoryId: catId, subcategoryId: undefined, query: "" });
+                        else onChange({ query: label });
                       }}
-                      disabled={disabled}
                     >
-                      <Icon className="h-5 w-5" aria-hidden="true" />
+                      {label}
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent>{pc.label}</TooltipContent>
+                  <TooltipContent>{label}</TooltipContent>
                 </Tooltip>
               )
             })}
