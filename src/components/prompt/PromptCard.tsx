@@ -85,8 +85,8 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   const PACK_DISCOUNT_CENTS = 499;
   const PROMPT_ORIGINAL_CENTS = 199;
   const PROMPT_DISCOUNT_CENTS = 96;
-  const SUB_ORIGINAL_CENTS = 1499;
-  const SUB_DISCOUNT_CENTS = 749;
+  const SUB_ORIGINAL_CENTS = 2499;
+  const SUB_DISCOUNT_CENTS = 1299;
   const fmtUSD = (cents: number) => `$${(cents / 100).toFixed(2)}`;
   useEffect(() => {
     let ignore = false;
