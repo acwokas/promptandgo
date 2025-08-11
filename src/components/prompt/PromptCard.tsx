@@ -265,10 +265,10 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                       Or unlock with a Monthly Subscription of <span className="line-through">{fmtUSD(SUB_ORIGINAL_CENTS)}</span> <span className="text-primary font-medium">{fmtUSD(SUB_DISCOUNT_CENTS)}</span>. Cancel any time.
                     </div>
                   </div>
-                  <div className="flex gap-2 justify-center">
-                    <Button size="sm" onClick={addPromptToCart}>Buy Prompt {fmtUSD(PROMPT_DISCOUNT_CENTS)}</Button>
-                    <Button size="sm" variant="secondary" onClick={handleSubscribeClick}>Subscribe {fmtUSD(SUB_DISCOUNT_CENTS)} per month</Button>
-                  </div>
+          <div className="flex flex-col gap-2 justify-center items-center">
+            <Button size="sm" onClick={addPromptToCart}>Buy Prompt {fmtUSD(PROMPT_DISCOUNT_CENTS)}</Button>
+            <Button size="sm" variant="secondary" onClick={handleSubscribeClick}>Subscribe for {fmtUSD(SUB_DISCOUNT_CENTS)} per month</Button>
+          </div>
                 </div>
               </div>
             )}

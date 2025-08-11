@@ -315,7 +315,7 @@ const PromptLibrary = () => {
             <span className="text-gradient-brand">Prompt</span> Library
           </>
         }
-        subtitle={<>Find the perfect prompt fast: browse free prompts by category or subcategory, save your favourites for later, or add premium prompts to your cart to review later.</>}
+        subtitle={<>Find the perfect prompt fast: browse free prompts by category or subcategory, save your favourites for later, add premium prompts to your cart to review later, or subscribe to PromptAndGo to immediately unlock all our paid prompts.</>}
       >
         <Button asChild size="lg" variant="hero" className="px-6">
           <a href="#library-filters">Browse Prompt Library</a>
