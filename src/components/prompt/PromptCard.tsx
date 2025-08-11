@@ -185,7 +185,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
     } finally {
       setFavLoading(false);
     }
-};
+  };
 
   const handleSubscribeClick = async () => {
     if (!user) {
@@ -231,12 +231,6 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
     return <Tag className="h-3.5 w-3.5" aria-hidden />;
   };
 
-  const getAccentIndex = (name?: string) => {
-    const s = name || "misc";
-    let h = 0;
-    for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
-    return (h % 6) + 1; // 1..6 matching CSS utilities in index.css
-  };
   return (
     <Card className={cn("relative overflow-hidden h-full with-category-accent card-surface", accentClass)}>
       <CardHeader>
