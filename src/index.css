@@ -59,11 +59,22 @@ All colors MUST be HSL. */
     /* Typography */
     --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
 
-    /* Effects */
+    /* Effects and accents */
     --gradient-primary: linear-gradient(135deg, hsl(var(--brand)), hsl(var(--brand-2)));
     --gradient-hero: radial-gradient(80% 80% at 50% 0%, hsl(var(--brand) / 0.18) 0%, transparent 60%),
                      linear-gradient(180deg, hsl(220 60% 6%) 0%, hsl(220 60% 3%) 100%);
+
+    /* Subtle accent palette for category color-coding */
+    --accent-1: 210 90% 56%; /* blue */
+    --accent-2: 160 84% 39%; /* emerald */
+    --accent-3: 40 96% 55%;  /* amber */
+    --accent-4: 280 70% 60%; /* purple */
+    --accent-5: 340 82% 60%; /* pink */
+    --accent-6: 20 90% 55%;  /* orange */
+
+    /* Shadows */
     --shadow-elevated: 0 10px 30px -10px hsl(var(--brand) / 0.35);
+    --shadow-elegant: 0 12px 24px -12px hsl(var(--brand) / 0.25);
     --shadow-glow: 0 0 0 1px hsl(var(--brand) / 0.6), 0 10px 30px -10px hsl(var(--brand-2) / 0.5);
     --shadow-glow-strong: 0 0 0 1px hsl(var(--brand) / 0.75), 0 14px 40px -8px hsl(var(--brand-2) / 0.65);
     --grid-line: 210 100% 60%;
@@ -140,6 +151,18 @@ All colors MUST be HSL. */
   }
   .shadow-glow { box-shadow: var(--shadow-glow); }
   .shadow-glow-strong { box-shadow: var(--shadow-glow-strong); }
+  .shadow-elegant { box-shadow: var(--shadow-elegant); }
   .text-gradient-brand { background: var(--gradient-primary); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  /* Category accent helpers */
+  .with-category-accent { border-top: 4px solid hsl(var(--category-accent)); }
+  .category-accent-1 { --category-accent: var(--accent-1); }
+  .category-accent-2 { --category-accent: var(--accent-2); }
+  .category-accent-3 { --category-accent: var(--accent-3); }
+  .category-accent-4 { --category-accent: var(--accent-4); }
+  .category-accent-5 { --category-accent: var(--accent-5); }
+  .category-accent-6 { --category-accent: var(--accent-6); }
+  .card-surface { background-image: linear-gradient(180deg, hsl(var(--card) / 0.98), hsl(var(--category-accent) / 0.06)); }
 }
+
 

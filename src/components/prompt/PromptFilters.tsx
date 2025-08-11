@@ -110,8 +110,8 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
             Search
           </Button>
           <span className="text-foreground">or</span>
-          <Button variant="secondary" className="border border-foreground" onClick={onClear} aria-label="Clear filters and search">
-            Clear Selections
+          <Button variant="secondary" className="border border-foreground" onClick={onClear} aria-label="Reset filters and search">
+            Reset Filters
           </Button>
         </div>
       </div>
