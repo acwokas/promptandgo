@@ -6,8 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { addToCart } from "@/lib/cart";
 import { toast } from "@/hooks/use-toast";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
+import { Input } from "@/components/ui/input";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
+import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
+import { Lock, Check } from "lucide-react";
 
 const PACK_ORIGINAL_CENTS = 999;
 const PACK_DISCOUNT_CENTS = 499;
@@ -15,70 +19,216 @@ const fmtUSD = (cents: number) => `$${(cents / 100).toFixed(2)}`;
 
 type Pack = { id: string; name: string; description: string | null };
 
+type PromptLite = { id: string; title: string; is_pro: boolean; excerpt: string | null };
+
 const PromptPacks = () => {
   const [packs, setPacks] = useState<Pack[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchParams] = useSearchParams();
   const [highlight, setHighlight] = useState<string | null>(null);
+  const [query, setQuery] = useState("");
+  const [contents, setContents] = useState<Record<string, PromptLite[]>>({});
+  const [ownedPromptIds, setOwnedPromptIds] = useState<Set<string>>(new Set());
+  const [ownedPackIds, setOwnedPackIds] = useState<Set<string>>(new Set());
+  const navigate = useNavigate();
+  const { user } = useSupabaseAuth();
 
   useEffect(() => {
     let cancelled = false;
     const load = async () => {
-      const { data, error } = await supabase.from('packs').select('id,name,description').eq('is_active', true).order('name');
-      if (!cancelled && !error) setPacks(data || []);
-      setLoading(false);
-      const hl = searchParams.get('highlight');
-      setHighlight(hl);
-      if (hl) {
-        setTimeout(() => {
-          const el = document.getElementById(`pack-${hl}`);
-          el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 50);
+      setLoading(true);
+      const { data: packRows, error } = await supabase
+        .from('packs')
+        .select('id,name,description')
+        .eq('is_active', true)
+        .order('name');
+
+      if (!cancelled) {
+        if (!error) setPacks(packRows || []);
+        setLoading(false);
+
+        const hl = searchParams.get('highlight');
+        setHighlight(hl);
+        if (hl) {
+          setTimeout(() => {
+            const el = document.getElementById(`pack-${hl}`);
+            el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 50);
+        }
+
+        const packIds = (packRows || []).map((r) => r.id);
+        if (packIds.length) {
+          const { data: joins } = await supabase
+            .from('pack_prompts')
+            .select('pack_id,prompt_id')
+            .in('pack_id', packIds);
+
+          const promptIds = Array.from(new Set((joins || []).map((j) => j.prompt_id)));
+          if (promptIds.length) {
+            const { data: promptsData } = await supabase
+              .from('prompts')
+              .select('id,title,is_pro,excerpt')
+              .in('id', promptIds);
+
+            const pMap = new Map((promptsData || []).map((p) => [p.id as string, p]));
+            const grouped: Record<string, PromptLite[]> = {};
+            (joins || []).forEach((j) => {
+              const pr = pMap.get(j.prompt_id as string);
+              if (pr) {
+                (grouped[j.pack_id as string] ||= []).push({
+                  id: pr.id as string,
+                  title: (pr as any).title,
+                  is_pro: (pr as any).is_pro,
+                  excerpt: ((pr as any).excerpt ?? null) as string | null,
+                });
+              }
+            });
+            if (!cancelled) setContents(grouped);
+          } else {
+            if (!cancelled) setContents({});
+          }
+
+          if (user) {
+            const [{ data: pAccess }, { data: pkAccess }] = await Promise.all([
+              supabase.from('prompt_access').select('prompt_id'),
+              supabase.from('pack_access').select('pack_id').in('pack_id', packIds),
+            ]);
+            if (!cancelled) {
+              setOwnedPromptIds(new Set((pAccess || []).map((r: any) => r.prompt_id as string)));
+              setOwnedPackIds(new Set((pkAccess || []).map((r: any) => r.pack_id as string)));
+            }
+          } else {
+            if (!cancelled) {
+              setOwnedPromptIds(new Set());
+              setOwnedPackIds(new Set());
+            }
+          }
+        } else {
+          if (!cancelled) {
+            setContents({});
+            setOwnedPromptIds(new Set());
+            setOwnedPackIds(new Set());
+          }
+        }
       }
     };
     load();
     return () => { cancelled = true; };
-  }, [searchParams]);
+  }, [searchParams, user]);
 
   const handleAdd = (p: Pack) => {
     addToCart({ id: p.id, type: 'pack', title: p.name, unitAmountCents: PACK_DISCOUNT_CENTS, quantity: 1 });
     toast({ title: 'Added to cart', description: `${p.name} — ${fmtUSD(PACK_DISCOUNT_CENTS)}` });
   };
+  const handleSubscribe = () => {
+    if (!user) {
+      navigate('/auth');
+      return;
+    }
+    toast({
+      title: 'Premium subscription',
+      description: 'Subscription checkout coming next. For now, you can purchase individual packs.',
+    });
+  };
+
+  const filteredPacks = query.trim()
+    ? packs.filter((pk) => {
+        const items = contents[pk.id] || [];
+        const q = query.toLowerCase();
+        return items.some((it) => (it.title?.toLowerCase().includes(q) || (it.excerpt || '').toLowerCase().includes(q)));
+      })
+    : packs;
 
   return (
     <>
       <PageHero title={<>Premium Packs</>} subtitle={<>Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results.</>} minHeightClass="min-h-[40vh]" />
       <main className="container py-10">
         <SEO title="Premium Packs – Save 50%" description="Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results." />
+        <div className="mb-6 max-w-xl">
+          <Input
+            placeholder="Search within pack contents..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </div>
 
-      {loading ? (
-        <div className="text-muted-foreground">Loading packs…</div>
-      ) : packs.length === 0 ? (
-        <div className="text-muted-foreground">No packs available yet.</div>
-      ) : (
-        <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {packs.map((p) => (
-            <Card key={p.id} id={`pack-${p.id}`} className={`relative ${highlight === p.id ? 'ring-2 ring-primary' : ''}`}>
-              <div className="absolute top-3 right-3 z-10 flex gap-2">
-                <Badge variant="destructive">PRO</Badge>
-                <Badge variant="secondary">SALE</Badge>
-              </div>
-              <CardHeader>
-                <CardTitle className="text-xl leading-tight">{p.name}</CardTitle>
-                {p.description && <p className="text-sm text-muted-foreground">{p.description}</p>}
-              </CardHeader>
-              <CardContent className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-muted-foreground line-through">{fmtUSD(PACK_ORIGINAL_CENTS)}</span>
-                  <span className="text-2xl font-semibold">{fmtUSD(PACK_DISCOUNT_CENTS)}</span>
-                </div>
-                <Button variant="hero" onClick={() => handleAdd(p)}>Add to cart</Button>
-              </CardContent>
-            </Card>
-          ))}
-        </section>
-      )}
-    </main>
+        {loading ? (
+          <div className="text-muted-foreground">Loading packs…</div>
+        ) : filteredPacks.length === 0 ? (
+          <div className="text-muted-foreground">No packs match your search.</div>
+        ) : (
+          <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {filteredPacks.map((p) => {
+              const items = contents[p.id] || [];
+              const packOwned = ownedPackIds.has(p.id);
+              const ownedCount = packOwned ? items.length : items.filter((it) => ownedPromptIds.has(it.id)).length;
+              const freeCount = items.filter((it) => !it.is_pro).length;
+              const proCount = items.filter((it) => it.is_pro).length;
+
+              return (
+                <Card key={p.id} id={`pack-${p.id}`} className={`relative ${highlight === p.id ? 'ring-2 ring-primary' : ''}`}>
+                  <div className="absolute top-3 right-3 z-10 flex gap-2">
+                    <Badge variant="destructive">PRO</Badge>
+                    <Badge variant="secondary">SALE</Badge>
+                  </div>
+                  <CardHeader>
+                    <CardTitle className="text-xl leading-tight">{p.name}</CardTitle>
+                    {p.description && <p className="text-sm text-muted-foreground">{p.description}</p>}
+                    <div className="text-sm text-muted-foreground">
+                      {packOwned ? 'You own this pack.' : `You own ${ownedCount}/${items.length} items`} • {freeCount} free, {proCount} PRO
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <Accordion type="single" collapsible className="w-full">
+                      <AccordionItem value="contents">
+                        <AccordionTrigger>View contents ({items.length})</AccordionTrigger>
+                        <AccordionContent>
+                          <ul className="space-y-2">
+                            {items.map((it) => {
+                              const owned = packOwned || ownedPromptIds.has(it.id);
+                              const locked = it.is_pro && !owned;
+                              return (
+                                <li key={it.id} className="flex items-start justify-between">
+                                  <div className={`text-sm ${locked ? 'text-muted-foreground' : ''}`}>
+                                    <div className={locked ? 'blur-[1px] select-none' : ''}>{it.title}</div>
+                                    {!locked && it.excerpt && (
+                                      <p className="text-xs text-muted-foreground mt-0.5">{it.excerpt}</p>
+                                    )}
+                                  </div>
+                                  <div className="ml-3 shrink-0 flex gap-1 items-center">
+                                    {it.is_pro ? <Badge variant="secondary">PRO</Badge> : <Badge>Free</Badge>}
+                                    {owned && (
+                                      <Badge variant="outline" className="flex items-center gap-1">
+                                        <Check className="h-3 w-3" /> Owned
+                                      </Badge>
+                                    )}
+                                    {locked && <Lock className="h-4 w-4 text-muted-foreground" />}
+                                  </div>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <span className="text-muted-foreground line-through">{fmtUSD(PACK_ORIGINAL_CENTS)}</span>
+                        <span className="text-2xl font-semibold">{fmtUSD(PACK_DISCOUNT_CENTS)}</span>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button variant="hero" onClick={() => handleAdd(p)}>Get Pack</Button>
+                        <Button variant="cta" onClick={handleSubscribe}>Subscribe</Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </section>
+        )}
+      </main>
     </>
   );
 };
