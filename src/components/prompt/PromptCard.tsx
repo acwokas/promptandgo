@@ -274,10 +274,11 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               </div>
             )}
           </div>
-          <div className="flex items-center gap-2 mt-2">
+          <div className="mt-2 flex flex-col gap-2">
             <Button
               size="sm"
               variant="hero"
+              className="w-full"
               disabled={showLock}
               title={showLock ? "Unlock to copy" : undefined}
               onClick={() => hasAccess && copy(prompt.prompt, "Prompt")}
@@ -292,6 +293,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                     <Button
                       variant="outline"
                       size="sm"
+                      className="w-full"
                       onClick={toggleFavorite}
                       disabled={favLoading}
                       aria-label={isFav ? "Remove from My Prompts" : "Add to My Prompts"}
