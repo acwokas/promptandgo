@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
 import { PromptCard } from "@/components/prompt/PromptCard";
+import type { Category as CategoryType } from "@/data/prompts";
 
 const Index = () => {
   const { user } = useSupabaseAuth();
@@ -25,46 +26,69 @@ const Index = () => {
   };
 
   const [slides, setSlides] = useState<HP[]>([]);
+  const [homeCategories, setHomeCategories] = useState<CategoryType[]>([]);
   const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null);
 
   useEffect(() => {
     const load = async () => {
       try {
-        const { data, error } = await supabase
-          .from("prompts")
-          .select("id, category_id, subcategory_id, title, what_for, prompt, excerpt, is_pro")
-          .order("created_at", { ascending: false })
-          .limit(200);
-        if (error) throw error;
-        const rows = data || [];
-        if (rows.length === 0) { setSlides([]); return; }
+        const [promptsRes, catsRes, subsRes] = await Promise.all([
+          supabase
+            .from("prompts")
+            .select("id, category_id, subcategory_id, title, what_for, prompt, excerpt, is_pro")
+            .order("created_at", { ascending: false })
+            .limit(200),
+          supabase.from("categories").select("id,name,slug").order("name"),
+          supabase.from("subcategories").select("id,name,slug,category_id").order("name"),
+        ]);
+        if (promptsRes.error) throw promptsRes.error;
+        const rows = promptsRes.data || [];
+        if (rows.length === 0) { setSlides([]); }
 
-        const byCat = new Map<string, any[]>();
-        rows.forEach((r: any) => {
-          const cid = r.category_id || "misc";
-          const arr = byCat.get(cid) || [];
-          arr.push(r);
-          byCat.set(cid, arr);
-        });
-        const sortedCats = Array.from(byCat.entries()).sort((a, b) => b[1].length - a[1].length);
-        const take = Math.min(6, sortedCats.length);
-        const picks: HP[] = [];
-        for (let i = 0; i < take; i++) {
-          const list = sortedCats[i][1];
-          const pick = list[Math.floor(Math.random() * list.length)];
-          picks.push({
-            id: pick.id,
-            categoryId: pick.category_id,
-            subcategoryId: pick.subcategory_id,
-            title: pick.title,
-            whatFor: pick.what_for,
-            prompt: pick.prompt,
-            excerpt: pick.excerpt,
-            tags: [],
-            isPro: !!pick.is_pro,
+        // Build categories list for PromptCard labels
+        if (!catsRes.error && !subsRes.error) {
+          const subcatByCategory = new Map<string, { id: string; name: string }[]>();
+          (subsRes.data || []).forEach((s: any) => {
+            const list = subcatByCategory.get(s.category_id as string) || [];
+            list.push({ id: s.id as string, name: s.name as string });
+            subcatByCategory.set(s.category_id as string, list);
           });
+          const built: CategoryType[] = (catsRes.data || []).map((c: any) => ({
+            id: c.id as string,
+            name: c.name as string,
+            subcategories: subcatByCategory.get(c.id as string) || [],
+          }));
+          setHomeCategories(built);
         }
-        setSlides(picks);
+
+        if (rows.length > 0) {
+          const byCat = new Map<string, any[]>();
+          rows.forEach((r: any) => {
+            const cid = r.category_id || "misc";
+            const arr = byCat.get(cid) || [];
+            arr.push(r);
+            byCat.set(cid, arr);
+          });
+          const sortedCats = Array.from(byCat.entries()).sort((a, b) => b[1].length - a[1].length);
+          const take = Math.min(6, sortedCats.length);
+          const picks: HP[] = [];
+          for (let i = 0; i < take; i++) {
+            const list = sortedCats[i][1];
+            const pick = list[Math.floor(Math.random() * list.length)];
+            picks.push({
+              id: pick.id,
+              categoryId: pick.category_id,
+              subcategoryId: pick.subcategory_id,
+              title: pick.title,
+              whatFor: pick.what_for,
+              prompt: pick.prompt,
+              excerpt: pick.excerpt,
+              tags: [],
+              isPro: !!pick.is_pro,
+            });
+          }
+          setSlides(picks);
+        }
       } catch (e) {
         console.error(e);
       }
@@ -216,7 +240,7 @@ const Index = () => {
             <CarouselContent>
               {slides.map((p) => (
                 <CarouselItem key={p.id} className="md:basis-1/2 lg:basis-1/3">
-                  <PromptCard prompt={p as any} categories={[]} />
+                  <PromptCard prompt={p as any} categories={homeCategories} />
                 </CarouselItem>
               ))}
             </CarouselContent>
