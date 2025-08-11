@@ -22,6 +22,7 @@ interface PromptUI {
   imagePrompt?: string | null;
   excerpt?: string | null;
   tags: string[];
+  isPro?: boolean;
 }
 
 // Deduplicate prompts by normalized title to avoid showing near-identical entries
@@ -135,7 +136,7 @@ const PromptLibrary = () => {
         let q = supabase
           .from("prompts")
           .select(
-            "id, category_id, subcategory_id, title, what_for, prompt, image_prompt, excerpt",
+            "id, category_id, subcategory_id, title, what_for, prompt, image_prompt, excerpt, is_pro",
             { count: "exact" }
           )
           .order("created_at", { ascending: false });
@@ -181,6 +182,7 @@ const PromptLibrary = () => {
           imagePrompt: r.image_prompt,
           excerpt: r.excerpt,
           tags: tagMap.get(r.id) || [],
+          isPro: !!r.is_pro,
         }));
 
         const total = count || 0;
@@ -214,7 +216,7 @@ const PromptLibrary = () => {
       const oneRes = await supabase
         .from("prompts")
         .select(
-          "id, category_id, subcategory_id, title, what_for, prompt, image_prompt, excerpt"
+          "id, category_id, subcategory_id, title, what_for, prompt, image_prompt, excerpt, is_pro"
         )
         .range(index, index);
       if (oneRes.error) throw oneRes.error;
@@ -242,6 +244,7 @@ const PromptLibrary = () => {
         imagePrompt: row.image_prompt,
         excerpt: row.excerpt,
         tags: tagNames,
+        isPro: !!row.is_pro,
       };
       setItems([mapped]);
       setHasMore(false);

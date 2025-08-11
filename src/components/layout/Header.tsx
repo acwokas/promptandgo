@@ -1,18 +1,30 @@
 import { Link, NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, User } from "lucide-react";
+import { Menu, User, ShoppingCart } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useToast } from "@/components/ui/use-toast";
 import { useEnsureProfile } from "@/hooks/useEnsureProfile";
-
+import { useEffect, useState } from "react";
+import { getCartCount } from "@/lib/cart";
 
 const Header = () => {
   const { user } = useSupabaseAuth();
-  
   const { toast } = useToast();
   useEnsureProfile();
+
+  const [cartCount, setCartCount] = useState<number>(getCartCount());
+  useEffect(() => {
+    const onChange = () => setCartCount(getCartCount());
+    window.addEventListener('cart:change', onChange);
+    window.addEventListener('storage', onChange);
+    return () => {
+      window.removeEventListener('cart:change', onChange);
+      window.removeEventListener('storage', onChange);
+    };
+  }, []);
+
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) {
@@ -57,6 +69,7 @@ const Header = () => {
                   <NavLink to="/how-it-works" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>How it Works</NavLink>
                   <NavLink to="/library" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Prompt Library</NavLink>
                   <NavLink to="/packs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Premium Packs</NavLink>
+                  <NavLink to="/cart" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Cart</NavLink>
                   <NavLink to="/faqs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>FAQs</NavLink>
                   <NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Prompt Pulse</NavLink>
                   
@@ -78,6 +91,16 @@ const Header = () => {
           {/* Desktop CTA */}
           <Button asChild variant="hero" className="px-5 hidden md:inline-flex">
             <Link to="/library?random=1">Surprise Me!</Link>
+          </Button>
+          <Button asChild variant="ghost" size="icon" className="hidden md:inline-flex relative" title="Cart" aria-label="Cart">
+            <Link to="/cart">
+              <ShoppingCart className="h-5 w-5" aria-hidden="true" />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] px-1">
+                  {cartCount}
+                </span>
+              )}
+            </Link>
           </Button>
           {!user && (
             <Button asChild variant="ghost" className="hidden md:inline-flex">

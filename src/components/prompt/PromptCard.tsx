@@ -10,6 +10,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { addToCart } from "@/lib/cart";
 
 // Clean display title by removing common variant markers
 const cleanTitle = (t?: string | null) => {
@@ -60,7 +61,13 @@ export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) 
   const { user } = useSupabaseAuth();
   const [isFav, setIsFav] = useState(false);
   const [favLoading, setFavLoading] = useState(false);
-
+  const isPro = (prompt as any).isPro || (prompt as any).is_pro || false;
+  const [hasAccess, setHasAccess] = useState(false);
+  const [packNames, setPackNames] = useState<string[]>([]);
+  const now = new Date();
+  const monthName = now.toLocaleString(undefined, { month: 'long' });
+  const PRO_ORIGINAL_CENTS = 199;
+  const PRO_DISCOUNT_CENTS = 99;
   useEffect(() => {
     let ignore = false;
     const check = async () => {
@@ -80,6 +87,57 @@ export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) 
     return () => {
       ignore = true;
     };
+  }, [user?.id, prompt.id]);
+
+  useEffect(() => {
+    let cancelled = false;
+    const loadAccessAndPacks = async () => {
+      try {
+        // Load pack names this prompt belongs to
+        const pp = await supabase.from('pack_prompts').select('pack_id').eq('prompt_id', prompt.id);
+        const packIds = (pp.data || []).map((r: any) => r.pack_id);
+        if (packIds.length) {
+          const packsRes = await supabase.from('packs').select('id,name').in('id', packIds);
+          if (!cancelled && !packsRes.error) setPackNames((packsRes.data || []).map((p: any) => p.name));
+        } else {
+          if (!cancelled) setPackNames([]);
+        }
+
+        if (!user) {
+          if (!cancelled) setHasAccess(false);
+          return;
+        }
+
+        // Check subscription
+        const subRes = await supabase.from('subscribers').select('subscribed').eq('user_id', user.id).maybeSingle();
+        if (subRes.data?.subscribed) {
+          if (!cancelled) setHasAccess(true);
+          return;
+        }
+
+        // Check direct prompt access
+        const pa = await supabase.from('prompt_access').select('user_id').eq('user_id', user.id).eq('prompt_id', prompt.id).maybeSingle();
+        if (pa.data) {
+          if (!cancelled) setHasAccess(true);
+          return;
+        }
+
+        // Check pack access intersect
+        if (packIds.length) {
+          const pacc = await supabase.from('pack_access').select('pack_id').eq('user_id', user.id).in('pack_id', packIds);
+          if ((pacc.data || []).length > 0) {
+            if (!cancelled) setHasAccess(true);
+            return;
+          }
+        }
+        if (!cancelled) setHasAccess(false);
+      } catch (e) {
+        console.error(e);
+        if (!cancelled) setHasAccess(false);
+      }
+    };
+    loadAccessAndPacks();
+    return () => { cancelled = true; };
   }, [user?.id, prompt.id]);
 
   const toggleFavorite = async () => {

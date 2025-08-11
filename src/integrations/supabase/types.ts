@@ -326,6 +326,7 @@ export type Database = {
           excerpt: string | null
           id: string
           image_prompt: string | null
+          is_pro: boolean
           prompt: string
           search_vector: unknown | null
           subcategory_id: string | null
@@ -339,6 +340,7 @@ export type Database = {
           excerpt?: string | null
           id?: string
           image_prompt?: string | null
+          is_pro?: boolean
           prompt: string
           search_vector?: unknown | null
           subcategory_id?: string | null
@@ -352,6 +354,7 @@ export type Database = {
           excerpt?: string | null
           id?: string
           image_prompt?: string | null
+          is_pro?: boolean
           prompt?: string
           search_vector?: unknown | null
           subcategory_id?: string | null

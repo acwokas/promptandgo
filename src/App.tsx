@@ -27,6 +27,7 @@ import PurchasesPage from "./pages/account/Purchases";
 import ProfilePage from "./pages/account/Profile";
 import NotificationsPage from "./pages/account/Notifications";
 import SecurityPage from "./pages/account/Security";
+import CartPage from "./pages/Cart";
 
 const queryClient = new QueryClient();
 
@@ -58,6 +59,7 @@ const App = () => (
             <Route path="/account/security" element={<SecurityPage />} />
             <Route path="/account/purchases" element={<PurchasesPage />} />
             <Route path="/account/favorites" element={<FavoritesPage />} />
+            <Route path="/cart" element={<CartPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
