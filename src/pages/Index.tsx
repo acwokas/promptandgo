@@ -144,38 +144,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Feature Strip */}
-        <section className="container pt-4 pb-6">
-          <div className="grid gap-4 md:grid-cols-3">
-            <article className="rounded-xl border p-6 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent">
-              <div className="flex items-start gap-3">
-                <ShieldCheck className="h-5 w-5 text-primary" />
-                <div>
-                  <h3 className="font-semibold">Curated by humans</h3>
-                  <p className="text-sm text-muted-foreground flex items-start gap-2"><Check className="h-4 w-4 text-primary mt-0.5" /><span>Every prompt is reviewed for clarity and usefulness.</span></p>
-                </div>
-              </div>
-            </article>
-            <article className="rounded-xl border p-6 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent">
-              <div className="flex items-start gap-3">
-                <Zap className="h-5 w-5 text-primary" />
-                <div>
-                  <h3 className="font-semibold">Works everywhere</h3>
-                  <p className="text-sm text-muted-foreground flex items-start gap-2"><Check className="h-4 w-4 text-primary mt-0.5" /><span>Use with ChatGPT, Claude, Gemini, or your AI of choice.</span></p>
-                </div>
-              </div>
-            </article>
-            <article className="rounded-xl border p-6 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent">
-              <div className="flex items-start gap-3">
-                <ListChecks className="h-5 w-5 text-primary" />
-                <div>
-                  <h3 className="font-semibold">No fluff, just results</h3>
-                  <p className="text-sm text-muted-foreground flex items-start gap-2"><Check className="h-4 w-4 text-primary mt-0.5" /><span>Practical outputs you can ship, not buzzwords.</span></p>
-                </div>
-              </div>
-            </article>
-          </div>
-        </section>
 
         {/* Audience Cards */}
         <section className="container py-6">
@@ -248,6 +216,39 @@ const Index = () => {
             <li className="rounded-lg border bg-card p-5">Easy to adapt for your own brand or client</li>
             <li className="rounded-lg border bg-card p-5">No “prompt engineering” required</li>
           </ul>
+        </section>
+
+        {/* Feature Strip */}
+        <section className="container pt-4 pb-2">
+          <div className="grid gap-4 md:grid-cols-3">
+            <article className="rounded-xl border p-6 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent">
+              <div className="flex items-start gap-3">
+                <ShieldCheck className="h-5 w-5 text-primary" />
+                <div>
+                  <h3 className="font-semibold">Curated by humans</h3>
+                  <p className="text-sm text-muted-foreground flex items-start gap-2"><Check className="h-4 w-4 text-primary mt-0.5" /><span>Every prompt is reviewed for clarity and usefulness.</span></p>
+                </div>
+              </div>
+            </article>
+            <article className="rounded-xl border p-6 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent">
+              <div className="flex items-start gap-3">
+                <Zap className="h-5 w-5 text-primary" />
+                <div>
+                  <h3 className="font-semibold">Works everywhere</h3>
+                  <p className="text-sm text-muted-foreground flex items-start gap-2"><Check className="h-4 w-4 text-primary mt-0.5" /><span>Use with ChatGPT, Claude, Gemini, or your AI of choice.</span></p>
+                </div>
+              </div>
+            </article>
+            <article className="rounded-xl border p-6 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent">
+              <div className="flex items-start gap-3">
+                <ListChecks className="h-5 w-5 text-primary" />
+                <div>
+                  <h3 className="font-semibold">No fluff, just results</h3>
+                  <p className="text-sm text-muted-foreground flex items-start gap-2"><Check className="h-4 w-4 text-primary mt-0.5" /><span>Practical outputs you can ship, not buzzwords.</span></p>
+                </div>
+              </div>
+            </article>
+          </div>
         </section>
 
         {/* Featured Prompts Carousel */}
