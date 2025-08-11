@@ -16,16 +16,31 @@ const PageHero = ({ title, subtitle, children, minHeightClass = "min-h-[62vh]", 
       {/* Decorative shapes for Prompt Library */}
       {variant === "prompt" && (
         <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute -top-10 -left-10 w-72 h-72 rounded-full bg-primary/25 blur-3xl"></div>
-          <div className="absolute top-6 right-[10%] w-64 h-64 rounded-full bg-primary/20 blur-3xl"></div>
-          <div className="absolute bottom-[-40px] left-[20%] w-56 h-56 rounded-full bg-primary/15 blur-2xl"></div>
+          {/* Soft gradient orbs */}
+          <div className="absolute -top-14 -left-16 w-80 h-80 rounded-full bg-primary/25 blur-3xl"></div>
+          <div className="absolute top-10 right-[8%] w-72 h-72 rounded-full bg-primary/20 blur-3xl"></div>
+          <div className="absolute bottom-[-60px] left-[18%] w-64 h-64 rounded-full bg-primary/15 blur-2xl"></div>
 
-          <div className="absolute left-[8%] top-1/3 w-14 h-14 rounded-xl border border-primary/30 bg-card/60 backdrop-blur-sm rotate-6 shadow-elegant"></div>
-          <div className="absolute right-[12%] top-1/4 w-16 h-16 rounded-full border border-primary/30"></div>
+          {/* Rotating ring */}
+          <div
+            className="absolute left-1/2 top-[10%] -translate-x-1/2 w-[520px] h-[520px] rounded-full opacity-50 animate-[spin_30s_linear_infinite]"
+            style={{
+              background: "conic-gradient(from 0deg, hsl(var(--brand) / 0.0), hsl(var(--brand) / 0.75), hsl(var(--brand-2) / 0.0))",
+              WebkitMask: "radial-gradient(closest-side, transparent 70%, black 71%)"
+            }}
+          />
+          {/* Ribbon */}
+          <div className="absolute right-[-10%] top-[48%] w-[560px] h-24 bg-gradient-to-r from-primary/25 via-primary/10 to-transparent rounded-full blur-2xl -skew-y-6"></div>
 
-          <MessageSquare className="absolute text-primary/30 w-10 h-10 left-[15%] top-[18%] rotate-[-12deg]" />
+          {/* Prompt tokens */}
+          <div className="absolute left-[14%] top-[26%] px-3 py-1 rounded-full text-xs bg-card/70 border border-primary/20 shadow backdrop-blur-sm animate-fade-in">/imagine</div>
+          <div className="absolute right-[14%] top-[32%] px-3 py-1 rounded-full text-xs bg-card/70 border border-primary/20 shadow backdrop-blur-sm animate-fade-in delay-100">{`{topic}`}</div>
+          <div className="absolute left-[48%] bottom-[26%] px-3 py-1 rounded-full text-xs bg-card/70 border border-primary/20 shadow backdrop-blur-sm animate-fade-in delay-200">#prompt</div>
+
+          {/* Minimal line icons */}
+          <MessageSquare className="absolute text-primary/30 w-10 h-10 left-[12%] top-[18%] rotate-[-12deg]" />
           <Braces className="absolute text-primary/30 w-10 h-10 right-[20%] top-[35%] rotate-12" />
-          <Sparkles className="absolute text-primary/40 w-8 h-8 left-1/2 bottom-[22%]" />
+          <Sparkles className="absolute text-primary/40 w-8 h-8 left-1/2 bottom-[20%]" />
         </div>
       )}
       <div className={`relative z-10 container ${minHeightClass} flex flex-col items-center justify-center text-center py-20 text-primary-foreground`}>
