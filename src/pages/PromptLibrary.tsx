@@ -81,6 +81,7 @@ const PromptLibrary = () => {
   const [hasMore, setHasMore] = useState(false);
   const [loading, setLoading] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
+  const isRandomActiveRef = useRef<boolean>(false);
 
   // Load categories + subcategories and compose to existing UI shape
   const loadCategories = useCallback(async () => {
@@ -269,9 +270,11 @@ const PromptLibrary = () => {
         tags: tagNames,
         isPro: !!row.is_pro,
       };
-      setItems([mapped]);
-      setHasMore(false);
-      setPage(1);
+      if (isRandomActiveRef.current) {
+        setItems([mapped]);
+        setHasMore(false);
+        setPage(1);
+      }
     } catch (e) {
       console.error(e);
       toast({ title: "Failed to load random prompt" });
@@ -305,7 +308,9 @@ const PromptLibrary = () => {
   }, []);
 
   useEffect(() => {
-    setRandomMode(!!searchParams.get('random'));
+    const isRandom = !!searchParams.get('random');
+    setRandomMode(isRandom);
+    isRandomActiveRef.current = isRandom;
     const cid = searchParams.get('categoryId') || undefined;
     const sid = searchParams.get('subcategoryId') || undefined;
     const po = searchParams.get('proOnly');
