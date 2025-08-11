@@ -38,9 +38,9 @@ const Header = () => {
       <nav className="container flex items-center justify-between h-24">
         <Link to="/" className="flex items-center gap-2" aria-label="PromptAndGo.ai home">
           <img
-            src="/lovable-uploads/00a8a6c7-da53-4583-8f5d-f1ee4a899501.png"
+            src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
             alt="PromptAndGo.ai logo"
-            className="h-[4.5rem] md:h-[5.25rem] w-auto align-middle"
+            className="h-[4.5rem] md:h-[5.25rem] w-auto align-middle object-contain"
             loading="eager"
             fetchPriority="high"
             decoding="async"
