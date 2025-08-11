@@ -58,6 +58,7 @@ const PromptLibrary = () => {
   const [selectedTag, setSelectedTag] = useState<string | undefined>();
   const [searchParams] = useSearchParams();
   const [randomMode, setRandomMode] = useState<boolean>(false);
+  const [includePro, setIncludePro] = useState(false);
 
   const [page, setPage] = useState(1);
   const [items, setItems] = useState<PromptUI[]>([]);
@@ -145,6 +146,7 @@ const PromptLibrary = () => {
         if (subcategoryId) q = q.eq("subcategory_id", subcategoryId);
         if (query.trim()) q = q.textSearch("search_vector", query.trim(), { type: "websearch" });
         if (promptIdsForTag) q = q.in("id", promptIdsForTag);
+        if (!includePro) q = q.eq("is_pro", false);
 
         q = q.range(from, to);
 
@@ -196,7 +198,7 @@ const PromptLibrary = () => {
         setLoading(false);
       }
     },
-    [categoryId, subcategoryId, query, selectedTag]
+    [categoryId, subcategoryId, query, selectedTag, includePro]
   );
 
   const fetchRandomPrompt = useCallback(async () => {
@@ -338,6 +340,7 @@ const PromptLibrary = () => {
             categoryId={categoryId}
             subcategoryId={subcategoryId}
             query={query}
+            includePro={includePro}
             onChange={(n) => {
               if (n.categoryId !== undefined) setCategoryId(n.categoryId || undefined);
               if (n.subcategoryId !== undefined) setSubcategoryId(n.subcategoryId || undefined);
@@ -345,6 +348,7 @@ const PromptLibrary = () => {
                 setQuery(n.query);
                 setSelectedTag(undefined); // typing a query clears tag filter
               }
+              if (n.includePro !== undefined) setIncludePro(!!n.includePro);
             }}
             onSearch={refresh}
             onClear={() => {
