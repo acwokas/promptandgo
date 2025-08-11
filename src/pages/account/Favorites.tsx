@@ -20,6 +20,7 @@ interface PromptUI {
   imagePrompt?: string | null;
   excerpt?: string | null;
   tags: string[];
+  is_pro?: boolean;
 }
 
 
@@ -172,10 +173,10 @@ const FavoritesPage = () => {
         const from = (pageNumber - 1) * PAGE_SIZE;
         const to = from + PAGE_SIZE - 1;
 
-        let q = supabase
+let q = supabase
           .from("prompts")
           .select(
-            "id, category_id, subcategory_id, title, what_for, prompt, image_prompt, excerpt",
+            "id, category_id, subcategory_id, title, what_for, prompt, image_prompt, excerpt, is_pro",
             { count: "exact" }
           )
           .in("id", constrainedIds)
@@ -207,7 +208,7 @@ const FavoritesPage = () => {
           });
         }
 
-        const mapped: PromptUI[] = (data || []).map((r: any) => ({
+const mapped: PromptUI[] = (data || []).map((r: any) => ({
           id: r.id,
           categoryId: r.category_id,
           subcategoryId: r.subcategory_id,
@@ -217,6 +218,7 @@ const FavoritesPage = () => {
           imagePrompt: r.image_prompt,
           excerpt: r.excerpt,
           tags: tagMap.get(r.id) || [],
+          is_pro: r.is_pro,
         }));
 
         const total = count || 0;
