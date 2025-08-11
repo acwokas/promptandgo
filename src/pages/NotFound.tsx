@@ -60,7 +60,7 @@ const NotFound = () => {
   const navigate = useNavigate();
 
   const [index, setIndex] = useState(0);
-  const [seconds, setSeconds] = useState(5);
+  const [seconds, setSeconds] = useState(10);
   const timerRef = useRef<number | null>(null);
 
   const poem = useMemo(() => poems[index], [index]);
@@ -74,7 +74,7 @@ const NotFound = () => {
 
   useEffect(() => {
     // reset countdown whenever poem changes
-    setSeconds(5);
+    setSeconds(10);
 
     if (timerRef.current) window.clearInterval(timerRef.current);
     timerRef.current = window.setInterval(() => {
@@ -153,7 +153,7 @@ const NotFound = () => {
 
           <aside className="order-first md:order-last">
             <img
-              src="/lovable-uploads/f78e24df-2952-481d-8924-76e902ee2000.png"
+              src="/lovable-uploads/9de93cdf-39c1-4acd-b341-1c0540bd28d3.png"
               alt="Playful AI 404 illustration with whimsical style"
               loading="lazy"
               className="mx-auto max-h-[420px] w-auto object-contain drop-shadow"
