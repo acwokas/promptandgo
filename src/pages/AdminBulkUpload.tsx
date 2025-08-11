@@ -47,6 +47,13 @@ const AdminBulkUpload = () => {
   const [jsonText, setJsonText] = useState("");
   const [loading, setLoading] = useState(false);
   const [csvFile, setCsvFile] = useState<File | null>(null);
+  const [csvStats, setCsvStats] = useState<{
+    rows: number;
+    proCount: number;
+    packRowCount: number;
+    distinctPacks: number;
+    samplePacks: string[];
+  } | null>(null);
 
   const placeholder = useMemo(() => samples[entity], [entity]);
 
@@ -250,6 +257,63 @@ const AdminBulkUpload = () => {
       toast({ title: "Upload failed", description: e.message || String(e), variant: "destructive" });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleCsvChange = async (file: File | null) => {
+    setCsvFile(file);
+    setCsvStats(null);
+    if (!file || entity !== "prompts") return;
+    try {
+      const rows: any[] = await new Promise((resolve, reject) => {
+        Papa.parse(file, {
+          header: true,
+          skipEmptyLines: true,
+          complete: (results) => resolve(results.data as any[]),
+          error: (err) => reject(err),
+        });
+      });
+      const parseBool = (v: any) => {
+        if (typeof v === "boolean") return v;
+        if (v == null) return false;
+        const s = String(v).trim().toLowerCase();
+        return ["1", "true", "yes", "y", "pro"].includes(s);
+      };
+      const splitMulti = (val: any) => {
+        if (Array.isArray(val)) return val;
+        if (typeof val === "string") return val.split(/[,;|]+/).map((t) => t.trim()).filter(Boolean);
+        return [] as string[];
+      };
+      const getField = (row: Record<string, any>, targets: string[]) => {
+        const targetSet = new Set(targets);
+        for (const k of Object.keys(row)) {
+          const nk = String(k).toLowerCase().replace(/[^a-z0-9]+/g, "");
+          if (targetSet.has(nk)) return row[k];
+        }
+        return undefined;
+      };
+      let proCount = 0;
+      let packRowCount = 0;
+      const packSet = new Set<string>();
+      rows.forEach((r) => {
+        const packs = splitMulti(getField(r, ["propack", "packs", "pack"]) ?? r.pro_pack ?? r.Pro_Pack ?? r.pack ?? r.packs);
+        const isPro = parseBool(getField(r, ["ispro", "pro", "proprompt"]) ?? r.is_pro ?? r.pro ?? r.Pro_Prompt ?? r.pro_prompt ?? r.Pro);
+        const finalIsPro = isPro || packs.length > 0;
+        if (finalIsPro) proCount++;
+        if (packs.length > 0) {
+          packRowCount++;
+          packs.forEach((p: string) => packSet.add(p));
+        }
+      });
+      setCsvStats({
+        rows: rows.length,
+        proCount,
+        packRowCount,
+        distinctPacks: packSet.size,
+        samplePacks: Array.from(packSet).slice(0, 8),
+      });
+    } catch (e) {
+      // ignore preview errors
     }
   };
 
@@ -579,10 +643,26 @@ const AdminBulkUpload = () => {
 
           <div className="grid gap-2 pt-6">
             <label className="text-sm font-medium">CSV File</label>
-            <Input type="file" accept=".csv" onChange={(e) => setCsvFile(e.target.files?.[0] ?? null)} aria-label="CSV file input" />
+            <Input type="file" accept=".csv" onChange={(e) => handleCsvChange(e.target.files?.[0] ?? null)} aria-label="CSV file input" />
             <p className="text-xs text-muted-foreground">
               CSV headers should match the selected entity. For prompts: title, prompt, category_slug, [subcategory_slug], [tags], [is_pro], [pro_pack]. Multiple packs can be comma/semicolon/pipe-separated. New packs auto-created at $9.99.
             </p>
+            {csvStats && (
+              <div className="text-xs rounded-md border bg-card p-3">
+                <div className="font-medium">Preflight summary</div>
+                <ul className="mt-1 space-y-0.5 list-disc pl-4">
+                  <li>Total rows: {csvStats.rows}</li>
+                  <li>Rows marked PRO (including any rows with packs): {csvStats.proCount}</li>
+                  <li>Rows with packs: {csvStats.packRowCount}</li>
+                  <li>
+                    Distinct packs detected: {csvStats.distinctPacks}
+                    {csvStats.samplePacks.length > 0 && (
+                      <> — e.g. {csvStats.samplePacks.join(', ')}</>
+                    )}
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
           <div className="flex gap-3">
             <Button onClick={handleUploadCsv} disabled={loading || !csvFile}>{loading ? "Uploading..." : "Upload CSV"}</Button>
