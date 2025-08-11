@@ -4,10 +4,81 @@ import { Link } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
 import { Sparkles, Zap, ShieldCheck, ListChecks, Wand2, Rocket, Check } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
-import PromptsOfTheDay from "@/components/prompt/PromptsOfTheDay";
+import { supabase } from "@/integrations/supabase/client";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel";
+import { useEffect, useState } from "react";
+import { PromptCard } from "@/components/prompt/PromptCard";
 
 const Index = () => {
   const { user } = useSupabaseAuth();
+
+  type HP = {
+    id: string;
+    categoryId?: string | null;
+    subcategoryId?: string | null;
+    title: string;
+    whatFor?: string | null;
+    prompt: string;
+    excerpt?: string | null;
+    tags: string[];
+    isPro?: boolean;
+  };
+
+  const [slides, setSlides] = useState<HP[]>([]);
+  const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("prompts")
+          .select("id, category_id, subcategory_id, title, what_for, prompt, excerpt, is_pro")
+          .order("created_at", { ascending: false })
+          .limit(200);
+        if (error) throw error;
+        const rows = data || [];
+        if (rows.length === 0) { setSlides([]); return; }
+
+        const byCat = new Map<string, any[]>();
+        rows.forEach((r: any) => {
+          const cid = r.category_id || "misc";
+          const arr = byCat.get(cid) || [];
+          arr.push(r);
+          byCat.set(cid, arr);
+        });
+        const sortedCats = Array.from(byCat.entries()).sort((a, b) => b[1].length - a[1].length);
+        const take = Math.min(6, sortedCats.length);
+        const picks: HP[] = [];
+        for (let i = 0; i < take; i++) {
+          const list = sortedCats[i][1];
+          const pick = list[Math.floor(Math.random() * list.length)];
+          picks.push({
+            id: pick.id,
+            categoryId: pick.category_id,
+            subcategoryId: pick.subcategory_id,
+            title: pick.title,
+            whatFor: pick.what_for,
+            prompt: pick.prompt,
+            excerpt: pick.excerpt,
+            tags: [],
+            isPro: !!pick.is_pro,
+          });
+        }
+        setSlides(picks);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    load();
+  }, []);
+
+  useEffect(() => {
+    if (!carouselApi) return;
+    const id = window.setInterval(() => {
+      try { carouselApi.scrollNext(); } catch {}
+    }, 5000);
+    return () => window.clearInterval(id);
+  }, [carouselApi]);
   return (
     <>
       <SEO
@@ -179,12 +250,20 @@ const Index = () => {
           </ul>
         </section>
 
-        {/* Prompts of the Day (moved from Library) */}
-        <section>
-          <div>
-            {/* The component includes its own container */}
-            <PromptsOfTheDay />
-          </div>
+        {/* Featured Prompts Carousel */}
+        <section className="container py-6" aria-labelledby="featured-prompts">
+          <h2 id="featured-prompts" className="text-2xl font-semibold mb-4">Prompts of the Day</h2>
+          <Carousel setApi={setCarouselApi} opts={{ loop: true, align: "start" }}>
+            <CarouselContent>
+              {slides.map((p) => (
+                <CarouselItem key={p.id} className="md:basis-1/2 lg:basis-1/3">
+                  <PromptCard prompt={p as any} categories={[]} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="-left-6 md:-left-10" />
+            <CarouselNext className="-right-6 md:-right-10" />
+          </Carousel>
         </section>
         <section aria-labelledby="cta-tail" className="relative bg-hero hero-grid mt-8" id="cta">
           <div className="container p-6 md:p-8 text-center text-primary-foreground">
