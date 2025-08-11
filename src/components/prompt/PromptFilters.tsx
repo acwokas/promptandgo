@@ -117,7 +117,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
       </div>
 
       <div className="mt-6">
-        <p className="text-sm text-foreground mb-3">Or select a popular category:</p>
+        <Label className="mb-3 block">Or select a popular category:</Label>
         <TooltipProvider>
           <div className="flex flex-wrap gap-2">
             {quickButtons.map((btn) => {
