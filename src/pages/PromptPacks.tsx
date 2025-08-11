@@ -131,13 +131,47 @@ const PromptPacks = () => {
     });
   };
 
+  const WELLNESS_TITLE = 'Health, Wellness & Lifestyle Coach Pack';
+  const normalize = (s: string) => s
+    .toLowerCase()
+    .replace(/&/g, 'and')
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/^rhw\s+/, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  const isWellnessName = (s: string) => normalize(s).includes('health wellness lifestyle coach pack');
+
+  const wellnessIds = packs.filter((pk) => isWellnessName(pk.name)).map((pk) => pk.id);
+  const combinedWellnessItems = wellnessIds.length
+    ? Array.from(
+        new Map(
+          wellnessIds
+            .flatMap((id) => (contents[id] || []))
+            .map((it) => [it.id, it] as const)
+        ).values()
+      )
+    : [];
+
+  const displayPacks = wellnessIds.length
+    ? [
+        {
+          id: wellnessIds[0],
+          name: WELLNESS_TITLE,
+          description: packs.find((pk) => isWellnessName(pk.name))?.description ?? null,
+        },
+        ...packs.filter((pk) => !isWellnessName(pk.name)),
+      ]
+    : packs;
+
+  const itemsForPack = (id: string) => (wellnessIds.includes(id) ? combinedWellnessItems : (contents[id] || []));
+
   const filteredPacks = query.trim()
-    ? packs.filter((pk) => {
-        const items = contents[pk.id] || [];
+    ? displayPacks.filter((pk) => {
+        const items = itemsForPack(pk.id);
         const q = query.toLowerCase();
         return items.some((it) => (it.title?.toLowerCase().includes(q) || (it.excerpt || '').toLowerCase().includes(q)));
       })
-    : packs;
+    : displayPacks;
 
   return (
     <>
@@ -159,19 +193,19 @@ const PromptPacks = () => {
         ) : (
           <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filteredPacks.map((p) => {
-              const items = contents[p.id] || [];
-              const packOwned = ownedPackIds.has(p.id);
+              const items = itemsForPack(p.id);
+              const packOwned = wellnessIds.includes(p.id) ? wellnessIds.some((id) => ownedPackIds.has(id)) : ownedPackIds.has(p.id);
               const ownedCount = packOwned ? items.length : items.filter((it) => ownedPromptIds.has(it.id)).length;
               const freeCount = items.filter((it) => !it.is_pro).length;
               const proCount = items.filter((it) => it.is_pro).length;
 
               return (
                 <Card key={p.id} id={`pack-${p.id}`} className={`relative ${highlight === p.id ? 'ring-2 ring-primary' : ''}`}>
-                  <div className="absolute top-3 right-3 z-10 flex gap-2">
-                    <Badge variant="destructive">PRO</Badge>
-                    <Badge variant="secondary">SALE</Badge>
-                  </div>
                   <CardHeader>
+                    <div className="mb-2 flex gap-2">
+                      <Badge variant="destructive">PRO</Badge>
+                      <Badge variant="success">SALE</Badge>
+                    </div>
                     <CardTitle className="text-xl leading-tight">{p.name}</CardTitle>
                     {p.description && <p className="text-sm text-muted-foreground">{p.description}</p>}
                     <div className="text-sm text-muted-foreground">
@@ -212,12 +246,12 @@ const PromptPacks = () => {
                       </AccordionItem>
                     </Accordion>
 
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <span className="text-muted-foreground line-through">{fmtUSD(PACK_ORIGINAL_CENTS)}</span>
-                        <span className="text-2xl font-semibold">{fmtUSD(PACK_DISCOUNT_CENTS)}</span>
+                    <div className="pt-2">
+                      <div className="text-right">
+                        <div className="text-muted-foreground line-through">{fmtUSD(PACK_ORIGINAL_CENTS)}</div>
+                        <div className="text-2xl font-semibold">{fmtUSD(PACK_DISCOUNT_CENTS)}</div>
                       </div>
-                      <div className="flex gap-2">
+                      <div className="mt-3 flex gap-2 justify-end">
                         <Button variant="hero" onClick={() => handleAdd(p)}>Get Pack</Button>
                         <Button variant="cta" onClick={handleSubscribe}>Subscribe</Button>
                       </div>
