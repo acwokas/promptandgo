@@ -10,7 +10,7 @@ const Footer = () => {
         <div>
           <Link to="/" className="inline-flex items-center mb-2" aria-label="PromptAndGo.ai home">
             <img
-              src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
+              src="/lovable-uploads/9e8de25b-d91c-445a-b211-d156a28e4b33.png"
               alt="PromptAndGo.ai logo"
               className="h-24 -mt-2 md:-mt-3 w-auto object-contain"
               loading="lazy"
