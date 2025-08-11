@@ -43,7 +43,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
 
   return (
     <section className="rounded-xl bg-accent/40 border p-4 md:p-6">
-      <h2 className="text-xl font-semibold mb-4">Start Here</h2>
+      
 
       <div className="grid gap-3 md:grid-cols-12 items-end">
         <div className="space-y-1 md:col-span-3">
