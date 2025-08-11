@@ -218,9 +218,29 @@ export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) 
       <CardContent className="space-y-4">
         <div>
           <div className="text-xs font-medium mb-1">Prompt:</div>
-          <pre className="whitespace-pre-wrap bg-muted/50 p-3 rounded-md text-sm">
-            {prompt.prompt}
-          </pre>
+          <div className="relative">
+            <pre className={cn("whitespace-pre-wrap bg-muted/50 p-3 rounded-md text-sm transition", showLock && "blur-sm select-none pointer-events-none")}>
+              {prompt.prompt}
+            </pre>
+            {showLock && (
+              <div className="absolute inset-0 rounded-md bg-gradient-to-b from-background/60 to-background/80 backdrop-blur-sm flex items-center justify-center">
+                <div className="text-center p-4 space-y-3">
+                  <div className="flex items-center justify-center gap-2 text-sm">
+                    <Lock className="h-4 w-4" /> PRO content locked
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    Unlock with Subscription {fmtUSD(SUB_DISCOUNT_CENTS)} {packs.length > 0 && <>or buy the pack {fmtUSD(PACK_DISCOUNT_CENTS)}</>}
+                  </div>
+                  <div className="flex gap-2 justify-center">
+                    <Button size="sm" onClick={handleSubscribeClick}>Subscribe {fmtUSD(SUB_DISCOUNT_CENTS)}</Button>
+                    {packs.length > 0 && (
+                      <Button size="sm" variant="secondary" onClick={addFirstPackToCart}>Add Pack {fmtUSD(PACK_DISCOUNT_CENTS)}</Button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
           <div className="flex items-center gap-2 mt-2">
             <Button
               size="sm"
@@ -272,6 +292,18 @@ export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) 
           </div>
         </div>
 
+        {packs.length > 0 && (
+          <div className="space-y-2">
+            <div className="text-xs font-medium">Included in:</div>
+            <div className="flex flex-wrap gap-2 text-xs">
+              {packs.map((p) => (
+                <Badge key={p.id} variant="outline">{p.name}</Badge>
+              ))}
+              <Link to="/packs"><Button size="sm" variant="link">View packs</Button></Link>
+            </div>
+          </div>
+        )}
+
         {prompt.tags.length > 0 && (
           <div className="space-y-2">
             <div className="text-xs font-medium">Related Prompts:</div>
@@ -294,7 +326,6 @@ export const PromptCard = ({ prompt, categories, onTagClick }: PromptCardProps) 
           </div>
         )}
 
-        
       </CardContent>
     </Card>
   );

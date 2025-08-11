@@ -2,7 +2,7 @@ import SEO from "@/components/SEO";
 import PageHero from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getCart, getCartTotalCents, removeFromCart, clearCart } from "@/lib/cart";
+import { getCart, getCartTotalCents, removeFromCart, clearCart, type CartItem } from "@/lib/cart";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -10,7 +10,6 @@ const centsToUSD = (cents: number) => `$${(cents / 100).toFixed(2)}`;
 
 const CartPage = () => {
   const [items, setItems] = useState(getCart());
-  const total = getCartTotalCents();
 
   useEffect(() => {
     const onChange = () => setItems(getCart());
@@ -21,6 +20,19 @@ const CartPage = () => {
       window.removeEventListener('storage', onChange);
     };
   }, []);
+
+  const originalUnitCents = (i: CartItem) => {
+    switch (i.type) {
+      case 'pack': return 999;
+      case 'subscription': return 1499;
+      case 'prompt': return 199;
+      default: return i.unitAmountCents;
+    }
+  };
+
+  const total = items.reduce((sum, i) => sum + i.unitAmountCents * i.quantity, 0);
+  const originalTotal = items.reduce((sum, i) => sum + originalUnitCents(i) * i.quantity, 0);
+  const savings = Math.max(0, originalTotal - total);
 
   const beginCheckout = async () => {
     // Placeholder checkout flow – will wire to Stripe edge function later
@@ -56,8 +68,17 @@ const CartPage = () => {
                     <div className="text-sm text-muted-foreground">x{i.quantity}</div>
                   </CardHeader>
                   <CardContent className="flex items-center justify-between">
-                    <div className="text-xl font-semibold">{centsToUSD(i.unitAmountCents)}</div>
-                    <Button variant="outline" onClick={() => removeFromCart(i.id, i.type)}>Remove</Button>
+                  <div className="flex items-center gap-3">
+                    {originalUnitCents(i) > i.unitAmountCents ? (
+                      <>
+                        <span className="text-muted-foreground line-through">{centsToUSD(originalUnitCents(i))}</span>
+                        <span className="text-xl font-semibold">{centsToUSD(i.unitAmountCents)}</span>
+                      </>
+                    ) : (
+                      <span className="text-xl font-semibold">{centsToUSD(i.unitAmountCents)}</span>
+                    )}
+                  </div>
+                  <Button variant="outline" onClick={() => removeFromCart(i.id, i.type)}>Remove</Button>
                   </CardContent>
                 </Card>
               ))}
@@ -72,6 +93,12 @@ const CartPage = () => {
                     <span>Subtotal</span>
                     <span className="font-semibold">{centsToUSD(total)}</span>
                   </div>
+                  {savings > 0 && (
+                    <div className="flex items-center justify-between text-sm text-muted-foreground">
+                      <span>You save</span>
+                      <span className="font-medium text-primary">{centsToUSD(savings)}</span>
+                    </div>
+                  )}
                   <div className="flex gap-2">
                     <Button className="flex-1" variant="hero" onClick={beginCheckout}>Checkout</Button>
                     <Button className="flex-1" variant="secondary" onClick={() => clearCart()}>Clear</Button>
