@@ -5,7 +5,7 @@ import { toast } from "@/hooks/use-toast";
 import type { Prompt, Category } from "@/data/prompts";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { Heart, Lock, Copy } from "lucide-react";
+import { Heart, Lock, Copy, MessageSquare, Megaphone, ShoppingBag, BarChart2, Briefcase, User, HeartPulse, Clock, Sparkles, Tag } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -206,6 +206,20 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   };
   const showLock = isPro && !hasAccess;
 
+  const getCategoryIcon = (name?: string) => {
+    const n = (name || "").toLowerCase();
+    if (/(social|community|chat|conversation)/.test(n)) return <MessageSquare className="h-3.5 w-3.5" aria-hidden />;
+    if (/(market|advert|campaign|growth)/.test(n)) return <Megaphone className="h-3.5 w-3.5" aria-hidden />;
+    if (/(ecom|shop|store|retail)/.test(n)) return <ShoppingBag className="h-3.5 w-3.5" aria-hidden />;
+    if (/(analytic|data|report|insight)/.test(n)) return <BarChart2 className="h-3.5 w-3.5" aria-hidden />;
+    if (/(business|automation|ops)/.test(n)) return <Briefcase className="h-3.5 w-3.5" aria-hidden />;
+    if (/(career|job|work|resume|cv)/.test(n)) return <User className="h-3.5 w-3.5" aria-hidden />;
+    if (/(wellness|health|fitness|mind)/.test(n)) return <HeartPulse className="h-3.5 w-3.5" aria-hidden />;
+    if (/(productivity|time|focus|task)/.test(n)) return <Clock className="h-3.5 w-3.5" aria-hidden />;
+    if (/(lifestyle|hobby|creative|inspiration)/.test(n)) return <Sparkles className="h-3.5 w-3.5" aria-hidden />;
+    return <Tag className="h-3.5 w-3.5" aria-hidden />;
+  };
+
   return (
     <Card className="relative overflow-hidden h-full">
       <CardHeader>
@@ -225,7 +239,10 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               aria-label={`Filter by category ${category.name}`}
               title={`Filter by ${category.name}`}
             >
-              {category.name}
+              <span className="inline-flex items-center gap-1.5">
+                {getCategoryIcon(category.name)}
+                <span>{category.name}</span>
+              </span>
             </button>
           )}
           {category && sub && <span>›</span>}
@@ -237,7 +254,10 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               aria-label={`Filter by subcategory ${sub.name}`}
               title={`Filter by ${sub.name}`}
             >
-              {sub.name}
+              <span className="inline-flex items-center gap-1.5">
+                {getCategoryIcon(sub.name)}
+                <span>{sub.name}</span>
+              </span>
             </button>
           )}
         </div>
