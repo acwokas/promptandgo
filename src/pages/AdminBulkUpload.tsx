@@ -309,9 +309,17 @@ const AdminBulkUpload = () => {
             }
             return [] as string[];
           };
+          const getField = (row: Record<string, any>, targets: string[]) => {
+            const targetSet = new Set(targets);
+            for (const k of Object.keys(row)) {
+              const nk = String(k).toLowerCase().replace(/[^a-z0-9]+/g, "");
+              if (targetSet.has(nk)) return row[k];
+            }
+            return undefined;
+          };
           data = rows.map((r) => {
-            const packs = splitMulti(r.pro_pack ?? r.Pro_Pack ?? r.pack ?? r.packs);
-            const is_pro = parseBool(r.is_pro ?? r.pro ?? r.Pro_Prompt ?? r.pro_prompt ?? r.Pro);
+            const packs = splitMulti(getField(r, ["propack", "packs", "pack"]) ?? r.pro_pack ?? r.Pro_Pack ?? r.pack ?? r.packs);
+            const is_pro = parseBool(getField(r, ["ispro", "pro", "proprompt"]) ?? r.is_pro ?? r.pro ?? r.Pro_Prompt ?? r.pro_prompt ?? r.Pro);
             return {
               title: String(r.title ?? "").trim(),
               what_for: r.what_for ? String(r.what_for).trim() : undefined,
@@ -440,6 +448,14 @@ const AdminBulkUpload = () => {
         if (typeof val === "string") return val.split(/[,;|]+/).map((t) => t.trim()).filter(Boolean);
         return [] as string[];
       };
+      const getField = (row: Record<string, any>, targets: string[]) => {
+        const targetSet = new Set(targets);
+        for (const k of Object.keys(row)) {
+          const nk = String(k).toLowerCase().replace(/[^a-z0-9]+/g, "");
+          if (targetSet.has(nk)) return row[k];
+        }
+        return undefined;
+      };
       const data = rows.map((r) => ({
         title: String(r.title ?? "").trim(),
         what_for: r.what_for ? String(r.what_for).trim() : undefined,
@@ -449,8 +465,8 @@ const AdminBulkUpload = () => {
         category_slug: String(r.category_slug ?? "").trim(),
         subcategory_slug: r.subcategory_slug ? String(r.subcategory_slug).trim() : undefined,
         tags: splitTags(r.tags),
-        is_pro: parseBool(r.is_pro ?? r.pro ?? r.Pro_Prompt ?? r.pro_prompt ?? r.Pro),
-        packs: splitMulti(r.pro_pack ?? r.Pro_Pack ?? r.pack ?? r.packs),
+        is_pro: parseBool(getField(r, ["ispro", "pro", "proprompt"]) ?? r.is_pro ?? r.pro ?? r.Pro_Prompt ?? r.pro_prompt ?? r.Pro),
+        packs: splitMulti(getField(r, ["propack", "packs", "pack"]) ?? r.pro_pack ?? r.Pro_Pack ?? r.pack ?? r.packs),
       }));
 
       // DELETE in dependency order
