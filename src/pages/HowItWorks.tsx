@@ -136,7 +136,7 @@ const HowItWorks = () => {
               </Button>
             )}
             <Button asChild size="lg" variant="inverted">
-              <Link to="/packs">Explore Prompt Powerpacks</Link>
+              <Link to="/packs">Explore ⚡️Power Packs</Link>
             </Button>
           </div>
         </div>

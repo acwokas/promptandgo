@@ -377,7 +377,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
             </div>
             <div>
               <Link to={`/packs?highlight=${packs[0].id}`}>
-                <Button size="sm" variant="hero" className="w-full">Included in Prompt Powerpack. Open Now.</Button>
+                <Button size="sm" variant="hero" className="w-full">Included in Power Pack. Open Now.</Button>
               </Link>
             </div>
           </div>

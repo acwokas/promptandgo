@@ -380,7 +380,7 @@ const PromptLibrary = () => {
           </Button>
         )}
         <Button asChild size="lg" variant="inverted">
-          <Link to="/packs">Explore Prompt Powerpacks</Link>
+          <Link to="/packs">Explore ⚡️Power Packs</Link>
         </Button>
       </PageHero>
       <main className="container py-10">

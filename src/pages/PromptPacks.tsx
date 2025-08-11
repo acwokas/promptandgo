@@ -159,9 +159,9 @@ const PromptPacks = () => {
 
   return (
     <>
-      <PageHero title={<>Prompt Powerpacks</>} subtitle={<>Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results.</>} minHeightClass="min-h-[40vh]" />
+      <PageHero title={<>⚡️Power Packs</>} subtitle={<>Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results.</>} minHeightClass="min-h-[40vh]" />
       <main className="container py-10">
-        <SEO title="Prompt Powerpacks – Save 50%" description="Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results." />
+        <SEO title="⚡️Power Packs – Save 50%" description="Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results." />
         <div className="mb-6 max-w-xl">
           <Input
             placeholder="Search within pack contents..."
