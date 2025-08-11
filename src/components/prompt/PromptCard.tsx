@@ -59,8 +59,8 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   const category = categories.find((c) => c.id === prompt.categoryId);
   const sub = category?.subcategories.find((s) => s.id === prompt.subcategoryId);
   const displayTitle = cleanTitle(prompt.title);
-  const seed = sub?.name || category?.name || (prompt as any).subcategoryId || (prompt as any).categoryId || displayTitle;
-  const accentIndex = categoryAccentIndex(seed);
+  const seed = category?.id || (prompt as any).categoryId || category?.name || displayTitle;
+  const accentIndex = categoryAccentIndex(String(seed));
   const accentClass = `category-accent-${accentIndex}`;
 
   const copy = async (text: string, label: string) => {

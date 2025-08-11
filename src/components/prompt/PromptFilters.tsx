@@ -22,6 +22,11 @@ interface FiltersProps {
   subcategoryLabel?: string;
 }
 
+function catAccentIndex(seed: string) {
+  let h = 0;
+  for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) >>> 0;
+  return (h % 6) + 1;
+}
 
 export const PromptFilters = ({ categories, categoryId, subcategoryId, query, includePro, onChange, onSearch, onClear, searchLabel, searchPlaceholder, categoryLabel, subcategoryLabel }: FiltersProps) => {
   const categoriesSorted = [...categories].sort((a, b) => a.name.localeCompare(b.name));
@@ -135,8 +140,9 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
                   <TooltipTrigger asChild>
                     <Button
                       type="button"
-                      className="bg-primary text-primary-foreground hover:opacity-90 shadow-sm whitespace-nowrap"
+                      className="text-foreground hover:opacity-95 shadow-sm whitespace-nowrap border"
                       aria-label={label}
+                      style={match ? ({ ['--category-accent' as any]: `var(--accent-${catAccentIndex(match.id)})`, backgroundColor: 'hsl(var(--category-accent) / 0.14)', borderColor: 'hsl(var(--category-accent) / 0.35)' }) : undefined}
                       onClick={() => {
                         if (catId) onChange({ categoryId: catId, subcategoryId: undefined, query: "" });
                         else onChange({ query: searchTerm });
