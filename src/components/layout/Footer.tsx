@@ -12,7 +12,7 @@ const Footer = () => {
             <img
               src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
               alt="PromptAndGo.ai logo"
-              className="h-12 w-auto object-contain"
+              className="h-36 w-auto object-contain"
               loading="lazy"
               decoding="async"
             />
