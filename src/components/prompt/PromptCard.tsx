@@ -313,9 +313,9 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               size="sm"
               variant="hero"
               className="w-full"
-              disabled={showLock && !onCopyClick}
-              title={showLock && !onCopyClick ? "Unlock to copy" : undefined}
-              onClick={() => { if (onCopyClick) onCopyClick(); else if (hasAccess) copy(prompt.prompt, "Prompt"); }}
+              disabled={showLock && !onCopyClick && !hasAccess}
+              title={showLock && !onCopyClick && !hasAccess ? "Unlock to copy" : undefined}
+              onClick={() => { if (onCopyClick) onCopyClick(); else if (!showLock || hasAccess) copy(prompt.prompt, "Prompt"); }}
             >
               <Copy className="h-4 w-4" />
               <span>Copy Prompt</span>
