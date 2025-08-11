@@ -58,7 +58,7 @@ const PromptLibrary = () => {
   const [selectedTag, setSelectedTag] = useState<string | undefined>();
   const [searchParams] = useSearchParams();
   const [randomMode, setRandomMode] = useState<boolean>(false);
-  const [includePro, setIncludePro] = useState(false);
+  const [includePro, setIncludePro] = useState(true);
 
   const [page, setPage] = useState(1);
   const [items, setItems] = useState<PromptUI[]>([]);
