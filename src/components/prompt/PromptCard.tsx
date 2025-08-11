@@ -5,7 +5,7 @@ import { toast } from "@/hooks/use-toast";
 import type { Prompt, Category } from "@/data/prompts";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { Heart, Lock } from "lucide-react";
+import { Heart, Lock, Copy } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -282,25 +282,27 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               title={showLock ? "Unlock to copy" : undefined}
               onClick={() => hasAccess && copy(prompt.prompt, "Prompt")}
             >
-              Copy Prompt
+              <Copy className="h-4 w-4" />
+              <span>Copy Prompt</span>
             </Button>
             {user ? (
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
-                      variant="ghost"
-                      size="icon"
+                      variant="outline"
+                      size="sm"
                       onClick={toggleFavorite}
                       disabled={favLoading}
-                      aria-label={isFav ? "Remove from Favourites" : "Add to Favourites"}
-                      title={isFav ? "Remove from Favourites" : "Add to Favourites"}
+                      aria-label={isFav ? "Remove from My Prompts" : "Add to My Prompts"}
+                      title={isFav ? "Remove from My Prompts" : "Add to My Prompts"}
                     >
                       <Heart className={cn("h-5 w-5", isFav ? "fill-current text-primary" : "")} />
+                      <span>{isFav ? "Remove from My Prompts" : "Add to My Prompts"}</span>
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    {isFav ? "Remove from Favourites" : "Add to Favourites"}
+                    {isFav ? "Remove from My Prompts" : "Add to My Prompts"}
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -308,13 +310,14 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="ghost" size="icon" disabled aria-label="Add to Favourites" title="Add to Favourites">
+                    <Button variant="outline" size="sm" disabled aria-label="Add to My Prompts" title="Add to My Prompts">
                       <Heart className="h-5 w-5 opacity-50" />
+                      <span>Add to My Prompts</span>
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
                     <div className="flex flex-col gap-2">
-                      <span>Log in to add favourites</span>
+                      <span>Log in to add to My Prompts</span>
                       <div className="flex gap-2">
                         <Link to="/auth"><Button size="sm" variant="secondary">Login</Button></Link>
                         <Link to="/auth"><Button size="sm" variant="outline">Sign up</Button></Link>
