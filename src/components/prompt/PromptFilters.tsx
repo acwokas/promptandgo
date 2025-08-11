@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
+
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 import type { Category } from "@/data/prompts";
@@ -105,22 +105,11 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
           />
         </div>
 
-        <div className="md:col-span-3 flex flex-col items-start gap-2">
-          <div className="flex items-center w-full gap-2">
-            <div className="flex items-center gap-2">
-              <Checkbox
-                id="include-pro"
-                checked={!!includePro}
-                onCheckedChange={(v) => onChange({ includePro: Boolean(v) })}
-                aria-label="Include PRO Prompts"
-              />
-              <Label htmlFor="include-pro" className="text-sm">Include PRO Prompts</Label>
-            </div>
-            <Button variant="cta" onClick={onSearch} aria-label="Run search" className="ml-auto">
-              Search
-            </Button>
-          </div>
-          <Button variant="inverted" onClick={onClear} aria-label="Clear filters and search">
+        <div className="md:col-span-3 flex items-end gap-2 justify-end md:justify-start flex-wrap">
+          <Button variant="cta" onClick={onSearch} aria-label="Run search">
+            Search
+          </Button>
+          <Button variant="secondary" onClick={onClear} aria-label="Clear filters and search">
             Clear Selections
           </Button>
         </div>
