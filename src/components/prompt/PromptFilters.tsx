@@ -30,15 +30,15 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
   const isCategorySelected = Boolean(categoryId);
 
   const quickButtons = [
-    "Content Creation",
-    "Content Marketing",
-    "Social Media",
-    "Ecommerce",
-    "AI for Business Automation",
-    "Career Development",
-    "Lifestyle",
-    "Wellness",
-    "Productivity",
+    { label: "Content Creation" },
+    { label: "Content Marketing" },
+    { label: "Social Media" },
+    { label: "Ecommerce" },
+    { label: "AI for Business Automation" },
+    { label: "Career Development" },
+    { label: "Lifestyle" },
+    { label: "Wellness" },
+    { label: "Productivity", search: "Productivity & Time Management" },
   ] as const;
 
   return (
@@ -106,18 +106,20 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
         </div>
 
         <div className="md:col-span-3 flex flex-col items-start gap-2">
-          <div className="flex items-center gap-2">
-            <Checkbox
-              id="include-pro"
-              checked={!!includePro}
-              onCheckedChange={(v) => onChange({ includePro: Boolean(v) })}
-              aria-label="Include PRO Prompts"
-            />
-            <Label htmlFor="include-pro" className="text-sm">Include PRO Prompts</Label>
+          <div className="flex items-center w-full gap-2">
+            <div className="flex items-center gap-2">
+              <Checkbox
+                id="include-pro"
+                checked={!!includePro}
+                onCheckedChange={(v) => onChange({ includePro: Boolean(v) })}
+                aria-label="Include PRO Prompts"
+              />
+              <Label htmlFor="include-pro" className="text-sm">Include PRO Prompts</Label>
+            </div>
+            <Button variant="cta" onClick={onSearch} aria-label="Run search" className="ml-auto">
+              Search
+            </Button>
           </div>
-          <Button variant="cta" onClick={onSearch} aria-label="Run search">
-            Search Prompts
-          </Button>
           <Button variant="inverted" onClick={onClear} aria-label="Clear filters and search">
             Clear Selections
           </Button>
@@ -128,9 +130,11 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
         <p className="text-sm text-muted-foreground mb-3">Or select a popular category:</p>
         <TooltipProvider>
           <div className="flex flex-wrap gap-2">
-            {quickButtons.map((label) => {
+            {quickButtons.map((btn) => {
+              const label = btn.label;
+              const searchTerm = (btn as any).search ?? btn.label;
               const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "");
-              const ln = normalize(label);
+              const ln = normalize(searchTerm);
               const match = categories.find((c) => {
                 const cn = normalize(c.name);
                 return cn === ln || cn.includes(ln) || ln.includes(cn);
@@ -145,7 +149,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
                       aria-label={label}
                       onClick={() => {
                         if (catId) onChange({ categoryId: catId, subcategoryId: undefined, query: "" });
-                        else onChange({ query: label });
+                        else onChange({ query: searchTerm });
                       }}
                     >
                       {label}
