@@ -286,6 +286,10 @@ const PromptLibrary = () => {
 
   useEffect(() => {
     setRandomMode(!!searchParams.get('random'));
+    const cid = searchParams.get('categoryId') || undefined;
+    const sid = searchParams.get('subcategoryId') || undefined;
+    if (cid !== undefined) setCategoryId(cid);
+    if (sid !== undefined) setSubcategoryId(sid);
   }, [searchParams]);
 
   // Initial loads

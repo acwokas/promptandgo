@@ -3,6 +3,7 @@ import { PromptCard } from "@/components/prompt/PromptCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
 import type { Category as CategoryType } from "@/data/prompts";
+import { useNavigate } from "react-router-dom";
 
 interface PromptUI {
   id: string;
@@ -30,6 +31,7 @@ const PromptsOfTheDay = () => {
   const [categories, setCategories] = useState<CategoryType[]>([]);
   const [featured, setFeatured] = useState<PromptUI[]>([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const loadCategories = useCallback(async () => {
     const [catRes, subRes] = await Promise.all([
@@ -188,7 +190,13 @@ const PromptsOfTheDay = () => {
         ) : featured.length > 0 ? (
           <div className="grid gap-6 md:grid-cols-2">
             {featured.map((p) => (
-              <PromptCard key={p.id} prompt={p as any} categories={categories} />
+              <PromptCard
+                key={p.id}
+                prompt={p as any}
+                categories={categories}
+                onCategoryClick={(cid) => navigate(`/library?categoryId=${cid}`)}
+                onSubcategoryClick={(sid, cid) => navigate(`/library?categoryId=${cid}&subcategoryId=${sid}`)}
+              />
             ))}
           </div>
         ) : null}
