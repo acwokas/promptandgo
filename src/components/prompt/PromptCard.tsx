@@ -362,6 +362,11 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               ))}
               <Link to="/packs"><Button size="sm" variant="link">View packs</Button></Link>
             </div>
+            <div>
+              <Link to={`/packs?highlight=${packs[0].id}`}>
+                <Button size="sm" variant="hero" className="w-full">Included in Premium Pack. Open Now.</Button>
+              </Link>
+            </div>
           </div>
         )}
 

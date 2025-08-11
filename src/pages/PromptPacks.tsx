@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { addToCart } from "@/lib/cart";
 import { toast } from "@/hooks/use-toast";
+import { useSearchParams } from "react-router-dom";
 
 const PACK_ORIGINAL_CENTS = 999;
 const PACK_DISCOUNT_CENTS = 499;
@@ -16,6 +17,8 @@ type Pack = { id: string; name: string; description: string | null };
 const PromptPacks = () => {
   const [packs, setPacks] = useState<Pack[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchParams] = useSearchParams();
+  const [highlight, setHighlight] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -23,10 +26,18 @@ const PromptPacks = () => {
       const { data, error } = await supabase.from('packs').select('id,name,description').eq('is_active', true).order('name');
       if (!cancelled && !error) setPacks(data || []);
       setLoading(false);
+      const hl = searchParams.get('highlight');
+      setHighlight(hl);
+      if (hl) {
+        setTimeout(() => {
+          const el = document.getElementById(`pack-${hl}`);
+          el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 50);
+      }
     };
     load();
     return () => { cancelled = true; };
-  }, []);
+  }, [searchParams]);
 
   const handleAdd = (p: Pack) => {
     addToCart({ id: p.id, type: 'pack', title: p.name, unitAmountCents: PACK_DISCOUNT_CENTS, quantity: 1 });
@@ -46,7 +57,7 @@ const PromptPacks = () => {
       ) : (
         <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {packs.map((p) => (
-            <Card key={p.id} className="relative">
+            <Card key={p.id} id={`pack-${p.id}`} className={`relative ${highlight === p.id ? 'ring-2 ring-primary' : ''}`}>
               <div className="absolute top-3 right-3 z-10 flex gap-2">
                 <Badge variant="destructive">PRO</Badge>
                 <Badge variant="secondary">SALE</Badge>
