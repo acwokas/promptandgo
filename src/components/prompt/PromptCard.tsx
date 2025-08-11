@@ -208,13 +208,14 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
 
   return (
     <Card className="relative overflow-hidden h-full">
-      {isPro && !hasAccess && (
-        <div className="absolute top-3 right-3 z-10 flex gap-2">
-          <Badge variant="destructive">PRO</Badge>
-          <Badge variant="success">SALE</Badge>
-        </div>
-      )}
       <CardHeader>
+        {isPro && !hasAccess && (
+          <div className="mb-2 flex gap-2">
+            <Badge variant="destructive">PRO</Badge>
+            <Badge variant="success">SALE</Badge>
+          </div>
+        )}
+
         <div className="flex items-center gap-2 flex-wrap text-xs text-muted-foreground">
           {category && (
             <button
