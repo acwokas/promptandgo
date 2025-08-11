@@ -211,7 +211,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
       {isPro && !hasAccess && (
         <div className="absolute top-3 right-3 z-10 flex gap-2">
           <Badge variant="destructive">PRO</Badge>
-          <Badge variant="secondary">SALE</Badge>
+          <Badge variant="success">SALE</Badge>
         </div>
       )}
       <CardHeader>
@@ -267,7 +267,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                   </div>
                   <div className="flex gap-2 justify-center">
                     <Button size="sm" onClick={addPromptToCart}>Buy Prompt {fmtUSD(PROMPT_DISCOUNT_CENTS)}</Button>
-                    <Button size="sm" variant="secondary" onClick={handleSubscribeClick}>Subscribe {fmtUSD(SUB_DISCOUNT_CENTS)}</Button>
+                    <Button size="sm" variant="secondary" onClick={handleSubscribeClick}>Subscribe {fmtUSD(SUB_DISCOUNT_CENTS)} per month</Button>
                   </div>
                 </div>
               </div>
