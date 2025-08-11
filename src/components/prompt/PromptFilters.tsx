@@ -29,7 +29,16 @@ function catAccentIndex(seed: string) {
 }
 
 export const PromptFilters = ({ categories, categoryId, subcategoryId, query, includePro, onChange, onSearch, onClear, searchLabel, searchPlaceholder, categoryLabel, subcategoryLabel }: FiltersProps) => {
-  const categoriesSorted = [...categories].sort((a, b) => a.name.localeCompare(b.name));
+  const categoriesSorted = [...categories].sort((a, b) => {
+    const an = a.name.trim().toLowerCase();
+    const bn = b.name.trim().toLowerCase();
+    const isAdv = (n: string) => n === "advanced prompt engineering" || n === "advaced prompt engineering";
+    const isAiFor = (n: string) => n.startsWith("ai for") && n !== "ai for business automation";
+    const aw = (isAdv(an) || isAiFor(an)) ? 1 : 0;
+    const bw = (isAdv(bn) || isAiFor(bn)) ? 1 : 0;
+    if (aw !== bw) return aw - bw; // non-bottom first, bottom last
+    return a.name.localeCompare(b.name);
+  });
   const currentCat = categories.find((c) => c.id === categoryId || c.name === categoryId);
   const subcategoriesSorted = [...(currentCat?.subcategories || [])].sort((a, b) => a.name.localeCompare(b.name));
   const isCategorySelected = Boolean(categoryId);
