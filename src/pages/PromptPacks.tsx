@@ -15,6 +15,8 @@ import { Lock, Check } from "lucide-react";
 
 const PACK_ORIGINAL_CENTS = 999;
 const PACK_DISCOUNT_CENTS = 499;
+const LIFETIME_ORIGINAL_CENTS = 9499;
+const LIFETIME_DISCOUNT_CENTS = 4785;
 const fmtUSD = (cents: number) => `$${(cents / 100).toFixed(2)}`;
 
 type Pack = { id: string; name: string; description: string | null };
@@ -131,47 +133,20 @@ const PromptPacks = () => {
     });
   };
 
-  const WELLNESS_TITLE = 'Health, Wellness & Lifestyle Coach Pack';
   const normalize = (s: string) => s
     .toLowerCase()
     .replace(/&/g, 'and')
     .replace(/[^a-z0-9\s]/g, ' ')
-    .replace(/^rhw\s+/, '')
     .replace(/\s+/g, ' ')
     .trim();
-  const isWellnessName = (s: string) => normalize(s).includes('health wellness lifestyle coach pack');
-
-  const wellnessIds = packs.filter((pk) => isWellnessName(pk.name)).map((pk) => pk.id);
-  const combinedWellnessItems = wellnessIds.length
-    ? Array.from(
-        new Map(
-          wellnessIds
-            .flatMap((id) => (contents[id] || []))
-            .map((it) => [it.id, it] as const)
-        ).values()
-      )
-    : [];
-
-  const displayPacks = wellnessIds.length
-    ? [
-        {
-          id: wellnessIds[0],
-          name: WELLNESS_TITLE,
-          description: packs.find((pk) => isWellnessName(pk.name))?.description ?? null,
-        },
-        ...packs.filter((pk) => !isWellnessName(pk.name)),
-      ]
-    : packs;
-
-  const itemsForPack = (id: string) => (wellnessIds.includes(id) ? combinedWellnessItems : (contents[id] || []));
 
   const filteredPacks = query.trim()
-    ? displayPacks.filter((pk) => {
-        const items = itemsForPack(pk.id);
+    ? packs.filter((pk) => {
+        const items = contents[pk.id] || [];
         const q = query.toLowerCase();
         return items.some((it) => (it.title?.toLowerCase().includes(q) || (it.excerpt || '').toLowerCase().includes(q)));
       })
-    : displayPacks;
+    : packs;
 
   return (
     <>

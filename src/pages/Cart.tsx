@@ -25,6 +25,7 @@ const CartPage = () => {
     switch (i.type) {
       case 'pack': return 999;
       case 'subscription': return 2499;
+      case 'lifetime': return 9499;
       case 'prompt': return 199;
       default: return i.unitAmountCents;
     }
@@ -103,7 +104,7 @@ const CartPage = () => {
                     <Button className="flex-1" variant="hero" onClick={beginCheckout}>Checkout</Button>
                     <Button className="flex-1" variant="secondary" onClick={() => clearCart()}>Clear</Button>
                   </div>
-                  <p className="text-sm text-muted-foreground">This month only: All PRO prompts $0.99 (was $1.99). Premium Packs $4.99 (was $9.99). Or subscribe for $12.99 (was $24.99).</p>
+                  <p className="text-sm text-muted-foreground">This month only: All PRO prompts $0.99 (was $1.99). Prompt Powerpacks $4.99 (was $9.99). Or subscribe for $12.99 (was $24.99), or get Lifetime Access $47.85 (was $94.99).</p>
                 </CardContent>
               </Card>
             </div>

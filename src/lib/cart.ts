@@ -3,7 +3,7 @@
 
 export type CartItem = {
   id: string;
-  type: 'prompt' | 'pack' | 'subscription';
+  type: 'prompt' | 'pack' | 'subscription' | 'lifetime';
   title: string;
   unitAmountCents: number;
   quantity: number;
