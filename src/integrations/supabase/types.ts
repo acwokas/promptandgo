@@ -67,6 +67,175 @@ export type Database = {
           },
         ]
       }
+      order_items: {
+        Row: {
+          created_at: string
+          id: string
+          item_id: string | null
+          item_type: string
+          order_id: string
+          quantity: number
+          title: string | null
+          unit_amount: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          item_id?: string | null
+          item_type: string
+          order_id: string
+          quantity?: number
+          title?: string | null
+          unit_amount: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          item_id?: string | null
+          item_type?: string
+          order_id?: string
+          quantity?: number
+          title?: string | null
+          unit_amount?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          amount: number | null
+          created_at: string
+          currency: string
+          id: string
+          mode: string
+          status: string
+          stripe_session_id: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          amount?: number | null
+          created_at?: string
+          currency?: string
+          id?: string
+          mode: string
+          status?: string
+          stripe_session_id?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          amount?: number | null
+          created_at?: string
+          currency?: string
+          id?: string
+          mode?: string
+          status?: string
+          stripe_session_id?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      pack_access: {
+        Row: {
+          created_at: string
+          pack_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          pack_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          pack_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pack_access_pack_id_fkey"
+            columns: ["pack_id"]
+            isOneToOne: false
+            referencedRelation: "packs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pack_prompts: {
+        Row: {
+          created_at: string
+          pack_id: string
+          prompt_id: string
+        }
+        Insert: {
+          created_at?: string
+          pack_id: string
+          prompt_id: string
+        }
+        Update: {
+          created_at?: string
+          pack_id?: string
+          prompt_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pack_prompts_pack_id_fkey"
+            columns: ["pack_id"]
+            isOneToOne: false
+            referencedRelation: "packs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pack_prompts_prompt_id_fkey"
+            columns: ["prompt_id"]
+            isOneToOne: false
+            referencedRelation: "prompts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      packs: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean
+          name: string
+          price_cents: number
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          price_cents?: number
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          price_cents?: number
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -90,6 +259,32 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      prompt_access: {
+        Row: {
+          created_at: string
+          prompt_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          prompt_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          prompt_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prompt_access_prompt_id_fkey"
+            columns: ["prompt_id"]
+            isOneToOne: false
+            referencedRelation: "prompts"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       prompt_tags: {
         Row: {
@@ -215,6 +410,42 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      subscribers: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          stripe_customer_id: string | null
+          subscribed: boolean
+          subscription_end: string | null
+          subscription_tier: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          stripe_customer_id?: string | null
+          subscribed?: boolean
+          subscription_end?: string | null
+          subscription_tier?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          stripe_customer_id?: string | null
+          subscribed?: boolean
+          subscription_end?: string | null
+          subscription_tier?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
       }
       tags: {
         Row: {
