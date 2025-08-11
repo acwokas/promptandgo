@@ -158,11 +158,15 @@ const PromptLibrary = () => {
           )
           .order("created_at", { ascending: false });
 
+        const rawQuery = query.trim();
+        const qLower = rawQuery.toLowerCase();
+        const proSearch = qLower === "pro";
+
         if (categoryId) q = q.eq("category_id", categoryId);
         if (subcategoryId) q = q.eq("subcategory_id", subcategoryId);
-        if (query.trim()) q = q.textSearch("search_vector", query.trim(), { type: "websearch" });
+        if (!proSearch && rawQuery) q = q.textSearch("search_vector", rawQuery, { type: "websearch" });
         if (promptIdsForTag) q = q.in("id", promptIdsForTag);
-        if (proOnly) q = q.eq("is_pro", true);
+        if (proOnly || proSearch) q = q.eq("is_pro", true);
         else if (!includePro) q = q.eq("is_pro", false);
 
         q = q.range(from, to);
@@ -411,6 +415,13 @@ const PromptLibrary = () => {
                 setSelectedTag(undefined);
                 setProOnly(false);
                 setQuery("");
+              }}
+              onViewAllPro={() => {
+                setCategoryId(undefined);
+                setSubcategoryId(undefined);
+                setSelectedTag(undefined);
+                setQuery("");
+                setProOnly(true);
               }}
             />
           ))}

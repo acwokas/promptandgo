@@ -44,9 +44,10 @@ interface PromptCardProps {
   onTagClick?: (tag: string) => void;
   onCategoryClick?: (categoryId: string) => void;
   onSubcategoryClick?: (subcategoryId: string, categoryId: string) => void;
+  onViewAllPro?: () => void;
 }
 
-export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, onSubcategoryClick }: PromptCardProps) => {
+export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, onSubcategoryClick, onViewAllPro }: PromptCardProps) => {
   const category = categories.find((c) => c.id === prompt.categoryId);
   const sub = category?.subcategories.find((s) => s.id === prompt.subcategoryId);
   const displayTitle = cleanTitle(prompt.title);
@@ -387,9 +388,9 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
         )}
         {showLock && (
           <div className="pt-2">
-            <Link to="/library?proOnly=1#library-filters">
-              <Button size="sm" variant="secondary">View all PRO prompts</Button>
-            </Link>
+            <Button size="sm" variant="destructive" onClick={() => onViewAllPro?.()}>
+              View all PRO prompts
+            </Button>
           </div>
         )}
 
