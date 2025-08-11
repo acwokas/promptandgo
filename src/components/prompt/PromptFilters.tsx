@@ -42,9 +42,11 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
   ] as const;
 
   return (
-    <>
-      <div className="grid gap-4 md:grid-cols-3 items-end">
-        <div className="space-y-1">
+    <section className="rounded-xl bg-accent/40 border p-4 md:p-6">
+      <h2 className="text-xl font-semibold mb-4">Start Here</h2>
+
+      <div className="grid gap-3 md:grid-cols-12 items-end">
+        <div className="space-y-1 md:col-span-3">
           <Label htmlFor="category-select">{categoryLabel ?? "Category:"}</Label>
           <Select
             value={categoryId ?? ""}
@@ -67,7 +69,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
           </Select>
         </div>
 
-        <div className="space-y-1">
+        <div className="space-y-1 md:col-span-3">
           <Label htmlFor="subcategory-select">{subcategoryLabel ?? "Sub-Category:"}</Label>
           <Select
             value={subcategoryId ?? ""}
@@ -91,44 +93,41 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
           </Select>
         </div>
 
-        <div className="space-y-1">
+        <div className="space-y-1 md:col-span-3">
           <Label htmlFor="search-input">{searchLabel ?? "Search:"}</Label>
-          <div className="flex flex-wrap items-center gap-3">
-            <Input
-              id="search-input"
-              value={query}
-              onChange={(e) => onChange({ query: e.target.value })}
-              placeholder={searchPlaceholder ?? "Search prompts..."}
-              aria-label={searchLabel ?? "Search prompts"}
-              className="bg-muted/60 border shadow-sm focus:ring-2 focus:ring-ring"
+          <Input
+            id="search-input"
+            value={query}
+            onChange={(e) => onChange({ query: e.target.value })}
+            placeholder={searchPlaceholder ?? "Search prompts..."}
+            aria-label={searchLabel ?? "Search prompts"}
+            className="bg-muted/60 border shadow-sm focus:ring-2 focus:ring-ring"
+          />
+        </div>
+
+        <div className="md:col-span-3 flex flex-wrap items-center gap-2">
+          <div className="flex items-center gap-2">
+            <Checkbox
+              id="include-pro"
+              checked={!!includePro}
+              onCheckedChange={(v) => onChange({ includePro: Boolean(v) })}
+              aria-label="Include PRO Prompts"
             />
-            <div className="flex items-center gap-2 pl-1">
-              <Checkbox
-                id="include-pro"
-                checked={!!includePro}
-                onCheckedChange={(v) => onChange({ includePro: Boolean(v) })}
-                aria-label="Include PRO Prompts"
-              />
-              <Label htmlFor="include-pro" className="text-sm">Include PRO Prompts</Label>
-            </div>
-            <Button variant="cta" onClick={onSearch} aria-label="Run search">
-              Search
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={onClear}
-              aria-label="Clear filters and search"
-            >
-              Clear
-            </Button>
+            <Label htmlFor="include-pro" className="text-sm">Include PRO Prompts</Label>
           </div>
+          <Button variant="cta" onClick={onSearch} aria-label="Run search">
+            Search
+          </Button>
+          <Button variant="ghost" onClick={onClear} aria-label="Clear filters and search">
+            Clear
+          </Button>
         </div>
       </div>
 
       <div className="mt-6">
         <p className="text-sm text-muted-foreground mb-3">Or select a popular category:</p>
         <TooltipProvider>
-          <div className="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-9 gap-3">
+          <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-2">
             {popularCats.map((pc) => {
               const catId = categories.find((c) => c.name.toLowerCase().trim() === pc.label.toLowerCase().trim())?.id;
               const Icon = pc.icon;
@@ -138,8 +137,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
                   <TooltipTrigger asChild>
                     <Button
                       type="button"
-                      variant="secondary"
-                      className="h-12 w-12 p-0 hover-scale"
+                      className="h-10 w-10 p-0 bg-primary text-primary-foreground hover:opacity-90 shadow-sm"
                       aria-label={pc.label}
                       onClick={() => {
                         if (catId) onChange({ categoryId: catId, subcategoryId: undefined, query: "" });
@@ -156,6 +154,6 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
           </div>
         </TooltipProvider>
       </div>
-    </>
+    </section>
   );
 };
