@@ -7,7 +7,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-async function grantEntitlements(supabaseService: any, userId: string, orderId: string, customerId?: string) {
+async function grantEntitlements(supabaseService: any, userId: string, userEmail: string | null, orderId: string, customerId?: string) {
   const { data: items, error: itemsErr } = await supabaseService
     .from('order_items')
     .select('*')
@@ -22,7 +22,7 @@ async function grantEntitlements(supabaseService: any, userId: string, orderId: 
     } else if (it.item_type === 'lifetime') {
       await supabaseService.from('subscribers').upsert({
         user_id: userId,
-        email: null,
+        email: userEmail,
         stripe_customer_id: customerId ?? null,
         subscribed: true,
         subscription_tier: 'Lifetime',
@@ -81,7 +81,7 @@ serve(async (req) => {
     await supabaseService.from('orders').update({ status: 'paid', amount: session.amount_total ?? order.amount, updated_at: new Date().toISOString() }).eq('id', orderId);
 
     const customerId = typeof session.customer === 'string' ? session.customer : (session.customer as any)?.id;
-    await grantEntitlements(supabaseService, user.id, orderId, customerId);
+    await grantEntitlements(supabaseService, user.id, user.email ?? null, orderId, customerId);
 
     return new Response(JSON.stringify({ ok: true }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 });
   } catch (error: any) {

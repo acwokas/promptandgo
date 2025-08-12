@@ -7,7 +7,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-async function grantEntitlements(supabaseService: any, userId: string, orderId: string, customerId?: string) {
+async function grantEntitlements(supabaseService: any, userId: string, userEmail: string | null, orderId: string, customerId?: string) {
   const { data: items } = await supabaseService.from('order_items').select('*').eq('order_id', orderId);
   for (const it of items || []) {
     if (it.item_type === 'prompt' && it.item_id) {
@@ -17,6 +17,7 @@ async function grantEntitlements(supabaseService: any, userId: string, orderId: 
     } else if (it.item_type === 'lifetime') {
       await supabaseService.from('subscribers').upsert({
         user_id: userId,
+        email: userEmail,
         subscribed: true,
         subscription_tier: 'Lifetime',
         subscription_end: null,
@@ -62,7 +63,7 @@ serve(async (req) => {
       if (session.payment_status === 'paid') {
         await supabaseService.from('orders').update({ status: 'paid', amount: session.amount_total ?? order.amount, updated_at: new Date().toISOString() }).eq('id', order.id);
         const customerId = typeof session.customer === 'string' ? session.customer : (session.customer as any)?.id;
-        await grantEntitlements(supabaseService, user.id, order.id, customerId);
+        await grantEntitlements(supabaseService, user.id, user.email ?? null, order.id, customerId);
       }
     }
 
