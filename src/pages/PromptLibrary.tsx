@@ -325,9 +325,11 @@ const PromptLibrary = () => {
     const cid = searchParams.get('categoryId') || undefined;
     const sid = searchParams.get('subcategoryId') || undefined;
     const po = searchParams.get('proOnly');
+    const q = searchParams.get('q') || undefined;
     if (cid !== undefined) setCategoryId(cid);
     if (sid !== undefined) setSubcategoryId(sid);
     setProOnly(po === '1' || po === 'true');
+    if (q !== undefined) setQuery(q);
   }, [searchParams]);
 
   // Initial loads

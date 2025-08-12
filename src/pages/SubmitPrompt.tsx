@@ -4,6 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
 import PageHero from "@/components/layout/PageHero";
+import RelatedPrompts from "@/components/prompt/RelatedPrompts";
+import { Link } from "react-router-dom";
 
 const SubmitPrompt = () => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -37,17 +39,29 @@ const SubmitPrompt = () => {
       <main className="container py-10">
         <SEO title="Submit a Prompt" description="Share your best workflow prompts with the community." />
 
-      <form onSubmit={onSubmit} className="grid gap-4 max-w-2xl">
-        <Input required name="title" placeholder="Title" />
-        <Textarea required name="whatFor" placeholder="What it's for (short description)" />
-        <Textarea required name="prompt" placeholder="Prompt (copyable block)" />
-        <Textarea name="excerpt" placeholder="Excerpt (short summary)" />
-        <p className="text-sm italic text-muted-foreground">
-          PromptAndGo.ai reserves the right to use, edit and revise any portion of this prompt.
-        </p>
-        <Button variant="cta" className="w-fit">Submit Prompt</Button>
-      </form>
-    </main>
+        <form onSubmit={onSubmit} className="grid gap-4 max-w-2xl">
+          <Input required name="title" placeholder="Title" />
+          <Textarea required name="whatFor" placeholder="What it's for (short description)" />
+          <Textarea required name="prompt" placeholder="Prompt (copyable block)" />
+          <Textarea name="excerpt" placeholder="Excerpt (short summary)" />
+          <p className="text-sm italic text-muted-foreground">
+            PromptAndGo.ai reserves the right to use, edit and revise any portion of this prompt.
+          </p>
+          <Button variant="cta" className="w-fit">Submit Prompt</Button>
+        </form>
+
+        {/* Helpful internal links for discovery */}
+        <nav aria-labelledby="browse-links" className="mt-10">
+          <h2 id="browse-links" className="text-xl md:text-2xl font-semibold tracking-tight mb-3">Explore more while you’re here</h2>
+          <div className="flex flex-wrap gap-3">
+            <Button asChild variant="secondary"><Link to="/library">Browse Prompt Library</Link></Button>
+            <Button asChild variant="inverted"><Link to="/packs">Explore ⚡️Power Packs</Link></Button>
+            <Button asChild variant="outline"><Link to="/how-it-works">How Prompting Works</Link></Button>
+          </div>
+        </nav>
+
+        <RelatedPrompts />
+      </main>
     </>
   );
 };
