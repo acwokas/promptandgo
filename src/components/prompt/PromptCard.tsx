@@ -307,7 +307,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
         <div>
           <div className="text-xs font-medium mb-1">Prompt:</div>
           <div className="relative">
-            <pre className={cn("whitespace-pre-wrap bg-muted/50 p-3 rounded-md text-sm transition", showLock && "blur-sm select-none pointer-events-none")}> 
+            <pre className={cn("whitespace-pre-wrap prompt-editorial p-4 sm:p-5 rounded-md text-[0.975rem] sm:text-[1.05rem] leading-7 transition shadow-elegant", showLock && "blur-sm select-none pointer-events-none")}> 
               {prompt.prompt}
             </pre>
             {showLock && (
