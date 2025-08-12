@@ -10,6 +10,7 @@ const HowToWriteAIPrompts = () => {
     "Learn how to write AI prompts that actually work. Follow these five rules to create prompts that produce accurate, useful, and consistent results every time.";
   const heroImage = "/lovable-uploads/07a07e3c-270d-4267-9143-81615a2c1611.png"; // Image 1
   const secondaryImage = "/lovable-uploads/cc4584af-ecc2-4ea7-9eb7-f6ec463c8ac6.png"; // Image 2
+  const thirdImage = "/lovable-uploads/dc900dd9-dbc7-43f2-a4d5-4fef2011cea4.png"; // Image 3
   const origin = typeof window !== "undefined" ? window.location.origin : "";
   const canonical = origin ? `${origin}/blog/how-to-write-ai-prompts` : undefined;
   const category = "Prompting";
@@ -113,6 +114,13 @@ const HowToWriteAIPrompts = () => {
           <p>
             Do not settle for the first output. Test different variations of your prompt, compare results, and adjust until you find the structure that works best. Save your best prompts so you can reuse them.
           </p>
+
+          <img
+            src={thirdImage}
+            alt="Team collaborating with AI using effective prompts"
+            className="mt-3 w-full rounded-lg border aspect-[16/9] object-cover"
+            loading="lazy"
+          />
 
           <h2 className="text-2xl font-semibold">Common Prompt Mistakes to Avoid</h2>
           <ul className="list-disc pl-6 space-y-2">

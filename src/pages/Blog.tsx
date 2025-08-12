@@ -71,8 +71,8 @@ const Blog = () => {
         <Link to="/blog/how-to-write-ai-prompts" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
           <Card className="overflow-hidden">
             <img
-              src="/lovable-uploads/dc900dd9-dbc7-43f2-a4d5-4fef2011cea4.png"
-              alt="How to Write AI Prompts That Actually Work"
+              src="/lovable-uploads/cc4584af-ecc2-4ea7-9eb7-f6ec463c8ac6.png"
+              alt="Good prompt vs bad prompt illustration"
               loading="lazy"
               className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
             />
