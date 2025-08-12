@@ -161,8 +161,13 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   }, [user?.id, prompt.id]);
 
   const toggleFavorite = async () => {
-    if (!user) return;
+    if (!user) {
+      console.debug('[favorites] click ignored — no user')
+      toast({ title: "Please log in to save prompts" })
+      return;
+    }
     setFavLoading(true);
+    console.debug('[favorites] toggling', { userId: user.id, promptId: prompt.id, isFav })
     try {
       if (isFav) {
         const { error } = await supabase
@@ -173,16 +178,29 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
         if (error) throw error;
         setIsFav(false);
         toast({ title: "Removed from favourites" });
+        console.debug('[favorites] removed', { promptId: prompt.id })
       } else {
         const { error } = await supabase
           .from("favorites")
           .insert({ user_id: user.id, prompt_id: prompt.id });
-        if (error) throw error;
-        setIsFav(true);
-        toast({ title: "Added to favourites" });
+        if (error) {
+          const code = (error as any).code || (error as any).details;
+          if (code === "23505" || String((error as any).message || "").toLowerCase().includes("duplicate")) {
+            setIsFav(true);
+            toast({ title: "Already in favourites" });
+            console.debug('[favorites] already favorited (unique constraint)', { promptId: prompt.id })
+          } else {
+            throw error;
+          }
+        } else {
+          setIsFav(true);
+          toast({ title: "Added to favourites" });
+          console.debug('[favorites] added', { promptId: prompt.id })
+        }
       }
     } catch (e) {
       console.error(e);
+      console.error('[favorites] failed to toggle', e);
       toast({ title: "Failed to update favourites" });
     } finally {
       setFavLoading(false);
