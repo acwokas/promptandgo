@@ -23,6 +23,7 @@ import BestAIPromptsForSmallBusiness2025 from "./pages/blog/BestAIPromptsForSmal
 import HowToWriteAIPrompts from "./pages/blog/HowToWriteAIPrompts";
 import AIPromptsThatSaveYouHours from "./pages/blog/AIPromptsThatSaveYouHours";
 import AIPromptsForMarketingCampaigns from "./pages/blog/AIPromptsForMarketingCampaigns";
+import AIPromptsForCustomerSupport from "./pages/blog/AIPromptsForCustomerSupport";
 import Auth from "./pages/Auth";
 import AdminBulkUpload from "./pages/AdminBulkUpload";
 import FavoritesPage from "./pages/account/Favorites";
