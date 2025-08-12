@@ -23,6 +23,7 @@ const AIPromptsForMarketingCampaigns = () => {
     "copywriting",
     "conversion",
   ];
+  const lastmod = "2025-08-12";
 
   const schema = {
     "@context": "https://schema.org",
@@ -32,13 +33,20 @@ const AIPromptsForMarketingCampaigns = () => {
     articleSection: category,
     keywords: tags,
     image: origin ? `${origin}${heroImage}` : heroImage,
+    datePublished: lastmod,
+    dateModified: lastmod,
     author: { "@type": "Organization", name: "PromptAndGo.ai" },
+    publisher: {
+      "@type": "Organization",
+      name: "PromptAndGo.ai",
+      logo: { "@type": "ImageObject", url: origin ? `${origin}/og-default.png` : "/og-default.png" },
+    },
     mainEntityOfPage: { "@type": "WebPage", "@id": canonical || "" },
   };
 
   return (
     <main className="container py-10">
-      <SEO title={title} description={description} canonical={canonical} image={origin ? `${origin}${heroImage}` : heroImage} />
+      <SEO title={title} description={description} canonical={canonical} image={origin ? `${origin}${heroImage}` : heroImage} ogType="article" publishedTime={lastmod} modifiedTime={lastmod} />
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(schema)}</script>
         <link rel="canonical" href={canonical} />

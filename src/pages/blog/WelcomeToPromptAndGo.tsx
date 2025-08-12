@@ -16,9 +16,10 @@ const WelcomeToPromptAndGo = () => {
     "AI productivity", "AI tools", "ChatGPT", "Claude", "Gemini",
     "prompt library", "AI workflow", "AI tips", "AI writing",
     "startup tools", "marketing AI", "productivity tools", "welcome"
-  ];
+];
+const lastmod = "2025-08-12";
 
-  const schema = {
+const schema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: title,
@@ -26,9 +27,19 @@ const WelcomeToPromptAndGo = () => {
     articleSection: category,
     keywords: tags,
     image: origin ? `${origin}${imagePath}` : imagePath,
+    datePublished: lastmod,
+    dateModified: lastmod,
     author: {
       "@type": "Organization",
       name: "PromptAndGo.ai",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "PromptAndGo.ai",
+      logo: {
+        "@type": "ImageObject",
+        url: origin ? `${origin}/og-default.png` : "/og-default.png",
+      },
     },
     mainEntityOfPage: {
       "@type": "WebPage",
@@ -38,7 +49,7 @@ const WelcomeToPromptAndGo = () => {
 
   return (
     <main className="container py-10">
-      <SEO title={seoTitle} description={description} canonical={canonical} image={origin ? `${origin}${imagePath}` : imagePath} />
+      <SEO title={seoTitle} description={description} canonical={canonical} image={origin ? `${origin}${imagePath}` : imagePath} ogType="article" publishedTime={lastmod} modifiedTime={lastmod} />
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(schema)}</script>
         <meta name="keywords" content={tags.join(", ")} />

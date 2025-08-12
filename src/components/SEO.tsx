@@ -7,6 +7,9 @@ interface SEOProps {
   image?: string;
   noindex?: boolean;
   structuredData?: object | object[];
+  ogType?: 'website' | 'article' | 'product';
+  publishedTime?: string;
+  modifiedTime?: string;
 }
 
 const SITE_NAME = "PromptAndGo";
@@ -34,6 +37,9 @@ const SEO = ({
   image,
   noindex = false,
   structuredData,
+  ogType = "website",
+  publishedTime,
+  modifiedTime,
 }: SEOProps) => {
   const canonicalUrl = normalizeCanonical(canonical);
   const ogImage = image || DEFAULT_OG_IMAGE;
@@ -50,9 +56,11 @@ const SEO = ({
       <meta property="og:site_name" content={SITE_NAME} />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
-      <meta property="og:type" content="website" />
+      <meta property="og:type" content={ogType} />
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:image" content={ogImage} />
+      {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+      {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
