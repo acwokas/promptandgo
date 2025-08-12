@@ -17,6 +17,7 @@ const PACK_ORIGINAL_CENTS = 999;
 const PACK_DISCOUNT_CENTS = 499;
 const LIFETIME_ORIGINAL_CENTS = 9499;
 const LIFETIME_DISCOUNT_CENTS = 4785;
+const SUB_DISCOUNT_CENTS = 1299;
 const fmtUSD = (cents: number) => `$${(cents / 100).toFixed(2)}`;
 
 type Pack = { id: string; name: string; description: string | null };
@@ -136,13 +137,13 @@ const PromptPacks = () => {
       navigate('/auth');
       return;
     }
-    try {
-      const { data, error } = await supabase.functions.invoke('create-checkout');
-      if (error) throw error;
-      window.open((data as any).url, '_blank');
-    } catch (e: any) {
-      toast({ title: 'Subscription error', description: e?.message || String(e), variant: 'destructive' });
+    const exists = getCart().some((i) => i.type === 'subscription' && i.id === 'monthly');
+    if (exists) {
+      toast({ title: 'Already in cart', description: 'Monthly All-Access Subscription is already in your cart.' });
+      return;
     }
+    addToCart({ id: 'monthly', type: 'subscription', title: 'Monthly All-Access Subscription', unitAmountCents: SUB_DISCOUNT_CENTS, quantity: 1 });
+    toast({ title: 'Subscription added to cart', description: `Monthly All-Access Subscription — ${fmtUSD(SUB_DISCOUNT_CENTS)}/mo` });
   };
 
   const normalize = (s: string) => s

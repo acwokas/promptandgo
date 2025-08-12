@@ -212,7 +212,13 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
       window.location.assign('/auth');
       return;
     }
-    toast({ title: 'Subscription checkout', description: 'Stripe checkout will be enabled after keys are configured.' });
+    const exists = getCart().some((i) => i.type === 'subscription' && i.id === 'monthly');
+    if (exists) {
+      toast({ title: 'Already in cart', description: 'Monthly All-Access Subscription is already in your cart.' });
+      return;
+    }
+    addToCart({ id: 'monthly', type: 'subscription', title: 'Monthly All-Access Subscription', unitAmountCents: SUB_DISCOUNT_CENTS, quantity: 1 });
+    toast({ title: 'Subscription added to cart', description: `Monthly All-Access Subscription — ${fmtUSD(SUB_DISCOUNT_CENTS)}/mo` });
   };
 
   const addFirstPackToCart = () => {

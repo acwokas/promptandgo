@@ -31,7 +31,12 @@ const CartPage = () => {
     }
   };
 
-  const total = items.reduce((sum, i) => sum + i.unitAmountCents * i.quantity, 0);
+  const hasSubscription = items.some((i) => i.type === 'subscription');
+
+  const total = items.reduce((sum, i) => {
+    const unit = hasSubscription && (i.type === 'prompt' || i.type === 'pack') ? 0 : i.unitAmountCents;
+    return sum + unit * i.quantity;
+  }, 0);
   const originalTotal = items.reduce((sum, i) => sum + originalUnitCents(i) * i.quantity, 0);
   const savings = Math.max(0, originalTotal - total);
 
@@ -93,7 +98,12 @@ const CartPage = () => {
                   </CardHeader>
                   <CardContent className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    {originalUnitCents(i) > i.unitAmountCents ? (
+                    {hasSubscription && (i.type === 'prompt' || i.type === 'pack') ? (
+                      <>
+                        <span className="text-muted-foreground line-through">{centsToUSD(originalUnitCents(i))}</span>
+                        <span className="text-xl font-semibold">{centsToUSD(0)}</span>
+                      </>
+                    ) : originalUnitCents(i) > i.unitAmountCents ? (
                       <>
                         <span className="text-muted-foreground line-through">{centsToUSD(originalUnitCents(i))}</span>
                         <span className="text-xl font-semibold">{centsToUSD(i.unitAmountCents)}</span>
