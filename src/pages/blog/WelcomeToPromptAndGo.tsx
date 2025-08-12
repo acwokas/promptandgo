@@ -67,6 +67,8 @@ const schema = {
             alt="PromptAndGo.ai – ready-to-use prompts for better AI results"
             className="mt-4 w-full rounded-lg border aspect-[16/9] object-cover"
             loading="lazy"
+            decoding="async"
+            width="1280" height="720"
           />
           <p className="mt-3 text-muted-foreground">
             When you open a blank AI chat window, it’s like standing in front of a rocket with the keys in your hand. The potential is huge, but only if you know what to type.
@@ -94,6 +96,8 @@ const schema = {
             alt="How the PromptAndGo.ai prompt library works – AI prompts overview"
             className="mt-4 w-full rounded-lg border aspect-[16/9] object-cover"
             loading="lazy"
+            decoding="async"
+            width="1280" height="720"
           />
           <p>
             At the heart of PromptAndGo.ai is our query loop, a database of categorised prompts you can search and filter in different ways.
@@ -133,6 +137,16 @@ const schema = {
               <Link to="/library">Explore the Prompt Library</Link>
             </Button>
           </div>
+
+          <nav aria-labelledby="see-also" className="mt-6">
+            <h3 id="see-also" className="text-lg font-semibold">See also</h3>
+            <div className="flex flex-wrap gap-3">
+              <Link to="/library?q=marketing" className="underline underline-offset-4">Marketing prompts</Link>
+              <Link to="/library?q=productivity" className="underline underline-offset-4">Productivity prompts</Link>
+              <Link to="/library?q=sales" className="underline underline-offset-4">Sales prompts</Link>
+              <Link to="/packs" className="underline underline-offset-4">⚡️Power Packs</Link>
+            </div>
+          </nav>
         </section>
         <footer className="mt-10 border-t pt-6">
           <div className="flex flex-wrap items-center gap-2">

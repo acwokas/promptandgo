@@ -23,7 +23,7 @@ const Footer = () => {
             Get 3 FREE <Link to="/contact" className="underline underline-offset-4 hover:no-underline">⚡️PowerPacks</Link> and the latest <Link to="/contact" className="underline underline-offset-4 hover:no-underline">prompting tips weekly</Link>.
           </p>
         </div>
-        <div className="md:col-span-2 grid grid-cols-2 gap-4">
+        <div className="md:col-span-2 grid grid-cols-3 gap-4">
           <nav className="flex flex-col gap-2">
             <Link to="/" className="text-muted-foreground hover:text-foreground">Welcome</Link>
             <Link to="/how-it-works" className="text-muted-foreground hover:text-foreground">How it Works</Link>
@@ -40,6 +40,13 @@ const Footer = () => {
                 <span className="inline-flex items-center gap-2"><UserIcon className="h-4 w-4" aria-hidden="true" /> My Account</span>
               </Link>
             )}
+          </nav>
+          <nav className="flex flex-col gap-2">
+            <span className="text-foreground font-medium">Popular categories</span>
+            <Link to="/library?q=marketing" className="text-muted-foreground hover:text-foreground">Marketing prompts</Link>
+            <Link to="/library?q=productivity" className="text-muted-foreground hover:text-foreground">Productivity prompts</Link>
+            <Link to="/library?q=sales" className="text-muted-foreground hover:text-foreground">Sales prompts</Link>
+            <Link to="/library?q=seo" className="text-muted-foreground hover:text-foreground">SEO prompts</Link>
           </nav>
         </div>
         <div className="md:col-span-3 col-span-full justify-self-end text-right text-muted-foreground">© 2025 PromptAndGo.ai  |  <Link to="/terms" className="hover:text-foreground">Terms & Conditions</Link>  |  <Link to="/privacy" className="hover:text-foreground">Privacy Policy</Link></div>

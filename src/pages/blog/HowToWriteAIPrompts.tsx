@@ -65,6 +65,8 @@ const HowToWriteAIPrompts = () => {
             alt="Happy creator crafting effective AI prompts at a laptop"
             className="mt-4 w-full rounded-lg border aspect-[16/9] object-cover"
             loading="lazy"
+            decoding="async"
+            width="1280" height="720"
           />
           <p className="mt-3 text-muted-foreground">
             AI tools are now part of everyday business, but the quality of the results you get depends heavily on the quality of the prompts you give. A vague or poorly written prompt will often return generic, unhelpful answers. A clear, well-structured prompt can produce outputs that feel as if they were crafted by a skilled professional.
@@ -116,6 +118,8 @@ const HowToWriteAIPrompts = () => {
             alt="Side-by-side comparison showing a bad prompt vs a good prompt"
             className="mt-3 w-full rounded-lg border aspect-[16/9] object-cover"
             loading="lazy"
+            decoding="async"
+            width="1280" height="720"
           />
 
           <h2 className="text-2xl font-semibold">Rule 5: Test and Refine</h2>
@@ -128,6 +132,8 @@ const HowToWriteAIPrompts = () => {
             alt="Team collaborating with AI using effective prompts"
             className="mt-3 w-full rounded-lg border aspect-[16/9] object-cover"
             loading="lazy"
+            decoding="async"
+            width="1280" height="720"
           />
 
           <h2 className="text-2xl font-semibold">Common Prompt Mistakes to Avoid</h2>
@@ -151,6 +157,16 @@ const HowToWriteAIPrompts = () => {
               <Link to="/library">Explore the Prompt Library</Link>
             </Button>
           </div>
+
+          <nav aria-labelledby="see-also" className="mt-6">
+            <h3 id="see-also" className="text-lg font-semibold">See also</h3>
+            <div className="flex flex-wrap gap-3">
+              <Link to="/library?q=marketing" className="underline underline-offset-4">Marketing prompts</Link>
+              <Link to="/library?q=productivity" className="underline underline-offset-4">Productivity prompts</Link>
+              <Link to="/library?q=sales" className="underline underline-offset-4">Sales prompts</Link>
+              <Link to="/packs" className="underline underline-offset-4">⚡️Power Packs</Link>
+            </div>
+          </nav>
         </section>
 
         <footer className="mt-10 border-t pt-6">

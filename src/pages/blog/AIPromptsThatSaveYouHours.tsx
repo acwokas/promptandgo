@@ -65,6 +65,8 @@ const AIPromptsThatSaveYouHours = () => {
             alt="AI prompts that save time and boost productivity"
             className="mt-4 w-full rounded-lg border aspect-[16/9] object-cover"
             loading="lazy"
+            decoding="async"
+            width="1280" height="720"
           />
           <p className="mt-3 text-muted-foreground">
             Time is one of the most valuable resources in business. Every minute spent on repetitive tasks is a minute that could be used for growth and innovation. AI can take on a surprising range of everyday tasks, from scheduling and research to content creation and customer communication. The right prompts turn these tools into powerful time-savers, freeing you to focus on high-value work.
@@ -89,6 +91,8 @@ const AIPromptsThatSaveYouHours = () => {
             alt="Analyst using AI dashboards to accelerate research and analysis"
             className="mt-6 w-full rounded-lg border aspect-[16/9] object-cover"
             loading="lazy"
+            decoding="async"
+            width="1280" height="720"
           />
 
           <h2 className="text-2xl font-semibold">1. Admin and Communication Prompts</h2>

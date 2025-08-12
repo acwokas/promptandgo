@@ -58,6 +58,8 @@ const BestAIPromptsForSmallBusiness2025 = () => {
             alt="Small business owner using AI prompts on a laptop"
             className="mt-4 w-full rounded-lg border aspect-[16/9] object-cover"
             loading="lazy"
+            decoding="async"
+            width="1280" height="720"
           />
           <p className="mt-3 text-muted-foreground">
             Running a small business in 2025 means wearing multiple hats at once. From marketing to operations, there are never enough hours in the day. AI has become an essential tool for business owners who want to work smarter, not harder. The right prompts can help you generate marketing content, create business strategies, and automate routine tasks in minutes.
@@ -83,6 +85,8 @@ const BestAIPromptsForSmallBusiness2025 = () => {
             alt="Team planning marketing content with AI insights"
             className="mt-3 w-full rounded-lg border aspect-[16/9] object-cover"
             loading="lazy"
+            decoding="async"
+            width="1280" height="720"
           />
           <p>Your marketing strategy is the lifeline of your business. These prompts are designed to help you create engaging, high-quality content quickly.</p>
           <p><strong>Social Media Caption Prompt:</strong><br />
@@ -107,6 +111,8 @@ const BestAIPromptsForSmallBusiness2025 = () => {
             alt="Happy customer with completed sale in a small business"
             className="mt-3 w-full rounded-lg border aspect-[16/9] object-cover"
             loading="lazy"
+            decoding="async"
+            width="1280" height="720"
           />
           <p>Closing sales requires the right words at the right time. These prompts can help you craft persuasive messaging.</p>
           <p><strong>Sales Pitch Script Prompt:</strong><br />
@@ -137,6 +143,16 @@ const BestAIPromptsForSmallBusiness2025 = () => {
               <Link to="/library">Explore the Prompt Library</Link>
             </Button>
           </div>
+
+          <nav aria-labelledby="see-also" className="mt-6">
+            <h3 id="see-also" className="text-lg font-semibold">See also</h3>
+            <div className="flex flex-wrap gap-3">
+              <Link to="/library?q=marketing" className="underline underline-offset-4">Marketing prompts</Link>
+              <Link to="/library?q=productivity" className="underline underline-offset-4">Productivity prompts</Link>
+              <Link to="/library?q=sales" className="underline underline-offset-4">Sales prompts</Link>
+              <Link to="/packs" className="underline underline-offset-4">⚡️Power Packs</Link>
+            </div>
+          </nav>
         </section>
 
         <footer className="mt-10 border-t pt-6">
