@@ -54,6 +54,7 @@ const SEO = ({
 
       {/* Open Graph */}
       <meta property="og:site_name" content={SITE_NAME} />
+      <meta property="og:locale" content="en_US" />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:type" content={ogType} />

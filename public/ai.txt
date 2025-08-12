@@ -1,0 +1,9 @@
+# ai.txt — Machine-readable AI crawling and data guidance
+User-agent: *
+Allow: /
+
+# LLM-friendly summaries and endpoints
+Sitemap: https://promptandgo.ai/ai/sitemap.json
+Data: https://promptandgo.ai/ai/sitemap.json
+
+Contact: mailto:support@promptandgo.ai

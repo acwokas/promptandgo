@@ -83,11 +83,15 @@ const GlobalStructuredData = () => {
 
   return (
     <Helmet>
+      {/* Global structured data */}
       <script type="application/ld+json">{JSON.stringify(organization)}</script>
       <script type="application/ld+json">{JSON.stringify(website)}</script>
       {segments.length > 0 && (
         <script type="application/ld+json">{JSON.stringify(breadcrumb)}</script>
       )}
+      {/* Site-wide head links */}
+      <link rel="alternate" type="application/rss+xml" title="PromptAndGo RSS" href={`${origin}/rss.xml`} />
+      <link rel="search" type="application/opensearchdescription+xml" title="PromptAndGo Search" href={`${origin}/opensearch.xml`} />
     </Helmet>
   );
 };
