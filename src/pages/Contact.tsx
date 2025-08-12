@@ -75,7 +75,7 @@ const Contact = () => {
               {/* Newsletter opt-in */}
               <label className="flex items-center gap-2 text-sm">
                 <input type="checkbox" name="newsletter_opt_in" className="h-4 w-4" />
-                Get 3 FREE ⚡️PowerPacks and the latest prompting tips weekly.
+                Get 1 FREE ⚡️PowerPacks and regular prompting tips.
               </label>
 
               {/* Simple captcha */}
