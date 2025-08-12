@@ -53,6 +53,12 @@ const GlobalStructuredData = () => {
     name: SITE_NAME,
     url: `${origin}/`,
     logo: `${origin}/og-default.png`,
+    contactPoint: [{
+      "@type": "ContactPoint",
+      email: "support@promptandgo.ai",
+      contactType: "customer support",
+      availableLanguage: ["en"],
+    }],
   };
 
   const website = {

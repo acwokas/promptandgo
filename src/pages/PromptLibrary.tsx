@@ -389,6 +389,25 @@ const PromptLibrary = () => {
         <SEO
           title="Prompt Library – Ready-to-use AI Prompts"
           description="Browse prompts by category and subcategory with fast search. Copy-ready cards for marketing, productivity, and sales."
+          structuredData={[
+            {
+              "@context": "https://schema.org",
+              "@type": "CollectionPage",
+              name: "Prompt Library",
+              description: "Browse prompts by category and subcategory with fast search.",
+              url: typeof window !== 'undefined' ? window.location.href : 'https://promptandgo.ai/library',
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "ItemList",
+              itemListElement: (items || []).slice(0, 10).map((p, i) => ({
+                "@type": "ListItem",
+                position: i + 1,
+                name: p.title,
+                url: typeof window !== 'undefined' ? `${window.location.origin}/library?q=${encodeURIComponent(p.title)}` : `https://promptandgo.ai/library?q=${encodeURIComponent(p.title)}`,
+              })),
+            },
+          ]}
         />
 
 
