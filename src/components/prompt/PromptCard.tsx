@@ -253,15 +253,13 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
 
   return (
     <Card className={cn("relative overflow-hidden h-full with-category-accent glass-card transition animate-float-in hover:shadow-glow-strong", accentClass)} style={{ ['--category-accent' as any]: `var(--accent-${accentIndex})` }}>
+      {isPro && !hasAccess && (
+        <div className="pro-ribbon absolute top-3 right-3 z-10 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold">
+          <Lock className="h-3.5 w-3.5" aria-hidden />
+          <span>PRO</span>
+        </div>
+      )}
       <CardHeader>
-        {isPro && !hasAccess && (
-          <div className="mb-2">
-            <div className="pro-ribbon inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold">
-              <Lock className="h-3.5 w-3.5" aria-hidden />
-              <span>PRO</span>
-            </div>
-          </div>
-        )}
 
         <div className="flex items-center gap-2 flex-wrap text-xs text-muted-foreground">
           {category && (
