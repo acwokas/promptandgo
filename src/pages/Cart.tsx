@@ -36,14 +36,37 @@ const CartPage = () => {
   const savings = Math.max(0, originalTotal - total);
 
   const beginCheckout = async () => {
-    // Placeholder checkout flow – will wire to Stripe edge function later
-    // For now, prompt login and show toast if not logged-in
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
       window.location.href = '/auth';
       return;
     }
-    alert('Checkout will open Stripe soon. Total: ' + centsToUSD(getCartTotalCents()));
+
+    const cartItems = getCart();
+    if (cartItems.length === 0) return;
+
+    const hasSubscription = cartItems.some((i) => i.type === 'subscription');
+    const hasLifetime = cartItems.some((i) => i.type === 'lifetime');
+
+    try {
+      if (hasSubscription) {
+        const { data, error } = await supabase.functions.invoke('create-checkout');
+        if (error) throw error;
+        window.open((data as any).url, '_blank');
+        return;
+      }
+
+      if (hasLifetime && cartItems.length > 1) {
+        alert('Lifetime purchase must be the only item in the cart.');
+        return;
+      }
+
+      const { data, error } = await supabase.functions.invoke('create-payment', { body: { items: cartItems } });
+      if (error) throw error;
+      window.open((data as any).url, '_blank');
+    } catch (e: any) {
+      alert('Checkout error: ' + (e?.message || String(e)));
+    }
   };
 
   return (

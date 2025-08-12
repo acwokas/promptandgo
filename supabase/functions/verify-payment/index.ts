@@ -1,0 +1,91 @@
+import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import Stripe from "https://esm.sh/stripe@14.21.0";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+};
+
+async function grantEntitlements(supabaseService: any, userId: string, orderId: string, customerId?: string) {
+  const { data: items, error: itemsErr } = await supabaseService
+    .from('order_items')
+    .select('*')
+    .eq('order_id', orderId);
+  if (itemsErr) throw new Error(`Load order items error: ${itemsErr.message}`);
+
+  for (const it of items || []) {
+    if (it.item_type === 'prompt' && it.item_id) {
+      await supabaseService.from('prompt_access').insert({ user_id: userId, prompt_id: it.item_id }).onConflict('user_id,prompt_id').ignore();
+    } else if (it.item_type === 'pack' && it.item_id) {
+      await supabaseService.from('pack_access').insert({ user_id: userId, pack_id: it.item_id }).onConflict('user_id,pack_id').ignore();
+    } else if (it.item_type === 'lifetime') {
+      await supabaseService.from('subscribers').upsert({
+        user_id: userId,
+        email: null,
+        stripe_customer_id: customerId ?? null,
+        subscribed: true,
+        subscription_tier: 'Lifetime',
+        subscription_end: null,
+        updated_at: new Date().toISOString(),
+      }, { onConflict: 'user_id' });
+    }
+  }
+}
+
+serve(async (req) => {
+  if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
+  try {
+    const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
+    if (!stripeKey) throw new Error("Missing STRIPE_SECRET_KEY secret");
+
+    const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
+    const anonKey = Deno.env.get("SUPABASE_ANON_KEY") ?? "";
+    const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
+    if (!serviceRoleKey) throw new Error("Missing SUPABASE_SERVICE_ROLE_KEY secret");
+
+    const authHeader = req.headers.get("Authorization") || "";
+    const token = authHeader.replace("Bearer ", "");
+
+    const supabaseAuth = createClient(supabaseUrl, anonKey);
+    const { data: userData, error: userError } = await supabaseAuth.auth.getUser(token);
+    if (userError) throw new Error(`Auth error: ${userError.message}`);
+    const user = userData.user;
+    if (!user) throw new Error("Not authenticated");
+
+    const body = await req.json();
+    const orderId: string = body?.order_id;
+    const sessionId: string = body?.session_id;
+    if (!orderId || !sessionId) throw new Error("Missing order_id or session_id");
+
+    const supabaseService = createClient(supabaseUrl, serviceRoleKey, { auth: { persistSession: false } });
+
+    const { data: order, error: orderErr } = await supabaseService
+      .from('orders')
+      .select('*')
+      .eq('id', orderId)
+      .single();
+    if (orderErr) throw new Error(`Order not found: ${orderErr.message}`);
+    if (order.user_id !== user.id) throw new Error("Order does not belong to user");
+    if (order.stripe_session_id !== sessionId) {
+      // Allow proceeding if not set due to edge cases, but log
+      console.log('Session mismatch', { orderSession: order.stripe_session_id, provided: sessionId });
+    }
+
+    const stripe = new Stripe(stripeKey, { apiVersion: "2023-10-16" });
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    if (session.payment_status !== 'paid') {
+      return new Response(JSON.stringify({ status: session.payment_status }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 });
+    }
+
+    await supabaseService.from('orders').update({ status: 'paid', amount: session.amount_total ?? order.amount, updated_at: new Date().toISOString() }).eq('id', orderId);
+
+    const customerId = typeof session.customer === 'string' ? session.customer : (session.customer as any)?.id;
+    await grantEntitlements(supabaseService, user.id, orderId, customerId);
+
+    return new Response(JSON.stringify({ ok: true }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 });
+  } catch (error: any) {
+    const msg = error?.message || String(error);
+    return new Response(JSON.stringify({ error: msg }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 });
+  }
+});

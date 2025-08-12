@@ -131,15 +131,18 @@ const PromptPacks = () => {
     addToCart({ id: p.id, type: 'pack', title: p.name, unitAmountCents: PACK_DISCOUNT_CENTS, quantity: 1 });
     toast({ title: 'Added to cart', description: `${p.name} — ${fmtUSD(PACK_DISCOUNT_CENTS)}` });
   };
-  const handleSubscribe = () => {
+  const handleSubscribe = async () => {
     if (!user) {
       navigate('/auth');
       return;
     }
-    toast({
-      title: 'Premium subscription',
-      description: 'Subscription checkout coming next. For now, you can purchase individual packs.',
-    });
+    try {
+      const { data, error } = await supabase.functions.invoke('create-checkout');
+      if (error) throw error;
+      window.open((data as any).url, '_blank');
+    } catch (e: any) {
+      toast({ title: 'Subscription error', description: e?.message || String(e), variant: 'destructive' });
+    }
   };
 
   const normalize = (s: string) => s

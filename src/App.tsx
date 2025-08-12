@@ -13,7 +13,6 @@ import Blog from "./pages/Blog";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import FAQs from "./pages/FAQs";
-
 import HowItWorks from "./pages/HowItWorks";
 import Contact from "./pages/Contact";
 import Header from "@/components/layout/Header";
@@ -34,6 +33,11 @@ import ProfilePage from "./pages/account/Profile";
 import NotificationsPage from "./pages/account/Notifications";
 import SecurityPage from "./pages/account/Security";
 import CartPage from "./pages/Cart";
+import CheckoutSuccess from "./pages/CheckoutSuccess";
+import CheckoutCanceled from "./pages/CheckoutCanceled";
+import SubscriptionSuccess from "./pages/SubscriptionSuccess";
+import SubscriptionCanceled from "./pages/SubscriptionCanceled";
+import AuthEffects from "@/components/auth/AuthEffects";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +50,7 @@ const App = () => (
         <BrowserRouter>
           <GlobalStructuredData />
           <Header />
+          <AuthEffects />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/library" element={<PromptLibrary />} />
@@ -72,6 +77,10 @@ const App = () => (
             <Route path="/account/purchases" element={<PurchasesPage />} />
             <Route path="/account/favorites" element={<FavoritesPage />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/checkout/success" element={<CheckoutSuccess />} />
+            <Route path="/checkout/canceled" element={<CheckoutCanceled />} />
+            <Route path="/subscription/success" element={<SubscriptionSuccess />} />
+            <Route path="/subscription/canceled" element={<SubscriptionCanceled />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
