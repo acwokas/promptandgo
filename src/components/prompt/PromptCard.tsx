@@ -253,21 +253,22 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   };
 
   return (
-    <Card className={cn("relative overflow-hidden h-full with-category-accent glass-card transition animate-float-in hover:shadow-glow-strong", accentClass, hasRibbon && "pt-8")} style={{ ['--category-accent' as any]: `var(--accent-${accentIndex})` }}>
-      {isPro && !hasAccess && (
-        <div className="pro-ribbon absolute top-3 right-3 z-10 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold">
-          <Lock className="h-3.5 w-3.5" aria-hidden />
-          <span>PRO</span>
-        </div>
-      )}
-      {!isPro && (
-        <div className="free-ribbon absolute top-3 right-3 z-10 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold">
-          <CheckCircle className="h-3.5 w-3.5" aria-hidden />
-          <span>FREE</span>
-        </div>
-      )}
+    <Card className={cn("relative overflow-hidden h-full with-category-accent glass-card transition animate-float-in hover:shadow-glow-strong", accentClass)} style={{ ['--category-accent' as any]: `var(--accent-${accentIndex})` }}>
       <CardHeader>
-
+        <div className="mb-2">
+          {isPro && !hasAccess && (
+            <div className="pro-ribbon inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold">
+              <Lock className="h-3.5 w-3.5" aria-hidden />
+              <span>PRO</span>
+            </div>
+          )}
+          {!isPro && (
+            <div className="free-ribbon inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold">
+              <CheckCircle className="h-3.5 w-3.5" aria-hidden />
+              <span>FREE</span>
+            </div>
+          )}
+        </div>
         <div className="flex items-center gap-2 flex-wrap text-xs text-muted-foreground">
           {category && (
             <button
