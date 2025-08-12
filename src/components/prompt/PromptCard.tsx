@@ -5,7 +5,7 @@ import { toast } from "@/hooks/use-toast";
 import type { Prompt, Category } from "@/data/prompts";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { Heart, Lock, Copy, MessageSquare, Megaphone, ShoppingBag, BarChart2, Briefcase, User, HeartPulse, Clock, Sparkles, Tag } from "lucide-react";
+import { Heart, Lock, Copy, MessageSquare, Megaphone, ShoppingBag, BarChart2, Briefcase, User, HeartPulse, Clock, Sparkles, Tag, CheckCircle } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -259,6 +259,12 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
           <span>PRO</span>
         </div>
       )}
+      {!isPro && (
+        <div className="free-ribbon absolute top-3 right-3 z-10 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold">
+          <CheckCircle className="h-3.5 w-3.5" aria-hidden />
+          <span>FREE</span>
+        </div>
+      )}
       <CardHeader>
 
         <div className="flex items-center gap-2 flex-wrap text-xs text-muted-foreground">
@@ -271,7 +277,6 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               title={`Filter by ${category.name}`}
             >
               <span className={cn("inline-flex items-center gap-1.5", accentClass)}>
-                <span className="inline-block h-2 w-2 rounded-full" style={{ backgroundColor: "hsl(var(--category-accent, var(--primary)))" }} />
                 {getCategoryIcon(category.name)}
                 <span>{category.name}</span>
               </span>
@@ -319,9 +324,9 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                       Or subscribe <span className="line-through">{fmtUSD(SUB_ORIGINAL_CENTS)}</span> <span className="text-primary font-medium">{fmtUSD(SUB_DISCOUNT_CENTS)}</span> / month
                     </div>
                   </div>
-                  <div className="flex flex-col sm:flex-row gap-2 justify-center items-stretch">
-                    <Button size="sm" variant="hero" onClick={addPromptToCart}>Buy Prompt {fmtUSD(PROMPT_DISCOUNT_CENTS)}</Button>
-                    <Button size="sm" variant="secondary" onClick={handleSubscribeClick}>Subscribe for {fmtUSD(SUB_DISCOUNT_CENTS)}/mo</Button>
+                  <div className="flex flex-col gap-2 justify-center items-stretch">
+                    <Button size="sm" variant="hero" className="w-full" onClick={addPromptToCart}>Buy Prompt {fmtUSD(PROMPT_DISCOUNT_CENTS)}</Button>
+                    <Button size="sm" variant="secondary" className="w-full" onClick={handleSubscribeClick}>Subscribe for {fmtUSD(SUB_DISCOUNT_CENTS)}/mo</Button>
                   </div>
                 </div>
               </div>
@@ -421,13 +426,6 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                 </Badge>
               ))}
             </div>
-          </div>
-        )}
-        {showLock && (
-          <div className="pt-2">
-            <Button size="sm" variant="destructive" onClick={() => onViewAllPro?.()}>
-              View all PRO prompts
-            </Button>
           </div>
         )}
 

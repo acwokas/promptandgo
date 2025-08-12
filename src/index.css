@@ -187,10 +187,16 @@ All colors MUST be HSL. */
     box-shadow: var(--shadow-glow-strong);
   }
   .pro-ribbon {
-    background: var(--gradient-primary);
-    color: hsl(var(--primary-foreground));
+    background: hsl(var(--destructive));
+    color: hsl(var(--destructive-foreground));
     box-shadow: var(--shadow-glow);
-    border: 1px solid hsl(var(--brand) / 0.5);
+    border: 1px solid hsl(var(--destructive) / 0.6);
+  }
+  .free-ribbon {
+    background: hsl(var(--success));
+    color: hsl(var(--success-foreground));
+    box-shadow: var(--shadow-glow);
+    border: 1px solid hsl(var(--success) / 0.6);
   }
 }
 
