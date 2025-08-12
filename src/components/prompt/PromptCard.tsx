@@ -129,7 +129,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
         }
 
         // Check subscription
-        const subRes = await supabase.from('subscribers').select('subscribed').eq('user_id', user.id).maybeSingle();
+        const subRes = await supabase.from('subscribers_safe').select('subscribed').eq('user_id', user.id).maybeSingle();
         if (subRes.data?.subscribed) {
           if (!cancelled) setHasAccess(true);
           return;
