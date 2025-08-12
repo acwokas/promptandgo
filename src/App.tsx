@@ -19,6 +19,7 @@ import Contact from "./pages/Contact";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import WelcomeToPromptAndGo from "./pages/blog/WelcomeToPromptAndGo";
+import BestAIPromptsForSmallBusiness2025 from "./pages/blog/BestAIPromptsForSmallBusiness2025";
 import Auth from "./pages/Auth";
 import AdminBulkUpload from "./pages/AdminBulkUpload";
 import FavoritesPage from "./pages/account/Favorites";
@@ -47,6 +48,7 @@ const App = () => (
             <Route path="/faqs" element={<FAQs />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/welcome-to-promptandgo-ai" element={<WelcomeToPromptAndGo />} />
+            <Route path="/blog/best-ai-prompts-for-small-business-2025" element={<BestAIPromptsForSmallBusiness2025 />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/how-it-works" element={<HowItWorks />} />

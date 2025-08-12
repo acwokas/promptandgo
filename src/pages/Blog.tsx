@@ -48,6 +48,25 @@ const Blog = () => {
           </Card>
         </Link>
       </article>
+      <article>
+        <Link to="/blog/best-ai-prompts-for-small-business-2025" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+          <Card className="overflow-hidden">
+            <img
+              src="/lovable-uploads/f23788ee-b45e-4f84-808a-691c7e3c5e52.png"
+              alt="Best AI Prompts for Small Business Owners in 2025"
+              loading="lazy"
+              className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+            />
+            <CardContent className="pt-4">
+              <h2 className="text-xl font-semibold leading-snug">Best AI Prompts for Small Business Owners in 2025</h2>
+              <p className="mt-2 text-muted-foreground">
+                Discover ready-to-run prompts to boost sales, streamline operations, and save hours each week.
+              </p>
+              <span className="mt-3 inline-block font-medium text-primary">Read more →</span>
+            </CardContent>
+          </Card>
+        </Link>
+      </article>
     </section>
 
     <section aria-labelledby="cta-tail" className="relative bg-hero hero-grid mt-16">
