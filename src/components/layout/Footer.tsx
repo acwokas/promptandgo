@@ -20,7 +20,7 @@ const Footer = () => {
           <p className="text-muted-foreground ml-1.5">Ready-to-use prompts for real-world work.</p>
           <p className="ml-1.5 mt-2">
             <span className="sr-only">Call to action:</span>
-            Get 3 FREE <Link to="/packs" className="underline underline-offset-4 hover:no-underline">⚡️PowerPacks</Link> and the latest <Link to="/blog" className="underline underline-offset-4 hover:no-underline">prompting tips weekly</Link>.
+            Get 3 FREE <Link to="/contact" className="underline underline-offset-4 hover:no-underline">⚡️PowerPacks</Link> and the latest <Link to="/contact" className="underline underline-offset-4 hover:no-underline">prompting tips weekly</Link>.
           </p>
         </div>
         <div className="md:col-span-2 grid grid-cols-2 gap-4">

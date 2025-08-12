@@ -64,6 +64,12 @@ const Contact = () => {
         {/* Honeypot field */}
         <input type="text" name="company" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
+        {/* Newsletter opt-in */}
+        <label className="flex items-center gap-2 text-sm">
+          <input type="checkbox" name="newsletter_opt_in" className="h-4 w-4" />
+          Get 3 FREE ⚡️PowerPacks and the latest prompting tips weekly.
+        </label>
+
         {/* Simple captcha */}
         <label className="flex items-center gap-2 text-sm">
           <input type="checkbox" name="captcha" className="h-4 w-4" />
