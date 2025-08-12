@@ -67,6 +67,25 @@ const Blog = () => {
           </Card>
         </Link>
       </article>
+      <article>
+        <Link to="/blog/how-to-write-ai-prompts" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+          <Card className="overflow-hidden">
+            <img
+              src="/lovable-uploads/dc900dd9-dbc7-43f2-a4d5-4fef2011cea4.png"
+              alt="How to Write AI Prompts That Actually Work"
+              loading="lazy"
+              className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+            />
+            <CardContent className="pt-4">
+              <h2 className="text-xl font-semibold leading-snug">How to Write AI Prompts That Actually Work</h2>
+              <p className="mt-2 text-muted-foreground">
+                Follow five proven rules to craft prompts that deliver accurate, useful and consistent results.
+              </p>
+              <span className="mt-3 inline-block font-medium text-primary">Read more →</span>
+            </CardContent>
+          </Card>
+        </Link>
+      </article>
     </section>
 
     <section aria-labelledby="cta-tail" className="relative bg-hero hero-grid mt-16">
