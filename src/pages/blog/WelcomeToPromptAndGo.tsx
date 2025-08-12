@@ -62,7 +62,7 @@ const schema = {
         {tags.map((t) => (
           <meta key={t} property="article:tag" content={t} />
         ))}
-        <link rel="preload" as="image" href={imagePath} fetchpriority="high" />
+        <link rel="preload" as="image" href={imagePath} fetchPriority="high" />
       </Helmet>
 
       <article className="mx-auto max-w-3xl">
@@ -73,7 +73,7 @@ const schema = {
             alt="PromptAndGo.ai – ready-to-use prompts for better AI results"
             className="mt-4 w-full rounded-lg border aspect-[16/9] object-cover"
             loading="eager"
-            fetchpriority="high"
+            fetchPriority="high"
             decoding="async"
             sizes="100vw"
             width="1280" height="720"

@@ -53,7 +53,7 @@ const BestAIPromptsForSmallBusiness2025 = () => {
         {tags.map((t) => (
           <meta key={t} property="article:tag" content={t} />
         ))}
-        <link rel="preload" as="image" href={heroImage} fetchpriority="high" />
+        <link rel="preload" as="image" href={heroImage} fetchPriority="high" />
       </Helmet>
 
       <article className="mx-auto max-w-3xl">
@@ -64,7 +64,7 @@ const BestAIPromptsForSmallBusiness2025 = () => {
             alt="Small business owner using AI prompts on a laptop"
             className="mt-4 w-full rounded-lg border aspect-[16/9] object-cover"
             loading="eager"
-            fetchpriority="high"
+            fetchPriority="high"
             decoding="async"
             sizes="100vw"
             width="1280" height="720"
