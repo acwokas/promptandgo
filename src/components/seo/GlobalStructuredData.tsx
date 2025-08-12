@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 
 const SITE_NAME = "PromptAndGo";
 
@@ -66,6 +66,20 @@ const GlobalStructuredData = () => {
       "query-input": "required name=search_term_string",
     },
   };
+
+  // IndexNow ping (once per path)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      const key = '8c1f9f5e5c124d0a8a7a9a2b1c3d4e5f';
+      const url = `${origin}${pathname}`;
+      const lsKey = `indexnow_ping_${url}`;
+      if (!localStorage.getItem(lsKey)) {
+        fetch(`https://www.bing.com/indexnow?url=${encodeURIComponent(url)}&key=${key}`, { mode: 'no-cors' }).catch(() => {});
+        localStorage.setItem(lsKey, String(Date.now()));
+      }
+    } catch {}
+  }, [origin, pathname]);
 
   return (
     <Helmet>

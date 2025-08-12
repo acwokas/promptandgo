@@ -1,5 +1,5 @@
 import SEO from "@/components/SEO";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -157,11 +157,36 @@ const PromptPacks = () => {
       })
     : packs;
 
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://promptandgo.ai';
+  const productSchemas = useMemo(() => (
+    packs.map((p) => ({
+      "@context": "https://schema.org",
+      "@type": "Product",
+      name: p.name,
+      description: p.description || "Curated prompt pack",
+      sku: p.id,
+      url: `${origin}/packs#pack-${p.id}`,
+      brand: { "@type": "Organization", name: "PromptAndGo" },
+      offers: {
+        "@type": "Offer",
+        priceCurrency: "USD",
+        price: (PACK_DISCOUNT_CENTS / 100).toFixed(2),
+        availability: "https://schema.org/InStock",
+        url: `${origin}/packs#pack-${p.id}`,
+      },
+      itemCondition: "https://schema.org/NewCondition",
+    }))
+  ), [packs, origin]);
+
   return (
     <>
       <PageHero title={<>⚡️<span className="text-gradient-brand">Power</span> Packs</>} subtitle={<>Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results.</>} minHeightClass="min-h-[40vh]" />
       <main className="container py-10">
-        <SEO title="⚡️Power Packs – Save 50%" description="Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results." />
+        <SEO
+          title="⚡️Power Packs – Save 50%"
+          description="Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results."
+          structuredData={productSchemas}
+        />
         <div className="mb-6 max-w-xl">
           <Input
             placeholder="Search within pack contents..."

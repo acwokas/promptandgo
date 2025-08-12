@@ -50,6 +50,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/library" element={<PromptLibrary />} />
             <Route path="/packs" element={<PromptPacks />} />
+            <Route path="/submit" element={<SubmitPrompt />} />
             <Route path="/faqs" element={<FAQs />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/welcome-to-promptandgo-ai" element={<WelcomeToPromptAndGo />} />

@@ -1,0 +1,11 @@
+{
+  "canonical": "https://promptandgo.ai/how-it-works",
+  "title": "How Prompting Works",
+  "tldr": "Browse a prompt, paste into ChatGPT or Claude, then tweak and go.",
+  "key_entities": ["HowTo", "ChatGPT", "Claude"],
+  "questions": [
+    { "q": "Is there a learning curve?", "a": "No. Copy, paste, and iterate. We handle the structure." },
+    { "q": "Which models are supported?", "a": "ChatGPT, GPT‑4, Claude, Gemini, and more." }
+  ],
+  "lastmod": "2025-08-12"
+}

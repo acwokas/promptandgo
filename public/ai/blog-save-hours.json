@@ -1,0 +1,10 @@
+{
+  "canonical": "https://promptandgo.ai/blog/ai-prompts-that-save-you-hours",
+  "title": "AI Prompts That Save You Hours",
+  "tldr": "Time-saving prompt patterns for everyday workflows.",
+  "key_entities": ["productivity", "workflows"],
+  "questions": [
+    { "q": "What’s a quick win?", "a": "Use structured prompts with examples and constraints to reduce retries." }
+  ],
+  "lastmod": "2025-08-12"
+}

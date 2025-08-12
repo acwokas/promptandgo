@@ -7,8 +7,30 @@ import { ShieldCheck, Zap, Clock, BadgeCheck, Globe, Scale } from "lucide-react"
 
 const HowItWorks = () => {
   const { user } = useSupabaseAuth();
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://promptandgo.ai';
+  const howToSchema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "How Prompting Works",
+    description: "Pick a prompt, paste it into your AI tool, and tweak to go.",
+    step: [
+      { "@type": "HowToStep", name: "Browse Prompts", text: "Explore by category or prompt pack — from career writing to creativity, productivity, and more." },
+      { "@type": "HowToStep", name: "Paste into ChatGPT", text: "Copy the prompt and paste it into ChatGPT, GPT-4, Claude, Gemini, or your AI of choice." },
+      { "@type": "HowToStep", name: "Tweak & Go", text: "Edit, regenerate, or stack prompts as needed. Get better results without starting from scratch." },
+    ],
+    mainEntityOfPage: { "@type": "WebPage", "@id": `${origin}/how-it-works` },
+  };
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      { "@type": "Question", name: "What is PromptAndGo?", acceptedAnswer: { "@type": "Answer", text: "A curated library of practical AI prompts tested for real tasks." } },
+      { "@type": "Question", name: "How do I use it?", acceptedAnswer: { "@type": "Answer", text: "Browse a prompt, paste into your AI tool, then tweak or stack prompts as needed." } },
+      { "@type": "Question", name: "Which AI tools are supported?", acceptedAnswer: { "@type": "Answer", text: "Works with ChatGPT, GPT-4, Claude, Gemini, and more." } },
+    ],
+  };
   return (<>
-    <SEO title="How Prompting Works" description="Browse, paste into ChatGPT or Claude, then tweak and go — fast, no jargon." />
+    <SEO title="How Prompting Works" description="Browse, paste into ChatGPT or Claude, then tweak and go — fast, no jargon." structuredData={[howToSchema, faqSchema]} />
     <PageHero
       title={<>How <span className="text-gradient-brand">Prompting</span> Works</>}
       subtitle={
@@ -158,42 +180,6 @@ const HowItWorks = () => {
         </div>
       </section>
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            {
-              "@context": "https://schema.org",
-              "@type": "HowTo",
-              name: "How Prompting Works",
-              description:
-                "Pick a prompt, paste it into your AI tool, and tweak to go.",
-              step: [
-                {
-                  "@type": "HowToStep",
-                  name: "Browse Prompts",
-                  text:
-                    "Explore by category or prompt pack — from career writing to creativity, productivity, and more.",
-                },
-                {
-                  "@type": "HowToStep",
-                  name: "Paste into ChatGPT",
-                  text:
-                    "Copy the prompt and paste it into ChatGPT, GPT-4, Claude, Gemini, or your AI of choice.",
-                },
-                {
-                  "@type": "HowToStep",
-                  name: "Tweak & Go",
-                  text:
-                    "Edit, regenerate, or stack prompts as needed. Get better results without starting from scratch.",
-                },
-              ],
-            },
-            null,
-            2
-          ),
-        }}
-      />
     </main>
   </>
   );

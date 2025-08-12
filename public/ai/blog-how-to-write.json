@@ -1,0 +1,10 @@
+{
+  "canonical": "https://promptandgo.ai/blog/how-to-write-ai-prompts",
+  "title": "How to Write AI Prompts",
+  "tldr": "Simple principles to craft prompts that consistently deliver.",
+  "key_entities": ["prompt writing", "best practices"],
+  "questions": [
+    { "q": "What’s the first step?", "a": "Define the outcome and constraints before prompting." }
+  ],
+  "lastmod": "2025-08-12"
+}

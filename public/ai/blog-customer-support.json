@@ -1,0 +1,10 @@
+{
+  "canonical": "https://promptandgo.ai/blog/ai-prompts-for-customer-support",
+  "title": "AI Prompts for Customer Support",
+  "tldr": "Prompts to draft replies, categorize tickets, and improve CSAT.",
+  "key_entities": ["customer support", "CX"],
+  "questions": [
+    { "q": "Will tone stay on-brand?", "a": "Yes — add style guides and examples in the prompt." }
+  ],
+  "lastmod": "2025-08-12"
+}

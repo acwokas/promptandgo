@@ -1,0 +1,10 @@
+{
+  "canonical": "https://promptandgo.ai/blog/welcome-to-promptandgo-ai",
+  "title": "Welcome to PromptAndGo.ai",
+  "tldr": "Why we built a practical prompt library and how to get the most from it.",
+  "key_entities": ["PromptAndGo", "prompt library"],
+  "questions": [
+    { "q": "What makes prompts effective?", "a": "Clarity, specificity, and intent. We optimize for outcomes." }
+  ],
+  "lastmod": "2025-08-12"
+}

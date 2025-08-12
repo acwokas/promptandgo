@@ -1,0 +1,16 @@
+{
+  "canonical": "https://promptandgo.ai/ai/sitemap.json",
+  "items": [
+    { "url": "https://promptandgo.ai/ai/home.json", "lastmod": "2025-08-12" },
+    { "url": "https://promptandgo.ai/ai/library.json", "lastmod": "2025-08-12" },
+    { "url": "https://promptandgo.ai/ai/packs.json", "lastmod": "2025-08-12" },
+    { "url": "https://promptandgo.ai/ai/faqs.json", "lastmod": "2025-08-12" },
+    { "url": "https://promptandgo.ai/ai/how-it-works.json", "lastmod": "2025-08-12" },
+    { "url": "https://promptandgo.ai/ai/blog-welcome.json", "lastmod": "2025-08-12" },
+    { "url": "https://promptandgo.ai/ai/blog-how-to-write.json", "lastmod": "2025-08-12" },
+    { "url": "https://promptandgo.ai/ai/blog-save-hours.json", "lastmod": "2025-08-12" },
+    { "url": "https://promptandgo.ai/ai/blog-customer-support.json", "lastmod": "2025-08-12" },
+    { "url": "https://promptandgo.ai/ai/blog-small-business.json", "lastmod": "2025-08-12" },
+    { "url": "https://promptandgo.ai/ai/blog-marketing-campaigns.json", "lastmod": "2025-08-12" }
+  ]
+}
