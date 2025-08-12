@@ -86,6 +86,25 @@ const Blog = () => {
           </Card>
         </Link>
       </article>
+      <article>
+        <Link to="/blog/ai-prompts-that-save-you-hours" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+          <Card className="overflow-hidden">
+            <img
+              src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
+              alt="AI Prompts That Save You Hours Every Week"
+              loading="lazy"
+              className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+            />
+            <CardContent className="pt-4">
+              <h2 className="text-xl font-semibold leading-snug">AI Prompts That Save You Hours Every Week</h2>
+              <p className="mt-2 text-muted-foreground">
+                Automate routine tasks and boost productivity with proven prompts for busy teams.
+              </p>
+              <span className="mt-3 inline-block font-medium text-primary">Read more →</span>
+            </CardContent>
+          </Card>
+        </Link>
+      </article>
     </section>
 
     <section aria-labelledby="cta-tail" className="relative bg-hero hero-grid mt-16">
