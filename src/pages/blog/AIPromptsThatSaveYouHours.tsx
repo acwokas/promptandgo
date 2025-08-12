@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import RelatedPrompts from "@/components/prompt/RelatedPrompts";
+import PrevNextNav from "@/components/blog/PrevNextNav";
 
 const AIPromptsThatSaveYouHours = () => {
   const title = "AI Prompts That Save You Hours Every Week";
@@ -150,8 +151,12 @@ const AIPromptsThatSaveYouHours = () => {
             <Button asChild variant="cta">
               <Link to="/library">Explore the Prompt Library</Link>
             </Button>
-          </div>
+           </div>
+
+           <RelatedPrompts />
         </section>
+
+        <PrevNextNav />
 
         <footer className="mt-10 border-t pt-6">
           <div className="flex flex-wrap items-center gap-2">

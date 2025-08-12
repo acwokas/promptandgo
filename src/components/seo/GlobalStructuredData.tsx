@@ -59,6 +59,10 @@ const GlobalStructuredData = () => {
       contactType: "customer support",
       availableLanguage: ["en"],
     }],
+    sameAs: [
+      `${origin}/`,
+      `${origin}/rss.xml`,
+    ],
   };
 
   const website = {

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import RelatedPrompts from "@/components/prompt/RelatedPrompts";
+import PrevNextNav from "@/components/blog/PrevNextNav";
 
 const BestAIPromptsForSmallBusiness2025 = () => {
   const title = "Best AI Prompts for Small Business Owners in 2025";
@@ -143,18 +144,22 @@ const BestAIPromptsForSmallBusiness2025 = () => {
             <Button asChild variant="cta">
               <Link to="/library">Explore the Prompt Library</Link>
             </Button>
-          </div>
+           </div>
 
-          <nav aria-labelledby="see-also" className="mt-6">
-            <h3 id="see-also" className="text-lg font-semibold">See also</h3>
-            <div className="flex flex-wrap gap-3">
-              <Link to="/library?q=marketing" className="underline underline-offset-4">Marketing prompts</Link>
-              <Link to="/library?q=productivity" className="underline underline-offset-4">Productivity prompts</Link>
-              <Link to="/library?q=sales" className="underline underline-offset-4">Sales prompts</Link>
-              <Link to="/packs" className="underline underline-offset-4">⚡️Power Packs</Link>
-            </div>
-          </nav>
+           <nav aria-labelledby="see-also" className="mt-6">
+             <h3 id="see-also" className="text-lg font-semibold">See also</h3>
+             <div className="flex flex-wrap gap-3">
+               <Link to="/library?q=marketing" className="underline underline-offset-4">Marketing prompts</Link>
+               <Link to="/library?q=productivity" className="underline underline-offset-4">Productivity prompts</Link>
+               <Link to="/library?q=sales" className="underline underline-offset-4">Sales prompts</Link>
+               <Link to="/packs" className="underline underline-offset-4">⚡️Power Packs</Link>
+             </div>
+           </nav>
+
+           <RelatedPrompts />
         </section>
+
+        <PrevNextNav />
 
         <footer className="mt-10 border-t pt-6">
           <div className="flex flex-wrap items-center gap-2">

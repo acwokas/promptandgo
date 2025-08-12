@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import RelatedPrompts from "@/components/prompt/RelatedPrompts";
+import PrevNextNav from "@/components/blog/PrevNextNav";
 
 const WelcomeToPromptAndGo = () => {
   const title = "Welcome to PromptAndGo.ai: Your Shortcut to Smarter AI Prompts";
@@ -148,7 +149,10 @@ const schema = {
               <Link to="/packs" className="underline underline-offset-4">⚡️Power Packs</Link>
             </div>
           </nav>
+
+          <RelatedPrompts />
         </section>
+        <PrevNextNav />
         <footer className="mt-10 border-t pt-6">
           <div className="flex flex-wrap items-center gap-2">
             <Badge variant="secondary">{category}</Badge>
