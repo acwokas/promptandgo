@@ -62,6 +62,19 @@ const Auth = () => {
     else handleSignUp();
   };
 
+  const handleGoogle = async () => {
+    try {
+      const redirectTo = `${window.location.origin}/`;
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo },
+      });
+      if (error) throw error;
+    } catch (err: any) {
+      toast({ title: "Google sign-in failed", description: err?.message || String(err), variant: "destructive" });
+    }
+  };
+
   return (
     <>
       <SEO
@@ -75,6 +88,10 @@ const Auth = () => {
           <div className="mb-6 inline-flex rounded-lg border p-1 bg-background">
             <Button variant={mode === "signin" ? "default" : "ghost"} onClick={() => setMode("signin")}>Log in</Button>
             <Button variant={mode === "signup" ? "default" : "ghost"} onClick={() => setMode("signup")}>Sign up</Button>
+          </div>
+          <div className="space-y-3 mb-6">
+            <Button type="button" variant="secondary" className="w-full" onClick={handleGoogle}>Continue with Google</Button>
+            <div className="text-center text-xs text-muted-foreground">or use email</div>
           </div>
 
           <form onSubmit={onSubmit} className="space-y-4">
