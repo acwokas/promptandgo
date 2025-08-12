@@ -1,0 +1,81 @@
+import { Helmet } from "react-helmet-async";
+import { useLocation } from "react-router-dom";
+import { useMemo } from "react";
+
+const SITE_NAME = "PromptAndGo";
+
+const getOrigin = () =>
+  typeof window !== "undefined" ? window.location.origin : "https://promptandgo.ai";
+
+const toTitle = (seg: string) =>
+  seg
+    .split("-")
+    .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+    .join(" ");
+
+const GlobalStructuredData = () => {
+  const location = useLocation();
+  const origin = getOrigin();
+  const pathname = location.pathname || "/";
+  const segments = pathname.split("/").filter(Boolean);
+
+  const breadcrumb = useMemo(() => {
+    const items: any[] = [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: `${origin}/`,
+      },
+    ];
+
+    let pathAcc = "";
+    segments.forEach((seg, idx) => {
+      pathAcc += `/${seg}`;
+      items.push({
+        "@type": "ListItem",
+        position: idx + 2,
+        name: toTitle(seg),
+        item: `${origin}${pathAcc}`,
+      });
+    });
+
+    return {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: items,
+    };
+  }, [origin, segments]);
+
+  const organization = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: SITE_NAME,
+    url: `${origin}/`,
+    logo: `${origin}/og-default.png`,
+  };
+
+  const website = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE_NAME,
+    url: `${origin}/`,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${origin}/library?q={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
+  };
+
+  return (
+    <Helmet>
+      <script type="application/ld+json">{JSON.stringify(organization)}</script>
+      <script type="application/ld+json">{JSON.stringify(website)}</script>
+      {segments.length > 0 && (
+        <script type="application/ld+json">{JSON.stringify(breadcrumb)}</script>
+      )}
+    </Helmet>
+  );
+};
+
+export default GlobalStructuredData;

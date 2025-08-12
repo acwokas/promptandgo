@@ -18,6 +18,7 @@ import HowItWorks from "./pages/HowItWorks";
 import Contact from "./pages/Contact";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import GlobalStructuredData from "@/components/seo/GlobalStructuredData";
 import WelcomeToPromptAndGo from "./pages/blog/WelcomeToPromptAndGo";
 import BestAIPromptsForSmallBusiness2025 from "./pages/blog/BestAIPromptsForSmallBusiness2025";
 import HowToWriteAIPrompts from "./pages/blog/HowToWriteAIPrompts";
@@ -43,12 +44,12 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <GlobalStructuredData />
           <Header />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/library" element={<PromptLibrary />} />
             <Route path="/packs" element={<PromptPacks />} />
-            <Route path="/submit" element={<SubmitPrompt />} />
             <Route path="/faqs" element={<FAQs />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/welcome-to-promptandgo-ai" element={<WelcomeToPromptAndGo />} />
