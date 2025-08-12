@@ -6,6 +6,7 @@ import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
 import PageHero from "@/components/layout/PageHero";
 import { Link } from "react-router-dom";
+import submitCta from "@/assets/submit-prompt-cta.png";
 const Contact = () => {
   const [isLoading, setIsLoading] = useState(false);
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -92,11 +93,24 @@ const Contact = () => {
           </div>
           <aside className="lg:col-span-5">
             <div className="sticky top-24">
-              <Button variant="cta" asChild>
-                <Link to="/submit" aria-label="Submit a Prompt">
-                  Send us your best prompt and help inspire the community.
-                </Link>
-              </Button>
+              <Link
+                to="/submit"
+                aria-label="Submit a Prompt"
+                className="group block aspect-square w-full max-w-sm rounded-lg border bg-card shadow-elegant p-6 mx-auto transition-transform duration-200 hover:scale-105 hover:shadow-glow"
+              >
+                <div className="h-full w-full flex flex-col items-center justify-center text-center">
+                  <img
+                    src={submitCta}
+                    alt="Submit a prompt illustration"
+                    className="w-24 h-24 mb-4 object-contain"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <p className="text-base md:text-lg font-medium text-foreground/90">
+                    Send us your best prompt and help inspire the community.
+                  </p>
+                </div>
+              </Link>
             </div>
           </aside>
         </div>
