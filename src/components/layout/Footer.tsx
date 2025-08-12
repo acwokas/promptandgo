@@ -26,18 +26,18 @@ const Footer = () => {
         </div>
         <div className="md:col-span-2 grid grid-cols-3 gap-4">
           <nav className="flex flex-col gap-2">
-            <Link to="/" className="text-muted-foreground hover:text-foreground">Welcome</Link>
-            <Link to="/how-it-works" className="text-muted-foreground hover:text-foreground">How it Works</Link>
-            <Link to="/library" className="text-muted-foreground hover:text-foreground">Prompt Library</Link>
-            <Link to="/packs" className="text-muted-foreground hover:text-foreground">⚡️Power Packs</Link>
-            <Link to="/faqs" className="text-muted-foreground hover:text-foreground">FAQs</Link>
-          </nav>
-          <nav className="flex flex-col gap-2">
             <span className="text-foreground font-medium">Popular categories</span>
             <Link to="/library?q=marketing" className="text-muted-foreground hover:text-foreground">Marketing prompts</Link>
             <Link to="/library?q=productivity" className="text-muted-foreground hover:text-foreground">Productivity prompts</Link>
             <Link to="/library?q=sales" className="text-muted-foreground hover:text-foreground">Sales prompts</Link>
             <Link to="/library?q=seo" className="text-muted-foreground hover:text-foreground">SEO prompts</Link>
+          </nav>
+          <nav className="flex flex-col gap-2">
+            <Link to="/" className="text-muted-foreground hover:text-foreground">Welcome</Link>
+            <Link to="/how-it-works" className="text-muted-foreground hover:text-foreground">How it Works</Link>
+            <Link to="/library" className="text-muted-foreground hover:text-foreground">Prompt Library</Link>
+            <Link to="/packs" className="text-muted-foreground hover:text-foreground">⚡️Power Packs</Link>
+            <Link to="/faqs" className="text-muted-foreground hover:text-foreground">FAQs</Link>
           </nav>
           <nav className="flex flex-col gap-2">
             <Link to="/blog" className="text-muted-foreground hover:text-foreground">Prompt Pulse</Link>
