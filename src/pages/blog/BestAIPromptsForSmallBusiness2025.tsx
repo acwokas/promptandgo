@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import RelatedPrompts from "@/components/prompt/RelatedPrompts";
 
 const BestAIPromptsForSmallBusiness2025 = () => {
   const title = "Best AI Prompts for Small Business Owners in 2025";
@@ -167,5 +168,6 @@ const BestAIPromptsForSmallBusiness2025 = () => {
     </main>
   );
 };
+
 
 export default BestAIPromptsForSmallBusiness2025;

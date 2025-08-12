@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import RelatedPrompts from "@/components/prompt/RelatedPrompts";
 
 const HowToWriteAIPrompts = () => {
   const title = "How to Write AI Prompts That Actually Work";
@@ -167,6 +168,8 @@ const HowToWriteAIPrompts = () => {
               <Link to="/packs" className="underline underline-offset-4">⚡️Power Packs</Link>
             </div>
           </nav>
+
+          <RelatedPrompts />
         </section>
 
         <footer className="mt-10 border-t pt-6">
@@ -181,5 +184,6 @@ const HowToWriteAIPrompts = () => {
     </main>
   );
 };
+
 
 export default HowToWriteAIPrompts;
