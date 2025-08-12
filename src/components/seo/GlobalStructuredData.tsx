@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
 import { useMemo, useEffect } from "react";
 
-const SITE_NAME = "PromptAndGo";
+const SITE_NAME = "promptandgo";
 
 const getOrigin = () =>
   typeof window !== "undefined" ? window.location.origin : "https://promptandgo.ai";
@@ -100,8 +100,8 @@ const GlobalStructuredData = () => {
         <script type="application/ld+json">{JSON.stringify(breadcrumb)}</script>
       )}
       {/* Site-wide head links */}
-      <link rel="alternate" type="application/rss+xml" title="PromptAndGo RSS" href={`${origin}/rss.xml`} />
-      <link rel="search" type="application/opensearchdescription+xml" title="PromptAndGo Search" href={`${origin}/opensearch.xml`} />
+      <link rel="alternate" type="application/rss+xml" title="promptandgo RSS" href={`${origin}/rss.xml`} />
+      <link rel="search" type="application/opensearchdescription+xml" title="promptandgo Search" href={`${origin}/opensearch.xml`} />
     </Helmet>
   );
 };

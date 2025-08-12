@@ -60,7 +60,7 @@ const Contact = () => {
         minHeightClass="min-h-[40vh]"
       />
       <main className="container py-10">
-        <SEO title="Contact PromptAndGo.ai" description="Send us a message — we'd love to hear from you." />
+        <SEO title="Contact promptandgo" description="Send us a message — we'd love to hear from you." />
 
         <div className="grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-7">

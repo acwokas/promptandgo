@@ -9,10 +9,10 @@ const Footer = () => {
     <footer className="border-t mt-16">
       <div className="container py-10 grid gap-6 md:grid-cols-3 text-sm">
         <div>
-          <Link to="/" className="inline-flex items-center mb-1" aria-label="PromptAndGo.ai home">
+          <Link to="/" className="inline-flex items-center mb-1" aria-label="promptandgo home">
             <img
               src="/lovable-uploads/9e8de25b-d91c-445a-b211-d156a28e4b33.png"
-              alt="PromptAndGo.ai logo"
+              alt="promptandgo logo"
               className="w-[40ch] max-w-full h-auto object-contain -mt-1"
               loading="lazy"
               decoding="async"
@@ -50,7 +50,7 @@ const Footer = () => {
             )}
           </nav>
         </div>
-        <div className="md:col-span-3 col-span-full justify-self-end text-right text-muted-foreground">© 2025 PromptAndGo.ai  |  <Link to="/terms" className="hover:text-foreground">Terms & Conditions</Link>  |  <Link to="/privacy" className="hover:text-foreground">Privacy Policy</Link></div>
+        <div className="md:col-span-3 col-span-full justify-self-end text-right text-muted-foreground">© 2025 <strong>prompt</strong>andgo  |  <Link to="/terms" className="hover:text-foreground">Terms & Conditions</Link>  |  <Link to="/privacy" className="hover:text-foreground">Privacy Policy</Link></div>
       </div>
     </footer>
   );

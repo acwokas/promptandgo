@@ -78,8 +78,8 @@ const Auth = () => {
   return (
     <>
       <SEO
-        title="Login or Sign Up | PromptAndGo.ai"
-        description="Access your PromptAndGo.ai account to save prompts and personalize your experience. Log in or create a new account."
+        title="Login or Sign Up | promptandgo"
+        description="Access your promptandgo account to save prompts and personalize your experience. Log in or create a new account."
       />
       <main className="container py-12">
         <section className="mx-auto max-w-md rounded-2xl border bg-card p-6 md:p-8">

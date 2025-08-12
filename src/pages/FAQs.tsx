@@ -16,15 +16,15 @@ interface FAQSection {
 
 const sections: FAQSection[] = [
   {
-    title: "About PromptAndGo",
+    title: "About promptandgo",
     items: [
       {
-        question: "Who created PromptAndGo?",
+        question: "Who created promptandgo?",
         answer:
-          "PromptAndGo was created by a team of AI enthusiasts, marketers, and content specialists who test every prompt before publishing. We focus on practical, real-world results rather than theory.",
+          "promptandgo was created by a team of AI enthusiasts, marketers, and content specialists who test every prompt before publishing. We focus on practical, real-world results rather than theory.",
       },
       {
-        question: "Why use PromptAndGo instead of free prompts online?",
+        question: "Why use promptandgo instead of free prompts online?",
         answer:
           "We curate and test every prompt for clarity, accuracy, and usefulness. This means you will not waste time sifting through outdated or unproven ideas. Everything here is designed to help you get better results, faster.",
       },
@@ -46,7 +46,7 @@ const sections: FAQSection[] = [
       {
         question: "What makes a good prompt?",
         answer:
-          "A good prompt is clear, specific, and written with purpose. The best prompts guide the AI by focusing on your intent without adding unnecessary complexity. Every prompt on PromptAndGo is designed to help you get strong results without needing to be an expert.",
+          "A good prompt is clear, specific, and written with purpose. The best prompts guide the AI by focusing on your intent without adding unnecessary complexity. Every prompt on promptandgo is designed to help you get strong results without needing to be an expert.",
       },
       {
         question: "Will these prompts work with free AI tools?",
@@ -79,7 +79,7 @@ const sections: FAQSection[] = [
     title: "Payments and Access",
     items: [
       {
-        question: "Do I need to pay to use PromptAndGo?",
+        question: "Do I need to pay to use promptandgo?",
         answer:
           "Many prompts are free to browse and use. You only pay if you choose to unlock one of our PRO prompt packs for advanced tasks such as job applications or productivity systems.",
       },
@@ -153,8 +153,8 @@ const FAQs = () => {
   return (
     <>
       <SEO
-        title="FAQs – PromptAndGo"
-        description="Find quick answers about PromptAndGo: getting started, using prompts, payments, licensing, and support."
+        title="FAQs – promptandgo"
+        description="Find quick answers about promptandgo: getting started, using prompts, payments, licensing, and support."
       />
 
       <PageHero
@@ -205,7 +205,7 @@ const FAQs = () => {
 
         <section aria-labelledby="cta-tail" className="relative bg-hero hero-grid mt-12">
           <div className="container p-8 md:p-12 text-center text-primary-foreground">
-            <h2 id="cta-tail" className="text-2xl md:text-3xl font-semibold tracking-tight">Whatever you’re working on, someone’s already used PromptAndGo to do it faster.</h2>
+            <h2 id="cta-tail" className="text-2xl md:text-3xl font-semibold tracking-tight">Whatever you’re working on, someone’s already used <strong>prompt</strong>andgo to do it faster.</h2>
             <p className="mt-3 text-primary-foreground/85 text-base md:text-lg">✨ Ready to Start Prompting Smarter? Try your first prompt or explore a pack, no sign-up required.</p>
             <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild variant="hero" className="px-6">

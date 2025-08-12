@@ -12,7 +12,7 @@ interface SEOProps {
   modifiedTime?: string;
 }
 
-const SITE_NAME = "PromptAndGo";
+const SITE_NAME = "promptandgo";
 const DEFAULT_OG_IMAGE =
   typeof window !== "undefined"
     ? `${window.location.origin}/og-default.png`
