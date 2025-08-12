@@ -56,6 +56,7 @@ const App = () => (
             <Route path="/blog/how-to-write-ai-prompts" element={<HowToWriteAIPrompts />} />
             <Route path="/blog/ai-prompts-that-save-you-hours" element={<AIPromptsThatSaveYouHours />} />
             <Route path="/blog/ai-prompts-for-marketing-campaigns" element={<AIPromptsForMarketingCampaigns />} />
+            <Route path="/blog/ai-prompts-for-customer-support" element={<AIPromptsForCustomerSupport />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/how-it-works" element={<HowItWorks />} />
