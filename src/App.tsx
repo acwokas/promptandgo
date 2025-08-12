@@ -22,6 +22,7 @@ import WelcomeToPromptAndGo from "./pages/blog/WelcomeToPromptAndGo";
 import BestAIPromptsForSmallBusiness2025 from "./pages/blog/BestAIPromptsForSmallBusiness2025";
 import HowToWriteAIPrompts from "./pages/blog/HowToWriteAIPrompts";
 import AIPromptsThatSaveYouHours from "./pages/blog/AIPromptsThatSaveYouHours";
+import AIPromptsForMarketingCampaigns from "./pages/blog/AIPromptsForMarketingCampaigns";
 import Auth from "./pages/Auth";
 import AdminBulkUpload from "./pages/AdminBulkUpload";
 import FavoritesPage from "./pages/account/Favorites";
@@ -53,6 +54,7 @@ const App = () => (
             <Route path="/blog/best-ai-prompts-for-small-business-2025" element={<BestAIPromptsForSmallBusiness2025 />} />
             <Route path="/blog/how-to-write-ai-prompts" element={<HowToWriteAIPrompts />} />
             <Route path="/blog/ai-prompts-that-save-you-hours" element={<AIPromptsThatSaveYouHours />} />
+            <Route path="/blog/ai-prompts-for-marketing-campaigns" element={<AIPromptsForMarketingCampaigns />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/how-it-works" element={<HowItWorks />} />
