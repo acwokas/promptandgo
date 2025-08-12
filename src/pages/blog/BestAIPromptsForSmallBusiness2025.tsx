@@ -31,7 +31,7 @@ const BestAIPromptsForSmallBusiness2025 = () => {
 
   return (
     <main className="container py-10">
-      <SEO title={seoTitle} description={description} />
+      <SEO title={seoTitle} description={description} canonical={canonical} image={origin ? `${origin}${heroImage}` : heroImage} />
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(schema)}</script>
         <link rel="canonical" href={canonical} />

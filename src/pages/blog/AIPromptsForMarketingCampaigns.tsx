@@ -38,7 +38,7 @@ const AIPromptsForMarketingCampaigns = () => {
 
   return (
     <main className="container py-10">
-      <SEO title={title} description={description} />
+      <SEO title={title} description={description} canonical={canonical} image={origin ? `${origin}${heroImage}` : heroImage} />
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(schema)}</script>
         <link rel="canonical" href={canonical} />

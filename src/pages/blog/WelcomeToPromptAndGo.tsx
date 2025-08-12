@@ -38,7 +38,7 @@ const WelcomeToPromptAndGo = () => {
 
   return (
     <main className="container py-10">
-      <SEO title={seoTitle} description={description} />
+      <SEO title={seoTitle} description={description} canonical={canonical} image={origin ? `${origin}${imagePath}` : imagePath} />
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(schema)}</script>
         <meta name="keywords" content={tags.join(", ")} />

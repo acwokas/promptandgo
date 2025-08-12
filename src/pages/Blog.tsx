@@ -6,6 +6,8 @@ import PageHero from "@/components/layout/PageHero";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 const Blog = () => {
   const { user } = useSupabaseAuth();
+  const origin = typeof window !== "undefined" ? window.location.origin : "";
+  const canonical = origin ? `${origin}/blog` : undefined;
   return (
   <>
     <PageHero title={<><span className="text-gradient-brand">Prompt</span> Pulse</>} subtitle={<>Tips, tricks and examples to get the most out of your prompting.</>} minHeightClass="min-h-[40vh]">
@@ -26,7 +28,7 @@ const Blog = () => {
       </Button>
     </PageHero>
     <main className="container py-10">
-      <SEO title="Prompt Pulse – Prompt tips, tricks & examples" description="Tips, tricks and examples to get the most out of your prompting." />
+      <SEO title="Prompt Pulse – Prompt tips, tricks & examples" description="Tips, tricks and examples to get the most out of your prompting." canonical={canonical} />
 
     <section className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       <article>
@@ -109,7 +111,7 @@ const Blog = () => {
         <Link to="/blog/ai-prompts-for-marketing-campaigns" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
           <Card className="overflow-hidden">
             <img
-              src="/lovable-uploads/0240be2e-4b38-4a77-a2f7-46db36807679.png"
+              src="/ai-prompts-email-social-icons.png"
               alt="AI Prompts for Marketing Campaigns That Convert"
               loading="lazy"
               className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
