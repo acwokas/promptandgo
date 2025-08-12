@@ -10,6 +10,8 @@ const AuthEffects = () => {
     // Fire-and-forget reconciliation and subscription check on login
     supabase.functions.invoke('reconcile-orders').catch(() => {});
     supabase.functions.invoke('check-subscription').catch(() => {});
+    // Attempt one-time security backfill (edge function enforces admin-only)
+    supabase.functions.invoke('backfill-subscribers').catch(() => {});
   }, [user]);
 
   return null;
