@@ -8,7 +8,9 @@ const AIPromptsForMarketingCampaigns = () => {
   const title = "AI Prompts for Marketing Campaigns That Convert";
   const description =
     "Discover the best AI prompts for marketing campaigns that convert. From ad copy to social captions, use these examples to boost engagement and sales.";
-  const heroImage = "/placeholder.svg";
+  const heroImage = "/lovable-uploads/42aa72df-62d8-45c3-83b2-c77657547ca7.png";
+  const midImage1 = "/lovable-uploads/02a7a5fd-f6f6-49c6-9f45-e70c7d3ba6be.png";
+  const midImage2 = "/lovable-uploads/0240be2e-4b38-4a77-a2f7-46db36807679.png";
   const origin = typeof window !== "undefined" ? window.location.origin : "";
   const canonical = origin ? `${origin}/blog/ai-prompts-for-marketing-campaigns` : undefined;
   const category = "Marketing";
@@ -77,6 +79,12 @@ const AIPromptsForMarketingCampaigns = () => {
           <p><strong>Google Ads Prompt:</strong><br />
             Create five Google Ads headlines (max 30 characters) and matching descriptions (max 90 characters) for [product/service]. Focus on urgency and value.
           </p>
+          <img
+            src={midImage1}
+            alt="AI marketing prompts examples for ad copy on a tablet with social reactions"
+            className="mt-6 w-full rounded-lg border aspect-[16/9] object-cover"
+            loading="lazy"
+          />
 
           <h2 className="text-2xl font-semibold">2. Email Marketing Prompts</h2>
           <p><strong>Launch Campaign Prompt:</strong><br />
@@ -85,6 +93,12 @@ const AIPromptsForMarketingCampaigns = () => {
           <p><strong>Newsletter Content Prompt:</strong><br />
             Generate three newsletter topic ideas for [industry] that balance education and subtle promotion.
           </p>
+          <img
+            src={midImage2}
+            alt="AI prompts for email and social marketing showing robot with social platform icons"
+            className="mt-6 w-full rounded-lg border aspect-[16/9] object-cover"
+            loading="lazy"
+          />
 
           <h2 className="text-2xl font-semibold">3. Social Media Prompts</h2>
           <p><strong>Content Calendar Prompt:</strong><br />
