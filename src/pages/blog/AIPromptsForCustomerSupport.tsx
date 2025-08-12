@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import RelatedPrompts from "@/components/prompt/RelatedPrompts";
 import PrevNextNav from "@/components/blog/PrevNextNav";
+import AuthorBio from "@/components/blog/AuthorBio";
+import { AUTHOR_MAIN } from "./authors";
+
 
 const AIPromptsForCustomerSupport = () => {
   const title = "AI Prompts for Customer Support Teams";
@@ -36,7 +39,7 @@ const AIPromptsForCustomerSupport = () => {
     image: origin ? `${origin}${heroImage}` : heroImage,
     datePublished: lastmod,
     dateModified: lastmod,
-    author: { "@type": "Organization", name: "PromptAndGo.ai" },
+    author: { "@type": "Person", name: AUTHOR_MAIN.name, sameAs: AUTHOR_MAIN.sameAs },
     publisher: {
       "@type": "Organization",
       name: "PromptAndGo.ai",
@@ -56,6 +59,7 @@ const AIPromptsForCustomerSupport = () => {
         {tags.map((t) => (
           <meta key={t} property="article:tag" content={t} />
         ))}
+        <link rel="preload" as="image" href={heroImage} fetchpriority="high" />
       </Helmet>
 
       <article className="mx-auto max-w-3xl">
@@ -65,7 +69,11 @@ const AIPromptsForCustomerSupport = () => {
             src={heroImage}
             alt="AI-powered customer support assistance"
             className="mt-4 w-full rounded-lg border aspect-[16/9] object-cover"
-            loading="lazy"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            sizes="100vw"
+            width="1280" height="720"
           />
           <p className="mt-3 text-muted-foreground">
             Fast, consistent, and helpful responses can make or break a customer’s experience. AI prompts give support teams the tools to respond quickly, personalise communication, and maintain a friendly tone while reducing workload.
@@ -125,6 +133,7 @@ const AIPromptsForCustomerSupport = () => {
            <RelatedPrompts />
         </section>
 
+        <AuthorBio author={AUTHOR_MAIN} />
         <PrevNextNav />
 
         <footer className="mt-10 border-t pt-6">

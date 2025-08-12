@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import RelatedPrompts from "@/components/prompt/RelatedPrompts";
 import PrevNextNav from "@/components/blog/PrevNextNav";
+import AuthorBio from "@/components/blog/AuthorBio";
+import { AUTHOR_MAIN } from "./authors";
+
 
 const AIPromptsForMarketingCampaigns = () => {
   const title = "AI Prompts for Marketing Campaigns That Convert";
@@ -37,7 +40,7 @@ const AIPromptsForMarketingCampaigns = () => {
     image: origin ? `${origin}${heroImage}` : heroImage,
     datePublished: lastmod,
     dateModified: lastmod,
-    author: { "@type": "Organization", name: "PromptAndGo.ai" },
+    author: { "@type": "Person", name: AUTHOR_MAIN.name, sameAs: AUTHOR_MAIN.sameAs },
     publisher: {
       "@type": "Organization",
       name: "PromptAndGo.ai",
@@ -57,6 +60,7 @@ const AIPromptsForMarketingCampaigns = () => {
         {tags.map((t) => (
           <meta key={t} property="article:tag" content={t} />
         ))}
+        <link rel="preload" as="image" href={heroImage} fetchpriority="high" />
       </Helmet>
 
       <article className="mx-auto max-w-3xl">
@@ -66,7 +70,11 @@ const AIPromptsForMarketingCampaigns = () => {
             src={heroImage}
             alt="AI prompts for high-converting marketing campaigns"
             className="mt-4 w-full rounded-lg border aspect-[16/9] object-cover"
-            loading="lazy"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            sizes="100vw"
+            width="1280" height="720"
           />
           <p className="mt-3 text-muted-foreground">
             A marketing campaign lives or dies by its messaging. AI can be your secret weapon in creating consistent, high-converting copy across ads, emails, and social posts. The right prompts will help you target the right audience, craft persuasive messaging, and keep your brand voice intact.
@@ -132,6 +140,7 @@ const AIPromptsForMarketingCampaigns = () => {
            <RelatedPrompts />
         </section>
 
+        <AuthorBio author={AUTHOR_MAIN} />
         <PrevNextNav />
 
         <footer className="mt-10 border-t pt-6">

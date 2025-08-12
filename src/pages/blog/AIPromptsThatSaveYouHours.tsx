@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import RelatedPrompts from "@/components/prompt/RelatedPrompts";
 import PrevNextNav from "@/components/blog/PrevNextNav";
+import AuthorBio from "@/components/blog/AuthorBio";
+import { AUTHOR_MAIN } from "./authors";
+
 
 const AIPromptsThatSaveYouHours = () => {
   const title = "AI Prompts That Save You Hours Every Week";
@@ -37,7 +40,7 @@ const AIPromptsThatSaveYouHours = () => {
     image: origin ? `${origin}${heroImage}` : heroImage,
     datePublished: lastmod,
     dateModified: lastmod,
-    author: { "@type": "Organization", name: "PromptAndGo.ai" },
+    author: { "@type": "Person", name: AUTHOR_MAIN.name, sameAs: AUTHOR_MAIN.sameAs },
     publisher: {
       "@type": "Organization",
       name: "PromptAndGo.ai",
@@ -57,6 +60,7 @@ const AIPromptsThatSaveYouHours = () => {
         {tags.map((t) => (
           <meta key={t} property="article:tag" content={t} />
         ))}
+        <link rel="preload" as="image" href={heroImage} fetchpriority="high" />
       </Helmet>
 
       <article className="mx-auto max-w-3xl">
@@ -66,8 +70,10 @@ const AIPromptsThatSaveYouHours = () => {
             src={heroImage}
             alt="AI prompts that save time and boost productivity"
             className="mt-4 w-full rounded-lg border aspect-[16/9] object-cover"
-            loading="lazy"
+            loading="eager"
+            fetchpriority="high"
             decoding="async"
+            sizes="100vw"
             width="1280" height="720"
           />
           <p className="mt-3 text-muted-foreground">
@@ -156,6 +162,7 @@ const AIPromptsThatSaveYouHours = () => {
            <RelatedPrompts />
         </section>
 
+        <AuthorBio author={AUTHOR_MAIN} />
         <PrevNextNav />
 
         <footer className="mt-10 border-t pt-6">
