@@ -42,7 +42,6 @@ const Header = () => {
             alt="PromptAndGo.ai logo"
             className="h-[4.5rem] md:h-[5.25rem] w-auto align-middle object-contain"
             loading="eager"
-            fetchPriority="high"
             decoding="async"
           />
         </Link>

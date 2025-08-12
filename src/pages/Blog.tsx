@@ -128,7 +128,7 @@ const Blog = () => {
         <Link to="/blog/ai-prompts-for-customer-support" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
           <Card className="overflow-hidden">
             <img
-              src="/placeholder.svg"
+              src="/lovable-uploads/b9bbcee0-042a-4751-9c30-dfc61fe9a846.png"
               alt="AI Prompts for Customer Support Teams"
               loading="lazy"
               className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
