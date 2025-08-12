@@ -90,7 +90,7 @@ const Auth = () => {
             <Button variant={mode === "signup" ? "default" : "ghost"} onClick={() => setMode("signup")}>Sign up</Button>
           </div>
           <div className="space-y-3 mb-6">
-            <Button type="button" variant="secondary" className="w-full" onClick={handleGoogle}>Continue with Google</Button>
+            <Button type="button" variant="secondary" className="w-full" disabled aria-disabled="true" title="Coming soon">Continue with Google (coming soon)</Button>
             <div className="text-center text-xs text-muted-foreground">or use email</div>
           </div>
 
