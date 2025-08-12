@@ -36,11 +36,11 @@ const Footer = () => {
             <Link to="/" className="text-muted-foreground hover:text-foreground">Welcome</Link>
             <Link to="/how-it-works" className="text-muted-foreground hover:text-foreground">How it Works</Link>
             <Link to="/library" className="text-muted-foreground hover:text-foreground">Prompt Library</Link>
-            <Link to="/packs" className="text-muted-foreground hover:text-foreground">⚡️Power Packs</Link>
+            <Link to="/blog" className="text-muted-foreground hover:text-foreground">Prompt Pulse</Link>
             <Link to="/faqs" className="text-muted-foreground hover:text-foreground">FAQs</Link>
           </nav>
           <nav className="flex flex-col gap-2">
-            <Link to="/blog" className="text-muted-foreground hover:text-foreground">Prompt Pulse</Link>
+            <Link to="/packs" className="text-muted-foreground hover:text-foreground">⚡️Power Packs</Link>
             <Link to="/submit" className="text-muted-foreground hover:text-foreground">Submit a Prompt</Link>
             <Link to="/contact" className="text-muted-foreground hover:text-foreground">Contact Us</Link>
             {user && (
