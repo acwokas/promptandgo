@@ -418,8 +418,11 @@ export type Database = {
         Row: {
           created_at: string
           email: string
+          email_enc: string | null
+          email_hash: string | null
           id: string
           stripe_customer_id: string | null
+          stripe_customer_id_enc: string | null
           subscribed: boolean
           subscription_end: string | null
           subscription_tier: string | null
@@ -429,8 +432,11 @@ export type Database = {
         Insert: {
           created_at?: string
           email: string
+          email_enc?: string | null
+          email_hash?: string | null
           id?: string
           stripe_customer_id?: string | null
+          stripe_customer_id_enc?: string | null
           subscribed?: boolean
           subscription_end?: string | null
           subscription_tier?: string | null
@@ -440,8 +446,11 @@ export type Database = {
         Update: {
           created_at?: string
           email?: string
+          email_enc?: string | null
+          email_hash?: string | null
           id?: string
           stripe_customer_id?: string | null
+          stripe_customer_id_enc?: string | null
           subscribed?: boolean
           subscription_end?: string | null
           subscription_tier?: string | null
@@ -529,6 +538,18 @@ export type Database = {
           _role: Database["public"]["Enums"]["app_role"]
         }
         Returns: boolean
+      }
+      secure_upsert_subscriber: {
+        Args: {
+          p_key: string
+          p_user_id: string
+          p_email: string
+          p_stripe_customer_id: string
+          p_subscribed: boolean
+          p_subscription_tier: string
+          p_subscription_end: string
+        }
+        Returns: undefined
       }
     }
     Enums: {

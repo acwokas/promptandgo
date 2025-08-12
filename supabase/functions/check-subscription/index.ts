@@ -34,15 +34,29 @@ serve(async (req) => {
 
     if (customers.data.length === 0) {
       logStep('No customer found; set unsubscribed');
-      await supabase.from('subscribers').upsert({
-        email: user.email,
-        user_id: user.id,
-        stripe_customer_id: null,
-        subscribed: false,
-        subscription_tier: null,
-        subscription_end: null,
-        updated_at: new Date().toISOString(),
-      }, { onConflict: 'user_id' });
+      const encKey = Deno.env.get('SUBSCRIBERS_ENCRYPTION_KEY');
+      if (encKey) {
+        await supabase.rpc('secure_upsert_subscriber', {
+          p_key: encKey,
+          p_user_id: user.id,
+          p_email: user.email,
+          p_stripe_customer_id: null,
+          p_subscribed: false,
+          p_subscription_tier: null,
+          p_subscription_end: null,
+        });
+      } else {
+        // Fallback (no encryption key configured yet)
+        await supabase.from('subscribers').upsert({
+          email: user.email,
+          user_id: user.id,
+          stripe_customer_id: null,
+          subscribed: false,
+          subscription_tier: null,
+          subscription_end: null,
+          updated_at: new Date().toISOString(),
+        }, { onConflict: 'user_id' });
+      }
       return new Response(JSON.stringify({ subscribed: false }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 });
     }
 
@@ -61,15 +75,28 @@ serve(async (req) => {
       tier = amount <= 1299 ? 'Basic' : amount <= 1999 ? 'Premium' : 'Enterprise';
     }
 
-    await supabase.from('subscribers').upsert({
-      email: user.email,
-      user_id: user.id,
-      stripe_customer_id: customerId,
-      subscribed: hasActive,
-      subscription_tier: tier,
-      subscription_end: subEnd,
-      updated_at: new Date().toISOString(),
-    }, { onConflict: 'user_id' });
+    const encKey = Deno.env.get('SUBSCRIBERS_ENCRYPTION_KEY');
+    if (encKey) {
+      await supabase.rpc('secure_upsert_subscriber', {
+        p_key: encKey,
+        p_user_id: user.id,
+        p_email: user.email,
+        p_stripe_customer_id: customerId,
+        p_subscribed: hasActive,
+        p_subscription_tier: tier,
+        p_subscription_end: subEnd,
+      });
+    } else {
+      await supabase.from('subscribers').upsert({
+        email: user.email,
+        user_id: user.id,
+        stripe_customer_id: customerId,
+        subscribed: hasActive,
+        subscription_tier: tier,
+        subscription_end: subEnd,
+        updated_at: new Date().toISOString(),
+      }, { onConflict: 'user_id' });
+    }
 
     return new Response(JSON.stringify({ subscribed: hasActive, subscription_tier: tier, subscription_end: subEnd }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 });
   } catch (error: any) {
