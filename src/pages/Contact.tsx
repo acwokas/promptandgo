@@ -96,17 +96,18 @@ const Contact = () => {
               <Link
                 to="/submit"
                 aria-label="Submit a Prompt"
-                className="group block aspect-square w-full max-w-sm rounded-lg border bg-card shadow-elegant p-6 mx-auto transition-transform duration-200 hover:scale-105 hover:shadow-glow"
+                className="group relative block aspect-square w-full max-w-sm rounded-lg overflow-hidden shadow-elegant mx-auto transition-transform duration-200 hover:scale-105 hover:shadow-glow"
               >
-                <div className="h-full w-full flex flex-col items-center justify-center text-center">
-                  <img
-                    src={submitCta}
-                    alt="Submit a prompt illustration"
-                    className="w-24 h-24 mb-4 object-contain"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <p className="text-base md:text-lg font-medium text-foreground/90">
+                <img
+                  src={submitCta}
+                  alt="Submit a prompt illustration"
+                  className="absolute inset-0 h-full w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-transparent transition-colors group-hover:from-foreground/80" />
+                <div className="absolute inset-x-0 bottom-0 p-6">
+                  <p className="text-primary-foreground text-lg md:text-xl font-semibold leading-snug">
                     Send us your best prompt and help inspire the community.
                   </p>
                 </div>
