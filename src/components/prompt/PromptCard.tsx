@@ -236,6 +236,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
     toast({ title: 'Prompt added to cart', description: `${displayTitle} — ${fmtUSD(PROMPT_DISCOUNT_CENTS)}` });
   };
   const showLock = isPro && !hasAccess;
+  const hasRibbon = (isPro && !hasAccess) || (!isPro);
 
   const getCategoryIcon = (name?: string) => {
     const n = (name || "").toLowerCase();
@@ -252,7 +253,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   };
 
   return (
-    <Card className={cn("relative overflow-hidden h-full with-category-accent glass-card transition animate-float-in hover:shadow-glow-strong", accentClass)} style={{ ['--category-accent' as any]: `var(--accent-${accentIndex})` }}>
+    <Card className={cn("relative overflow-hidden h-full with-category-accent glass-card transition animate-float-in hover:shadow-glow-strong", accentClass, hasRibbon && "pt-8 pr-24")} style={{ ['--category-accent' as any]: `var(--accent-${accentIndex})` }}>
       {isPro && !hasAccess && (
         <div className="pro-ribbon absolute top-3 right-3 z-10 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold">
           <Lock className="h-3.5 w-3.5" aria-hidden />
