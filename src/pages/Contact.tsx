@@ -6,7 +6,7 @@ import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
 import PageHero from "@/components/layout/PageHero";
 import { Link } from "react-router-dom";
-import submitCta from "@/assets/submit-prompt-cta.png";
+
 const Contact = () => {
   const [isLoading, setIsLoading] = useState(false);
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -99,7 +99,7 @@ const Contact = () => {
                 className="group relative block aspect-square w-full max-w-sm rounded-lg overflow-hidden shadow-elegant mx-auto transition-transform duration-200 hover:scale-105 hover:shadow-glow"
               >
                 <img
-                  src={submitCta}
+                  src="/lovable-uploads/48df9644-8012-4209-b92b-e0e694b2a2f7.png"
                   alt="Submit a prompt illustration"
                   className="absolute inset-0 h-full w-full object-cover"
                   loading="lazy"
@@ -107,9 +107,11 @@ const Contact = () => {
                 />
                 <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-transparent transition-colors group-hover:from-foreground/80" />
                 <div className="absolute inset-x-0 bottom-0 p-6">
-                  <p className="text-primary-foreground text-lg md:text-xl font-semibold leading-snug">
-                    Send us your best prompt and help inspire the community.
-                  </p>
+                  <div className="inline-block rounded-md bg-background/80 backdrop-blur-sm px-4 py-3 shadow-elegant">
+                    <p className="text-foreground text-lg md:text-xl font-semibold leading-snug">
+                      Send us your best prompt and help inspire the community.
+                    </p>
+                  </div>
                 </div>
               </Link>
             </div>
