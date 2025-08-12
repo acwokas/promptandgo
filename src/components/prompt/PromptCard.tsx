@@ -252,12 +252,14 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   };
 
   return (
-    <Card className={cn("relative overflow-hidden h-full with-category-accent", accentClass)} style={{ ['--category-accent' as any]: `var(--accent-${accentIndex})` }}>
+    <Card className={cn("relative overflow-hidden h-full with-category-accent glass-card transition animate-float-in hover:shadow-glow-strong", accentClass)} style={{ ['--category-accent' as any]: `var(--accent-${accentIndex})` }}>
       <CardHeader>
         {isPro && !hasAccess && (
-          <div className="mb-2 flex gap-2">
-            <Badge variant="destructive">PRO</Badge>
-            <Badge variant="success">SALE</Badge>
+          <div className="mb-2">
+            <div className="pro-ribbon inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold">
+              <Lock className="h-3.5 w-3.5" aria-hidden />
+              <span>PRO</span>
+            </div>
           </div>
         )}
 
@@ -301,27 +303,28 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
         <div>
           <div className="text-xs font-medium mb-1">Prompt:</div>
           <div className="relative">
-            <pre className={cn("whitespace-pre-wrap bg-muted/50 p-3 rounded-md text-sm transition", showLock && "blur-sm select-none pointer-events-none")}>
+            <pre className={cn("whitespace-pre-wrap bg-muted/50 p-3 rounded-md text-sm transition", showLock && "blur-sm select-none pointer-events-none")}> 
               {prompt.prompt}
             </pre>
             {showLock && (
-              <div className="absolute inset-0 rounded-md bg-gradient-to-b from-background/60 to-background/80 backdrop-blur-sm flex items-center justify-center">
-                <div className="text-center p-4 space-y-4">
-                  <div className="flex items-center justify-center gap-2 text-sm">
-                    <Lock className="h-4 w-4" /> PRO content locked
+              <div className="absolute inset-0 rounded-md glass-overlay flex items-center justify-center">
+                <div className="text-center p-5 space-y-4 max-w-[520px]">
+                  <div className="inline-flex items-center gap-2 text-sm font-medium px-3 py-1 rounded-full bg-background/40 border border-brand/30">
+                    <Lock className="h-4 w-4" aria-hidden />
+                    <span>Unlock premium prompt</span>
                   </div>
                   <div className="text-xs text-muted-foreground space-y-1">
                     <div>
-                      Access this prompt with a one-time payment of <span className="line-through">{fmtUSD(PROMPT_ORIGINAL_CENTS)}</span> <span className="text-primary font-medium">{fmtUSD(PROMPT_DISCOUNT_CENTS)}</span> for a limited time only.
+                      One‑time <span className="line-through">{fmtUSD(PROMPT_ORIGINAL_CENTS)}</span> <span className="text-primary font-medium">{fmtUSD(PROMPT_DISCOUNT_CENTS)}</span>
                     </div>
                     <div>
-                      Or unlock with a Monthly Subscription of <span className="line-through">{fmtUSD(SUB_ORIGINAL_CENTS)}</span> <span className="text-primary font-medium">{fmtUSD(SUB_DISCOUNT_CENTS)}</span>. Cancel any time.
+                      Or subscribe <span className="line-through">{fmtUSD(SUB_ORIGINAL_CENTS)}</span> <span className="text-primary font-medium">{fmtUSD(SUB_DISCOUNT_CENTS)}</span> / month
                     </div>
                   </div>
-          <div className="flex flex-col gap-2 justify-center items-center">
-            <Button size="sm" onClick={addPromptToCart}>Buy Prompt {fmtUSD(PROMPT_DISCOUNT_CENTS)}</Button>
-            <Button size="sm" variant="secondary" onClick={handleSubscribeClick}>Subscribe for {fmtUSD(SUB_DISCOUNT_CENTS)} per month</Button>
-          </div>
+                  <div className="flex flex-col sm:flex-row gap-2 justify-center items-stretch">
+                    <Button size="sm" variant="hero" onClick={addPromptToCart}>Buy Prompt {fmtUSD(PROMPT_DISCOUNT_CENTS)}</Button>
+                    <Button size="sm" variant="secondary" onClick={handleSubscribeClick}>Subscribe for {fmtUSD(SUB_DISCOUNT_CENTS)}/mo</Button>
+                  </div>
                 </div>
               </div>
             )}
