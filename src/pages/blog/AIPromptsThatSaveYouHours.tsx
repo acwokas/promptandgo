@@ -8,7 +8,9 @@ const AIPromptsThatSaveYouHours = () => {
   const title = "AI Prompts That Save You Hours Every Week";
   const description =
     "Discover AI prompts that save you hours every week. Automate routine tasks, speed up decision-making, and boost productivity with these proven examples.";
-  const heroImage = "/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png";
+  const heroImage = "/lovable-uploads/07189309-a3ae-4520-988b-ea83220f5935.png";
+  const secondaryImage = "/lovable-uploads/94ca5534-1070-4bf0-a579-0445f417c302.png";
+  const thirdImage = "/lovable-uploads/c85bfc5c-8d77-4e8d-af37-6c58b9647269.png";
   const origin = typeof window !== "undefined" ? window.location.origin : "";
   const canonical = origin ? `${origin}/blog/ai-prompts-that-save-you-hours` : undefined;
   const category = "Productivity";
@@ -74,6 +76,13 @@ const AIPromptsThatSaveYouHours = () => {
             <li>Streamline decision-making with fast, structured insights</li>
           </ul>
 
+          <img
+            src={secondaryImage}
+            alt="Analyst using AI dashboards to accelerate research and analysis"
+            className="mt-6 w-full rounded-lg border aspect-[16/9] object-cover"
+            loading="lazy"
+          />
+
           <h2 className="text-2xl font-semibold">1. Admin and Communication Prompts</h2>
           <p>Reduce time spent on day-to-day communications and scheduling.</p>
           <p><strong>Meeting Summary Prompt:</strong><br />
@@ -100,6 +109,13 @@ const AIPromptsThatSaveYouHours = () => {
           Generate a detailed outline for a 1,500-word blog post on [topic], including section headings, bullet points for each section, and key points to cover.</p>
           <p><strong>Video Script Prompt:</strong><br />
           Write a one-minute video script promoting [product/service], including an opening hook, core message, and call to action.</p>
+
+          <img
+            src={thirdImage}
+            alt="Dashboard visual showing time saved with AI prompts"
+            className="mt-6 w-full rounded-lg border aspect-[16/9] object-cover"
+            loading="lazy"
+          />
 
           <h2 className="text-2xl font-semibold">Tips for Maximising Time Savings with AI</h2>
           <ul className="list-disc pl-6 space-y-2">

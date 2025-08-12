@@ -90,7 +90,7 @@ const Blog = () => {
         <Link to="/blog/ai-prompts-that-save-you-hours" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
           <Card className="overflow-hidden">
             <img
-              src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
+              src="/lovable-uploads/94ca5534-1070-4bf0-a579-0445f417c302.png"
               alt="AI Prompts That Save You Hours Every Week"
               loading="lazy"
               className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
