@@ -19,8 +19,8 @@ const Footer = () => {
             />
           </Link>
           <div className="ml-1.5 mt-3">
-            <Button asChild variant="cta" size="sm" aria-label="Sign up free and get 1 PowerPack, plus regular tips">
-              <Link to="/contact">Sign up free and get 1 PowerPack, plus regular tips</Link>
+            <Button asChild variant="cta" size="sm" aria-label="Join free to get a bonus PowerPack and expert tips">
+              <Link to="/contact">Join free to get a bonus PowerPack and expert tips</Link>
             </Button>
           </div>
         </div>
