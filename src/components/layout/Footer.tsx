@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { User as UserIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Footer = () => {
   const { user } = useSupabaseAuth();
@@ -17,11 +18,11 @@ const Footer = () => {
               decoding="async"
             />
           </Link>
-          <p className="text-muted-foreground ml-1.5">Ready-to-use prompts for real-world work.</p>
-          <p className="ml-1.5 mt-2">
-            <span className="sr-only">Call to action:</span>
-            Get 3 FREE <Link to="/contact" className="underline underline-offset-4 hover:no-underline">⚡️PowerPacks</Link> and the latest <Link to="/contact" className="underline underline-offset-4 hover:no-underline">prompting tips weekly</Link>.
-          </p>
+          <div className="ml-1.5 mt-3">
+            <Button asChild variant="cta" size="sm" aria-label="Sign up free and get 1 PowerPack, plus regular tips">
+              <Link to="/contact">Sign up free and get 1 PowerPack, plus regular tips</Link>
+            </Button>
+          </div>
         </div>
         <div className="md:col-span-2 grid grid-cols-3 gap-4">
           <nav className="flex flex-col gap-2">
