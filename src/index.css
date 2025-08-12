@@ -204,6 +204,12 @@ All colors MUST be HSL. */
     background-image: linear-gradient(180deg, hsl(var(--card) / 0.98), hsl(var(--muted) / 0.45));
     border: 1px solid hsl(var(--border));
   }
+  .btn-subtle-stroke {
+    border: 1px solid hsl(var(--foreground) / 0.18) !important;
+  }
+  .btn-subtle-stroke:hover {
+    border-color: hsl(var(--foreground) / 0.28) !important;
+  }
 }
 
 

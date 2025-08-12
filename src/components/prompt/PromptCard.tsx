@@ -328,7 +328,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                   </div>
                   <div className="flex flex-col gap-2 justify-center items-stretch">
                     <Button size="sm" variant="hero" className="w-full" onClick={addPromptToCart}>Buy Prompt {fmtUSD(PROMPT_DISCOUNT_CENTS)}</Button>
-                    <Button size="sm" variant="secondary" className="w-full" onClick={handleSubscribeClick}>Subscribe for {fmtUSD(SUB_DISCOUNT_CENTS)}/mo</Button>
+                    <Button size="sm" variant="secondary" className="w-full btn-subtle-stroke" onClick={handleSubscribeClick}>Subscribe for {fmtUSD(SUB_DISCOUNT_CENTS)}/mo</Button>
                   </div>
                 </div>
               </div>
@@ -353,7 +353,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                     <Button
                       variant="outline"
                       size="sm"
-                      className="w-full"
+                      className="w-full btn-subtle-stroke"
                       onClick={toggleFavorite}
                       disabled={favLoading}
                       aria-label={isFav ? "Remove from My Prompts" : "Add to My Prompts"}
@@ -372,7 +372,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="outline" size="sm" disabled aria-label="Add to My Prompts" title="Add to My Prompts">
+                    <Button variant="outline" size="sm" className="w-full btn-subtle-stroke" disabled aria-label="Add to My Prompts" title="Add to My Prompts">
                       <Heart className="h-5 w-5 opacity-50" />
                       <span>Add to My Prompts</span>
                     </Button>
