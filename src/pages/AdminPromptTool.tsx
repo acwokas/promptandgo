@@ -49,14 +49,14 @@ const AdminPromptTool = () => {
   const [imagePrompt, setImagePrompt] = useState("");
   const [excerpt, setExcerpt] = useState("");
   const [categoryId, setCategoryId] = useState("");
-  const [subcategoryId, setSubcategoryId] = useState("");
+  const [subcategoryId, setSubcategoryId] = useState("none");
   const [tags, setTags] = useState("");
-  const [packSlug, setPackSlug] = useState("");
+  const [packSlug, setPackSlug] = useState("none");
   const [isPro, setIsPro] = useState(false);
-  const [ribbon, setRibbon] = useState("");
+  const [ribbon, setRibbon] = useState("none");
 
   const ribbonOptions = [
-    { value: "", label: "No ribbon" },
+    { value: "none", label: "No ribbon" },
     { value: "popular", label: "Popular" },
     { value: "bestseller", label: "Bestseller" },
     { value: "new", label: "New" },
@@ -115,9 +115,9 @@ const AdminPromptTool = () => {
           image_prompt: imagePrompt.trim() || null,
           excerpt: excerpt.trim() || null,
           category_id: categoryId,
-          subcategory_id: subcategoryId || null,
+          subcategory_id: subcategoryId === "none" ? null : subcategoryId || null,
           is_pro: isPro,
-          ribbon: ribbon || null
+          ribbon: ribbon === "none" ? null : ribbon || null
         })
         .select()
         .single();
@@ -161,7 +161,7 @@ const AdminPromptTool = () => {
       }
 
       // Handle pack association
-      if (packSlug) {
+      if (packSlug && packSlug !== "none") {
         const { data: packData } = await supabase
           .from("packs")
           .select("id")
@@ -190,11 +190,11 @@ const AdminPromptTool = () => {
       setImagePrompt("");
       setExcerpt("");
       setCategoryId("");
-      setSubcategoryId("");
+      setSubcategoryId("none");
       setTags("");
-      setPackSlug("");
+      setPackSlug("none");
       setIsPro(false);
-      setRibbon("");
+      setRibbon("none");
 
     } catch (error) {
       console.error("Error creating prompt:", error);
@@ -324,7 +324,7 @@ const AdminPromptTool = () => {
                       <SelectValue placeholder="Select subcategory" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">None</SelectItem>
+                      <SelectItem value="none">None</SelectItem>
                       {filteredSubcategories.map((sub) => (
                         <SelectItem key={sub.id} value={sub.id}>
                           {sub.name}
@@ -353,7 +353,7 @@ const AdminPromptTool = () => {
                       <SelectValue placeholder="Select pack (optional)" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">None</SelectItem>
+                      <SelectItem value="none">None</SelectItem>
                       {packs.map((pack) => (
                         <SelectItem key={pack.slug} value={pack.slug}>
                           {pack.name}
