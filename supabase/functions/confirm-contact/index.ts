@@ -52,7 +52,7 @@ serve(async (req: Request): Promise<Response> => {
         </html>
       `, { 
         status: 400,
-        headers: { "Content-Type": "text/html" }
+        headers: { "Content-Type": "text/html; charset=utf-8" }
       });
     }
 
@@ -73,7 +73,7 @@ serve(async (req: Request): Promise<Response> => {
         </html>
       `, { 
         status: 400,
-        headers: { "Content-Type": "text/html" }
+        headers: { "Content-Type": "text/html; charset=utf-8" }
       });
     }
 
@@ -282,7 +282,7 @@ ${contact.message.replace(/</g, "&lt;").replace(/>/g, "&gt;")}
       </html>
     `, {
       status: 200,
-      headers: { "Content-Type": "text/html" }
+      headers: { "Content-Type": "text/html; charset=utf-8" }
     });
 
   } catch (err: any) {
@@ -298,7 +298,7 @@ ${contact.message.replace(/</g, "&lt;").replace(/>/g, "&gt;")}
       </html>
     `, { 
       status: 500,
-      headers: { "Content-Type": "text/html" }
+      headers: { "Content-Type": "text/html; charset=utf-8" }
     });
   }
 });
