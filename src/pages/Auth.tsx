@@ -4,6 +4,7 @@ import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
@@ -19,6 +20,30 @@ const Auth = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  
+  // Optional context fields for better prompt personalization
+  const [industry, setIndustry] = useState("");
+  const [projectType, setProjectType] = useState("");
+  const [preferredTone, setPreferredTone] = useState("");
+  const [desiredOutcome, setDesiredOutcome] = useState("");
+  const [showOptionalFields, setShowOptionalFields] = useState(false);
+
+  const industries = [
+    "Technology", "Healthcare", "Finance", "Education", "Retail", "Manufacturing",
+    "Marketing & Advertising", "Real Estate", "Legal Services", "Consulting",
+    "Media & Entertainment", "Non-profit", "Other"
+  ];
+
+  const projectTypes = [
+    "Content Creation", "Marketing Campaigns", "Business Strategy", "Customer Support",
+    "Product Development", "Research & Analysis", "Educational Content", "Creative Writing",
+    "Technical Documentation", "Sales & Outreach", "Other"
+  ];
+
+  const tones = [
+    "Professional", "Casual", "Friendly", "Authoritative", "Conversational",
+    "Formal", "Creative", "Direct", "Empathetic", "Persuasive"
+  ];
 
   useEffect(() => {
     if (session) {
@@ -44,6 +69,10 @@ const Auth = () => {
     setLoading(true);
     setError(null);
     const redirectUrl = `${window.location.origin}/`;
+    
+    // Check if any context fields are filled
+    const hasContextFields = industry || projectType || preferredTone || desiredOutcome;
+    
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -51,7 +80,12 @@ const Auth = () => {
         emailRedirectTo: redirectUrl,
         data: { 
           display_name: name,
-          wants_power_pack: true // Everyone gets PowerPack automatically
+          wants_power_pack: true, // Everyone gets PowerPack automatically
+          industry: industry || null,
+          project_type: projectType || null,
+          preferred_tone: preferredTone || null,
+          desired_outcome: desiredOutcome || null,
+          context_fields_completed: hasContextFields
         }
       },
     });
@@ -133,6 +167,82 @@ const Auth = () => {
               <Label htmlFor="password">Password</Label>
               <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required placeholder="Your password" />
             </div>
+
+            {mode === "signup" && (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="text-sm text-muted-foreground">
+                    🎯 Optional: Help us personalize your prompts
+                  </div>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowOptionalFields(!showOptionalFields)}
+                    className="text-xs"
+                  >
+                    {showOptionalFields ? "Hide" : "Show"} Options
+                  </Button>
+                </div>
+
+                {showOptionalFields && (
+                  <div className="space-y-3 p-4 bg-muted/30 rounded-lg">
+                    <div className="space-y-2">
+                      <Label htmlFor="industry" className="text-xs">Industry</Label>
+                      <Select value={industry} onValueChange={setIndustry}>
+                        <SelectTrigger className="h-8">
+                          <SelectValue placeholder="Select industry" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-background border shadow-lg z-50">
+                          {industries.map((ind) => (
+                            <SelectItem key={ind} value={ind}>{ind}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="projectType" className="text-xs">Main Use Case</Label>
+                      <Select value={projectType} onValueChange={setProjectType}>
+                        <SelectTrigger className="h-8">
+                          <SelectValue placeholder="What do you mainly use AI for?" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-background border shadow-lg z-50">
+                          {projectTypes.map((type) => (
+                            <SelectItem key={type} value={type}>{type}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="preferredTone" className="text-xs">Preferred Tone</Label>
+                      <Select value={preferredTone} onValueChange={setPreferredTone}>
+                        <SelectTrigger className="h-8">
+                          <SelectValue placeholder="Select tone" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-background border shadow-lg z-50">
+                          {tones.map((tone) => (
+                            <SelectItem key={tone} value={tone}>{tone}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="desiredOutcome" className="text-xs">Desired Outcome</Label>
+                      <Input
+                        id="desiredOutcome"
+                        value={desiredOutcome}
+                        onChange={(e) => setDesiredOutcome(e.target.value)}
+                        placeholder="e.g., Increase engagement, Save time"
+                        className="h-8"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
 
             {error && (
               <p className="text-sm text-destructive" role="alert">{error}</p>

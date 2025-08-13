@@ -296,23 +296,41 @@ export type Database = {
       profiles: {
         Row: {
           avatar_url: string | null
+          context_fields_completed: boolean | null
+          context_popup_dismissed: boolean | null
           created_at: string
+          desired_outcome: string | null
           display_name: string | null
           id: string
+          industry: string | null
+          preferred_tone: string | null
+          project_type: string | null
           updated_at: string
         }
         Insert: {
           avatar_url?: string | null
+          context_fields_completed?: boolean | null
+          context_popup_dismissed?: boolean | null
           created_at?: string
+          desired_outcome?: string | null
           display_name?: string | null
           id: string
+          industry?: string | null
+          preferred_tone?: string | null
+          project_type?: string | null
           updated_at?: string
         }
         Update: {
           avatar_url?: string | null
+          context_fields_completed?: boolean | null
+          context_popup_dismissed?: boolean | null
           created_at?: string
+          desired_outcome?: string | null
           display_name?: string | null
           id?: string
+          industry?: string | null
+          preferred_tone?: string | null
+          project_type?: string | null
           updated_at?: string
         }
         Relationships: []

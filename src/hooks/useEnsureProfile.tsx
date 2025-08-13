@@ -27,10 +27,19 @@ export function useEnsureProfile() {
         }
 
         if (!data) {
+          // Get user metadata for context fields
+          const metaData = user.user_metadata || {};
+          
           const { error: insertError } = await supabase.from("profiles").insert({
             id: user.id,
-            display_name: user.email?.split("@")[0] ?? "",
+            display_name: metaData.display_name || (user.email?.split("@")[0] ?? ""),
             avatar_url: null,
+            industry: metaData.industry || null,
+            project_type: metaData.project_type || null,
+            preferred_tone: metaData.preferred_tone || null,
+            desired_outcome: metaData.desired_outcome || null,
+            context_fields_completed: metaData.context_fields_completed || false,
+            context_popup_dismissed: false
           });
           if (insertError) {
             console.error("Profile insert error:", insertError);

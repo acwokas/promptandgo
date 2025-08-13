@@ -45,65 +45,85 @@ import SubscriptionSuccess from "./pages/SubscriptionSuccess";
 import SubscriptionCanceled from "./pages/SubscriptionCanceled";
 import EmailConfirmed from "./pages/EmailConfirmed";
 import AuthEffects from "@/components/auth/AuthEffects";
+import ContextPopup from "@/components/ContextPopup";
+import { usePageVisitTracker } from "@/hooks/usePageVisitTracker";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <HelmetProvider>
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <GlobalStructuredData />
-          <Header />
-          <AuthEffects />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/library" element={<PromptLibrary />} />
-            <Route path="/packs" element={<PromptPacks />} />
-            <Route path="/submit" element={<SubmitPrompt />} />
-            <Route path="/faqs" element={<FAQs />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/welcome-to-promptandgo-ai" element={<WelcomeToPromptAndGo />} />
-            <Route path="/blog/best-ai-prompts-for-small-business-2025" element={<BestAIPromptsForSmallBusiness2025 />} />
-            <Route path="/blog/how-to-write-ai-prompts" element={<HowToWriteAIPrompts />} />
-            <Route path="/blog/ai-prompts-that-save-you-hours" element={<AIPromptsThatSaveYouHours />} />
-            <Route path="/blog/ai-prompts-for-marketing-campaigns" element={<AIPromptsForMarketingCampaigns />} />
-            <Route path="/blog/ai-prompts-for-customer-support" element={<AIPromptsForCustomerSupport />} />
-            <Route path="/blog/ai-prompts-for-social-media-content" element={<AIPromptsForSocialMediaContent />} />
-            <Route path="/blog/ai-prompts-for-content-writers" element={<AIPromptsForContentWriters />} />
-            <Route path="/blog/ai-prompts-for-business-strategy" element={<AIPromptsForBusinessStrategy />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/how-it-works" element={<HowItWorks />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/auth" element={<Auth />} />
-          <Route path="/admin" element={<AdminTools />} />
-          <Route path="/admin/upload" element={<AdminBulkUpload />} />
-          <Route path="/admin/prompts" element={<AdminPromptTool />} />
-          <Route path="/admin/export" element={<AdminExport />} />
-            <Route path="/account" element={<AccountPage />} />
-            <Route path="/account/profile" element={<ProfilePage />} />
-            <Route path="/account/notifications" element={<NotificationsPage />} />
-            <Route path="/account/security" element={<SecurityPage />} />
-            <Route path="/account/purchases" element={<PurchasesPage />} />
-            <Route path="/account/favorites" element={<FavoritesPage />} />
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/checkout/success" element={<CheckoutSuccess />} />
-            <Route path="/checkout/canceled" element={<CheckoutCanceled />} />
-            <Route path="/subscription/success" element={<SubscriptionSuccess />} />
-            <Route path="/subscription/canceled" element={<SubscriptionCanceled />} />
-            <Route path="/email-confirmed" element={<EmailConfirmed />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-          <Footer />
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
-  </HelmetProvider>
-);
+const App = () => {
+  return (
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <AppContent />
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </HelmetProvider>
+  );
+};
 
+const AppContent = () => {
+  const { shouldShowPopup, dismissPopup, markContextFieldsCompleted } = usePageVisitTracker();
+
+  return (
+    <>
+      <GlobalStructuredData />
+      <Header />
+      <AuthEffects />
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/library" element={<PromptLibrary />} />
+        <Route path="/packs" element={<PromptPacks />} />
+        <Route path="/submit" element={<SubmitPrompt />} />
+        <Route path="/faqs" element={<FAQs />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/welcome-to-promptandgo-ai" element={<WelcomeToPromptAndGo />} />
+        <Route path="/blog/best-ai-prompts-for-small-business-2025" element={<BestAIPromptsForSmallBusiness2025 />} />
+        <Route path="/blog/how-to-write-ai-prompts" element={<HowToWriteAIPrompts />} />
+        <Route path="/blog/ai-prompts-that-save-you-hours" element={<AIPromptsThatSaveYouHours />} />
+        <Route path="/blog/ai-prompts-for-marketing-campaigns" element={<AIPromptsForMarketingCampaigns />} />
+        <Route path="/blog/ai-prompts-for-customer-support" element={<AIPromptsForCustomerSupport />} />
+        <Route path="/blog/ai-prompts-for-social-media-content" element={<AIPromptsForSocialMediaContent />} />
+        <Route path="/blog/ai-prompts-for-content-writers" element={<AIPromptsForContentWriters />} />
+        <Route path="/blog/ai-prompts-for-business-strategy" element={<AIPromptsForBusinessStrategy />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/how-it-works" element={<HowItWorks />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/admin" element={<AdminTools />} />
+        <Route path="/admin/upload" element={<AdminBulkUpload />} />
+        <Route path="/admin/prompts" element={<AdminPromptTool />} />
+        <Route path="/admin/export" element={<AdminExport />} />
+        <Route path="/account" element={<AccountPage />} />
+        <Route path="/account/profile" element={<ProfilePage />} />
+        <Route path="/account/notifications" element={<NotificationsPage />} />
+        <Route path="/account/security" element={<SecurityPage />} />
+        <Route path="/account/purchases" element={<PurchasesPage />} />
+        <Route path="/account/favorites" element={<FavoritesPage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/checkout/success" element={<CheckoutSuccess />} />
+        <Route path="/checkout/canceled" element={<CheckoutCanceled />} />
+        <Route path="/subscription/success" element={<SubscriptionSuccess />} />
+        <Route path="/subscription/canceled" element={<SubscriptionCanceled />} />
+        <Route path="/email-confirmed" element={<EmailConfirmed />} />
+        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <Footer />
+      
+      <ContextPopup
+        isOpen={shouldShowPopup}
+        onClose={() => dismissPopup(false)}
+        onDismissPermanently={() => dismissPopup(true)}
+        onComplete={markContextFieldsCompleted}
+      />
+    </>
+  );
+};
 
 export default App;
