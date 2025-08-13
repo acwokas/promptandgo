@@ -105,7 +105,12 @@ const ProfilePage = () => {
               <AvatarImage src={avatarUrl} alt="User avatar" />
               <AvatarFallback>{initials}</AvatarFallback>
             </Avatar>
-            <div className="text-sm text-muted-foreground">Signed in as <span className="font-medium text-foreground">{user?.email}</span></div>
+            <div>
+              <div className="text-sm text-muted-foreground">Signed in as <span className="font-medium text-foreground">{user?.email}</span></div>
+              <div className="text-xs text-muted-foreground mt-1">
+                Your avatar is used in interactive AI toolkits and chat responses
+              </div>
+            </div>
           </div>
 
           <div className="grid gap-6">

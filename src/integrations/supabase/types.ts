@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_usage: {
+        Row: {
+          created_at: string
+          id: string
+          queries_used: number
+          reset_date: string
+          updated_at: string
+          usage_type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          queries_used?: number
+          reset_date?: string
+          updated_at?: string
+          usage_type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          queries_used?: number
+          reset_date?: string
+          updated_at?: string
+          usage_type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       categories: {
         Row: {
           created_at: string
@@ -740,6 +770,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      check_and_increment_usage: {
+        Args: { user_id_param: string; usage_type_param: string }
+        Returns: {
+          allowed: boolean
+          current_usage: number
+          daily_limit: number
+          remaining: number
+        }[]
+      }
       get_subscriber_info: {
         Args: { p_user_id: string }
         Returns: {
@@ -749,6 +788,14 @@ export type Database = {
           subscription_tier: string
           subscription_end: string
           updated_at: string
+        }[]
+      }
+      get_user_ai_limits: {
+        Args: { user_id_param: string }
+        Returns: {
+          daily_generator_limit: number
+          daily_suggestions_limit: number
+          daily_assistant_limit: number
         }[]
       }
       has_role: {

@@ -4,10 +4,12 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { AvatarUpload } from "./AvatarUpload";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Bot, Send, User, Loader2, Lightbulb, Search } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
+import ReactMarkdown from "react-markdown";
 
 interface Message {
   id: string;
@@ -30,6 +32,7 @@ const AIAssistant = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
   const { user } = useSupabaseAuth();
+  const [currentAvatarUrl, setCurrentAvatarUrl] = useState<string>(user?.user_metadata?.avatar_url || "");
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -38,6 +41,10 @@ const AIAssistant = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    setCurrentAvatarUrl(user?.user_metadata?.avatar_url || "");
+  }, [user]);
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim()) return;
@@ -114,6 +121,22 @@ const AIAssistant = () => {
         </p>
       </div>
 
+      {user && (
+        <Card className="mb-6">
+          <CardContent className="pt-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="font-semibold mb-1">Your Chat Avatar</h3>
+                <p className="text-sm text-muted-foreground">
+                  This avatar appears in your chat messages below
+                </p>
+              </div>
+              <AvatarUpload onAvatarUpdate={setCurrentAvatarUrl} />
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       <Card className="h-[700px] flex flex-col">
         <CardHeader className="pb-3 flex-shrink-0">
           <CardTitle className="flex items-center gap-2 text-lg">
@@ -146,8 +169,14 @@ const AIAssistant = () => {
                         : 'bg-muted'
                     }`}
                   >
-                    <div className="whitespace-pre-wrap text-sm">
-                      {message.content}
+                    <div className="text-sm">
+                      {message.role === 'assistant' ? (
+                        <div className="prose prose-sm max-w-none dark:prose-invert">
+                          <ReactMarkdown>{message.content}</ReactMarkdown>
+                        </div>
+                      ) : (
+                        <div className="whitespace-pre-wrap">{message.content}</div>
+                      )}
                     </div>
                     <div className={`text-xs mt-2 opacity-70`}>
                       {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -156,7 +185,7 @@ const AIAssistant = () => {
 
                   {message.role === 'user' && (
                     <Avatar className="w-8 h-8 flex-shrink-0">
-                      <AvatarImage src={user?.user_metadata?.avatar_url} />
+                      <AvatarImage src={currentAvatarUrl} />
                       <AvatarFallback className="bg-muted">
                         <User className="h-4 w-4" />
                       </AvatarFallback>
