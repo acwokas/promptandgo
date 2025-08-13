@@ -83,11 +83,17 @@ const AIPromptGenerator = () => {
     }
 
     try {
+      // Extract first 50 chars of description as title
+      const title = description.substring(0, 50).trim() + (description.length > 50 ? '...' : '');
+      
       const { error } = await supabase
-        .from('favorites')
+        .from('user_generated_prompts')
         .insert({
           user_id: user.id,
-          prompt_id: `generated_${Date.now()}`, // Temporary ID for generated prompts
+          title: title,
+          prompt: generatedPrompt,
+          description: description,
+          tags: ['ai-generated']
         });
 
       if (error) throw error;

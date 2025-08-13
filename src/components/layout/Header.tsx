@@ -83,7 +83,10 @@ const Header = () => {
                   <NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Prompt Pulse</NavLink>
                   
                   {user && (
-                    <NavLink to="/account" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>My Account</NavLink>
+                    <>
+                      <NavLink to="/my-prompts" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>My Prompts</NavLink>
+                      <NavLink to="/account" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>My Account</NavLink>
+                    </>
                   )}
                   {user ? (
                     <Button variant="secondary" onClick={handleLogout} className="mt-2">Log out</Button>
