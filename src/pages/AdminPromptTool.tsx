@@ -48,7 +48,7 @@ const AdminPromptTool = () => {
   const [prompt, setPrompt] = useState("");
   const [imagePrompt, setImagePrompt] = useState("");
   const [excerpt, setExcerpt] = useState("");
-  const [categoryId, setCategoryId] = useState("");
+  const [categoryId, setCategoryId] = useState("none");
   const [subcategoryId, setSubcategoryId] = useState("none");
   const [tags, setTags] = useState("");
   const [packSlug, setPackSlug] = useState("none");
@@ -93,7 +93,7 @@ const AdminPromptTool = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim() || !prompt.trim() || !categoryId) {
+    if (!title.trim() || !prompt.trim() || !categoryId || categoryId === "none") {
       toast({
         title: "Error",
         description: "Please fill in title, prompt, and category",
@@ -189,7 +189,7 @@ const AdminPromptTool = () => {
       setPrompt("");
       setImagePrompt("");
       setExcerpt("");
-      setCategoryId("");
+      setCategoryId("none");
       setSubcategoryId("none");
       setTags("");
       setPackSlug("none");
@@ -217,7 +217,7 @@ const AdminPromptTool = () => {
     return <Navigate to="/" replace />;
   }
 
-  const filteredSubcategories = subcategories.filter(sub => sub.category_id === categoryId);
+  const filteredSubcategories = subcategories.filter(sub => sub.category_id === (categoryId === "none" ? "" : categoryId));
 
   return (
     <div className="min-h-screen bg-background">
@@ -308,6 +308,7 @@ const AdminPromptTool = () => {
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="none">Select a category</SelectItem>
                       {categories.map((cat) => (
                         <SelectItem key={cat.id} value={cat.id}>
                           {cat.name}
