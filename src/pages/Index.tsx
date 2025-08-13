@@ -2,7 +2,7 @@ import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
-import { Sparkles, Zap, ShieldCheck, ListChecks, Wand2, Rocket, Check, Search, Heart } from "lucide-react";
+import { Sparkles, Zap, ShieldCheck, ListChecks, Wand2, Rocket, Check, Search, Heart, Bot } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -131,14 +131,14 @@ const Index = () => {
             <Link to="/packs">⚡️Power Packs</Link>
           </Button>
           <Button asChild size="default" variant="secondary">
-            <Link to="/toolkit">🤖 AI Tools</Link>
+            <Link to="/toolkit"><Bot className="h-4 w-4 mr-2 text-blue-500" />AI Tools</Link>
           </Button>
           {user ? (
-            <Button asChild size="default" variant="outline">
+            <Button asChild size="default" variant="ghost">
               <Link to="/account/favorites"><Heart className="h-4 w-4 mr-2" />My Prompts</Link>
             </Button>
           ) : (
-            <Button asChild size="default" variant="outline">
+            <Button asChild size="default" variant="ghost">
               <Link to="/auth">Login</Link>
             </Button>
           )}
@@ -370,14 +370,14 @@ const Index = () => {
                 <Link to="/packs">⚡️Power Packs</Link>
               </Button>
               <Button asChild variant="secondary">
-                <Link to="/toolkit">🤖 AI Tools</Link>
+                <Link to="/toolkit"><Bot className="h-4 w-4 mr-2 text-blue-500" />AI Tools</Link>
               </Button>
               {user ? (
-                <Button asChild size="lg" variant="outline">
+                <Button asChild size="lg" variant="ghost">
                   <Link to="/account/favorites"><Heart className="h-4 w-4 mr-2" />My Prompts</Link>
                 </Button>
               ) : (
-                <Button asChild size="lg" variant="outline">
+                <Button asChild size="lg" variant="ghost">
                   <Link to="/auth">Login</Link>
                 </Button>
               )}

@@ -3,7 +3,7 @@ import PageHero from "@/components/layout/PageHero";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
-import { ShieldCheck, Zap, Clock, BadgeCheck, Globe, Scale, Search, Heart } from "lucide-react";
+import { ShieldCheck, Zap, Clock, BadgeCheck, Globe, Scale, Search, Heart, Bot } from "lucide-react";
 
 const HowItWorks = () => {
   const { user } = useSupabaseAuth();
@@ -47,14 +47,14 @@ const HowItWorks = () => {
         <Link to="/packs">⚡️Power Packs</Link>
       </Button>
       <Button asChild size="lg" variant="secondary">
-        <Link to="/toolkit">🤖 AI Tools</Link>
+        <Link to="/toolkit"><Bot className="h-4 w-4 mr-2 text-blue-500" />AI Tools</Link>
       </Button>
       {user ? (
-        <Button asChild size="lg" variant="outline">
+        <Button asChild size="lg" variant="ghost">
           <Link to="/account/favorites"><Heart className="h-4 w-4 mr-2" />My Prompts</Link>
         </Button>
       ) : (
-        <Button asChild size="lg" variant="outline">
+        <Button asChild size="lg" variant="ghost">
           <Link to="/auth">Login</Link>
         </Button>
       )}
@@ -171,14 +171,14 @@ const HowItWorks = () => {
               <Link to="/packs">⚡️Power Packs</Link>
             </Button>
             <Button asChild size="lg" variant="secondary">
-              <Link to="/toolkit">🤖 AI Tools</Link>
+              <Link to="/toolkit"><Bot className="h-4 w-4 mr-2 text-blue-500" />AI Tools</Link>
             </Button>
             {user ? (
-              <Button asChild size="lg" variant="outline">
+              <Button asChild size="lg" variant="ghost">
                 <Link to="/account/favorites"><Heart className="h-4 w-4 mr-2" />My Prompts</Link>
               </Button>
             ) : (
-              <Button asChild size="lg" variant="outline">
+              <Button asChild size="lg" variant="ghost">
                 <Link to="/auth">Login</Link>
               </Button>
             )}

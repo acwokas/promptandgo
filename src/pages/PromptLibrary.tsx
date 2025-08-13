@@ -4,7 +4,7 @@ import { PromptCard } from "@/components/prompt/PromptCard";
 import { Button } from "@/components/ui/button";
 import PageHero from "@/components/layout/PageHero";
 import { Link, useSearchParams } from "react-router-dom";
-import { Search, Heart } from "lucide-react";
+import { Search, Heart, Bot } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useCallback, useEffect, useState, useRef } from "react";
@@ -381,14 +381,14 @@ const PromptLibrary = () => {
           <Link to="/packs">⚡️Power Packs</Link>
         </Button>
         <Button asChild size="lg" variant="secondary">
-          <Link to="/toolkit">🤖 AI Tools</Link>
+          <Link to="/toolkit"><Bot className="h-4 w-4 mr-2 text-blue-500" />AI Tools</Link>
         </Button>
         {user ? (
-          <Button asChild size="lg" variant="outline">
+          <Button asChild size="lg" variant="ghost">
             <Link to="/account/favorites"><Heart className="h-4 w-4 mr-2" />My Prompts</Link>
           </Button>
         ) : (
-          <Button asChild size="lg" variant="outline">
+          <Button asChild size="lg" variant="ghost">
             <Link to="/auth">Login</Link>
           </Button>
         )}
