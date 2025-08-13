@@ -3,12 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
 import { Sparkles, Zap, ShieldCheck, ListChecks, Wand2, Rocket, Check } from "lucide-react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
 import { PromptCard } from "@/components/prompt/PromptCard";
 import { usePersonalizedPrompts } from "@/hooks/usePersonalizedPrompts";
+import AIPromptWidget from "@/components/ai/AIPromptWidget";
 import type { Category as CategoryType } from "@/data/prompts";
 
 const Index = () => {
@@ -200,6 +202,61 @@ const Index = () => {
             </div>
           </section>
         )}
+
+        {/* AI Widgets Section */}
+        <section className="container py-6">
+          <h2 className="text-2xl font-semibold mb-2">✨ AI-Powered Tools</h2>
+          <p className="text-muted-foreground max-w-3xl mb-6">Try our intelligent tools to create perfect prompts and enhance your AI interactions.</p>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <AIPromptWidget />
+            
+            <Card className="bg-gradient-to-br from-accent/10 to-transparent border-accent/20">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <Sparkles className="h-5 w-5 text-accent" />
+                  🎯 Smart Suggestions
+                </CardTitle>
+                <p className="text-sm text-muted-foreground">
+                  Get personalized prompt recommendations based on your work
+                </p>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="text-center text-muted-foreground py-6 text-sm">
+                  <Sparkles className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                  <p>Coming soon - AI-powered recommendations</p>
+                </div>
+                <Button asChild variant="outline" size="sm" className="w-full">
+                  <Link to="/smart-suggestions">
+                    Learn More →
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-secondary/10 to-transparent border-secondary/20">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <Wand2 className="h-5 w-5 text-secondary" />
+                  🤖 AI Assistant
+                </CardTitle>
+                <p className="text-sm text-muted-foreground">
+                  Chat with our AI to refine and improve your prompts
+                </p>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="text-center text-muted-foreground py-6 text-sm">
+                  <Wand2 className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                  <p>Get expert help crafting better prompts</p>
+                </div>
+                <Button asChild variant="outline" size="sm" className="w-full">
+                  <Link to="/ai-assistant">
+                    Try Assistant →
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
 
         {/* Audience Cards */}
         <section className="container py-6">
