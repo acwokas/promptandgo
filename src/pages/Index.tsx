@@ -134,11 +134,11 @@ const Index = () => {
             <Link to="/toolkit">🤖 AI Tools</Link>
           </Button>
           {user ? (
-            <Button asChild size="default" variant="secondary">
+            <Button asChild size="default" variant="outline">
               <Link to="/account/favorites"><Heart className="h-4 w-4 mr-2" />My Prompts</Link>
             </Button>
           ) : (
-            <Button asChild size="default" variant="secondary">
+            <Button asChild size="default" variant="outline">
               <Link to="/auth">Login</Link>
             </Button>
           )}
@@ -373,11 +373,11 @@ const Index = () => {
                 <Link to="/toolkit">🤖 AI Tools</Link>
               </Button>
               {user ? (
-                <Button asChild size="lg" variant="secondary">
+                <Button asChild size="lg" variant="outline">
                   <Link to="/account/favorites"><Heart className="h-4 w-4 mr-2" />My Prompts</Link>
                 </Button>
               ) : (
-                <Button asChild size="lg" variant="secondary">
+                <Button asChild size="lg" variant="outline">
                   <Link to="/auth">Login</Link>
                 </Button>
               )}
