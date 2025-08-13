@@ -117,7 +117,7 @@ const Index = () => {
           title={<>
             Find your perfect <span className="text-gradient-brand">AI</span> <span className="text-gradient-brand">prompt</span>, fast.
           </>}
-          subtitle={<>Browse hundreds of human-curated prompts to help you write better, work smarter, and think bigger.</>}
+          subtitle={<>Browse thousands of human-curated prompts to help you write better, work smarter, and think bigger.</>}
         >
           <Button asChild size="lg" variant="hero" className="px-6">
             <Link to="/library">Browse Prompt Library</Link>
