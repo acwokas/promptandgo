@@ -59,7 +59,7 @@ const Auth = () => {
       setError(error.message);
       toast({ title: "Sign up error", description: error.message, variant: "destructive" });
     } else {
-      toast({ title: "Check your email", description: "Confirm your address to finish sign up and get your PowerPack!" });
+      toast({ title: "Check your email", description: "Confirm your address to finish sign up and get your ⚡️Power Pack!" });
     }
   };
 
@@ -138,7 +138,7 @@ const Auth = () => {
             )}
 
             <Button type="submit" disabled={loading} className="w-full">
-              {loading ? "Please wait..." : mode === "signin" ? "Log in" : "Create Account & Claim My FREE Power Pack"}
+              {loading ? "Please wait..." : mode === "signin" ? "Log in" : "Create Account & Claim My FREE ⚡️Power Pack"}
             </Button>
 
             {mode === "signin" ? (

@@ -65,7 +65,7 @@ const Contact = () => {
       } else {
         toast({ 
           title: "Account created!", 
-          description: "Check your email to confirm your account and get your PowerPack!", 
+          description: "Check your email to confirm your account and get your ⚡️Power Pack!", 
           duration: 8000
         });
         return true;
@@ -256,7 +256,7 @@ const Contact = () => {
                       </div>
                       
                       <p className="text-xs text-muted-foreground">
-                        Creating an account lets you save favorite prompts and access premium features. You'll also get a FREE PowerPack!
+                        Creating an account lets you save favorite prompts and access premium features. You'll also get a FREE ⚡️Power Pack!
                       </p>
                     </div>
                   )}
@@ -271,7 +271,7 @@ const Contact = () => {
 
               <div className="pt-2">
                 <Button type="submit" variant="cta" disabled={isLoading}>
-                  {isLoading ? "Sending..." : (!user && showAccountCreation) ? "Create Account & Claim My FREE Power Pack" : "Send Message"}
+                  {isLoading ? "Sending..." : (!user && showAccountCreation) ? "Create Account & Claim My FREE ⚡️Power Pack" : "Send Message"}
                 </Button>
               </div>
             </form>
