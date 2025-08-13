@@ -3,16 +3,19 @@ import PageHero from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
+import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { Navigate, Link } from "react-router-dom";
 import { Upload, Plus, Download } from "lucide-react";
 
 const AdminTools = () => {
+  const { loading: authLoading } = useSupabaseAuth();
   const { isAdmin, loading: adminLoading } = useIsAdmin();
 
-  console.log("AdminTools: Component state", { isAdmin, adminLoading });
+  console.log("AdminTools: Component state", { isAdmin, adminLoading, authLoading });
 
-  if (adminLoading) {
-    console.log("AdminTools: Still loading admin status");
+  // Wait for both auth and admin checks to complete
+  if (authLoading || adminLoading) {
+    console.log("AdminTools: Still loading", { authLoading, adminLoading });
     return <div>Loading...</div>;
   }
 

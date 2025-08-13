@@ -3,6 +3,7 @@ import PageHero from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
+import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { Navigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -10,10 +11,12 @@ import { useState } from "react";
 import { Download, FileSpreadsheet } from "lucide-react";
 
 const AdminExport = () => {
+  const { loading: authLoading } = useSupabaseAuth();
   const { isAdmin, loading: adminLoading } = useIsAdmin();
   const [loading, setLoading] = useState(false);
 
-  if (adminLoading) {
+  // Wait for both auth and admin checks to complete
+  if (authLoading || adminLoading) {
     return <div>Loading...</div>;
   }
 

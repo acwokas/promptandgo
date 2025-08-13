@@ -11,6 +11,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
+import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { Navigate } from "react-router-dom";
 
 interface Category {
@@ -33,6 +34,7 @@ interface Pack {
 }
 
 const AdminPromptTool = () => {
+  const { loading: authLoading } = useSupabaseAuth();
   const { isAdmin, loading: adminLoading } = useIsAdmin();
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -205,7 +207,8 @@ const AdminPromptTool = () => {
     }
   };
 
-  if (adminLoading) {
+  // Wait for both auth and admin checks to complete
+  if (authLoading || adminLoading) {
     return <div>Loading...</div>;
   }
 
