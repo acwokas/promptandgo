@@ -9,7 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Bot, Send, User, Loader2, Lightbulb, Search } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
-import ReactMarkdown from "react-markdown";
+
 
 interface Message {
   id: string;
@@ -171,9 +171,16 @@ const AIAssistant = () => {
                   >
                     <div className="text-sm">
                       {message.role === 'assistant' ? (
-                        <div className="prose prose-sm max-w-none dark:prose-invert">
-                          <ReactMarkdown>{message.content}</ReactMarkdown>
-                        </div>
+                        <div 
+                          className="prose prose-sm max-w-none dark:prose-invert"
+                          dangerouslySetInnerHTML={{
+                            __html: message.content
+                              .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                              .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                              .replace(/`(.*?)`/g, '<code>$1</code>')
+                              .replace(/\n/g, '<br>')
+                          }}
+                        />
                       ) : (
                         <div className="whitespace-pre-wrap">{message.content}</div>
                       )}
