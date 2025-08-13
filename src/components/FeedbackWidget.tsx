@@ -17,6 +17,7 @@ interface FeedbackWidgetProps {
 export const FeedbackWidget = ({ promptId }: FeedbackWidgetProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
+  const [isDismissed, setIsDismissed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
   const { user } = useSupabaseAuth();
@@ -105,21 +106,32 @@ export const FeedbackWidget = ({ promptId }: FeedbackWidgetProps) => {
     }
   };
 
-  if (!isEnabled) return null;
+  if (!isEnabled || isDismissed) return null;
 
   if (isMinimized) {
     return (
       <div className="fixed bottom-4 right-4 z-50">
-        <Button
-          onClick={() => setIsMinimized(false)}
-          size="sm"
-          className="shadow-lg"
-          aria-label="Open feedback"
-        >
-          <MessageCircle className="h-4 w-4 mr-2" />
-          Feedback
-          <ChevronUp className="h-4 w-4 ml-2" />
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            onClick={() => setIsMinimized(false)}
+            size="sm"
+            className="shadow-lg"
+            aria-label="Open feedback"
+          >
+            <MessageCircle className="h-4 w-4 mr-2" />
+            Feedback
+            <ChevronUp className="h-4 w-4 ml-2" />
+          </Button>
+          <Button
+            onClick={() => setIsDismissed(true)}
+            variant="ghost"
+            size="sm"
+            className="shadow-lg bg-background/80 backdrop-blur-sm border"
+            aria-label="Dismiss feedback widget"
+          >
+            <X className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
     );
   }
@@ -127,15 +139,26 @@ export const FeedbackWidget = ({ promptId }: FeedbackWidgetProps) => {
   return (
     <div className="fixed bottom-4 right-4 z-50">
       {!isOpen ? (
-        <Button
-          onClick={() => setIsOpen(true)}
-          size="lg"
-          className="shadow-lg"
-          aria-label="Open feedback form"
-        >
-          <MessageCircle className="h-5 w-5 mr-2" />
-          Feedback
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            onClick={() => setIsOpen(true)}
+            size="lg"
+            className="shadow-lg"
+            aria-label="Open feedback form"
+          >
+            <MessageCircle className="h-5 w-5 mr-2" />
+            Feedback
+          </Button>
+          <Button
+            onClick={() => setIsDismissed(true)}
+            variant="ghost"
+            size="sm"
+            className="shadow-lg bg-background/80 backdrop-blur-sm border"
+            aria-label="Dismiss feedback widget"
+          >
+            <X className="h-4 w-4" />
+          </Button>
+        </div>
       ) : (
         <Card className="w-80 shadow-xl">
           <CardHeader className="pb-3">
