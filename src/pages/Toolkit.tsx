@@ -36,8 +36,8 @@ const ToolkitPage = () => {
   return (
     <>
       <SEO 
-        title="AI Toolkit - Advanced Prompt Tools"
-        description="Discover our powerful AI toolkit featuring prompt generation, smart recommendations, and an AI assistant to enhance your AI interactions."
+        title="Interactive AI Tools - Advanced Prompt Tools"
+        description="Discover our powerful interactive AI tools featuring prompt generation, smart recommendations, and an AI assistant to enhance your AI interactions."
       />
       
       <main className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
@@ -49,13 +49,13 @@ const ToolkitPage = () => {
                 <Sparkles className="h-8 w-8 text-primary" />
               </div>
               <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-                AI Toolkit
+                Interactive
               </h1>
             </div>
             
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Advanced AI-powered tools to create, discover, and optimize your prompts. 
-              Get professional results with our intelligent toolkit.
+              Get professional results with our intelligent interactive tools.
             </p>
             
             <div className="flex flex-wrap items-center justify-center gap-3">
@@ -110,7 +110,7 @@ const ToolkitPage = () => {
 
           {/* Features Section */}
           <div className="text-center space-y-8 bg-muted/30 rounded-3xl p-8 md:p-12">
-            <h2 className="text-3xl font-bold mb-6">Why Use Our AI Toolkit?</h2>
+            <h2 className="text-3xl font-bold mb-6">Why Use Our Interactive Tools?</h2>
             
             <div className="grid gap-6 md:grid-cols-3">
               <div className="space-y-3">

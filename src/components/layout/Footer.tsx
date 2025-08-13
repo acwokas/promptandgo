@@ -36,7 +36,7 @@ const Footer = () => {
             <Link to="/" className="text-muted-foreground hover:text-foreground">Welcome</Link>
             <Link to="/how-it-works" className="text-muted-foreground hover:text-foreground">How it Works</Link>
             <Link to="/library" className="text-muted-foreground hover:text-foreground">Prompt Library</Link>
-            <Link to="/blog" className="text-muted-foreground hover:text-foreground">Prompt Pulse</Link>
+            <Link to="/blog" className="text-muted-foreground hover:text-foreground">Tips</Link>
             <Link to="/faqs" className="text-muted-foreground hover:text-foreground">FAQs</Link>
           </nav>
           <nav className="flex flex-col gap-2">

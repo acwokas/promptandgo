@@ -1,7 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, User, ShoppingCart } from "lucide-react";
+import { Menu, User, ShoppingCart, Bot } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useToast } from "@/components/ui/use-toast";
@@ -58,9 +58,14 @@ const Header = () => {
           <li><NavLink to="/how-it-works" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>How it Works</NavLink></li>
           <li><NavLink to="/library" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Prompt Library</NavLink></li>
           <li><NavLink to="/packs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>⚡️Power Packs</NavLink></li>
-          <li><NavLink to="/toolkit" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>🧰 Toolkit</NavLink></li>
+          <li>
+            <NavLink to="/toolkit" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
+              <Bot className="h-4 w-4 inline mr-1 text-blue-500" />
+              Interactive
+            </NavLink>
+          </li>
           <li><NavLink to="/faqs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>FAQs</NavLink></li>
-          <li><NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Prompt Pulse</NavLink></li>
+          <li><NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Tips</NavLink></li>
         </ul>
         <div className="flex items-center gap-2">
           {/* Mobile menu */}
@@ -77,10 +82,13 @@ const Header = () => {
                   <NavLink to="/how-it-works" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>How it Works</NavLink>
                   <NavLink to="/library" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Prompt Library</NavLink>
                   <NavLink to="/packs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>⚡️Power Packs</NavLink>
-                  <NavLink to="/toolkit" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>🧰 Toolkit</NavLink>
+                  <NavLink to="/toolkit" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
+                    <Bot className="h-4 w-4 inline mr-1 text-blue-500" />
+                    Interactive
+                  </NavLink>
                   <NavLink to="/cart" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Cart</NavLink>
                   <NavLink to="/faqs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>FAQs</NavLink>
-                  <NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Prompt Pulse</NavLink>
+                  <NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Tips</NavLink>
                   
                   {user && (
                     <>

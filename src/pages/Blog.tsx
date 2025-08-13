@@ -10,7 +10,7 @@ const Blog = () => {
   const canonical = origin ? `${origin}/blog` : undefined;
   return (
   <>
-    <PageHero title={<><span className="text-gradient-brand">Prompt</span> Pulse</>} subtitle={<>Tips, tricks and examples to get the most out of your prompting.</>} minHeightClass="min-h-[40vh]">
+    <PageHero title={<>Tips</>} subtitle={<>Tips, tricks and examples to get the most out of your prompting.</>} minHeightClass="min-h-[40vh]">
       <Button asChild size="lg" variant="hero" className="px-6">
         <Link to="/library#library-filters">Browse Prompt Library</Link>
       </Button>
@@ -28,7 +28,7 @@ const Blog = () => {
       </Button>
     </PageHero>
     <main className="container py-10">
-      <SEO title="Prompt Pulse – Prompt tips, tricks & examples" description="Tips, tricks and examples to get the most out of your prompting." canonical={canonical} />
+      <SEO title="Tips – Prompt tips, tricks & examples" description="Tips, tricks and examples to get the most out of your prompting." canonical={canonical} />
 
     <section className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       <article>
