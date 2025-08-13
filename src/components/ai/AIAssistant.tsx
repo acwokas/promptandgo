@@ -103,7 +103,7 @@ const AIAssistant = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-12rem)] max-w-4xl mx-auto p-6">
+    <div className="max-w-4xl mx-auto p-6">
       <div className="text-center space-y-2 mb-6">
         <div className="flex items-center justify-center gap-2">
           <Bot className="h-6 w-6 text-primary" />
@@ -114,18 +114,18 @@ const AIAssistant = () => {
         </p>
       </div>
 
-      <Card className="h-[calc(100vh-20rem)] flex flex-col">
-        <CardHeader className="pb-3">
+      <Card className="h-[700px] flex flex-col">
+        <CardHeader className="pb-3 flex-shrink-0">
           <CardTitle className="flex items-center gap-2 text-lg">
             <Bot className="h-5 w-5" />
             Chat with AI Assistant
           </CardTitle>
         </CardHeader>
         
-        <CardContent className="flex-1 flex flex-col p-0">
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto px-6">
-            <div className="space-y-4 py-4">
+        <CardContent className="flex-1 flex flex-col p-0 min-h-0">
+          {/* Messages Container */}
+          <div className="flex-1 overflow-y-auto px-6 py-4">
+            <div className="space-y-4">
               {messages.map((message) => (
                 <div
                   key={message.id}
@@ -186,7 +186,7 @@ const AIAssistant = () => {
           </div>
 
           {/* Quick Actions */}
-          <div className="px-6 pb-3">
+          <div className="px-6 py-3 flex-shrink-0 border-t">
             <div className="flex flex-wrap gap-2">
               {quickActions.map((action) => (
                 <Button
@@ -204,7 +204,7 @@ const AIAssistant = () => {
           </div>
 
           {/* Input */}
-          <div className="border-t p-6">
+          <div className="px-6 py-4 flex-shrink-0 border-t">
             <div className="flex gap-2">
               <Input
                 value={inputMessage}
