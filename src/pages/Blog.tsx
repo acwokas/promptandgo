@@ -145,6 +145,25 @@ const Blog = () => {
           </Card>
         </Link>
       </article>
+      <article>
+        <Link to="/blog/ai-prompts-for-social-media-content" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+          <Card className="overflow-hidden">
+            <img
+              src="/lovable-uploads/a619c09b-001e-470b-beff-59e90dcd0a60.png"
+              alt="AI Prompts for Social Media Content That Stands Out"
+              loading="lazy"
+              className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+            />
+            <CardContent className="pt-4">
+              <h2 className="text-xl font-semibold leading-snug">AI Prompts for Social Media Content That Stands Out</h2>
+              <p className="mt-2 text-muted-foreground">
+                Create social media content that gets noticed. Prompts for posts, captions, and engagement ideas in minutes.
+              </p>
+              <span className="mt-3 inline-block font-medium text-primary">Read more →</span>
+            </CardContent>
+          </Card>
+        </Link>
+      </article>
     </section>
 
     <section aria-labelledby="cta-tail" className="relative bg-hero hero-grid mt-16">
