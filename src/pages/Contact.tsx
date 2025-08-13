@@ -37,7 +37,7 @@ const Contact = () => {
     try {
       const newsletterOptIn = data.get("newsletter_opt_in") === "on";
 
-      const { error } = await supabase.functions.invoke("send-contact", {
+      const { data: response, error } = await supabase.functions.invoke("send-contact", {
         body: { name, email, message, newsletterOptIn },
       });
 
@@ -47,8 +47,16 @@ const Contact = () => {
         return;
       }
 
-      toast({ title: "Message sent", description: "Thanks! We’ll get back to you shortly." });
-      form.reset();
+      if (response?.success) {
+        toast({ 
+          title: "Check your email!", 
+          description: response.message || "We've sent you a confirmation link to complete your message submission.",
+          duration: 8000
+        });
+        form.reset();
+      } else {
+        toast({ title: "Something went wrong", description: "Please try again.", variant: "destructive" });
+      }
     } finally {
       setIsLoading(false);
     }
@@ -58,7 +66,7 @@ const Contact = () => {
     <>
       <PageHero
         title={<><span className="text-brand">Got something</span> to share?</>}
-        subtitle={<>We’d love to hear from you, whether it’s a fresh idea, feedback, a request for more of a certain prompt type, or a challenge you would like us to tackle. Drop us a message, and remember to subscribe to our newsletter for new prompts, tips, and inspiration straight to your inbox.</>}
+        subtitle={<>We'd love to hear from you, whether it's a fresh idea, feedback, a request for more of a certain prompt type, or a challenge you would like us to tackle. Drop us a message, and remember to subscribe to our newsletter for new prompts, tips, and inspiration straight to your inbox.</>}
         minHeightClass="min-h-[40vh]"
       />
       <main className="container py-10">
