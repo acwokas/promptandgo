@@ -147,10 +147,10 @@ All colors MUST be HSL. */
     linear-gradient(180deg, hsl(220 60% 7%), hsl(220 60% 3%));
     background-size: cover; background-position: center; background-repeat: no-repeat; }
   .bg-hero-admin { position: relative; background-image:
-    radial-gradient(60% 80% at 0% 0%, hsl(0 84% 60% / 0.35), transparent 65%),
-    radial-gradient(50% 60% at 100% 10%, hsl(0 72% 51% / 0.28), transparent 60%),
-    radial-gradient(30% 45% at 30% 100%, hsl(0 65% 45% / 0.25), transparent 60%),
-    linear-gradient(180deg, hsl(0 40% 8%), hsl(0 35% 5%));
+    radial-gradient(60% 80% at 0% 0%, hsl(0 84% 60% / 0.65), transparent 65%),
+    radial-gradient(50% 60% at 100% 10%, hsl(0 72% 51% / 0.55), transparent 60%),
+    radial-gradient(30% 45% at 30% 100%, hsl(0 65% 45% / 0.45), transparent 60%),
+    linear-gradient(180deg, hsl(0 50% 12%), hsl(0 45% 8%));
     background-size: cover; background-position: center; background-repeat: no-repeat; }
   .hero-grid::before {
     content: ""; position: absolute; inset: 0;
