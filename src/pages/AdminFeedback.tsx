@@ -51,6 +51,10 @@ const AdminFeedback = () => {
   const [adminNotes, setAdminNotes] = useState("");
   const [updatingStatus, setUpdatingStatus] = useState(false);
 
+  useEffect(() => {
+    loadFeedback();
+  }, []);
+
   // Wait for both auth and admin checks to complete
   if (authLoading || adminLoading) {
     return <div>Loading...</div>;
@@ -60,10 +64,6 @@ const AdminFeedback = () => {
     navigate("/");
     return null;
   }
-
-  useEffect(() => {
-    loadFeedback();
-  }, []);
 
   const loadFeedback = async () => {
     try {
