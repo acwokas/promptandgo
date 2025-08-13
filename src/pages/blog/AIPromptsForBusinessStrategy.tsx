@@ -68,7 +68,7 @@ const AIPromptsForBusinessStrategy = () => {
         {tags.map((t) => (
           <meta key={t} property="article:tag" content={t} />
         ))}
-        <link rel="preload" as="image" href={heroImage} fetchPriority="high" />
+        <link rel="preload" as="image" href={heroImage} />
       </Helmet>
 
       <article className="mx-auto max-w-3xl">
@@ -79,7 +79,6 @@ const AIPromptsForBusinessStrategy = () => {
             alt="AI prompts for business strategy and planning – dashboard with charts"
             className="mt-4 w-full rounded-lg border aspect-[16/9] object-cover"
             loading="eager"
-            fetchPriority="high"
             decoding="async"
             sizes="100vw"
             width="1280" height="720"
