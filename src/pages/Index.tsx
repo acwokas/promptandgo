@@ -8,11 +8,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
 import { PromptCard } from "@/components/prompt/PromptCard";
+import { usePersonalizedPrompts } from "@/hooks/usePersonalizedPrompts";
 import type { Category as CategoryType } from "@/data/prompts";
 
 const Index = () => {
   const { user } = useSupabaseAuth();
   const navigate = useNavigate();
+  const { personalizedPrompts, hasPersonalization } = usePersonalizedPrompts();
 
   type HP = {
     id: string;
@@ -104,6 +106,7 @@ const Index = () => {
     }, 5000);
     return () => window.clearInterval(id);
   }, [carouselApi]);
+
   return (
     <>
       <SEO
@@ -169,6 +172,34 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Personalized Recommendations for Homepage */}
+        {hasPersonalization && personalizedPrompts.length > 0 && (
+          <section className="container py-6">
+            <h2 className="text-2xl font-semibold mb-2">🎯 Recommended for You</h2>
+            <p className="text-muted-foreground max-w-3xl mb-8">Based on your preferences, here are some prompts we think you'll love.</p>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {personalizedPrompts.slice(0, 3).map((p) => (
+                <div key={p.id} className="relative group">
+                  <PromptCard
+                    prompt={p as any}
+                    categories={homeCategories}
+                    onCategoryClick={(cid) => navigate(`/library?categoryId=${cid}`)}
+                    onSubcategoryClick={(sid, cid) => navigate(`/library?categoryId=${cid}&subcategoryId=${sid}`)}
+                    onCopyClick={() => navigate(`/library?categoryId=${p.categoryId || ""}${p.subcategoryId ? `&subcategoryId=${p.subcategoryId}` : ""}`)}
+                  />
+                  <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full border-2 border-background shadow-sm">
+                    {Math.round(p.relevanceScore)}% match
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 text-center">
+              <Button asChild variant="outline">
+                <Link to="/library">See All Your Recommendations →</Link>
+              </Button>
+            </div>
+          </section>
+        )}
 
         {/* Audience Cards */}
         <section className="container py-6">
@@ -204,7 +235,7 @@ const Index = () => {
             </article>
             <article className="group rounded-xl border bg-card p-6 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
               <h3 className="text-xl font-semibold">🎨 Creativity &amp; Writing</h3>
-              <p className="text-muted-foreground mt-2">From idea to finished story — overcome writer’s block and generate concepts, hooks, and poetry with ease.</p>
+              <p className="text-muted-foreground mt-2">From idea to finished story — overcome writer's block and generate concepts, hooks, and poetry with ease.</p>
               <div className="mt-4">
                 <Button asChild variant="hero" size="sm">
                   <Link to="/library">Learn More</Link>
@@ -292,7 +323,7 @@ const Index = () => {
 
         <section aria-labelledby="cta-tail" className="relative bg-hero hero-grid mt-8" id="cta">
           <div className="container p-6 md:p-8 text-center text-primary-foreground">
-            <h2 id="cta-tail" className="text-2xl md:text-3xl font-semibold tracking-tight">Whatever you’re working on, someone’s already used PromptAndGo to do it faster.</h2>
+            <h2 id="cta-tail" className="text-2xl md:text-3xl font-semibold tracking-tight">Whatever you're working on, someone's already used PromptAndGo to do it faster.</h2>
             <p className="mt-3 text-primary-foreground/85 text-base md:text-lg">✨ Ready to Start Prompting Smarter? Try your first prompt or explore a pack, no sign-up required.</p>
             <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild variant="hero" className="px-6">

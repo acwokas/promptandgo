@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useCallback, useEffect, useState, useRef } from "react";
 import type { Category as CategoryType } from "@/data/prompts";
 import { toast } from "@/hooks/use-toast";
+import { usePersonalizedPrompts } from "@/hooks/usePersonalizedPrompts";
 
 const PAGE_SIZE = 6;
 
@@ -65,6 +66,7 @@ const reorderByLockedBuckets = (arr: PromptUI[]) => {
 
 const PromptLibrary = () => {
   const { user } = useSupabaseAuth();
+  const { personalizedPrompts, hasPersonalization, loading: personalizationLoading } = usePersonalizedPrompts();
   const [categories, setCategories] = useState<CategoryType[]>([]);
   const [categoryId, setCategoryId] = useState<string | undefined>();
   const [subcategoryId, setSubcategoryId] = useState<string | undefined>();
@@ -442,41 +444,127 @@ const PromptLibrary = () => {
           />
         </section>
 
-        <section ref={listRef} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-6">
-          {items.map((p) => (
-            <PromptCard
-              key={p.id}
-              prompt={p as any}
-              categories={categories}
-              onTagClick={(t) => { clearRandom();
-                setSelectedTag(t);
-                setQuery(t); // reflect in input
-                setCategoryId(undefined);
-                setSubcategoryId(undefined);
-              }}
-              onCategoryClick={(cid) => { clearRandom();
-                setCategoryId(cid);
-                setSubcategoryId(undefined);
-                setSelectedTag(undefined);
-                setProOnly(false);
-                setQuery("");
-              }}
-              onSubcategoryClick={(sid, cid) => { clearRandom();
-                setCategoryId(cid);
-                setSubcategoryId(sid);
-                setSelectedTag(undefined);
-                setProOnly(false);
-                setQuery("");
-              }}
-              onViewAllPro={() => { clearRandom();
-                setCategoryId(undefined);
-                setSubcategoryId(undefined);
-                setSelectedTag(undefined);
-                setQuery("");
-                setProOnly(true);
-              }}
-            />
-          ))}
+        {/* Personalized Recommendations */}
+        {hasPersonalization && personalizedPrompts.length > 0 && (
+          <section className="mt-8 mb-6">
+            <div className="mb-4">
+              <h2 className="text-xl font-semibold text-foreground">🎯 Recommended for You</h2>
+              <p className="text-sm text-muted-foreground mt-1">
+                Based on your preferences and goals
+              </p>
+            </div>
+            
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {personalizedPrompts.map((p) => (
+                <div key={p.id} className="relative">
+                  <PromptCard
+                    prompt={p as any}
+                    categories={categories}
+                    onTagClick={(t) => { 
+                      clearRandom();
+                      setSelectedTag(t);
+                      setQuery(t);
+                      setCategoryId(undefined);
+                      setSubcategoryId(undefined);
+                    }}
+                    onCategoryClick={(cid) => { 
+                      clearRandom();
+                      setCategoryId(cid);
+                      setSubcategoryId(undefined);
+                      setSelectedTag(undefined);
+                      setProOnly(false);
+                      setQuery("");
+                    }}
+                    onSubcategoryClick={(sid, cid) => { 
+                      clearRandom();
+                      setCategoryId(cid);
+                      setSubcategoryId(sid);
+                      setSelectedTag(undefined);
+                      setProOnly(false);
+                      setQuery("");
+                    }}
+                    onViewAllPro={() => { 
+                      clearRandom();
+                      setCategoryId(undefined);
+                      setSubcategoryId(undefined);
+                      setSelectedTag(undefined);
+                      setQuery("");
+                      setProOnly(true);
+                    }}
+                  />
+                  {/* Relevance indicator */}
+                  <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full border-2 border-background shadow-sm">
+                    Match: {Math.round(p.relevanceScore)}%
+                  </div>
+                  {/* Match reasons */}
+                  {p.matchReason.length > 0 && (
+                    <div className="absolute bottom-2 left-2 right-2 bg-background/95 backdrop-blur-sm rounded-md p-2 border text-xs">
+                      <div className="text-muted-foreground">
+                        {p.matchReason.join(" • ")}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {personalizationLoading && (
+              <div className="text-center py-4 text-muted-foreground">
+                Loading personalized recommendations...
+              </div>
+            )}
+
+            <div className="mt-4 pt-4 border-t border-border">
+              <p className="text-xs text-muted-foreground text-center">
+                Want different recommendations? Update your preferences in{" "}
+                <Link to="/account/profile" className="text-primary hover:underline">
+                  Account → Profile
+                </Link>
+              </p>
+            </div>
+          </section>
+        )}
+
+        <section className="mt-6">
+          <h2 className="text-xl font-semibold mb-4">
+            {hasPersonalization ? "All Prompts" : "Browse All Prompts"}
+          </h2>
+          <div ref={listRef} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {items.map((p) => (
+              <PromptCard
+                key={p.id}
+                prompt={p as any}
+                categories={categories}
+                onTagClick={(t) => { clearRandom();
+                  setSelectedTag(t);
+                  setQuery(t); // reflect in input
+                  setCategoryId(undefined);
+                  setSubcategoryId(undefined);
+                }}
+                onCategoryClick={(cid) => { clearRandom();
+                  setCategoryId(cid);
+                  setSubcategoryId(undefined);
+                  setSelectedTag(undefined);
+                  setProOnly(false);
+                  setQuery("");
+                }}
+                onSubcategoryClick={(sid, cid) => { clearRandom();
+                  setCategoryId(cid);
+                  setSubcategoryId(sid);
+                  setSelectedTag(undefined);
+                  setProOnly(false);
+                  setQuery("");
+                }}
+                onViewAllPro={() => { clearRandom();
+                  setCategoryId(undefined);
+                  setSubcategoryId(undefined);
+                  setSelectedTag(undefined);
+                  setQuery("");
+                  setProOnly(true);
+                }}
+              />
+            ))}
+          </div>
         </section>
 
         {hasMore && (
