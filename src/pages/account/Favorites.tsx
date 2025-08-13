@@ -327,7 +327,7 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
                 searchLabel="Search My Prompts:"
                 searchPlaceholder="Search My Prompts..."
                 categoryLabel="My Prompt Categories:"
-                subcategoryLabel="My Prompt Sub-Categories:"
+                subcategoryLabel="My Prompt Subcategories:"
               />
             </section>
 

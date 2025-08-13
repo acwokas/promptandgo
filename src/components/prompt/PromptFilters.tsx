@@ -85,7 +85,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
         </div>
 
         <div className="space-y-1 md:col-span-3">
-          <Label htmlFor="subcategory-select">{subcategoryLabel ?? "Sub-Category:"}</Label>
+          <Label htmlFor="subcategory-select">{subcategoryLabel ?? "Subcategory:"}</Label>
           <Select
             value={subcategoryId ?? ""}
             onValueChange={(v) => onChange({ subcategoryId: v || undefined })}
