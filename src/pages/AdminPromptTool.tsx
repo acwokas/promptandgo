@@ -15,6 +15,7 @@ import { toast } from "@/hooks/use-toast";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { Navigate } from "react-router-dom";
+import { Lock, CheckCircle, MessageSquare, Megaphone, ShoppingBag, BarChart2, Briefcase, User, HeartPulse, Clock, Sparkles, Tag, Copy, Heart } from "lucide-react";
 
 interface Category {
   id: string;
@@ -286,6 +287,20 @@ const AdminPromptTool = () => {
       isOverLimit,
       display: isOverLimit ? `${Math.abs(remaining)} over limit` : `${remaining} remaining`
     };
+  };
+
+  const getCategoryIcon = (name?: string) => {
+    const n = (name || "").toLowerCase();
+    if (/(social|community|chat|conversation)/.test(n)) return <MessageSquare className="h-3.5 w-3.5" aria-hidden />;
+    if (/(market|advert|campaign|growth)/.test(n)) return <Megaphone className="h-3.5 w-3.5" aria-hidden />;
+    if (/(ecom|shop|store|retail)/.test(n)) return <ShoppingBag className="h-3.5 w-3.5" aria-hidden />;
+    if (/(analytic|data|report|insight)/.test(n)) return <BarChart2 className="h-3.5 w-3.5" aria-hidden />;
+    if (/(business|automation|ops)/.test(n)) return <Briefcase className="h-3.5 w-3.5" aria-hidden />;
+    if (/(career|job|work|resume|cv)/.test(n)) return <User className="h-3.5 w-3.5" aria-hidden />;
+    if (/(wellness|health|fitness|mind)/.test(n)) return <HeartPulse className="h-3.5 w-3.5" aria-hidden />;
+    if (/(productivity|time|focus|task)/.test(n)) return <Clock className="h-3.5 w-3.5" aria-hidden />;
+    if (/(lifestyle|hobby|creative|inspiration)/.test(n)) return <Sparkles className="h-3.5 w-3.5" aria-hidden />;
+    return <Tag className="h-3.5 w-3.5" aria-hidden />;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -763,56 +778,108 @@ const AdminPromptTool = () => {
                       <DialogTitle>Prompt Preview</DialogTitle>
                     </DialogHeader>
                     <div className="space-y-4">
-                      <div>
-                        <h3 className="font-semibold text-lg">{title || "Untitled"}</h3>
-                        {whatFor && <p className="text-sm text-muted-foreground mt-1">{whatFor}</p>}
-                      </div>
-                      
-                      {excerpt && (
-                        <div>
-                          <h4 className="font-medium mb-2">Description</h4>
-                          <p className="text-sm">{excerpt}</p>
-                        </div>
-                      )}
-                      
-                      <div>
-                        <h4 className="font-medium mb-2">Prompt</h4>
-                        <div className="bg-muted p-4 rounded-lg">
-                          <p className="whitespace-pre-wrap text-sm font-mono">{prompt || "No prompt content"}</p>
-                        </div>
-                      </div>
-                      
-                      {imagePrompt && (
-                        <div>
-                          <h4 className="font-medium mb-2">Image Prompt</h4>
-                          <div className="bg-muted p-4 rounded-lg">
-                            <p className="whitespace-pre-wrap text-sm font-mono">{imagePrompt}</p>
+                      {/* Prompt Card Preview - Matching actual PromptCard appearance */}
+                      <Card className="relative overflow-hidden">
+                        <CardHeader>
+                          <div className="mb-2">
+                            {isPro ? (
+                              <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200">
+                                <Lock className="h-3.5 w-3.5" aria-hidden />
+                                <span>PRO</span>
+                              </div>
+                            ) : (
+                              <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                <CheckCircle className="h-3.5 w-3.5" aria-hidden />
+                                <span>FREE</span>
+                              </div>
+                            )}
                           </div>
-                        </div>
-                      )}
-                      
-                      <div className="grid grid-cols-2 gap-4 text-sm">
-                        <div>
-                          <span className="font-medium">Category:</span> {categories.find(c => c.id === categoryId)?.name || "None"}
-                        </div>
-                        <div>
-                          <span className="font-medium">Subcategory:</span> {filteredSubcategories.find(s => s.id === subcategoryId)?.name || "None"}
-                        </div>
-                        <div>
-                          <span className="font-medium">Power Pack:</span> {packs.find(p => p.slug === packSlug)?.name || "None"}
-                        </div>
-                        <div>
-                          <span className="font-medium">Type:</span> {isPro ? "PRO" : "Free"}
-                        </div>
-                        {ribbon !== "none" && (
+                          
+                          <div className="flex items-center gap-2 flex-wrap text-xs text-muted-foreground">
+                            {categories.find(c => c.id === categoryId) && (
+                              <span className="inline-flex items-center gap-1.5 text-primary">
+                                {getCategoryIcon(categories.find(c => c.id === categoryId)?.name)}
+                                <span>{categories.find(c => c.id === categoryId)?.name}</span>
+                              </span>
+                            )}
+                            {categories.find(c => c.id === categoryId) && filteredSubcategories.find(s => s.id === subcategoryId) && <span>›</span>}
+                            {filteredSubcategories.find(s => s.id === subcategoryId) && (
+                              <span className="inline-flex items-center gap-1.5 text-primary">
+                                {getCategoryIcon(filteredSubcategories.find(s => s.id === subcategoryId)?.name)}
+                                <span>{filteredSubcategories.find(s => s.id === subcategoryId)?.name}</span>
+                              </span>
+                            )}
+                          </div>
+                          
+                          <CardTitle className="text-xl leading-tight">{title || "Untitled"}</CardTitle>
+                          {whatFor && <p className="text-sm text-muted-foreground">🤓 {whatFor}</p>}
+                          {excerpt && <p className="text-sm text-muted-foreground">✅ {excerpt}</p>}
+                        </CardHeader>
+                        
+                        <CardContent className="space-y-4">
                           <div>
-                            <span className="font-medium">Ribbon:</span> {ribbonOptions.find(r => r.value === ribbon)?.label || "None"}
+                            <div className="text-xs font-medium mb-1">Prompt:</div>
+                            <div className="relative">
+                              <pre className="whitespace-pre-wrap p-4 sm:p-5 rounded-md text-[0.975rem] sm:text-[1.05rem] leading-7 bg-muted border font-mono"> 
+                                {prompt || "No prompt content"}
+                              </pre>
+                            </div>
+                            
+                            <div className="mt-2 flex flex-col gap-2">
+                              <Button size="sm" variant="default" className="w-full" disabled>
+                                <Copy className="h-4 w-4" />
+                                <span>Copy Prompt</span>
+                              </Button>
+                              <Button variant="outline" size="sm" className="w-full" disabled>
+                                <Heart className="h-5 w-5" />
+                                <span>Add to My Prompts</span>
+                              </Button>
+                            </div>
                           </div>
-                        )}
-                        <div>
-                          <span className="font-medium">Tags:</span> {tags || generateAutoTags(title, prompt, whatFor) || "None"}
-                        </div>
-                      </div>
+
+                          {imagePrompt && (
+                            <div>
+                              <div className="text-xs font-medium mb-1">Image Prompt:</div>
+                              <div className="p-3 bg-muted rounded-md border">
+                                <p className="whitespace-pre-wrap text-sm font-mono">{imagePrompt}</p>
+                              </div>
+                            </div>
+                          )}
+
+                          {packs.find(p => p.slug === packSlug) && (
+                            <div className="space-y-2">
+                              <div className="text-xs font-medium">Power Pack:</div>
+                              <div className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-primary/10 border border-primary/20">
+                                <span className="text-sm font-medium text-primary">
+                                  {packs.find(p => p.slug === packSlug)?.name}
+                                </span>
+                              </div>
+                            </div>
+                          )}
+
+                          {ribbon !== "none" && (
+                            <div className="flex items-center gap-2">
+                              <span className="text-xs font-medium">Ribbon:</span>
+                              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-secondary text-secondary-foreground">
+                                {ribbonOptions.find(r => r.value === ribbon)?.label}
+                              </span>
+                            </div>
+                          )}
+
+                          {(tags || generateAutoTags(title, prompt, whatFor)) && (
+                            <div className="space-y-2">
+                              <div className="text-xs font-medium">Tags:</div>
+                              <div className="flex flex-wrap gap-1">
+                                {(tags || generateAutoTags(title, prompt, whatFor)).split(',').map((tag: string, i: number) => (
+                                  <span key={i} className="inline-flex items-center px-2 py-1 rounded-md text-xs bg-muted hover:bg-muted/80 cursor-pointer transition-colors">
+                                    {tag.trim()}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </CardContent>
+                      </Card>
                     </div>
                   </DialogContent>
                 </Dialog>
