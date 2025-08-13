@@ -51,6 +51,9 @@ import AuthEffects from "@/components/auth/AuthEffects";
 import ContextPopup from "@/components/ContextPopup";
 import { FeedbackWidget } from "@/components/FeedbackWidget";
 import { usePageVisitTracker } from "@/hooks/usePageVisitTracker";
+import AIPromptGeneratorPage from "./pages/AIPromptGenerator";
+import SmartSuggestionsPage from "./pages/SmartSuggestions";
+import AIAssistantPage from "./pages/AIAssistant";
 
 const queryClient = new QueryClient();
 
@@ -118,6 +121,9 @@ const AppContent = () => {
         <Route path="/subscription/canceled" element={<SubscriptionCanceled />} />
         <Route path="/email-confirmed" element={<EmailConfirmed />} />
         <Route path="/s/:shortCode" element={<ShareRedirect />} />
+        <Route path="/ai/generator" element={<AIPromptGeneratorPage />} />
+        <Route path="/ai/suggestions" element={<SmartSuggestionsPage />} />
+        <Route path="/ai/assistant" element={<AIAssistantPage />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
