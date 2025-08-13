@@ -17,7 +17,6 @@ const Contact = () => {
   const [accountName, setAccountName] = useState("");
   const [accountEmail, setAccountEmail] = useState("");
   const [accountPassword, setAccountPassword] = useState("");
-  const [accountPowerPack, setAccountPowerPack] = useState(false);
   const [userProfile, setUserProfile] = useState<{ display_name?: string } | null>(null);
 
   // Fetch user profile data when user is available
@@ -41,7 +40,7 @@ const Contact = () => {
     fetchProfile();
   }, [user]);
 
-  const handleAccountCreation = async (name: string, email: string, password: string, wantsPowerPack: boolean) => {
+  const handleAccountCreation = async (name: string, email: string, password: string) => {
     try {
       const redirectUrl = `${window.location.origin}/`;
       const { error } = await supabase.auth.signUp({
@@ -51,7 +50,7 @@ const Contact = () => {
           emailRedirectTo: redirectUrl,
           data: { 
             display_name: name,
-            wants_power_pack: wantsPowerPack 
+            wants_power_pack: true // Everyone gets PowerPack automatically
           }
         },
       });
@@ -66,7 +65,7 @@ const Contact = () => {
       } else {
         toast({ 
           title: "Account created!", 
-          description: `Check your email to confirm your account.${wantsPowerPack ? ' Your PowerPack will be sent after confirmation!' : ''}`, 
+          description: "Check your email to confirm your account and get your PowerPack!", 
           duration: 8000
         });
         return true;
@@ -114,7 +113,7 @@ const Contact = () => {
     try {
       // Handle account creation if requested and user is not logged in
       if (!user && showAccountCreation && accountName && accountEmail && accountPassword) {
-        const accountCreated = await handleAccountCreation(accountName, accountEmail, accountPassword, accountPowerPack);
+        const accountCreated = await handleAccountCreation(accountName, accountEmail, accountPassword);
         if (!accountCreated) {
           setIsLoading(false);
           return; // Stop if account creation failed
@@ -143,7 +142,6 @@ const Contact = () => {
       setAccountName("");
       setAccountEmail("");
       setAccountPassword("");
-      setAccountPowerPack(false);
       setShowAccountCreation(false);
     } catch (error) {
       console.error("Contact form error:", error);
@@ -257,19 +255,8 @@ const Contact = () => {
                         />
                       </div>
                       
-                      {/* PowerPack option for new accounts */}
-                      <label className="flex items-center gap-2 text-sm">
-                        <input 
-                          type="checkbox" 
-                          checked={accountPowerPack}
-                          onChange={(e) => setAccountPowerPack(e.target.checked)}
-                          className="h-4 w-4" 
-                        />
-                        Get 1 FREE ⚡️Power Pack, and regular prompting tips
-                      </label>
-                      
                       <p className="text-xs text-muted-foreground">
-                        Creating an account lets you save favorite prompts and access premium features.
+                        Creating an account lets you save favorite prompts and access premium features. You'll also get a FREE PowerPack!
                       </p>
                     </div>
                   )}
@@ -284,7 +271,7 @@ const Contact = () => {
 
               <div className="pt-2">
                 <Button type="submit" variant="cta" disabled={isLoading}>
-                  {isLoading ? "Sending..." : (!user && showAccountCreation) ? "Create Account & Send Message" : "Send Message"}
+                  {isLoading ? "Sending..." : (!user && showAccountCreation) ? "Create Account & Claim My FREE Power Pack" : "Send Message"}
                 </Button>
               </div>
             </form>

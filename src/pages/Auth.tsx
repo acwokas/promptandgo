@@ -13,6 +13,7 @@ const Auth = () => {
   const { toast } = useToast();
   const { session } = useSupabaseAuth();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -45,19 +46,33 @@ const Auth = () => {
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: { emailRedirectTo: redirectUrl },
+      options: { 
+        emailRedirectTo: redirectUrl,
+        data: { 
+          display_name: name,
+          wants_power_pack: true // Everyone gets PowerPack automatically
+        }
+      },
     });
     setLoading(false);
     if (error) {
       setError(error.message);
       toast({ title: "Sign up error", description: error.message, variant: "destructive" });
     } else {
-      toast({ title: "Check your email", description: "Confirm your address to finish sign up." });
+      toast({ title: "Check your email", description: "Confirm your address to finish sign up and get your PowerPack!" });
     }
   };
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate name for signup
+    if (mode === "signup" && !name.trim()) {
+      setError("Please enter your full name");
+      toast({ title: "Name required", description: "Please enter your full name to create an account.", variant: "destructive" });
+      return;
+    }
+    
     if (mode === "signin") handleSignIn();
     else handleSignUp();
   };
@@ -95,6 +110,20 @@ const Auth = () => {
           </div>
 
           <form onSubmit={onSubmit} className="space-y-4">
+            {mode === "signup" && (
+              <div className="space-y-2">
+                <Label htmlFor="name">Full Name</Label>
+                <Input 
+                  id="name" 
+                  type="text" 
+                  value={name} 
+                  onChange={(e) => setName(e.target.value)} 
+                  required 
+                  placeholder="Your full name" 
+                />
+              </div>
+            )}
+            
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="you@example.com" />
@@ -109,7 +138,7 @@ const Auth = () => {
             )}
 
             <Button type="submit" disabled={loading} className="w-full">
-              {loading ? "Please wait..." : mode === "signin" ? "Log in" : "Create account"}
+              {loading ? "Please wait..." : mode === "signin" ? "Log in" : "Create Account & Claim My FREE Power Pack"}
             </Button>
 
             {mode === "signin" ? (
