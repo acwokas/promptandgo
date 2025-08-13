@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { addToCart, getCart } from "@/lib/cart";
+import ShareButton from "@/components/ShareButton";
 
 // Clean display title by removing common variant markers
 const cleanTitle = (t?: string | null) => {
@@ -395,6 +396,16 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                 </Tooltip>
               </TooltipProvider>
             )}
+            
+            <ShareButton
+              url={`${window.location.origin}/library?search=${encodeURIComponent(prompt.title)}`}
+              contentType="prompt"
+              contentId={prompt.id}
+              title={`Check out this AI prompt: ${prompt.title}`}
+              variant="outline"
+              size="sm"
+              showText={true}
+            />
           </div>
         </div>
 

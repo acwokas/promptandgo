@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { Lock, Check } from "lucide-react";
+import ShareButton from "@/components/ShareButton";
 
 const PACK_ORIGINAL_CENTS = 999;
 const PACK_DISCOUNT_CENTS = 499;
@@ -270,6 +271,17 @@ const PromptPacks = () => {
                     </div>
                     <CardTitle className="text-xl leading-tight">{p.name}</CardTitle>
                     {p.description && <p className="text-sm text-muted-foreground">{p.description}</p>}
+                    
+                    <div className="flex items-center gap-2 mt-2">
+                      <ShareButton
+                        url={`${origin}/packs#pack-${p.id}`}
+                        contentType="pack"
+                        contentId={p.id}
+                        title={`Check out the ${p.name} - AI prompt pack from PromptAndGo.ai`}
+                        variant="outline"
+                        size="sm"
+                      />
+                    </div>
                     
                     {/* Display pack tags */}
                     {p.tags.length > 0 && (

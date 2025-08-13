@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import RelatedPrompts from "@/components/prompt/RelatedPrompts";
 import PrevNextNav from "@/components/blog/PrevNextNav";
 import AuthorBio from "@/components/blog/AuthorBio";
+import ShareButton from "@/components/ShareButton";
 import { AUTHOR_MAIN } from "./authors";
 
 const WelcomeToPromptAndGo = () => {
@@ -82,6 +83,18 @@ const schema = {
             When you open a blank AI chat window, it’s like standing in front of a rocket with the keys in your hand. The potential is huge, but only if you know what to type.
           </p>
         </header>
+
+        <div className="mb-4">
+          <ShareButton
+            url={canonical || `${origin}/blog/welcome-to-promptandgo-ai`}
+            contentType="blog"
+            contentId="welcome-to-promptandgo-ai"
+            title={title}
+            variant="outline"
+            size="sm"
+            showText={true}
+          />
+        </div>
 
         <section className="mt-8 space-y-6">
           <p>

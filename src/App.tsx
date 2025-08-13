@@ -44,6 +44,7 @@ import CheckoutCanceled from "./pages/CheckoutCanceled";
 import SubscriptionSuccess from "./pages/SubscriptionSuccess";
 import SubscriptionCanceled from "./pages/SubscriptionCanceled";
 import EmailConfirmed from "./pages/EmailConfirmed";
+import ShareRedirect from "./pages/ShareRedirect";
 import AuthEffects from "@/components/auth/AuthEffects";
 import ContextPopup from "@/components/ContextPopup";
 import { usePageVisitTracker } from "@/hooks/usePageVisitTracker";
@@ -111,6 +112,7 @@ const AppContent = () => {
         <Route path="/subscription/success" element={<SubscriptionSuccess />} />
         <Route path="/subscription/canceled" element={<SubscriptionCanceled />} />
         <Route path="/email-confirmed" element={<EmailConfirmed />} />
+        <Route path="/s/:shortCode" element={<ShareRedirect />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>

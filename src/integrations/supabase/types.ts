@@ -457,6 +457,45 @@ export type Database = {
           },
         ]
       }
+      shared_links: {
+        Row: {
+          clicks: number
+          content_id: string
+          content_type: string
+          created_at: string
+          id: string
+          original_url: string
+          shared_by: string | null
+          short_code: string
+          title: string | null
+          updated_at: string
+        }
+        Insert: {
+          clicks?: number
+          content_id: string
+          content_type: string
+          created_at?: string
+          id?: string
+          original_url: string
+          shared_by?: string | null
+          short_code: string
+          title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          clicks?: number
+          content_id?: string
+          content_type?: string
+          created_at?: string
+          id?: string
+          original_url?: string
+          shared_by?: string | null
+          short_code?: string
+          title?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       subcategories: {
         Row: {
           category_id: string
@@ -601,6 +640,10 @@ export type Database = {
           _role: Database["public"]["Enums"]["app_role"]
         }
         Returns: boolean
+      }
+      increment_link_clicks: {
+        Args: { link_code: string }
+        Returns: undefined
       }
       secure_upsert_subscriber: {
         Args: {
