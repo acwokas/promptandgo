@@ -143,42 +143,24 @@ const Index = () => {
 
         {/* Top Widget Section */}
         <section className="container pt-6 pb-2">
-          <div className="flex justify-end">
-            <div className="w-full max-w-md">
-              <AIPromptWidget />
+          <div className="grid gap-6 md:grid-cols-2">
+            {/* What is PromptAndGo.ai? */}
+            <div className="rounded-2xl border bg-card p-6 md:p-8 animate-fade-in">
+              <h2 className="text-2xl font-semibold mb-3">What is PromptAndGo.ai?</h2>
+              <p className="text-muted-foreground max-w-prose mb-6">
+                Ready-to-use prompts designed for real-world work. Whether you're writing a pitch, planning a launch, creating some social media assets or creating an image, we've got a prompt for that.
+              </p>
+              <ul className="grid grid-cols-2 gap-3 text-sm text-muted-foreground">
+                <li className="flex items-center gap-2"><ShieldCheck className="h-5 w-5 text-primary" /> Human-curated</li>
+                <li className="flex items-center gap-2"><ListChecks className="h-5 w-5 text-primary" /> Practical results</li>
+                <li className="flex items-center gap-2"><Wand2 className="h-5 w-5 text-primary" /> Copy-and-go</li>
+                <li className="flex items-center gap-2"><Zap className="h-5 w-5 text-primary" /> Works everywhere</li>
+              </ul>
             </div>
-          </div>
-        </section>
-        {/* Intro */}
-        <section className="container pt-2 pb-4">
-          <div className="rounded-2xl border bg-card p-6 md:p-8 animate-fade-in">
-            <div className="grid gap-8 md:grid-cols-2 items-center">
-              <div>
-                <h2 className="text-2xl font-semibold mb-3">What is PromptAndGo.ai?</h2>
-                <p className="text-muted-foreground max-w-prose">
-                  Ready-to-use prompts designed for real-world work. Whether you're writing a pitch, planning a launch, creating some social media assets or creating an image, we've got a prompt for that.
-                </p>
-                <ul className="mt-6 grid grid-cols-2 gap-3 text-sm text-muted-foreground">
-                  <li className="flex items-center gap-2"><ShieldCheck className="h-5 w-5 text-primary" /> Human-curated</li>
-                  <li className="flex items-center gap-2"><ListChecks className="h-5 w-5 text-primary" /> Practical results</li>
-                  <li className="flex items-center gap-2"><Wand2 className="h-5 w-5 text-primary" /> Copy-and-go</li>
-                  <li className="flex items-center gap-2"><Zap className="h-5 w-5 text-primary" /> Works everywhere</li>
-                </ul>
-              </div>
-              <div className="grid grid-cols-3 gap-4 justify-items-center">
-                <div className="rounded-xl border bg-card p-6 text-center hover-scale">
-                  <Sparkles className="h-8 w-8 text-primary mx-auto" />
-                  <p className="mt-2 text-sm text-muted-foreground">Ideas</p>
-                </div>
-                <div className="rounded-xl border bg-card p-6 text-center hover-scale">
-                  <Rocket className="h-8 w-8 text-primary mx-auto" />
-                  <p className="mt-2 text-sm text-muted-foreground">Launches</p>
-                </div>
-                <div className="rounded-xl border bg-card p-6 text-center hover-scale">
-                  <ShieldCheck className="h-8 w-8 text-primary mx-auto" />
-                  <p className="mt-2 text-sm text-muted-foreground">Reliable</p>
-                </div>
-              </div>
+            
+            {/* AI Prompt Generator Widget */}
+            <div className="w-full">
+              <AIPromptWidget />
             </div>
           </div>
         </section>
