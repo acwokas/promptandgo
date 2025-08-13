@@ -308,12 +308,11 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
           )}
         </div>
         <CardTitle className="text-xl leading-tight">{displayTitle}</CardTitle>
-        <p className="text-sm text-muted-foreground">🤓 {prompt.whatFor}</p>
-        <p className="text-sm text-muted-foreground">✅ {prompt.excerpt}</p>
+        <p className="text-sm text-muted-foreground">{prompt.whatFor}</p>
+        <div className="text-xs font-medium mb-1">{prompt.excerpt}:</div>
       </CardHeader>
       <CardContent className="space-y-4">
         <div>
-          <div className="text-xs font-medium mb-1">Prompt:</div>
           <div className="relative">
             <pre className={cn("whitespace-pre-wrap prompt-editorial p-4 sm:p-5 rounded-md text-[0.975rem] sm:text-[1.05rem] leading-7 transition shadow-elegant", showLock && "blur-sm select-none pointer-events-none")}> 
               {prompt.prompt}
