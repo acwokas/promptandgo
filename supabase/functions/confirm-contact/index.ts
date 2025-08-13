@@ -203,86 +203,14 @@ ${contact.message.replace(/</g, "&lt;").replace(/>/g, "&gt;")}
       console.error("Failed to send welcome email", welcomeEmailError);
     }
 
-    // Return success page
-    return new Response(`
-      <html>
-        <head>
-          <title>Email Confirmed - PromptAndGo</title>
-          <meta name="viewport" content="width=device-width, initial-scale=1">
-          <style>
-            body { 
-              font-family: system-ui, -apple-system, sans-serif; 
-              margin: 0; 
-              padding: 20px; 
-              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-              min-height: 100vh;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            }
-            .container {
-              background: white;
-              padding: 40px;
-              border-radius: 16px;
-              box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-              text-align: center;
-              max-width: 500px;
-              width: 100%;
-            }
-            .success-icon {
-              font-size: 64px;
-              margin-bottom: 20px;
-            }
-            h1 {
-              color: #1f2937;
-              margin: 0 0 15px;
-              font-size: 28px;
-            }
-            p {
-              color: #6b7280;
-              line-height: 1.6;
-              margin: 0 0 25px;
-            }
-            .button {
-              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-              color: white;
-              text-decoration: none;
-              padding: 15px 30px;
-              border-radius: 8px;
-              font-weight: 600;
-              display: inline-block;
-              margin: 10px;
-              transition: transform 0.2s;
-            }
-            .button:hover {
-              transform: translateY(-2px);
-            }
-            .secondary-button {
-              background: #f3f4f6;
-              color: #374151;
-            }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="success-icon">✅</div>
-            <h1>Email Confirmed!</h1>
-            <p>
-              Thank you ${contact.name}! Your email has been confirmed and your message has been sent to our team. 
-              ${contact.newsletter_opt_in ? 'We\'ll also be sending you your free PowerPack shortly!' : ''}
-            </p>
-            <p>We'll get back to you within 24 hours.</p>
-            
-            <div style="margin-top: 30px;">
-              <a href="https://promptandgo.ai" class="button">Return to PromptAndGo</a>
-              <a href="https://promptandgo.ai/library" class="button secondary-button">Browse Prompts</a>
-            </div>
-          </div>
-        </body>
-      </html>
-    `, {
-      status: 200,
-      headers: { "Content-Type": "text/html; charset=utf-8" }
+    // Redirect to the React page instead of returning HTML
+    const redirectUrl = `https://promptandgo.ai/email-confirmed?name=${encodeURIComponent(contact.name)}&powerpack=${contact.newsletter_opt_in}`;
+    
+    return new Response(null, {
+      status: 302,
+      headers: {
+        "Location": redirectUrl
+      }
     });
 
   } catch (err: any) {

@@ -40,6 +40,7 @@ import CheckoutSuccess from "./pages/CheckoutSuccess";
 import CheckoutCanceled from "./pages/CheckoutCanceled";
 import SubscriptionSuccess from "./pages/SubscriptionSuccess";
 import SubscriptionCanceled from "./pages/SubscriptionCanceled";
+import EmailConfirmed from "./pages/EmailConfirmed";
 import AuthEffects from "@/components/auth/AuthEffects";
 
 const queryClient = new QueryClient();
@@ -87,6 +88,7 @@ const App = () => (
             <Route path="/checkout/canceled" element={<CheckoutCanceled />} />
             <Route path="/subscription/success" element={<SubscriptionSuccess />} />
             <Route path="/subscription/canceled" element={<SubscriptionCanceled />} />
+            <Route path="/email-confirmed" element={<EmailConfirmed />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
