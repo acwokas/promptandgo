@@ -164,6 +164,25 @@ const Blog = () => {
           </Card>
         </Link>
       </article>
+      <article>
+        <Link to="/blog/ai-prompts-for-content-writers" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+          <Card className="overflow-hidden">
+            <img
+              src="/lovable-uploads/5328cd62-1da8-46db-a7a4-4ee4d9124945.png"
+              alt="AI Prompts for Content Writers and Copywriters"
+              loading="lazy"
+              className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+            />
+            <CardContent className="pt-4">
+              <h2 className="text-xl font-semibold leading-snug">AI Prompts for Content Writers and Copywriters</h2>
+              <p className="mt-2 text-muted-foreground">
+                Boost creativity and speed with these AI prompts for content writers and copywriters. From headlines to long-form articles, these examples get results.
+              </p>
+              <span className="mt-3 inline-block font-medium text-primary">Read more →</span>
+            </CardContent>
+          </Card>
+        </Link>
+      </article>
     </section>
 
     <section aria-labelledby="cta-tail" className="relative bg-hero hero-grid mt-16">
