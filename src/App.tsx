@@ -32,6 +32,8 @@ import AdminBulkUpload from "./pages/AdminBulkUpload";
 import AdminTools from "./pages/AdminTools";
 import AdminPromptTool from "./pages/AdminPromptTool";
 import AdminExport from "./pages/AdminExport";
+import AdminWidgetSettings from "./pages/AdminWidgetSettings";
+import AdminFeedback from "./pages/AdminFeedback";
 import FavoritesPage from "./pages/account/Favorites";
 import AccountPage from "./pages/account/Account";
 import PurchasesPage from "./pages/account/Purchases";
@@ -47,6 +49,7 @@ import EmailConfirmed from "./pages/EmailConfirmed";
 import ShareRedirect from "./pages/ShareRedirect";
 import AuthEffects from "@/components/auth/AuthEffects";
 import ContextPopup from "@/components/ContextPopup";
+import { FeedbackWidget } from "@/components/FeedbackWidget";
 import { usePageVisitTracker } from "@/hooks/usePageVisitTracker";
 
 const queryClient = new QueryClient();
@@ -100,6 +103,8 @@ const AppContent = () => {
         <Route path="/admin/upload" element={<AdminBulkUpload />} />
         <Route path="/admin/prompts" element={<AdminPromptTool />} />
         <Route path="/admin/export" element={<AdminExport />} />
+        <Route path="/admin/widgets" element={<AdminWidgetSettings />} />
+        <Route path="/admin/feedback" element={<AdminFeedback />} />
         <Route path="/account" element={<AccountPage />} />
         <Route path="/account/profile" element={<ProfilePage />} />
         <Route path="/account/notifications" element={<NotificationsPage />} />
@@ -124,6 +129,8 @@ const AppContent = () => {
         onDismissPermanently={() => dismissPopup(true)}
         onComplete={markContextFieldsCompleted}
       />
+      
+      <FeedbackWidget />
     </>
   );
 };

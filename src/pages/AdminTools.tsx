@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { Navigate, Link } from "react-router-dom";
-import { Upload, Plus, Download } from "lucide-react";
+import { Upload, Plus, Download, Settings, MessageCircle } from "lucide-react";
 
 const AdminTools = () => {
   const { loading: authLoading } = useSupabaseAuth();
@@ -46,6 +46,20 @@ const AdminTools = () => {
       icon: Download,
       href: "/admin/export",
       color: "text-purple-500"
+    },
+    {
+      title: "Widget Settings",
+      description: "Control the visibility of feedback widgets and context popups across the platform",
+      icon: Settings,
+      href: "/admin/widgets",
+      color: "text-orange-500"
+    },
+    {
+      title: "User Feedback",
+      description: "Review and manage user feedback, bug reports, and feature requests",
+      icon: MessageCircle,
+      href: "/admin/feedback",
+      color: "text-cyan-500"
     }
   ];
 
