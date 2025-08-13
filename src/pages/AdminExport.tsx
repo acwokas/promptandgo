@@ -1,5 +1,6 @@
 import SEO from "@/components/SEO";
 import PageHero from "@/components/layout/PageHero";
+import { AdminBreadcrumb } from "@/components/admin/AdminBreadcrumb";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
@@ -224,6 +225,12 @@ const AdminExport = () => {
         title="Admin Export"
         subtitle="Download CSV exports of all prompts and Power Packs"
         variant="admin"
+      />
+
+      <AdminBreadcrumb 
+        items={[
+          { label: "Export Data" }
+        ]} 
       />
 
       <div className="container mx-auto px-4 py-12">

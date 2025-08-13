@@ -1,5 +1,6 @@
 import SEO from "@/components/SEO";
 import PageHero from "@/components/layout/PageHero";
+import { AdminBreadcrumb } from "@/components/admin/AdminBreadcrumb";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useIsAdmin } from "@/hooks/useIsAdmin";

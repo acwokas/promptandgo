@@ -1,5 +1,6 @@
 import SEO from "@/components/SEO";
 import PageHero from "@/components/layout/PageHero";
+import { AdminBreadcrumb } from "@/components/admin/AdminBreadcrumb";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -612,6 +613,13 @@ const AdminBulkUpload = () => {
         subtitle={<>Paste JSON arrays and upload categories, subcategories, tags, and prompts.</>}
         variant="admin"
       />
+      
+      <AdminBreadcrumb 
+        items={[
+          { label: "Bulk Upload" }
+        ]} 
+      />
+
       <main className="container py-10">
         <SEO
           title="Bulk Upload – Admin"

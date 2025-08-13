@@ -1,5 +1,6 @@
 import SEO from "@/components/SEO";
 import PageHero from "@/components/layout/PageHero";
+import { AdminBreadcrumb } from "@/components/admin/AdminBreadcrumb";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -229,6 +230,12 @@ const AdminPromptTool = () => {
         title="Admin Prompt Tool"
         subtitle="Create and manage individual prompts"
         variant="admin"
+      />
+
+      <AdminBreadcrumb 
+        items={[
+          { label: "Prompt Tool" }
+        ]} 
       />
 
       <div className="container mx-auto px-4 py-12">
