@@ -20,7 +20,7 @@ const Footer = () => {
           </Link>
           <div className="ml-1.5 mt-3">
             <Button asChild variant="cta" size="sm" aria-label="Get 1 FREE ⚡️Power Pack!">
-              <Link to="/auth">Get 1 FREE ⚡️Power Pack!</Link>
+              <Link to="/auth?mode=signup">Get 1 FREE ⚡️Power Pack!</Link>
             </Button>
           </div>
         </div>
