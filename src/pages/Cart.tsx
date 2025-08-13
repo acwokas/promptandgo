@@ -141,7 +141,24 @@ const CartPage = () => {
                     <Button className="flex-1" variant="hero" onClick={beginCheckout}>Checkout</Button>
                     <Button className="flex-1" variant="secondary" onClick={() => clearCart()}>Clear</Button>
                   </div>
-                  <p className="text-sm text-muted-foreground">This month only: All PRO prompts $0.99 (was $1.99). ⚡️Power Packs $4.99 (was $9.99). Or subscribe for $12.99 (was $24.99), or get Lifetime Access $47.85 (was $94.99).</p>
+                  <div className="space-y-4">
+                    <p className="text-sm text-muted-foreground">
+                      Summer Sale for a limited time only:<br/>
+                      🏷️ All PRO prompts $0.99 (was $1.99).<br/>
+                      ⚡️Power Packs $4.99 (was $9.99).
+                    </p>
+                    <div className="text-center text-sm text-muted-foreground">or</div>
+                    <div className="space-y-2">
+                      <Button variant="outline" className="w-full justify-between text-sm">
+                        <span>Subscribe for $12.99 (was $24.99)</span>
+                        <span className="text-xs">(p/mo)</span>
+                      </Button>
+                      <Button variant="outline" className="w-full justify-between text-sm">
+                        <span>Lifetime Access $47.85 (was $94.99)</span>
+                        <span className="text-xs">(one off)</span>
+                      </Button>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             </div>
