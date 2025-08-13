@@ -7,32 +7,40 @@ import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useToast } from "@/components/ui/use-toast";
 import { useEnsureProfile } from "@/hooks/useEnsureProfile";
 import { useEffect, useState } from "react";
-import { getCartCount } from "@/lib/cart";
+import { getCartCount, clearCartOnLogout } from "@/lib/cart";
 
 const Header = () => {
   const { user } = useSupabaseAuth();
   const { toast } = useToast();
   useEnsureProfile();
 
-  const [cartCount, setCartCount] = useState<number>(getCartCount());
+  const [cartCount, setCartCount] = useState<number>(getCartCount(!!user));
   useEffect(() => {
-    const onChange = () => setCartCount(getCartCount());
+    const onChange = () => setCartCount(getCartCount(!!user));
     window.addEventListener('cart:change', onChange);
     window.addEventListener('storage', onChange);
     return () => {
       window.removeEventListener('cart:change', onChange);
       window.removeEventListener('storage', onChange);
     };
-  }, []);
+  }, [user]);
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) {
       toast({ title: "Logout failed", description: error.message, variant: "destructive" });
     } else {
+      clearCartOnLogout(); // Clear cart when user logs out
       toast({ title: "Signed out" });
     }
   };
+
+  // Clear cart when user logs out (detect auth state change)
+  useEffect(() => {
+    if (!user) {
+      clearCartOnLogout();
+    }
+  }, [user]);
   return (
     <header className="sticky top-0 z-40 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
       <nav className="container flex items-center justify-between h-24">

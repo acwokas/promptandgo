@@ -129,7 +129,7 @@ const PromptPacks = () => {
       toast({ title: 'Already in cart', description: `${p.name} is already in your cart.` });
       return;
     }
-    addToCart({ id: p.id, type: 'pack', title: p.name, unitAmountCents: PACK_DISCOUNT_CENTS, quantity: 1 });
+    addToCart({ id: p.id, type: 'pack', title: p.name, unitAmountCents: PACK_DISCOUNT_CENTS, quantity: 1 }, !!user);
     toast({ title: 'Added to cart', description: `${p.name} — ${fmtUSD(PACK_DISCOUNT_CENTS)}` });
   };
   const handleSubscribe = async () => {
@@ -142,7 +142,7 @@ const PromptPacks = () => {
       toast({ title: 'Already in cart', description: 'Monthly All-Access Subscription is already in your cart.' });
       return;
     }
-    addToCart({ id: 'monthly', type: 'subscription', title: 'Monthly All-Access Subscription', unitAmountCents: SUB_DISCOUNT_CENTS, quantity: 1 });
+    addToCart({ id: 'monthly', type: 'subscription', title: 'Monthly All-Access Subscription', unitAmountCents: SUB_DISCOUNT_CENTS, quantity: 1 }, !!user);
     toast({ title: 'Subscription added to cart', description: `Monthly All-Access Subscription — ${fmtUSD(SUB_DISCOUNT_CENTS)}/mo` });
   };
 

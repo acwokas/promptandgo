@@ -218,14 +218,14 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
       toast({ title: 'Already in cart', description: 'Monthly All-Access Subscription is already in your cart.' });
       return;
     }
-    addToCart({ id: 'monthly', type: 'subscription', title: 'Monthly All-Access Subscription', unitAmountCents: SUB_DISCOUNT_CENTS, quantity: 1 });
+    addToCart({ id: 'monthly', type: 'subscription', title: 'Monthly All-Access Subscription', unitAmountCents: SUB_DISCOUNT_CENTS, quantity: 1 }, !!user);
     toast({ title: 'Subscription added to cart', description: `Monthly All-Access Subscription — ${fmtUSD(SUB_DISCOUNT_CENTS)}/mo` });
   };
 
   const addFirstPackToCart = () => {
     if (!packs.length) return;
     const p = packs[0];
-    addToCart({ id: p.id, type: 'pack', title: p.name, unitAmountCents: PACK_DISCOUNT_CENTS, quantity: 1 });
+    addToCart({ id: p.id, type: 'pack', title: p.name, unitAmountCents: PACK_DISCOUNT_CENTS, quantity: 1 }, !!user);
     toast({ title: 'Pack added to cart', description: `${p.name} — ${fmtUSD(PACK_DISCOUNT_CENTS)}` });
   };
 
@@ -239,7 +239,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
       toast({ title: 'Already added to cart' });
       return;
     }
-    addToCart({ id: prompt.id, type: 'prompt', title: displayTitle, unitAmountCents: PROMPT_DISCOUNT_CENTS, quantity: 1 });
+    addToCart({ id: prompt.id, type: 'prompt', title: displayTitle, unitAmountCents: PROMPT_DISCOUNT_CENTS, quantity: 1 }, !!user);
     toast({ title: 'Prompt added to cart', description: `${displayTitle} — ${fmtUSD(PROMPT_DISCOUNT_CENTS)}` });
   };
   const showLock = isPro && !hasAccess;

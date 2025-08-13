@@ -2,24 +2,28 @@ import SEO from "@/components/SEO";
 import PageHero from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getCart, getCartTotalCents, removeFromCart, clearCart, type CartItem } from "@/lib/cart";
+import { getCartForUser, getCartTotalCents, removeFromCart, clearCart, type CartItem } from "@/lib/cart";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 
 const centsToUSD = (cents: number) => `$${(cents / 100).toFixed(2)}`;
 
 const CartPage = () => {
-  const [items, setItems] = useState(getCart());
+  const { user } = useSupabaseAuth();
+  const [items, setItems] = useState<CartItem[]>([]);
 
   useEffect(() => {
-    const onChange = () => setItems(getCart());
-    window.addEventListener('cart:change', onChange);
-    window.addEventListener('storage', onChange);
+    const updateItems = () => setItems(getCartForUser(!!user));
+    updateItems(); // Initial load
+    
+    window.addEventListener('cart:change', updateItems);
+    window.addEventListener('storage', updateItems);
     return () => {
-      window.removeEventListener('cart:change', onChange);
-      window.removeEventListener('storage', onChange);
+      window.removeEventListener('cart:change', updateItems);
+      window.removeEventListener('storage', updateItems);
     };
-  }, []);
+  }, [user]);
 
   const originalUnitCents = (i: CartItem) => {
     switch (i.type) {
@@ -47,7 +51,7 @@ const CartPage = () => {
       return;
     }
 
-    const cartItems = getCart();
+    const cartItems = getCartForUser(!!user);
     if (cartItems.length === 0) return;
 
     const hasSubscription = cartItems.some((i) => i.type === 'subscription');
@@ -112,7 +116,7 @@ const CartPage = () => {
                       <span className="text-xl font-semibold">{centsToUSD(i.unitAmountCents)}</span>
                     )}
                   </div>
-                  <Button variant="outline" onClick={() => removeFromCart(i.id, i.type)}>Remove</Button>
+                  <Button variant="outline" onClick={() => removeFromCart(i.id, i.type, !!user)}>Remove</Button>
                   </CardContent>
                 </Card>
               ))}
