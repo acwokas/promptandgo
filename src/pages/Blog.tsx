@@ -183,6 +183,25 @@ const Blog = () => {
           </Card>
         </Link>
       </article>
+      <article>
+        <Link to="/blog/ai-prompts-for-business-strategy" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+          <Card className="overflow-hidden">
+            <img
+              src="/lovable-uploads/a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d.png"
+              alt="AI Prompts for Business Strategy and Planning"
+              loading="lazy"
+              className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+            />
+            <CardContent className="pt-4">
+              <h2 className="text-xl font-semibold leading-snug">AI Prompts for Business Strategy and Planning</h2>
+              <p className="mt-2 text-muted-foreground">
+                Plan smarter with AI prompts for strategy: SWOTs, growth roadmaps, market insights, and more.
+              </p>
+              <span className="mt-3 inline-block font-medium text-primary">Read more →</span>
+            </CardContent>
+          </Card>
+        </Link>
+      </article>
     </section>
 
     <section aria-labelledby="cta-tail" className="relative bg-hero hero-grid mt-16">

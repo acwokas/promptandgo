@@ -26,6 +26,7 @@ import AIPromptsForMarketingCampaigns from "./pages/blog/AIPromptsForMarketingCa
 import AIPromptsForCustomerSupport from "./pages/blog/AIPromptsForCustomerSupport";
 import AIPromptsForSocialMediaContent from "./pages/blog/AIPromptsForSocialMediaContent";
 import AIPromptsForContentWriters from "./pages/blog/AIPromptsForContentWriters";
+import AIPromptsForBusinessStrategy from "./pages/blog/AIPromptsForBusinessStrategy";
 import Auth from "./pages/Auth";
 import AdminBulkUpload from "./pages/AdminBulkUpload";
 import FavoritesPage from "./pages/account/Favorites";
@@ -68,6 +69,7 @@ const App = () => (
             <Route path="/blog/ai-prompts-for-customer-support" element={<AIPromptsForCustomerSupport />} />
             <Route path="/blog/ai-prompts-for-social-media-content" element={<AIPromptsForSocialMediaContent />} />
             <Route path="/blog/ai-prompts-for-content-writers" element={<AIPromptsForContentWriters />} />
+            <Route path="/blog/ai-prompts-for-business-strategy" element={<AIPromptsForBusinessStrategy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/how-it-works" element={<HowItWorks />} />

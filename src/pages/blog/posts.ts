@@ -12,4 +12,5 @@ export const BLOG_POSTS: BlogPost[] = [
   { path: "/blog/ai-prompts-for-customer-support", title: "AI Prompts for Customer Support Teams" },
   { path: "/blog/ai-prompts-for-social-media-content", title: "AI Prompts for Social Media Content That Stands Out" },
   { path: "/blog/ai-prompts-for-content-writers", title: "AI Prompts for Content Writers and Copywriters" },
+  { path: "/blog/ai-prompts-for-business-strategy", title: "AI Prompts for Business Strategy and Planning" },
 ];
