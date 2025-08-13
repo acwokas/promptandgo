@@ -9,11 +9,15 @@ import { Upload, Plus, Download } from "lucide-react";
 const AdminTools = () => {
   const { isAdmin, loading: adminLoading } = useIsAdmin();
 
+  console.log("AdminTools: Component state", { isAdmin, adminLoading });
+
   if (adminLoading) {
+    console.log("AdminTools: Still loading admin status");
     return <div>Loading...</div>;
   }
 
   if (!isAdmin) {
+    console.log("AdminTools: User is not admin, redirecting to home");
     return <Navigate to="/" replace />;
   }
 

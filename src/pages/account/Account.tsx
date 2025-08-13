@@ -12,6 +12,8 @@ const AccountPage = () => {
   const { isAdmin } = useIsAdmin();
   const { toast } = useToast();
 
+  console.log("Account page: Auth state", { user: user?.email, isAdmin });
+
   return (
     <>
       <SEO title="My Account" description="Manage your account: prompts, purchases, and settings." />
