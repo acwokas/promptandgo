@@ -124,8 +124,8 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
         <div className="space-y-1 md:col-span-2">
           <Label htmlFor="ribbon-select">Special:</Label>
           <Select
-            value={ribbon ?? ""}
-            onValueChange={(v) => onChange({ ribbon: v || undefined })}
+            value={ribbon ?? "all"}
+            onValueChange={(v) => onChange({ ribbon: v === "all" ? undefined : v })}
           >
             <SelectTrigger
               id="ribbon-select"
@@ -135,7 +135,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
               <SelectValue placeholder="All" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All</SelectItem>
+              <SelectItem value="all">All</SelectItem>
               <SelectItem value="RECOMMENDED">🎯 Recommended</SelectItem>
             </SelectContent>
           </Select>

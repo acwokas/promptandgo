@@ -49,9 +49,9 @@ const ProfilePage = () => {
       if (data) {
         setDisplayName(data.display_name || "");
         setAvatarUrl(data.avatar_url || "");
-        setIndustry(data.industry || "");
-        setProjectType(data.project_type || "");
-        setPreferredTone(data.preferred_tone || "");
+        setIndustry(data.industry && data.industry !== "none" ? data.industry : "");
+        setProjectType(data.project_type && data.project_type !== "none" ? data.project_type : "");
+        setPreferredTone(data.preferred_tone && data.preferred_tone !== "none" ? data.preferred_tone : "");
         setDesiredOutcome(data.desired_outcome || "");
       }
     }
@@ -62,17 +62,22 @@ const ProfilePage = () => {
     if (!user) return;
     setSaving(true);
     try {
-      // Check if context fields are filled to mark as completed
-      const hasContextFields = Boolean(industry || projectType || preferredTone || desiredOutcome);
+      // Check if context fields are filled to mark as completed (treat "none" as empty)
+      const hasContextFields = Boolean(
+        (industry && industry !== "none") || 
+        (projectType && projectType !== "none") || 
+        (preferredTone && preferredTone !== "none") || 
+        desiredOutcome
+      );
       
       const { error } = await supabase
         .from("profiles")
         .update({ 
           display_name: displayName || null, 
           avatar_url: avatarUrl || null,
-          industry: industry || null,
-          project_type: projectType || null,
-          preferred_tone: preferredTone || null,
+          industry: (industry && industry !== "none") ? industry : null,
+          project_type: (projectType && projectType !== "none") ? projectType : null,
+          preferred_tone: (preferredTone && preferredTone !== "none") ? preferredTone : null,
           desired_outcome: desiredOutcome || null,
           context_fields_completed: hasContextFields
         })
@@ -130,7 +135,7 @@ const ProfilePage = () => {
                       <SelectValue placeholder="Select your industry" />
                     </SelectTrigger>
                     <SelectContent className="bg-background border shadow-lg z-50">
-                      <SelectItem value="">None selected</SelectItem>
+                      <SelectItem value="none">None selected</SelectItem>
                       {industries.map((ind) => (
                         <SelectItem key={ind} value={ind}>{ind}</SelectItem>
                       ))}
@@ -145,7 +150,7 @@ const ProfilePage = () => {
                       <SelectValue placeholder="What do you mainly use AI for?" />
                     </SelectTrigger>
                     <SelectContent className="bg-background border shadow-lg z-50">
-                      <SelectItem value="">None selected</SelectItem>
+                      <SelectItem value="none">None selected</SelectItem>
                       {projectTypes.map((type) => (
                         <SelectItem key={type} value={type}>{type}</SelectItem>
                       ))}
@@ -160,7 +165,7 @@ const ProfilePage = () => {
                       <SelectValue placeholder="Select your preferred tone" />
                     </SelectTrigger>
                     <SelectContent className="bg-background border shadow-lg z-50">
-                      <SelectItem value="">None selected</SelectItem>
+                      <SelectItem value="none">None selected</SelectItem>
                       {tones.map((tone) => (
                         <SelectItem key={tone} value={tone}>{tone}</SelectItem>
                       ))}
