@@ -2,6 +2,7 @@ import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
 import PageHero from "@/components/layout/PageHero";
@@ -10,6 +11,44 @@ import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [showAccountCreation, setShowAccountCreation] = useState(false);
+  const [accountEmail, setAccountEmail] = useState("");
+  const [accountPassword, setAccountPassword] = useState("");
+
+  const handleAccountCreation = async (email: string, password: string) => {
+    try {
+      const redirectUrl = `${window.location.origin}/`;
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { emailRedirectTo: redirectUrl },
+      });
+      
+      if (error) {
+        toast({ 
+          title: "Account creation failed", 
+          description: error.message, 
+          variant: "destructive" 
+        });
+        return false;
+      } else {
+        toast({ 
+          title: "Account created!", 
+          description: "Check your email to confirm your account.", 
+          duration: 6000
+        });
+        return true;
+      }
+    } catch (err) {
+      toast({ 
+        title: "Account creation failed", 
+        description: "Please try again.", 
+        variant: "destructive" 
+      });
+      return false;
+    }
+  };
+
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -28,6 +67,11 @@ const Contact = () => {
       return;
     }
 
+    if (showAccountCreation && (!accountEmail || !accountPassword)) {
+      toast({ title: "Account details required", description: "Please fill in email and password for your account.", variant: "destructive" });
+      return;
+    }
+
     if (!notRobot) {
       toast({ title: "Captcha required", description: "Please confirm you are not a robot.", variant: "destructive" });
       return;
@@ -35,6 +79,15 @@ const Contact = () => {
 
     setIsLoading(true);
     try {
+      // Handle account creation if requested
+      if (showAccountCreation && accountEmail && accountPassword) {
+        const accountCreated = await handleAccountCreation(accountEmail, accountPassword);
+        if (!accountCreated) {
+          setIsLoading(false);
+          return; // Stop if account creation failed
+        }
+      }
+
       const newsletterOptIn = data.get("newsletter_opt_in") === "on";
 
       const { data: response, error } = await supabase.functions.invoke("send-contact", {
@@ -54,6 +107,10 @@ const Contact = () => {
           duration: 8000
         });
         form.reset();
+        // Also reset account creation fields
+        setAccountEmail("");
+        setAccountPassword("");
+        setShowAccountCreation(false);
       } else {
         toast({ title: "Something went wrong", description: "Please try again.", variant: "destructive" });
       }
@@ -88,6 +145,60 @@ const Contact = () => {
                 Get 1 FREE ⚡️Power Pack, and regular prompting tips
               </label>
 
+              {/* Create account option */}
+              <label className="flex items-center gap-2 text-sm">
+                <input 
+                  type="checkbox" 
+                  className="h-4 w-4" 
+                  checked={showAccountCreation}
+                  onChange={(e) => setShowAccountCreation(e.target.checked)}
+                />
+                Create a free account (optional)
+              </label>
+
+              {/* Account creation form */}
+              {showAccountCreation && (
+                <div className="space-y-3 p-4 border border-border rounded-lg bg-muted/20">
+                  <div className="text-sm font-medium text-foreground mb-2">
+                    Account Details
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="account-email" className="text-xs">Email for account</Label>
+                    <Input 
+                      id="account-email"
+                      type="email" 
+                      value={accountEmail}
+                      onChange={(e) => setAccountEmail(e.target.value)}
+                      placeholder="Account email (can be same as above)"
+                      className="h-9"
+                      onFocus={(e) => {
+                        // Auto-fill with contact email if empty
+                        if (!accountEmail) {
+                          const contactEmailInput = document.querySelector('input[name="email"]') as HTMLInputElement;
+                          if (contactEmailInput?.value) {
+                            setAccountEmail(contactEmailInput.value);
+                          }
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="account-password" className="text-xs">Choose password</Label>
+                    <Input 
+                      id="account-password"
+                      type="password" 
+                      value={accountPassword}
+                      onChange={(e) => setAccountPassword(e.target.value)}
+                      placeholder="Create a secure password"
+                      className="h-9"
+                    />
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Creating an account lets you save favorite prompts and access premium features.
+                  </p>
+                </div>
+              )}
+
               {/* Simple captcha */}
               <label className="flex items-center gap-2 text-sm">
                 <input type="checkbox" name="captcha" className="h-4 w-4" />
@@ -96,7 +207,7 @@ const Contact = () => {
 
               <div className="pt-2">
                 <Button type="submit" variant="cta" disabled={isLoading}>
-                  {isLoading ? "Sending..." : "Send Message"}
+                  {isLoading ? "Sending..." : showAccountCreation ? "Create Account & Send Message" : "Send Message"}
                 </Button>
               </div>
             </form>
