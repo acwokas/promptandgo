@@ -29,6 +29,8 @@ import AIPromptsForContentWriters from "./pages/blog/AIPromptsForContentWriters"
 import AIPromptsForBusinessStrategy from "./pages/blog/AIPromptsForBusinessStrategy";
 import Auth from "./pages/Auth";
 import AdminBulkUpload from "./pages/AdminBulkUpload";
+import AdminTools from "./pages/AdminTools";
+import AdminPromptTool from "./pages/AdminPromptTool";
 import FavoritesPage from "./pages/account/Favorites";
 import AccountPage from "./pages/account/Account";
 import PurchasesPage from "./pages/account/Purchases";
@@ -76,7 +78,9 @@ const App = () => (
             <Route path="/how-it-works" element={<HowItWorks />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/auth" element={<Auth />} />
-            <Route path="/admin/upload" element={<AdminBulkUpload />} />
+          <Route path="/admin" element={<AdminTools />} />
+          <Route path="/admin/upload" element={<AdminBulkUpload />} />
+          <Route path="/admin/prompts" element={<AdminPromptTool />} />
             <Route path="/account" element={<AccountPage />} />
             <Route path="/account/profile" element={<ProfilePage />} />
             <Route path="/account/notifications" element={<NotificationsPage />} />

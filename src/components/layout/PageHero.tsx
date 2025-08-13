@@ -6,15 +6,15 @@ interface PageHeroProps {
   subtitle?: ReactNode;
   children?: ReactNode; // actions
   minHeightClass?: string; // allow pages to tweak height
-  variant?: "default" | "prompt";
+  variant?: "default" | "prompt" | "admin";
 }
 
 const PageHero = ({ title, subtitle, children, minHeightClass = "min-h-[62vh]", variant = "prompt" }: PageHeroProps) => {
-  const bgClass = variant === "prompt" ? "bg-hero-prompt" : "bg-hero";
+  const bgClass = variant === "admin" ? "bg-hero-admin" : variant === "prompt" ? "bg-hero-prompt" : "bg-hero";
   return (
     <section className={`relative ${bgClass} hero-grid`}>
-      {/* Decorative shapes for Prompt Library */}
-      {variant === "prompt" && (
+      {/* Decorative shapes for Prompt Library and Admin */}
+      {(variant === "prompt" || variant === "admin") && (
         <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
           {/* Soft gradient orbs */}
           <div className="absolute -top-14 -left-16 w-80 h-80 rounded-full bg-primary/25 blur-3xl"></div>

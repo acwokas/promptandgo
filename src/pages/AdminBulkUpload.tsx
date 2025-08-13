@@ -601,6 +601,7 @@ const AdminBulkUpload = () => {
       <PageHero
         title={<><span className="text-gradient-brand">Admin</span> Bulk Upload</>}
         subtitle={<>Paste JSON arrays and upload categories, subcategories, tags, and prompts.</>}
+        variant="admin"
       />
       <main className="container py-10">
         <SEO
