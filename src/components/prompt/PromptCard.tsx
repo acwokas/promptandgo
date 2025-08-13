@@ -309,7 +309,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
         <CardTitle className="text-xl leading-tight">{displayTitle}</CardTitle>
         
         <p className="text-sm text-muted-foreground">{prompt.whatFor}</p>
-        <div className="text-xs font-medium">{prompt.excerpt}:</div>
+        <div className="text-xs font-medium">{prompt.excerpt?.replace(/\.$/, '')}:</div>
       </CardHeader>
       <CardContent>
         <div>
@@ -340,7 +340,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               </div>
             )}
           </div>
-          <div className="mt-2 flex flex-col gap-2">
+          <div className="mt-4 flex flex-col gap-2">
             <Button
               size="sm"
               variant="hero"
