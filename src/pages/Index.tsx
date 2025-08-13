@@ -124,20 +124,20 @@ const Index = () => {
           </>}
           subtitle={<>Browse thousands of human-curated prompts to help you write better, work smarter, and think bigger.</>}
         >
-          <Button asChild size="lg" variant="hero" className="px-6">
-            <Link to="/library">Browse Prompt Library</Link>
+          <Button asChild size="default" variant="hero" className="px-4">
+            <Link to="/library">Browse Library</Link>
           </Button>
           {user ? (
-            <Button asChild size="lg" variant="secondary">
+            <Button asChild size="default" variant="secondary">
               <Link to="/account/favorites">My Prompts</Link>
             </Button>
           ) : (
-            <Button asChild size="lg" variant="secondary">
+            <Button asChild size="default" variant="secondary">
               <Link to="/auth">Login</Link>
             </Button>
           )}
-          <Button asChild size="lg" variant="inverted">
-            <Link to="/packs">Explore ⚡️Power Packs</Link>
+          <Button asChild size="default" variant="inverted">
+            <Link to="/packs">⚡️Power Packs</Link>
           </Button>
         </PageHero>
 
@@ -248,63 +248,51 @@ const Index = () => {
         </section>
 
         {/* Audience Cards */}
-        <section className="container py-6">
-          <h2 className="text-2xl font-semibold mb-2">Who it's for</h2>
-          <p className="text-muted-foreground max-w-3xl mb-8">Explore tailor-made prompts for every subject and find the perfect starting point with curated AI prompts designed to help you learn, create, and do more, faster.</p>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <article className="group rounded-xl border bg-card p-6 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-xl font-semibold">💼 Career &amp; Job Prompts</h3>
-              <p className="text-muted-foreground mt-2">Write better resumes, prep smarter for interviews, and land your next role with AI prompts designed for real-world results.</p>
-              <div className="mt-4">
-                <Button asChild variant="hero" size="sm">
-                  <Link to="/library">Learn More</Link>
-                </Button>
-              </div>
+        <section className="container py-4">
+          <h2 className="text-xl font-semibold mb-1">Who it's for</h2>
+          <p className="text-muted-foreground text-sm mb-4">Explore tailor-made prompts for every subject and find the perfect starting point.</p>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <h3 className="text-lg font-semibold">💼 Career &amp; Job Prompts</h3>
+              <p className="text-muted-foreground text-sm mt-1 mb-3">Write better resumes, prep smarter for interviews, and land your next role.</p>
+              <Button asChild variant="hero" size="sm">
+                <Link to="/library">Learn More</Link>
+              </Button>
             </article>
-            <article className="group rounded-xl border bg-card p-6 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-xl font-semibold">🧠 Self &amp; Growth</h3>
-              <p className="text-muted-foreground mt-2">Build better habits, sharpen your focus, and reflect more deeply with prompts designed to unlock your best self.</p>
-              <div className="mt-4">
-                <Button asChild variant="hero" size="sm">
-                  <Link to="/library">Learn More</Link>
-                </Button>
-              </div>
+            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <h3 className="text-lg font-semibold">🧠 Self &amp; Growth</h3>
+              <p className="text-muted-foreground text-sm mt-1 mb-3">Build better habits, sharpen your focus, and reflect more deeply.</p>
+              <Button asChild variant="hero" size="sm">
+                <Link to="/library">Learn More</Link>
+              </Button>
             </article>
-            <article className="group rounded-xl border bg-card p-6 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-xl font-semibold">💬 Comms &amp; Messaging</h3>
-              <p className="text-muted-foreground mt-2">Write clearer emails, sharper responses, and better internal docs — with AI prompts that get the tone right.</p>
-              <div className="mt-4">
-                <Button asChild variant="hero" size="sm">
-                  <Link to="/library">Learn More</Link>
-                </Button>
-              </div>
+            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <h3 className="text-lg font-semibold">💬 Comms &amp; Messaging</h3>
+              <p className="text-muted-foreground text-sm mt-1 mb-3">Write clearer emails, sharper responses, and better internal docs.</p>
+              <Button asChild variant="hero" size="sm">
+                <Link to="/library">Learn More</Link>
+              </Button>
             </article>
-            <article className="group rounded-xl border bg-card p-6 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-xl font-semibold">🎨 Creativity &amp; Writing</h3>
-              <p className="text-muted-foreground mt-2">From idea to finished story — overcome writer's block and generate concepts, hooks, and poetry with ease.</p>
-              <div className="mt-4">
-                <Button asChild variant="hero" size="sm">
-                  <Link to="/library">Learn More</Link>
-                </Button>
-              </div>
+            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <h3 className="text-lg font-semibold">🎨 Creativity &amp; Writing</h3>
+              <p className="text-muted-foreground text-sm mt-1 mb-3">From idea to finished story — overcome writer's block and generate concepts.</p>
+              <Button asChild variant="hero" size="sm">
+                <Link to="/library">Learn More</Link>
+              </Button>
             </article>
-            <article className="group rounded-xl border bg-card p-6 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-xl font-semibold">🎯 Sales &amp; Marketing</h3>
-              <p className="text-muted-foreground mt-2">Craft high-converting ads, persuasive emails, compelling landing pages, and effective sales messages — designed to move people to act, not just skim.</p>
-              <div className="mt-4">
-                <Button asChild variant="hero" size="sm">
-                  <Link to="/library">Learn More</Link>
-                </Button>
-              </div>
+            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <h3 className="text-lg font-semibold">🎯 Sales &amp; Marketing</h3>
+              <p className="text-muted-foreground text-sm mt-1 mb-3">Craft high-converting ads, persuasive emails, and compelling landing pages.</p>
+              <Button asChild variant="hero" size="sm">
+                <Link to="/library">Learn More</Link>
+              </Button>
             </article>
-            <article className="group rounded-xl border bg-card p-6 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-xl font-semibold">🎓 Education &amp; Teachers</h3>
-              <p className="text-muted-foreground mt-2">Generate lesson plans, explain complex concepts, and create classroom-ready activities — all with teacher-friendly, ethical AI prompts.</p>
-              <div className="mt-4">
-                <Button asChild variant="hero" size="sm">
-                  <Link to="/library">Learn More</Link>
-                </Button>
-              </div>
+            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <h3 className="text-lg font-semibold">🎓 Education &amp; Teachers</h3>
+              <p className="text-muted-foreground text-sm mt-1 mb-3">Generate lesson plans, explain complex concepts, and create classroom-ready activities.</p>
+              <Button asChild variant="hero" size="sm">
+                <Link to="/library">Learn More</Link>
+              </Button>
             </article>
           </div>
         </section>
@@ -312,8 +300,8 @@ const Index = () => {
 
 
         {/* Featured Prompts Carousel */}
-        <section className="container py-6" aria-labelledby="featured-prompts">
-          <h2 id="featured-prompts" className="text-2xl font-semibold mb-4">Prompts of the Day</h2>
+        <section className="container py-4" aria-labelledby="featured-prompts">
+          <h2 id="featured-prompts" className="text-xl font-semibold mb-3">Prompts of the Day</h2>
           <Carousel setApi={setCarouselApi} opts={{ loop: true, align: "start" }}>
             <CarouselContent>
               {slides.map((p) => (
