@@ -51,16 +51,6 @@ const AdminFeedback = () => {
   const [adminNotes, setAdminNotes] = useState("");
   const [updatingStatus, setUpdatingStatus] = useState(false);
 
-  // Wait for both auth and admin checks to complete
-  if (authLoading || adminLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!isAdmin) {
-    navigate("/");
-    return null;
-  }
-
   const loadFeedback = async () => {
     try {
       const { data, error } = await supabase
@@ -131,6 +121,16 @@ const AdminFeedback = () => {
   useEffect(() => {
     loadFeedback();
   }, []);
+
+  // Wait for both auth and admin checks to complete
+  if (authLoading || adminLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isAdmin) {
+    navigate("/");
+    return null;
+  }
 
   const filteredFeedback = feedback.filter(item => {
     if (filter.type !== "all" && item.feedback_type !== filter.type) return false;
