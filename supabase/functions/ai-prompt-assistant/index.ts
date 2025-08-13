@@ -13,6 +13,40 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Input validation functions
+const validatePromptInput = (input: string): { isValid: boolean; error?: string } => {
+  if (!input || typeof input !== 'string') {
+    return { isValid: false, error: 'Input is required' };
+  }
+  
+  if (input.length > 5000) {
+    return { isValid: false, error: 'Input exceeds maximum length of 5000 characters' };
+  }
+  
+  // Check for potential prompt injection attempts
+  const suspiciousPatterns = [
+    /ignore\s+previous\s+instructions/i,
+    /system\s*:\s*you\s+are/i,
+    /forget\s+everything/i,
+    /new\s+instructions/i,
+    /admin\s+mode/i,
+    /<script/i,
+    /javascript:/i,
+  ];
+  
+  for (const pattern of suspiciousPatterns) {
+    if (pattern.test(input)) {
+      return { isValid: false, error: 'Input contains potentially harmful content' };
+    }
+  }
+  
+  return { isValid: true };
+};
+
+const sanitizeInput = (input: string): string => {
+  return input.trim().replace(/\s+/g, ' ');
+};
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -22,6 +56,31 @@ serve(async (req) => {
   try {
     const authHeader = req.headers.get('Authorization');
     const { type, prompt, context, userProfile } = await req.json();
+
+    // Validate and sanitize inputs
+    if (prompt) {
+      const promptValidation = validatePromptInput(prompt);
+      if (!promptValidation.isValid) {
+        return new Response(
+          JSON.stringify({ error: promptValidation.error }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
+        );
+      }
+    }
+
+    if (context) {
+      const contextValidation = validatePromptInput(context);
+      if (!contextValidation.isValid) {
+        return new Response(
+          JSON.stringify({ error: 'Context ' + contextValidation.error?.toLowerCase() }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
+        );
+      }
+    }
+
+    // Sanitize inputs
+    const sanitizedPrompt = prompt ? sanitizeInput(prompt) : '';
+    const sanitizedContext = context ? sanitizeInput(context) : '';
 
     // Extract user ID from auth header if present
     let userId = null;
@@ -91,9 +150,9 @@ Guidelines:
 - Include example formats when helpful
 
 Return only the generated prompt, no explanations or additional text.`;
-        userMessage = `Create an AI prompt for: ${prompt}
+        userMessage = `Create an AI prompt for: ${sanitizedPrompt}
 
-${context ? `Additional context: ${context}` : ''}`;
+${sanitizedContext ? `Additional context: ${sanitizedContext}` : ''}`;
         break;
 
       case 'smart_suggestions':
@@ -109,8 +168,8 @@ Return a JSON array of suggestions with this structure:
   }
 ]`;
         userMessage = `User context: ${JSON.stringify(userProfile)}
-Current query/interest: ${prompt}
-${context ? `Additional context: ${context}` : ''}
+Current query/interest: ${sanitizedPrompt}
+${sanitizedContext ? `Additional context: ${sanitizedContext}` : ''}
 
 Provide smart prompt suggestions.`;
         break;
@@ -126,7 +185,7 @@ You should:
 - Help users refine their requirements
 
 Keep responses concise and actionable.`;
-        userMessage = prompt;
+        userMessage = sanitizedPrompt;
         break;
 
       default:
@@ -180,10 +239,12 @@ Keep responses concise and actionable.`;
     });
   } catch (error) {
     console.error('Error in ai-prompt-assistant function:', error);
+    // Don't expose internal error details to clients
+    const isClientError = error.message?.includes('Input') || error.message?.includes('Context');
     return new Response(JSON.stringify({ 
-      error: error.message || 'An unexpected error occurred' 
+      error: isClientError ? error.message : 'An unexpected error occurred'
     }), {
-      status: 500,
+      status: isClientError ? 400 : 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }

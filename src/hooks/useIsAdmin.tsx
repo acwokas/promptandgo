@@ -54,18 +54,16 @@ export function useIsAdmin() {
         if (error) throw error;
         const hasRole = (data?.length || 0) > 0;
 
-        // Fallback: explicit email allowlist (requested)
-        const emailAllow = user.email?.toLowerCase() === "me@adrianwatkins.com";
+        // Removed hardcoded email fallback for security
         
         console.log("useIsAdmin: Admin check results", { 
           hasRole, 
-          emailAllow, 
           userEmail: user.email,
-          finalResult: !!hasRole || emailAllow,
+          finalResult: !!hasRole,
           active: active 
         });
 
-        const adminResult = !!hasRole || emailAllow;
+        const adminResult = !!hasRole;
         if (active) {
           console.log("useIsAdmin: Setting isAdmin to:", adminResult);
           setIsAdmin(adminResult);
@@ -80,15 +78,14 @@ export function useIsAdmin() {
         }
       } catch (e) {
         console.error("useIsAdmin: Error in admin check", e);
-        const fallbackResult = user?.email?.toLowerCase() === "me@adrianwatkins.com";
-        console.log("useIsAdmin: Using fallback email check:", fallbackResult);
+        console.log("useIsAdmin: Setting admin status to false due to error");
         if (active) {
-          setIsAdmin(fallbackResult);
-          // Cache the fallback result too
+          setIsAdmin(false);
+          // Clear cached admin status on error
           try {
-            sessionStorage.setItem('isAdmin', fallbackResult.toString());
+            sessionStorage.removeItem('isAdmin');
           } catch (e) {
-            console.warn("Could not cache admin status:", e);
+            console.warn("Could not clear admin cache:", e);
           }
         }
       } finally {
