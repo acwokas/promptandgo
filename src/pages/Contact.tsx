@@ -14,8 +14,10 @@ const Contact = () => {
   const { user } = useSupabaseAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [showAccountCreation, setShowAccountCreation] = useState(false);
+  const [accountName, setAccountName] = useState("");
   const [accountEmail, setAccountEmail] = useState("");
   const [accountPassword, setAccountPassword] = useState("");
+  const [accountPowerPack, setAccountPowerPack] = useState(false);
   const [userProfile, setUserProfile] = useState<{ display_name?: string } | null>(null);
 
   // Fetch user profile data when user is available
@@ -39,13 +41,19 @@ const Contact = () => {
     fetchProfile();
   }, [user]);
 
-  const handleAccountCreation = async (email: string, password: string) => {
+  const handleAccountCreation = async (name: string, email: string, password: string, wantsPowerPack: boolean) => {
     try {
       const redirectUrl = `${window.location.origin}/`;
       const { error } = await supabase.auth.signUp({
         email,
         password,
-        options: { emailRedirectTo: redirectUrl },
+        options: { 
+          emailRedirectTo: redirectUrl,
+          data: { 
+            display_name: name,
+            wants_power_pack: wantsPowerPack 
+          }
+        },
       });
       
       if (error) {
@@ -58,8 +66,8 @@ const Contact = () => {
       } else {
         toast({ 
           title: "Account created!", 
-          description: "Check your email to confirm your account.", 
-          duration: 6000
+          description: `Check your email to confirm your account.${wantsPowerPack ? ' Your PowerPack will be sent after confirmation!' : ''}`, 
+          duration: 8000
         });
         return true;
       }
@@ -92,8 +100,8 @@ const Contact = () => {
     }
 
     // Only validate account creation fields if user is not logged in and wants to create account
-    if (!user && showAccountCreation && (!accountEmail || !accountPassword)) {
-      toast({ title: "Account details required", description: "Please fill in email and password for your account.", variant: "destructive" });
+    if (!user && showAccountCreation && (!accountName || !accountEmail || !accountPassword)) {
+      toast({ title: "Account details required", description: "Please fill in name, email and password for your account.", variant: "destructive" });
       return;
     }
 
@@ -105,18 +113,17 @@ const Contact = () => {
     setIsLoading(true);
     try {
       // Handle account creation if requested and user is not logged in
-      if (!user && showAccountCreation && accountEmail && accountPassword) {
-        const accountCreated = await handleAccountCreation(accountEmail, accountPassword);
+      if (!user && showAccountCreation && accountName && accountEmail && accountPassword) {
+        const accountCreated = await handleAccountCreation(accountName, accountEmail, accountPassword, accountPowerPack);
         if (!accountCreated) {
           setIsLoading(false);
           return; // Stop if account creation failed
         }
       }
 
-      const newsletterOptIn = data.get("newsletter_opt_in") === "on";
-
+      // Send contact message directly (no email confirmation needed)
       const { data: response, error } = await supabase.functions.invoke("send-contact", {
-        body: { name, email, message, newsletterOptIn },
+        body: { name, email, message },
       });
 
       if (error) {
@@ -125,20 +132,22 @@ const Contact = () => {
         return;
       }
 
-      if (response?.success) {
-        toast({ 
-          title: "Check your email!", 
-          description: response.message || "We've sent you a confirmation link to complete your message submission.",
-          duration: 8000
-        });
-        form.reset();
-        // Also reset account creation fields
-        setAccountEmail("");
-        setAccountPassword("");
-        setShowAccountCreation(false);
-      } else {
-        toast({ title: "Something went wrong", description: "Please try again.", variant: "destructive" });
-      }
+      // Contact message sent successfully
+      toast({ 
+        title: "Message sent!", 
+        description: "Thank you for your message. We'll get back to you soon.",
+        duration: 5000
+      });
+      form.reset();
+      // Also reset account creation fields
+      setAccountName("");
+      setAccountEmail("");
+      setAccountPassword("");
+      setAccountPowerPack(false);
+      setShowAccountCreation(false);
+    } catch (error) {
+      console.error("Contact form error:", error);
+      toast({ title: "Failed to send", description: "Please try again in a moment.", variant: "destructive" });
     } finally {
       setIsLoading(false);
     }
@@ -185,12 +194,6 @@ const Contact = () => {
               {/* Honeypot field */}
               <input type="text" name="company" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
-              {/* Newsletter opt-in */}
-              <label className="flex items-center gap-2 text-sm">
-                <input type="checkbox" name="newsletter_opt_in" className="h-4 w-4" />
-                Get 1 FREE ⚡️Power Pack, and regular prompting tips
-              </label>
-
               {/* Create account option - only show if not logged in */}
               {!user && (
                 <>
@@ -209,6 +212,18 @@ const Contact = () => {
                     <div className="space-y-3 p-4 border border-border rounded-lg bg-muted/20">
                       <div className="text-sm font-medium text-foreground mb-2">
                         Account Details
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="account-name" className="text-xs">Full Name</Label>
+                        <Input 
+                          id="account-name"
+                          type="text" 
+                          value={accountName}
+                          onChange={(e) => setAccountName(e.target.value)}
+                          placeholder="Your full name"
+                          className="h-9"
+                          required
+                        />
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="account-email" className="text-xs">Email for account</Label>
@@ -241,6 +256,18 @@ const Contact = () => {
                           className="h-9"
                         />
                       </div>
+                      
+                      {/* PowerPack option for new accounts */}
+                      <label className="flex items-center gap-2 text-sm">
+                        <input 
+                          type="checkbox" 
+                          checked={accountPowerPack}
+                          onChange={(e) => setAccountPowerPack(e.target.checked)}
+                          className="h-4 w-4" 
+                        />
+                        Get 1 FREE ⚡️Power Pack, and regular prompting tips
+                      </label>
+                      
                       <p className="text-xs text-muted-foreground">
                         Creating an account lets you save favorite prompts and access premium features.
                       </p>
