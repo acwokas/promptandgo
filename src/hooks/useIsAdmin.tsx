@@ -4,7 +4,15 @@ import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 
 export function useIsAdmin() {
   const { user } = useSupabaseAuth();
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(() => {
+    // Initialize with cached value if available
+    try {
+      const cached = sessionStorage.getItem('isAdmin');
+      return cached === 'true';
+    } catch {
+      return false;
+    }
+  });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -14,8 +22,18 @@ export function useIsAdmin() {
       
       if (!user) {
         console.log("useIsAdmin: No user found");
+        // Don't immediately reset admin status if we have a cached value
+        // This handles the case where user state fluctuates during navigation
+        const cachedAdmin = sessionStorage.getItem('isAdmin') === 'true';
+        if (cachedAdmin && isAdmin) {
+          console.log("useIsAdmin: Keeping cached admin status during auth fluctuation");
+          if (active) setLoading(false);
+          return;
+        }
+        
         if (active) {
           setIsAdmin(false);
+          sessionStorage.removeItem('isAdmin');
           setLoading(false);
         }
         return;
@@ -51,6 +69,12 @@ export function useIsAdmin() {
         if (active) {
           console.log("useIsAdmin: Setting isAdmin to:", adminResult);
           setIsAdmin(adminResult);
+          // Cache the result in sessionStorage
+          try {
+            sessionStorage.setItem('isAdmin', adminResult.toString());
+          } catch (e) {
+            console.warn("Could not cache admin status:", e);
+          }
         } else {
           console.log("useIsAdmin: Component unmounted, not setting admin state");
         }
@@ -58,7 +82,15 @@ export function useIsAdmin() {
         console.error("useIsAdmin: Error in admin check", e);
         const fallbackResult = user?.email?.toLowerCase() === "me@adrianwatkins.com";
         console.log("useIsAdmin: Using fallback email check:", fallbackResult);
-        if (active) setIsAdmin(fallbackResult);
+        if (active) {
+          setIsAdmin(fallbackResult);
+          // Cache the fallback result too
+          try {
+            sessionStorage.setItem('isAdmin', fallbackResult.toString());
+          } catch (e) {
+            console.warn("Could not cache admin status:", e);
+          }
+        }
       } finally {
         console.log("useIsAdmin: Setting loading to false, active:", active);
         if (active) setLoading(false);
