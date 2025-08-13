@@ -40,28 +40,40 @@ const PromptPacks = () => {
     let cancelled = false;
     const load = async () => {
       setLoading(true);
-      // Load packs with their tags (left join so packs without tags still show)
-      const { data: packRows, error } = await supabase
-        .from('packs')
-        .select(`
-          id,
-          name,
-          description,
-          pack_tags(
-            tags(name)
-          )
-        `)
-        .eq('is_active', true)
-        .order('name');
+      
+      // Load packs and their tags separately
+      const [packsResult, packTagsResult] = await Promise.all([
+        supabase
+          .from('packs')
+          .select('id, name, description')
+          .eq('is_active', true)
+          .order('name'),
+        supabase
+          .from('pack_tags')
+          .select('pack_id, tags(name)')
+      ]);
 
       if (!cancelled) {
-        if (!error) {
+        if (!packsResult.error) {
+          // Create a map of pack tags
+          const tagsByPack = new Map<string, string[]>();
+          if (!packTagsResult.error && packTagsResult.data) {
+            packTagsResult.data.forEach((pt: any) => {
+              if (!tagsByPack.has(pt.pack_id)) {
+                tagsByPack.set(pt.pack_id, []);
+              }
+              if (pt.tags?.name) {
+                tagsByPack.get(pt.pack_id)?.push(pt.tags.name);
+              }
+            });
+          }
+          
           // Transform the data to include tags as an array
-          const transformedPacks = (packRows || []).map((pack: any) => ({
+          const transformedPacks = (packsResult.data || []).map((pack: any) => ({
             id: pack.id,
             name: pack.name,
             description: pack.description,
-            tags: pack.pack_tags?.map((pt: any) => pt.tags?.name).filter(Boolean) || []
+            tags: tagsByPack.get(pack.id) || []
           }));
           setPacks(transformedPacks);
         }
@@ -76,7 +88,7 @@ const PromptPacks = () => {
           }, 50);
         }
 
-        const packIds = (packRows || []).map((r) => r.id);
+        const packIds = (packsResult.data || []).map((r) => r.id);
         if (packIds.length) {
           const { data: joins } = await supabase
             .from('pack_prompts')
