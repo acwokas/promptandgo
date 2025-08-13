@@ -28,6 +28,9 @@ const AccountPage = () => {
           <Link to="/account/favorites">My Prompts</Link>
         </Button>
         <Button asChild variant="secondary">
+          <Link to="/account/generated">AI Generated</Link>
+        </Button>
+        <Button asChild variant="secondary">
           <Link to="/account/purchases">My Purchases</Link>
         </Button>
         {isAdmin && (
@@ -65,6 +68,10 @@ const AccountPage = () => {
           <Link to="/account/security" className="rounded-xl border bg-card p-5 block group hover:shadow-md transition-all">
             <h2 className="font-semibold">Security</h2>
             <p className="text-muted-foreground text-sm mt-1">Change your password and log out.</p>
+          </Link>
+          <Link to="/account/generated" className="rounded-xl border bg-card p-5 block group hover:shadow-md transition-all">
+            <h2 className="font-semibold">My Generated Prompts</h2>
+            <p className="text-muted-foreground text-sm mt-1">View and manage AI-generated prompts.</p>
           </Link>
         </section>
       </main>

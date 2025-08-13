@@ -100,13 +100,13 @@ const AIPromptGenerator = () => {
 
       toast({
         title: "Added to My Prompts!",
-        description: "The generated prompt has been saved to your collection."
+        description: "The generated prompt has been saved to your personal collection."
       });
     } catch (error: any) {
       console.error('Error adding to my prompts:', error);
       toast({
         title: "Save failed",
-        description: "Failed to add prompt to your collection.",
+        description: "Failed to save prompt to your collection. Please try again.",
         variant: "destructive"
       });
     }
