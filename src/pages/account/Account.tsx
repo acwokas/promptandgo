@@ -30,7 +30,7 @@ const AccountPage = () => {
         </Button>
         {isAdmin && (
           <Button asChild variant="inverted">
-            <Link to="/admin/upload">Admin Tools</Link>
+            <Link to="/admin">Admin Tools</Link>
           </Button>
         )}
         {user && (
