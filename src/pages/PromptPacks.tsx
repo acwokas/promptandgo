@@ -20,7 +20,7 @@ const LIFETIME_DISCOUNT_CENTS = 4785;
 const SUB_DISCOUNT_CENTS = 1299;
 const fmtUSD = (cents: number) => `$${(cents / 100).toFixed(2)}`;
 
-type Pack = { id: string; name: string; description: string | null };
+type Pack = { id: string; name: string; description: string | null; tags: string[] };
 
 type PromptLite = { id: string; title: string; is_pro: boolean; excerpt: string | null };
 
@@ -40,14 +40,31 @@ const PromptPacks = () => {
     let cancelled = false;
     const load = async () => {
       setLoading(true);
+      // Load packs with their tags (left join so packs without tags still show)
       const { data: packRows, error } = await supabase
         .from('packs')
-        .select('id,name,description')
+        .select(`
+          id,
+          name,
+          description,
+          pack_tags(
+            tags(name)
+          )
+        `)
         .eq('is_active', true)
         .order('name');
 
       if (!cancelled) {
-        if (!error) setPacks(packRows || []);
+        if (!error) {
+          // Transform the data to include tags as an array
+          const transformedPacks = (packRows || []).map((pack: any) => ({
+            id: pack.id,
+            name: pack.name,
+            description: pack.description,
+            tags: pack.pack_tags?.map((pt: any) => pt.tags?.name).filter(Boolean) || []
+          }));
+          setPacks(transformedPacks);
+        }
         setLoading(false);
 
         const hl = searchParams.get('highlight');
@@ -157,7 +174,16 @@ const PromptPacks = () => {
     ? packs.filter((pk) => {
         const items = contents[pk.id] || [];
         const q = query.toLowerCase();
-        return items.some((it) => (it.title?.toLowerCase().includes(q) || (it.excerpt || '').toLowerCase().includes(q)));
+        
+        // Search in pack name, description, tags, and prompt contents
+        const packNameMatch = pk.name.toLowerCase().includes(q);
+        const packDescMatch = (pk.description || '').toLowerCase().includes(q);
+        const packTagsMatch = pk.tags.some(tag => tag.toLowerCase().includes(q));
+        const promptContentMatch = items.some((it) => 
+          (it.title?.toLowerCase().includes(q) || (it.excerpt || '').toLowerCase().includes(q))
+        );
+        
+        return packNameMatch || packDescMatch || packTagsMatch || promptContentMatch;
       })
     : packs;
 
@@ -193,7 +219,7 @@ const PromptPacks = () => {
         />
         <div className="mb-6 max-w-xl">
           <Input
-            placeholder="Search within pack contents..."
+            placeholder="Search packs by name, tags, or contents..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
@@ -232,6 +258,23 @@ const PromptPacks = () => {
                     </div>
                     <CardTitle className="text-xl leading-tight">{p.name}</CardTitle>
                     {p.description && <p className="text-sm text-muted-foreground">{p.description}</p>}
+                    
+                    {/* Display pack tags */}
+                    {p.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mt-2">
+                        {p.tags.map((tag, index) => (
+                          <Badge 
+                            key={index} 
+                            variant="outline" 
+                            className="text-xs cursor-pointer hover:bg-muted" 
+                            onClick={() => setQuery(tag)}
+                          >
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                    
                     <div className="text-sm text-muted-foreground">
                       {packOwned ? 'You own this pack.' : `You own ${ownedCount}/${items.length} items`} • {freeCount} free, {proCount} PRO
                     </div>

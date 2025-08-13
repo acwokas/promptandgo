@@ -203,6 +203,24 @@ export type Database = {
           },
         ]
       }
+      pack_tags: {
+        Row: {
+          created_at: string
+          pack_id: string
+          tag_id: string
+        }
+        Insert: {
+          created_at?: string
+          pack_id: string
+          tag_id: string
+        }
+        Update: {
+          created_at?: string
+          pack_id?: string
+          tag_id?: string
+        }
+        Relationships: []
+      }
       packs: {
         Row: {
           created_at: string
