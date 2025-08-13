@@ -56,43 +56,85 @@
   </url>
   <url>
     <loc>https://promptandgo.ai/blog</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-08-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://promptandgo.ai/toolkit</loc>
+    <lastmod>2025-08-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://promptandgo.ai/ai/generator</loc>
+    <lastmod>2025-08-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://promptandgo.ai/ai/suggestions</loc>
+    <lastmod>2025-08-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://promptandgo.ai/ai/assistant</loc>
+    <lastmod>2025-08-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://promptandgo.ai/blog/welcome-to-promptandgo-ai</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-08-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://promptandgo.ai/blog/how-to-write-ai-prompts</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-08-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://promptandgo.ai/blog/ai-prompts-that-save-you-hours</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-08-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://promptandgo.ai/blog/ai-prompts-for-customer-support</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-08-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://promptandgo.ai/blog/best-ai-prompts-for-small-business-2025</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-08-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://promptandgo.ai/blog/ai-prompts-for-marketing-campaigns</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-08-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://promptandgo.ai/blog/ai-prompts-for-social-media-content</loc>
+    <lastmod>2025-08-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://promptandgo.ai/blog/ai-prompts-for-content-writers</loc>
+    <lastmod>2025-08-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://promptandgo.ai/blog/ai-prompts-for-business-strategy</loc>
+    <lastmod>2025-08-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

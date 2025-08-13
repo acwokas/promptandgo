@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
-import { User as UserIcon } from "lucide-react";
+import { User as UserIcon, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Footer = () => {
@@ -33,14 +33,23 @@ const Footer = () => {
             <Link to="/library?q=seo" className="text-muted-foreground hover:text-foreground">SEO prompts</Link>
           </nav>
           <nav className="flex flex-col gap-2">
+            <span className="text-foreground font-medium">Main sections</span>
             <Link to="/" className="text-muted-foreground hover:text-foreground">Welcome</Link>
             <Link to="/how-it-works" className="text-muted-foreground hover:text-foreground">How it Works</Link>
             <Link to="/library" className="text-muted-foreground hover:text-foreground">Prompt Library</Link>
+            <Link to="/packs" className="text-muted-foreground hover:text-foreground">⚡️Power Packs</Link>
+            <Link to="/toolkit" className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
+              <Bot className="h-3 w-3 text-blue-500" />
+              Interactive
+            </Link>
             <Link to="/blog" className="text-muted-foreground hover:text-foreground">Tips</Link>
             <Link to="/faqs" className="text-muted-foreground hover:text-foreground">FAQs</Link>
           </nav>
           <nav className="flex flex-col gap-2">
-            <Link to="/packs" className="text-muted-foreground hover:text-foreground">⚡️Power Packs</Link>
+            <span className="text-foreground font-medium">AI Tools</span>
+            <Link to="/ai/generator" className="text-muted-foreground hover:text-foreground">AI Prompt Generator</Link>
+            <Link to="/ai/suggestions" className="text-muted-foreground hover:text-foreground">Smart Suggestions</Link>
+            <Link to="/ai/assistant" className="text-muted-foreground hover:text-foreground">AI Assistant</Link>
             <Link to="/submit" className="text-muted-foreground hover:text-foreground">Submit a Prompt</Link>
             <Link to="/contact" className="text-muted-foreground hover:text-foreground">Contact Us</Link>
             {user && (
