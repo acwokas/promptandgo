@@ -52,7 +52,7 @@ serve(async (req: Request): Promise<Response> => {
 
     const { error } = await resend.emails.send({
       from: "PromptAndGo <noreply@promptandgo.ai>",
-      to: ["hey@promptandgo.ai"],
+      to: ["hello@promptandgo.ai"],
       replyTo: email,
       subject,
       html,
