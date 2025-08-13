@@ -41,7 +41,13 @@ const HowItWorks = () => {
       minHeightClass="min-h-[56vh]"
     >
       <Button asChild size="lg" variant="hero" className="px-6">
-        <Link to="/library">Browse Prompt Library</Link>
+        <Link to="/library">Browse Library</Link>
+      </Button>
+      <Button asChild size="lg" variant="inverted">
+        <Link to="/packs">⚡️Power Packs</Link>
+      </Button>
+      <Button asChild size="lg" variant="secondary">
+        <Link to="/toolkit">🤖 AI Tools</Link>
       </Button>
       {user ? (
         <Button asChild size="lg" variant="secondary">
@@ -52,9 +58,6 @@ const HowItWorks = () => {
           <Link to="/auth">Login</Link>
         </Button>
       )}
-      <Button asChild size="lg" variant="inverted">
-        <Link to="/packs">Explore ⚡️Power Packs</Link>
-      </Button>
     </PageHero>
 
     <main className="container py-12">
@@ -162,7 +165,13 @@ const HowItWorks = () => {
           <p className="mt-3 text-primary-foreground/85 text-base md:text-lg">✨ Ready to Start Prompting Smarter? Try your first prompt or explore a pack, no sign-up required.</p>
           <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
             <Button asChild variant="hero" className="px-6">
-              <Link to="/library">Browse Prompt Library</Link>
+              <Link to="/library">Browse Library</Link>
+            </Button>
+            <Button asChild size="lg" variant="inverted">
+              <Link to="/packs">⚡️Power Packs</Link>
+            </Button>
+            <Button asChild size="lg" variant="secondary">
+              <Link to="/toolkit">🤖 AI Tools</Link>
             </Button>
             {user ? (
               <Button asChild size="lg" variant="secondary">
@@ -173,9 +182,6 @@ const HowItWorks = () => {
                 <Link to="/auth">Login</Link>
               </Button>
             )}
-            <Button asChild size="lg" variant="inverted">
-              <Link to="/packs">Explore ⚡️Power Packs</Link>
-            </Button>
           </div>
         </div>
       </section>

@@ -376,6 +376,12 @@ const PromptLibrary = () => {
         <Button asChild size="lg" variant="hero" className="px-6">
           <a href="#library-filters">Browse Prompt Library</a>
         </Button>
+        <Button asChild size="lg" variant="inverted">
+          <Link to="/packs">⚡️Power Packs</Link>
+        </Button>
+        <Button asChild size="lg" variant="secondary">
+          <Link to="/toolkit">🤖 AI Tools</Link>
+        </Button>
         {user ? (
           <Button asChild size="lg" variant="secondary">
             <Link to="/account/favorites">My Prompts</Link>
@@ -385,9 +391,6 @@ const PromptLibrary = () => {
             <Link to="/auth">Login</Link>
           </Button>
         )}
-        <Button asChild size="lg" variant="inverted">
-          <Link to="/packs">Explore ⚡️Power Packs</Link>
-        </Button>
       </PageHero>
       <main className="container py-10">
         <SEO

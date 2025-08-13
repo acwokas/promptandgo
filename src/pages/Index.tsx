@@ -127,6 +127,12 @@ const Index = () => {
           <Button asChild size="default" variant="hero" className="px-4">
             <Link to="/library">Browse Library</Link>
           </Button>
+          <Button asChild size="default" variant="inverted">
+            <Link to="/packs">⚡️Power Packs</Link>
+          </Button>
+          <Button asChild size="default" variant="secondary">
+            <Link to="/toolkit">🤖 AI Tools</Link>
+          </Button>
           {user ? (
             <Button asChild size="default" variant="secondary">
               <Link to="/account/favorites">My Prompts</Link>
@@ -136,9 +142,6 @@ const Index = () => {
               <Link to="/auth">Login</Link>
             </Button>
           )}
-          <Button asChild size="default" variant="inverted">
-            <Link to="/packs">⚡️Power Packs</Link>
-          </Button>
         </PageHero>
 
         {/* Top Widget Section */}
@@ -361,7 +364,13 @@ const Index = () => {
             <p className="mt-3 text-primary-foreground/85 text-base md:text-lg">✨ Ready to Start Prompting Smarter? Try your first prompt or explore a pack, no sign-up required.</p>
             <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild variant="hero" className="px-6">
-                <Link to="/library">Browse Prompt Library</Link>
+                <Link to="/library">Browse Library</Link>
+              </Button>
+              <Button asChild variant="inverted">
+                <Link to="/packs">⚡️Power Packs</Link>
+              </Button>
+              <Button asChild variant="secondary">
+                <Link to="/toolkit">🤖 AI Tools</Link>
               </Button>
               {user ? (
                 <Button asChild size="lg" variant="secondary">
@@ -372,9 +381,6 @@ const Index = () => {
                   <Link to="/auth">Login</Link>
                 </Button>
               )}
-              <Button asChild size="lg" variant="inverted">
-                <Link to="/packs">Explore ⚡️Power Packs</Link>
-              </Button>
             </div>
           </div>
         </section>
