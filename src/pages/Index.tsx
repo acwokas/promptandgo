@@ -140,8 +140,17 @@ const Index = () => {
             <Link to="/packs">Explore ⚡️Power Packs</Link>
           </Button>
         </PageHero>
+
+        {/* Top Widget Section */}
+        <section className="container pt-6 pb-2">
+          <div className="flex justify-end">
+            <div className="w-full max-w-md">
+              <AIPromptWidget />
+            </div>
+          </div>
+        </section>
         {/* Intro */}
-        <section className="container pt-8 pb-4">
+        <section className="container pt-2 pb-4">
           <div className="rounded-2xl border bg-card p-6 md:p-8 animate-fade-in">
             <div className="grid gap-8 md:grid-cols-2 items-center">
               <div>
@@ -203,13 +212,11 @@ const Index = () => {
           </section>
         )}
 
-        {/* AI Widgets Section */}
+        {/* AI Tools Section */}
         <section className="container py-6">
           <h2 className="text-2xl font-semibold mb-2">✨ AI-Powered Tools</h2>
-          <p className="text-muted-foreground max-w-3xl mb-6">Try our intelligent tools to create perfect prompts and enhance your AI interactions.</p>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <AIPromptWidget />
-            
+          <p className="text-muted-foreground max-w-3xl mb-6">Enhance your prompting with our intelligent tools and personalized recommendations.</p>
+          <div className="grid gap-6 md:grid-cols-2">
             <Card className="bg-gradient-to-br from-accent/10 to-transparent border-accent/20">
               <CardHeader className="pb-4">
                 <CardTitle className="flex items-center gap-2 text-lg">
@@ -217,17 +224,17 @@ const Index = () => {
                   🎯 Smart Suggestions
                 </CardTitle>
                 <p className="text-sm text-muted-foreground">
-                  Get personalized prompt recommendations based on your work
+                  Get personalized prompt recommendations based on your preferences
                 </p>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="text-center text-muted-foreground py-6 text-sm">
-                  <Sparkles className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                  <p>Coming soon - AI-powered recommendations</p>
+                <div className="text-center text-muted-foreground py-4 text-sm">
+                  <Sparkles className="h-8 w-8 mx-auto mb-2 text-accent" />
+                  <p>Discover prompts tailored just for you</p>
                 </div>
                 <Button asChild variant="outline" size="sm" className="w-full">
                   <Link to="/smart-suggestions">
-                    Learn More →
+                    Get Smart Suggestions →
                   </Link>
                 </Button>
               </CardContent>
@@ -244,13 +251,13 @@ const Index = () => {
                 </p>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="text-center text-muted-foreground py-6 text-sm">
-                  <Wand2 className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                <div className="text-center text-muted-foreground py-4 text-sm">
+                  <Wand2 className="h-8 w-8 mx-auto mb-2 text-secondary" />
                   <p>Get expert help crafting better prompts</p>
                 </div>
                 <Button asChild variant="outline" size="sm" className="w-full">
                   <Link to="/ai-assistant">
-                    Try Assistant →
+                    Try AI Assistant →
                   </Link>
                 </Button>
               </CardContent>
