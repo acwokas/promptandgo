@@ -2,7 +2,7 @@ import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
-import { Sparkles, Zap, ShieldCheck, ListChecks, Wand2, Rocket, Check } from "lucide-react";
+import { Sparkles, Zap, ShieldCheck, ListChecks, Wand2, Rocket, Check, Search, Heart } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -125,7 +125,7 @@ const Index = () => {
           subtitle={<>Browse thousands of human-curated prompts to help you write better, work smarter, and think bigger.</>}
         >
           <Button asChild size="default" variant="hero" className="px-4">
-            <Link to="/library">Browse Library</Link>
+            <Link to="/library"><Search className="h-4 w-4 mr-2" />Browse Library</Link>
           </Button>
           <Button asChild size="default" variant="inverted">
             <Link to="/packs">⚡️Power Packs</Link>
@@ -135,7 +135,7 @@ const Index = () => {
           </Button>
           {user ? (
             <Button asChild size="default" variant="secondary">
-              <Link to="/account/favorites">My Prompts</Link>
+              <Link to="/account/favorites"><Heart className="h-4 w-4 mr-2" />My Prompts</Link>
             </Button>
           ) : (
             <Button asChild size="default" variant="secondary">
@@ -364,7 +364,7 @@ const Index = () => {
             <p className="mt-3 text-primary-foreground/85 text-base md:text-lg">✨ Ready to Start Prompting Smarter? Try your first prompt or explore a pack, no sign-up required.</p>
             <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild variant="hero" className="px-6">
-                <Link to="/library">Browse Library</Link>
+                <Link to="/library"><Search className="h-4 w-4 mr-2" />Browse Library</Link>
               </Button>
               <Button asChild variant="inverted">
                 <Link to="/packs">⚡️Power Packs</Link>
@@ -374,7 +374,7 @@ const Index = () => {
               </Button>
               {user ? (
                 <Button asChild size="lg" variant="secondary">
-                  <Link to="/account/favorites">My Prompts</Link>
+                  <Link to="/account/favorites"><Heart className="h-4 w-4 mr-2" />My Prompts</Link>
                 </Button>
               ) : (
                 <Button asChild size="lg" variant="secondary">

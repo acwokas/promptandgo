@@ -3,7 +3,7 @@ import PageHero from "@/components/layout/PageHero";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
-import { ShieldCheck, Zap, Clock, BadgeCheck, Globe, Scale } from "lucide-react";
+import { ShieldCheck, Zap, Clock, BadgeCheck, Globe, Scale, Search, Heart } from "lucide-react";
 
 const HowItWorks = () => {
   const { user } = useSupabaseAuth();
@@ -41,7 +41,7 @@ const HowItWorks = () => {
       minHeightClass="min-h-[56vh]"
     >
       <Button asChild size="lg" variant="hero" className="px-6">
-        <Link to="/library">Browse Library</Link>
+        <Link to="/library"><Search className="h-4 w-4 mr-2" />Browse Library</Link>
       </Button>
       <Button asChild size="lg" variant="inverted">
         <Link to="/packs">⚡️Power Packs</Link>
@@ -51,7 +51,7 @@ const HowItWorks = () => {
       </Button>
       {user ? (
         <Button asChild size="lg" variant="secondary">
-          <Link to="/account/favorites">My Prompts</Link>
+          <Link to="/account/favorites"><Heart className="h-4 w-4 mr-2" />My Prompts</Link>
         </Button>
       ) : (
         <Button asChild size="lg" variant="secondary">
@@ -165,7 +165,7 @@ const HowItWorks = () => {
           <p className="mt-3 text-primary-foreground/85 text-base md:text-lg">✨ Ready to Start Prompting Smarter? Try your first prompt or explore a pack, no sign-up required.</p>
           <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
             <Button asChild variant="hero" className="px-6">
-              <Link to="/library">Browse Library</Link>
+              <Link to="/library"><Search className="h-4 w-4 mr-2" />Browse Library</Link>
             </Button>
             <Button asChild size="lg" variant="inverted">
               <Link to="/packs">⚡️Power Packs</Link>
@@ -175,7 +175,7 @@ const HowItWorks = () => {
             </Button>
             {user ? (
               <Button asChild size="lg" variant="secondary">
-                <Link to="/account/favorites">My Prompts</Link>
+                <Link to="/account/favorites"><Heart className="h-4 w-4 mr-2" />My Prompts</Link>
               </Button>
             ) : (
               <Button asChild size="lg" variant="secondary">

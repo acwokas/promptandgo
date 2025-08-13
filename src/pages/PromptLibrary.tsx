@@ -4,6 +4,7 @@ import { PromptCard } from "@/components/prompt/PromptCard";
 import { Button } from "@/components/ui/button";
 import PageHero from "@/components/layout/PageHero";
 import { Link, useSearchParams } from "react-router-dom";
+import { Search, Heart } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useCallback, useEffect, useState, useRef } from "react";
@@ -374,7 +375,7 @@ const PromptLibrary = () => {
         subtitle={<>Find the perfect prompt fast: browse free prompts by category or subcategory, save your favourites for later <Link to="/account/favorites" className="text-accent hover:underline">My Prompts</Link>, add <Link to="/library?proOnly=true" className="text-accent hover:underline">PRO prompts</Link> to your cart to review later, or <Link to="/cart" className="text-accent hover:underline">subscribe</Link> to immediately unlock all premium items.</>}
       >
         <Button asChild size="lg" variant="hero" className="px-6">
-          <a href="#library-filters">Browse Prompt Library</a>
+          <a href="#library-filters"><Search className="h-4 w-4 mr-2" />Browse Prompt Library</a>
         </Button>
         <Button asChild size="lg" variant="inverted">
           <Link to="/packs">⚡️Power Packs</Link>
@@ -384,7 +385,7 @@ const PromptLibrary = () => {
         </Button>
         {user ? (
           <Button asChild size="lg" variant="secondary">
-            <Link to="/account/favorites">My Prompts</Link>
+            <Link to="/account/favorites"><Heart className="h-4 w-4 mr-2" />My Prompts</Link>
           </Button>
         ) : (
           <Button asChild size="lg" variant="secondary">
