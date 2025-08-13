@@ -163,7 +163,7 @@ export function usePersonalizedPrompts() {
       // Get a broader set of prompts to analyze
       const { data: prompts, error } = await supabase
         .from("prompts")
-        .select("id, category_id, subcategory_id, title, what_for, prompt, image_prompt, excerpt, is_pro")
+        .select("id, category_id, subcategory_id, title, what_for, prompt, image_prompt, excerpt, is_pro, ribbon")
         .order("created_at", { ascending: false })
         .limit(100); // Analyze top 100 recent prompts
 
@@ -201,6 +201,12 @@ export function usePersonalizedPrompts() {
           const tags = tagMap.get(prompt.id) || [];
           const { score, reasons } = calculateRelevanceScore(prompt, tags, context);
           
+          // Boost score if it has RECOMMENDED ribbon
+          let finalScore = score;
+          if (prompt.ribbon === "RECOMMENDED") {
+            finalScore += 15; // Significant boost for user-trained prompts
+          }
+          
           return {
             id: prompt.id,
             categoryId: prompt.category_id,
@@ -212,8 +218,10 @@ export function usePersonalizedPrompts() {
             excerpt: prompt.excerpt,
             tags,
             isPro: prompt.is_pro,
-            relevanceScore: score,
-            matchReason: reasons
+            relevanceScore: finalScore,
+            matchReason: prompt.ribbon === "RECOMMENDED" 
+              ? ["Previously liked by you", ...reasons]
+              : reasons
           };
         })
         .filter(p => p.relevanceScore > 0) // Only show prompts with some relevance
