@@ -70,7 +70,8 @@ export default {
 				'brand-2': 'hsl(var(--brand-2))'
 			},
 			fontFamily: {
-				sans: ['var(--font-sans)', 'ui-sans-serif', 'system-ui']
+				sans: ['var(--font-sans)', 'Satoshi', 'ui-sans-serif', 'system-ui'],
+				editorial: ['var(--font-editorial)', 'Manrope', 'sans-serif']
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
