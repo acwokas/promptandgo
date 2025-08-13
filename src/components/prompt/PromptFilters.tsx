@@ -13,7 +13,8 @@ interface FiltersProps {
   subcategoryId: string | undefined;
   query: string;
   includePro?: boolean;
-  onChange: (next: { categoryId?: string; subcategoryId?: string; query?: string; includePro?: boolean }) => void;
+  ribbon?: string;
+  onChange: (next: { categoryId?: string; subcategoryId?: string; query?: string; includePro?: boolean; ribbon?: string }) => void;
   onSearch?: () => void;
   onClear?: () => void;
   searchLabel?: string;
@@ -28,7 +29,7 @@ function catAccentIndex(seed: string) {
   return (h % 6) + 1;
 }
 
-export const PromptFilters = ({ categories, categoryId, subcategoryId, query, includePro, onChange, onSearch, onClear, searchLabel, searchPlaceholder, categoryLabel, subcategoryLabel }: FiltersProps) => {
+export const PromptFilters = ({ categories, categoryId, subcategoryId, query, includePro, ribbon, onChange, onSearch, onClear, searchLabel, searchPlaceholder, categoryLabel, subcategoryLabel }: FiltersProps) => {
   const categoriesSorted = [...categories].sort((a, b) => {
     const an = a.name.trim().toLowerCase();
     const bn = b.name.trim().toLowerCase();
@@ -108,7 +109,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
           </Select>
         </div>
 
-        <div className="space-y-1 md:col-span-3">
+        <div className="space-y-1 md:col-span-2">
           <Label htmlFor="search-input">{searchLabel ?? "Search:"}</Label>
           <Input
             id="search-input"
@@ -118,6 +119,26 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
             aria-label={searchLabel ?? "Search prompts"}
             className="bg-muted/60 border shadow-sm focus:ring-2 focus:ring-ring"
           />
+        </div>
+
+        <div className="space-y-1 md:col-span-2">
+          <Label htmlFor="ribbon-select">Special:</Label>
+          <Select
+            value={ribbon ?? ""}
+            onValueChange={(v) => onChange({ ribbon: v || undefined })}
+          >
+            <SelectTrigger
+              id="ribbon-select"
+              aria-label="Filter by special ribbons"
+              className="bg-muted/60 border shadow-sm hover:bg-muted focus:ring-2 focus:ring-ring data-[state=open]:ring-2"
+            >
+              <SelectValue placeholder="All" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="">All</SelectItem>
+              <SelectItem value="RECOMMENDED">🎯 Recommended</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         <div className="md:col-span-3 flex items-center gap-2 justify-end md:justify-start flex-wrap">

@@ -1,5 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 import type { Prompt, Category } from "@/data/prompts";
@@ -263,7 +263,13 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   return (
     <Card className={cn("relative overflow-hidden h-full with-category-accent glass-card transition animate-float-in hover:shadow-glow-strong", accentClass)} style={{ ['--category-accent' as any]: `var(--accent-${accentIndex})` }}>
       <CardHeader>
-        <div className="mb-2">
+        <div className="mb-2 flex gap-2 flex-wrap">
+          {(prompt as any).ribbon === "RECOMMENDED" && (
+            <div className="recommended-ribbon inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-yellow-400 to-orange-500 text-white">
+              <Sparkles className="h-3.5 w-3.5" aria-hidden />
+              <span>RECOMMENDED</span>
+            </div>
+          )}
           {isPro && !hasAccess && (
             <div className="pro-ribbon inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold">
               <Lock className="h-3.5 w-3.5" aria-hidden />

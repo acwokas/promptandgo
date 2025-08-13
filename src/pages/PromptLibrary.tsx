@@ -76,6 +76,7 @@ const PromptLibrary = () => {
   const [randomMode, setRandomMode] = useState<boolean>(false);
   const [includePro, setIncludePro] = useState(true);
   const [proOnly, setProOnly] = useState(false);
+  const [ribbon, setRibbon] = useState<string | undefined>();
 
 
   const [page, setPage] = useState(1);
@@ -167,7 +168,7 @@ const PromptLibrary = () => {
         let q = supabase
           .from("prompts")
           .select(
-            "id, category_id, subcategory_id, title, what_for, prompt, image_prompt, excerpt, is_pro",
+            "id, category_id, subcategory_id, title, what_for, prompt, image_prompt, excerpt, is_pro, ribbon",
             { count: "exact" }
           )
           .order("created_at", { ascending: false });
@@ -180,6 +181,7 @@ const PromptLibrary = () => {
         if (subcategoryId) q = q.eq("subcategory_id", subcategoryId);
         if (!proSearch && rawQuery) q = q.textSearch("search_vector", rawQuery, { type: "websearch" });
         if (promptIdsForTag) q = q.in("id", promptIdsForTag);
+        if (ribbon) q = q.eq("ribbon", ribbon);
         if (proOnly || proSearch) q = q.eq("is_pro", true);
         else if (!includePro) q = q.eq("is_pro", false);
 
@@ -233,7 +235,7 @@ const PromptLibrary = () => {
         setLoading(false);
       }
     },
-    [categoryId, subcategoryId, query, selectedTag, includePro, proOnly]
+    [categoryId, subcategoryId, query, selectedTag, includePro, proOnly, ribbon]
   );
 
   const fetchRandomPrompt = useCallback(async () => {
@@ -346,7 +348,7 @@ const PromptLibrary = () => {
     } else {
       refresh();
     }
-  }, [categoryId, subcategoryId, query, selectedTag, randomMode, refresh, fetchRandomPrompt]);
+  }, [categoryId, subcategoryId, query, selectedTag, ribbon, randomMode, refresh, fetchRandomPrompt]);
 
   // Scroll to first prompt when in random mode after items load
   useEffect(() => {
@@ -420,6 +422,7 @@ const PromptLibrary = () => {
             subcategoryId={subcategoryId}
             query={query}
             includePro={includePro}
+            ribbon={ribbon}
             onChange={(n) => {
               clearRandom();
               if (n.categoryId !== undefined) setCategoryId(n.categoryId || undefined);
@@ -429,6 +432,7 @@ const PromptLibrary = () => {
                 setSelectedTag(undefined); // typing a query clears tag filter
               }
               if (n.includePro !== undefined) setIncludePro(!!n.includePro);
+              if (n.ribbon !== undefined) setRibbon(n.ribbon || undefined);
             }}
             onSearch={() => { clearRandom(); refresh(); }}
             onClear={() => {
@@ -437,6 +441,7 @@ const PromptLibrary = () => {
               setSubcategoryId(undefined);
               setQuery("");
               setSelectedTag(undefined);
+              setRibbon(undefined);
               setProOnly(false);
               setPage(1);
               // No manual refresh here; useEffect will trigger once state updates propagate
