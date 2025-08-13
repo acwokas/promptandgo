@@ -7,36 +7,87 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+const logStep = (step: string, details?: any) => {
+  const detailsStr = details ? ` - ${JSON.stringify(details)}` : '';
+  console.log(`[CUSTOMER-PORTAL] ${step}${detailsStr}`);
+};
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
+  
   try {
+    logStep("Function started");
+
     const stripeKey = Deno.env.get('STRIPE_SECRET_KEY');
-    if (!stripeKey) throw new Error('STRIPE_SECRET_KEY is not set');
+    if (!stripeKey) {
+      logStep("ERROR: STRIPE_SECRET_KEY is not set");
+      throw new Error('STRIPE_SECRET_KEY is not set');
+    }
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? '';
     const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
-    if (!serviceRoleKey) throw new Error('SUPABASE_SERVICE_ROLE_KEY is not set');
+    if (!serviceRoleKey) {
+      logStep("ERROR: SUPABASE_SERVICE_ROLE_KEY is not set");
+      throw new Error('SUPABASE_SERVICE_ROLE_KEY is not set');
+    }
 
     const authHeader = req.headers.get('Authorization');
-    if (!authHeader) throw new Error('No authorization header provided');
+    if (!authHeader) {
+      logStep("ERROR: No authorization header provided");
+      throw new Error('No authorization header provided');
+    }
     const token = authHeader.replace('Bearer ', '');
 
     const supabase = createClient(supabaseUrl, serviceRoleKey, { auth: { persistSession: false } });
     const { data: userData, error: userError } = await supabase.auth.getUser(token);
-    if (userError) throw new Error(`Authentication error: ${userError.message}`);
+    if (userError) {
+      logStep("ERROR: Authentication error", { message: userError.message });
+      throw new Error(`Authentication error: ${userError.message}`);
+    }
     const user = userData.user;
-    if (!user?.email) throw new Error('User not authenticated or email not available');
+    if (!user?.email) {
+      logStep("ERROR: User not authenticated or email not available");
+      throw new Error('User not authenticated or email not available');
+    }
+
+    logStep("User authenticated", { userId: user.id, email: user.email });
 
     const stripe = new Stripe(stripeKey, { apiVersion: '2023-10-16' });
     const customers = await stripe.customers.list({ email: user.email, limit: 1 });
-    if (customers.data.length === 0) throw new Error('No Stripe customer found');
+    
+    if (customers.data.length === 0) {
+      logStep("No Stripe customer found for user", { email: user.email });
+      return new Response(JSON.stringify({ 
+        error: 'No subscription found', 
+        message: 'You need to purchase a subscription before accessing the customer portal.',
+        action: 'redirect_to_checkout'
+      }), { 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }, 
+        status: 400 
+      });
+    }
 
     const customerId = customers.data[0].id;
-    const origin = req.headers.get('origin') || 'https://promptandgo.ai';
-    const portal = await stripe.billingPortal.sessions.create({ customer: customerId, return_url: `${origin}/account/purchases` });
+    logStep("Found Stripe customer", { customerId });
 
-    return new Response(JSON.stringify({ url: portal.url }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 });
+    const origin = req.headers.get('origin') || 'https://promptandgo.ai';
+    const portal = await stripe.billingPortal.sessions.create({ 
+      customer: customerId, 
+      return_url: `${origin}/account/purchases` 
+    });
+
+    logStep("Customer portal session created", { portalUrl: portal.url });
+
+    return new Response(JSON.stringify({ url: portal.url }), { 
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }, 
+      status: 200 
+    });
   } catch (error: any) {
-    return new Response(JSON.stringify({ error: error?.message || String(error) }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 });
+    const errorMessage = error?.message || String(error);
+    logStep("ERROR in customer-portal", { message: errorMessage });
+    return new Response(JSON.stringify({ error: errorMessage }), { 
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }, 
+      status: 500 
+    });
   }
 });

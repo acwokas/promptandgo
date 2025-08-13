@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { Wand2, Brain, Bot, ArrowRight, Sparkles } from "lucide-react";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
 const ToolkitPage = () => {
   const tools = [
@@ -42,6 +43,21 @@ const ToolkitPage = () => {
       
       <main className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
         <div className="container mx-auto px-4 py-12 max-w-7xl">
+          
+          {/* Breadcrumb */}
+          <Breadcrumb className="mb-8">
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link to="/">Home</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Interactive</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
           {/* Hero Section */}
           <div className="text-center mb-16 space-y-6">
             <div className="flex items-center justify-center gap-3 mb-4">

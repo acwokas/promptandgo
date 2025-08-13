@@ -29,12 +29,30 @@ const PurchasesPage = () => {
   }, []);
 
   const manageSubscription = async () => {
-    const { data, error } = await supabase.functions.invoke('customer-portal');
-    if (error) {
-      toast({ title: 'Portal error', description: error.message, variant: 'destructive' });
-      return;
+    try {
+      const { data, error } = await supabase.functions.invoke('customer-portal');
+      if (error) {
+        // Check if this is a "no customer found" error
+        if (error.message?.includes('No subscription found') || error.message?.includes('No Stripe customer found')) {
+          toast({ 
+            title: 'No subscription found', 
+            description: 'You need to purchase a subscription first. Redirecting to Power Packs...', 
+            variant: 'default' 
+          });
+          // Redirect to packs page after a short delay
+          setTimeout(() => {
+            window.location.href = '/packs';
+          }, 1500);
+          return;
+        }
+        toast({ title: 'Portal error', description: error.message, variant: 'destructive' });
+        return;
+      }
+      window.open((data as any).url, '_blank');
+    } catch (err: any) {
+      console.error('Manage subscription error:', err);
+      toast({ title: 'Portal error', description: 'Failed to access customer portal', variant: 'destructive' });
     }
-    window.open((data as any).url, '_blank');
   };
 
   const refreshSubscription = async () => {
