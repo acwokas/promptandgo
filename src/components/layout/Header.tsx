@@ -80,17 +80,29 @@ const Header = () => {
                   ) : (
                     <NavLink to="/auth" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Log in</NavLink>
                   )}
-                  <Button asChild variant="hero" className="mt-4">
-                    <Link to="/library?random=1">Surprise Me!</Link>
-                  </Button>
+                  {user ? (
+                    <Button asChild variant="hero" className="mt-4">
+                      <Link to="/library?random=1">Surprise Me!</Link>
+                    </Button>
+                  ) : (
+                    <Button asChild variant="cta" className="mt-4">
+                      <Link to="/auth?mode=signup">Get 1 FREE ⚡️Power Pack!</Link>
+                    </Button>
+                  )}
                 </nav>
               </SheetContent>
             </Sheet>
           </div>
           {/* Desktop CTA */}
-          <Button asChild variant="hero" className="px-5 hidden md:inline-flex">
-            <Link to="/library?random=1">Surprise Me!</Link>
-          </Button>
+          {user ? (
+            <Button asChild variant="hero" className="px-5 hidden md:inline-flex">
+              <Link to="/library?random=1">Surprise Me!</Link>
+            </Button>
+          ) : (
+            <Button asChild variant="cta" className="px-5 hidden md:inline-flex">
+              <Link to="/auth?mode=signup">Get 1 FREE ⚡️Power Pack!</Link>
+            </Button>
+          )}
           <Button asChild variant="ghost" size="icon" className="hidden md:inline-flex relative" title="Cart" aria-label="Cart">
             <Link to="/cart">
               <ShoppingCart className="h-5 w-5" aria-hidden="true" />
