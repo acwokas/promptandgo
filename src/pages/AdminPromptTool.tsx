@@ -54,6 +54,16 @@ const AdminPromptTool = () => {
   const [packSlug, setPackSlug] = useState("none");
   const [isPro, setIsPro] = useState(false);
   const [ribbon, setRibbon] = useState("none");
+  
+  // Add new item states
+  const [showNewCategory, setShowNewCategory] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState("");
+  const [showNewSubcategory, setShowNewSubcategory] = useState(false);
+  const [newSubcategoryName, setNewSubcategoryName] = useState("");
+  const [showNewPack, setShowNewPack] = useState(false);
+  const [newPackName, setNewPackName] = useState("");
+  const [newPackDescription, setNewPackDescription] = useState("");
+  const [newPackPrice, setNewPackPrice] = useState("999");
 
   const ribbonOptions = [
     { value: "none", label: "No ribbon" },
@@ -86,6 +96,145 @@ const AdminPromptTool = () => {
       toast({
         title: "Error",
         description: "Failed to load categories, subcategories, and packs",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleCategoryChange = (value: string) => {
+    if (value === "add-new") {
+      setShowNewCategory(true);
+      setCategoryId("none");
+      setSubcategoryId("none");
+    } else {
+      setShowNewCategory(false);
+      setCategoryId(value);
+      setSubcategoryId("none");
+    }
+  };
+
+  const handleSubcategoryChange = (value: string) => {
+    if (value === "add-new") {
+      setShowNewSubcategory(true);
+      setSubcategoryId("none");
+    } else {
+      setShowNewSubcategory(false);
+      setSubcategoryId(value);
+    }
+  };
+
+  const handlePackChange = (value: string) => {
+    if (value === "add-new") {
+      setShowNewPack(true);
+      setPackSlug("none");
+    } else {
+      setShowNewPack(false);
+      setPackSlug(value);
+    }
+  };
+
+  const createCategory = async () => {
+    if (!newCategoryName.trim()) return;
+
+    try {
+      const slug = newCategoryName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+      const { data, error } = await supabase
+        .from("categories")
+        .insert({ name: newCategoryName.trim(), slug })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      setCategories(prev => [...prev, data]);
+      setCategoryId(data.id);
+      setShowNewCategory(false);
+      setNewCategoryName("");
+      
+      toast({
+        title: "Success",
+        description: "Category created successfully!",
+      });
+    } catch (error) {
+      console.error("Error creating category:", error);
+      toast({
+        title: "Error",
+        description: "Failed to create category",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const createSubcategory = async () => {
+    if (!newSubcategoryName.trim() || categoryId === "none") return;
+
+    try {
+      const slug = newSubcategoryName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+      const { data, error } = await supabase
+        .from("subcategories")
+        .insert({ 
+          name: newSubcategoryName.trim(), 
+          slug, 
+          category_id: categoryId 
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      setSubcategories(prev => [...prev, data]);
+      setSubcategoryId(data.id);
+      setShowNewSubcategory(false);
+      setNewSubcategoryName("");
+      
+      toast({
+        title: "Success",
+        description: "Subcategory created successfully!",
+      });
+    } catch (error) {
+      console.error("Error creating subcategory:", error);
+      toast({
+        title: "Error",
+        description: "Failed to create subcategory",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const createPack = async () => {
+    if (!newPackName.trim()) return;
+
+    try {
+      const slug = newPackName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+      const { data, error } = await supabase
+        .from("packs")
+        .insert({ 
+          name: newPackName.trim(), 
+          slug,
+          description: newPackDescription.trim() || null,
+          price_cents: parseInt(newPackPrice)
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      setPacks(prev => [...prev, data]);
+      setPackSlug(data.slug);
+      setShowNewPack(false);
+      setNewPackName("");
+      setNewPackDescription("");
+      setNewPackPrice("999");
+      
+      toast({
+        title: "Success",
+        description: "Power Pack created successfully!",
+      });
+    } catch (error) {
+      console.error("Error creating pack:", error);
+      toast({
+        title: "Error",
+        description: "Failed to create power pack",
         variant: "destructive",
       });
     }
@@ -303,7 +452,7 @@ const AdminPromptTool = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="category">Category *</Label>
-                  <Select value={categoryId} onValueChange={setCategoryId}>
+                  <Select value={categoryId} onValueChange={handleCategoryChange}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
@@ -314,13 +463,40 @@ const AdminPromptTool = () => {
                           {cat.name}
                         </SelectItem>
                       ))}
+                      <SelectItem value="add-new">+ Add new category</SelectItem>
                     </SelectContent>
                   </Select>
+                  {showNewCategory && (
+                    <div className="flex gap-2 mt-2">
+                      <Input
+                        value={newCategoryName}
+                        onChange={(e) => setNewCategoryName(e.target.value)}
+                        placeholder="Enter category name"
+                        className="flex-1"
+                      />
+                      <Button 
+                        type="button" 
+                        onClick={createCategory} 
+                        size="sm"
+                        disabled={!newCategoryName.trim()}
+                      >
+                        Add
+                      </Button>
+                      <Button 
+                        type="button" 
+                        onClick={() => {setShowNewCategory(false); setNewCategoryName("");}} 
+                        variant="outline" 
+                        size="sm"
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  )}
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="subcategory">Subcategory</Label>
-                  <Select value={subcategoryId} onValueChange={setSubcategoryId}>
+                  <Select value={subcategoryId} onValueChange={handleSubcategoryChange}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select subcategory" />
                     </SelectTrigger>
@@ -331,8 +507,37 @@ const AdminPromptTool = () => {
                           {sub.name}
                         </SelectItem>
                       ))}
+                      {categoryId !== "none" && (
+                        <SelectItem value="add-new">+ Add new subcategory</SelectItem>
+                      )}
                     </SelectContent>
                   </Select>
+                  {showNewSubcategory && (
+                    <div className="flex gap-2 mt-2">
+                      <Input
+                        value={newSubcategoryName}
+                        onChange={(e) => setNewSubcategoryName(e.target.value)}
+                        placeholder="Enter subcategory name"
+                        className="flex-1"
+                      />
+                      <Button 
+                        type="button" 
+                        onClick={createSubcategory} 
+                        size="sm"
+                        disabled={!newSubcategoryName.trim() || categoryId === "none"}
+                      >
+                        Add
+                      </Button>
+                      <Button 
+                        type="button" 
+                        onClick={() => {setShowNewSubcategory(false); setNewSubcategoryName("");}} 
+                        variant="outline" 
+                        size="sm"
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -349,7 +554,7 @@ const AdminPromptTool = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="pack">Power Pack</Label>
-                  <Select value={packSlug} onValueChange={setPackSlug}>
+                  <Select value={packSlug} onValueChange={handlePackChange}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select pack (optional)" />
                     </SelectTrigger>
@@ -360,8 +565,57 @@ const AdminPromptTool = () => {
                           {pack.name}
                         </SelectItem>
                       ))}
+                      <SelectItem value="add-new">+ Add new power pack</SelectItem>
                     </SelectContent>
                   </Select>
+                  {showNewPack && (
+                    <div className="space-y-2 mt-2">
+                      <div className="flex gap-2">
+                        <Input
+                          value={newPackName}
+                          onChange={(e) => setNewPackName(e.target.value)}
+                          placeholder="Power pack name"
+                          className="flex-1"
+                        />
+                        <Input
+                          value={newPackPrice}
+                          onChange={(e) => setNewPackPrice(e.target.value)}
+                          placeholder="Price (cents)"
+                          type="number"
+                          className="w-32"
+                        />
+                      </div>
+                      <Textarea
+                        value={newPackDescription}
+                        onChange={(e) => setNewPackDescription(e.target.value)}
+                        placeholder="Description (optional)"
+                        rows={2}
+                      />
+                      <div className="flex gap-2">
+                        <Button 
+                          type="button" 
+                          onClick={createPack} 
+                          size="sm"
+                          disabled={!newPackName.trim()}
+                        >
+                          Add Pack
+                        </Button>
+                        <Button 
+                          type="button" 
+                          onClick={() => {
+                            setShowNewPack(false); 
+                            setNewPackName(""); 
+                            setNewPackDescription(""); 
+                            setNewPackPrice("999");
+                          }} 
+                          variant="outline" 
+                          size="sm"
+                        >
+                          Cancel
+                        </Button>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <div className="space-y-2">
