@@ -114,22 +114,10 @@ const ContextPopup = ({ isOpen, onClose, onDismissPermanently, onComplete }: Con
     <Dialog open={isOpen} onOpenChange={() => {}}>
       <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <div className="flex items-center justify-between">
-            <div>
-              <DialogTitle>🎯 Get Better Prompts</DialogTitle>
-              <DialogDescription className="mt-2">
-                Help us personalize your experience with a few optional details
-              </DialogDescription>
-            </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleSkip}
-              className="h-6 w-6 p-0"
-            >
-              <X className="h-4 w-4" />
-            </Button>
-          </div>
+          <DialogTitle>🎯 Get Better Prompts</DialogTitle>
+          <DialogDescription className="mt-2">
+            Help us personalize your experience with a few optional details
+          </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4 py-4">
