@@ -4,16 +4,40 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PageHero from "@/components/layout/PageHero";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 
 const Contact = () => {
+  const { user } = useSupabaseAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [showAccountCreation, setShowAccountCreation] = useState(false);
   const [accountEmail, setAccountEmail] = useState("");
   const [accountPassword, setAccountPassword] = useState("");
+  const [userProfile, setUserProfile] = useState<{ display_name?: string } | null>(null);
+
+  // Fetch user profile data when user is available
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (!user) return;
+      
+      try {
+        const { data } = await supabase
+          .from("profiles")
+          .select("display_name")
+          .eq("id", user.id)
+          .maybeSingle();
+        
+        setUserProfile(data);
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
+    };
+
+    fetchProfile();
+  }, [user]);
 
   const handleAccountCreation = async (email: string, password: string) => {
     try {
@@ -67,7 +91,8 @@ const Contact = () => {
       return;
     }
 
-    if (showAccountCreation && (!accountEmail || !accountPassword)) {
+    // Only validate account creation fields if user is not logged in and wants to create account
+    if (!user && showAccountCreation && (!accountEmail || !accountPassword)) {
       toast({ title: "Account details required", description: "Please fill in email and password for your account.", variant: "destructive" });
       return;
     }
@@ -79,8 +104,8 @@ const Contact = () => {
 
     setIsLoading(true);
     try {
-      // Handle account creation if requested
-      if (showAccountCreation && accountEmail && accountPassword) {
+      // Handle account creation if requested and user is not logged in
+      if (!user && showAccountCreation && accountEmail && accountPassword) {
         const accountCreated = await handleAccountCreation(accountEmail, accountPassword);
         if (!accountCreated) {
           setIsLoading(false);
@@ -131,9 +156,30 @@ const Contact = () => {
 
         <div className="grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-7">
+            {user && (
+              <div className="mb-4 p-3 bg-muted/30 border border-border rounded-lg">
+                <p className="text-sm text-muted-foreground">
+                  Logged in as <span className="font-medium text-foreground">{user.email}</span>
+                </p>
+              </div>
+            )}
+            
             <form onSubmit={onSubmit} className="grid gap-4 max-w-xl">
-              <Input required name="name" placeholder="Name" />
-              <Input required type="email" name="email" placeholder="Email" />
+              <Input 
+                required 
+                name="name" 
+                placeholder="Name" 
+                defaultValue={user ? (userProfile?.display_name || user.email?.split("@")[0] || "") : ""}
+              />
+              <Input 
+                required 
+                type="email" 
+                name="email" 
+                placeholder="Email" 
+                defaultValue={user?.email || ""}
+                readOnly={!!user}
+                className={user ? "bg-muted/50" : ""}
+              />
               <Textarea required name="message" placeholder="Message" />
 
               {/* Honeypot field */}
@@ -145,58 +191,62 @@ const Contact = () => {
                 Get 1 FREE ⚡️Power Pack, and regular prompting tips
               </label>
 
-              {/* Create account option */}
-              <label className="flex items-center gap-2 text-sm">
-                <input 
-                  type="checkbox" 
-                  className="h-4 w-4" 
-                  checked={showAccountCreation}
-                  onChange={(e) => setShowAccountCreation(e.target.checked)}
-                />
-                Create a free account (optional)
-              </label>
+              {/* Create account option - only show if not logged in */}
+              {!user && (
+                <>
+                  <label className="flex items-center gap-2 text-sm">
+                    <input 
+                      type="checkbox" 
+                      className="h-4 w-4" 
+                      checked={showAccountCreation}
+                      onChange={(e) => setShowAccountCreation(e.target.checked)}
+                    />
+                    Create a free account (optional)
+                  </label>
 
-              {/* Account creation form */}
-              {showAccountCreation && (
-                <div className="space-y-3 p-4 border border-border rounded-lg bg-muted/20">
-                  <div className="text-sm font-medium text-foreground mb-2">
-                    Account Details
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="account-email" className="text-xs">Email for account</Label>
-                    <Input 
-                      id="account-email"
-                      type="email" 
-                      value={accountEmail}
-                      onChange={(e) => setAccountEmail(e.target.value)}
-                      placeholder="Account email (can be same as above)"
-                      className="h-9"
-                      onFocus={(e) => {
-                        // Auto-fill with contact email if empty
-                        if (!accountEmail) {
-                          const contactEmailInput = document.querySelector('input[name="email"]') as HTMLInputElement;
-                          if (contactEmailInput?.value) {
-                            setAccountEmail(contactEmailInput.value);
-                          }
-                        }
-                      }}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="account-password" className="text-xs">Choose password</Label>
-                    <Input 
-                      id="account-password"
-                      type="password" 
-                      value={accountPassword}
-                      onChange={(e) => setAccountPassword(e.target.value)}
-                      placeholder="Create a secure password"
-                      className="h-9"
-                    />
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    Creating an account lets you save favorite prompts and access premium features.
-                  </p>
-                </div>
+                  {/* Account creation form */}
+                  {showAccountCreation && (
+                    <div className="space-y-3 p-4 border border-border rounded-lg bg-muted/20">
+                      <div className="text-sm font-medium text-foreground mb-2">
+                        Account Details
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="account-email" className="text-xs">Email for account</Label>
+                        <Input 
+                          id="account-email"
+                          type="email" 
+                          value={accountEmail}
+                          onChange={(e) => setAccountEmail(e.target.value)}
+                          placeholder="Account email (can be same as above)"
+                          className="h-9"
+                          onFocus={(e) => {
+                            // Auto-fill with contact email if empty
+                            if (!accountEmail) {
+                              const contactEmailInput = document.querySelector('input[name="email"]') as HTMLInputElement;
+                              if (contactEmailInput?.value) {
+                                setAccountEmail(contactEmailInput.value);
+                              }
+                            }
+                          }}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="account-password" className="text-xs">Choose password</Label>
+                        <Input 
+                          id="account-password"
+                          type="password" 
+                          value={accountPassword}
+                          onChange={(e) => setAccountPassword(e.target.value)}
+                          placeholder="Create a secure password"
+                          className="h-9"
+                        />
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        Creating an account lets you save favorite prompts and access premium features.
+                      </p>
+                    </div>
+                  )}
+                </>
               )}
 
               {/* Simple captcha */}
@@ -207,7 +257,7 @@ const Contact = () => {
 
               <div className="pt-2">
                 <Button type="submit" variant="cta" disabled={isLoading}>
-                  {isLoading ? "Sending..." : showAccountCreation ? "Create Account & Send Message" : "Send Message"}
+                  {isLoading ? "Sending..." : (!user && showAccountCreation) ? "Create Account & Send Message" : "Send Message"}
                 </Button>
               </div>
             </form>
