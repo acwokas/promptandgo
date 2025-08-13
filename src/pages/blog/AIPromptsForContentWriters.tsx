@@ -12,9 +12,9 @@ const AIPromptsForContentWriters = () => {
   const title = "AI Prompts for Content Writers and Copywriters";
   const description =
     "Boost creativity and speed with these AI prompts for content writers and copywriters. From headlines to long-form articles, these examples get results.";
-  const heroImage = "/lovable-uploads/5328cd62-1da8-46db-a7a4-4ee4d9124945.png"; // Thumbnail (file 3)
-  const midImage1 = "/lovable-uploads/3d5f6466-6230-4876-9469-dcdac217ca80.png"; // Image 1
-  const midImage2 = "/lovable-uploads/a85d016e-3f3c-40a8-af62-8b7eec00df23.png"; // Image 2
+  const heroImage = "/lovable-uploads/3f39df0f-d378-4f05-bd67-2399d5467ca8.png"; // Thumbnail (file 2)
+  const midImage1 = "/lovable-uploads/f32d80cf-413a-416b-958e-97f023e82320.png"; // Image 1 (file 1)
+  const midImage2 = "/lovable-uploads/cf547dfa-ef34-4643-811a-b6b8c6ef4c19.png"; // Image 2 (file 3)
   const origin = typeof window !== "undefined" ? window.location.origin : "";
   const canonical = origin ? `${origin}/blog/ai-prompts-for-content-writers` : undefined;
   const category = "Copywriting";
@@ -78,7 +78,7 @@ const AIPromptsForContentWriters = () => {
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight">{title}</h1>
           <img
             src={heroImage}
-            alt="Vibrant 3D social app and emojis illustrating engaging content performance"
+            alt="Before-and-after editing concept for copywriting on a futuristic display"
             className="mt-4 w-full rounded-lg border aspect-[16/9] object-cover"
             loading="eager"
             fetchPriority="high"
@@ -114,7 +114,7 @@ const AIPromptsForContentWriters = () => {
 
           <img
             src={midImage1}
-            alt="Playful character planning content ideas on colorful cards"
+            alt="Copywriter brainstorming headlines with colorful cards"
             className="mt-4 w-full rounded-lg border aspect-[16/9] object-cover"
             loading="lazy"
             decoding="async"
@@ -132,7 +132,7 @@ const AIPromptsForContentWriters = () => {
 
           <img
             src={midImage2}
-            alt="Writer planning a social and editorial calendar with platform icons"
+            alt="Laptop with content analytics dashboard in a cafe setting"
             className="mt-4 w-full rounded-lg border aspect-[16/9] object-cover"
             loading="lazy"
             decoding="async"
