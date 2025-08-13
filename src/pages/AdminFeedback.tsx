@@ -51,10 +51,6 @@ const AdminFeedback = () => {
   const [adminNotes, setAdminNotes] = useState("");
   const [updatingStatus, setUpdatingStatus] = useState(false);
 
-  useEffect(() => {
-    loadFeedback();
-  }, []);
-
   // Wait for both auth and admin checks to complete
   if (authLoading || adminLoading) {
     return <div>Loading...</div>;
@@ -131,6 +127,10 @@ const AdminFeedback = () => {
       setUpdatingStatus(false);
     }
   };
+
+  useEffect(() => {
+    loadFeedback();
+  }, []);
 
   const filteredFeedback = feedback.filter(item => {
     if (filter.type !== "all" && item.feedback_type !== filter.type) return false;
