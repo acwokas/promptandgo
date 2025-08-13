@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useState, useEffect } from "react";
@@ -64,6 +65,18 @@ const AdminPromptTool = () => {
   const [newPackName, setNewPackName] = useState("");
   const [newPackDescription, setNewPackDescription] = useState("");
   const [newPackPrice, setNewPackPrice] = useState("999");
+  
+  // Preview state
+  const [showPreview, setShowPreview] = useState(false);
+
+  // Character limits
+  const limits = {
+    title: 100,
+    whatFor: 150,
+    prompt: 2000,
+    imagePrompt: 500,
+    excerpt: 300
+  };
 
   const ribbonOptions = [
     { value: "none", label: "No ribbon" },
@@ -240,6 +253,41 @@ const AdminPromptTool = () => {
     }
   };
 
+  const generateAutoTags = (title: string, prompt: string, whatFor?: string) => {
+    const text = `${title} ${prompt} ${whatFor || ''}`.toLowerCase();
+    
+    // Common words to exclude
+    const stopWords = new Set(['the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'a', 'an', 'is', 'are', 'was', 'were', 'be', 'been', 'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should', 'may', 'might', 'can', 'this', 'that', 'these', 'those', 'you', 'your', 'i', 'my', 'me', 'we', 'our', 'us', 'they', 'them', 'their', 'it', 'its']);
+    
+    // Extract meaningful words
+    const words = text
+      .replace(/[^\w\s]/g, ' ')
+      .split(/\s+/)
+      .filter(word => word.length > 2 && !stopWords.has(word))
+      .reduce((acc, word) => {
+        acc[word] = (acc[word] || 0) + 1;
+        return acc;
+      }, {} as Record<string, number>);
+    
+    // Get top 5 most frequent words as tags
+    return Object.entries(words)
+      .sort(([,a], [,b]) => b - a)
+      .slice(0, 5)
+      .map(([word]) => word)
+      .join(', ');
+  };
+
+  const getCharacterCount = (text: string, limit: number) => {
+    const remaining = limit - text.length;
+    const isOverLimit = remaining < 0;
+    return {
+      count: text.length,
+      remaining: Math.max(0, remaining),
+      isOverLimit,
+      display: isOverLimit ? `${Math.abs(remaining)} over limit` : `${remaining} remaining`
+    };
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || !prompt.trim() || !categoryId || categoryId === "none") {
@@ -274,8 +322,14 @@ const AdminPromptTool = () => {
       if (promptError) throw promptError;
 
       // Handle tags
-      if (tags.trim()) {
-        const tagNames = tags.split(",").map(t => t.trim()).filter(Boolean);
+      let finalTags = tags.trim();
+      if (!finalTags) {
+        // Auto-generate tags if none provided
+        finalTags = generateAutoTags(title, prompt, whatFor);
+      }
+      
+      if (finalTags) {
+        const tagNames = finalTags.split(",").map(t => t.trim()).filter(Boolean);
         const tagPromises = tagNames.map(async (tagName) => {
           // First, try to insert the tag (will fail if it already exists)
           try {
@@ -400,9 +454,18 @@ const AdminPromptTool = () => {
                   <Input
                     id="title"
                     value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (value.length <= limits.title) {
+                        setTitle(value);
+                      }
+                    }}
                     placeholder="Enter prompt title"
+                    className={getCharacterCount(title, limits.title).isOverLimit ? "border-destructive" : ""}
                   />
+                  <div className={`text-xs ${getCharacterCount(title, limits.title).isOverLimit ? "text-destructive" : "text-muted-foreground"}`}>
+                    {getCharacterCount(title, limits.title).display}
+                  </div>
                 </div>
 
                 <div className="space-y-2">
@@ -410,9 +473,18 @@ const AdminPromptTool = () => {
                   <Input
                     id="whatFor"
                     value={whatFor}
-                    onChange={(e) => setWhatFor(e.target.value)}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (value.length <= limits.whatFor) {
+                        setWhatFor(value);
+                      }
+                    }}
                     placeholder="What this prompt is for"
+                    className={getCharacterCount(whatFor, limits.whatFor).isOverLimit ? "border-destructive" : ""}
                   />
+                  <div className={`text-xs ${getCharacterCount(whatFor, limits.whatFor).isOverLimit ? "text-destructive" : "text-muted-foreground"}`}>
+                    {getCharacterCount(whatFor, limits.whatFor).display}
+                  </div>
                 </div>
               </div>
 
@@ -421,10 +493,19 @@ const AdminPromptTool = () => {
                 <Textarea
                   id="prompt"
                   value={prompt}
-                  onChange={(e) => setPrompt(e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value.length <= limits.prompt) {
+                      setPrompt(value);
+                    }
+                  }}
                   placeholder="Enter the prompt content"
                   rows={8}
+                  className={getCharacterCount(prompt, limits.prompt).isOverLimit ? "border-destructive" : ""}
                 />
+                <div className={`text-xs ${getCharacterCount(prompt, limits.prompt).isOverLimit ? "text-destructive" : "text-muted-foreground"}`}>
+                  {getCharacterCount(prompt, limits.prompt).display}
+                </div>
               </div>
 
               <div className="space-y-2">
@@ -432,10 +513,19 @@ const AdminPromptTool = () => {
                 <Textarea
                   id="imagePrompt"
                   value={imagePrompt}
-                  onChange={(e) => setImagePrompt(e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value.length <= limits.imagePrompt) {
+                      setImagePrompt(value);
+                    }
+                  }}
                   placeholder="Enter image generation prompt (optional)"
                   rows={3}
+                  className={getCharacterCount(imagePrompt, limits.imagePrompt).isOverLimit ? "border-destructive" : ""}
                 />
+                <div className={`text-xs ${getCharacterCount(imagePrompt, limits.imagePrompt).isOverLimit ? "text-destructive" : "text-muted-foreground"}`}>
+                  {getCharacterCount(imagePrompt, limits.imagePrompt).display}
+                </div>
               </div>
 
               <div className="space-y-2">
@@ -443,10 +533,19 @@ const AdminPromptTool = () => {
                 <Textarea
                   id="excerpt"
                   value={excerpt}
-                  onChange={(e) => setExcerpt(e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value.length <= limits.excerpt) {
+                      setExcerpt(value);
+                    }
+                  }}
                   placeholder="Brief description/excerpt"
                   rows={3}
+                  className={getCharacterCount(excerpt, limits.excerpt).isOverLimit ? "border-destructive" : ""}
                 />
+                <div className={`text-xs ${getCharacterCount(excerpt, limits.excerpt).isOverLimit ? "text-destructive" : "text-muted-foreground"}`}>
+                  {getCharacterCount(excerpt, limits.excerpt).display}
+                </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -549,6 +648,9 @@ const AdminPromptTool = () => {
                   onChange={(e) => setTags(e.target.value)}
                   placeholder="tag1, tag2, tag3"
                 />
+                <div className="text-xs text-muted-foreground">
+                  Leave blank to auto-generate tags from title and prompt content
+                </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -644,9 +746,81 @@ const AdminPromptTool = () => {
                 <Label htmlFor="isPro">PRO prompt</Label>
               </div>
 
-              <Button type="submit" disabled={loading} className="w-full">
-                {loading ? "Creating..." : "Create Prompt"}
-              </Button>
+              <div className="flex gap-4">
+                <Dialog open={showPreview} onOpenChange={setShowPreview}>
+                  <DialogTrigger asChild>
+                    <Button 
+                      type="button" 
+                      variant="outline" 
+                      disabled={!title.trim() || !prompt.trim() || categoryId === "none"}
+                      className="flex-1"
+                    >
+                      Preview Prompt
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle>Prompt Preview</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4">
+                      <div>
+                        <h3 className="font-semibold text-lg">{title || "Untitled"}</h3>
+                        {whatFor && <p className="text-sm text-muted-foreground mt-1">{whatFor}</p>}
+                      </div>
+                      
+                      {excerpt && (
+                        <div>
+                          <h4 className="font-medium mb-2">Description</h4>
+                          <p className="text-sm">{excerpt}</p>
+                        </div>
+                      )}
+                      
+                      <div>
+                        <h4 className="font-medium mb-2">Prompt</h4>
+                        <div className="bg-muted p-4 rounded-lg">
+                          <p className="whitespace-pre-wrap text-sm font-mono">{prompt || "No prompt content"}</p>
+                        </div>
+                      </div>
+                      
+                      {imagePrompt && (
+                        <div>
+                          <h4 className="font-medium mb-2">Image Prompt</h4>
+                          <div className="bg-muted p-4 rounded-lg">
+                            <p className="whitespace-pre-wrap text-sm font-mono">{imagePrompt}</p>
+                          </div>
+                        </div>
+                      )}
+                      
+                      <div className="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                          <span className="font-medium">Category:</span> {categories.find(c => c.id === categoryId)?.name || "None"}
+                        </div>
+                        <div>
+                          <span className="font-medium">Subcategory:</span> {filteredSubcategories.find(s => s.id === subcategoryId)?.name || "None"}
+                        </div>
+                        <div>
+                          <span className="font-medium">Power Pack:</span> {packs.find(p => p.slug === packSlug)?.name || "None"}
+                        </div>
+                        <div>
+                          <span className="font-medium">Type:</span> {isPro ? "PRO" : "Free"}
+                        </div>
+                        {ribbon !== "none" && (
+                          <div>
+                            <span className="font-medium">Ribbon:</span> {ribbonOptions.find(r => r.value === ribbon)?.label || "None"}
+                          </div>
+                        )}
+                        <div>
+                          <span className="font-medium">Tags:</span> {tags || generateAutoTags(title, prompt, whatFor) || "None"}
+                        </div>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+
+                <Button type="submit" disabled={loading} className="flex-1">
+                  {loading ? "Creating..." : "Create Prompt"}
+                </Button>
+              </div>
             </form>
           </CardContent>
         </Card>
