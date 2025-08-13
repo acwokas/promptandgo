@@ -597,6 +597,63 @@ export type Database = {
         }
         Relationships: []
       }
+      user_feedback: {
+        Row: {
+          admin_notes: string | null
+          ai_category: string | null
+          ai_sentiment: string | null
+          ai_summary: string | null
+          content: string
+          created_at: string
+          email: string | null
+          feedback_type: string
+          id: string
+          name: string | null
+          priority: string | null
+          prompt_id: string | null
+          rating: number | null
+          status: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          admin_notes?: string | null
+          ai_category?: string | null
+          ai_sentiment?: string | null
+          ai_summary?: string | null
+          content: string
+          created_at?: string
+          email?: string | null
+          feedback_type: string
+          id?: string
+          name?: string | null
+          priority?: string | null
+          prompt_id?: string | null
+          rating?: number | null
+          status?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          admin_notes?: string | null
+          ai_category?: string | null
+          ai_sentiment?: string | null
+          ai_summary?: string | null
+          content?: string
+          created_at?: string
+          email?: string | null
+          feedback_type?: string
+          id?: string
+          name?: string | null
+          priority?: string | null
+          prompt_id?: string | null
+          rating?: number | null
+          status?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -615,6 +672,33 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      widget_settings: {
+        Row: {
+          description: string | null
+          id: string
+          setting_key: string
+          setting_value: boolean
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          description?: string | null
+          id?: string
+          setting_key: string
+          setting_value?: boolean
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          description?: string | null
+          id?: string
+          setting_key?: string
+          setting_value?: boolean
+          updated_at?: string
+          updated_by?: string | null
         }
         Relationships: []
       }
