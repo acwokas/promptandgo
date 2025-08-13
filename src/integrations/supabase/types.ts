@@ -563,33 +563,7 @@ export type Database = {
       }
     }
     Views: {
-      subscribers_safe: {
-        Row: {
-          id: string | null
-          subscribed: boolean | null
-          subscription_end: string | null
-          subscription_tier: string | null
-          updated_at: string | null
-          user_id: string | null
-        }
-        Insert: {
-          id?: string | null
-          subscribed?: boolean | null
-          subscription_end?: string | null
-          subscription_tier?: string | null
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          id?: string | null
-          subscribed?: boolean | null
-          subscription_end?: string | null
-          subscription_tier?: string | null
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       get_subscriber_info: {
