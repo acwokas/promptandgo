@@ -13,9 +13,9 @@ const AIPromptsForBusinessStrategy = () => {
   const description =
     "Plan smarter with these AI prompts for business strategy. Create SWOT analyses, growth roadmaps, and market insights in minutes.";
   // Images provided by user for this article
-  const heroImage = "/lovable-uploads/1f2e3d4c-5b6a-4c3d-8e7f-9a0b1c2d3e4f.png"; // Image 1
-  const midImage1 = "/lovable-uploads/5a4b3c2d-1e0f-9a8b-7c6d-5e4f3a2b1c0d.png"; // Image 2
-  const midImage2 = "/lovable-uploads/a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d.png"; // Image 3 (used as blog index thumbnail)
+  const heroImage = "/lovable-uploads/5fac65f5-604b-497b-87ea-e804970602f1.png"; // Image 1
+  const midImage1 = "/lovable-uploads/d8a2f578-fe88-4435-b597-d06bdb0e74bc.png"; // Image 2
+  const midImage2 = "/lovable-uploads/f0a62b1b-6fae-4b41-8211-30a3c0ed8ee7.png"; // Image 3 (used as blog index thumbnail)
   const origin = typeof window !== "undefined" ? window.location.origin : "";
   const canonical = origin ? `${origin}/blog/ai-prompts-for-business-strategy` : undefined;
   const category = "Strategy";

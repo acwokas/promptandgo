@@ -187,7 +187,7 @@ const Blog = () => {
         <Link to="/blog/ai-prompts-for-business-strategy" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
           <Card className="overflow-hidden">
             <img
-              src="/lovable-uploads/a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d.png"
+              src="/lovable-uploads/f0a62b1b-6fae-4b41-8211-30a3c0ed8ee7.png"
               alt="AI Prompts for Business Strategy and Planning"
               loading="lazy"
               className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
