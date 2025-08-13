@@ -161,25 +161,44 @@ const AdminExport = () => {
   const exportPacks = async () => {
     setLoading(true);
     try {
-      // Fetch all packs
-      const { data: packs, error: packsError } = await supabase
-        .from("packs")
-        .select("*")
-        .order("name");
+      // Fetch all packs and their tags
+      const [packsResult, packTagsResult] = await Promise.all([
+        supabase
+          .from("packs")
+          .select("*")
+          .order("name"),
+        supabase
+          .from("pack_tags")
+          .select(`
+            pack_id,
+            tags:tag_id(name)
+          `)
+      ]);
 
-      if (packsError) throw packsError;
+      if (packsResult.error) throw packsResult.error;
+      if (packTagsResult.error) throw packTagsResult.error;
+
+      // Create map for pack tags
+      const tagsByPack = new Map<string, string[]>();
+      packTagsResult.data?.forEach((pt: any) => {
+        if (!tagsByPack.has(pt.pack_id)) {
+          tagsByPack.set(pt.pack_id, []);
+        }
+        tagsByPack.get(pt.pack_id)?.push(pt.tags.name);
+      });
 
       // Convert to CSV format
-      const csvData = packs?.map((pack: any) => ({
+      const csvData = packsResult.data?.map((pack: any) => ({
         name: pack.name,
         slug: pack.slug,
         description: pack.description || "",
         price_cents: pack.price_cents,
-        is_active: pack.is_active
+        is_active: pack.is_active,
+        tags: tagsByPack.get(pack.id)?.join(", ") || ""
       }));
 
       // Convert to CSV string
-      const headers = ["name", "slug", "description", "price_cents", "is_active"];
+      const headers = ["name", "slug", "description", "price_cents", "is_active", "tags"];
 
       const csvContent = [
         headers.join(","),
@@ -227,7 +246,7 @@ const AdminExport = () => {
     setLoading(true);
     try {
       // Fetch everything in parallel
-      const [promptsResult, packsResult, categoriesResult, subcategoriesResult, tagsResult, packPromptsResult, promptTagsResult] = await Promise.all([
+      const [promptsResult, packsResult, categoriesResult, subcategoriesResult, tagsResult, packPromptsResult, promptTagsResult, packTagsResult] = await Promise.all([
         supabase
           .from("prompts")
           .select(`
@@ -264,12 +283,19 @@ const AdminExport = () => {
           .from("pack_prompts")
           .select(`
             prompt_id,
+            pack_id,
             packs:pack_id(name, slug, price_cents)
           `),
         supabase
           .from("prompt_tags")
           .select(`
             prompt_id,
+            tags:tag_id(name)
+          `),
+        supabase
+          .from("pack_tags")
+          .select(`
+            pack_id,
             tags:tag_id(name)
           `)
       ]);
@@ -282,6 +308,7 @@ const AdminExport = () => {
       if (tagsResult.error) throw tagsResult.error;
       if (packPromptsResult.error) throw packPromptsResult.error;
       if (promptTagsResult.error) throw promptTagsResult.error;
+      if (packTagsResult.error) throw packTagsResult.error;
 
       // Create maps for quick lookup
       const tagsByPrompt = new Map<string, string[]>();
@@ -292,18 +319,39 @@ const AdminExport = () => {
         tagsByPrompt.get(pt.prompt_id)?.push(pt.tags.name);
       });
 
-      const packsByPrompt = new Map<string, { slug: string, name: string, price_cents: number }>();
+      const packsByPrompt = new Map<string, { slug: string, name: string, price_cents: number, pack_id: string }>();
       packPromptsResult.data?.forEach((pp: any) => {
         packsByPrompt.set(pp.prompt_id, {
           slug: pp.packs.slug,
           name: pp.packs.name,
-          price_cents: pp.packs.price_cents || 0
+          price_cents: pp.packs.price_cents || 0,
+          pack_id: pp.pack_id
+        });
+      });
+
+      // Create map for pack tags
+      const tagsByPack = new Map<string, string[]>();
+      packTagsResult.data?.forEach((pt: any) => {
+        if (!tagsByPack.has(pt.pack_id)) {
+          tagsByPack.set(pt.pack_id, []);
+        }
+        tagsByPack.get(pt.pack_id)?.push(pt.tags.name);
+      });
+
+      // Create pack info map with tags
+      const packInfoMap = new Map<string, any>();
+      packsResult.data?.forEach((pack: any) => {
+        packInfoMap.set(pack.id, {
+          ...pack,
+          tags: tagsByPack.get(pack.id)?.join(", ") || ""
         });
       });
 
       // Create comprehensive data with all relationships
       const comprehensiveData = promptsResult.data?.map((prompt: any) => {
         const packInfo = packsByPrompt.get(prompt.id);
+        const fullPackInfo = packInfo ? packInfoMap.get(packInfo.pack_id) : null;
+        
         return {
           // Prompt data
           prompt_title: prompt.title,
@@ -320,14 +368,15 @@ const AdminExport = () => {
           subcategory_name: prompt.subcategories?.name || "",
           subcategory_slug: prompt.subcategories?.slug || "",
           
-          // Tags
-          tags: tagsByPrompt.get(prompt.id)?.join("; ") || "",
+          // Prompt Tags
+          prompt_tags: tagsByPrompt.get(prompt.id)?.join("; ") || "",
           
           // Power Pack data (if associated)
           pack_name: packInfo?.name || "",
           pack_slug: packInfo?.slug || "",
           pack_price_cents: packInfo?.price_cents || "",
           pack_price_dollars: packInfo ? (packInfo.price_cents / 100).toFixed(2) : "",
+          pack_tags: fullPackInfo?.tags || "",
           
           // Status
           in_power_pack: packInfo ? "Yes" : "No",
@@ -340,7 +389,7 @@ const AdminExport = () => {
         "prompt_title", "prompt_what_for", "prompt_content", "prompt_image_prompt", "prompt_excerpt",
         "prompt_is_pro", "prompt_type", "prompt_ribbon",
         "category_name", "category_slug", "subcategory_name", "subcategory_slug",
-        "tags", "in_power_pack", "pack_name", "pack_slug", "pack_price_cents", "pack_price_dollars"
+        "prompt_tags", "in_power_pack", "pack_name", "pack_slug", "pack_price_cents", "pack_price_dollars", "pack_tags"
       ];
 
       const csvContent = [
