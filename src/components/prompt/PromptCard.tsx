@@ -419,7 +419,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
 
 
         {prompt.tags.length > 0 && (
-          <div className="space-y-2">
+          <div className="space-y-2 mt-6">
             <div className="text-xs font-medium">Related Prompts:</div>
             <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
               {prompt.tags.map((t) => (
