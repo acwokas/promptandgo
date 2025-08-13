@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { Navigate, Link } from "react-router-dom";
-import { Upload, Plus, Settings } from "lucide-react";
+import { Upload, Plus, Download } from "lucide-react";
 
 const AdminTools = () => {
   const { isAdmin, loading: adminLoading } = useIsAdmin();
@@ -31,6 +31,13 @@ const AdminTools = () => {
       icon: Plus,
       href: "/admin/prompts",
       color: "text-green-500"
+    },
+    {
+      title: "Export Data",
+      description: "Download complete CSV exports of all prompts and Power Packs for backup or analysis",
+      icon: Download,
+      href: "/admin/export",
+      color: "text-purple-500"
     }
   ];
 

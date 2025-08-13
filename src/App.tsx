@@ -31,6 +31,7 @@ import Auth from "./pages/Auth";
 import AdminBulkUpload from "./pages/AdminBulkUpload";
 import AdminTools from "./pages/AdminTools";
 import AdminPromptTool from "./pages/AdminPromptTool";
+import AdminExport from "./pages/AdminExport";
 import FavoritesPage from "./pages/account/Favorites";
 import AccountPage from "./pages/account/Account";
 import PurchasesPage from "./pages/account/Purchases";
@@ -81,6 +82,7 @@ const App = () => (
           <Route path="/admin" element={<AdminTools />} />
           <Route path="/admin/upload" element={<AdminBulkUpload />} />
           <Route path="/admin/prompts" element={<AdminPromptTool />} />
+          <Route path="/admin/export" element={<AdminExport />} />
             <Route path="/account" element={<AccountPage />} />
             <Route path="/account/profile" element={<ProfilePage />} />
             <Route path="/account/notifications" element={<NotificationsPage />} />

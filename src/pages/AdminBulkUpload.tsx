@@ -173,6 +173,7 @@ const AdminBulkUpload = () => {
         image_prompt: r.image_prompt ?? null,
         excerpt: r.excerpt ?? null,
         is_pro: !!r.is_pro,
+        ribbon: r.ribbon || null,
         _tag_names: r.tags || [],
         _pack_names: r.packs || [],
       }))
@@ -181,7 +182,13 @@ const AdminBulkUpload = () => {
     if (toInsert.length === 0) return { inserted: 0 };
 
     const insertPayload = toInsert.map(({ _tag_names, _pack_names, ...p }) => p);
-    const { data: inserted, error } = await supabase.from("prompts").insert(insertPayload).select("id");
+    
+    // Use insert for prompts since there's no unique constraint for deduplication
+    // The system will handle potential duplicates at the application level
+    const { data: inserted, error } = await supabase
+      .from("prompts")
+      .insert(insertPayload)
+      .select("id");
     if (error) throw error;
 
     const promptIds = (inserted || []).map((r: any) => r.id);
@@ -395,6 +402,7 @@ const AdminBulkUpload = () => {
               tags: splitTags(r.tags),
               is_pro,
               packs,
+              ribbon: r.ribbon ? String(r.ribbon).trim() : undefined,
             };
           });
           break;
@@ -531,6 +539,7 @@ const AdminBulkUpload = () => {
         tags: splitTags(r.tags),
         is_pro: parseBool(getField(r, ["ispro", "pro", "proprompt"]) ?? r.is_pro ?? r.pro ?? r.Pro_Prompt ?? r.pro_prompt ?? r.Pro),
         packs: splitMulti(getField(r, ["propack", "packs", "pack"]) ?? r.pro_pack ?? r.Pro_Pack ?? r.pack ?? r.packs),
+        ribbon: r.ribbon ? String(r.ribbon).trim() : undefined,
       }));
 
       // DELETE in dependency order
@@ -646,7 +655,7 @@ const AdminBulkUpload = () => {
             <label className="text-sm font-medium">CSV File</label>
             <Input type="file" accept=".csv" onChange={(e) => handleCsvChange(e.target.files?.[0] ?? null)} aria-label="CSV file input" />
             <p className="text-xs text-muted-foreground">
-              CSV headers should match the selected entity. For prompts: title, prompt, category_slug, [subcategory_slug], [tags], [is_pro], [pro_pack]. Multiple packs can be comma/semicolon/pipe-separated. New packs auto-created at $9.99.
+              CSV headers should match the selected entity. For prompts: title, prompt, category_slug, [subcategory_slug], [tags], [is_pro], [pro_pack], [ribbon]. Multiple packs can be comma/semicolon/pipe-separated. New packs auto-created at $9.99. Ribbon options: popular, bestseller, new, trending, featured.
             </p>
             {csvStats && (
               <div className="text-xs rounded-md border bg-card p-3">
