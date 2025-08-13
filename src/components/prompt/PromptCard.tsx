@@ -7,7 +7,7 @@ import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Heart, Lock, Copy, MessageSquare, Megaphone, ShoppingBag, BarChart2, Briefcase, User, HeartPulse, Clock, Sparkles, Tag, CheckCircle } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { addToCart, getCart } from "@/lib/cart";
@@ -63,6 +63,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   const seed = category?.id || (prompt as any).categoryId || category?.name || displayTitle;
   const accentIndex = categoryAccentIndex(String(seed));
   const accentClass = `category-accent-${accentIndex}`;
+  const navigate = useNavigate();
 
   const copy = async (text: string, label: string) => {
     try {
@@ -378,8 +379,8 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="outline" size="sm" className="w-full btn-subtle-stroke" disabled aria-label="Add to My Prompts" title="Add to My Prompts">
-                      <Heart className="h-5 w-5 opacity-50" />
+                    <Button variant="outline" size="sm" className="w-full btn-subtle-stroke" onClick={() => navigate('/auth')} aria-label="Add to My Prompts" title="Add to My Prompts">
+                      <Heart className="h-5 w-5" />
                       <span>Add to My Prompts</span>
                     </Button>
                   </TooltipTrigger>
