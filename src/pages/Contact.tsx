@@ -6,6 +6,7 @@ import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
 import PageHero from "@/components/layout/PageHero";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -34,18 +35,19 @@ const Contact = () => {
 
     setIsLoading(true);
     try {
-      const subject = `Contact from ${name}`;
-      const body = [
-        `Name: ${name}`,
-        `Email: ${email}`,
-        "",
-        "Message:",
-        message,
-      ].join("\n");
+      const newsletterOptIn = data.get("newsletter_opt_in") === "on";
 
-      const mailto = `mailto:hey@promptandgo.ai?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      window.location.href = mailto;
-      toast({ title: "Compose email", description: "Your email client should open with your message pre-filled." });
+      const { error } = await supabase.functions.invoke("send-contact", {
+        body: { name, email, message, newsletterOptIn },
+      });
+
+      if (error) {
+        console.error("send-contact error:", error);
+        toast({ title: "Failed to send", description: "Please try again in a moment.", variant: "destructive" });
+        return;
+      }
+
+      toast({ title: "Message sent", description: "Thanks! We’ll get back to you shortly." });
       form.reset();
     } finally {
       setIsLoading(false);
@@ -60,7 +62,7 @@ const Contact = () => {
         minHeightClass="min-h-[40vh]"
       />
       <main className="container py-10">
-        <SEO title="Contact promptandgo" description="Send us a message — we'd love to hear from you." />
+        <SEO title="Contact PromptAndGo" description="Send us a message — we'd love to hear from you." />
 
         <div className="grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-7">
