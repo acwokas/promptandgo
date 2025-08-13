@@ -1,0 +1,134 @@
+import { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
+
+interface UsageData {
+  allowed: boolean;
+  current_usage: number;
+  daily_limit: number;
+  remaining: number;
+}
+
+interface AIUsageState {
+  generator: UsageData | null;
+  suggestions: UsageData | null;
+  assistant: UsageData | null;
+  loading: boolean;
+  error: string | null;
+}
+
+export function useAIUsage() {
+  const { user } = useSupabaseAuth();
+  const [usage, setUsage] = useState<AIUsageState>({
+    generator: null,
+    suggestions: null,
+    assistant: null,
+    loading: false,
+    error: null
+  });
+
+  const fetchUsage = async (usageType: 'generator' | 'suggestions' | 'assistant') => {
+    if (!user) return null;
+
+    try {
+      const { data, error } = await supabase.rpc('get_user_ai_limits', {
+        user_id_param: user.id
+      });
+
+      if (error) throw error;
+
+      if (data && data.length > 0) {
+        const limits = data[0];
+        
+        // Get current usage
+        const { data: usageData, error: usageError } = await supabase
+          .from('ai_usage')
+          .select('queries_used')
+          .eq('user_id', user.id)
+          .eq('usage_type', usageType)
+          .eq('reset_date', new Date().toISOString().split('T')[0])
+          .maybeSingle();
+
+        if (usageError) throw usageError;
+
+        const currentUsage = usageData?.queries_used || 0;
+        let dailyLimit: number;
+
+        switch (usageType) {
+          case 'generator':
+            dailyLimit = limits.daily_generator_limit;
+            break;
+          case 'suggestions':
+            dailyLimit = limits.daily_suggestions_limit;
+            break;
+          case 'assistant':
+            dailyLimit = limits.daily_assistant_limit;
+            break;
+        }
+
+        return {
+          allowed: currentUsage < dailyLimit,
+          current_usage: currentUsage,
+          daily_limit: dailyLimit,
+          remaining: Math.max(0, dailyLimit - currentUsage)
+        };
+      }
+
+      return null;
+    } catch (error) {
+      console.error(`Error fetching ${usageType} usage:`, error);
+      return null;
+    }
+  };
+
+  const loadAllUsage = async () => {
+    if (!user) {
+      setUsage(prev => ({ 
+        ...prev, 
+        generator: null, 
+        suggestions: null, 
+        assistant: null,
+        loading: false 
+      }));
+      return;
+    }
+
+    setUsage(prev => ({ ...prev, loading: true, error: null }));
+
+    try {
+      const [generatorUsage, suggestionsUsage, assistantUsage] = await Promise.all([
+        fetchUsage('generator'),
+        fetchUsage('suggestions'),
+        fetchUsage('assistant')
+      ]);
+
+      setUsage(prev => ({
+        ...prev,
+        generator: generatorUsage,
+        suggestions: suggestionsUsage,
+        assistant: assistantUsage,
+        loading: false
+      }));
+    } catch (error: any) {
+      setUsage(prev => ({
+        ...prev,
+        loading: false,
+        error: error.message || 'Failed to load usage data'
+      }));
+    }
+  };
+
+  const refreshUsage = () => {
+    loadAllUsage();
+  };
+
+  useEffect(() => {
+    loadAllUsage();
+  }, [user]);
+
+  return {
+    usage,
+    refreshUsage,
+    loadAllUsage
+  };
+}

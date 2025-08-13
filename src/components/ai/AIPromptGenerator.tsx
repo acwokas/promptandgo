@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Wand2, Copy, Plus, Loader2 } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
+import UsageDisplay from "@/components/ai/UsageDisplay";
 
 const AIPromptGenerator = () => {
   const [description, setDescription] = useState("");
@@ -37,7 +38,14 @@ const AIPromptGenerator = () => {
         }
       });
 
-      if (error) throw error;
+      if (error) {
+        // Handle usage limit exceeded
+        if (error.message?.includes('Daily limit exceeded') || data?.usageExceeded) {
+          window.location.href = `/ai-credits-exhausted?type=generator&usage=${data?.currentUsage || 0}&limit=${data?.dailyLimit || 0}`;
+          return;
+        }
+        throw error;
+      }
 
       setGeneratedPrompt(data.result);
       toast({
@@ -46,6 +54,13 @@ const AIPromptGenerator = () => {
       });
     } catch (error: any) {
       console.error('Error generating prompt:', error);
+      
+      // Check if it's a usage limit error
+      if (error.message?.includes('Daily limit exceeded')) {
+        window.location.href = '/ai-credits-exhausted?type=generator';
+        return;
+      }
+
       toast({
         title: "Generation failed",
         description: error.message || "Failed to generate prompt. Please try again.",
@@ -123,6 +138,11 @@ const AIPromptGenerator = () => {
           Describe what you want and get a perfectly crafted AI prompt
         </p>
       </div>
+
+      {/* Usage Display for logged-in users */}
+      {user && (
+        <UsageDisplay usageType="generator" compact />
+      )}
 
       <div className="grid md:grid-cols-2 gap-6">
         {/* Input Section */}

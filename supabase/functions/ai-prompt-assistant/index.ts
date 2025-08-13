@@ -1,7 +1,12 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.54.0';
 
 const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+
+const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -15,7 +20,60 @@ serve(async (req) => {
   }
 
   try {
+    const authHeader = req.headers.get('Authorization');
     const { type, prompt, context, userProfile } = await req.json();
+
+    // Extract user ID from auth header if present
+    let userId = null;
+    if (authHeader) {
+      try {
+        const token = authHeader.replace('Bearer ', '');
+        const { data: { user }, error } = await supabase.auth.getUser(token);
+        if (!error && user) {
+          userId = user.id;
+        }
+      } catch (e) {
+        console.log('Failed to get user from token:', e);
+      }
+    }
+
+    // Check usage limits for authenticated users
+    if (userId) {
+      const usageTypeMap = {
+        'generate_prompt': 'generator',
+        'smart_suggestions': 'suggestions',
+        'assistant': 'assistant'
+      };
+      
+      const usageType = usageTypeMap[type as keyof typeof usageTypeMap];
+      if (usageType) {
+        const { data: usageResult, error: usageError } = await supabase
+          .rpc('check_and_increment_usage', {
+            user_id_param: userId,
+            usage_type_param: usageType
+          });
+
+        if (usageError) {
+          console.error('Usage check error:', usageError);
+          throw new Error('Failed to check usage limits');
+        }
+
+        const usageData = usageResult?.[0];
+        if (!usageData?.allowed) {
+          return new Response(JSON.stringify({
+            error: 'Daily limit exceeded',
+            usageExceeded: true,
+            currentUsage: usageData?.current_usage || 0,
+            dailyLimit: usageData?.daily_limit || 0,
+            remaining: usageData?.remaining || 0,
+            usageType: usageType
+          }), {
+            status: 429,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          });
+        }
+      }
+    }
 
     let systemPrompt = '';
     let userMessage = '';
@@ -75,7 +133,7 @@ Keep responses concise and actionable.`;
         throw new Error('Invalid request type');
     }
 
-    console.log('Making OpenAI API request:', { type, systemPrompt: systemPrompt.substring(0, 100) + '...' });
+    console.log('Making OpenAI API request:', { type, userId, systemPrompt: systemPrompt.substring(0, 100) + '...' });
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',

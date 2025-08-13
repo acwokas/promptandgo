@@ -7,6 +7,7 @@ import { useSmartSuggestions } from "@/hooks/useSmartSuggestions";
 import { Brain, Search, Loader2, Lightbulb, TrendingUp } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useToast } from "@/hooks/use-toast";
+import UsageDisplay from "@/components/ai/UsageDisplay";
 
 const SmartSuggestions = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -68,6 +69,11 @@ const SmartSuggestions = () => {
           AI-powered recommendations tailored to your needs and context
         </p>
       </div>
+
+      {/* Usage Display for logged-in users */}
+      {user && (
+        <UsageDisplay usageType="suggestions" compact />
+      )}
 
       {/* Search Section */}
       <Card>

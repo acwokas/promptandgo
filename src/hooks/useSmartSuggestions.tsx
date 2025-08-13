@@ -33,13 +33,26 @@ export function useSmartSuggestions(userContext?: UserContext) {
         }
       });
 
-      if (error) throw error;
+      if (error) {
+        // Handle usage limit exceeded
+        if (error.message?.includes('Daily limit exceeded') || data?.usageExceeded) {
+          window.location.href = `/ai-credits-exhausted?type=suggestions&usage=${data?.currentUsage || 0}&limit=${data?.dailyLimit || 0}`;
+          return;
+        }
+        throw error;
+      }
 
       if (Array.isArray(data.result)) {
         setSmartSuggestions(data.result);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error generating smart suggestions:', error);
+      
+      // Check if it's a usage limit error
+      if (error.message?.includes('Daily limit exceeded')) {
+        window.location.href = '/ai-credits-exhausted?type=suggestions';
+        return;
+      }
     } finally {
       setIsLoadingSuggestions(false);
     }

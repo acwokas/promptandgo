@@ -57,6 +57,7 @@ import SmartSuggestionsPage from "./pages/SmartSuggestions";
 import AIAssistantPage from "./pages/AIAssistant";
 import ToolkitPage from "./pages/Toolkit";
 import MyPromptsPage from "./pages/MyPrompts";
+import AICreditsExhaustedPage from "./pages/AICreditsExhausted";
 
 const queryClient = new QueryClient();
 
@@ -129,6 +130,7 @@ const AppContent = () => {
         <Route path="/ai/generator" element={<AIPromptGeneratorPage />} />
         <Route path="/ai/suggestions" element={<SmartSuggestionsPage />} />
         <Route path="/ai/assistant" element={<AIAssistantPage />} />
+        <Route path="/ai-credits-exhausted" element={<AICreditsExhaustedPage />} />
         <Route path="/my-prompts" element={<MyPromptsPage />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />

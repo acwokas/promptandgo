@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Bot, Send, User, Loader2, Lightbulb, Search } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
+import UsageDisplay from "@/components/ai/UsageDisplay";
 
 
 interface Message {
@@ -69,7 +70,14 @@ const AIAssistant = () => {
         }
       });
 
-      if (error) throw error;
+      if (error) {
+        // Handle usage limit exceeded
+        if (error.message?.includes('Daily limit exceeded') || data?.usageExceeded) {
+          window.location.href = `/ai-credits-exhausted?type=assistant&usage=${data?.currentUsage || 0}&limit=${data?.dailyLimit || 0}`;
+          return;
+        }
+        throw error;
+      }
 
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -81,6 +89,13 @@ const AIAssistant = () => {
       setMessages(prev => [...prev, assistantMessage]);
     } catch (error: any) {
       console.error('Error getting AI response:', error);
+      
+      // Check if it's a usage limit error
+      if (error.message?.includes('Daily limit exceeded')) {
+        window.location.href = '/ai-credits-exhausted?type=assistant';
+        return;
+      }
+
       toast({
         title: "Assistant unavailable",
         description: "Failed to get response from AI assistant. Please try again.",
@@ -120,6 +135,11 @@ const AIAssistant = () => {
           Get personalized help finding and creating the perfect prompts
         </p>
       </div>
+
+      {/* Usage Display for logged-in users */}
+      {user && (
+        <UsageDisplay usageType="assistant" compact />
+      )}
 
       {user && (
         <Card className="mb-6">

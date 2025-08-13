@@ -6,6 +6,7 @@ import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
+import UsageDisplay from "@/components/ai/UsageDisplay";
 
 const AccountPage = () => {
   const { user } = useSupabaseAuth();
@@ -56,6 +57,11 @@ const AccountPage = () => {
       </PageHero>
 
       <main className="container py-8">
+        {/* AI Usage Overview */}
+        <div className="mb-8">
+          <UsageDisplay />
+        </div>
+
         <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           <Link to="/account/profile" className="rounded-xl border bg-card p-5 block group hover:shadow-md transition-all">
             <h2 className="font-semibold">Profile</h2>
