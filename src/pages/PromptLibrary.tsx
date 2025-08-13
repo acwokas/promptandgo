@@ -443,8 +443,11 @@ const PromptLibrary = () => {
               setSelectedTag(undefined);
               setRibbon(undefined);
               setProOnly(false);
+              setIncludePro(true);
               setPage(1);
-              // No manual refresh here; useEffect will trigger once state updates propagate
+              // Clear URL search params as well
+              const newSearchParams = new URLSearchParams();
+              setSearchParams(newSearchParams, { replace: true });
             }}
           />
         </section>
