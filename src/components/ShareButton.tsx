@@ -1,7 +1,42 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Share2, Copy, Twitter, Facebook, Linkedin, Smartphone } from "lucide-react";
+import { Share2, Copy, Facebook, Linkedin, Smartphone, Instagram } from "lucide-react";
+
+// Custom X (Twitter) icon since lucide-react doesn't have the new X logo
+const XIcon = ({ className, ...props }: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    {...props}
+  >
+    <path d="m4 4 11.733 16h4.267l-11.733 -16z" />
+    <path d="m4 20 6.768 -6.768m2.46 -2.46 6.772 -6.772" />
+  </svg>
+);
+
+// TikTok icon
+const TikTokIcon = ({ className, ...props }: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    {...props}
+  >
+    <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+  </svg>
+);
 import { useSharing } from "@/hooks/useSharing";
 
 interface ShareButtonProps {
@@ -28,7 +63,7 @@ const ShareButton = ({
 
   const shareOptions = { url, contentType, contentId, title };
 
-  const handleShare = async (method: 'clipboard' | 'twitter' | 'facebook' | 'linkedin' | 'native') => {
+  const handleShare = async (method: 'clipboard' | 'x' | 'facebook' | 'linkedin' | 'instagram' | 'tiktok' | 'native') => {
     setOpen(false);
     
     switch (method) {
@@ -80,11 +115,27 @@ const ShareButton = ({
         )}
         
         <DropdownMenuItem 
-          onClick={() => handleShare('twitter')}
+          onClick={() => handleShare('x')}
           className="gap-2 cursor-pointer"
         >
-          <Twitter className="h-4 w-4" />
-          Share on Twitter
+          <XIcon className="h-4 w-4" />
+          Share on X
+        </DropdownMenuItem>
+        
+        <DropdownMenuItem 
+          onClick={() => handleShare('instagram')}
+          className="gap-2 cursor-pointer"
+        >
+          <Instagram className="h-4 w-4" />
+          Share on Instagram
+        </DropdownMenuItem>
+        
+        <DropdownMenuItem 
+          onClick={() => handleShare('tiktok')}
+          className="gap-2 cursor-pointer"
+        >
+          <TikTokIcon className="h-4 w-4" />
+          Share on TikTok
         </DropdownMenuItem>
         
         <DropdownMenuItem 

@@ -63,7 +63,7 @@ export function useSharing() {
     }
   };
 
-  const shareToSocial = async (platform: 'twitter' | 'facebook' | 'linkedin', options: ShareOptions) => {
+  const shareToSocial = async (platform: 'x' | 'facebook' | 'linkedin' | 'instagram' | 'tiktok', options: ShareOptions) => {
     const shortUrl = await createShareLink(options);
     if (!shortUrl) return;
 
@@ -72,7 +72,7 @@ export function useSharing() {
 
     let shareUrl = '';
     switch (platform) {
-      case 'twitter':
+      case 'x':
         shareUrl = `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`;
         break;
       case 'facebook':
@@ -81,6 +81,22 @@ export function useSharing() {
       case 'linkedin':
         shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
         break;
+      case 'instagram':
+        // Instagram doesn't support direct URL sharing via web, so copy to clipboard with a message
+        await navigator.clipboard.writeText(`${options.title} ${shortUrl}`);
+        toast({
+          title: "Link copied for Instagram!",
+          description: "Paste this in your Instagram post or story."
+        });
+        return;
+      case 'tiktok':
+        // TikTok doesn't have direct URL sharing, so copy to clipboard with a message  
+        await navigator.clipboard.writeText(`${options.title} ${shortUrl}`);
+        toast({
+          title: "Link copied for TikTok!",
+          description: "Paste this in your TikTok post description."
+        });
+        return;
     }
 
     window.open(shareUrl, '_blank', 'width=600,height=400');

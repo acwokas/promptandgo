@@ -84,7 +84,7 @@ const schema = {
           </p>
         </header>
 
-        <div className="mb-4">
+        <div className="mb-4 flex justify-end">
           <ShareButton
             url={canonical || `${origin}/blog/welcome-to-promptandgo-ai`}
             contentType="blog"
