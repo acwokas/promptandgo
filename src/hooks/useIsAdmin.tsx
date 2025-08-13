@@ -43,14 +43,24 @@ export function useIsAdmin() {
           hasRole, 
           emailAllow, 
           userEmail: user.email,
-          finalResult: !!hasRole || emailAllow 
+          finalResult: !!hasRole || emailAllow,
+          active: active 
         });
 
-        if (active) setIsAdmin(!!hasRole || emailAllow);
+        const adminResult = !!hasRole || emailAllow;
+        if (active) {
+          console.log("useIsAdmin: Setting isAdmin to:", adminResult);
+          setIsAdmin(adminResult);
+        } else {
+          console.log("useIsAdmin: Component unmounted, not setting admin state");
+        }
       } catch (e) {
         console.error("useIsAdmin: Error in admin check", e);
-        if (active) setIsAdmin(user?.email?.toLowerCase() === "me@adrianwatkins.com");
+        const fallbackResult = user?.email?.toLowerCase() === "me@adrianwatkins.com";
+        console.log("useIsAdmin: Using fallback email check:", fallbackResult);
+        if (active) setIsAdmin(fallbackResult);
       } finally {
+        console.log("useIsAdmin: Setting loading to false, active:", active);
         if (active) setLoading(false);
       }
     }
@@ -59,6 +69,8 @@ export function useIsAdmin() {
       active = false;
     };
   }, [user?.id, user?.email]);
+
+  console.log("useIsAdmin hook returning:", { isAdmin, loading });
 
   return { isAdmin, loading };
 }
