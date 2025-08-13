@@ -417,6 +417,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
         )}
 
 
+
         {prompt.tags.length > 0 && (
           <div className="space-y-2">
             <div className="text-xs font-medium">Related Prompts:</div>
