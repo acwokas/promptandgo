@@ -35,6 +35,7 @@ const MyGeneratedPrompts = () => {
   const [prompts, setPrompts] = useState<GeneratedPrompt[]>([]);
   const [loading, setLoading] = useState(true);
   const [promptToDelete, setPromptToDelete] = useState<{ id: string; title: string } | null>(null);
+  const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const { user } = useSupabaseAuth();
   const { toast } = useToast();
 
@@ -110,6 +111,70 @@ const MyGeneratedPrompts = () => {
     }
   };
 
+  // Generate dynamic tags based on prompt characteristics
+  const getDynamicTags = (prompt: GeneratedPrompt) => {
+    const dynamicTags: string[] = [];
+    
+    // Length-based tags
+    if (prompt.prompt.length < 100) {
+      dynamicTags.push("Short");
+    } else if (prompt.prompt.length < 300) {
+      dynamicTags.push("Medium");
+    } else {
+      dynamicTags.push("Long");
+    }
+    
+    // Content-based tags
+    if (prompt.prompt.toLowerCase().includes('creative') || prompt.prompt.toLowerCase().includes('writing')) {
+      dynamicTags.push("Creative");
+    }
+    if (prompt.prompt.toLowerCase().includes('business') || prompt.prompt.toLowerCase().includes('marketing')) {
+      dynamicTags.push("Business");
+    }
+    if (prompt.prompt.toLowerCase().includes('technical') || prompt.prompt.toLowerCase().includes('code')) {
+      dynamicTags.push("Technical");
+    }
+    if (prompt.prompt.toLowerCase().includes('analysis') || prompt.prompt.toLowerCase().includes('analyze')) {
+      dynamicTags.push("Analysis");
+    }
+    
+    // Recent tag for prompts created in the last 7 days
+    const createdDate = new Date(prompt.created_at);
+    const weekAgo = new Date();
+    weekAgo.setDate(weekAgo.getDate() - 7);
+    if (createdDate > weekAgo) {
+      dynamicTags.push("Recent");
+    }
+    
+    return dynamicTags;
+  };
+
+  // Get all unique tags from prompts
+  const getAllTags = () => {
+    const allTags = new Set<string>();
+    prompts.forEach(prompt => {
+      prompt.tags.forEach(tag => allTags.add(tag));
+      getDynamicTags(prompt).forEach(tag => allTags.add(tag));
+    });
+    return Array.from(allTags).sort();
+  };
+
+  // Filter prompts based on active filter
+  const filteredPrompts = activeFilter 
+    ? prompts.filter(prompt => {
+        const allPromptTags = [...prompt.tags, ...getDynamicTags(prompt)];
+        return allPromptTags.includes(activeFilter);
+      })
+    : prompts;
+
+  const handleTagClick = (tag: string) => {
+    if (activeFilter === tag) {
+      setActiveFilter(null); // Clear filter if clicking the same tag
+    } else {
+      setActiveFilter(tag);
+    }
+  };
+
   if (loading) {
     return (
       <>
@@ -148,9 +213,22 @@ const MyGeneratedPrompts = () => {
 
         {/* Action Bar */}
         <div className="flex items-center justify-between mb-6">
-          <p className="text-sm text-muted-foreground">
-            {prompts.length} prompt{prompts.length !== 1 ? 's' : ''} generated
-          </p>
+          <div className="flex items-center gap-4">
+            <p className="text-sm text-muted-foreground">
+              {filteredPrompts.length} of {prompts.length} prompt{prompts.length !== 1 ? 's' : ''} 
+              {activeFilter && <> • Filtered by: <Badge variant="secondary" className="ml-1">{activeFilter}</Badge></>}
+            </p>
+            {activeFilter && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setActiveFilter(null)}
+                className="text-xs"
+              >
+                Clear Filter
+              </Button>
+            )}
+          </div>
           <Button asChild>
             <Link to="/ai/generator">
               <Plus className="h-4 w-4 mr-2" />
@@ -159,10 +237,31 @@ const MyGeneratedPrompts = () => {
           </Button>
         </div>
 
+        {/* Filter Tags */}
+        {prompts.length > 0 && (
+          <div className="mb-6">
+            <h3 className="text-sm font-medium mb-2">Filter by tags:</h3>
+            <div className="flex flex-wrap gap-2">
+              {getAllTags().map((tag) => (
+                <Badge
+                  key={tag}
+                  variant={activeFilter === tag ? "default" : "outline"}
+                  className="cursor-pointer hover:bg-muted transition-colors"
+                  onClick={() => handleTagClick(tag)}
+                >
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Prompts Grid */}
-        {prompts.length > 0 ? (
+        {filteredPrompts.length > 0 ? (
           <div className="grid gap-6">
-            {prompts.map((prompt) => (
+            {filteredPrompts.map((prompt) => {
+              const allTags = [...prompt.tags, ...getDynamicTags(prompt)];
+              return (
               <Card key={prompt.id} className="hover:shadow-md transition-shadow">
                 <CardHeader>
                   <div className="flex items-start justify-between">
@@ -209,11 +308,21 @@ const MyGeneratedPrompts = () => {
 
                   <div className="flex items-center justify-between">
                     <div className="flex flex-wrap gap-1">
-                      {prompt.tags.map((tag) => (
-                        <Badge key={tag} variant="outline" className="text-xs">
-                          {tag}
-                        </Badge>
-                      ))}
+                      {allTags.map((tag) => {
+                        const isDynamic = getDynamicTags(prompt).includes(tag);
+                        return (
+                          <Badge 
+                            key={tag} 
+                            variant={activeFilter === tag ? "default" : "outline"} 
+                            className={`text-xs cursor-pointer hover:bg-muted transition-colors ${
+                              isDynamic ? 'border-primary/40 bg-primary/5' : ''
+                            }`}
+                            onClick={() => handleTagClick(tag)}
+                          >
+                            {tag}
+                          </Badge>
+                        );
+                      })}
                     </div>
                     
                     <div className="flex items-center gap-2">
@@ -245,8 +354,28 @@ const MyGeneratedPrompts = () => {
                   </div>
                 </CardContent>
               </Card>
-            ))}
+              );
+            })}
           </div>
+        ) : activeFilter ? (
+          <Card>
+            <CardContent className="py-12">
+              <div className="text-center space-y-4">
+                <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto">
+                  <Sparkles className="h-8 w-8 text-muted-foreground" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">No Prompts Match Filter</h3>
+                  <p className="text-muted-foreground mb-4">
+                    No prompts found with the "{activeFilter}" tag.
+                  </p>
+                  <Button onClick={() => setActiveFilter(null)} variant="outline">
+                    Clear Filter
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         ) : (
           <Card>
             <CardContent className="py-12">
