@@ -4,10 +4,21 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Copy, Trash2, Edit, Plus, Sparkles } from "lucide-react";
+import { Copy, Trash2, Edit, Plus, Sparkles, AlertTriangle } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface GeneratedPrompt {
   id: string;
@@ -22,6 +33,7 @@ interface GeneratedPrompt {
 const MyGeneratedPrompts = () => {
   const [prompts, setPrompts] = useState<GeneratedPrompt[]>([]);
   const [loading, setLoading] = useState(true);
+  const [deletePromptId, setDeletePromptId] = useState<string | null>(null);
   const { user } = useSupabaseAuth();
   const { toast } = useToast();
 
@@ -70,8 +82,6 @@ const MyGeneratedPrompts = () => {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this prompt?")) return;
-
     try {
       const { error } = await supabase
         .from('user_generated_prompts')
@@ -82,6 +92,7 @@ const MyGeneratedPrompts = () => {
       if (error) throw error;
 
       setPrompts(prompts.filter(p => p.id !== id));
+      setDeletePromptId(null);
       toast({
         title: "Deleted!",
         description: "Prompt has been deleted."
@@ -190,15 +201,39 @@ const MyGeneratedPrompts = () => {
                         <Copy className="h-3 w-3 mr-1" />
                         Copy
                       </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleDelete(prompt.id)}
-                        className="text-destructive hover:text-destructive"
-                      >
-                        <Trash2 className="h-3 w-3 mr-1" />
-                        Delete
-                      </Button>
+                      
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="text-destructive hover:text-destructive"
+                          >
+                            <Trash2 className="h-3 w-3 mr-1" />
+                            Delete
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle className="flex items-center gap-2">
+                              <AlertTriangle className="h-5 w-5 text-destructive" />
+                              Caution!
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Are you sure you want to delete this prompt? This cannot be undone.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => handleDelete(prompt.id)}
+                              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                            >
+                              Confirm Delete
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </div>
                   </div>
 
