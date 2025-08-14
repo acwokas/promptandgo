@@ -76,6 +76,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
               <SelectValue placeholder="All" />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="">All</SelectItem>
               {categoriesSorted.map((c) => (
                 <SelectItem key={c.id} value={c.id}>
                   {c.name}
@@ -100,11 +101,16 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
               <SelectValue placeholder={isCategorySelected ? "All" : "Please select a category or search prompts"} />
             </SelectTrigger>
             <SelectContent>
-              {isCategorySelected && subcategoriesSorted.map((s) => (
-                <SelectItem key={s.id} value={s.id}>
-                  {s.name}
-                </SelectItem>
-              ))}
+              {isCategorySelected && (
+                <>
+                  <SelectItem value="">All</SelectItem>
+                  {subcategoriesSorted.map((s) => (
+                    <SelectItem key={s.id} value={s.id}>
+                      {s.name}
+                    </SelectItem>
+                  ))}
+                </>
+              )}
             </SelectContent>
           </Select>
         </div>
