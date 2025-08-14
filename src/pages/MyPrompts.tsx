@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
-import { Heart, Bookmark, Trash2, ExternalLink } from "lucide-react";
+import { Heart, Bookmark, Trash2, ExternalLink, Search } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -129,6 +129,14 @@ const MyPromptsPage = () => {
           <p className="text-muted-foreground">
             View and manage all your AI-generated prompts in one place
           </p>
+          <div className="mt-4 flex items-center justify-center">
+            <Button asChild size="lg" variant="secondary">
+              <Link to="/library">
+                <Search className="h-4 w-4 mr-2" />
+                Browse Library
+              </Link>
+            </Button>
+          </div>
         </div>
 
         {isLoading ? (
