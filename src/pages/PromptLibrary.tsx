@@ -483,7 +483,7 @@ const PromptLibrary = () => {
               
               if (n.includePro !== undefined) setIncludePro(!!n.includePro);
               
-              if (n.ribbon !== undefined) {
+              if ('ribbon' in n) {
                 setRibbon(n.ribbon || undefined);
                 // Track when user explicitly selects "All"
                 if (!n.ribbon) {
