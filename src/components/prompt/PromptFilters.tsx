@@ -65,8 +65,8 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
         <div className="space-y-1 md:col-span-3">
           <Label htmlFor="category-select">{categoryLabel ?? "Category:"}</Label>
           <Select
-            value={categoryId ?? ""}
-            onValueChange={(v) => onChange({ categoryId: v || undefined, subcategoryId: undefined })}
+            value={categoryId ?? "all"}
+            onValueChange={(v) => onChange({ categoryId: v === "all" ? undefined : v, subcategoryId: undefined })}
           >
             <SelectTrigger
               id="category-select"
@@ -76,7 +76,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
               <SelectValue placeholder="All" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All</SelectItem>
+              <SelectItem value="all">All</SelectItem>
               {categoriesSorted.map((c) => (
                 <SelectItem key={c.id} value={c.id}>
                   {c.name}
@@ -89,8 +89,8 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
         <div className="space-y-1 md:col-span-3">
           <Label htmlFor="subcategory-select">{subcategoryLabel ?? "Subcategory:"}</Label>
           <Select
-            value={subcategoryId ?? ""}
-            onValueChange={(v) => onChange({ subcategoryId: v || undefined })}
+            value={subcategoryId ?? "all"}
+            onValueChange={(v) => onChange({ subcategoryId: v === "all" ? undefined : v })}
             disabled={!isCategorySelected}
           >
             <SelectTrigger
@@ -103,7 +103,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
             <SelectContent>
               {isCategorySelected && (
                 <>
-                  <SelectItem value="">All</SelectItem>
+                  <SelectItem value="all">All</SelectItem>
                   {subcategoriesSorted.map((s) => (
                     <SelectItem key={s.id} value={s.id}>
                       {s.name}
