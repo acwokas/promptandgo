@@ -489,7 +489,7 @@ const PromptLibrary = () => {
         </section>
 
         {/* Personalized Recommendations - show when no active filters */}
-        {hasPersonalization && personalizedPrompts.length > 0 && !categoryId && !subcategoryId && !query && !selectedTag && (
+        {hasPersonalization && personalizedPrompts.length > 0 && !categoryId && !subcategoryId && !query && !selectedTag && !ribbon && (
           <section className="mt-8 mb-6">
             <div className="mb-4">
               <h2 className="text-xl font-semibold text-foreground">🎯 Recommended for You</h2>
