@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -6,19 +6,58 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Wand2, Copy, Plus, Loader2 } from "lucide-react";
+import { Wand2, Copy, Plus, Loader2, History, ExternalLink } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useAIUsage } from "@/hooks/useAIUsage";
 import UsageDisplay from "@/components/ai/UsageDisplay";
+import { Link } from "react-router-dom";
+
+interface RecentPrompt {
+  id: string;
+  title: string;
+  prompt: string;
+  created_at: string;
+}
 
 const AIPromptGenerator = () => {
   const [description, setDescription] = useState("");
   const [context, setContext] = useState("");
   const [generatedPrompt, setGeneratedPrompt] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [recentPrompts, setRecentPrompts] = useState<RecentPrompt[]>([]);
+  const [loadingRecent, setLoadingRecent] = useState(false);
   const { toast } = useToast();
   const { user } = useSupabaseAuth();
   const { refreshUsage } = useAIUsage();
+
+  
+  // Load recent prompts when user is available
+  useEffect(() => {
+    if (user) {
+      loadRecentPrompts();
+    }
+  }, [user]);
+
+  const loadRecentPrompts = async () => {
+    if (!user) return;
+    
+    setLoadingRecent(true);
+    try {
+      const { data, error } = await supabase
+        .from('user_generated_prompts')
+        .select('id, title, prompt, created_at')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(5);
+
+      if (error) throw error;
+      setRecentPrompts(data || []);
+    } catch (error) {
+      console.error('Error loading recent prompts:', error);
+    } finally {
+      setLoadingRecent(false);
+    }
+  };
 
   const handleGenerate = async () => {
     if (!description.trim()) {
@@ -123,11 +162,30 @@ const AIPromptGenerator = () => {
         title: "Added to My Prompts!",
         description: "The generated prompt has been saved to your personal collection."
       });
+
+      // Refresh recent prompts after adding
+      loadRecentPrompts();
     } catch (error: any) {
       console.error('Error adding to my prompts:', error);
       toast({
         title: "Save failed",
         description: "Failed to save prompt to your collection. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const handleCopyRecentPrompt = async (prompt: string) => {
+    try {
+      await navigator.clipboard.writeText(prompt);
+      toast({
+        title: "Copied!",
+        description: "Prompt copied to clipboard."
+      });
+    } catch (error) {
+      toast({
+        title: "Copy failed",
+        description: "Failed to copy prompt to clipboard.",
         variant: "destructive"
       });
     }
@@ -242,6 +300,77 @@ const AIPromptGenerator = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Recent Generated Prompts Section */}
+      {user && (
+        <Card>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle className="flex items-center gap-2">
+                <History className="h-5 w-5" />
+                Recent Generated Prompts
+              </CardTitle>
+              <Button asChild variant="outline" size="sm">
+                <Link to="/account/generated">
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                  View All
+                </Link>
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            {loadingRecent ? (
+              <div className="text-center text-muted-foreground py-8">
+                <Loader2 className="h-6 w-6 animate-spin mx-auto mb-2" />
+                <p>Loading your prompts...</p>
+              </div>
+            ) : recentPrompts.length > 0 ? (
+              <div className="space-y-3">
+                {recentPrompts.map((prompt) => (
+                  <div key={prompt.id} className="p-3 border rounded-lg hover:bg-muted/50 transition-colors">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-medium text-sm mb-1 truncate">
+                          {prompt.title}
+                        </h4>
+                        <p className="text-xs text-muted-foreground line-clamp-2">
+                          {prompt.prompt.substring(0, 120)}
+                          {prompt.prompt.length > 120 ? '...' : ''}
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {new Date(prompt.created_at).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleCopyRecentPrompt(prompt.prompt)}
+                      >
+                        <Copy className="h-3 w-3" />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+                {recentPrompts.length === 5 && (
+                  <div className="text-center pt-2">
+                    <Button asChild variant="link" size="sm">
+                      <Link to="/account/generated">
+                        View all {recentPrompts.length}+ prompts →
+                      </Link>
+                    </Button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="text-center text-muted-foreground py-8">
+                <History className="h-8 w-8 mx-auto mb-3 opacity-50" />
+                <p className="mb-2">No generated prompts yet</p>
+                <p className="text-xs">Generate your first prompt above to see it here</p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
 
       {/* Tips Section */}
       <Card>
