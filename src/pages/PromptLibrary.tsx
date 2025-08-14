@@ -78,6 +78,7 @@ const PromptLibrary = () => {
   const [includePro, setIncludePro] = useState(true);
   const [proOnly, setProOnly] = useState(false);
   const [ribbon, setRibbon] = useState<string | undefined>();
+  const [userExplicitlySelectedAll, setUserExplicitlySelectedAll] = useState(false);
 
 
   const [page, setPage] = useState(1);
@@ -341,10 +342,10 @@ const PromptLibrary = () => {
 
   // Set ribbon to "RECOMMENDED" when personalized prompts are available and no explicit ribbon is set
   useEffect(() => {
-    if (!searchParams.get('ribbon') && hasPersonalization && personalizedPrompts.length > 0 && !ribbon && !categoryId && !subcategoryId && !query) {
+    if (!searchParams.get('ribbon') && hasPersonalization && personalizedPrompts.length > 0 && !ribbon && !categoryId && !subcategoryId && !query && !userExplicitlySelectedAll) {
       setRibbon("RECOMMENDED");
     }
-  }, [hasPersonalization, personalizedPrompts, ribbon, categoryId, subcategoryId, query, searchParams]);
+  }, [hasPersonalization, personalizedPrompts, ribbon, categoryId, subcategoryId, query, searchParams, userExplicitlySelectedAll]);
 
   // Initial loads
   useEffect(() => {
@@ -447,6 +448,12 @@ const PromptLibrary = () => {
               if (n.includePro !== undefined) setIncludePro(!!n.includePro);
               if (n.ribbon !== undefined) {
                 setRibbon(n.ribbon || undefined);
+                // Track when user explicitly selects "All"
+                if (!n.ribbon) {
+                  setUserExplicitlySelectedAll(true);
+                } else {
+                  setUserExplicitlySelectedAll(false);
+                }
                 // Update URL to reflect ribbon change
                 const newSearchParams = new URLSearchParams(searchParams);
                 if (n.ribbon) {
@@ -467,6 +474,7 @@ const PromptLibrary = () => {
               setProOnly(false);
               setIncludePro(true);
               setPage(1);
+              setUserExplicitlySelectedAll(false); // Reset the explicit selection flag
               // Reset ribbon to default based on personalization
               const defaultRibbon = hasPersonalization && personalizedPrompts.length > 0 ? "RECOMMENDED" : undefined;
               setRibbon(defaultRibbon);
