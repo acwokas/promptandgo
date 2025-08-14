@@ -439,13 +439,46 @@ const PromptLibrary = () => {
             ribbon={ribbon}
             onChange={(n) => {
               clearRandom();
-              if (n.categoryId !== undefined) setCategoryId(n.categoryId || undefined);
-              if (n.subcategoryId !== undefined) setSubcategoryId(n.subcategoryId || undefined);
+              const newSearchParams = new URLSearchParams(searchParams);
+              
+              if (n.categoryId !== undefined) {
+                setCategoryId(n.categoryId || undefined);
+                if (n.categoryId) {
+                  newSearchParams.set('categoryId', n.categoryId);
+                } else {
+                  newSearchParams.delete('categoryId');
+                }
+                // Clear ribbon when selecting category
+                setRibbon(undefined);
+                setUserExplicitlySelectedAll(false);
+                newSearchParams.delete('ribbon');
+              }
+              
+              if (n.subcategoryId !== undefined) {
+                setSubcategoryId(n.subcategoryId || undefined);
+                if (n.subcategoryId) {
+                  newSearchParams.set('subcategoryId', n.subcategoryId);
+                } else {
+                  newSearchParams.delete('subcategoryId');
+                }
+              }
+              
               if (n.query !== undefined) {
                 setQuery(n.query);
                 setSelectedTag(undefined); // typing a query clears tag filter
+                if (n.query) {
+                  newSearchParams.set('q', n.query);
+                } else {
+                  newSearchParams.delete('q');
+                }
+                // Clear ribbon when searching
+                setRibbon(undefined);
+                setUserExplicitlySelectedAll(false);
+                newSearchParams.delete('ribbon');
               }
+              
               if (n.includePro !== undefined) setIncludePro(!!n.includePro);
+              
               if (n.ribbon !== undefined) {
                 setRibbon(n.ribbon || undefined);
                 // Track when user explicitly selects "All"
@@ -455,14 +488,14 @@ const PromptLibrary = () => {
                   setUserExplicitlySelectedAll(false);
                 }
                 // Update URL to reflect ribbon change
-                const newSearchParams = new URLSearchParams(searchParams);
                 if (n.ribbon) {
                   newSearchParams.set('ribbon', n.ribbon);
                 } else {
                   newSearchParams.delete('ribbon');
                 }
-                setSearchParams(newSearchParams, { replace: true });
               }
+              
+              setSearchParams(newSearchParams, { replace: true });
             }}
             onSearch={() => { clearRandom(); refresh(); }}
             onClear={() => {
