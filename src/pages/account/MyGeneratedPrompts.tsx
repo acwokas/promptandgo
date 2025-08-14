@@ -33,7 +33,7 @@ interface GeneratedPrompt {
 const MyGeneratedPrompts = () => {
   const [prompts, setPrompts] = useState<GeneratedPrompt[]>([]);
   const [loading, setLoading] = useState(true);
-  const [deletePromptId, setDeletePromptId] = useState<string | null>(null);
+  const [promptToDelete, setPromptToDelete] = useState<{ id: string; title: string } | null>(null);
   const { user } = useSupabaseAuth();
   const { toast } = useToast();
 
@@ -81,18 +81,20 @@ const MyGeneratedPrompts = () => {
     }
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDeleteConfirm = async () => {
+    if (!promptToDelete) return;
+
     try {
       const { error } = await supabase
         .from('user_generated_prompts')
         .delete()
-        .eq('id', id)
+        .eq('id', promptToDelete.id)
         .eq('user_id', user?.id);
 
       if (error) throw error;
 
-      setPrompts(prompts.filter(p => p.id !== id));
-      setDeletePromptId(null);
+      setPrompts(prompts.filter(p => p.id !== promptToDelete.id));
+      setPromptToDelete(null);
       toast({
         title: "Deleted!",
         description: "Prompt has been deleted."
@@ -201,39 +203,15 @@ const MyGeneratedPrompts = () => {
                         <Copy className="h-3 w-3 mr-1" />
                         Copy
                       </Button>
-                      
-                      <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="text-destructive hover:text-destructive"
-                          >
-                            <Trash2 className="h-3 w-3 mr-1" />
-                            Delete
-                          </Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                          <AlertDialogHeader>
-                            <AlertDialogTitle className="flex items-center gap-2">
-                              <AlertTriangle className="h-5 w-5 text-destructive" />
-                              Caution!
-                            </AlertDialogTitle>
-                            <AlertDialogDescription>
-                              Are you sure you want to delete this prompt? This cannot be undone.
-                            </AlertDialogDescription>
-                          </AlertDialogHeader>
-                          <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction
-                              onClick={() => handleDelete(prompt.id)}
-                              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                            >
-                              Confirm Delete
-                            </AlertDialogAction>
-                          </AlertDialogFooter>
-                        </AlertDialogContent>
-                      </AlertDialog>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setPromptToDelete({ id: prompt.id, title: prompt.title })}
+                        className="text-destructive hover:text-destructive"
+                      >
+                        <Trash2 className="h-3 w-3 mr-1" />
+                        Delete
+                      </Button>
                     </div>
                   </div>
 
@@ -305,6 +283,30 @@ const MyGeneratedPrompts = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* Delete Confirmation Dialog */}
+        <AlertDialog open={!!promptToDelete} onOpenChange={() => setPromptToDelete(null)}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle className="flex items-center gap-2">
+                <AlertTriangle className="h-5 w-5 text-destructive" />
+                Caution!
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                Are you sure you want to delete "{promptToDelete?.title}"? This cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel onClick={() => setPromptToDelete(null)}>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={handleDeleteConfirm}
+                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              >
+                Confirm Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </main>
     </>
   );
