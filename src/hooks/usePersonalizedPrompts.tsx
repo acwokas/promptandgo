@@ -94,62 +94,78 @@ export function usePersonalizedPrompts() {
     const toneKeywords = context.preferred_tone ? getToneKeywords(context.preferred_tone) : [];
     const outcomeKeywords = context.desired_outcome ? context.desired_outcome.toLowerCase().split(/[,\s]+/).filter(w => w.length > 2) : [];
 
-    // Check tags for matches
+    // Combine all searchable text
     const allTags = tags.map(t => t.toLowerCase());
+    const contentText = [prompt.title, prompt.what_for, prompt.excerpt, prompt.prompt].join(" ").toLowerCase();
+    const searchableContent = [...allTags, contentText].join(" ");
     
-    // Industry match (high weight)
+    // Industry match (25 points max)
+    let industryMatches = 0;
     industryKeywords.forEach(keyword => {
-      if (allTags.some(tag => tag.includes(keyword.toLowerCase()))) {
-        score += 10;
-        if (!reasons.includes(`Matches your ${context.industry} industry`)) {
-          reasons.push(`Matches your ${context.industry} industry`);
-        }
-      }
-    });
-
-    // Project type match (high weight)
-    projectKeywords.forEach(keyword => {
-      if (allTags.some(tag => tag.includes(keyword.toLowerCase()))) {
-        score += 8;
-        if (!reasons.includes(`Perfect for ${context.project_type}`)) {
-          reasons.push(`Perfect for ${context.project_type}`);
-        }
-      }
-    });
-
-    // Tone match (medium weight)
-    toneKeywords.forEach(keyword => {
-      if (allTags.some(tag => tag.includes(keyword.toLowerCase()))) {
+      if (searchableContent.includes(keyword.toLowerCase())) {
+        industryMatches++;
         score += 5;
-        if (!reasons.includes(`Matches your ${context.preferred_tone?.toLowerCase()} style`)) {
-          reasons.push(`Matches your ${context.preferred_tone?.toLowerCase()} style`);
-        }
       }
     });
+    if (industryMatches > 0) {
+      reasons.push(`${context.industry} industry focus`);
+    }
 
-    // Desired outcome match (medium weight)
+    // Project type match (25 points max) 
+    let projectMatches = 0;
+    projectKeywords.forEach(keyword => {
+      if (searchableContent.includes(keyword.toLowerCase())) {
+        projectMatches++;
+        score += 5;
+      }
+    });
+    if (projectMatches > 0) {
+      reasons.push(`Perfect for ${context.project_type}`);
+    }
+
+    // Tone match (15 points max)
+    let toneMatches = 0;
+    toneKeywords.forEach(keyword => {
+      if (searchableContent.includes(keyword.toLowerCase())) {
+        toneMatches++;
+        score += 3;
+      }
+    });
+    if (toneMatches > 0) {
+      reasons.push(`${context.preferred_tone} tone`);
+    }
+
+    // Desired outcome match (15 points max)
+    let outcomeMatches = 0;
     outcomeKeywords.forEach(keyword => {
-      if (allTags.some(tag => tag.includes(keyword)) || 
-          prompt.title?.toLowerCase().includes(keyword) ||
-          prompt.what_for?.toLowerCase().includes(keyword) ||
-          prompt.excerpt?.toLowerCase().includes(keyword)) {
-        score += 6;
-        if (!reasons.includes("Aligns with your goals")) {
-          reasons.push("Aligns with your goals");
-        }
+      if (searchableContent.includes(keyword)) {
+        outcomeMatches++;
+        score += 3;
       }
     });
+    if (outcomeMatches > 0) {
+      reasons.push("Aligns with your goals");
+    }
 
-    // Text content matching (lower weight)
-    const contentText = [prompt.title, prompt.what_for, prompt.excerpt].join(" ").toLowerCase();
-    
-    [...industryKeywords, ...projectKeywords].forEach(keyword => {
-      if (contentText.includes(keyword.toLowerCase())) {
-        score += 2;
-      }
-    });
+    // Category relevance bonus (10 points max)
+    const relevantCategories = ["Content Creation", "Marketing Campaigns", "Business Strategy", "Customer Support"];
+    if (context.project_type && relevantCategories.some(cat => 
+      contentText.includes(cat.toLowerCase()) || 
+      allTags.some(tag => tag.includes(cat.toLowerCase()))
+    )) {
+      score += 5;
+    }
 
-    return { score, reasons: reasons.slice(0, 2) }; // Limit to top 2 reasons
+    // Popular/quality indicators (10 points max)
+    if (prompt.excerpt && prompt.excerpt.length > 50) score += 2; // Well-documented
+    if (allTags.length >= 3) score += 3; // Well-tagged
+    if (prompt.what_for && prompt.what_for.length > 20) score += 2; // Good description
+
+    // Convert raw score to percentage (max theoretical score is ~90)
+    const maxPossibleScore = 90;
+    const percentage = Math.min(100, Math.round((score / maxPossibleScore) * 100));
+
+    return { score: percentage, reasons: reasons.slice(0, 3) }; // Show top 3 reasons
   };
 
   const loadPersonalizedPrompts = async (context: UserContext) => {
