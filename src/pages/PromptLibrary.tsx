@@ -682,6 +682,7 @@ const PromptLibrary = () => {
                     setQuery(t); // reflect in input
                     setCategoryId(undefined);
                     setSubcategoryId(undefined);
+                    setRibbon(undefined); // Clear ribbon filter when clicking tags
                   }}
                   onCategoryClick={(cid) => { clearRandom();
                     setCategoryId(cid);
