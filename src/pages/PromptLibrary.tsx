@@ -441,9 +441,9 @@ const PromptLibrary = () => {
               clearRandom();
               const newSearchParams = new URLSearchParams(searchParams);
               
-              if (n.categoryId !== undefined) {
+              if ('categoryId' in n) {
                 setCategoryId(n.categoryId || undefined);
-                if (n.categoryId && n.categoryId !== "all") {
+                if (n.categoryId) {
                   newSearchParams.set('categoryId', n.categoryId);
                 } else {
                   newSearchParams.delete('categoryId');
@@ -457,9 +457,9 @@ const PromptLibrary = () => {
                 newSearchParams.delete('ribbon');
               }
               
-              if (n.subcategoryId !== undefined) {
+              if ('subcategoryId' in n) {
                 setSubcategoryId(n.subcategoryId || undefined);
-                if (n.subcategoryId && n.subcategoryId !== "all") {
+                if (n.subcategoryId) {
                   newSearchParams.set('subcategoryId', n.subcategoryId);
                 } else {
                   newSearchParams.delete('subcategoryId');
