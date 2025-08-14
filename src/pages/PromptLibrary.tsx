@@ -443,11 +443,14 @@ const PromptLibrary = () => {
               
               if (n.categoryId !== undefined) {
                 setCategoryId(n.categoryId || undefined);
-                if (n.categoryId) {
+                if (n.categoryId && n.categoryId !== "all") {
                   newSearchParams.set('categoryId', n.categoryId);
                 } else {
                   newSearchParams.delete('categoryId');
                 }
+                // Clear subcategory when changing category
+                setSubcategoryId(undefined);
+                newSearchParams.delete('subcategoryId');
                 // Clear ribbon when selecting category
                 setRibbon(undefined);
                 setUserExplicitlySelectedAll(false);
@@ -456,7 +459,7 @@ const PromptLibrary = () => {
               
               if (n.subcategoryId !== undefined) {
                 setSubcategoryId(n.subcategoryId || undefined);
-                if (n.subcategoryId) {
+                if (n.subcategoryId && n.subcategoryId !== "all") {
                   newSearchParams.set('subcategoryId', n.subcategoryId);
                 } else {
                   newSearchParams.delete('subcategoryId');
