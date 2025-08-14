@@ -480,8 +480,8 @@ const PromptLibrary = () => {
           />
         </section>
 
-        {/* Personalized Recommendations - only show when ribbon is not explicitly set to RECOMMENDED filter */}
-        {hasPersonalization && personalizedPrompts.length > 0 && ribbon !== "RECOMMENDED" && !categoryId && !subcategoryId && !query && (
+        {/* Personalized Recommendations - show when no active filters */}
+        {hasPersonalization && personalizedPrompts.length > 0 && !categoryId && !subcategoryId && !query && !selectedTag && (
           <section className="mt-8 mb-6">
             <div className="mb-4">
               <h2 className="text-xl font-semibold text-foreground">🎯 Recommended for You</h2>
