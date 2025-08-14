@@ -7,12 +7,14 @@ import { useSmartSuggestions } from "@/hooks/useSmartSuggestions";
 import { Brain, Search, Loader2, Lightbulb, TrendingUp } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useToast } from "@/hooks/use-toast";
+import { useAIUsage } from "@/hooks/useAIUsage";
 import UsageDisplay from "@/components/ai/UsageDisplay";
 
 const SmartSuggestions = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const { user } = useSupabaseAuth();
   const { toast } = useToast();
+  const { refreshUsage } = useAIUsage();
   
   // Mock user context for demo - in real app, this would come from user profile
   const userContext = {
@@ -28,9 +30,11 @@ const SmartSuggestions = () => {
     generateSmartSuggestions 
   } = useSmartSuggestions(userContext);
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (searchQuery.trim()) {
-      generateSmartSuggestions(searchQuery);
+      await generateSmartSuggestions(searchQuery);
+      // Refresh usage display after successful generation
+      refreshUsage();
     } else {
       toast({
         title: "Search query required",

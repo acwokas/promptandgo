@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Wand2, Copy, Plus, Loader2 } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
+import { useAIUsage } from "@/hooks/useAIUsage";
 import UsageDisplay from "@/components/ai/UsageDisplay";
 
 const AIPromptGenerator = () => {
@@ -17,6 +18,7 @@ const AIPromptGenerator = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const { toast } = useToast();
   const { user } = useSupabaseAuth();
+  const { refreshUsage } = useAIUsage();
 
   const handleGenerate = async () => {
     if (!description.trim()) {
@@ -48,6 +50,10 @@ const AIPromptGenerator = () => {
       }
 
       setGeneratedPrompt(data.result);
+      
+      // Refresh usage display after successful generation
+      refreshUsage();
+      
       toast({
         title: "Prompt generated!",
         description: "Your AI prompt has been created successfully."

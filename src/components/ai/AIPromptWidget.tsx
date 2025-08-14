@@ -4,6 +4,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useAIUsage } from "@/hooks/useAIUsage";
 import { Wand2, Copy, Loader2, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -12,6 +13,7 @@ const AIPromptWidget = () => {
   const [generatedPrompt, setGeneratedPrompt] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const { toast } = useToast();
+  const { refreshUsage } = useAIUsage();
 
   const handleGenerate = async () => {
     if (!description.trim()) {
@@ -43,6 +45,10 @@ const AIPromptWidget = () => {
       }
 
       setGeneratedPrompt(data.result);
+      
+      // Refresh usage display after successful generation
+      refreshUsage();
+      
       toast({
         title: "Prompt generated!",
         description: "Your AI prompt has been created successfully."

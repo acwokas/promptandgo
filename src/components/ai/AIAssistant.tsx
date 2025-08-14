@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Bot, Send, User, Loader2, Lightbulb, Search } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
+import { useAIUsage } from "@/hooks/useAIUsage";
 import UsageDisplay from "@/components/ai/UsageDisplay";
 
 
@@ -33,6 +34,7 @@ const AIAssistant = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
   const { user } = useSupabaseAuth();
+  const { refreshUsage } = useAIUsage();
   const [currentAvatarUrl, setCurrentAvatarUrl] = useState<string>(user?.user_metadata?.avatar_url || "");
 
   const scrollToBottom = () => {
@@ -87,6 +89,9 @@ const AIAssistant = () => {
       };
 
       setMessages(prev => [...prev, assistantMessage]);
+      
+      // Refresh usage display after successful response
+      refreshUsage();
     } catch (error: any) {
       console.error('Error getting AI response:', error);
       
