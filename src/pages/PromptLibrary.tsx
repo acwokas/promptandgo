@@ -510,15 +510,11 @@ const PromptLibrary = () => {
               setProOnly(false);
               setIncludePro(true);
               setPage(1);
-              setUserExplicitlySelectedAll(false); // Reset the explicit selection flag
-              // Reset ribbon to default based on personalization
-              const defaultRibbon = hasPersonalization && personalizedPrompts.length > 0 ? "RECOMMENDED" : undefined;
-              setRibbon(defaultRibbon);
-              // Clear URL search params as well
+              setUserExplicitlySelectedAll(true); // User explicitly wants to see all prompts
+              // Clear ribbon completely - don't auto-set to RECOMMENDED
+              setRibbon(undefined);
+              // Clear all URL search params
               const newSearchParams = new URLSearchParams();
-              if (defaultRibbon) {
-                newSearchParams.set('ribbon', defaultRibbon);
-              }
               setSearchParams(newSearchParams, { replace: true });
             }}
           />
