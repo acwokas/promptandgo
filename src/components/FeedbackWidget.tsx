@@ -99,6 +99,16 @@ export const FeedbackWidget = ({ promptId }: FeedbackWidgetProps) => {
 
     setIsSubmitting(true);
 
+    // Check if user is authenticated (required by RLS policy)
+    if (!user) {
+      toast({
+        title: "Authentication Required",
+        description: "Please sign in to submit feedback.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     try {
       const { error } = await supabase
         .from("user_feedback")
@@ -107,7 +117,7 @@ export const FeedbackWidget = ({ promptId }: FeedbackWidgetProps) => {
           content: sanitizedContent,
           rating: formData.rating ? parseInt(formData.rating) : null,
           prompt_id: promptId || null,
-          user_id: user?.id || null,
+          user_id: user.id,
           name: sanitizedName || null,
           email: formData.email.trim() || null // Email already validated
         });

@@ -6,6 +6,7 @@ import { toast } from "@/hooks/use-toast";
 import PageHero from "@/components/layout/PageHero";
 import RelatedPrompts from "@/components/prompt/RelatedPrompts";
 import { Link } from "react-router-dom";
+import { validatePromptInput, sanitizeInput } from "@/lib/inputValidation";
 
 const SubmitPrompt = () => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -17,12 +18,50 @@ const SubmitPrompt = () => {
     const promptText = String(fd.get("prompt") ?? "");
     const excerpt = String(fd.get("excerpt") ?? "");
 
-    const subject = `New Prompt Submission: ${title}`;
+    // Validate inputs
+    const titleValidation = validatePromptInput(title);
+    const whatForValidation = validatePromptInput(whatFor);
+    const promptValidation = validatePromptInput(promptText);
+
+    if (!titleValidation.isValid) {
+      toast({
+        title: "Invalid Title",
+        description: titleValidation.error,
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (!whatForValidation.isValid) {
+      toast({
+        title: "Invalid Description", 
+        description: whatForValidation.error,
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (!promptValidation.isValid) {
+      toast({
+        title: "Invalid Prompt",
+        description: promptValidation.error,
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Sanitize inputs for URL safety
+    const sanitizedTitle = sanitizeInput(title);
+    const sanitizedWhatFor = sanitizeInput(whatFor);
+    const sanitizedPromptText = sanitizeInput(promptText);
+    const sanitizedExcerpt = excerpt ? sanitizeInput(excerpt) : "";
+
+    const subject = `New Prompt Submission: ${sanitizedTitle}`;
     const bodyLines = [
-      `Title: ${title}`,
-      `What for: ${whatFor}`,
-      `Prompt:\n${promptText}`,
-      excerpt ? `Excerpt:\n${excerpt}` : undefined,
+      `Title: ${sanitizedTitle}`,
+      `What for: ${sanitizedWhatFor}`,
+      `Prompt:\n${sanitizedPromptText}`,
+      sanitizedExcerpt ? `Excerpt:\n${sanitizedExcerpt}` : undefined,
     ].filter(Boolean) as string[];
     const body = bodyLines.join("\n\n");
 
