@@ -153,6 +153,8 @@ export function usePersonalizedPrompts() {
   };
 
   const loadPersonalizedPrompts = async (context: UserContext) => {
+    if (!user) return;
+    
     if (!context.industry && !context.project_type && !context.preferred_tone && !context.desired_outcome) {
       setPersonalizedPrompts([]);
       return;
@@ -168,6 +170,14 @@ export function usePersonalizedPrompts() {
         .limit(100); // Analyze top 100 recent prompts
 
       if (error) throw error;
+
+      // Get user preferences
+      const { data: userPreferences, error: preferencesError } = await supabase
+        .from('user_prompt_preferences')
+        .select('prompt_id, preference_type')
+        .eq('user_id', user.id);
+
+      if (preferencesError) throw preferencesError;
 
       if (!prompts || prompts.length === 0) {
         setPersonalizedPrompts([]);
@@ -195,16 +205,24 @@ export function usePersonalizedPrompts() {
         }
       });
 
+      // Create a map of user preferences for quick lookup
+      const preferencesMap = new Map(
+        userPreferences?.map(p => [p.prompt_id, p.preference_type]) || []
+      );
+
       // Score and filter prompts
       const scoredPrompts = prompts
         .map(prompt => {
           const tags = tagMap.get(prompt.id) || [];
           const { score, reasons } = calculateRelevanceScore(prompt, tags, context);
           
-          // Boost score if it has RECOMMENDED ribbon
+          // Boost score based on user preferences
           let finalScore = score;
-          if (prompt.ribbon === "RECOMMENDED") {
-            finalScore += 15; // Significant boost for user-trained prompts
+          const userPreference = preferencesMap.get(prompt.id);
+          if (userPreference === 'liked') {
+            finalScore += 20; // Significant boost for user-liked prompts
+          } else if (userPreference === 'disliked') {
+            finalScore = Math.max(0, finalScore - 10); // Reduce score for disliked prompts
           }
           
           return {
@@ -219,8 +237,8 @@ export function usePersonalizedPrompts() {
             tags,
             isPro: prompt.is_pro,
             relevanceScore: finalScore,
-            matchReason: prompt.ribbon === "RECOMMENDED" 
-              ? ["Previously liked by you", ...reasons]
+            matchReason: userPreference === 'liked'
+              ? ["✨ You liked this prompt", ...reasons]
               : reasons
           };
         })

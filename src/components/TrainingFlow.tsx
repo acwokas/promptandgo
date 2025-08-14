@@ -166,14 +166,22 @@ export const TrainingFlow = ({ onComplete, onClose }: TrainingFlowProps) => {
         .map(([promptId]) => promptId);
 
       if (likedPromptIds.length > 0) {
-        // Set ribbon to "RECOMMENDED" for liked prompts
+        // Save user-specific preferences for liked prompts
+        const preferences = likedPromptIds.map(promptId => ({
+          user_id: user.id,
+          prompt_id: promptId,
+          preference_type: 'liked' as const
+        }));
+
         await supabase
-          .from("prompts")
-          .update({ ribbon: "RECOMMENDED" })
-          .in("id", likedPromptIds);
+          .from("user_prompt_preferences")
+          .upsert(preferences, { 
+            onConflict: 'user_id,prompt_id',
+            ignoreDuplicates: false 
+          });
       }
     } catch (error) {
-      console.error("Error updating recommended prompts:", error);
+      console.error("Error saving user preferences:", error);
     }
   };
 
