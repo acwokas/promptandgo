@@ -161,11 +161,16 @@ export function usePersonalizedPrompts() {
     if (allTags.length >= 3) score += 3; // Well-tagged
     if (prompt.what_for && prompt.what_for.length > 20) score += 2; // Good description
 
-    // Convert raw score to percentage (max theoretical score is ~90)
-    const maxPossibleScore = 90;
-    const percentage = Math.min(100, Math.round((score / maxPossibleScore) * 100));
-
-    return { score: percentage, reasons: reasons.slice(0, 3) }; // Show top 3 reasons
+    // Convert raw score to percentage with better scaling
+    // Scores typically range from 10-40, so let's scale them better
+    let percentage;
+    if (score >= 30) percentage = 90 + Math.min(10, score - 30); // 90-100% for high scores
+    else if (score >= 20) percentage = 70 + (score - 20) * 2; // 70-90% for good scores  
+    else if (score >= 10) percentage = 50 + (score - 10) * 2; // 50-70% for decent scores
+    else if (score >= 5) percentage = 30 + score * 4; // 30-50% for low scores
+    else percentage = score * 6; // 0-30% for very low scores
+    
+    return { score: Math.min(100, Math.round(percentage)), reasons: reasons.slice(0, 3) };
   };
 
   const loadPersonalizedPrompts = async (context: UserContext) => {
