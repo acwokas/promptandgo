@@ -19,6 +19,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 interface GeneratedPrompt {
   id: string;
@@ -179,10 +180,31 @@ const MyGeneratedPrompts = () => {
                 </CardHeader>
                 
                 <CardContent className="space-y-4">
-                  <div className="p-4 bg-muted rounded-lg border">
-                    <pre className="whitespace-pre-wrap text-sm font-mono">
-                      {prompt.prompt}
-                    </pre>
+                  <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value={`prompt-${prompt.id}`}>
+                      <AccordionTrigger className="text-left">
+                        <div className="flex items-center gap-2">
+                          <span>View full prompt</span>
+                          <Badge variant="secondary" className="text-xs">
+                            {prompt.prompt.length} characters
+                          </Badge>
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="p-4 bg-muted rounded-lg border">
+                          <pre className="whitespace-pre-wrap text-sm font-mono">
+                            {prompt.prompt}
+                          </pre>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+
+                  {/* Preview of prompt (first 150 characters) */}
+                  <div className="p-3 bg-muted/30 rounded-lg border-l-4 border-l-primary/20">
+                    <p className="text-sm text-muted-foreground italic">
+                      "{prompt.prompt.substring(0, 150)}{prompt.prompt.length > 150 ? '...' : ''}"
+                    </p>
                   </div>
 
                   <div className="flex items-center justify-between">
