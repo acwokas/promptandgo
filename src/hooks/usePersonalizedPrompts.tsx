@@ -179,6 +179,9 @@ export function usePersonalizedPrompts() {
 
       if (preferencesError) throw preferencesError;
 
+      console.log('🔍 Debug - User preferences loaded:', userPreferences);
+      console.log('🔍 Debug - Number of prompts to analyze:', prompts?.length);
+
       if (!prompts || prompts.length === 0) {
         setPersonalizedPrompts([]);
         return;
@@ -209,6 +212,9 @@ export function usePersonalizedPrompts() {
       const preferencesMap = new Map(
         userPreferences?.map(p => [p.prompt_id, p.preference_type]) || []
       );
+
+      console.log('🔍 Debug - Preferences map size:', preferencesMap.size);
+      console.log('🔍 Debug - User context:', context);
 
       // Score and filter prompts
       const scoredPrompts = prompts
@@ -245,6 +251,13 @@ export function usePersonalizedPrompts() {
         .filter(p => p.relevanceScore > 0) // Only show prompts with some relevance
         .sort((a, b) => b.relevanceScore - a.relevanceScore) // Sort by relevance
         .slice(0, 6); // Top 6 most relevant
+
+      console.log('🔍 Debug - Scored prompts:', scoredPrompts.map(p => ({
+        title: p.title,
+        score: p.relevanceScore,
+        reasons: p.matchReason,
+        hasUserPreference: preferencesMap.has(p.id)
+      })));
 
       setPersonalizedPrompts(scoredPrompts);
     } catch (error) {

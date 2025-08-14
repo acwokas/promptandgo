@@ -179,6 +179,8 @@ export const TrainingFlow = ({ onComplete, onClose }: TrainingFlowProps) => {
             onConflict: 'user_id,prompt_id',
             ignoreDuplicates: false 
           });
+
+        console.log('✅ Successfully saved user preferences:', preferences);
       }
     } catch (error) {
       console.error("Error saving user preferences:", error);

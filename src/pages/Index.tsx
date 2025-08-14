@@ -189,9 +189,17 @@ const Index = () => {
                 </div>
               ))}
             </div>
-            <div className="mt-6 text-center">
+            <div className="mt-6 text-center space-x-3">
               <Button asChild variant="outline">
                 <Link to="/library">See All Your Recommendations →</Link>
+              </Button>
+              <Button 
+                onClick={() => window.location.reload()} 
+                variant="ghost" 
+                size="sm"
+                className="text-xs"
+              >
+                🔄 Refresh
               </Button>
             </div>
           </section>
