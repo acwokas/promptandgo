@@ -331,11 +331,20 @@ const PromptLibrary = () => {
     const sid = searchParams.get('subcategoryId') || undefined;
     const po = searchParams.get('proOnly');
     const q = searchParams.get('q') || undefined;
+    const ribbonFromUrl = searchParams.get('ribbon') || undefined;
     if (cid !== undefined) setCategoryId(cid);
     if (sid !== undefined) setSubcategoryId(sid);
     setProOnly(po === '1' || po === 'true');
     if (q !== undefined) setQuery(q);
+    if (ribbonFromUrl !== undefined) setRibbon(ribbonFromUrl);
   }, [searchParams]);
+
+  // Set ribbon to "RECOMMENDED" when personalized prompts are available and no explicit ribbon is set
+  useEffect(() => {
+    if (!searchParams.get('ribbon') && hasPersonalization && personalizedPrompts.length > 0 && !ribbon && !categoryId && !subcategoryId && !query) {
+      setRibbon("RECOMMENDED");
+    }
+  }, [hasPersonalization, personalizedPrompts, ribbon, categoryId, subcategoryId, query, searchParams]);
 
   // Initial loads
   useEffect(() => {
@@ -436,7 +445,17 @@ const PromptLibrary = () => {
                 setSelectedTag(undefined); // typing a query clears tag filter
               }
               if (n.includePro !== undefined) setIncludePro(!!n.includePro);
-              if (n.ribbon !== undefined) setRibbon(n.ribbon || undefined);
+              if (n.ribbon !== undefined) {
+                setRibbon(n.ribbon || undefined);
+                // Update URL to reflect ribbon change
+                const newSearchParams = new URLSearchParams(searchParams);
+                if (n.ribbon) {
+                  newSearchParams.set('ribbon', n.ribbon);
+                } else {
+                  newSearchParams.delete('ribbon');
+                }
+                setSearchParams(newSearchParams, { replace: true });
+              }
             }}
             onSearch={() => { clearRandom(); refresh(); }}
             onClear={() => {
@@ -445,19 +464,24 @@ const PromptLibrary = () => {
               setSubcategoryId(undefined);
               setQuery("");
               setSelectedTag(undefined);
-              setRibbon(undefined);
               setProOnly(false);
               setIncludePro(true);
               setPage(1);
+              // Reset ribbon to default based on personalization
+              const defaultRibbon = hasPersonalization && personalizedPrompts.length > 0 ? "RECOMMENDED" : undefined;
+              setRibbon(defaultRibbon);
               // Clear URL search params as well
               const newSearchParams = new URLSearchParams();
+              if (defaultRibbon) {
+                newSearchParams.set('ribbon', defaultRibbon);
+              }
               setSearchParams(newSearchParams, { replace: true });
             }}
           />
         </section>
 
-        {/* Personalized Recommendations */}
-        {hasPersonalization && personalizedPrompts.length > 0 && (
+        {/* Personalized Recommendations - only show when ribbon is not explicitly set to RECOMMENDED filter */}
+        {hasPersonalization && personalizedPrompts.length > 0 && ribbon !== "RECOMMENDED" && !categoryId && !subcategoryId && !query && (
           <section className="mt-8 mb-6">
             <div className="mb-4">
               <h2 className="text-xl font-semibold text-foreground">🎯 Recommended for You</h2>
@@ -478,6 +502,7 @@ const PromptLibrary = () => {
                       setQuery(t);
                       setCategoryId(undefined);
                       setSubcategoryId(undefined);
+                      setRibbon(undefined);
                     }}
                     onCategoryClick={(cid) => { 
                       clearRandom();
@@ -486,6 +511,7 @@ const PromptLibrary = () => {
                       setSelectedTag(undefined);
                       setProOnly(false);
                       setQuery("");
+                      setRibbon(undefined);
                     }}
                     onSubcategoryClick={(sid, cid) => { 
                       clearRandom();
@@ -494,6 +520,7 @@ const PromptLibrary = () => {
                       setSelectedTag(undefined);
                       setProOnly(false);
                       setQuery("");
+                      setRibbon(undefined);
                     }}
                     onViewAllPro={() => { 
                       clearRandom();
@@ -502,6 +529,7 @@ const PromptLibrary = () => {
                       setSelectedTag(undefined);
                       setQuery("");
                       setProOnly(true);
+                      setRibbon(undefined);
                     }}
                   />
                   {/* Relevance indicator */}
@@ -539,7 +567,9 @@ const PromptLibrary = () => {
 
         <section className="mt-6">
           <h2 className="text-xl font-semibold mb-4">
-            {hasPersonalization ? "All Prompts" : "Browse All Prompts"}
+            {ribbon === "RECOMMENDED" ? "🎯 Recommended Prompts" : 
+             hasPersonalization && personalizedPrompts.length > 0 && ribbon !== "RECOMMENDED" ? "All Prompts" : 
+             "Browse All Prompts"}
           </h2>
           <div ref={listRef} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {items.map((p) => (
