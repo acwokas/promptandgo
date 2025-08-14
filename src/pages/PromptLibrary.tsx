@@ -183,7 +183,8 @@ const PromptLibrary = () => {
         if (subcategoryId) q = q.eq("subcategory_id", subcategoryId);
         if (!proSearch && rawQuery) q = q.textSearch("search_vector", rawQuery, { type: "websearch" });
         if (promptIdsForTag) q = q.in("id", promptIdsForTag);
-        if (ribbon) q = q.eq("ribbon", ribbon);
+        // Only filter by database ribbon if it's not "RECOMMENDED" (which shows personalized prompts)
+        if (ribbon && ribbon !== "RECOMMENDED") q = q.eq("ribbon", ribbon);
         if (proOnly || proSearch) q = q.eq("is_pro", true);
         else if (!includePro) q = q.eq("is_pro", false);
 
@@ -612,40 +613,100 @@ const PromptLibrary = () => {
              "Browse All Prompts"}
           </h2>
           <div ref={listRef} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {items.map((p) => (
-              <PromptCard
-                key={p.id}
-                prompt={p as any}
-                categories={categories}
-                onTagClick={(t) => { clearRandom();
-                  setSelectedTag(t);
-                  setQuery(t); // reflect in input
-                  setCategoryId(undefined);
-                  setSubcategoryId(undefined);
-                }}
-                onCategoryClick={(cid) => { clearRandom();
-                  setCategoryId(cid);
-                  setSubcategoryId(undefined);
-                  setSelectedTag(undefined);
-                  setProOnly(false);
-                  setQuery("");
-                }}
-                onSubcategoryClick={(sid, cid) => { clearRandom();
-                  setCategoryId(cid);
-                  setSubcategoryId(sid);
-                  setSelectedTag(undefined);
-                  setProOnly(false);
-                  setQuery("");
-                }}
-                onViewAllPro={() => { clearRandom();
-                  setCategoryId(undefined);
-                  setSubcategoryId(undefined);
-                  setSelectedTag(undefined);
-                  setQuery("");
-                  setProOnly(true);
-                }}
-              />
-            ))}
+            {ribbon === "RECOMMENDED" && hasPersonalization && personalizedPrompts.length > 0 ? (
+              // Show personalized prompts when "Recommended" is selected
+              personalizedPrompts.map((p) => (
+                <div key={p.id} className="relative">
+                  <PromptCard
+                    prompt={p as any}
+                    categories={categories}
+                    onTagClick={(t) => { 
+                      clearRandom();
+                      setSelectedTag(t);
+                      setQuery(t);
+                      setCategoryId(undefined);
+                      setSubcategoryId(undefined);
+                      setRibbon(undefined);
+                    }}
+                    onCategoryClick={(cid) => { 
+                      clearRandom();
+                      setCategoryId(cid);
+                      setSubcategoryId(undefined);
+                      setSelectedTag(undefined);
+                      setProOnly(false);
+                      setQuery("");
+                      setRibbon(undefined);
+                    }}
+                    onSubcategoryClick={(sid, cid) => { 
+                      clearRandom();
+                      setCategoryId(cid);
+                      setSubcategoryId(sid);
+                      setSelectedTag(undefined);
+                      setProOnly(false);
+                      setQuery("");
+                      setRibbon(undefined);
+                    }}
+                    onViewAllPro={() => { 
+                      clearRandom();
+                      setCategoryId(undefined);
+                      setSubcategoryId(undefined);
+                      setSelectedTag(undefined);
+                      setQuery("");
+                      setProOnly(true);
+                      setRibbon(undefined);
+                    }}
+                  />
+                  {/* Relevance indicator */}
+                  <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full border-2 border-background shadow-sm">
+                    Match: {Math.round(p.relevanceScore)}%
+                  </div>
+                  {/* Match reasons */}
+                  {p.matchReason.length > 0 && (
+                    <div className="absolute bottom-2 left-2 right-2 bg-background/95 backdrop-blur-sm rounded-md p-2 border text-xs">
+                      <div className="text-muted-foreground">
+                        {p.matchReason.join(" • ")}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))
+            ) : (
+              // Show regular database prompts for all other cases
+              items.map((p) => (
+                <PromptCard
+                  key={p.id}
+                  prompt={p as any}
+                  categories={categories}
+                  onTagClick={(t) => { clearRandom();
+                    setSelectedTag(t);
+                    setQuery(t); // reflect in input
+                    setCategoryId(undefined);
+                    setSubcategoryId(undefined);
+                  }}
+                  onCategoryClick={(cid) => { clearRandom();
+                    setCategoryId(cid);
+                    setSubcategoryId(undefined);
+                    setSelectedTag(undefined);
+                    setProOnly(false);
+                    setQuery("");
+                  }}
+                  onSubcategoryClick={(sid, cid) => { clearRandom();
+                    setCategoryId(cid);
+                    setSubcategoryId(sid);
+                    setSelectedTag(undefined);
+                    setProOnly(false);
+                    setQuery("");
+                  }}
+                  onViewAllPro={() => { clearRandom();
+                    setCategoryId(undefined);
+                    setSubcategoryId(undefined);
+                    setSelectedTag(undefined);
+                    setQuery("");
+                    setProOnly(true);
+                  }}
+                />
+              ))
+            )}
           </div>
         </section>
 
