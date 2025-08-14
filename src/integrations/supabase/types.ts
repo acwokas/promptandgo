@@ -7,7 +7,7 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "13.0.4"
@@ -771,7 +771,7 @@ export type Database = {
     }
     Functions: {
       check_and_increment_usage: {
-        Args: { user_id_param: string; usage_type_param: string }
+        Args: { usage_type_param: string; user_id_param: string }
         Returns: {
           allowed: boolean
           current_usage: number
@@ -783,25 +783,25 @@ export type Database = {
         Args: { p_user_id: string }
         Returns: {
           id: string
-          user_id: string
           subscribed: boolean
-          subscription_tier: string
           subscription_end: string
+          subscription_tier: string
           updated_at: string
+          user_id: string
         }[]
       }
       get_user_ai_limits: {
         Args: { user_id_param: string }
         Returns: {
+          daily_assistant_limit: number
           daily_generator_limit: number
           daily_suggestions_limit: number
-          daily_assistant_limit: number
         }[]
       }
       has_role: {
         Args: {
-          _user_id: string
           _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
         }
         Returns: boolean
       }
@@ -811,13 +811,13 @@ export type Database = {
       }
       secure_upsert_subscriber: {
         Args: {
-          p_key: string
-          p_user_id: string
           p_email: string
+          p_key: string
           p_stripe_customer_id: string
           p_subscribed: boolean
-          p_subscription_tier: string
           p_subscription_end: string
+          p_subscription_tier: string
+          p_user_id: string
         }
         Returns: undefined
       }

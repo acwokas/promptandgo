@@ -9,6 +9,7 @@ import { MessageCircle, Star, X, ChevronUp, ChevronDown } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useToast } from "@/hooks/use-toast";
+import { validateEmailInput, validatePromptInput, sanitizeInput } from "@/lib/inputValidation";
 
 interface FeedbackWidgetProps {
   promptId?: string;
@@ -68,6 +69,34 @@ export const FeedbackWidget = ({ promptId }: FeedbackWidgetProps) => {
       return;
     }
 
+    // Validate content
+    const contentValidation = validatePromptInput(formData.content);
+    if (!contentValidation.isValid) {
+      toast({
+        title: "Invalid Content",
+        description: contentValidation.error,
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Validate email if provided
+    if (formData.email && formData.email.trim()) {
+      const emailValidation = validateEmailInput(formData.email);
+      if (!emailValidation.isValid) {
+        toast({
+          title: "Invalid Email",
+          description: emailValidation.error,
+          variant: "destructive"
+        });
+        return;
+      }
+    }
+
+    // Sanitize inputs
+    const sanitizedContent = sanitizeInput(formData.content);
+    const sanitizedName = formData.name ? sanitizeInput(formData.name) : "";
+
     setIsSubmitting(true);
 
     try {
@@ -75,12 +104,12 @@ export const FeedbackWidget = ({ promptId }: FeedbackWidgetProps) => {
         .from("user_feedback")
         .insert({
           feedback_type: formData.feedbackType,
-          content: formData.content.trim(),
+          content: sanitizedContent,
           rating: formData.rating ? parseInt(formData.rating) : null,
           prompt_id: promptId || null,
           user_id: user?.id || null,
-          name: formData.name.trim() || null,
-          email: formData.email.trim() || null
+          name: sanitizedName || null,
+          email: formData.email.trim() || null // Email already validated
         });
 
       if (error) throw error;

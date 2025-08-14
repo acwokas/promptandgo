@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
+import { validateEmailInput, sanitizeInput } from "@/lib/inputValidation";
 
 const Auth = () => {
   const [searchParams] = useSearchParams();
@@ -54,6 +55,16 @@ const Auth = () => {
   const handleSignIn = async () => {
     setLoading(true);
     setError(null);
+    
+    // Validate email
+    const emailValidation = validateEmailInput(email);
+    if (!emailValidation.isValid) {
+      setError(emailValidation.error);
+      toast({ title: "Invalid Email", description: emailValidation.error, variant: "destructive" });
+      setLoading(false);
+      return;
+    }
+
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
     if (error) {
@@ -68,6 +79,23 @@ const Auth = () => {
   const handleSignUp = async () => {
     setLoading(true);
     setError(null);
+    
+    // Validate email
+    const emailValidation = validateEmailInput(email);
+    if (!emailValidation.isValid) {
+      setError(emailValidation.error);
+      toast({ title: "Invalid Email", description: emailValidation.error, variant: "destructive" });
+      setLoading(false);
+      return;
+    }
+
+    // Sanitize inputs
+    const sanitizedName = sanitizeInput(name);
+    const sanitizedIndustry = industry ? sanitizeInput(industry) : null;
+    const sanitizedProjectType = projectType ? sanitizeInput(projectType) : null;
+    const sanitizedPreferredTone = preferredTone ? sanitizeInput(preferredTone) : null;
+    const sanitizedDesiredOutcome = desiredOutcome ? sanitizeInput(desiredOutcome) : null;
+
     const redirectUrl = `${window.location.origin}/`;
     
     // Check if any context fields are filled
@@ -79,12 +107,12 @@ const Auth = () => {
       options: { 
         emailRedirectTo: redirectUrl,
         data: { 
-          display_name: name,
+          display_name: sanitizedName,
           wants_power_pack: true, // Everyone gets PowerPack automatically
-          industry: industry || null,
-          project_type: projectType || null,
-          preferred_tone: preferredTone || null,
-          desired_outcome: desiredOutcome || null,
+          industry: sanitizedIndustry,
+          project_type: sanitizedProjectType,
+          preferred_tone: sanitizedPreferredTone,
+          desired_outcome: sanitizedDesiredOutcome,
           context_fields_completed: hasContextFields
         }
       },

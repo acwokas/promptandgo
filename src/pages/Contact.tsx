@@ -9,6 +9,7 @@ import PageHero from "@/components/layout/PageHero";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
+import { validateEmailInput, validatePromptInput, sanitizeInput } from "@/lib/inputValidation";
 
 const Contact = () => {
   const { user } = useSupabaseAuth();
@@ -98,6 +99,24 @@ const Contact = () => {
       return;
     }
 
+    // Validate email
+    const emailValidation = validateEmailInput(email);
+    if (!emailValidation.isValid) {
+      toast({ title: "Invalid Email", description: emailValidation.error, variant: "destructive" });
+      return;
+    }
+
+    // Validate message content
+    const messageValidation = validatePromptInput(message);
+    if (!messageValidation.isValid) {
+      toast({ title: "Invalid Message", description: messageValidation.error, variant: "destructive" });
+      return;
+    }
+
+    // Sanitize inputs
+    const sanitizedName = sanitizeInput(name);
+    const sanitizedMessage = sanitizeInput(message);
+
     // Only validate account creation fields if user is not logged in and wants to create account
     if (!user && showAccountCreation && (!accountName || !accountEmail || !accountPassword)) {
       toast({ title: "Account details required", description: "Please fill in name, email and password for your account.", variant: "destructive" });
@@ -122,7 +141,7 @@ const Contact = () => {
 
       // Send contact message directly (no email confirmation needed)
       const { data: response, error } = await supabase.functions.invoke("send-contact", {
-        body: { name, email, message },
+        body: { name: sanitizedName, email, message: sanitizedMessage },
       });
 
       if (error) {
