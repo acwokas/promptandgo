@@ -132,70 +132,6 @@ const Index = () => {
           </Button>
         </PageHero>
 
-        {/* Social Proof Section */}
-        <section className="container py-6">
-          <div className="text-center mb-8">
-            <p className="text-muted-foreground mb-2">Trusted by 50,000+ professionals</p>
-            <div className="flex items-center justify-center gap-8 text-sm text-muted-foreground">
-              <span>⭐⭐⭐⭐⭐ 4.9/5</span>
-              <span>•</span>
-              <span>1M+ prompts copied</span>
-              <span>•</span>
-              <span>500+ hours saved daily</span>
-            </div>
-          </div>
-          
-          <div className="grid gap-6 md:grid-cols-3 mb-8">
-            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-3 mb-4">
-                  <div className="text-yellow-500">⭐⭐⭐⭐⭐</div>
-                </div>
-                <p className="text-sm text-muted-foreground mb-4">"These prompts saved me 5 hours per week on content creation. The marketing category alone paid for itself in one campaign."</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">SJ</div>
-                  <div>
-                    <p className="text-sm font-medium">Sarah Johnson</p>
-                    <p className="text-xs text-muted-foreground">Marketing Director</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-3 mb-4">
-                  <div className="text-yellow-500">⭐⭐⭐⭐⭐</div>
-                </div>
-                <p className="text-sm text-muted-foreground mb-4">"As a freelancer, these prompts help me deliver better work faster. The career section helped me land three new clients this month."</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">MR</div>
-                  <div>
-                    <p className="text-sm font-medium">Michael Rodriguez</p>
-                    <p className="text-xs text-muted-foreground">Freelance Writer</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-3 mb-4">
-                  <div className="text-yellow-500">⭐⭐⭐⭐⭐</div>
-                </div>
-                <p className="text-sm text-muted-foreground mb-4">"Game changer for our startup. We use the business prompts daily for everything from investor pitches to customer emails."</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">AL</div>
-                  <div>
-                    <p className="text-sm font-medium">Alex Liu</p>
-                    <p className="text-xs text-muted-foreground">Startup Founder</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-
         {/* Top Widget Section */}
         <section className="container pt-6 pb-2">
           <div className="grid gap-6 md:grid-cols-2">
@@ -279,6 +215,70 @@ const Index = () => {
                 </Button>
               </div>
             </article>
+          </div>
+        </section>
+
+        {/* Social Proof Section */}
+        <section className="container py-6">
+          <div className="text-center mb-8">
+            <p className="text-muted-foreground mb-2">Trusted by 50,000+ professionals</p>
+            <div className="flex items-center justify-center gap-8 text-sm text-muted-foreground">
+              <span>⭐⭐⭐⭐⭐ 4.9/5</span>
+              <span>•</span>
+              <span>1M+ prompts copied</span>
+              <span>•</span>
+              <span>500+ hours saved daily</span>
+            </div>
+          </div>
+          
+          <div className="grid gap-6 md:grid-cols-3 mb-8">
+            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-3 mb-4">
+                  <div className="text-yellow-500">⭐⭐⭐⭐⭐</div>
+                </div>
+                <p className="text-sm text-muted-foreground mb-4">"These prompts saved me 5 hours per week on content creation. The marketing category alone paid for itself in one campaign."</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">SJ</div>
+                  <div>
+                    <p className="text-sm font-medium">Sarah Johnson</p>
+                    <p className="text-xs text-muted-foreground">Marketing Director</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-3 mb-4">
+                  <div className="text-yellow-500">⭐⭐⭐⭐⭐</div>
+                </div>
+                <p className="text-sm text-muted-foreground mb-4">"As a freelancer, these prompts help me deliver better work faster. The career section helped me land three new clients this month."</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">MR</div>
+                  <div>
+                    <p className="text-sm font-medium">Michael Rodriguez</p>
+                    <p className="text-xs text-muted-foreground">Freelance Writer</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-3 mb-4">
+                  <div className="text-yellow-500">⭐⭐⭐⭐⭐</div>
+                </div>
+                <p className="text-sm text-muted-foreground mb-4">"Game changer for our startup. We use the business prompts daily for everything from investor pitches to customer emails."</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">AL</div>
+                  <div>
+                    <p className="text-sm font-medium">Alex Liu</p>
+                    <p className="text-xs text-muted-foreground">Startup Founder</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </section>
 
