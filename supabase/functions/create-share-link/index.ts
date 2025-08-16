@@ -47,23 +47,23 @@ serve(async (req: Request) => {
   }
 
   try {
-    // Verify authentication
+    // Get authentication header (optional for anonymous sharing)
     const authHeader = req.headers.get('Authorization');
-    if (!authHeader) {
-      return new Response('Authentication required', { status: 401, headers: corsHeaders });
-    }
+    let user = null;
 
-    // Create Supabase client with the user's auth token
+    // Create Supabase client
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_ANON_KEY')!,
-      { global: { headers: { Authorization: authHeader } } }
+      authHeader ? { global: { headers: { Authorization: authHeader } } } : {}
     );
 
-    // Verify the user is authenticated
-    const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
-    if (authError || !user) {
-      return new Response('Invalid authentication', { status: 401, headers: corsHeaders });
+    // Get the current user if authenticated
+    if (authHeader) {
+      const { data: { user: authUser }, error: userError } = await supabaseClient.auth.getUser();
+      if (!userError && authUser) {
+        user = authUser;
+      }
     }
 
     const { original_url, content_type, content_id, title } = await req.json();
@@ -92,25 +92,31 @@ serve(async (req: Request) => {
     const sanitizedContentType = sanitizeInput(content_type);
     const sanitizedContentId = sanitizeInput(content_id);
 
-    // Rate limiting: prevent creating too many links per user
-    const { count } = await supabase
-      .from('shared_links')
-      .select('*', { count: 'exact', head: true })
-      .eq('shared_by', user.id)
-      .gte('created_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString());
+    // Rate limiting: prevent creating too many links per user (only for authenticated users)
+    if (user?.id) {
+      const { count } = await supabase
+        .from('shared_links')
+        .select('*', { count: 'exact', head: true })
+        .eq('shared_by', user.id)
+        .gte('created_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString());
 
-    if (count && count > 50) {
-      return new Response('Rate limit exceeded', { status: 429, headers: corsHeaders });
+      if (count && count > 50) {
+        return new Response('Rate limit exceeded', { status: 429, headers: corsHeaders });
+      }
     }
 
-    // Check if a share link already exists for this content
-    const { data: existing } = await supabase
-      .from('shared_links')
-      .select('short_code')
-      .eq('content_type', sanitizedContentType)
-      .eq('content_id', sanitizedContentId)
-      .eq('shared_by', user.id)
-      .single();
+    // Check if a share link already exists for this content (only for authenticated users)
+    let existing = null;
+    if (user?.id) {
+      const { data } = await supabase
+        .from('shared_links')
+        .select('short_code')
+        .eq('content_type', sanitizedContentType)
+        .eq('content_id', sanitizedContentId)
+        .eq('shared_by', user.id)
+        .single();
+      existing = data;
+    }
 
     if (existing) {
       // Return existing short link
@@ -152,7 +158,7 @@ serve(async (req: Request) => {
         content_type: sanitizedContentType,
         content_id: sanitizedContentId,
         title: sanitizedTitle,
-        shared_by: user.id
+        shared_by: user?.id || null
       })
       .select('short_code')
       .single();
