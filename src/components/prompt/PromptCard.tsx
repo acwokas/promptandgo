@@ -5,7 +5,7 @@ import { toast } from "@/hooks/use-toast";
 import type { Prompt, Category } from "@/data/prompts";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { Heart, Lock, Copy, MessageSquare, Megaphone, ShoppingBag, BarChart2, Briefcase, User, HeartPulse, Clock, Sparkles, Tag, CheckCircle } from "lucide-react";
+import { Heart, Lock, Copy, MessageSquare, Megaphone, ShoppingBag, BarChart2, Briefcase, User, HeartPulse, Clock, Sparkles, Tag, CheckCircle, Star } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -47,6 +47,37 @@ const categoryAccentIndex = (name?: string) => {
   return (h % 6) + 1;
 };
 
+// Generate realistic ratings (3.8-5.0) based on prompt ID
+const generateRating = (promptId: string) => {
+  let hash = 0;
+  for (let i = 0; i < promptId.length; i++) {
+    hash = (hash * 31 + promptId.charCodeAt(i)) >>> 0;
+  }
+  
+  // Generate rating between 3.8 and 5.0, with most being 4.2-4.8
+  const base = 3.8;
+  const range = 1.2;
+  const normalized = (hash % 10000) / 10000;
+  
+  // Bias toward higher ratings (bell curve effect)
+  const skewed = Math.pow(normalized, 0.7);
+  const rating = base + (skewed * range);
+  
+  // Round to one decimal place
+  return Math.round(rating * 10) / 10;
+};
+
+// Generate number of ratings based on prompt ID
+const generateRatingCount = (promptId: string) => {
+  let hash = 0;
+  for (let i = 0; i < promptId.length; i++) {
+    hash = (hash * 17 + promptId.charCodeAt(i)) >>> 0;
+  }
+  
+  // Generate between 12 and 847 ratings
+  return 12 + (hash % 836);
+};
+
 interface PromptCardProps {
   prompt: Prompt;
   categories: Category[];
@@ -65,6 +96,43 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   const accentIndex = categoryAccentIndex(String(seed));
   const accentClass = `category-accent-${accentIndex}`;
   const navigate = useNavigate();
+
+  // Generate realistic rating data
+  const rating = generateRating(prompt.id);
+  const ratingCount = generateRatingCount(prompt.id);
+
+  // Component to render star rating
+  const StarRating = ({ rating, count }: { rating: number; count: number }) => {
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 >= 0.5;
+    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+
+    return (
+      <div className="flex items-center gap-2 mt-2">
+        <div className="flex items-center gap-0.5">
+          {/* Full stars */}
+          {Array.from({ length: fullStars }, (_, i) => (
+            <Star key={`full-${i}`} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+          ))}
+          {/* Half star */}
+          {hasHalfStar && (
+            <div className="relative">
+              <Star className="h-4 w-4 text-gray-300" />
+              <div className="absolute inset-0 overflow-hidden w-1/2">
+                <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+              </div>
+            </div>
+          )}
+          {/* Empty stars */}
+          {Array.from({ length: emptyStars }, (_, i) => (
+            <Star key={`empty-${i}`} className="h-4 w-4 text-gray-300" />
+          ))}
+        </div>
+        <span className="text-sm font-medium text-foreground">{rating}</span>
+        <span className="text-xs text-muted-foreground">({count.toLocaleString()})</span>
+      </div>
+    );
+  };
 
   const copy = async (text: string, label: string) => {
     try {
@@ -316,6 +384,9 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
         <CardTitle className="text-xl leading-tight">{displayTitle}</CardTitle>
         
          <p className="text-sm text-muted-foreground">{prompt.whatFor}</p>
+         
+         {/* Star Rating */}
+         <StarRating rating={rating} count={ratingCount} />
       </CardHeader>
       <CardContent>
         <div>
