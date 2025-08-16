@@ -194,6 +194,7 @@ const PromptsOfTheDay = () => {
                 key={p.id}
                 prompt={p as any}
                 categories={categories}
+                onTagClick={(tag) => navigate(`/library?q=${encodeURIComponent(tag)}`)}
                 onCategoryClick={(cid) => navigate(`/library?categoryId=${cid}`)}
                 onSubcategoryClick={(sid, cid) => navigate(`/library?categoryId=${cid}&subcategoryId=${sid}`)}
               />
