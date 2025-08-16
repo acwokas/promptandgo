@@ -45,20 +45,8 @@ export function addToCart(newItem: CartItem, isAuthenticated: boolean = true) {
   }
   
   const items = getCart();
-  const hasLifetime = items.some((i) => i.type === 'lifetime');
-  const hasMembership = items.some((i) => i.type === 'membership');
   
-  // If adding lifetime and other items exist (except membership), show message
-  if (newItem.type === 'lifetime' && items.some(i => i.type !== 'membership')) {
-    // Allow adding lifetime, other items will become free
-  }
-  
-  // If lifetime exists and adding other items, they'll be free anyway
-  if (hasLifetime && (newItem.type === 'prompt' || newItem.type === 'pack')) {
-    // Allow adding but they'll show as free
-  }
-  
-  // merge by id+type
+  // Allow adding any items - just merge by id+type
   const idx = items.findIndex((i) => i.id === newItem.id && i.type === newItem.type);
   if (idx >= 0) {
     items[idx] = { ...items[idx], quantity: items[idx].quantity + newItem.quantity };
@@ -66,6 +54,29 @@ export function addToCart(newItem: CartItem, isAuthenticated: boolean = true) {
     items.push(newItem);
   }
   saveCart(items);
+}
+
+// Add items to favorites for when membership activates
+export async function addToMyPrompts(itemIds: string[], itemType: 'prompt' | 'pack'): Promise<boolean> {
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return false;
+
+    if (itemType === 'prompt') {
+      const { error } = await supabase
+        .from('favorites')
+        .upsert(
+          itemIds.map(id => ({ user_id: user.id, prompt_id: id })),
+          { onConflict: 'user_id,prompt_id' }
+        );
+      return !error;
+    }
+    // For packs, we'd need to get all prompts in the pack and add them
+    return true;
+  } catch (error) {
+    console.error('Error adding to My Prompts:', error);
+    return false;
+  }
 }
 
 export function removeFromCart(id: string, type: CartItem['type'], isAuthenticated: boolean = true) {

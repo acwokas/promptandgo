@@ -2,16 +2,18 @@ import SEO from "@/components/SEO";
 import PageHero from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getCartForUser, getCartTotalCents, removeFromCart, clearCart, type CartItem } from "@/lib/cart";
+import { getCartForUser, getCartTotalCents, removeFromCart, clearCart, addToMyPrompts, type CartItem } from "@/lib/cart";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
+import { toast } from "@/hooks/use-toast";
 
 const centsToUSD = (cents: number) => `$${(cents / 100).toFixed(2)}`;
 
 const CartPage = () => {
   const { user } = useSupabaseAuth();
   const [items, setItems] = useState<CartItem[]>([]);
+  const [addingToFavorites, setAddingToFavorites] = useState<boolean>(false);
 
   useEffect(() => {
     const updateItems = () => setItems(getCartForUser(!!user));
@@ -77,6 +79,30 @@ const CartPage = () => {
     }
   };
 
+  const handleAddToMyPrompts = async () => {
+    if (!user || addingToFavorites) return;
+    
+    setAddingToFavorites(true);
+    const promptItems = items.filter(i => i.type === 'prompt');
+    const promptIds = promptItems.map(i => i.id);
+    
+    if (promptIds.length > 0) {
+      const success = await addToMyPrompts(promptIds, 'prompt');
+      if (success) {
+        toast({
+          title: "Added to My Prompts!",
+          description: `${promptIds.length} prompt(s) will unlock when your membership activates.`
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to add prompts to favorites."
+        });
+      }
+    }
+    setAddingToFavorites(false);
+  };
+
   return (
     <>
       <SEO title="Your Cart" description="Review your selected prompts and packs before checkout." />
@@ -115,8 +141,8 @@ const CartPage = () => {
                     ) : (
                       <span className="text-xl font-semibold">{centsToUSD(i.unitAmountCents)}</span>
                     )}
-                  </div>
-                  <Button variant="outline" onClick={() => removeFromCart(i.id, i.type, !!user)}>Remove</Button>
+                   </div>
+                   <Button variant="outline" onClick={() => removeFromCart(i.id, i.type, !!user)}>Remove</Button>
                   </CardContent>
                 </Card>
               ))}
@@ -147,6 +173,26 @@ const CartPage = () => {
                       🏷️ All PRO prompts $0.99 (was $1.99).<br/>
                       ⚡️Power Packs $4.99 (was $9.99).
                     </p>
+                    
+                    {(hasMembership || hasLifetime) && items.some(i => i.type === 'prompt' || i.type === 'pack') && (
+                      <div className="p-3 bg-primary/10 rounded-lg border border-primary/20">
+                        <p className="text-sm font-medium text-primary mb-2">💡 Pro Tip!</p>
+                        <p className="text-xs text-muted-foreground mb-2">
+                          Your prompts & packs are FREE with {hasLifetime ? 'Lifetime' : 'Membership'}! 
+                          Add them to "My Prompts" now - they'll unlock when you complete checkout.
+                        </p>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="w-full"
+                          onClick={handleAddToMyPrompts}
+                          disabled={addingToFavorites}
+                        >
+                          {addingToFavorites ? "Adding..." : `Add ${items.filter(i => i.type === 'prompt').length} Prompts to My Library`}
+                        </Button>
+                      </div>
+                    )}
+                    
                     <div className="text-center text-sm text-muted-foreground">or</div>
                     <div className="space-y-2">
                       <Button variant="outline" className="w-full justify-between text-sm">
