@@ -224,13 +224,13 @@ const PromptPacks = () => {
   return (
     <>
       <PageHero title={<>⚡️<span className="text-gradient-brand">Power</span> Packs</>} subtitle={<>Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results.</>} minHeightClass="min-h-[28vh]">
-        <Button asChild variant="secondary">
+        <Button asChild variant="hero">
           <Link to="/library">
             <Search className="h-4 w-4 mr-2" />
             Back to Library
           </Link>
         </Button>
-        <Button asChild variant="outline">
+        <Button asChild variant="outline" className="text-foreground hover:text-foreground">
           <Link to="/account/favorites">
             <Heart className="h-4 w-4 mr-2" />
             My Prompts
