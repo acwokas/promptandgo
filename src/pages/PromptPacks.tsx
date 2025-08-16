@@ -11,7 +11,7 @@ import PageHero from "@/components/layout/PageHero";
 import { Input } from "@/components/ui/input";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
-import { Lock, Check, Heart, Search } from "lucide-react";
+import { Lock, Check, Heart, Search, Zap, Crown, Infinity } from "lucide-react";
 import ShareButton from "@/components/ShareButton";
 
 const PACK_ORIGINAL_CENTS = 999;
@@ -237,6 +237,78 @@ const PromptPacks = () => {
           </Link>
         </Button>
       </PageHero>
+      
+      {/* Call to Action Section */}
+      <section className="bg-gradient-subtle py-12 mb-10">
+        <div className="container">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold mb-3">Unlock Premium AI Prompts</h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Choose how you want to access our premium content - buy individual packs or unlock everything with a membership.
+            </p>
+          </div>
+          
+          <div className="grid gap-6 md:grid-cols-3 max-w-5xl mx-auto">
+            {/* Individual Packs */}
+            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
+              <div className="mb-4">
+                <Zap className="h-12 w-12 mx-auto text-yellow-500" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Individual Packs</h3>
+              <p className="text-muted-foreground mb-4">
+                Purchase specific Power Packs that match your needs. Perfect for targeted projects.
+              </p>
+              <div className="text-2xl font-bold text-primary mb-4">
+                ${(PACK_DISCOUNT_CENTS / 100).toFixed(2)} <span className="text-sm line-through text-muted-foreground">${(PACK_ORIGINAL_CENTS / 100).toFixed(2)}</span>
+              </div>
+              <Button variant="outline" className="w-full">
+                Browse Packs Below
+              </Button>
+            </Card>
+
+            {/* Monthly Membership */}
+            <Card className="text-center p-6 hover:shadow-lg transition-shadow border-primary">
+              <div className="mb-4">
+                <Crown className="h-12 w-12 mx-auto text-primary" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Monthly Member</h3>
+              <p className="text-muted-foreground mb-4">
+                Unlock ALL premium prompts and Power Packs. Cancel anytime.
+              </p>
+              <div className="text-2xl font-bold text-primary mb-4">
+                ${(SUB_DISCOUNT_CENTS / 100).toFixed(2)}/mo
+              </div>
+              <Button variant="hero" className="w-full">
+                Start Monthly Plan
+              </Button>
+            </Card>
+
+            {/* Lifetime Membership */}
+            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
+              <div className="mb-4">
+                <Infinity className="h-12 w-12 mx-auto text-gradient-brand" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Lifetime Access</h3>
+              <p className="text-muted-foreground mb-4">
+                One-time payment for permanent access to all current and future premium content.
+              </p>
+              <div className="text-2xl font-bold text-primary mb-4">
+                ${(LIFETIME_DISCOUNT_CENTS / 100).toFixed(2)} <span className="text-sm line-through text-muted-foreground">${(LIFETIME_ORIGINAL_CENTS / 100).toFixed(2)}</span>
+              </div>
+              <Button variant="secondary" className="w-full">
+                Get Lifetime Access
+              </Button>
+            </Card>
+          </div>
+
+          <div className="text-center mt-8">
+            <p className="text-sm text-muted-foreground">
+              All purchases include instant access • 30-day money-back guarantee • No hidden fees
+            </p>
+          </div>
+        </div>
+      </section>
+      
       <main className="container py-10">
         <SEO
           title="⚡️Power Packs – Save 50%"
