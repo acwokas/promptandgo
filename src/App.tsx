@@ -51,6 +51,8 @@ import ShareRedirect from "./pages/ShareRedirect";
 import AuthEffects from "@/components/auth/AuthEffects";
 import ContextPopup from "@/components/ContextPopup";
 import { FeedbackWidget } from "@/components/FeedbackWidget";
+import { LoginWidget } from "@/components/LoginWidget";
+import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { usePageVisitTracker } from "@/hooks/usePageVisitTracker";
 import AIPromptGeneratorPage from "./pages/AIPromptGenerator";
 import SmartSuggestionsPage from "./pages/SmartSuggestions";
@@ -79,6 +81,7 @@ const App = () => {
 
 const AppContent = () => {
   const { shouldShowPopup, dismissPopup, markContextFieldsCompleted } = usePageVisitTracker();
+  const { user } = useSupabaseAuth();
 
   return (
     <>
@@ -144,7 +147,8 @@ const AppContent = () => {
         onComplete={markContextFieldsCompleted}
       />
       
-      <FeedbackWidget />
+      {/* Show feedback widget for logged in users, login widget for guests */}
+      {user ? <FeedbackWidget /> : <LoginWidget />}
     </>
   );
 };
