@@ -1,7 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, User, ShoppingCart, Bot } from "lucide-react";
+import { Menu, User, ShoppingCart, Bot, Heart } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useToast } from "@/components/ui/use-toast";
@@ -78,6 +78,14 @@ const Header = () => {
           </li>
           <li><NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Tips</NavLink></li>
           <li><NavLink to="/faqs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>FAQs</NavLink></li>
+          {user && (
+            <li>
+              <NavLink to="/my-prompts" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
+                <Heart className="h-4 w-4 inline mr-1 text-red-500" />
+                My Prompts
+              </NavLink>
+            </li>
+          )}
         </ul>
         <div className="flex items-center gap-2">
           {/* Mobile menu */}
@@ -104,7 +112,10 @@ const Header = () => {
                   
                   {user && (
                     <>
-                      <NavLink to="/my-prompts" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>My Prompts</NavLink>
+                      <NavLink to="/my-prompts" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
+                        <Heart className="h-4 w-4 inline mr-1 text-red-500" />
+                        My Prompts
+                      </NavLink>
                       <NavLink to="/account" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>My Account</NavLink>
                     </>
                   )}
