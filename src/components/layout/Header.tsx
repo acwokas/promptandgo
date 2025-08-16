@@ -99,7 +99,7 @@ const Header = () => {
                   {user ? (
                     <Button variant="secondary" onClick={handleLogout} className="mt-2">Log out</Button>
                   ) : (
-                    <NavLink to="/auth" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Login or Sign up</NavLink>
+                    <NavLink to="/auth" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Login / Sign up</NavLink>
                   )}
                   {user ? (
                     <Button asChild variant="hero" className="mt-4">
@@ -136,7 +136,7 @@ const Header = () => {
           </Button>
           {!user && (
             <Button asChild variant="ghost" className="hidden md:inline-flex">
-              <Link to="/auth">Login or Sign up</Link>
+              <Link to="/auth">Login / Sign up</Link>
             </Button>
           )}
           {user && (
