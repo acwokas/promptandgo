@@ -12,8 +12,8 @@ const Terms = () => (
 
     <section className="prose prose-neutral max-w-none dark:prose-invert">
       <p>
-        Welcome to PromptAndGo (“we”, “our”, “us”). These Terms &amp; Conditions (“Terms”) govern your use of the
-        website https://promptandgo.ai (the “Site”) and any related services we provide.
+        Welcome to PromptAndGo ("we", "our", "us"). These Terms &amp; Conditions ("Terms") govern your use of the
+        website https://promptandgo.ai (the "Site") and any related services we provide.
       </p>
       <p>By accessing or using the Site, you agree to be bound by these Terms. If you do not agree, please do not use the Site.</p>
 
@@ -23,63 +23,119 @@ const Terms = () => (
         <li>Violate any applicable laws or regulations.</li>
         <li>Infringe intellectual property rights.</li>
         <li>Upload or distribute harmful, obscene, defamatory, or unlawful content.</li>
-        <li>Attempt to gain unauthorised access to our systems or interfere with the Site’s operation.</li>
+        <li>Attempt to gain unauthorised access to our systems or interfere with the Site's operation.</li>
       </ul>
       <p>We may suspend or terminate your access if you breach these Terms.</p>
 
-      <h2>2.&nbsp;&nbsp;Account Registration</h2>
+      <h2>2.&nbsp;&nbsp;AI Tools and Beta Services</h2>
+      <p>PromptAndGo provides AI-powered tools including but not limited to:</p>
+      <ul>
+        <li><strong>AI Prompt Generator</strong> – generates customized prompts based on your inputs</li>
+        <li><strong>Smart Suggestions</strong> – provides AI-powered recommendations</li>
+        <li><strong>AI Assistant</strong> – interactive AI chat assistance</li>
+      </ul>
+      <p><strong>IMPORTANT BETA DISCLAIMER:</strong> All AI tools are currently in beta testing. We reserve the right to:</p>
+      <ul>
+        <li>Modify, suspend, or discontinue any AI service at any time without prior notice</li>
+        <li>Change usage limits, quotas, or access restrictions as needed</li>
+        <li>Update AI models, features, or functionality</li>
+        <li>Impose temporary or permanent limitations on service availability</li>
+      </ul>
+      <p>AI services are provided "as is" without guarantees of availability, accuracy, or fitness for any particular purpose. Usage limits may change based on operational needs and cost considerations.</p>
+
+      <h2>3.&nbsp;&nbsp;Acceptable Use of AI Tools</h2>
+      <p>When using our AI services, you must not:</p>
+      <ul>
+        <li>Generate content that is illegal, harmful, defamatory, or violates others' rights</li>
+        <li>Attempt to reverse engineer or extract AI models or training data</li>
+        <li>Use the services for any unlawful purpose or in violation of applicable laws</li>
+        <li>Exceed usage limits or attempt to circumvent access controls</li>
+        <li>Share account credentials or allow unauthorized access to AI tools</li>
+        <li>Generate content that infringes intellectual property rights</li>
+      </ul>
+      <p>We reserve the right to monitor AI usage and suspend access for violations.</p>
+
+      <h2>4.&nbsp;&nbsp;Account Registration</h2>
       <p>Some features may require creating an account. You agree to:</p>
       <ul>
-        <li>Provide accurate and complete information.</li>
-        <li>Keep your login credentials secure.</li>
-        <li>Be responsible for all activities under your account.</li>
+        <li>Provide accurate and complete information</li>
+        <li>Keep your login credentials secure</li>
+        <li>Be responsible for all activities under your account</li>
+        <li>Maintain the security of your AI usage and not share access with unauthorized parties</li>
       </ul>
 
-      <h2>3.&nbsp;&nbsp;Content and Intellectual Property</h2>
+      <h2>5.&nbsp;&nbsp;Content and Intellectual Property</h2>
       <p>All content on the Site, including text, graphics, code, prompts, and designs, is owned by or licensed to PromptAndGo, unless otherwise stated.</p>
       <ul>
-        <li>You may use content for personal or internal business purposes only.</li>
-        <li>You may not copy, redistribute, or commercially exploit any content without our written permission.</li>
-        <li>If you submit content (e.g., prompts, comments, reviews), you grant us a non-exclusive, royalty-free, worldwide licence to use, display, and distribute that content in connection with our services.</li>
+        <li>You may use content for personal or internal business purposes only</li>
+        <li>You may not copy, redistribute, or commercially exploit any content without our written permission</li>
+        <li>AI-generated content remains subject to the terms of the underlying AI provider and applicable IP laws</li>
+        <li>If you submit content (e.g., prompts, comments, reviews, AI interactions), you grant us a non-exclusive, royalty-free, worldwide licence to use, display, and distribute that content in connection with our services</li>
+        <li>User-generated prompts and favorites are owned by you but may be used by us to improve our services</li>
+        <li>We may use anonymized, aggregated data from AI interactions to enhance our algorithms</li>
       </ul>
 
-      <h2>4.&nbsp;&nbsp;Payment and Memberships</h2>
-      <p>If you purchase premium prompts, downloads, or membership services:</p>
+      <h2>6.&nbsp;&nbsp;Payment and Memberships</h2>
+      <p>If you purchase premium prompts, downloads, membership services, or AI tool access:</p>
       <ul>
-        <li>All prices are listed in Singapore Dollars (SGD) unless otherwise stated.</li>
-        <li>Payment processing is handled by secure third-party providers; we do not store full payment details.</li>
-        <li>Membership fees are billed in advance and are non-refundable unless required by law.</li>
+        <li>All prices are listed in Singapore Dollars (SGD) unless otherwise stated</li>
+        <li>Payment processing is handled by secure third-party providers; we do not store full payment details</li>
+        <li>Membership fees are billed in advance and are non-refundable unless required by law</li>
+        <li>AI usage limits are tied to your subscription tier and may change as services evolve</li>
+        <li>Beta services may affect pricing or access levels without prior notice</li>
       </ul>
 
-      <h2>5.&nbsp;&nbsp;Privacy</h2>
-      <p>Your use of the Site is also governed by our Privacy Policy, which explains how we collect, use, and protect your personal data in compliance with Singapore’s Personal Data Protection Act (PDPA).</p>
+      <h2>7.&nbsp;&nbsp;Privacy</h2>
+      <p>Your use of the Site is also governed by our Privacy Policy, which explains how we collect, use, and protect your personal data in compliance with Singapore's Personal Data Protection Act (PDPA).</p>
 
-      <h2>6.&nbsp;&nbsp;Disclaimers</h2>
+      <h2>8.&nbsp;&nbsp;AI Output Disclaimers</h2>
+      <p>Regarding AI-generated content and services:</p>
       <ul>
-        <li>The Site and its content are provided “as is” without warranties of any kind.</li>
-        <li>We do not guarantee uninterrupted access or that content will be error-free.</li>
-        <li>We are not responsible for actions you take based on the content or prompts provided.</li>
+        <li>AI outputs are generated by third-party providers and we do not guarantee their accuracy, completeness, or appropriateness</li>
+        <li>You are solely responsible for reviewing and validating any AI-generated content before use</li>
+        <li>AI services may be temporarily unavailable due to technical issues or third-party provider limitations</li>
+        <li>We are not liable for any decisions made based on AI-generated content or suggestions</li>
+        <li>Beta AI features may produce unexpected results and should be used with caution</li>
       </ul>
 
-      <h2>7.&nbsp;&nbsp;Limitation of Liability</h2>
+      <h2>9.&nbsp;&nbsp;Service Availability and Modifications</h2>
+      <p>We reserve the right to:</p>
       <ul>
-        <li>We are not liable for indirect, incidental, special, or consequential damages, to the fullest extent permitted by law.</li>
-        <li>Our total liability to you for any claims shall not exceed the total amount paid by you to us in the 6 months preceding the claim.</li>
+        <li>Modify, suspend, or discontinue any part of our services, including AI tools, at any time</li>
+        <li>Change usage limits, quotas, or access restrictions without prior notice</li>
+        <li>Update our AI models, algorithms, or service providers as needed</li>
+        <li>Temporarily restrict access for maintenance, updates, or operational needs</li>
+        <li>Implement new features or remove existing ones as part of service evolution</li>
       </ul>
 
-      <h2>8.&nbsp;&nbsp;Indemnity</h2>
-      <p>You agree to indemnify and hold harmless PromptAndGo, its officers, employees, and partners from any claims, damages, or expenses arising from your use of the Site or breach of these Terms.</p>
+      <h2>10.&nbsp;&nbsp;General Disclaimers</h2>
+      <ul>
+        <li>The Site and its content are provided "as is" without warranties of any kind</li>
+        <li>We do not guarantee uninterrupted access or that content will be error-free</li>
+        <li>We are not responsible for actions you take based on the content or prompts provided</li>
+        <li>Beta services are provided without warranties and may change or be discontinued</li>
+      </ul>
 
-      <h2>9.&nbsp;&nbsp;Third-Party Links</h2>
-      <p>The Site may contain links to third-party websites. We are not responsible for their content, policies, or practices.</p>
+      <h2>11.&nbsp;&nbsp;Limitation of Liability</h2>
+      <ul>
+        <li>We are not liable for indirect, incidental, special, or consequential damages, to the fullest extent permitted by law</li>
+        <li>Our total liability to you for any claims shall not exceed the total amount paid by you to us in the 6 months preceding the claim</li>
+        <li>We are not liable for AI-generated content, service interruptions, or beta feature limitations</li>
+      </ul>
 
-      <h2>10.&nbsp;&nbsp;Governing Law</h2>
+      <h2>12.&nbsp;&nbsp;Indemnity</h2>
+      <p>You agree to indemnify and hold harmless PromptAndGo, its officers, employees, and partners from any claims, damages, or expenses arising from your use of the Site, AI tools, or breach of these Terms.</p>
+
+      <h2>13.&nbsp;&nbsp;Third-Party Links and Services</h2>
+      <p>The Site may contain links to third-party websites and relies on third-party AI providers. We are not responsible for their content, policies, practices, or service availability.</p>
+
+      <h2>14.&nbsp;&nbsp;Governing Law</h2>
       <p>These Terms are governed by and construed in accordance with the laws of Singapore. You agree to submit to the exclusive jurisdiction of the Singapore courts.</p>
 
-      <h2>11.&nbsp;&nbsp;Changes to the Terms</h2>
-      <p>We may update these Terms at any time by posting a new version on this page. Your continued use of the Site constitutes acceptance of the updated Terms.</p>
+      <h2>15.&nbsp;&nbsp;Changes to the Terms</h2>
+      <p>We may update these Terms at any time by posting a new version on this page, particularly as our AI services evolve. Your continued use of the Site constitutes acceptance of the updated Terms.</p>
 
-      <h2>12.&nbsp;&nbsp;Contact Us</h2>
+      <h2>16.&nbsp;&nbsp;Contact Us</h2>
       <p>If you have any questions about these Terms, please contact:</p>
       <p>
         PromptAndGo<br />
@@ -87,9 +143,10 @@ const Terms = () => (
         Jurisdiction: Singapore
       </p>
 
-      <h2>13.&nbsp;&nbsp;Refunds &amp; Cancellations</h2>
+      <h2>17.&nbsp;&nbsp;Refunds &amp; Cancellations</h2>
       <p>All sales of digital products, including prompt packs, downloads, and memberships, are final. We do not offer refunds, exchanges, or cancellations once a purchase is completed, except as required under Singapore law.</p>
       <p>If a digital product is defective, inaccessible, or not as described, you must notify us within 7 days of purchase at <a href="mailto:legal@promptandgo.ai">legal@promptandgo.ai</a> so we can investigate and, if appropriate, provide a replacement or alternative remedy.</p>
+      <p>Note that changes to AI service limits, features, or availability do not constitute grounds for refunds, as these services are clearly marked as beta and subject to modification.</p>
     </section>
   </main>
   </>

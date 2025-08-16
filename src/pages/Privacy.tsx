@@ -22,29 +22,37 @@ const Privacy = () => (
       <p>We may collect the following types of personal data:</p>
       <ul>
         <li><strong>Contact Information</strong> – name, email address, and other details you provide when signing up or contacting us.</li>
-        <li><strong>Account Information</strong> – username, password, and profile settings if you create an account.</li>
-        <li><strong>Usage Data</strong> – IP address, browser type, device information, pages visited, and time spent on the Site.</li>
-        <li><strong>Content Submissions</strong> – prompts, comments, or other materials you submit.</li>
+        <li><strong>Account Information</strong> – username, password, profile settings, subscription details, and preferences if you create an account.</li>
+        <li><strong>Usage Data</strong> – IP address, browser type, device information, pages visited, time spent on the Site, and AI tool usage patterns.</li>
+        <li><strong>Content Submissions</strong> – prompts, AI-generated content, comments, feedback, favorites, or other materials you submit or interact with.</li>
+        <li><strong>AI Interaction Data</strong> – conversations with AI tools, prompt inputs, generated outputs, usage frequency, and personalization data for Smart Suggestions.</li>
+        <li><strong>Profile Context</strong> – industry, project type, preferred tone, desired outcomes, and other context you provide to enhance AI recommendations.</li>
         <li><strong>Transactional Data</strong> – payment details (processed securely via third-party payment providers; we do not store full credit card details).</li>
+        <li><strong>Analytics Data</strong> – aggregated usage statistics, feature adoption metrics, and performance data for our AI services.</li>
       </ul>
 
       <h2>2.&nbsp;&nbsp;How We Use Your Information</h2>
       <p>We use your personal data to:</p>
       <ul>
-        <li>Provide, maintain, and improve our services.</li>
+        <li>Provide, maintain, and improve our services, including AI tools and personalized recommendations.</li>
         <li>Process your account registration and authenticate your access.</li>
+        <li>Generate AI-powered prompts, suggestions, and assist with your queries through our AI Assistant.</li>
+        <li>Track usage limits and quotas for our AI services (currently in beta).</li>
+        <li>Personalize your experience based on your industry, project type, and preferences.</li>
         <li>Respond to your enquiries and support requests.</li>
         <li>Send you updates, newsletters, and marketing (only with your consent).</li>
-        <li>Customise content and recommendations.</li>
+        <li>Analyze usage patterns to improve our AI algorithms and service quality.</li>
         <li>Comply with legal obligations and enforce our terms of use.</li>
       </ul>
 
       <h2>3.&nbsp;&nbsp;How We Share Your Information</h2>
       <p>We do not sell your personal data. We may share your data with:</p>
       <ul>
-        <li><strong>Service Providers</strong> – third parties who help us operate the Site, such as hosting, analytics, and payment processing.</li>
+        <li><strong>AI Service Providers</strong> – third-party AI providers (including OpenAI) to process your prompts and generate AI responses. These providers have their own privacy policies and data handling practices.</li>
+        <li><strong>Service Providers</strong> – third parties who help us operate the Site, such as hosting, analytics, payment processing, and infrastructure services (including Supabase).</li>
         <li><strong>Legal Authorities</strong> – if required by law, court order, or government regulation.</li>
         <li><strong>Business Transfers</strong> – if PromptAndGo is acquired, merged, or reorganised.</li>
+        <li><strong>Aggregated Data</strong> – we may share anonymized, aggregated usage statistics that do not identify individual users.</li>
       </ul>
 
       <h2>4.&nbsp;&nbsp;International Data Transfers</h2>
@@ -54,7 +62,13 @@ const Privacy = () => (
       </p>
 
       <h2>5.&nbsp;&nbsp;Data Retention</h2>
-      <p>We retain your personal data only for as long as necessary to fulfil the purposes stated in this policy or as required by law.</p>
+      <p>We retain your personal data only for as long as necessary to fulfil the purposes stated in this policy or as required by law. Specifically:</p>
+      <ul>
+        <li><strong>AI Conversation Data</strong> – stored for up to 30 days to improve service quality and provide support.</li>
+        <li><strong>Account Data</strong> – retained while your account is active and for a reasonable period thereafter.</li>
+        <li><strong>Usage Analytics</strong> – aggregated data may be retained indefinitely in anonymized form.</li>
+        <li><strong>User-Generated Content</strong> – prompts and favorites are retained until you delete them or close your account.</li>
+      </ul>
 
       <h2>6.&nbsp;&nbsp;Security</h2>
       <p>
@@ -81,17 +95,29 @@ const Privacy = () => (
       </ul>
       <p>You may disable cookies in your browser settings, but some Site features may not function properly.</p>
 
-      <h2>9.&nbsp;&nbsp;Third-Party Links</h2>
+      <h2>9.&nbsp;&nbsp;AI Services and Beta Features</h2>
+      <p>
+        Our AI tools (including AI Prompt Generator, Smart Suggestions, and AI Assistant) are currently in beta. 
+        Please note that:
+      </p>
+      <ul>
+        <li>Usage limits and quotas may change without notice as we optimize our services.</li>
+        <li>AI-generated content may be used to improve our algorithms (in anonymized form).</li>
+        <li>Beta services may be modified, suspended, or discontinued at any time.</li>
+        <li>AI outputs are generated by third-party providers and we cannot guarantee their accuracy or appropriateness.</li>
+      </ul>
+
+      <h2>10.&nbsp;&nbsp;Third-Party Links</h2>
       <p>
         Our Site may contain links to external websites. We are not responsible for the privacy practices or content of those third-party sites.
       </p>
 
-      <h2>10.&nbsp;&nbsp;Updates to This Policy</h2>
+      <h2>11.&nbsp;&nbsp;Updates to This Policy</h2>
       <p>
         We may update this Privacy Policy from time to time. The updated version will be posted on this page with a new “Effective Date.”
       </p>
 
-      <h2>11.&nbsp;&nbsp;Contact Us</h2>
+      <h2>12.&nbsp;&nbsp;Contact Us</h2>
       <p>If you have any questions about this Privacy Policy or our data practices, please contact:</p>
       <p>
         PromptAndGo<br />
