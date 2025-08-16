@@ -44,75 +44,34 @@ serve(async (req: Request) => {
       });
     }
 
-    // Compute SHA-256 hash of email to match encrypted records
-    const encoder = new TextEncoder();
-    const digest = await crypto.subtle.digest("SHA-256", encoder.encode(lowerEmail));
-    const hashHex = Array.from(new Uint8Array(digest))
-      .map((b) => b.toString(16).padStart(2, "0"))
-      .join("");
-
-    // Try to find existing subscriber by email hash (since emails are encrypted at rest)
-    const { data: existing, error: selectError } = await supabase
-      .from("subscribers")
-      .select("id, subscribed, user_id")
-      .eq("email_hash", hashHex)
-      .maybeSingle();
-
-    if (selectError) {
-      console.error("Select subscriber error:", selectError);
+    // Get encryption key
+    const key = Deno.env.get("SUBSCRIBERS_ENCRYPTION_KEY");
+    if (!key) {
+      console.error("Missing SUBSCRIBERS_ENCRYPTION_KEY env var");
+      return new Response(JSON.stringify({ error: "Server misconfiguration" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
     }
 
-    if (existing) {
-      // Update existing subscriber (reactivate + attach user if provided)
-      const { error: updateError } = await supabase
-        .from("subscribers")
-        .update({
-          subscribed: true,
-          user_id: existing.user_id ?? (user_id ?? undefined),
-          updated_at: new Date().toISOString(),
-        })
-        .eq("id", existing.id);
+    // Use the secure RPC function to handle all subscriber operations (insert/update)
+    // This function handles encryption and all database constraints properly
+    const { error: rpcError } = await supabase.rpc("secure_upsert_subscriber", {
+      p_key: key,
+      p_user_id: user_id || null,
+      p_email: lowerEmail,
+      p_stripe_customer_id: null,
+      p_subscribed: true,
+      p_subscription_tier: null,
+      p_subscription_end: null,
+    });
 
-      if (updateError) {
-        console.error("Update subscriber error:", updateError);
-        return new Response(JSON.stringify({ error: updateError.message }), {
-          status: 500,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        });
-      }
-    } else {
-      // Insert new subscriber securely via RPC (handles encryption + placeholders)
-      const key = Deno.env.get("SUBSCRIBERS_ENCRYPTION_KEY");
-      if (!key) {
-        console.error("Missing SUBSCRIBERS_ENCRYPTION_KEY env var");
-        return new Response(JSON.stringify({ error: "Server misconfiguration" }), {
-          status: 500,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        });
-      }
-
-      // Deterministic UUID from email hash if user_id not provided (to avoid duplicates)
-      const base = hashHex.slice(0, 32);
-      const derivedUserId = `${base.slice(0, 8)}-${base.slice(8, 12)}-${base.slice(12, 16)}-${base.slice(16, 20)}-${base.slice(20, 32)}`;
-      const effectiveUserId = user_id ?? derivedUserId;
-
-      const { error: rpcError } = await supabase.rpc("secure_upsert_subscriber", {
-        p_key: key,
-        p_user_id: effectiveUserId,
-        p_email: lowerEmail,
-        p_stripe_customer_id: null,
-        p_subscribed: true,
-        p_subscription_tier: null,
-        p_subscription_end: null,
+    if (rpcError) {
+      console.error("secure_upsert_subscriber RPC error:", rpcError);
+      return new Response(JSON.stringify({ error: rpcError.message }), {
+        status: 500,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
       });
-
-      if (rpcError) {
-        console.error("secure_upsert_subscriber RPC error:", rpcError);
-        return new Response(JSON.stringify({ error: rpcError.message }), {
-          status: 500,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        });
-      }
     }
 
     return new Response(JSON.stringify({ ok: true }), {
