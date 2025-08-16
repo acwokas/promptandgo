@@ -500,7 +500,7 @@ const PromptLibrary = () => {
           <Link to="/packs">⚡️Power Packs</Link>
         </Button>
         {user ? (
-          <Button asChild size="lg" variant="outline">
+          <Button asChild size="lg" variant="secondary">
             <Link to="/account/favorites"><Heart className="h-4 w-4 mr-2" />My Prompts</Link>
           </Button>
         ) : (
