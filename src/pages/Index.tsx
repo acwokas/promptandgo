@@ -493,34 +493,28 @@ const Index = () => {
         {/* Quick FAQ Section */}
         <section className="container py-6">
           <h2 className="text-2xl font-semibold mb-6 text-center">Quick Questions</h2>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-4xl mx-auto">
-            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
-              <CardContent className="p-6">
-                <h3 className="font-semibold mb-2 text-sm">Do I need to sign up?</h3>
-                <p className="text-xs text-muted-foreground">Nope! Browse and copy prompts for free. Sign up only to save favorites and access power packs.</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
-              <CardContent className="p-6">
-                <h3 className="font-semibold mb-2 text-sm">Works with free AI tools?</h3>
-                <p className="text-xs text-muted-foreground">Yes! Most prompts work perfectly with free versions of ChatGPT, Claude, and other AI tools.</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
-              <CardContent className="p-6">
-                <h3 className="font-semibold mb-2 text-sm">How much does it cost?</h3>
-                <p className="text-xs text-muted-foreground">Browsing is free forever. Premium packs start at $9.99 for specialized collections.</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
-              <CardContent className="p-6">
-                <h3 className="font-semibold mb-2 text-sm">Can I use them commercially?</h3>
-                <p className="text-xs text-muted-foreground">Yes! Use prompts and their outputs for any personal or commercial project.</p>
-              </CardContent>
-            </Card>
+          <div className="max-w-3xl mx-auto">
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="border-l-4 border-primary pl-4 py-2">
+                <h3 className="font-semibold mb-1">Do I need to sign up?</h3>
+                <p className="text-sm text-muted-foreground">Nope! Browse and copy prompts for free. Sign up only to save favorites and access power packs.</p>
+              </div>
+              
+              <div className="border-l-4 border-primary pl-4 py-2">
+                <h3 className="font-semibold mb-1">Works with free AI tools?</h3>
+                <p className="text-sm text-muted-foreground">Yes! Most prompts work perfectly with free versions of ChatGPT, Claude, and other AI tools.</p>
+              </div>
+              
+              <div className="border-l-4 border-primary pl-4 py-2">
+                <h3 className="font-semibold mb-1">How much does it cost?</h3>
+                <p className="text-sm text-muted-foreground">Browsing is free forever. Premium packs start at $9.99 for specialized collections.</p>
+              </div>
+              
+              <div className="border-l-4 border-primary pl-4 py-2">
+                <h3 className="font-semibold mb-1">Can I use them commercially?</h3>
+                <p className="text-sm text-muted-foreground">Yes! Use prompts and their outputs for any personal or commercial project.</p>
+              </div>
+            </div>
           </div>
           
           <div className="text-center mt-6">
