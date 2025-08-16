@@ -170,7 +170,7 @@ const FAQs = () => {
         }
       >
         <Button asChild size="lg" variant="hero" className="px-6">
-          <Link to="/library">Browse Prompts</Link>
+          <Link to="/library#library-filters">Browse Prompts</Link>
         </Button>
         <Button asChild size="lg" variant="secondary">
           <Link to="/contact">Contact Support</Link>
@@ -187,27 +187,33 @@ const FAQs = () => {
         {/* Quick Stats Section */}
         <section className="mb-12">
           <div className="grid gap-6 md:grid-cols-3">
-            <Card className="text-center p-6 bg-gradient-to-br from-primary/5 to-accent/5 border-primary/20">
-              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
-                <MessageCircle className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2">1600+ Prompts</h3>
-              <p className="text-sm text-muted-foreground">Tested and curated for real-world use</p>
-            </Card>
-            <Card className="text-center p-6 bg-gradient-to-br from-accent/5 to-primary/5 border-accent/20">
-              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-accent/10 flex items-center justify-center">
-                <Sparkles className="w-6 h-6 text-accent" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2">⚡ Power Packs</h3>
-              <p className="text-sm text-muted-foreground">Curated bundles for specific goals</p>
-            </Card>
-            <Card className="text-center p-6 bg-gradient-to-br from-secondary/5 to-primary/5 border-secondary/20">
-              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-secondary/10 flex items-center justify-center">
-                <Heart className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2">My Prompts</h3>
-              <p className="text-sm text-muted-foreground">Save your favorites for quick access</p>
-            </Card>
+            <Link to="/library#library-filters">
+              <Card className="text-center p-6 bg-gradient-to-br from-primary/5 to-accent/5 border-primary/20 hover:shadow-lg transition-all cursor-pointer">
+                <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+                  <MessageCircle className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2">1600+ Prompts</h3>
+                <p className="text-sm text-muted-foreground">Tested and curated for real-world use</p>
+              </Card>
+            </Link>
+            <Link to="/packs#popular-power-packs">
+              <Card className="text-center p-6 bg-gradient-to-br from-accent/5 to-primary/5 border-accent/20 hover:shadow-lg transition-all cursor-pointer">
+                <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-accent/10 flex items-center justify-center">
+                  <Sparkles className="w-6 h-6 text-accent" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2">⚡ Power Packs</h3>
+                <p className="text-sm text-muted-foreground">Curated bundles for specific goals</p>
+              </Card>
+            </Link>
+            <Link to="/account/favorites">
+              <Card className="text-center p-6 bg-gradient-to-br from-secondary/5 to-primary/5 border-secondary/20 hover:shadow-lg transition-all cursor-pointer">
+                <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-secondary/10 flex items-center justify-center">
+                  <Heart className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2">My Prompts</h3>
+                <p className="text-sm text-muted-foreground">Save your favorites for quick access</p>
+              </Card>
+            </Link>
           </div>
         </section>
 
@@ -254,13 +260,13 @@ const FAQs = () => {
               </CardHeader>
               <CardContent className="space-y-3">
                 <Button asChild variant="outline" className="w-full justify-start">
-                  <Link to="/library">
+                  <Link to="/library#library-filters">
                     <MessageCircle className="w-4 h-4 mr-2" />
                     Browse All Prompts
                   </Link>
                 </Button>
                 <Button asChild variant="outline" className="w-full justify-start">
-                  <Link to="/packs">
+                  <Link to="/packs#popular-power-packs">
                     <Sparkles className="w-4 h-4 mr-2" />
                     Explore ⚡Power Packs
                   </Link>
@@ -300,7 +306,7 @@ const FAQs = () => {
                     size="sm"
                     className="w-full justify-start text-sm"
                   >
-                    <Link to={`/library?category=${encodeURIComponent(category)}`}>
+                    <Link to={`/library#library-filters?category=${encodeURIComponent(category)}`}>
                       {category}
                     </Link>
                   </Button>
@@ -331,7 +337,7 @@ const FAQs = () => {
             <p className="mt-3 text-primary-foreground/85 text-base md:text-lg">✨ Ready to Start Prompting Smarter? Try your first prompt or explore a Power Pack, no sign-up required.</p>
             <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild variant="hero" className="px-6">
-                <Link to="/library">Browse Prompt Library</Link>
+                <Link to="/library#library-filters">Browse Prompt Library</Link>
               </Button>
               {user ? (
                 <Button asChild size="lg" variant="secondary">
