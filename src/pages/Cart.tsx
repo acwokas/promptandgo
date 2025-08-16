@@ -150,12 +150,12 @@ const CartPage = () => {
                     <div className="text-center text-sm text-muted-foreground">or</div>
                     <div className="space-y-2">
                       <Button variant="outline" className="w-full justify-between text-sm">
-                        <span>Subscribe for $12.99 (was $24.99)</span>
-                        <span className="text-xs">(p/mo)</span>
+                        <span>Monthly $12.99</span>
+                        <span className="text-xs">(was $24.99)</span>
                       </Button>
                       <Button variant="outline" className="w-full justify-between text-sm">
-                        <span>Lifetime Access $99.50 (was $199.00)</span>
-                        <span className="text-xs">(one off)</span>
+                        <span>Lifetime $99.50</span>
+                        <span className="text-xs">(was $199.00)</span>
                       </Button>
                     </div>
                   </div>
