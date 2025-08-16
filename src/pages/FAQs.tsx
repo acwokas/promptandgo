@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
-import { MessageCircle, Sparkles, Heart, Search } from "lucide-react";
+import { MessageCircle, Sparkles, Heart, Search, HelpCircle } from "lucide-react";
 interface FAQItem {
   question: string;
   answer: string;
@@ -224,7 +224,9 @@ const FAQs = () => {
               <Card key={section.title} className="overflow-hidden">
                 <CardHeader className="bg-gradient-to-r from-primary/5 to-accent/5 border-b">
                   <div className="flex items-center gap-3">
-                    <Badge variant="secondary" className="px-3 py-1">{section.items.length}</Badge>
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                      <HelpCircle className="w-5 h-5 text-primary" />
+                    </div>
                     <CardTitle className="text-xl font-semibold text-foreground">
                       {section.title}
                     </CardTitle>
