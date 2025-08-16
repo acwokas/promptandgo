@@ -531,7 +531,7 @@ const Index = () => {
           
           <div className="text-center mt-6">
             <Button asChild variant="ghost" size="sm">
-              <Link to="/faqs">See All FAQs →</Link>
+              <Link to="/faqs#top">See All FAQs →</Link>
             </Button>
           </div>
         </section>

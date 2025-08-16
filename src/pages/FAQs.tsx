@@ -177,6 +177,8 @@ const FAQs = () => {
         </Button>
       </PageHero>
 
+      <div id="top"></div>
+
       <main className="container py-10 max-w-6xl">
         {/* Structured data for SEO */}
         <script
