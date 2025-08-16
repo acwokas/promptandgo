@@ -51,11 +51,18 @@ const Auth = () => {
 
   useEffect(() => {
     if (session && user) {
-      // Check if this is a new Google signup that needs additional info
+      // Check if this is a Google signup that needs additional info
       const isNewUser = searchParams.get('new_user') === 'true';
-      const loginMethod = user.app_metadata?.provider;
       
-      if (isNewUser && loginMethod === 'google') {
+      // Check for Google OAuth provider in multiple possible locations
+      const providers = user.app_metadata?.providers || [];
+      const provider = user.app_metadata?.provider;
+      const isGoogleAuth = provider === 'google' || providers.includes('google') || 
+                          user.user_metadata?.iss?.includes('accounts.google.com');
+      
+      console.log('Auth debug:', { isNewUser, provider, providers, isGoogleAuth, user: user.user_metadata });
+      
+      if (isNewUser && isGoogleAuth) {
         setIsGoogleSignup(true);
         setShowPostGoogleForm(true);
         return;
