@@ -1135,6 +1135,39 @@ const PromptLibrary = () => {
             </Button>
           </div>
         )}
+
+        {/* Submit a Prompt Section */}
+        <section className="mt-16 pt-12 border-t border-border">
+          <div className="text-center max-w-3xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-4">
+              Submit Your Best Prompt
+            </h2>
+            <p className="text-muted-foreground text-lg mb-6">
+              Share your most effective prompts with the community and help others work smarter.
+            </p>
+            
+            <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-lg p-6 mb-8">
+              <h3 className="font-semibold text-primary text-lg mb-2">🎉 Win 1 Month Free Premium Membership!</h3>
+              <p className="text-muted-foreground">
+                Successfully submitted prompts that get added to our library earn you a <strong>free month of premium membership</strong> as our thank you for contributing to the community!
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button asChild variant="cta" size="lg">
+                <Link to="/submit-prompt">Submit a Prompt</Link>
+              </Button>
+              <Button asChild variant="outline" size="lg">
+                <Link to="/how-it-works">How It Works</Link>
+              </Button>
+            </div>
+
+            <p className="text-xs text-muted-foreground mt-4 italic">
+              PromptAndGo reserves the right to edit and revise submitted prompts. 
+              We'll reach out if your prompt is selected for the library.
+            </p>
+          </div>
+        </section>
       </main>
     </>
   );

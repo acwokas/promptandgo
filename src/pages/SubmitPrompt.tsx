@@ -6,10 +6,15 @@ import { toast } from "@/hooks/use-toast";
 import PageHero from "@/components/layout/PageHero";
 import RelatedPrompts from "@/components/prompt/RelatedPrompts";
 import { Link } from "react-router-dom";
-import { validatePromptInput, sanitizeInput } from "@/lib/inputValidation";
+import { validatePromptInput, sanitizeInput, validateEmailInput } from "@/lib/inputValidation";
+import { supabase } from "@/integrations/supabase/client";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
 
 const SubmitPrompt = () => {
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget as HTMLFormElement;
     const fd = new FormData(form);
@@ -17,11 +22,14 @@ const SubmitPrompt = () => {
     const whatFor = String(fd.get("whatFor") ?? "");
     const promptText = String(fd.get("prompt") ?? "");
     const excerpt = String(fd.get("excerpt") ?? "");
+    const submitterEmail = String(fd.get("email") ?? "");
+    const submitterName = String(fd.get("name") ?? "");
 
     // Validate inputs
     const titleValidation = validatePromptInput(title);
     const whatForValidation = validatePromptInput(whatFor);
     const promptValidation = validatePromptInput(promptText);
+    const emailValidation = validateEmailInput(submitterEmail);
 
     if (!titleValidation.isValid) {
       toast({
@@ -50,26 +58,54 @@ const SubmitPrompt = () => {
       return;
     }
 
-    // Sanitize inputs for URL safety
-    const sanitizedTitle = sanitizeInput(title);
-    const sanitizedWhatFor = sanitizeInput(whatFor);
-    const sanitizedPromptText = sanitizeInput(promptText);
-    const sanitizedExcerpt = excerpt ? sanitizeInput(excerpt) : "";
+    if (!emailValidation.isValid) {
+      toast({
+        title: "Invalid Email",
+        description: emailValidation.error,
+        variant: "destructive"
+      });
+      return;
+    }
 
-    const subject = `New Prompt Submission: ${sanitizedTitle}`;
-    const bodyLines = [
-      `Title: ${sanitizedTitle}`,
-      `What for: ${sanitizedWhatFor}`,
-      `Prompt:\n${sanitizedPromptText}`,
-      sanitizedExcerpt ? `Excerpt:\n${sanitizedExcerpt}` : undefined,
-    ].filter(Boolean) as string[];
-    const body = bodyLines.join("\n\n");
+    setIsSubmitting(true);
 
-    const mailto = `mailto:newprompt@promptandgo.ai?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
+    try {
+      // Sanitize inputs
+      const sanitizedTitle = sanitizeInput(title);
+      const sanitizedWhatFor = sanitizeInput(whatFor);
+      const sanitizedPromptText = sanitizeInput(promptText);
+      const sanitizedExcerpt = excerpt ? sanitizeInput(excerpt) : "";
 
-    toast({ title: "Compose email", description: "Your email client should open with the submission pre-filled." });
-    form.reset();
+      const { error } = await supabase.functions.invoke('submit-prompt', {
+        body: {
+          title: sanitizedTitle,
+          whatFor: sanitizedWhatFor,
+          prompt: sanitizedPromptText,
+          excerpt: sanitizedExcerpt,
+          submitterEmail,
+          submitterName: submitterName || undefined,
+        }
+      });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      toast({ 
+        title: "Submission sent!", 
+        description: "Thank you! We'll review your prompt and get back to you soon." 
+      });
+      form.reset();
+    } catch (error) {
+      console.error('Submission error:', error);
+      toast({
+        title: "Submission failed",
+        description: "Please try again or contact us directly.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -79,14 +115,35 @@ const SubmitPrompt = () => {
         <SEO title="Submit a Prompt" description="Share your best workflow prompts with the community." />
 
         <form onSubmit={onSubmit} className="grid gap-4 max-w-2xl">
+          <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-lg p-4 mb-4">
+            <h3 className="font-semibold text-primary mb-2">🎉 Win 1 Month Free Premium!</h3>
+            <p className="text-sm text-muted-foreground">
+              Successfully submitted prompts that get added to our library earn you a free month of premium membership!
+            </p>
+          </div>
+          
           <Input required name="title" placeholder="Title" />
           <Textarea required name="whatFor" placeholder="What it's for (short description)" />
           <Textarea required name="prompt" placeholder="Prompt (copyable block)" />
           <Textarea name="excerpt" placeholder="Excerpt (short summary)" />
+          
+          <div className="grid gap-2">
+            <Label htmlFor="email">Your Email (required) *</Label>
+            <Input required name="email" type="email" placeholder="your@email.com" />
+          </div>
+          
+          <div className="grid gap-2">
+            <Label htmlFor="name">Your Name (optional)</Label>
+            <Input name="name" placeholder="John Doe" />
+          </div>
+          
           <p className="text-sm italic text-muted-foreground">
-            <strong>prompt</strong>andgo reserves the right to use, edit and revise any portion of this prompt.
+            * <strong>prompt</strong>andgo reserves the right to use, edit and revise any portion of this prompt. 
+            We'll reach out if your prompt is added to the website.
           </p>
-          <Button variant="cta" className="w-fit">Submit Prompt</Button>
+          <Button variant="cta" className="w-fit" disabled={isSubmitting}>
+            {isSubmitting ? "Submitting..." : "Submit Prompt"}
+          </Button>
         </form>
 
         {/* Helpful internal links for discovery */}
