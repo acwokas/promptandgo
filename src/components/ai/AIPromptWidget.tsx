@@ -129,7 +129,7 @@ const AIPromptWidget = () => {
             )}
           </Button>
           <Button asChild variant="outline" size="sm">
-            <Link to="/ai-prompt-generator">
+            <Link to="/toolkit">
               <ArrowRight className="h-4 w-4" />
             </Link>
           </Button>
@@ -151,7 +151,7 @@ const AIPromptWidget = () => {
                 Copy
               </Button>
               <Button asChild variant="outline" size="sm">
-                <Link to="/ai-prompt-generator">
+                <Link to="/toolkit">
                   View Full Generator →
                 </Link>
               </Button>
