@@ -76,8 +76,8 @@ const Header = () => {
               AI Tools
             </NavLink>
           </li>
-          <li><NavLink to="/faqs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>FAQs</NavLink></li>
           <li><NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Tips</NavLink></li>
+          <li><NavLink to="/faqs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>FAQs</NavLink></li>
         </ul>
         <div className="flex items-center gap-2">
           {/* Mobile menu */}
@@ -99,8 +99,8 @@ const Header = () => {
                     AI Tools
                   </NavLink>
                   <NavLink to="/cart" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Cart</NavLink>
-                  <NavLink to="/faqs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>FAQs</NavLink>
                   <NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Tips</NavLink>
+                  <NavLink to="/faqs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>FAQs</NavLink>
                   
                   {user && (
                     <>
