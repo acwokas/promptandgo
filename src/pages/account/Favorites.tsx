@@ -375,12 +375,7 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
           <>
             {/* My Saved Prompts section */}
             <section id="my-saved-prompts" className="mb-16">
-              <div className="text-center mb-8">
-                <h2 className="text-2xl font-bold mb-2">My Saved Prompts</h2>
-                <p className="text-muted-foreground">
-                  Prompts you've saved for quick access
-                </p>
-              </div>
+              <h2 className="text-2xl font-bold mb-6">Prompts you've saved for quick access</h2>
 
               {favIds.length === 0 ? (
                 <Card className="text-center py-16">
@@ -468,12 +463,7 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
 
             {/* My AI-Generated Prompts section */}
             <section id="my-generated-prompts" className="mb-16">
-              <div className="text-center mb-8">
-                <h2 className="text-2xl font-bold mb-2">My AI-Generated Prompts</h2>
-                <p className="text-muted-foreground">
-                  Custom prompts you've generated with our AI tools
-                </p>
-              </div>
+              <h2 className="text-2xl font-bold mb-6">Custom prompts you've generated with our AI tools</h2>
 
               {generatedPromptsLoading ? (
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
