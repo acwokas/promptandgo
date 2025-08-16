@@ -26,6 +26,7 @@ type Pack = { id: string; name: string; description: string | null; tags: string
 type PromptLite = { id: string; title: string; is_pro: boolean; excerpt: string | null };
 
 const PromptPacks = () => {
+  // Component for displaying and managing prompt packs
   const [packs, setPacks] = useState<Pack[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchParams] = useSearchParams();
