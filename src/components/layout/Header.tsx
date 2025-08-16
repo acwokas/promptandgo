@@ -126,7 +126,7 @@ const Header = () => {
                   )}
                   {user ? (
                     <Button asChild variant="hero" className="mt-4">
-                      <Link to="/library?random=1">Prompt Me!</Link>
+                      <Link to="/library?random=1">Inspire Me!</Link>
                     </Button>
                   ) : (
                     <Button asChild variant="cta" className="mt-4">
@@ -140,7 +140,7 @@ const Header = () => {
           {/* Desktop CTA */}
           {user ? (
             <Button asChild variant="hero" className="px-5 hidden md:inline-flex">
-              <Link to="/library?random=1">Prompt Me!</Link>
+              <Link to="/library?random=1">Inspire Me!</Link>
             </Button>
           ) : (
             <Button asChild variant="cta" className="px-5 hidden md:inline-flex">
