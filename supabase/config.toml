@@ -27,9 +27,6 @@ verify_jwt = false
 [functions.send-contact]
 verify_jwt = false
 
-[functions.send-contact-enhanced]
-verify_jwt = false
-
 [functions.confirm-contact]
 verify_jwt = false
 
