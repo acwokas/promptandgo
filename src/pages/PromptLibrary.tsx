@@ -2,9 +2,11 @@ import SEO from "@/components/SEO";
 import { PromptFilters } from "@/components/prompt/PromptFilters";
 import { PromptCard } from "@/components/prompt/PromptCard";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import PageHero from "@/components/layout/PageHero";
 import { Link, useSearchParams } from "react-router-dom";
-import { Search, Heart, Bot } from "lucide-react";
+import { Search, Heart, Bot, TrendingUp, Clock, Star, Users, Copy, Sparkles } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useCallback, useEffect, useState, useRef } from "react";
@@ -391,18 +393,6 @@ const PromptLibrary = () => {
         <Button asChild size="lg" variant="inverted">
           <Link to="/packs">⚡️Power Packs</Link>
         </Button>
-        <Button asChild size="lg" variant="secondary">
-          <Link to="/toolkit"><Bot className="h-4 w-4 mr-2 text-blue-500" />AI Tools</Link>
-        </Button>
-        {user ? (
-          <Button asChild size="lg" variant="secondary">
-            <Link to="/account/favorites"><Heart className="h-4 w-4 mr-2" />My Prompts</Link>
-          </Button>
-        ) : (
-          <Button asChild size="lg" variant="secondary">
-            <Link to="/auth">Login</Link>
-          </Button>
-        )}
       </PageHero>
       <main className="container py-10">
         <SEO
@@ -429,6 +419,221 @@ const PromptLibrary = () => {
           ]}
         />
 
+        {/* Library Stats & Social Proof */}
+        <section className="mb-8">
+          <div className="text-center mb-6">
+            <div className="flex items-center justify-center gap-8 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                  <Users className="h-4 w-4 text-primary" />
+                </div>
+                <span>50,000+ users</span>
+              </div>
+              <span>•</span>
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                  <Copy className="h-4 w-4 text-primary" />
+                </div>
+                <span>1.2M+ prompts copied</span>
+              </div>
+              <span>•</span>
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                  <Star className="h-4 w-4 text-primary" />
+                </div>
+                <span>4.9/5 rating</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Quick Discovery Features */}
+        <section className="mb-8">
+          <div className="grid gap-4 md:grid-cols-3">
+            <Card className="bg-gradient-to-br from-green-50 to-transparent border-green-200 dark:from-green-950 dark:border-green-800">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 bg-green-500/10 rounded-full flex items-center justify-center">
+                    <TrendingUp className="h-5 w-5 text-green-600 dark:text-green-400" />
+                  </div>
+                  <h3 className="font-semibold">Trending Now</h3>
+                </div>
+                <p className="text-sm text-muted-foreground mb-4">Most popular prompts this week</p>
+                <div className="space-y-2">
+                  <Badge variant="secondary" className="text-xs">LinkedIn content strategy</Badge>
+                  <Badge variant="secondary" className="text-xs">Email marketing</Badge>
+                  <Badge variant="secondary" className="text-xs">Interview prep</Badge>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-blue-50 to-transparent border-blue-200 dark:from-blue-950 dark:border-blue-800">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 bg-blue-500/10 rounded-full flex items-center justify-center">
+                    <Clock className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <h3 className="font-semibold">New This Week</h3>
+                </div>
+                <p className="text-sm text-muted-foreground mb-4">Fresh prompts added recently</p>
+                <div className="space-y-2">
+                  <Badge variant="secondary" className="text-xs">Crisis response</Badge>
+                  <Badge variant="secondary" className="text-xs">Content series</Badge>
+                  <Badge variant="secondary" className="text-xs">Data storytelling</Badge>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-purple-50 to-transparent border-purple-200 dark:from-purple-950 dark:border-purple-800">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 bg-purple-500/10 rounded-full flex items-center justify-center">
+                    <Sparkles className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                  </div>
+                  <h3 className="font-semibold">Most Effective</h3>
+                </div>
+                <p className="text-sm text-muted-foreground mb-4">Highest rated by our community</p>
+                <div className="space-y-2">
+                  <Badge variant="secondary" className="text-xs">STAR method stories</Badge>
+                  <Badge variant="secondary" className="text-xs">Viral trend adaptation</Badge>
+                  <Badge variant="secondary" className="text-xs">Content calendar</Badge>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        {/* Popular Categories - Visual Cards */}
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">Browse by Category</h2>
+          <p className="text-muted-foreground mb-6">Jump directly to the prompt categories you need most</p>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <Card 
+              className="group hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 cursor-pointer bg-gradient-to-br from-blue-50 to-transparent border-blue-200 dark:from-blue-950 dark:border-blue-800"
+              onClick={() => {
+                clearRandom();
+                setQuery("marketing");
+                setCategoryId(undefined);
+                setSubcategoryId(undefined);
+                setRibbon(undefined);
+              }}
+            >
+              <CardContent className="p-6 text-center">
+                <div className="w-12 h-12 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <TrendingUp className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                </div>
+                <h3 className="font-semibold mb-2">Marketing</h3>
+                <p className="text-xs text-muted-foreground">850+ prompts</p>
+              </CardContent>
+            </Card>
+
+            <Card 
+              className="group hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 cursor-pointer bg-gradient-to-br from-green-50 to-transparent border-green-200 dark:from-green-950 dark:border-green-800"
+              onClick={() => {
+                clearRandom();
+                setQuery("career");
+                setCategoryId(undefined);
+                setSubcategoryId(undefined);
+                setRibbon(undefined);
+              }}
+            >
+              <CardContent className="p-6 text-center">
+                <div className="w-12 h-12 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Users className="h-6 w-6 text-green-600 dark:text-green-400" />
+                </div>
+                <h3 className="font-semibold mb-2">Career</h3>
+                <p className="text-xs text-muted-foreground">420+ prompts</p>
+              </CardContent>
+            </Card>
+
+            <Card 
+              className="group hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 cursor-pointer bg-gradient-to-br from-purple-50 to-transparent border-purple-200 dark:from-purple-950 dark:border-purple-800"
+              onClick={() => {
+                clearRandom();
+                setQuery("content");
+                setCategoryId(undefined);
+                setSubcategoryId(undefined);
+                setRibbon(undefined);
+              }}
+            >
+              <CardContent className="p-6 text-center">
+                <div className="w-12 h-12 bg-purple-500/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Copy className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+                </div>
+                <h3 className="font-semibold mb-2">Content</h3>
+                <p className="text-xs text-muted-foreground">380+ prompts</p>
+              </CardContent>
+            </Card>
+
+            <Card 
+              className="group hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 cursor-pointer bg-gradient-to-br from-orange-50 to-transparent border-orange-200 dark:from-orange-950 dark:border-orange-800"
+              onClick={() => {
+                clearRandom();
+                setQuery("productivity");
+                setCategoryId(undefined);
+                setSubcategoryId(undefined);
+                setRibbon(undefined);
+              }}
+            >
+              <CardContent className="p-6 text-center">
+                <div className="w-12 h-12 bg-orange-500/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Clock className="h-6 w-6 text-orange-600 dark:text-orange-400" />
+                </div>
+                <h3 className="font-semibold mb-2">Productivity</h3>
+                <p className="text-xs text-muted-foreground">290+ prompts</p>
+              </CardContent>
+            </Card>
+          </div>
+          
+          <div className="mt-4 text-center">
+            <Button 
+              variant="ghost" 
+              onClick={() => {
+                clearRandom();
+                setCategoryId(undefined);
+                setSubcategoryId(undefined);
+                setQuery("");
+                setRibbon(undefined);
+              }}
+            >
+              View All Categories →
+            </Button>
+          </div>
+        </section>
+
+        {/* Enhanced Search Section */}
+        <section className="mb-8">
+          <Card className="bg-gradient-to-r from-primary/5 to-accent/5 border-primary/20">
+            <CardContent className="p-6">
+              <div className="text-center mb-4">
+                <h3 className="text-lg font-semibold mb-2">🔍 Popular Searches</h3>
+                <p className="text-sm text-muted-foreground">Quick access to what others are looking for</p>
+              </div>
+              <div className="flex flex-wrap justify-center gap-2">
+                {[
+                  "email marketing", "resume writing", "social media", "interview prep", 
+                  "content calendar", "crisis response", "LinkedIn strategy", "data analysis"
+                ].map((searchTerm) => (
+                  <Button
+                    key={searchTerm}
+                    variant="outline"
+                    size="sm"
+                    className="text-xs"
+                    onClick={() => {
+                      clearRandom();
+                      setQuery(searchTerm);
+                      setCategoryId(undefined);
+                      setSubcategoryId(undefined);
+                      setRibbon(undefined);
+                    }}
+                  >
+                    {searchTerm}
+                  </Button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </section>
 
         <section id="library-filters" className="scroll-mt-28 md:scroll-mt-28">
           <PromptFilters
