@@ -2,8 +2,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Zap, RefreshCw, Crown } from "lucide-react";
+import { Zap, RefreshCw, Crown, Infinity } from "lucide-react";
 import { useAIUsage } from "@/hooks/useAIUsage";
+import { supabase } from "@/integrations/supabase/client";
+import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
+import { useState, useEffect } from "react";
+
+interface SubscriptionInfo {
+  subscribed: boolean;
+  subscription_tier: string | null;
+}
 
 interface UsageDisplayProps {
   usageType?: 'generator' | 'suggestions' | 'assistant' | 'all';
@@ -11,7 +19,55 @@ interface UsageDisplayProps {
 }
 
 const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps) => {
+  const { user } = useSupabaseAuth();
   const { usage, refreshUsage } = useAIUsage();
+  const [subscriptionInfo, setSubscriptionInfo] = useState<SubscriptionInfo | null>(null);
+
+  // Fetch subscription info
+  useEffect(() => {
+    const fetchSubscriptionInfo = async () => {
+      if (!user) {
+        setSubscriptionInfo(null);
+        return;
+      }
+
+      try {
+        const { data, error } = await supabase
+          .from('subscribers')
+          .select('subscribed, subscription_tier')
+          .eq('user_id', user.id)
+          .maybeSingle();
+
+        if (error) throw error;
+        setSubscriptionInfo(data);
+      } catch (error) {
+        console.error('Error fetching subscription info:', error);
+        setSubscriptionInfo(null);
+      }
+    };
+
+    fetchSubscriptionInfo();
+  }, [user]);
+
+  const getSubscriptionMultiplier = () => {
+    if (!subscriptionInfo?.subscribed) return 1;
+    const tier = subscriptionInfo.subscription_tier?.toLowerCase();
+    if (tier === 'basic' || tier === 'monthly') return 2;
+    if (tier === 'premium' || tier === 'lifetime') return 3;
+    return 1;
+  };
+
+  const getSubscriptionBadge = () => {
+    if (!subscriptionInfo?.subscribed) return null;
+    const tier = subscriptionInfo.subscription_tier?.toLowerCase();
+    if (tier === 'basic' || tier === 'monthly') {
+      return <Badge variant="secondary" className="text-xs"><Crown className="h-3 w-3 mr-1" />Monthly 2x</Badge>;
+    }
+    if (tier === 'premium' || tier === 'lifetime') {
+      return <Badge variant="secondary" className="text-xs"><Infinity className="h-3 w-3 mr-1" />Lifetime 3x</Badge>;
+    }
+    return <Badge variant="secondary" className="text-xs"><Crown className="h-3 w-3 mr-1" />Premium</Badge>;
+  };
 
   const getUsageTypeLabel = (type: string) => {
     switch (type) {
@@ -72,14 +128,20 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
       <Card className="p-3">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium">{singleUsage.label}</span>
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium">{singleUsage.label}</span>
+              {getSubscriptionBadge()}
+            </div>
             <Badge variant={singleUsage.data.remaining > 0 ? "secondary" : "destructive"}>
               {singleUsage.data.remaining} left
             </Badge>
           </div>
           <Progress value={progressPercentage} className="h-2" />
-          <div className="text-xs text-muted-foreground">
-            {singleUsage.data.current_usage} / {singleUsage.data.daily_limit} queries used
+          <div className="text-xs text-muted-foreground flex justify-between">
+            <span>{singleUsage.data.current_usage} / {singleUsage.data.daily_limit} queries used</span>
+            {subscriptionInfo?.subscribed && (
+              <span>{getSubscriptionMultiplier()}x limits</span>
+            )}
           </div>
         </div>
       </Card>
@@ -92,7 +154,8 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
         <CardTitle className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Zap className="h-5 w-5 text-primary" />
-            AI Usage Today
+            <span>AI Usage Today</span>
+            {getSubscriptionBadge()}
           </div>
           <Button
             variant="ghost"
@@ -138,12 +201,48 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
               <div className="flex-1">
                 <h4 className="font-medium">Need more queries?</h4>
                 <p className="text-sm text-muted-foreground mt-1">
-                  Upgrade to premium for higher daily limits and unlimited access to all AI features.
+                  {!subscriptionInfo?.subscribed ? (
+                    <>Upgrade to get <strong>2x queries</strong> with monthly membership or <strong>3x queries</strong> with lifetime access.</>
+                  ) : (
+                    <>You've reached your enhanced daily limits. Your queries will reset at midnight UTC.</>
+                  )}
                 </p>
-                <Button size="sm" className="mt-2" disabled>
-                  <Crown className="h-4 w-4 mr-1" />
-                  Upgrade - Coming Soon
-                </Button>
+                {!subscriptionInfo?.subscribed && (
+                  <div className="flex gap-2 mt-2">
+                    <Button size="sm" variant="outline">
+                      <Crown className="h-4 w-4 mr-1" />
+                      Monthly (2x) - $12.99/mo
+                    </Button>
+                    <Button size="sm" variant="secondary">
+                      <Infinity className="h-4 w-4 mr-1" />
+                      Lifetime (3x) - $47.85
+                    </Button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {subscriptionInfo?.subscribed && (
+          <div className="mt-4 p-3 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg border">
+            <div className="flex items-start gap-3">
+              {subscriptionInfo.subscription_tier?.toLowerCase() === 'lifetime' || subscriptionInfo.subscription_tier?.toLowerCase() === 'premium' ? (
+                <Infinity className="h-5 w-5 text-primary mt-0.5" />
+              ) : (
+                <Crown className="h-5 w-5 text-primary mt-0.5" />
+              )}
+              <div className="flex-1">
+                <h4 className="font-medium flex items-center gap-2">
+                  Premium Member Benefits
+                  {getSubscriptionBadge()}
+                </h4>
+                <p className="text-sm text-muted-foreground mt-1">
+                  You're enjoying {getSubscriptionMultiplier()}x the standard AI query limits. 
+                  {subscriptionInfo.subscription_tier?.toLowerCase() === 'lifetime' || subscriptionInfo.subscription_tier?.toLowerCase() === 'premium' 
+                    ? ' Thank you for your lifetime support!' 
+                    : ' Your subscription provides enhanced daily limits.'}
+                </p>
               </div>
             </div>
           </div>
