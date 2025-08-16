@@ -311,7 +311,7 @@ const AIPromptGenerator = () => {
                 Recent Generated Prompts
               </CardTitle>
               <Button asChild variant="outline" size="sm">
-                <Link to="/account/generated">
+                <Link to="/account/favorites#my-generated-prompts">
                   <ExternalLink className="h-4 w-4 mr-2" />
                   View All
                 </Link>
@@ -354,7 +354,7 @@ const AIPromptGenerator = () => {
                 {recentPrompts.length === 5 && (
                   <div className="text-center pt-2">
                     <Button asChild variant="link" size="sm">
-                      <Link to="/account/generated">
+                      <Link to="/account/favorites#my-generated-prompts">
                         View all {recentPrompts.length}+ prompts →
                       </Link>
                     </Button>

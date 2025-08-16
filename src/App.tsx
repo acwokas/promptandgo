@@ -40,7 +40,7 @@ import PurchasesPage from "./pages/account/Purchases";
 import ProfilePage from "./pages/account/Profile";
 import NotificationsPage from "./pages/account/Notifications";
 import SecurityPage from "./pages/account/Security";
-import MyGeneratedPrompts from "./pages/account/MyGeneratedPrompts";
+
 import CartPage from "./pages/Cart";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
 import CheckoutCanceled from "./pages/CheckoutCanceled";
@@ -118,7 +118,7 @@ const AppContent = () => {
         <Route path="/account/security" element={<SecurityPage />} />
         <Route path="/account/purchases" element={<PurchasesPage />} />
         <Route path="/account/favorites" element={<FavoritesPage />} />
-        <Route path="/account/generated" element={<MyGeneratedPrompts />} />
+        
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout/success" element={<CheckoutSuccess />} />
         <Route path="/checkout/canceled" element={<CheckoutCanceled />} />
