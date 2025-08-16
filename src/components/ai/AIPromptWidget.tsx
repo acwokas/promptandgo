@@ -93,7 +93,7 @@ const AIPromptWidget = () => {
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center gap-2 text-lg">
           <Wand2 className="h-5 w-5 text-primary" />
-          🚀 Try Our AI Prompt Generator
+          🚀 Try Our FREE AI Prompt Generator
         </CardTitle>
         <p className="text-sm text-muted-foreground">
           Describe what you need and get a perfectly crafted prompt instantly
