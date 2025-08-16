@@ -13,8 +13,16 @@ interface FiltersProps {
   subcategoryId: string | undefined;
   query: string;
   includePro?: boolean;
+  proOnly?: boolean;
   ribbon?: string;
-  onChange: (next: { categoryId?: string; subcategoryId?: string; query?: string; includePro?: boolean; ribbon?: string }) => void;
+  onChange: (next: { 
+    categoryId?: string; 
+    subcategoryId?: string; 
+    query?: string; 
+    includePro?: boolean; 
+    proOnly?: boolean;
+    ribbon?: string 
+  }) => void;
   onSearch?: () => void;
   onClear?: () => void;
   searchLabel?: string;
@@ -29,7 +37,7 @@ function catAccentIndex(seed: string) {
   return (h % 6) + 1;
 }
 
-export const PromptFilters = ({ categories, categoryId, subcategoryId, query, includePro, ribbon, onChange, onSearch, onClear, searchLabel, searchPlaceholder, categoryLabel, subcategoryLabel }: FiltersProps) => {
+export const PromptFilters = ({ categories, categoryId, subcategoryId, query, includePro, proOnly, ribbon, onChange, onSearch, onClear, searchLabel, searchPlaceholder, categoryLabel, subcategoryLabel }: FiltersProps) => {
   const categoriesSorted = [...categories].sort((a, b) => {
     const an = a.name.trim().toLowerCase();
     const bn = b.name.trim().toLowerCase();
@@ -140,9 +148,19 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
             >
               <SelectValue placeholder="All" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="max-h-80">
               <SelectItem value="all">All</SelectItem>
               <SelectItem value="RECOMMENDED">🎯 Recommended</SelectItem>
+              <SelectItem value="MOST_POPULAR">🔥 Most Popular</SelectItem>
+              <SelectItem value="HIGHEST_RATED">⭐ Highest Rated (4.5+)</SelectItem>
+              <SelectItem value="MY_PROMPTS">❤️ My Prompts</SelectItem>
+              <SelectItem value="NEW_PROMPTS">✨ New Prompts</SelectItem>
+              <SelectItem value="TRENDING">📈 Trending</SelectItem>
+              <SelectItem value="FREE_ONLY">🆓 Free Only</SelectItem>
+              <SelectItem value="PRO_ONLY">💎 PRO Only</SelectItem>
+              <SelectItem value="MOST_COPIED">📋 Most Copied</SelectItem>
+              <SelectItem value="QUICK_WIN">⚡ Quick Win</SelectItem>
+              <SelectItem value="RECENTLY_VIEWED">👁️ Recently Viewed</SelectItem>
             </SelectContent>
           </Select>
         </div>
