@@ -205,52 +205,64 @@ const Index = () => {
           </section>
         )}
 
-        {/* Audience Cards */}
+        {/* Popular Categories */}
         <section className="container py-4">
-          <h2 className="text-xl font-semibold mb-1">Who it's for</h2>
-          <p className="text-muted-foreground text-sm mb-4">Explore tailor-made prompts for every subject and find the perfect starting point.</p>
+          <h2 className="text-xl font-semibold mb-1">Popular Categories</h2>
+          <p className="text-muted-foreground text-sm mb-4">Jump directly to our most popular prompt collections with thousands of ready-to-use examples.</p>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-lg font-semibold">💼 Career &amp; Job Prompts</h3>
-              <p className="text-muted-foreground text-sm mt-1 mb-3">Write better resumes, prep smarter for interviews, and land your next role.</p>
-              <Button asChild variant="hero" size="sm">
-                <Link to="/library">Learn More</Link>
-              </Button>
+              <h3 className="text-lg font-semibold">💼 Business & Marketing</h3>
+              <p className="text-muted-foreground text-sm mt-1 mb-3">Email campaigns, ad copy, social media content, and sales outreach that converts.</p>
+              <div className="flex gap-2">
+                <Button asChild variant="hero" size="sm">
+                  <Link to="/library?search=marketing">Browse Marketing</Link>
+                </Button>
+              </div>
             </article>
             <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-lg font-semibold">🧠 Self &amp; Growth</h3>
-              <p className="text-muted-foreground text-sm mt-1 mb-3">Build better habits, sharpen your focus, and reflect more deeply.</p>
-              <Button asChild variant="hero" size="sm">
-                <Link to="/library">Learn More</Link>
-              </Button>
+              <h3 className="text-lg font-semibold">✍️ Content Creation</h3>
+              <p className="text-muted-foreground text-sm mt-1 mb-3">Blog posts, articles, creative writing, and storytelling prompts for any audience.</p>
+              <div className="flex gap-2">
+                <Button asChild variant="hero" size="sm">
+                  <Link to="/library?search=content">Browse Content</Link>
+                </Button>
+              </div>
             </article>
             <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-lg font-semibold">💬 Comms &amp; Messaging</h3>
-              <p className="text-muted-foreground text-sm mt-1 mb-3">Write clearer emails, sharper responses, and better internal docs.</p>
-              <Button asChild variant="hero" size="sm">
-                <Link to="/library">Learn More</Link>
-              </Button>
+              <h3 className="text-lg font-semibold">💬 Communication</h3>
+              <p className="text-muted-foreground text-sm mt-1 mb-3">Professional emails, presentations, and customer support responses.</p>
+              <div className="flex gap-2">
+                <Button asChild variant="hero" size="sm">
+                  <Link to="/library?search=email">Browse Communication</Link>
+                </Button>
+              </div>
             </article>
             <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-lg font-semibold">🎨 Creativity &amp; Writing</h3>
-              <p className="text-muted-foreground text-sm mt-1 mb-3">From idea to finished story — overcome writer's block and generate concepts.</p>
-              <Button asChild variant="hero" size="sm">
-                <Link to="/library">Learn More</Link>
-              </Button>
+              <h3 className="text-lg font-semibold">🎯 Career Development</h3>
+              <p className="text-muted-foreground text-sm mt-1 mb-3">Resume writing, interview prep, LinkedIn optimization, and job search strategies.</p>
+              <div className="flex gap-2">
+                <Button asChild variant="hero" size="sm">
+                  <Link to="/library?search=career">Browse Career</Link>
+                </Button>
+              </div>
             </article>
             <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-lg font-semibold">🎯 Sales &amp; Marketing</h3>
-              <p className="text-muted-foreground text-sm mt-1 mb-3">Craft high-converting ads, persuasive emails, and compelling landing pages.</p>
-              <Button asChild variant="hero" size="sm">
-                <Link to="/library">Learn More</Link>
-              </Button>
+              <h3 className="text-lg font-semibold">📊 Data & Analysis</h3>
+              <p className="text-muted-foreground text-sm mt-1 mb-3">Research, data analysis, reporting, and insights generation for better decisions.</p>
+              <div className="flex gap-2">
+                <Button asChild variant="hero" size="sm">
+                  <Link to="/library?search=analysis">Browse Analysis</Link>
+                </Button>
+              </div>
             </article>
             <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-lg font-semibold">🎓 Education &amp; Teachers</h3>
-              <p className="text-muted-foreground text-sm mt-1 mb-3">Generate lesson plans, explain complex concepts, and create classroom-ready activities.</p>
-              <Button asChild variant="hero" size="sm">
-                <Link to="/library">Learn More</Link>
-              </Button>
+              <h3 className="text-lg font-semibold">🎓 Education & Learning</h3>
+              <p className="text-muted-foreground text-sm mt-1 mb-3">Lesson plans, explanations, tutorials, and educational content creation.</p>
+              <div className="flex gap-2">
+                <Button asChild variant="hero" size="sm">
+                  <Link to="/library?search=education">Browse Education</Link>
+                </Button>
+              </div>
             </article>
           </div>
         </section>
