@@ -41,9 +41,15 @@ const CartPage = () => {
   const hasLifetime = items.some((i) => i.type === 'lifetime');
 
   const total = items.reduce((sum, i) => {
-    // If lifetime or membership is in cart, other items are free
-    const unit = (hasLifetime || hasMembership) && (i.type === 'prompt' || i.type === 'pack') ? 0 : i.unitAmountCents;
-    return sum + unit * i.quantity;
+    // If lifetime is in cart, everything else is free
+    if (hasLifetime && i.type !== 'lifetime') {
+      return sum;
+    }
+    // If only membership (no lifetime), prompts and packs are free
+    if (!hasLifetime && hasMembership && (i.type === 'prompt' || i.type === 'pack')) {
+      return sum;
+    }
+    return sum + i.unitAmountCents * i.quantity;
   }, 0);
   const originalTotal = items.reduce((sum, i) => sum + originalUnitCents(i) * i.quantity, 0);
   const savings = Math.max(0, originalTotal - total);
@@ -127,11 +133,17 @@ const CartPage = () => {
                   </CardHeader>
                   <CardContent className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    {(hasLifetime || hasMembership) && (i.type === 'prompt' || i.type === 'pack') ? (
+                    {hasLifetime && i.type !== 'lifetime' ? (
                       <>
                         <span className="text-muted-foreground line-through">{centsToUSD(originalUnitCents(i))}</span>
                         <span className="text-xl font-semibold text-primary">{centsToUSD(0)}</span>
-                        <span className="text-xs text-primary font-medium">FREE with {hasLifetime ? 'Lifetime' : 'Membership'}</span>
+                        <span className="text-xs text-primary font-medium">FREE with Lifetime</span>
+                      </>
+                    ) : (!hasLifetime && hasMembership) && (i.type === 'prompt' || i.type === 'pack') ? (
+                      <>
+                        <span className="text-muted-foreground line-through">{centsToUSD(originalUnitCents(i))}</span>
+                        <span className="text-xl font-semibold text-primary">{centsToUSD(0)}</span>
+                        <span className="text-xs text-primary font-medium">FREE with Membership</span>
                       </>
                     ) : originalUnitCents(i) > i.unitAmountCents ? (
                       <>
@@ -141,7 +153,7 @@ const CartPage = () => {
                     ) : (
                       <span className="text-xl font-semibold">{centsToUSD(i.unitAmountCents)}</span>
                     )}
-                   </div>
+                  </div>
                    <Button variant="outline" onClick={() => removeFromCart(i.id, i.type, !!user)}>Remove</Button>
                   </CardContent>
                 </Card>
@@ -174,11 +186,28 @@ const CartPage = () => {
                       ⚡️Power Packs $4.99 (was $9.99).
                     </p>
                     
-                    {(hasMembership || hasLifetime) && items.some(i => i.type === 'prompt' || i.type === 'pack') && (
+                    {hasLifetime && items.some(i => i.type === 'membership' || i.type === 'prompt' || i.type === 'pack') && (
                       <div className="p-3 bg-primary/10 rounded-lg border border-primary/20">
                         <p className="text-sm font-medium text-primary mb-2">💡 Pro Tip!</p>
                         <p className="text-xs text-muted-foreground mb-2">
-                          Your prompts & packs are FREE with {hasLifetime ? 'Lifetime' : 'Membership'}! 
+                          Your membership, prompts & packs are FREE with Lifetime Access! 
+                          Add prompts to "My Prompts" now - they'll unlock when you complete checkout.
+                        </p>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="w-full"
+                          onClick={handleAddToMyPrompts}
+                          disabled={addingToFavorites}
+                        >
+                          {addingToFavorites ? "Adding..." : `Add ${items.filter(i => i.type === 'prompt').length} Prompts to My Library`}
+                        </Button>
+                      </div>
+                    ) || (!hasLifetime && hasMembership && items.some(i => i.type === 'prompt' || i.type === 'pack') && (
+                      <div className="p-3 bg-primary/10 rounded-lg border border-primary/20">
+                        <p className="text-sm font-medium text-primary mb-2">💡 Pro Tip!</p>
+                        <p className="text-xs text-muted-foreground mb-2">
+                          Your prompts & packs are FREE with Membership! 
                           Add them to "My Prompts" now - they'll unlock when you complete checkout.
                         </p>
                         <Button 
@@ -191,7 +220,7 @@ const CartPage = () => {
                           {addingToFavorites ? "Adding..." : `Add ${items.filter(i => i.type === 'prompt').length} Prompts to My Library`}
                         </Button>
                       </div>
-                    )}
+                    ))}
                     
                     <div className="text-center text-sm text-muted-foreground">or</div>
                     <div className="space-y-2">

@@ -109,8 +109,14 @@ export function getCartTotalCents(isAuthenticated: boolean = true): number {
   const hasMembership = cartItems.some((i) => i.type === 'membership');
   
   return cartItems.reduce((sum, i) => {
-    // If lifetime or membership is in cart, other items are free
-    const unit = (hasLifetime || hasMembership) && (i.type === 'prompt' || i.type === 'pack') ? 0 : i.unitAmountCents;
-    return sum + unit * i.quantity;
+    // If lifetime is in cart, everything else is free
+    if (hasLifetime && i.type !== 'lifetime') {
+      return sum;
+    }
+    // If only membership (no lifetime), prompts and packs are free
+    if (!hasLifetime && hasMembership && (i.type === 'prompt' || i.type === 'pack')) {
+      return sum;
+    }
+    return sum + i.unitAmountCents * i.quantity;
   }, 0);
 }
