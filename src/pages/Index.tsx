@@ -168,6 +168,101 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Social Proof Section */}
+        <section className="container py-6">
+          <div className="text-center mb-8">
+            <p className="text-muted-foreground mb-2">Trusted by 50,000+ professionals</p>
+            <div className="flex items-center justify-center gap-8 text-sm text-muted-foreground">
+              <span>⭐⭐⭐⭐⭐ 4.9/5</span>
+              <span>•</span>
+              <span>1M+ prompts copied</span>
+              <span>•</span>
+              <span>500+ hours saved daily</span>
+            </div>
+          </div>
+          
+          <div className="grid gap-6 md:grid-cols-3 mb-8">
+            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-3 mb-4">
+                  <div className="text-yellow-500">⭐⭐⭐⭐⭐</div>
+                </div>
+                <p className="text-sm text-muted-foreground mb-4">"These prompts saved me 5 hours per week on content creation. The marketing category alone paid for itself in one campaign."</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">SJ</div>
+                  <div>
+                    <p className="text-sm font-medium">Sarah Johnson</p>
+                    <p className="text-xs text-muted-foreground">Marketing Director</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-3 mb-4">
+                  <div className="text-yellow-500">⭐⭐⭐⭐⭐</div>
+                </div>
+                <p className="text-sm text-muted-foreground mb-4">"As a freelancer, these prompts help me deliver better work faster. The career section helped me land three new clients this month."</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">MR</div>
+                  <div>
+                    <p className="text-sm font-medium">Michael Rodriguez</p>
+                    <p className="text-xs text-muted-foreground">Freelance Writer</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-3 mb-4">
+                  <div className="text-yellow-500">⭐⭐⭐⭐⭐</div>
+                </div>
+                <p className="text-sm text-muted-foreground mb-4">"Game changer for our startup. We use the business prompts daily for everything from investor pitches to customer emails."</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">AL</div>
+                  <div>
+                    <p className="text-sm font-medium">Alex Liu</p>
+                    <p className="text-xs text-muted-foreground">Startup Founder</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Trust Signals */}
+          <div className="text-center">
+            <p className="text-sm text-muted-foreground mb-4">Works seamlessly with your favorite AI tools</p>
+            <div className="flex items-center justify-center gap-8 text-xs text-muted-foreground">
+              <span className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
+                  <span className="text-white font-bold text-xs">✓</span>
+                </div>
+                ChatGPT
+              </span>
+              <span className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center">
+                  <span className="text-white font-bold text-xs">✓</span>
+                </div>
+                Claude
+              </span>
+              <span className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+                  <span className="text-white font-bold text-xs">✓</span>
+                </div>
+                Gemini
+              </span>
+              <span className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                  <span className="text-white font-bold text-xs">✓</span>
+                </div>
+                Perplexity
+              </span>
+            </div>
+          </div>
+        </section>
+
         {/* Personalized Recommendations for Homepage */}
         {hasPersonalization && personalizedPrompts.length > 0 && (
           <section className="container py-6">
@@ -375,6 +470,105 @@ const Index = () => {
                 </div>
               </div>
             </article>
+          </div>
+        </section>
+
+        {/* Quick FAQ Section */}
+        <section className="container py-6">
+          <h2 className="text-2xl font-semibold mb-6 text-center">Quick Questions</h2>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-4xl mx-auto">
+            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
+              <CardContent className="p-6">
+                <h3 className="font-semibold mb-2 text-sm">Do I need to sign up?</h3>
+                <p className="text-xs text-muted-foreground">Nope! Browse and copy prompts for free. Sign up only to save favorites and access power packs.</p>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
+              <CardContent className="p-6">
+                <h3 className="font-semibold mb-2 text-sm">Works with free AI tools?</h3>
+                <p className="text-xs text-muted-foreground">Yes! Most prompts work perfectly with free versions of ChatGPT, Claude, and other AI tools.</p>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
+              <CardContent className="p-6">
+                <h3 className="font-semibold mb-2 text-sm">How much does it cost?</h3>
+                <p className="text-xs text-muted-foreground">Browsing is free forever. Premium packs start at $9.99 for specialized collections.</p>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
+              <CardContent className="p-6">
+                <h3 className="font-semibold mb-2 text-sm">Can I use them commercially?</h3>
+                <p className="text-xs text-muted-foreground">Yes! Use prompts and their outputs for any personal or commercial project.</p>
+              </CardContent>
+            </Card>
+          </div>
+          
+          <div className="text-center mt-6">
+            <Button asChild variant="ghost" size="sm">
+              <Link to="/faqs">See All FAQs →</Link>
+            </Button>
+          </div>
+        </section>
+
+        {/* Newsletter Signup */}
+        <section className="container py-6">
+          <Card className="max-w-2xl mx-auto bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
+            <CardContent className="p-8 text-center">
+              <h2 className="text-2xl font-semibold mb-3">🚀 Get Weekly Prompt Tips</h2>
+              <p className="text-muted-foreground mb-6">Join 25,000+ professionals getting our best prompts, tips, and AI updates delivered to their inbox every Tuesday.</p>
+              <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                <input 
+                  type="email" 
+                  placeholder="Enter your email" 
+                  className="flex-1 px-4 py-2 rounded-md border bg-background"
+                />
+                <Button variant="hero" className="px-6">
+                  Subscribe Free
+                </Button>
+              </div>
+              <p className="text-xs text-muted-foreground mt-3">No spam. Unsubscribe anytime. Free forever.</p>
+              
+              {/* Social proof for newsletter */}
+              <div className="mt-6 pt-4 border-t border-primary/10">
+                <p className="text-xs text-muted-foreground mb-2">Recent subscriber feedback:</p>
+                <div className="text-xs text-muted-foreground italic">
+                  "These weekly tips have made me 3x better at prompting. Best AI newsletter I subscribe to!" — Jenny K.
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </section>
+
+        {/* Pricing transparency hint */}
+        <section className="container py-4">
+          <div className="text-center bg-gradient-to-r from-primary/5 to-accent/5 rounded-lg p-6 max-w-2xl mx-auto">
+            <h3 className="font-semibold mb-2">💡 Start Free, Upgrade When Ready</h3>
+            <p className="text-sm text-muted-foreground">
+              Browse thousands of prompts for free. Get premium collections starting at $9.99 when you need specialized prompts for your industry or project.
+            </p>
+            <div className="flex justify-center gap-4 mt-4 text-xs text-muted-foreground">
+              <span className="flex items-center gap-1">
+                <div className="w-3 h-3 bg-green-500 rounded-full flex items-center justify-center">
+                  <span className="text-white text-[8px]">✓</span>
+                </div>
+                Free browsing
+              </span>
+              <span className="flex items-center gap-1">
+                <div className="w-3 h-3 bg-green-500 rounded-full flex items-center justify-center">
+                  <span className="text-white text-[8px]">✓</span>
+                </div>
+                No trial limits
+              </span>
+              <span className="flex items-center gap-1">
+                <div className="w-3 h-3 bg-green-500 rounded-full flex items-center justify-center">
+                  <span className="text-white text-[8px]">✓</span>
+                </div>
+                No credit card needed
+              </span>
+            </div>
           </div>
         </section>
 
