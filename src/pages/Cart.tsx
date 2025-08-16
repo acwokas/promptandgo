@@ -29,7 +29,7 @@ const CartPage = () => {
     switch (i.type) {
       case 'pack': return 999;
       case 'membership': return 2499;
-      case 'lifetime': return 9499;
+      case 'lifetime': return 19900;
       case 'prompt': return 199;
       default: return i.unitAmountCents;
     }
@@ -154,7 +154,7 @@ const CartPage = () => {
                         <span className="text-xs">(p/mo)</span>
                       </Button>
                       <Button variant="outline" className="w-full justify-between text-sm">
-                        <span>Lifetime Access $47.85 (was $94.99)</span>
+                        <span>Lifetime Access $99.50 (was $199.00)</span>
                         <span className="text-xs">(one off)</span>
                       </Button>
                     </div>

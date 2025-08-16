@@ -16,8 +16,8 @@ import { PackFilters } from "@/components/prompt/PackFilters";
 
 const PACK_ORIGINAL_CENTS = 999;
 const PACK_DISCOUNT_CENTS = 499;
-const LIFETIME_ORIGINAL_CENTS = 9499;
-const LIFETIME_DISCOUNT_CENTS = 4785;
+const LIFETIME_ORIGINAL_CENTS = 19900;
+const LIFETIME_DISCOUNT_CENTS = 9950;
 const SUB_DISCOUNT_CENTS = 1299;
 const fmtUSD = (cents: number) => `$${(cents / 100).toFixed(2)}`;
 
