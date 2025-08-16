@@ -876,7 +876,7 @@ const PromptLibrary = () => {
           </Card>
         </section>
 
-        <section id="library-filters" className="scroll-mt-28 md:scroll-mt-28 sticky top-20 z-40 bg-background/95 backdrop-blur-sm border-b border-border/50 py-4 -mx-4 px-4 shadow-sm mb-6">
+        <section id="library-filters" className="scroll-mt-36 md:scroll-mt-40 sticky top-20 z-40 bg-background/95 backdrop-blur-sm border-b border-border/50 py-4 -mx-4 px-4 shadow-sm mb-6">
           <PromptFilters
             categories={categories}
             categoryId={categoryId}
