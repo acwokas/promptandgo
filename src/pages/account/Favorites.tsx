@@ -535,7 +535,7 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
                             {promptData.title}
                           </CardTitle>
                           {promptData.description && (
-                            <CardDescription className="line-clamp-2 mt-1 text-sm">
+                            <CardDescription className="text-sm">
                               {promptData.description}
                             </CardDescription>
                           )}
