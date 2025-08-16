@@ -68,12 +68,12 @@ const Header = () => {
         <ul className="hidden md:flex items-center gap-6 text-sm">
           <li><NavLink to="/" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Welcome</NavLink></li>
           <li><NavLink to="/how-it-works" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>How it Works</NavLink></li>
-          <li><NavLink to="/library" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Prompt Library</NavLink></li>
+          <li><NavLink to="/library" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Library</NavLink></li>
           <li><NavLink to="/packs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>⚡️Power Packs</NavLink></li>
           <li>
             <NavLink to="/toolkit" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
               <Bot className="h-4 w-4 inline mr-1 text-blue-500" />
-              Interactive
+              AI Tools
             </NavLink>
           </li>
           <li><NavLink to="/faqs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>FAQs</NavLink></li>
@@ -92,11 +92,11 @@ const Header = () => {
                 <nav className="mt-8 grid gap-3 text-base">
                   <NavLink to="/" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Welcome</NavLink>
                   <NavLink to="/how-it-works" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>How it Works</NavLink>
-                  <NavLink to="/library" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Prompt Library</NavLink>
+                  <NavLink to="/library" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Library</NavLink>
                   <NavLink to="/packs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>⚡️Power Packs</NavLink>
                   <NavLink to="/toolkit" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
                     <Bot className="h-4 w-4 inline mr-1 text-blue-500" />
-                    Interactive
+                    AI Tools
                   </NavLink>
                   <NavLink to="/cart" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Cart</NavLink>
                   <NavLink to="/faqs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>FAQs</NavLink>
@@ -115,7 +115,7 @@ const Header = () => {
                   )}
                   {user ? (
                     <Button asChild variant="hero" className="mt-4">
-                      <Link to="/library?random=1">Surprise Me!</Link>
+                      <Link to="/library?random=1">Prompt Me!</Link>
                     </Button>
                   ) : (
                     <Button asChild variant="cta" className="mt-4">
@@ -129,7 +129,7 @@ const Header = () => {
           {/* Desktop CTA */}
           {user ? (
             <Button asChild variant="hero" className="px-5 hidden md:inline-flex">
-              <Link to="/library?random=1">Surprise Me!</Link>
+              <Link to="/library?random=1">Prompt Me!</Link>
             </Button>
           ) : (
             <Button asChild variant="cta" className="px-5 hidden md:inline-flex">
