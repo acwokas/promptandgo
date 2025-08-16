@@ -388,13 +388,13 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
             My AI-Generated Prompts ({userGeneratedPrompts.length})
           </a>
         </Button>
-        <Button asChild variant="secondary">
+        <Button asChild variant="outline">
           <a href="#my-power-packs">
             <Zap className="h-4 w-4 mr-2" />
             My Power Packs ({userPacks.length})
           </a>
         </Button>
-        <Button asChild variant="outline">
+        <Button asChild variant="ghost">
           <Link to="/library">Back to Library</Link>
         </Button>
       </PageHero>
