@@ -137,7 +137,7 @@ const CartPage = () => {
                       <>
                         <span className="text-muted-foreground line-through">{centsToUSD(originalUnitCents(i))}</span>
                         <span className="text-xl font-semibold text-primary">{centsToUSD(0)}</span>
-                        <span className="text-xs text-primary font-medium">FREE with Lifetime</span>
+                        <span className="text-xs text-primary font-medium">FREE with Membership</span>
                       </>
                     ) : (!hasLifetime && hasMembership) && (i.type === 'prompt' || i.type === 'pack') ? (
                       <>
@@ -190,7 +190,7 @@ const CartPage = () => {
                       <div className="p-3 bg-primary/10 rounded-lg border border-primary/20">
                         <p className="text-sm font-medium text-primary mb-2">💡 Pro Tip!</p>
                         <p className="text-xs text-muted-foreground mb-2">
-                          Your membership, prompts & packs are FREE with Lifetime Access! 
+                          Your membership, prompts & packs are FREE with Membership! 
                           Add prompts to "My Prompts" now - they'll unlock when you complete checkout.
                         </p>
                         <Button 
