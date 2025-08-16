@@ -25,7 +25,7 @@ verify_jwt = false
 verify_jwt = false
 
 [functions.create-share-link]
-verify_jwt = false
+verify_jwt = true
 
 [functions.share-redirect]
 verify_jwt = false

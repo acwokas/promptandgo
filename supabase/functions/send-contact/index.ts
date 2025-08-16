@@ -14,6 +14,29 @@ interface ContactPayload {
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
+// Simple rate limiting using in-memory store
+const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
+
+const checkRateLimit = (ip: string): boolean => {
+  const now = Date.now();
+  const windowMs = 15 * 60 * 1000; // 15 minutes
+  const maxRequests = 5;
+
+  const record = rateLimitStore.get(ip);
+  
+  if (!record || now > record.resetTime) {
+    rateLimitStore.set(ip, { count: 1, resetTime: now + windowMs });
+    return true;
+  }
+  
+  if (record.count >= maxRequests) {
+    return false;
+  }
+  
+  record.count++;
+  return true;
+};
+
 serve(async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -27,10 +50,49 @@ serve(async (req: Request): Promise<Response> => {
       });
     }
 
+    // Rate limiting
+    const clientIp = req.headers.get('x-forwarded-for') || 'unknown';
+    if (!checkRateLimit(clientIp)) {
+      return new Response(JSON.stringify({ error: "Rate limit exceeded" }), {
+        status: 429,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
+    }
+
     const { name, email, message }: ContactPayload = await req.json();
 
     if (!name || !email || !message) {
       return new Response(JSON.stringify({ error: "Missing fields" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
+    }
+
+    // Validate input lengths and content
+    if (name.length > 100 || email.length > 254 || message.length > 2000) {
+      return new Response(JSON.stringify({ error: "Input too long" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
+    }
+
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return new Response(JSON.stringify({ error: "Invalid email format" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
+    }
+
+    // Check for suspicious patterns
+    const suspiciousPatterns = [
+      /<script/i, /javascript:/i, /on\w+=/i, /data:text\/html/i
+    ];
+    
+    const allInput = `${name} ${email} ${message}`;
+    if (suspiciousPatterns.some(pattern => pattern.test(allInput))) {
+      return new Response(JSON.stringify({ error: "Invalid input content" }), {
         status: 400,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
@@ -46,8 +108,8 @@ serve(async (req: Request): Promise<Response> => {
         <div style="background: white; padding: 30px; border: 1px solid #e5e7eb; border-radius: 0 0 8px 8px;">
           <div style="margin-bottom: 20px;">
             <p style="margin: 0 0 8px; font-weight: 600; color: #374151;">Contact Information:</p>
-            <p style="margin: 0 0 5px; color: #6b7280;"><strong>Name:</strong> ${name}</p>
-            <p style="margin: 0 0 15px; color: #6b7280;"><strong>Email:</strong> ${email}</p>
+            <p style="margin: 0 0 5px; color: #6b7280;"><strong>Name:</strong> ${name.replace(/[<>&"']/g, (char) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#x27;' }[char] || char))}</p>
+            <p style="margin: 0 0 15px; color: #6b7280;"><strong>Email:</strong> ${email.replace(/[<>&"']/g, (char) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#x27;' }[char] || char))}</p>
           </div>
           
           <hr style="border: none; border-top: 2px solid #e5e7eb; margin: 20px 0;">

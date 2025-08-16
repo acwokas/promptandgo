@@ -31,10 +31,53 @@ serve(async (req: Request) => {
   }
 
   try {
-    const { original_url, content_type, content_id, title, shared_by } = await req.json();
+    // Verify authentication
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response('Unauthorized', { status: 401, headers: corsHeaders });
+    }
+
+    // Create Supabase client with the user's auth token
+    const supabaseClient = createClient(
+      Deno.env.get('SUPABASE_URL')!,
+      Deno.env.get('SUPABASE_ANON_KEY')!,
+      { global: { headers: { Authorization: authHeader } } }
+    );
+
+    // Verify the user is authenticated
+    const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
+    if (authError || !user) {
+      return new Response('Unauthorized', { status: 401, headers: corsHeaders });
+    }
+
+    const { original_url, content_type, content_id, title } = await req.json();
 
     if (!original_url || !content_type || !content_id) {
       return new Response('Missing required fields', { status: 400, headers: corsHeaders });
+    }
+
+    // Validate URL format
+    try {
+      new URL(original_url);
+    } catch {
+      return new Response('Invalid URL format', { status: 400, headers: corsHeaders });
+    }
+
+    // Validate content type
+    const validContentTypes = ['prompt', 'pack', 'blog'];
+    if (!validContentTypes.includes(content_type)) {
+      return new Response('Invalid content type', { status: 400, headers: corsHeaders });
+    }
+
+    // Prevent creating too many links per user
+    const { count } = await supabase
+      .from('shared_links')
+      .select('*', { count: 'exact', head: true })
+      .eq('shared_by', user.id)
+      .gte('created_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()); // Last 24 hours
+
+    if (count && count > 50) {
+      return new Response('Rate limit exceeded', { status: 429, headers: corsHeaders });
     }
 
     // Check if a share link already exists for this content
@@ -43,7 +86,7 @@ serve(async (req: Request) => {
       .select('short_code')
       .eq('content_type', content_type)
       .eq('content_id', content_id)
-      .eq('shared_by', shared_by || null)
+      .eq('shared_by', user.id)
       .single();
 
     if (existing) {
@@ -85,8 +128,8 @@ serve(async (req: Request) => {
         original_url,
         content_type,
         content_id,
-        title: title || null,
-        shared_by: shared_by || null
+        title: title ? title.substring(0, 255) : null, // Limit title length
+        shared_by: user.id
       })
       .select('short_code')
       .single();

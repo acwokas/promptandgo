@@ -15,6 +15,12 @@ export const validatePromptInput = (input: string): { isValid: boolean; error?: 
     /forget\s+everything/i,
     /new\s+instructions/i,
     /admin\s+mode/i,
+    /<script/i,
+    /javascript:/i,
+    /on\w+\s*=/i,
+    /data:text\/html/i,
+    /eval\s*\(/i,
+    /expression\s*\(/i
   ];
   
   for (const pattern of suspiciousPatterns) {
