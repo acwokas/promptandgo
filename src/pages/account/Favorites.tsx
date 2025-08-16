@@ -11,7 +11,7 @@ import { useEffect, useState, useCallback } from "react";
 import type { Category as CategoryType } from "@/data/prompts";
 import { Link } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
-import { Heart, Bot, Trash2, Search } from "lucide-react";
+import { Heart, Bot, Trash2, Search, Zap } from "lucide-react";
 
 interface PromptUI {
   id: string;
@@ -70,6 +70,10 @@ const FavoritesPage = () => {
   // AI-generated prompts state
   const [userGeneratedPrompts, setUserGeneratedPrompts] = useState<UserGeneratedPrompt[]>([]);
   const [generatedPromptsLoading, setGeneratedPromptsLoading] = useState(false);
+  
+  // Power Packs state
+  const [userPacks, setUserPacks] = useState<any[]>([]);
+  const [packsLoading, setPacksLoading] = useState(false);
 
   // Filters and UI state (mirrors Prompt Library)
   const [categories, setCategories] = useState<CategoryType[]>([]);
@@ -180,6 +184,28 @@ const FavoritesPage = () => {
       toast({ title: "Failed to load AI-generated prompts", variant: "destructive" });
     } finally {
       setGeneratedPromptsLoading(false);
+    }
+  }, [user]);
+
+  // Load user's Power Packs
+  const loadUserPacks = useCallback(async () => {
+    if (!user) return;
+    
+    setPacksLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from('pack_access')
+        .select('pack_id, packs(id, name, description, slug)')
+        .eq('user_id', user.id);
+
+      if (error) throw error;
+      const packs = (data || []).map(item => item.packs).filter(Boolean);
+      setUserPacks(packs);
+    } catch (error: any) {
+      console.error('Error loading user packs:', error);
+      toast({ title: "Failed to load Power Packs", variant: "destructive" });
+    } finally {
+      setPacksLoading(false);
     }
   }, [user]);
 
@@ -324,8 +350,9 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
     if (user) {
       loadFavoriteIds();
       loadUserGeneratedPrompts();
+      loadUserPacks();
     }
-  }, [user, loadFavoriteIds, loadUserGeneratedPrompts]);
+  }, [user, loadFavoriteIds, loadUserGeneratedPrompts, loadUserPacks]);
 
   // Rebuild narrowed category options when favorites change
   useEffect(() => {
@@ -359,6 +386,12 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
           <a href="#my-generated-prompts">
             <Bot className="h-4 w-4 mr-2" />
             My AI-Generated Prompts ({userGeneratedPrompts.length})
+          </a>
+        </Button>
+        <Button asChild variant="secondary">
+          <a href="#my-power-packs">
+            <Zap className="h-4 w-4 mr-2" />
+            My Power Packs ({userPacks.length})
           </a>
         </Button>
         <Button asChild variant="outline">
@@ -496,16 +529,16 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
                   {userGeneratedPrompts.map((promptData) => (
                     <Card key={promptData.id} className="hover:shadow-lg transition-shadow">
                       <CardHeader>
-                        <div className="flex items-start justify-between gap-2">
-                          <div className="flex-1 min-w-0">
-                            <CardTitle className="text-lg line-clamp-2">
-                              {promptData.title}
-                            </CardTitle>
-                            {promptData.description && (
-                              <CardDescription className="line-clamp-2 mt-1">
-                                {promptData.description}
-                              </CardDescription>
-                            )}
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex-1 min-w-0">
+                          <CardTitle className="text-base line-clamp-2">
+                            {promptData.title}
+                          </CardTitle>
+                          {promptData.description && (
+                            <CardDescription className="line-clamp-2 mt-1 text-sm">
+                              {promptData.description}
+                            </CardDescription>
+                          )}
                           </div>
                         </div>
                       </CardHeader>
@@ -549,6 +582,57 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
                             </Button>
                           </div>
                         </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </section>
+
+            {/* My Power Packs section */}
+            <section id="my-power-packs" className="mb-16">
+              <h2 className="text-2xl font-bold mb-6">My <Zap className="h-6 w-6 inline mx-1" /> Power Packs</h2>
+
+              {packsLoading ? (
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  {Array.from({ length: 3 }).map((_, i) => (
+                    <div key={i} className="animate-pulse">
+                      <div className="bg-muted rounded-lg h-48"></div>
+                    </div>
+                  ))}
+                </div>
+              ) : userPacks.length === 0 ? (
+                <Card className="text-center py-16">
+                  <CardContent>
+                    <Zap className="h-16 w-16 mx-auto mb-4 text-muted-foreground/50" />
+                    <h3 className="text-lg font-semibold mb-2">No Power Packs yet</h3>
+                    <p className="text-muted-foreground mb-6">
+                      Unlock powerful prompt collections designed for specific use cases and industries.
+                    </p>
+                    <Button asChild>
+                      <Link to="/packs">Explore Power Packs</Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+              ) : (
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  {userPacks.map((pack) => (
+                    <Card key={pack.id} className="hover:shadow-lg transition-shadow">
+                      <CardHeader>
+                        <CardTitle className="text-base flex items-center gap-2">
+                          <Zap className="h-4 w-4" />
+                          {pack.name}
+                        </CardTitle>
+                        {pack.description && (
+                          <CardDescription className="text-sm">
+                            {pack.description}
+                          </CardDescription>
+                        )}
+                      </CardHeader>
+                      <CardContent>
+                        <Button asChild variant="outline" className="w-full">
+                          <Link to={`/packs/${pack.slug}`}>View Pack</Link>
+                        </Button>
                       </CardContent>
                     </Card>
                   ))}
