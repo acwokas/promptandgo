@@ -876,7 +876,7 @@ const PromptLibrary = () => {
           </Card>
         </section>
 
-        <section id="library-filters" className="scroll-mt-28 md:scroll-mt-28 sticky top-16 z-40 bg-background/95 backdrop-blur-sm border-b border-border/50 py-4 -mx-4 px-4 shadow-sm">
+        <section id="library-filters" className="scroll-mt-28 md:scroll-mt-28 sticky top-20 z-40 bg-background/95 backdrop-blur-sm border-b border-border/50 py-4 -mx-4 px-4 shadow-sm mb-6">
           <PromptFilters
             categories={categories}
             categoryId={categoryId}
@@ -1053,7 +1053,7 @@ const PromptLibrary = () => {
           </section>
         )}
 
-        <section className="mt-6">
+        <section className="mt-0 pt-6">
           <h2 className="text-xl font-semibold mb-4">
             {ribbon === "RECOMMENDED" ? "🎯 Recommended Prompts" : 
              hasPersonalization && personalizedPrompts.length > 0 && ribbon !== "RECOMMENDED" ? "All Prompts" : 
@@ -1159,8 +1159,13 @@ const PromptLibrary = () => {
         </section>
 
         {hasMore && (
-          <div className="flex justify-center mt-8">
-            <Button variant="secondary" onClick={loadMore} disabled={loading}>
+          <div className="flex justify-center mt-8 mb-4">
+            <Button 
+              variant="secondary" 
+              onClick={loadMore} 
+              disabled={loading}
+              className="sticky bottom-4 z-30 shadow-lg border-2 border-background bg-background/95 backdrop-blur-sm"
+            >
               {loading ? "Loading..." : "Load more"}
             </Button>
           </div>
