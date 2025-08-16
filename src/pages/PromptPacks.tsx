@@ -6,12 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { addToCart, getCart } from "@/lib/cart";
 import { toast } from "@/hooks/use-toast";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
 import { Input } from "@/components/ui/input";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
-import { Lock, Check } from "lucide-react";
+import { Lock, Check, Heart, Search } from "lucide-react";
 import ShareButton from "@/components/ShareButton";
 
 const PACK_ORIGINAL_CENTS = 999;
@@ -223,7 +223,20 @@ const PromptPacks = () => {
 
   return (
     <>
-      <PageHero title={<>⚡️<span className="text-gradient-brand">Power</span> Packs</>} subtitle={<>Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results.</>} minHeightClass="min-h-[28vh]" />
+      <PageHero title={<>⚡️<span className="text-gradient-brand">Power</span> Packs</>} subtitle={<>Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results.</>} minHeightClass="min-h-[28vh]">
+        <Button asChild variant="secondary">
+          <Link to="/library">
+            <Search className="h-4 w-4 mr-2" />
+            Back to Library
+          </Link>
+        </Button>
+        <Button asChild variant="outline">
+          <Link to="/account/favorites">
+            <Heart className="h-4 w-4 mr-2" />
+            My Prompts
+          </Link>
+        </Button>
+      </PageHero>
       <main className="container py-10">
         <SEO
           title="⚡️Power Packs – Save 50%"
