@@ -181,14 +181,8 @@ const PromptPacks = () => {
       navigate('/auth');
       return;
     }
+    
     const cart = getCart();
-    const hasLifetime = cart.some((i) => i.type === 'lifetime');
-    
-    if (hasLifetime) {
-      toast({ title: 'Already have Lifetime Access', description: 'You already have Lifetime Access in your cart!' });
-      return;
-    }
-    
     const exists = cart.some((i) => i.type === 'membership' && i.id === 'monthly');
     if (exists) {
       toast({ title: 'Already in cart', description: 'Monthly All-Access Membership is already in your cart.' });
@@ -519,12 +513,6 @@ const PromptPacks = () => {
                     return;
                   }
                   const cart = getCart();
-                  const hasMembership = cart.some((i) => i.type === 'membership');
-                  
-                  if (hasMembership) {
-                    toast({ title: 'Already have a membership', description: 'You already have a membership in your cart!' });
-                    return;
-                  }
                   
                   const exists = cart.some((i) => i.type === 'lifetime' && i.id === 'lifetime');
                   if (exists) {
