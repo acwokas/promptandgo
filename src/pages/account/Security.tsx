@@ -37,10 +37,21 @@ const SecurityPage = () => {
   };
 
   const onLogout = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      toast({ title: "Logout failed", description: error.message, variant: "destructive" });
-    } else {
+    try {
+      // Try to sign out normally first
+      const { error } = await supabase.auth.signOut();
+      
+      if (error) {
+        // If normal signout fails (e.g., session expired), force local signout
+        console.warn("Normal signout failed, forcing local signout:", error.message);
+        await supabase.auth.signOut({ scope: 'local' });
+      }
+      
+      toast({ title: "Signed out successfully" });
+    } catch (err: any) {
+      // Fallback: force local signout even if everything fails
+      console.error("All signout methods failed, clearing local state:", err);
+      await supabase.auth.signOut({ scope: 'local' });
       toast({ title: "Signed out" });
     }
   };
