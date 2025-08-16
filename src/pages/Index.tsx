@@ -403,6 +403,34 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Newsletter Signup */}
+        <section className="container py-6">
+          <Card className="max-w-2xl mx-auto bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
+            <CardContent className="p-8 text-center">
+              <h2 className="text-2xl font-semibold mb-3">🚀 Get Weekly Prompt Tips</h2>
+              <p className="text-muted-foreground mb-6">Join 25,000+ professionals getting our best prompts, tips, and AI updates delivered to their inbox every Tuesday.</p>
+              <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                <input 
+                  type="email" 
+                  placeholder="Enter your email" 
+                  className="flex-1 px-4 py-2 rounded-md border bg-background"
+                />
+                <Button variant="hero" className="px-6">
+                  Subscribe Free
+                </Button>
+              </div>
+              <p className="text-xs text-muted-foreground mt-3">No spam. Unsubscribe anytime. Free forever.</p>
+              
+              {/* Social proof for newsletter */}
+              <div className="mt-6 pt-4 border-t border-primary/10">
+                <p className="text-xs text-muted-foreground mb-2">Recent subscriber feedback:</p>
+                <div className="text-xs text-muted-foreground italic">
+                  "These weekly tips have made me 3x better at prompting. Best AI newsletter I subscribe to!" — Jenny K.
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </section>
 
 
         {/* Featured Prompts Carousel */}
@@ -426,6 +454,7 @@ const Index = () => {
             <CarouselNext className="-right-6 md:-right-10" />
           </Carousel>
         </section>
+
 
         {/* Feature Strip (moved below carousel) */}
         <section className="container pt-2 pb-6" aria-labelledby="why-prompts-work">
@@ -501,34 +530,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Newsletter Signup */}
-        <section className="container py-6">
-          <Card className="max-w-2xl mx-auto bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
-            <CardContent className="p-8 text-center">
-              <h2 className="text-2xl font-semibold mb-3">🚀 Get Weekly Prompt Tips</h2>
-              <p className="text-muted-foreground mb-6">Join 25,000+ professionals getting our best prompts, tips, and AI updates delivered to their inbox every Tuesday.</p>
-              <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                <input 
-                  type="email" 
-                  placeholder="Enter your email" 
-                  className="flex-1 px-4 py-2 rounded-md border bg-background"
-                />
-                <Button variant="hero" className="px-6">
-                  Subscribe Free
-                </Button>
-              </div>
-              <p className="text-xs text-muted-foreground mt-3">No spam. Unsubscribe anytime. Free forever.</p>
-              
-              {/* Social proof for newsletter */}
-              <div className="mt-6 pt-4 border-t border-primary/10">
-                <p className="text-xs text-muted-foreground mb-2">Recent subscriber feedback:</p>
-                <div className="text-xs text-muted-foreground italic">
-                  "These weekly tips have made me 3x better at prompting. Best AI newsletter I subscribe to!" — Jenny K.
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </section>
 
         {/* Pricing transparency hint */}
         <section className="container py-4">
