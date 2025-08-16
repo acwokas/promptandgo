@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { PromptCard } from "@/components/prompt/PromptCard";
 import { usePersonalizedPrompts } from "@/hooks/usePersonalizedPrompts";
 import AIPromptWidget from "@/components/ai/AIPromptWidget";
+import PromptsOfTheDay from "@/components/prompt/PromptsOfTheDay";
 import type { Category as CategoryType } from "@/data/prompts";
 
 const Index = () => {
@@ -37,18 +38,10 @@ const Index = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const [promptsRes, catsRes, subsRes] = await Promise.all([
-          supabase
-            .from("prompts")
-            .select("id, category_id, subcategory_id, title, what_for, prompt, excerpt, is_pro")
-            .order("created_at", { ascending: false })
-            .limit(200),
+        const [catsRes, subsRes] = await Promise.all([
           supabase.from("categories").select("id,name,slug").order("name"),
           supabase.from("subcategories").select("id,name,slug,category_id").order("name"),
         ]);
-        if (promptsRes.error) throw promptsRes.error;
-        const rows = promptsRes.data || [];
-        if (rows.length === 0) { setSlides([]); }
 
         // Build categories list for PromptCard labels
         if (!catsRes.error && !subsRes.error) {
@@ -64,35 +57,6 @@ const Index = () => {
             subcategories: subcatByCategory.get(c.id as string) || [],
           }));
           setHomeCategories(built);
-        }
-
-        if (rows.length > 0) {
-          const byCat = new Map<string, any[]>();
-          rows.forEach((r: any) => {
-            const cid = r.category_id || "misc";
-            const arr = byCat.get(cid) || [];
-            arr.push(r);
-            byCat.set(cid, arr);
-          });
-          const sortedCats = Array.from(byCat.entries()).sort((a, b) => b[1].length - a[1].length);
-          const take = Math.min(6, sortedCats.length);
-          const picks: HP[] = [];
-          for (let i = 0; i < take; i++) {
-            const list = sortedCats[i][1];
-            const pick = list[Math.floor(Math.random() * list.length)];
-            picks.push({
-              id: pick.id,
-              categoryId: pick.category_id,
-              subcategoryId: pick.subcategory_id,
-              title: pick.title,
-              whatFor: pick.what_for,
-              prompt: pick.prompt,
-              excerpt: pick.excerpt,
-              tags: [],
-              isPro: !!pick.is_pro,
-            });
-          }
-          setSlides(picks);
         }
       } catch (e) {
         console.error(e);
@@ -314,64 +278,62 @@ const Index = () => {
         </section>
 
 
-        {/* Personalized Recommendations for Homepage */}
-        {hasPersonalization && personalizedPrompts.length > 0 && (
-          <section className="container py-6">
-            <h2 className="text-2xl font-semibold mb-2">🎯 Recommended for You</h2>
-            <p className="text-muted-foreground max-w-3xl mb-8">Based on your preferences, here are some prompts we think you'll love.</p>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {personalizedPrompts.slice(0, 3).map((p) => (
-                <div key={p.id} className="relative group">
-                  <PromptCard
-                    prompt={p as any}
-                    categories={homeCategories}
-                    onCategoryClick={(cid) => navigate(`/library?categoryId=${cid}`)}
-                    onSubcategoryClick={(sid, cid) => navigate(`/library?categoryId=${cid}&subcategoryId=${sid}`)}
-                    onCopyClick={() => navigate(`/library?categoryId=${p.categoryId || ""}${p.subcategoryId ? `&subcategoryId=${p.subcategoryId}` : ""}`)}
-                  />
-                  <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full border-2 border-background shadow-sm">
-                    {Math.round(p.relevanceScore)}% match
+        {/* Conditional Content Based on Login Status */}
+        {user ? (
+          // Logged-in users: Show Personalized Recommendations
+          personalizedPrompts.length > 0 ? (
+            <section className="container py-6">
+              <h2 className="text-2xl font-semibold mb-2">🎯 Recommended for You</h2>
+              <p className="text-muted-foreground max-w-3xl mb-8">Based on your preferences, here are some prompts we think you'll love.</p>
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {personalizedPrompts.slice(0, 3).map((p) => (
+                  <div key={p.id} className="relative group">
+                    <PromptCard
+                      prompt={p as any}
+                      categories={homeCategories}
+                      onCategoryClick={(cid) => navigate(`/library?categoryId=${cid}`)}
+                      onSubcategoryClick={(sid, cid) => navigate(`/library?categoryId=${cid}&subcategoryId=${sid}`)}
+                      onCopyClick={() => navigate(`/library?categoryId=${p.categoryId || ""}${p.subcategoryId ? `&subcategoryId=${p.subcategoryId}` : ""}`)}
+                    />
+                    <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full border-2 border-background shadow-sm">
+                      {Math.round(p.relevanceScore)}% match
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-            <div className="mt-6 text-center space-x-3">
-              <Button asChild variant="outline">
-                <Link to="/library">See All Your Recommendations →</Link>
-              </Button>
-              <Button 
-                onClick={() => window.location.reload()} 
-                variant="ghost" 
-                size="sm"
-                className="text-xs"
-              >
-                🔄 Refresh
-              </Button>
-            </div>
-          </section>
+                ))}
+              </div>
+              <div className="mt-6 text-center space-x-3">
+                <Button asChild variant="outline">
+                  <Link to="/library">See All Your Recommendations →</Link>
+                </Button>
+                <Button 
+                  onClick={() => window.location.reload()} 
+                  variant="ghost" 
+                  size="sm"
+                  className="text-xs"
+                >
+                  🔄 Refresh
+                </Button>
+              </div>
+            </section>
+          ) : (
+            // Logged-in users without personalization: Show generic recommendations
+            <section className="container py-6">
+              <h2 className="text-2xl font-semibold mb-2">🎯 Recommended for You</h2>
+              <p className="text-muted-foreground max-w-3xl mb-8">Get started by exploring some of our most popular prompts, or set up your preferences for personalized recommendations.</p>
+              <div className="text-center space-y-4">
+                <Button asChild variant="hero">
+                  <Link to="/smart-suggestions">Set Up Personalized Suggestions</Link>
+                </Button>
+                <Button asChild variant="outline">
+                  <Link to="/library">Browse All Prompts</Link>
+                </Button>
+              </div>
+            </section>
+          )
+        ) : (
+          // Non-logged-in users: Show Prompts of the Day
+          <PromptsOfTheDay />
         )}
-
-        {/* Featured Prompts Carousel */}
-        <section className="container py-4" aria-labelledby="featured-prompts">
-          <h2 id="featured-prompts" className="text-xl font-semibold mb-3">Prompts of the Day</h2>
-          <Carousel setApi={setCarouselApi} opts={{ loop: true, align: "start" }}>
-            <CarouselContent>
-              {slides.map((p) => (
-                <CarouselItem key={p.id} className="md:basis-1/2 lg:basis-1/3">
-                  <PromptCard
-                    prompt={p as any}
-                    categories={homeCategories}
-                    onCategoryClick={(cid) => navigate(`/library?categoryId=${cid}`)}
-                    onSubcategoryClick={(sid, cid) => navigate(`/library?categoryId=${cid}&subcategoryId=${sid}`)}
-                    onCopyClick={() => navigate(`/library?categoryId=${p.categoryId || ""}${p.subcategoryId ? `&subcategoryId=${p.subcategoryId}` : ""}`)}
-                  />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="-left-6 md:-left-10" />
-            <CarouselNext className="-right-6 md:-right-10" />
-          </Carousel>
-        </section>
 
         {/* Newsletter Signup */}
         <section className="container py-6">
