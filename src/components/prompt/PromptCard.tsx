@@ -47,8 +47,8 @@ const categoryAccentIndex = (name?: string) => {
   return (h % 6) + 1;
 };
 
-// Generate realistic ratings (3.8-5.0) based on prompt ID
-const generateRating = (promptId: string) => {
+// Fallback ratings for prompts without user ratings yet
+const generateFallbackRating = (promptId: string) => {
   let hash = 0;
   for (let i = 0; i < promptId.length; i++) {
     hash = (hash * 31 + promptId.charCodeAt(i)) >>> 0;
@@ -67,8 +67,8 @@ const generateRating = (promptId: string) => {
   return Math.round(rating * 10) / 10;
 };
 
-// Generate number of ratings based on prompt ID
-const generateRatingCount = (promptId: string) => {
+// Generate fallback rating count
+const generateFallbackRatingCount = (promptId: string) => {
   let hash = 0;
   for (let i = 0; i < promptId.length; i++) {
     hash = (hash * 17 + promptId.charCodeAt(i)) >>> 0;
@@ -97,39 +97,159 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   const accentClass = `category-accent-${accentIndex}`;
   const navigate = useNavigate();
 
-  // Generate realistic rating data
-  const rating = generateRating(prompt.id);
-  const ratingCount = generateRatingCount(prompt.id);
+  // Auth and user state
+  const { user } = useSupabaseAuth();
 
-  // Component to render star rating
-  const StarRating = ({ rating, count }: { rating: number; count: number }) => {
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 >= 0.5;
-    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+  // Rating state management
+  const [averageRating, setAverageRating] = useState<number>(0);
+  const [totalRatings, setTotalRatings] = useState<number>(0);
+  const [userRating, setUserRating] = useState<number>(0);
+  const [isRatingLoading, setIsRatingLoading] = useState(false);
 
+  // Load ratings data
+  useEffect(() => {
+    let cancelled = false;
+    const loadRatings = async () => {
+      try {
+        // Get overall rating for the prompt
+        const { data: ratingData } = await supabase.rpc('get_prompt_rating', { prompt_id_param: prompt.id });
+        
+        if (!cancelled && ratingData?.[0]) {
+          const avgRating = Number(ratingData[0].average_rating) || 0;
+          const totalCount = Number(ratingData[0].total_ratings) || 0;
+          
+          // Use fallback if no ratings yet
+          if (totalCount === 0) {
+            setAverageRating(generateFallbackRating(prompt.id));
+            setTotalRatings(generateFallbackRatingCount(prompt.id));
+          } else {
+            setAverageRating(avgRating);
+            setTotalRatings(totalCount);
+          }
+        }
+
+        // Get user's rating if logged in
+        if (user) {
+          const { data: userRatingData } = await supabase
+            .from('user_ratings')
+            .select('rating')
+            .eq('user_id', user.id)
+            .eq('prompt_id', prompt.id)
+            .maybeSingle();
+          
+          if (!cancelled) {
+            setUserRating(userRatingData?.rating || 0);
+          }
+        }
+      } catch (error) {
+        console.error('Error loading ratings:', error);
+        if (!cancelled) {
+          // Use fallback data on error
+          setAverageRating(generateFallbackRating(prompt.id));
+          setTotalRatings(generateFallbackRatingCount(prompt.id));
+        }
+      }
+    };
+
+    loadRatings();
+    return () => { cancelled = true; };
+  }, [user?.id, prompt.id]);
+
+  // Handle star rating click
+  const handleStarClick = async (rating: number) => {
+    if (!user) {
+      toast({ title: "Please log in to rate prompts" });
+      return;
+    }
+
+    setIsRatingLoading(true);
+    try {
+      // Insert or update user rating
+      const { error } = await supabase
+        .from('user_ratings')
+        .upsert({
+          user_id: user.id,
+          prompt_id: prompt.id,
+          rating: rating
+        });
+
+      if (error) throw error;
+
+      setUserRating(rating);
+      toast({ title: `Rated ${rating} star${rating !== 1 ? 's' : ''}` });
+
+      // Refresh overall rating
+      const { data: ratingData } = await supabase.rpc('get_prompt_rating', { prompt_id_param: prompt.id });
+      if (ratingData?.[0]) {
+        const avgRating = Number(ratingData[0].average_rating) || 0;
+        const totalCount = Number(ratingData[0].total_ratings) || 0;
+        setAverageRating(avgRating);
+        setTotalRatings(totalCount);
+      }
+    } catch (error) {
+      console.error('Error saving rating:', error);
+      toast({ title: "Failed to save rating" });
+    } finally {
+      setIsRatingLoading(false);
+    }
+  };
+
+  // Interactive star rating component
+  const InteractiveStarRating = ({ rating, count, userRating }: { rating: number; count: number; userRating: number }) => {
+    const [hoveredStar, setHoveredStar] = useState(0);
+    
     return (
       <div className="flex items-center gap-2 mt-2">
         <div className="flex items-center gap-0.5">
-          {/* Full stars */}
-          {Array.from({ length: fullStars }, (_, i) => (
-            <Star key={`full-${i}`} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-          ))}
-          {/* Half star */}
-          {hasHalfStar && (
-            <div className="relative">
-              <Star className="h-4 w-4 text-gray-300" />
-              <div className="absolute inset-0 overflow-hidden w-1/2">
-                <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-              </div>
-            </div>
-          )}
-          {/* Empty stars */}
-          {Array.from({ length: emptyStars }, (_, i) => (
-            <Star key={`empty-${i}`} className="h-4 w-4 text-gray-300" />
-          ))}
+          {Array.from({ length: 5 }, (_, i) => {
+            const starNumber = i + 1;
+            const isFilled = starNumber <= (hoveredStar || userRating);
+            const isPartOfAverage = !userRating && starNumber <= Math.floor(rating);
+            const isHalfStar = !userRating && starNumber === Math.floor(rating) + 1 && rating % 1 >= 0.5;
+            
+            return (
+              <button
+                key={starNumber}
+                type="button"
+                className={cn(
+                  "relative transition-all duration-150 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-ring rounded-sm",
+                  user ? "cursor-pointer" : "cursor-default"
+                )}
+                onClick={() => user && handleStarClick(starNumber)}
+                onMouseEnter={() => user && setHoveredStar(starNumber)}
+                onMouseLeave={() => user && setHoveredStar(0)}
+                disabled={isRatingLoading}
+                aria-label={user ? `Rate ${starNumber} star${starNumber !== 1 ? 's' : ''}` : undefined}
+              >
+                {isHalfStar ? (
+                  <div className="relative">
+                    <Star className="h-4 w-4 text-gray-300" />
+                    <div className="absolute inset-0 overflow-hidden w-1/2">
+                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                    </div>
+                  </div>
+                ) : (
+                  <Star 
+                    className={cn(
+                      "h-4 w-4 transition-colors",
+                      (isFilled || isPartOfAverage) 
+                        ? "fill-yellow-400 text-yellow-400" 
+                        : "text-gray-300",
+                      hoveredStar && starNumber <= hoveredStar && user && "fill-yellow-500 text-yellow-500"
+                    )} 
+                  />
+                )}
+              </button>
+            );
+          })}
         </div>
-        <span className="text-sm font-medium text-foreground">{rating}</span>
+        <span className="text-sm font-medium text-foreground">{rating || 0}</span>
         <span className="text-xs text-muted-foreground">({count.toLocaleString()})</span>
+        {userRating > 0 && (
+          <span className="text-xs text-primary font-medium">
+            Your rating: {userRating}★
+          </span>
+        )}
       </div>
     );
   };
@@ -143,7 +263,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
     }
   };
 
-  const { user } = useSupabaseAuth();
+  // Additional state management
   const [isFav, setIsFav] = useState(false);
   const [favLoading, setFavLoading] = useState(false);
   const isPro = (prompt as any).isPro || (prompt as any).is_pro || false;
@@ -385,8 +505,8 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
         
          <p className="text-sm text-muted-foreground">{prompt.whatFor}</p>
          
-         {/* Star Rating */}
-         <StarRating rating={rating} count={ratingCount} />
+         {/* Interactive Star Rating */}
+         <InteractiveStarRating rating={averageRating} count={totalRatings} userRating={userRating} />
       </CardHeader>
       <CardContent>
         <div>

@@ -749,6 +749,33 @@ export type Database = {
           },
         ]
       }
+      user_ratings: {
+        Row: {
+          created_at: string
+          id: string
+          prompt_id: string
+          rating: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          prompt_id: string
+          rating: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          prompt_id?: string
+          rating?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -849,6 +876,13 @@ export type Database = {
       get_decrypted_subscriber_email: {
         Args: { p_key: string; p_user_id: string }
         Returns: string
+      }
+      get_prompt_rating: {
+        Args: { prompt_id_param: string }
+        Returns: {
+          average_rating: number
+          total_ratings: number
+        }[]
       }
       get_subscriber_info: {
         Args: { p_user_id: string }
