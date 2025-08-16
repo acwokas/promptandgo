@@ -124,24 +124,12 @@ const Index = () => {
           </>}
           subtitle={<>Browse thousands of human-curated prompts to help you write better, work smarter, and think bigger.</>}
         >
-          <Button asChild size="default" variant="hero" className="px-4">
+          <Button asChild size="default" variant="hero" className="px-6">
             <Link to="/library"><Search className="h-4 w-4 mr-2" />Browse Library</Link>
           </Button>
           <Button asChild size="default" variant="inverted">
             <Link to="/packs">⚡️Power Packs</Link>
           </Button>
-          <Button asChild size="default" variant="secondary">
-            <Link to="/toolkit"><Bot className="h-4 w-4 mr-2 text-blue-500" />AI Tools</Link>
-          </Button>
-          {user ? (
-            <Button asChild size="default" variant="secondary">
-              <Link to="/account/favorites"><Heart className="h-4 w-4 mr-2" />My Prompts</Link>
-            </Button>
-          ) : (
-            <Button asChild size="default" variant="secondary">
-              <Link to="/auth">Login</Link>
-            </Button>
-          )}
         </PageHero>
 
         {/* Top Widget Section */}
