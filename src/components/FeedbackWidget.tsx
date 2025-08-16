@@ -99,28 +99,26 @@ export const FeedbackWidget = ({ promptId }: FeedbackWidgetProps) => {
 
     setIsSubmitting(true);
 
-    // Check if user is authenticated (required by RLS policy)
-    if (!user) {
-      toast({
-        title: "Authentication Required",
-        description: "Please sign in to submit feedback.",
-        variant: "destructive"
-      });
-      return;
-    }
-
     try {
-      const { error } = await supabase
-        .from("user_feedback")
-        .insert({
-          feedback_type: formData.feedbackType,
-          content: sanitizedContent,
-          rating: formData.rating ? parseInt(formData.rating) : null,
-          prompt_id: promptId || null,
-          user_id: user.id,
-          name: sanitizedName || null,
-          email: formData.email.trim() || null // Email already validated
-        });
+      // Format feedback data for email
+      const feedbackMessage = [
+        `Feedback Type: ${formData.feedbackType}`,
+        formData.rating ? `Rating: ${formData.rating} stars` : '',
+        promptId ? `Prompt ID: ${promptId}` : '',
+        user ? `User ID: ${user.id}` : '',
+        '',
+        'Message:',
+        sanitizedContent
+      ].filter(Boolean).join('\n');
+
+      // Send feedback via email
+      const { error } = await supabase.functions.invoke('send-contact', {
+        body: {
+          name: sanitizedName || user?.user_metadata?.display_name || 'Anonymous',
+          email: formData.email.trim() || user?.email || 'noreply@promptandgo.ai',
+          message: feedbackMessage
+        }
+      });
 
       if (error) throw error;
 
@@ -280,7 +278,7 @@ export const FeedbackWidget = ({ promptId }: FeedbackWidgetProps) => {
                 />
               </div>
 
-              {!user && (
+              {(!user || !user.email) && (
                 <>
                   <div>
                     <Label htmlFor="name">Your Name (Optional)</Label>
