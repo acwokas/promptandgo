@@ -194,21 +194,34 @@ Keep responses concise and actionable.`;
 
     console.log('Making OpenAI API request:', { type, userId, systemPrompt: systemPrompt.substring(0, 100) + '...' });
 
+    // Choose model based on complexity - optimize for cost efficiency
+    let model;
+    let requestBody: any = {
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userMessage }
+      ]
+    };
+
+    if (type === 'generate_prompt') {
+      // More complex prompt generation - use mini
+      model = 'gpt-5-mini-2025-08-07';
+      requestBody.model = model;
+      requestBody.max_completion_tokens = 1000; // GPT-5 uses max_completion_tokens
+    } else {
+      // Simple suggestions and assistant - use nano for cost efficiency
+      model = 'gpt-5-nano-2025-08-07';  
+      requestBody.model = model;
+      requestBody.max_completion_tokens = 800; // Smaller responses for simple tasks
+    }
+
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${openAIApiKey}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: userMessage }
-        ],
-        temperature: 0.7,
-        max_tokens: 1000,
-      }),
+      body: JSON.stringify(requestBody),
     });
 
     if (!response.ok) {

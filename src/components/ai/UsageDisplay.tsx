@@ -52,19 +52,19 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
   const getSubscriptionMultiplier = () => {
     if (!subscriptionInfo?.subscribed) return 1;
     const tier = subscriptionInfo.subscription_tier?.toLowerCase();
-    if (tier === 'basic' || tier === 'monthly') return 2;
-    if (tier === 'premium' || tier === 'lifetime') return 3;
-    return 1;
+    if (tier === 'basic' || tier === 'monthly') return "3x"; // 15,15,20 vs 5,5,10 is roughly 3x
+    if (tier === 'premium' || tier === 'lifetime') return "6x"; // 30,30,30 vs 5,5,10 is 6x
+    return "Premium";
   };
 
   const getSubscriptionBadge = () => {
     if (!subscriptionInfo?.subscribed) return null;
     const tier = subscriptionInfo.subscription_tier?.toLowerCase();
     if (tier === 'basic' || tier === 'monthly') {
-      return <Badge variant="secondary" className="text-xs"><Crown className="h-3 w-3 mr-1" />Monthly 2x</Badge>;
+      return <Badge variant="secondary" className="text-xs"><Crown className="h-3 w-3 mr-1" />Monthly 3x</Badge>;
     }
     if (tier === 'premium' || tier === 'lifetime') {
-      return <Badge variant="secondary" className="text-xs"><Infinity className="h-3 w-3 mr-1" />Lifetime 3x</Badge>;
+      return <Badge variant="secondary" className="text-xs"><Infinity className="h-3 w-3 mr-1" />Lifetime 6x</Badge>;
     }
     return <Badge variant="secondary" className="text-xs"><Crown className="h-3 w-3 mr-1" />Premium</Badge>;
   };
@@ -202,7 +202,7 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
                 <h4 className="font-medium">Need more queries?</h4>
                 <p className="text-sm text-muted-foreground mt-1">
                   {!subscriptionInfo?.subscribed ? (
-                    <>Upgrade to get <strong>2x queries</strong> with monthly membership or <strong>3x queries</strong> with lifetime access.</>
+                    <>Upgrade to get <strong>3x queries</strong> with monthly membership or <strong>6x queries</strong> with lifetime access.</>
                   ) : (
                     <>You've reached your enhanced daily limits. Your queries will reset at midnight UTC.</>
                   )}
@@ -211,11 +211,11 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
                   <div className="flex gap-2 mt-2">
                     <Button size="sm" variant="outline">
                       <Crown className="h-4 w-4 mr-1" />
-                      Monthly (2x) - $12.99/mo
+                      Monthly (3x) - $12.99/mo
                     </Button>
                     <Button size="sm" variant="secondary">
                       <Infinity className="h-4 w-4 mr-1" />
-                      Lifetime (3x) - $47.85
+                      Lifetime (6x) - $47.85
                     </Button>
                   </div>
                 )}
