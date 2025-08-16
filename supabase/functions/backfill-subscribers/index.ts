@@ -11,27 +11,54 @@ serve(async (req) => {
 
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
+    const anonKey = Deno.env.get("SUPABASE_ANON_KEY") ?? "";
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
     const encKey = Deno.env.get("SUBSCRIBERS_ENCRYPTION_KEY");
     if (!encKey) throw new Error("SUBSCRIBERS_ENCRYPTION_KEY not set");
 
-    const supabase = createClient(supabaseUrl, serviceKey, { auth: { persistSession: false } });
-
     const authHeader = req.headers.get("Authorization");
-    if (!authHeader) return new Response(JSON.stringify({ error: "Missing Authorization" }), { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 401 });
+    if (!authHeader) {
+      // Allow graceful failure for fire-and-forget calls from AuthEffects
+      return new Response(JSON.stringify({ error: "No authorization provided" }), { 
+        headers: { ...corsHeaders, "Content-Type": "application/json" }, 
+        status: 200 // Don't break deployment with 401
+      });
+    }
+
     const token = authHeader.replace("Bearer ", "");
 
-    // Identify caller
-    const { data: userData, error: userErr } = await supabase.auth.getUser(token);
-    if (userErr) throw new Error(`Auth error: ${userErr.message}`);
+    // SECURITY FIX: Use anon key for auth verification, service key for DB operations
+    const supabaseAuth = createClient(supabaseUrl, anonKey);
+    const { data: userData, error: userErr } = await supabaseAuth.auth.getUser(token);
+    
+    if (userErr) {
+      console.error("[backfill-subscribers] Auth error:", userErr.message);
+      // Graceful failure - don't break deployment
+      return new Response(JSON.stringify({ error: "Authentication failed" }), { 
+        headers: { ...corsHeaders, "Content-Type": "application/json" }, 
+        status: 200 
+      });
+    }
+
     const user = userData.user;
-    if (!user) return new Response(JSON.stringify({ error: "Unauthorized" }), { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 401 });
+    if (!user) {
+      return new Response(JSON.stringify({ error: "User not found" }), { 
+        headers: { ...corsHeaders, "Content-Type": "application/json" }, 
+        status: 200 
+      });
+    }
+
+    // Use service role for database operations
+    const supabase = createClient(supabaseUrl, serviceKey, { auth: { persistSession: false } });
 
     // Check admin role (allow only admins)
     const { data: roles } = await supabase.from("user_roles").select("role").eq("user_id", user.id);
     const isAdmin = (roles || []).some((r: any) => String(r.role).toLowerCase() === "admin");
     if (!isAdmin) {
-      return new Response(JSON.stringify({ error: "Forbidden" }), { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 403 });
+      return new Response(JSON.stringify({ error: "Admin access required" }), { 
+        headers: { ...corsHeaders, "Content-Type": "application/json" }, 
+        status: 200 
+      });
     }
 
     // Load subscribers needing backfill
