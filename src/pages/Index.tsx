@@ -132,30 +132,6 @@ const Index = () => {
           </Button>
         </PageHero>
 
-        {/* Top Widget Section */}
-        <section className="container pt-6 pb-2">
-          <div className="grid gap-6 md:grid-cols-2">
-            {/* What is PromptAndGo.ai? */}
-            <div className="rounded-2xl border bg-card p-6 md:p-8 animate-fade-in">
-              <h2 className="text-2xl font-semibold mb-3">What is PromptAndGo.ai?</h2>
-              <p className="text-muted-foreground max-w-prose mb-6">
-                Ready-to-use prompts designed for real-world work. Whether you're writing a pitch, planning a launch, creating some social media assets or creating an image, we've got a prompt for that.
-              </p>
-              <ul className="grid grid-cols-2 gap-3 text-sm text-muted-foreground">
-                <li className="flex items-center gap-2"><ShieldCheck className="h-5 w-5 text-primary" /> Human-curated</li>
-                <li className="flex items-center gap-2"><ListChecks className="h-5 w-5 text-primary" /> Practical results</li>
-                <li className="flex items-center gap-2"><Wand2 className="h-5 w-5 text-primary" /> Copy-and-go</li>
-                <li className="flex items-center gap-2"><Zap className="h-5 w-5 text-primary" /> Works everywhere</li>
-              </ul>
-            </div>
-            
-            {/* AI Prompt Generator Widget */}
-            <div className="w-full">
-              <AIPromptWidget />
-            </div>
-          </div>
-        </section>
-
         {/* Social Proof Section */}
         <section className="container py-6">
           <div className="text-center mb-8">
@@ -218,10 +194,98 @@ const Index = () => {
               </CardContent>
             </Card>
           </div>
+        </section>
 
-          {/* Trust Signals */}
+        {/* Top Widget Section */}
+        <section className="container pt-6 pb-2">
+          <div className="grid gap-6 md:grid-cols-2">
+            {/* What is PromptAndGo.ai? */}
+            <div className="rounded-2xl border bg-card p-6 md:p-8 animate-fade-in">
+              <h2 className="text-2xl font-semibold mb-3">What is PromptAndGo.ai?</h2>
+              <p className="text-muted-foreground max-w-prose mb-6">
+                Ready-to-use prompts designed for real-world work. Whether you're writing a pitch, planning a launch, creating some social media assets or creating an image, we've got a prompt for that.
+              </p>
+              <ul className="grid grid-cols-2 gap-3 text-sm text-muted-foreground">
+                <li className="flex items-center gap-2"><ShieldCheck className="h-5 w-5 text-primary" /> Human-curated</li>
+                <li className="flex items-center gap-2"><ListChecks className="h-5 w-5 text-primary" /> Practical results</li>
+                <li className="flex items-center gap-2"><Wand2 className="h-5 w-5 text-primary" /> Copy-and-go</li>
+                <li className="flex items-center gap-2"><Zap className="h-5 w-5 text-primary" /> Works everywhere</li>
+              </ul>
+            </div>
+            
+            {/* AI Prompt Generator Widget */}
+            <div className="w-full">
+              <AIPromptWidget />
+            </div>
+          </div>
+        </section>
+
+        {/* Popular Categories */}
+        <section className="container py-4">
+          <h2 className="text-xl font-semibold mb-1">Popular Categories</h2>
+          <p className="text-muted-foreground text-sm mb-4">Jump directly to our most popular prompt collections with thousands of ready-to-use examples.</p>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <h3 className="text-lg font-semibold">💼 Business & Marketing</h3>
+              <p className="text-muted-foreground text-sm mt-1 mb-3">Email campaigns, ad copy, social media content, and sales outreach that converts.</p>
+              <div className="flex gap-2">
+                <Button asChild variant="hero" size="sm">
+                  <Link to="/library?search=marketing">Browse Marketing</Link>
+                </Button>
+              </div>
+            </article>
+            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <h3 className="text-lg font-semibold">✍️ Content Creation</h3>
+              <p className="text-muted-foreground text-sm mt-1 mb-3">Blog posts, articles, creative writing, and storytelling prompts for any audience.</p>
+              <div className="flex gap-2">
+                <Button asChild variant="hero" size="sm">
+                  <Link to="/library?search=content">Browse Content</Link>
+                </Button>
+              </div>
+            </article>
+            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <h3 className="text-lg font-semibold">💬 Communication</h3>
+              <p className="text-muted-foreground text-sm mt-1 mb-3">Professional emails, presentations, and customer support responses.</p>
+              <div className="flex gap-2">
+                <Button asChild variant="hero" size="sm">
+                  <Link to="/library?search=email">Browse Communication</Link>
+                </Button>
+              </div>
+            </article>
+            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <h3 className="text-lg font-semibold">🎯 Career Development</h3>
+              <p className="text-muted-foreground text-sm mt-1 mb-3">Resume writing, interview prep, LinkedIn optimization, and job search strategies.</p>
+              <div className="flex gap-2">
+                <Button asChild variant="hero" size="sm">
+                  <Link to="/library?search=career">Browse Career</Link>
+                </Button>
+              </div>
+            </article>
+            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <h3 className="text-lg font-semibold">📊 Data & Analysis</h3>
+              <p className="text-muted-foreground text-sm mt-1 mb-3">Research, data analysis, reporting, and insights generation for better decisions.</p>
+              <div className="flex gap-2">
+                <Button asChild variant="hero" size="sm">
+                  <Link to="/library?search=analysis">Browse Analysis</Link>
+                </Button>
+              </div>
+            </article>
+            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <h3 className="text-lg font-semibold">🎓 Education & Learning</h3>
+              <p className="text-muted-foreground text-sm mt-1 mb-3">Lesson plans, explanations, tutorials, and educational content creation.</p>
+              <div className="flex gap-2">
+                <Button asChild variant="hero" size="sm">
+                  <Link to="/library?search=education">Browse Education</Link>
+                </Button>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        {/* AI Tools Compatibility */}
+        <section className="container py-6">
           <div className="text-center">
-            <p className="text-sm text-muted-foreground mb-4">Works seamlessly with your favorite AI tools</p>
+            <p className="text-sm text-muted-foreground mb-4">Works seamlessly with your favourite AI tools</p>
             <div className="flex items-center justify-center gap-8 text-xs text-muted-foreground">
               <span className="flex items-center gap-2">
                 <div className="w-6 h-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
@@ -288,71 +352,60 @@ const Index = () => {
           </section>
         )}
 
-        {/* Popular Categories */}
-        <section className="container py-4">
-          <h2 className="text-xl font-semibold mb-1">Popular Categories</h2>
-          <p className="text-muted-foreground text-sm mb-4">Jump directly to our most popular prompt collections with thousands of ready-to-use examples.</p>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-lg font-semibold">💼 Business & Marketing</h3>
-              <p className="text-muted-foreground text-sm mt-1 mb-3">Email campaigns, ad copy, social media content, and sales outreach that converts.</p>
-              <div className="flex gap-2">
-                <Button asChild variant="hero" size="sm">
-                  <Link to="/library?search=marketing">Browse Marketing</Link>
+        {/* Featured Prompts Carousel */}
+        <section className="container py-4" aria-labelledby="featured-prompts">
+          <h2 id="featured-prompts" className="text-xl font-semibold mb-3">Prompts of the Day</h2>
+          <Carousel setApi={setCarouselApi} opts={{ loop: true, align: "start" }}>
+            <CarouselContent>
+              {slides.map((p) => (
+                <CarouselItem key={p.id} className="md:basis-1/2 lg:basis-1/3">
+                  <PromptCard
+                    prompt={p as any}
+                    categories={homeCategories}
+                    onCategoryClick={(cid) => navigate(`/library?categoryId=${cid}`)}
+                    onSubcategoryClick={(sid, cid) => navigate(`/library?categoryId=${cid}&subcategoryId=${sid}`)}
+                    onCopyClick={() => navigate(`/library?categoryId=${p.categoryId || ""}${p.subcategoryId ? `&subcategoryId=${p.subcategoryId}` : ""}`)}
+                  />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="-left-6 md:-left-10" />
+            <CarouselNext className="-right-6 md:-right-10" />
+          </Carousel>
+        </section>
+
+        {/* Newsletter Signup */}
+        <section className="container py-6">
+          <Card className="max-w-2xl mx-auto bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
+            <CardContent className="p-8 text-center">
+              <h2 className="text-2xl font-semibold mb-3">🚀 Get Weekly Prompt Tips</h2>
+              <p className="text-muted-foreground mb-6">Join 25,000+ professionals getting our best prompts, tips, and AI updates delivered to their inbox every Tuesday.</p>
+              <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                <input 
+                  type="email" 
+                  placeholder="Enter your email" 
+                  className="flex-1 px-4 py-2 rounded-md border bg-background"
+                />
+                <Button variant="hero" className="px-6">
+                  Subscribe Free
                 </Button>
               </div>
-            </article>
-            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-lg font-semibold">✍️ Content Creation</h3>
-              <p className="text-muted-foreground text-sm mt-1 mb-3">Blog posts, articles, creative writing, and storytelling prompts for any audience.</p>
-              <div className="flex gap-2">
-                <Button asChild variant="hero" size="sm">
-                  <Link to="/library?search=content">Browse Content</Link>
-                </Button>
+              <p className="text-xs text-muted-foreground mt-3">No spam. Unsubscribe anytime. Free forever.</p>
+              
+              {/* Social proof for newsletter */}
+              <div className="mt-6 pt-4 border-t border-primary/10">
+                <p className="text-xs text-muted-foreground mb-2">Recent subscriber feedback:</p>
+                <div className="text-xs text-muted-foreground italic">
+                  "These weekly tips have made me 3x better at prompting. Best AI newsletter I subscribe to!" — Jenny K.
+                </div>
               </div>
-            </article>
-            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-lg font-semibold">💬 Communication</h3>
-              <p className="text-muted-foreground text-sm mt-1 mb-3">Professional emails, presentations, and customer support responses.</p>
-              <div className="flex gap-2">
-                <Button asChild variant="hero" size="sm">
-                  <Link to="/library?search=email">Browse Communication</Link>
-                </Button>
-              </div>
-            </article>
-            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-lg font-semibold">🎯 Career Development</h3>
-              <p className="text-muted-foreground text-sm mt-1 mb-3">Resume writing, interview prep, LinkedIn optimization, and job search strategies.</p>
-              <div className="flex gap-2">
-                <Button asChild variant="hero" size="sm">
-                  <Link to="/library?search=career">Browse Career</Link>
-                </Button>
-              </div>
-            </article>
-            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-lg font-semibold">📊 Data & Analysis</h3>
-              <p className="text-muted-foreground text-sm mt-1 mb-3">Research, data analysis, reporting, and insights generation for better decisions.</p>
-              <div className="flex gap-2">
-                <Button asChild variant="hero" size="sm">
-                  <Link to="/library?search=analysis">Browse Analysis</Link>
-                </Button>
-              </div>
-            </article>
-            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-lg font-semibold">🎓 Education & Learning</h3>
-              <p className="text-muted-foreground text-sm mt-1 mb-3">Lesson plans, explanations, tutorials, and educational content creation.</p>
-              <div className="flex gap-2">
-                <Button asChild variant="hero" size="sm">
-                  <Link to="/library?search=education">Browse Education</Link>
-                </Button>
-              </div>
-            </article>
-          </div>
+            </CardContent>
+          </Card>
         </section>
 
         {/* AI Tools Section */}
         <section className="container py-6">
-          <h2 className="text-2xl font-semibold mb-2">✨ AI-Powered Tools</h2>
+          <h2 className="text-2xl font-semibold mb-2">✨ Try our AI-Powered Tools</h2>
           <p className="text-muted-foreground max-w-3xl mb-6">Enhance your prompting with our intelligent tools and personalized recommendations.</p>
           <div className="grid gap-6 md:grid-cols-2">
             <Card className="bg-gradient-to-br from-accent/10 to-transparent border-accent/20">
@@ -403,58 +456,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Newsletter Signup */}
-        <section className="container py-6">
-          <Card className="max-w-2xl mx-auto bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
-            <CardContent className="p-8 text-center">
-              <h2 className="text-2xl font-semibold mb-3">🚀 Get Weekly Prompt Tips</h2>
-              <p className="text-muted-foreground mb-6">Join 25,000+ professionals getting our best prompts, tips, and AI updates delivered to their inbox every Tuesday.</p>
-              <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                <input 
-                  type="email" 
-                  placeholder="Enter your email" 
-                  className="flex-1 px-4 py-2 rounded-md border bg-background"
-                />
-                <Button variant="hero" className="px-6">
-                  Subscribe Free
-                </Button>
-              </div>
-              <p className="text-xs text-muted-foreground mt-3">No spam. Unsubscribe anytime. Free forever.</p>
-              
-              {/* Social proof for newsletter */}
-              <div className="mt-6 pt-4 border-t border-primary/10">
-                <p className="text-xs text-muted-foreground mb-2">Recent subscriber feedback:</p>
-                <div className="text-xs text-muted-foreground italic">
-                  "These weekly tips have made me 3x better at prompting. Best AI newsletter I subscribe to!" — Jenny K.
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </section>
-
-
-        {/* Featured Prompts Carousel */}
-        <section className="container py-4" aria-labelledby="featured-prompts">
-          <h2 id="featured-prompts" className="text-xl font-semibold mb-3">Prompts of the Day</h2>
-          <Carousel setApi={setCarouselApi} opts={{ loop: true, align: "start" }}>
-            <CarouselContent>
-              {slides.map((p) => (
-                <CarouselItem key={p.id} className="md:basis-1/2 lg:basis-1/3">
-                  <PromptCard
-                    prompt={p as any}
-                    categories={homeCategories}
-                    onCategoryClick={(cid) => navigate(`/library?categoryId=${cid}`)}
-                    onSubcategoryClick={(sid, cid) => navigate(`/library?categoryId=${cid}&subcategoryId=${sid}`)}
-                    onCopyClick={() => navigate(`/library?categoryId=${p.categoryId || ""}${p.subcategoryId ? `&subcategoryId=${p.subcategoryId}` : ""}`)}
-                  />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="-left-6 md:-left-10" />
-            <CarouselNext className="-right-6 md:-right-10" />
-          </Carousel>
-        </section>
-
         {/* Quick FAQ Section */}
         <section className="container py-6">
           <h2 className="text-2xl font-semibold mb-6 text-center">Quick Questions</h2>
@@ -489,7 +490,6 @@ const Index = () => {
           </div>
         </section>
 
-
         {/* Pricing transparency hint */}
         <section className="container py-4">
           <div className="text-center bg-gradient-to-r from-primary/5 to-accent/5 rounded-lg p-6 max-w-2xl mx-auto">
@@ -497,7 +497,7 @@ const Index = () => {
             <p className="text-sm text-muted-foreground">
               Browse thousands of prompts for free. Get premium collections starting at $9.99 when you need specialized prompts for your industry or project.
             </p>
-            <div className="flex justify-center gap-4 mt-4 text-xs text-muted-foreground">
+            <div className="flex justify-center gap-4 mt-4 text-xs text-muted-foreground mb-4">
               <span className="flex items-center gap-1">
                 <div className="w-3 h-3 bg-green-500 rounded-full flex items-center justify-center">
                   <span className="text-white text-[8px]">✓</span>
@@ -516,6 +516,11 @@ const Index = () => {
                 </div>
                 No credit card needed
               </span>
+            </div>
+            <div className="mt-4">
+              <Button asChild variant="hero" size="sm">
+                <Link to="/library">Browse Prompt Library</Link>
+              </Button>
             </div>
           </div>
         </section>
