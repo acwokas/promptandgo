@@ -157,7 +157,7 @@ const Index = () => {
         </section>
 
         {/* Social Proof Section */}
-        <section className="container py-6">
+        <section className="container pt-6 pb-2">
           <div className="text-center mb-8">
             <p className="text-muted-foreground mb-2">Trusted by 50,000+ professionals</p>
             <div className="flex items-center justify-center gap-8 text-sm text-muted-foreground">
@@ -169,7 +169,7 @@ const Index = () => {
             </div>
           </div>
           
-          <div className="grid gap-6 md:grid-cols-3 mb-8">
+          <div className="grid gap-6 md:grid-cols-3 mb-4">
             <Card className="bg-gradient-to-br from-primary/5 to-transparent">
               <CardContent className="p-6">
                 <div className="flex items-start gap-3 mb-4">
@@ -221,7 +221,7 @@ const Index = () => {
         </section>
 
         {/* AI Tools Compatibility */}
-        <section className="container py-6">
+        <section className="container pt-2 pb-6">
           <div className="text-center">
             <p className="text-sm text-muted-foreground mb-4">Works seamlessly with your favourite AI tools</p>
             <div className="flex items-center justify-center gap-8 text-xs text-muted-foreground">
