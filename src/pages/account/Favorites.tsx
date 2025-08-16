@@ -350,16 +350,19 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
         subtitle={<>Manage your saved prompts and AI-generated custom prompts</>}
       >
         <Button asChild variant="hero" className="px-6">
-          <a href="#my-saved-prompts">Browse My Prompts</a>
+          <a href="#my-saved-prompts">
+            <Heart className="h-4 w-4 mr-2" />
+            My Saved Prompts ({favIds.length})
+          </a>
         </Button>
         <Button asChild variant="secondary">
-          <Link to="/library">Back to Library</Link>
-        </Button>
-        <Button asChild variant="outline">
-          <Link to="/toolkit">
+          <a href="#my-generated-prompts">
             <Bot className="h-4 w-4 mr-2" />
-            AI Tools
-          </Link>
+            My AI-Generated Prompts ({userGeneratedPrompts.length})
+          </a>
+        </Button>
+        <Button asChild variant="ghost">
+          <Link to="/library">Back to Library</Link>
         </Button>
       </PageHero>
       <main className="container py-8">
@@ -370,24 +373,6 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
           </div>
         ) : (
           <>
-            {/* Quick navigation for sections */}
-            <section className="mb-12">
-              <div className="flex justify-center gap-4 mb-6">
-                <Button asChild variant="outline" size="sm">
-                  <a href="#my-saved-prompts">
-                    <Heart className="h-4 w-4 mr-2" />
-                    My Saved Prompts ({favIds.length})
-                  </a>
-                </Button>
-                <Button asChild variant="outline" size="sm">
-                  <a href="#my-generated-prompts">
-                    <Bot className="h-4 w-4 mr-2" />
-                    My AI-Generated Prompts ({userGeneratedPrompts.length})
-                  </a>
-                </Button>
-              </div>
-            </section>
-
             {/* My Saved Prompts section */}
             <section id="my-saved-prompts" className="mb-16">
               <div className="text-center mb-8">
