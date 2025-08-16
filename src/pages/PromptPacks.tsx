@@ -450,10 +450,10 @@ const PromptPacks = () => {
                 className="w-full"
                 onClick={() => {
                   const element = document.getElementById("pack-filters");
-                  element?.scrollIntoView({ behavior: "smooth", block: "center" });
+                  element?.scrollIntoView({ behavior: "smooth", block: "start" });
                 }}
               >
-                Browse Packs Above
+                Browse Power Packs
               </Button>
             </Card>
 
