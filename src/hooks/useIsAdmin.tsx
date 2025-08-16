@@ -10,7 +10,8 @@ export function useIsAdmin() {
   useEffect(() => {
     let active = true;
     async function check() {
-      console.log("useIsAdmin: Starting admin check", { user: user?.email, userId: user?.id });
+      // SECURITY FIX: Reduced PII logging in production
+      console.log("useIsAdmin: Starting admin check");
       
       if (!user) {
         console.log("useIsAdmin: No user found");        
@@ -22,7 +23,7 @@ export function useIsAdmin() {
       }
       
       try {
-        console.log("useIsAdmin: Checking user_roles table for user:", user.id);
+        console.log("useIsAdmin: Checking user_roles table");
         // Primary: check user_roles table (RLS allows users to read their own roles)
         const { data, error } = await supabase
           .from("user_roles")
@@ -31,7 +32,7 @@ export function useIsAdmin() {
           .eq("role", "admin")
           .limit(1);
           
-        console.log("useIsAdmin: user_roles query result", { data, error });
+        console.log("useIsAdmin: user_roles query result", { hasData: !!data, error: !!error });
         
         if (error) throw error;
         const hasRole = (data?.length || 0) > 0;
@@ -40,7 +41,6 @@ export function useIsAdmin() {
         
         console.log("useIsAdmin: Admin check results", { 
           hasRole, 
-          userEmail: user.email,
           finalResult: !!hasRole,
           active: active 
         });

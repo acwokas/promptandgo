@@ -487,6 +487,33 @@ export type Database = {
           },
         ]
       }
+      rate_limits: {
+        Row: {
+          count: number | null
+          created_at: string | null
+          id: string
+          key: string
+          updated_at: string | null
+          window_start: string | null
+        }
+        Insert: {
+          count?: number | null
+          created_at?: string | null
+          id?: string
+          key: string
+          updated_at?: string | null
+          window_start?: string | null
+        }
+        Update: {
+          count?: number | null
+          created_at?: string | null
+          id?: string
+          key?: string
+          updated_at?: string | null
+          window_start?: string | null
+        }
+        Relationships: []
+      }
       shared_links: {
         Row: {
           clicks: number
@@ -888,6 +915,20 @@ export type Database = {
         Args: { p_user_id: string }
         Returns: {
           id: string
+          subscribed: boolean
+          subscription_end: string
+          subscription_tier: string
+          updated_at: string
+          user_id: string
+        }[]
+      }
+      get_subscribers_admin_data: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          email: string
+          email_hash: string
+          id: string
+          stripe_customer_id: string
           subscribed: boolean
           subscription_end: string
           subscription_tier: string

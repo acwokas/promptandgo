@@ -89,6 +89,11 @@ serve(async (req) => {
       mode: 'payment',
       success_url: `${origin}/checkout/success?order_id=${orderId}&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/checkout/canceled`,
+      // SECURITY: Add metadata for additional verification
+      metadata: {
+        order_id: orderId,
+        user_id: user.id,
+      },
     });
 
     await supabaseService.from('orders').update({ stripe_session_id: session.id }).eq('id', orderId);

@@ -20,15 +20,31 @@ async function grantEntitlements(supabaseService: any, userId: string, userEmail
     } else if (it.item_type === 'pack' && it.item_id) {
       await supabaseService.from('pack_access').insert({ user_id: userId, pack_id: it.item_id }).onConflict('user_id,pack_id').ignore();
     } else if (it.item_type === 'lifetime') {
-      await supabaseService.from('subscribers').upsert({
-        user_id: userId,
-        email: userEmail,
-        stripe_customer_id: customerId ?? null,
-        subscribed: true,
-        subscription_tier: 'Lifetime',
-        subscription_end: null,
-        updated_at: new Date().toISOString(),
-      }, { onConflict: 'user_id' });
+      // SECURITY FIX: Use secure_upsert_subscriber instead of direct upsert
+      const encryptionKey = Deno.env.get("SUBSCRIBERS_ENCRYPTION_KEY");
+      if (encryptionKey && userEmail) {
+        await supabaseService.rpc("secure_upsert_subscriber", {
+          p_key: encryptionKey,
+          p_user_id: userId,
+          p_email: userEmail,
+          p_stripe_customer_id: customerId ?? null,
+          p_subscribed: true,
+          p_subscription_tier: 'lifetime',
+          p_subscription_end: null,
+        });
+      } else {
+        // Fallback for missing encryption key (should be configured)
+        console.warn("SECURITY: Missing encryption key, using insecure fallback");
+        await supabaseService.from('subscribers').upsert({
+          user_id: userId,
+          email: userEmail || '[encrypted]',
+          stripe_customer_id: customerId ?? null,
+          subscribed: true,
+          subscription_tier: 'lifetime',
+          subscription_end: null,
+          updated_at: new Date().toISOString(),
+        }, { onConflict: 'user_id' });
+      }
     }
   }
 }
@@ -67,13 +83,42 @@ serve(async (req) => {
       .single();
     if (orderErr) throw new Error(`Order not found: ${orderErr.message}`);
     if (order.user_id !== user.id) throw new Error("Order does not belong to user");
+    
+    // SECURITY FIX: Strictly enforce session ID matching - this was a critical vulnerability
     if (order.stripe_session_id !== sessionId) {
-      // Allow proceeding if not set due to edge cases, but log
-      console.log('Session mismatch', { orderSession: order.stripe_session_id, provided: sessionId });
+      console.error('SECURITY: Session ID mismatch - potential fraud attempt', { 
+        orderId, 
+        expectedSession: order.stripe_session_id, 
+        providedSession: sessionId,
+        userId: user.id
+      });
+      throw new Error("Invalid session ID for this order - security violation");
     }
 
     const stripe = new Stripe(stripeKey, { apiVersion: "2023-10-16" });
     const session = await stripe.checkout.sessions.retrieve(sessionId);
+    
+    // SECURITY: Additional validation - ensure session belongs to authenticated user
+    if (session.customer) {
+      const customer = await stripe.customers.retrieve(session.customer as string);
+      if (typeof customer !== "string" && customer.email && customer.email !== user.email) {
+        console.error('SECURITY: Customer email mismatch - potential fraud attempt', {
+          sessionCustomerEmail: customer.email,
+          userEmail: user.email,
+          userId: user.id
+        });
+        throw new Error("Session does not belong to authenticated user");
+      }
+    }
+
+    // SECURITY: Validate session metadata if available  
+    if (session.metadata?.order_id && session.metadata.order_id !== orderId) {
+      console.error('SECURITY: Order ID metadata mismatch', {
+        sessionMetadataOrderId: session.metadata.order_id,
+        requestOrderId: orderId
+      });
+      throw new Error("Session metadata validation failed");
+    }
     if (session.payment_status !== 'paid') {
       return new Response(JSON.stringify({ status: session.payment_status }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 });
     }
