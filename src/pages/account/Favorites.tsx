@@ -390,7 +390,7 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
         </Button>
         <Button asChild variant="inverted">
           <a href="#my-power-packs">
-            <Zap className="h-4 w-4 mr-2" />
+            <Zap className="h-4 w-4 mr-2 text-yellow-500" />
             My Power Packs ({userPacks.length})
           </a>
         </Button>
@@ -591,7 +591,7 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
 
             {/* My Power Packs section */}
             <section id="my-power-packs" className="mb-16">
-              <h2 className="text-2xl font-bold mb-6">My <Zap className="h-6 w-6 inline mx-1" /> Power Packs</h2>
+              <h2 className="text-2xl font-bold mb-6">My <Zap className="h-6 w-6 inline mx-1 text-yellow-500" /> Power Packs</h2>
 
               {packsLoading ? (
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -604,7 +604,7 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
               ) : userPacks.length === 0 ? (
                 <Card className="text-center py-16">
                   <CardContent>
-                    <Zap className="h-16 w-16 mx-auto mb-4 text-muted-foreground/50" />
+                    <Zap className="h-16 w-16 mx-auto mb-4 text-yellow-500" />
                     <h3 className="text-lg font-semibold mb-2">No Power Packs yet</h3>
                     <p className="text-muted-foreground mb-6">
                       Unlock powerful prompt collections designed for specific use cases and industries.
@@ -620,7 +620,7 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
                     <Card key={pack.id} className="hover:shadow-lg transition-shadow">
                       <CardHeader>
                         <CardTitle className="text-base flex items-center gap-2">
-                          <Zap className="h-4 w-4" />
+                          <Zap className="h-4 w-4 text-yellow-500" />
                           {pack.name}
                         </CardTitle>
                         {pack.description && (
