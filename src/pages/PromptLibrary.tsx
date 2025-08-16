@@ -470,6 +470,24 @@ const PromptLibrary = () => {
     }
   }, [categoryId, subcategoryId, query, selectedTag, ribbon, randomMode, refresh, fetchRandomPrompt]);
 
+  // Auto-scroll to search results when query or filters change
+  useEffect(() => {
+    if (loading || randomMode) return;
+    if (query || categoryId || subcategoryId || selectedTag || ribbon) {
+      // Small delay to ensure the UI has updated
+      const timeoutId = setTimeout(() => {
+        if (listRef.current) {
+          const header = document.querySelector('header');
+          const headerHeight = header ? (header as HTMLElement).getBoundingClientRect().height : 0;
+          const y = listRef.current.getBoundingClientRect().top + window.scrollY - headerHeight - 20;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }, 100);
+      
+      return () => clearTimeout(timeoutId);
+    }
+  }, [query, categoryId, subcategoryId, selectedTag, ribbon, loading, randomMode]);
+
   // Scroll to first prompt when in random mode after items load
   useEffect(() => {
     if (!randomMode) return;
