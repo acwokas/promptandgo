@@ -109,7 +109,7 @@ const AIPromptsForCustomerSupport = () => {
             Write a friendly follow-up message to check if a customer is satisfied with their recent support experience.
           </p>
           <p><strong>Retention Offer Prompt:</strong><br />
-            Draft a personalised message offering a discount or bonus to a customer considering cancelling their subscription.
+            Draft a personalised message offering a discount or bonus to a customer considering cancelling their membership.
           </p>
 
           <img

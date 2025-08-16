@@ -43,12 +43,12 @@ const Terms = () => (
         <li>If you submit content (e.g., prompts, comments, reviews), you grant us a non-exclusive, royalty-free, worldwide licence to use, display, and distribute that content in connection with our services.</li>
       </ul>
 
-      <h2>4.&nbsp;&nbsp;Payment and Subscriptions</h2>
-      <p>If you purchase premium prompts, downloads, or subscription services:</p>
+      <h2>4.&nbsp;&nbsp;Payment and Memberships</h2>
+      <p>If you purchase premium prompts, downloads, or membership services:</p>
       <ul>
         <li>All prices are listed in Singapore Dollars (SGD) unless otherwise stated.</li>
         <li>Payment processing is handled by secure third-party providers; we do not store full payment details.</li>
-        <li>Subscription fees are billed in advance and are non-refundable unless required by law.</li>
+        <li>Membership fees are billed in advance and are non-refundable unless required by law.</li>
       </ul>
 
       <h2>5.&nbsp;&nbsp;Privacy</h2>
@@ -88,7 +88,7 @@ const Terms = () => (
       </p>
 
       <h2>13.&nbsp;&nbsp;Refunds &amp; Cancellations</h2>
-      <p>All sales of digital products, including prompt packs, downloads, and subscriptions, are final. We do not offer refunds, exchanges, or cancellations once a purchase is completed, except as required under Singapore law.</p>
+      <p>All sales of digital products, including prompt packs, downloads, and memberships, are final. We do not offer refunds, exchanges, or cancellations once a purchase is completed, except as required under Singapore law.</p>
       <p>If a digital product is defective, inaccessible, or not as described, you must notify us within 7 days of purchase at <a href="mailto:legal@promptandgo.ai">legal@promptandgo.ai</a> so we can investigate and, if appropriate, provide a replacement or alternative remedy.</p>
     </section>
   </main>

@@ -28,17 +28,17 @@ const CartPage = () => {
   const originalUnitCents = (i: CartItem) => {
     switch (i.type) {
       case 'pack': return 999;
-      case 'subscription': return 2499;
+      case 'membership': return 2499;
       case 'lifetime': return 9499;
       case 'prompt': return 199;
       default: return i.unitAmountCents;
     }
   };
 
-  const hasSubscription = items.some((i) => i.type === 'subscription');
+  const hasMembership = items.some((i) => i.type === 'membership');
 
   const total = items.reduce((sum, i) => {
-    const unit = hasSubscription && (i.type === 'prompt' || i.type === 'pack') ? 0 : i.unitAmountCents;
+    const unit = hasMembership && (i.type === 'prompt' || i.type === 'pack') ? 0 : i.unitAmountCents;
     return sum + unit * i.quantity;
   }, 0);
   const originalTotal = items.reduce((sum, i) => sum + originalUnitCents(i) * i.quantity, 0);
@@ -54,11 +54,11 @@ const CartPage = () => {
     const cartItems = getCartForUser(!!user);
     if (cartItems.length === 0) return;
 
-    const hasSubscription = cartItems.some((i) => i.type === 'subscription');
+    const hasMembership = cartItems.some((i) => i.type === 'membership');
     const hasLifetime = cartItems.some((i) => i.type === 'lifetime');
 
     try {
-      if (hasSubscription) {
+      if (hasMembership) {
         const { data, error } = await supabase.functions.invoke('create-checkout');
         if (error) throw error;
         window.open((data as any).url, '_blank');
@@ -81,7 +81,7 @@ const CartPage = () => {
   return (
     <>
       <SEO title="Your Cart" description="Review your selected prompts and packs before checkout." />
-      <PageHero title={<><span className="text-gradient-brand">Your</span> Cart</>} subtitle={<>Complete your purchase securely. Subscription option available at checkout.</>} minHeightClass="min-h-[25vh]"/>
+      <PageHero title={<><span className="text-gradient-brand">Your</span> Cart</>} subtitle={<>Complete your purchase securely. Membership option available at checkout.</>} minHeightClass="min-h-[25vh]"/>
       <main className="container py-8">
         {items.length === 0 ? (
           <Card>
@@ -102,7 +102,7 @@ const CartPage = () => {
                   </CardHeader>
                   <CardContent className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    {hasSubscription && (i.type === 'prompt' || i.type === 'pack') ? (
+                    {hasMembership && (i.type === 'prompt' || i.type === 'pack') ? (
                       <>
                         <span className="text-muted-foreground line-through">{centsToUSD(originalUnitCents(i))}</span>
                         <span className="text-xl font-semibold">{centsToUSD(0)}</span>

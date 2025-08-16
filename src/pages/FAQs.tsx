@@ -51,7 +51,7 @@ const sections: FAQSection[] = [
       {
         question: "Will these prompts work with free AI tools?",
         answer:
-          "Yes. All prompts are designed to work with free versions of tools like ChatGPT. You do not need a subscription or special setup, just copy and paste into your preferred AI tool.",
+          "Yes. All prompts are designed to work with free versions of tools like ChatGPT. You do not need a membership or special setup, just copy and paste into your preferred AI tool.",
       },
     ],
   },

@@ -58,8 +58,8 @@ serve(async (req) => {
     if (customers.data.length === 0) {
       logStep("No Stripe customer found for user", { email: user.email });
       return new Response(JSON.stringify({ 
-        error: 'No subscription found', 
-        message: 'You need to purchase a subscription before accessing the customer portal.',
+        error: 'No membership found', 
+        message: 'You need to purchase a membership before accessing the customer portal.',
         action: 'redirect_to_checkout'
       }), { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }, 

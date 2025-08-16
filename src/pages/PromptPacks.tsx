@@ -167,13 +167,13 @@ const PromptPacks = () => {
       navigate('/auth');
       return;
     }
-    const exists = getCart().some((i) => i.type === 'subscription' && i.id === 'monthly');
+    const exists = getCart().some((i) => i.type === 'membership' && i.id === 'monthly');
     if (exists) {
-      toast({ title: 'Already in cart', description: 'Monthly All-Access Subscription is already in your cart.' });
+      toast({ title: 'Already in cart', description: 'Monthly All-Access Membership is already in your cart.' });
       return;
     }
-    addToCart({ id: 'monthly', type: 'subscription', title: 'Monthly All-Access Subscription', unitAmountCents: SUB_DISCOUNT_CENTS, quantity: 1 }, !!user);
-    toast({ title: 'Subscription added to cart', description: `Monthly All-Access Subscription — ${fmtUSD(SUB_DISCOUNT_CENTS)}/mo` });
+    addToCart({ id: 'monthly', type: 'membership', title: 'Monthly All-Access Membership', unitAmountCents: SUB_DISCOUNT_CENTS, quantity: 1 }, !!user);
+    toast({ title: 'Membership added to cart', description: `Monthly All-Access Membership — ${fmtUSD(SUB_DISCOUNT_CENTS)}/mo` });
   };
 
   const normalize = (s: string) => s

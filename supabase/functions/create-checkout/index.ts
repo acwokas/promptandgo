@@ -7,7 +7,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// Create a subscription checkout session ($12.99/month)
+// Create a membership checkout session ($12.99/month)
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
   try {
@@ -39,15 +39,15 @@ serve(async (req) => {
         {
           price_data: {
             currency: 'usd',
-            product_data: { name: 'Monthly All-Access Subscription' },
+            product_data: { name: 'Monthly All-Access Membership' },
             unit_amount: 1299,
             recurring: { interval: 'month' },
           },
           quantity: 1,
         }
       ],
-      success_url: `${origin}/subscription/success`,
-      cancel_url: `${origin}/subscription/canceled`,
+      success_url: `${origin}/membership/success`,
+      cancel_url: `${origin}/membership/canceled`,
     });
 
     return new Response(JSON.stringify({ url: session.url }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 });

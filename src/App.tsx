@@ -44,8 +44,8 @@ import MyGeneratedPrompts from "./pages/account/MyGeneratedPrompts";
 import CartPage from "./pages/Cart";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
 import CheckoutCanceled from "./pages/CheckoutCanceled";
-import SubscriptionSuccess from "./pages/SubscriptionSuccess";
-import SubscriptionCanceled from "./pages/SubscriptionCanceled";
+import MembershipSuccess from "./pages/MembershipSuccess";
+import MembershipCanceled from "./pages/MembershipCanceled";
 import EmailConfirmed from "./pages/EmailConfirmed";
 import ShareRedirect from "./pages/ShareRedirect";
 import AuthEffects from "@/components/auth/AuthEffects";
@@ -122,8 +122,8 @@ const AppContent = () => {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout/success" element={<CheckoutSuccess />} />
         <Route path="/checkout/canceled" element={<CheckoutCanceled />} />
-        <Route path="/subscription/success" element={<SubscriptionSuccess />} />
-        <Route path="/subscription/canceled" element={<SubscriptionCanceled />} />
+        <Route path="/membership/success" element={<MembershipSuccess />} />
+        <Route path="/membership/canceled" element={<MembershipCanceled />} />
         <Route path="/email-confirmed" element={<EmailConfirmed />} />
         <Route path="/s/:shortCode" element={<ShareRedirect />} />
         <Route path="/toolkit" element={<ToolkitPage />} />

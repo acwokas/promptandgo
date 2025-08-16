@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 export type CartItem = {
   id: string;
-  type: 'prompt' | 'pack' | 'subscription' | 'lifetime';
+  type: 'prompt' | 'pack' | 'membership' | 'lifetime';
   title: string;
   unitAmountCents: number;
   quantity: number;

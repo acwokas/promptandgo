@@ -28,15 +28,15 @@ const PurchasesPage = () => {
     })();
   }, []);
 
-  const manageSubscription = async () => {
+  const manageMembership = async () => {
     try {
       const { data, error } = await supabase.functions.invoke('customer-portal');
       if (error) {
         // Check if this is a "no customer found" error
-        if (error.message?.includes('No subscription found') || error.message?.includes('No Stripe customer found')) {
+        if (error.message?.includes('No membership found') || error.message?.includes('No Stripe customer found')) {
           toast({ 
-            title: 'No subscription found', 
-            description: 'You need to purchase a subscription first. Redirecting to Power Packs...', 
+            title: 'No membership found', 
+            description: 'You need to purchase a membership first. Redirecting to Power Packs...', 
             variant: 'default' 
           });
           // Redirect to packs page after a short delay
@@ -50,14 +50,14 @@ const PurchasesPage = () => {
       }
       window.open((data as any).url, '_blank');
     } catch (err: any) {
-      console.error('Manage subscription error:', err);
+      console.error('Manage membership error:', err);
       toast({ title: 'Portal error', description: 'Failed to access customer portal', variant: 'destructive' });
     }
   };
 
-  const refreshSubscription = async () => {
+  const refreshMembership = async () => {
     await supabase.functions.invoke('check-subscription');
-    toast({ title: 'Subscription refreshed' });
+    toast({ title: 'Membership refreshed' });
   };
 
   return (
@@ -70,8 +70,8 @@ const PurchasesPage = () => {
       />
       <main className="container py-8 space-y-6">
         <div className="flex gap-2 justify-end">
-          <Button variant="secondary" onClick={refreshSubscription}>Refresh Subscription</Button>
-          <Button variant="cta" onClick={manageSubscription}>Manage Subscription</Button>
+          <Button variant="secondary" onClick={refreshMembership}>Refresh Membership</Button>
+          <Button variant="cta" onClick={manageMembership}>Manage Membership</Button>
         </div>
         {orders.length === 0 ? (
           <div className="rounded-xl border bg-card p-6 text-center text-muted-foreground">No purchases yet.</div>

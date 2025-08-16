@@ -33,8 +33,8 @@ serve(async (req) => {
     const items: Array<{ id?: string; type: 'prompt'|'pack'|'lifetime'; title?: string; unitAmountCents?: number; quantity?: number }> = body?.items || [];
     if (!Array.isArray(items) || items.length === 0) throw new Error("No items provided");
 
-    const hasSubscription = items.some(i => i.type === 'subscription');
-    if (hasSubscription) throw new Error("Subscription items not allowed in create-payment");
+    const hasMembership = items.some(i => i.type === 'membership');
+    if (hasMembership) throw new Error("Membership items not allowed in create-payment");
 
     const hasLifetime = items.some(i => i.type === 'lifetime');
     if (hasLifetime && items.length > 1) throw new Error("Lifetime purchase must be a single item");
