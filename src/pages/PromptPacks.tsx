@@ -273,7 +273,7 @@ const PromptPacks = () => {
               </div>
               <h3 className="text-xl font-bold mb-2">Monthly Member</h3>
               <p className="text-muted-foreground mb-4">
-                Unlock ALL premium prompts and Power Packs. Cancel anytime.
+                Unlock ALL premium prompts and Power Packs and unlock additional AI Tools queries. . Cancel anytime.
               </p>
               <div className="text-2xl font-bold text-primary mb-4">
                 ${(SUB_DISCOUNT_CENTS / 100).toFixed(2)}/mo
