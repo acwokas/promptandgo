@@ -545,7 +545,7 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
                       
                       <CardContent className="space-y-4">
                         <div className="bg-muted/50 rounded-lg p-3 text-sm max-h-32 overflow-y-auto">
-                          <pre className="whitespace-pre-wrap font-mono text-xs">
+                          <pre className="whitespace-pre-wrap font-mono text-[0.975rem] sm:text-[1.05rem]">
                             {promptData.prompt.substring(0, 200)}
                             {promptData.prompt.length > 200 && '...'}
                           </pre>
