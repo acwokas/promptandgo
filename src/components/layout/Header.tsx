@@ -80,7 +80,7 @@ const Header = () => {
           <li><NavLink to="/faqs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>FAQs</NavLink></li>
           {user && (
             <li>
-              <NavLink to="/my-prompts" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
+              <NavLink to="/account/favorites" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
                 <Heart className="h-4 w-4 inline mr-1 text-red-500" />
                 My Prompts
               </NavLink>
@@ -112,7 +112,7 @@ const Header = () => {
                   
                   {user && (
                     <>
-                      <NavLink to="/my-prompts" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
+                      <NavLink to="/account/favorites" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
                         <Heart className="h-4 w-4 inline mr-1 text-red-500" />
                         My Prompts
                       </NavLink>
