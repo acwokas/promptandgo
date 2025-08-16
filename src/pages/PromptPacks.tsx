@@ -8,11 +8,11 @@ import { addToCart, getCart } from "@/lib/cart";
 import { toast } from "@/hooks/use-toast";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
-import { Input } from "@/components/ui/input";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { Lock, Check, Heart, Search, Zap, Crown, Infinity } from "lucide-react";
 import ShareButton from "@/components/ShareButton";
+import { PackFilters } from "@/components/prompt/PackFilters";
 
 const PACK_ORIGINAL_CENTS = 999;
 const PACK_DISCOUNT_CENTS = 499;
@@ -176,6 +176,14 @@ const PromptPacks = () => {
     toast({ title: 'Membership added to cart', description: `Monthly All-Access Membership — ${fmtUSD(SUB_DISCOUNT_CENTS)}/mo` });
   };
 
+  const handleSearch = () => {
+    // Search functionality is handled by the query state change
+  };
+
+  const handleClear = () => {
+    setQuery("");
+  };
+
   const normalize = (s: string) => s
     .toLowerCase()
     .replace(/&/g, 'and')
@@ -244,13 +252,43 @@ const PromptPacks = () => {
           description="Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results."
           structuredData={productSchemas}
         />
-        <div className="mb-6 max-w-xl">
-          <Input
-            placeholder="Search packs by name, tags, or contents..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
+        
+        {/* Popular Searches Section */}
+        <section className="mb-8">
+          <Card className="bg-gradient-to-r from-primary/5 to-accent/5 border-primary/20">
+            <CardContent className="p-6">
+              <div className="text-center mb-4">
+                <h3 className="text-lg font-semibold mb-2">⚡ Popular Power Packs</h3>
+                <p className="text-sm text-muted-foreground">Quick access to our most sought-after pack categories</p>
+              </div>
+              <div className="flex flex-wrap justify-center gap-2">
+                {[
+                  "social media", "content marketing", "business", "career", 
+                  "productivity", "writing", "automation", "strategy"
+                ].map((searchTerm) => (
+                  <Button
+                    key={searchTerm}
+                    variant="outline"
+                    size="sm"
+                    className="text-xs"
+                    onClick={() => setQuery(searchTerm)}
+                  >
+                    {searchTerm}
+                  </Button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </section>
+
+        <section id="pack-filters" className="scroll-mt-36 md:scroll-mt-40 sticky top-20 z-40 bg-background/95 backdrop-blur-sm border-b border-border/50 py-4 -mx-4 px-4 shadow-sm mb-6">
+          <PackFilters
+            query={query}
+            onChange={setQuery}
+            onSearch={handleSearch}
+            onClear={handleClear}
           />
-        </div>
+        </section>
 
         {loading ? (
           <div className="text-muted-foreground">Loading packs…</div>
