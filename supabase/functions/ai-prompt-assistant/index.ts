@@ -204,15 +204,17 @@ Keep responses concise and actionable.`;
     };
 
     if (type === 'generate_prompt') {
-      // More complex prompt generation - use mini
-      model = 'gpt-5-mini-2025-08-07';
+      // More complex prompt generation - use reliable model
+      model = 'gpt-4o-mini';
       requestBody.model = model;
-      requestBody.max_completion_tokens = 1000; // GPT-5 uses max_completion_tokens
+      requestBody.max_tokens = 1000; // Legacy model uses max_tokens
+      requestBody.temperature = 0.7;
     } else {
-      // Simple suggestions and assistant - use nano for cost efficiency
-      model = 'gpt-5-nano-2025-08-07';  
+      // Simple suggestions and assistant - use same reliable model 
+      model = 'gpt-4o-mini';  
       requestBody.model = model;
-      requestBody.max_completion_tokens = 800; // Smaller responses for simple tasks
+      requestBody.max_tokens = 800;
+      requestBody.temperature = 0.7;
     }
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
