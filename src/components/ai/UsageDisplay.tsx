@@ -52,8 +52,8 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
   const getSubscriptionMultiplier = () => {
     if (!subscriptionInfo?.subscribed) return 1;
     const tier = subscriptionInfo.subscription_tier?.toLowerCase();
-    if (tier === 'basic' || tier === 'monthly') return "3x"; // 15,15,20 vs 5,5,10 is roughly 3x
-    if (tier === 'premium' || tier === 'lifetime') return "6x"; // 30,30,30 vs 5,5,10 is 6x
+    if (tier === 'basic' || tier === 'monthly') return "3x"; // 30,30,40 vs 10,10,20 is roughly 3x
+    if (tier === 'premium' || tier === 'lifetime') return "6x"; // 60,60,60 vs 10,10,20 is roughly 6x
     return "Premium";
   };
 
@@ -202,7 +202,7 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
                 <h4 className="font-medium">Need more queries?</h4>
                 <p className="text-sm text-muted-foreground mt-1">
                   {!subscriptionInfo?.subscribed ? (
-                    <>Upgrade to get <strong>3x queries</strong> with monthly membership or <strong>6x queries</strong> with lifetime access.</>
+                    <>Upgrade to get <strong>up to 40 queries/day</strong> with monthly membership or <strong>up to 60 queries/day</strong> with lifetime access.</>
                   ) : (
                     <>You've reached your enhanced daily limits. Your queries will reset at midnight UTC.</>
                   )}
@@ -211,11 +211,11 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
                   <div className="flex gap-2 mt-2">
                     <Button size="sm" variant="outline">
                       <Crown className="h-4 w-4 mr-1" />
-                      Monthly (3x) - $12.99/mo
+                      Monthly (30-40/day) - $12.99/mo
                     </Button>
                     <Button size="sm" variant="secondary">
                       <Infinity className="h-4 w-4 mr-1" />
-                      Lifetime (6x) - $47.85
+                      Lifetime (60/day) - $47.85
                     </Button>
                   </div>
                 )}
