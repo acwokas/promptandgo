@@ -2,8 +2,9 @@ import SEO from "@/components/SEO";
 import PageHero from "@/components/layout/PageHero";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
-import { ShieldCheck, Zap, Clock, BadgeCheck, Globe, Scale, Search, Heart, Bot } from "lucide-react";
+import { ShieldCheck, Zap, Clock, BadgeCheck, Globe, Scale, Search, Heart, Bot, Copy } from "lucide-react";
 
 const HowItWorks = () => {
   const { user } = useSupabaseAuth();
@@ -46,18 +47,6 @@ const HowItWorks = () => {
       <Button asChild size="lg" variant="inverted">
         <Link to="/packs">⚡️Power Packs</Link>
       </Button>
-      <Button asChild size="lg" variant="secondary">
-        <Link to="/toolkit"><Bot className="h-4 w-4 mr-2 text-blue-500" />AI Tools</Link>
-      </Button>
-      {user ? (
-        <Button asChild size="lg" variant="secondary">
-          <Link to="/account/favorites"><Heart className="h-4 w-4 mr-2" />My Prompts</Link>
-        </Button>
-      ) : (
-        <Button asChild size="lg" variant="secondary">
-          <Link to="/auth">Login</Link>
-        </Button>
-      )}
     </PageHero>
 
     <main className="container py-12">
@@ -99,6 +88,148 @@ const HowItWorks = () => {
             </article>
           </div>
         </div>
+      </section>
+
+      {/* Visual Example Section */}
+      <section className="max-w-4xl mx-auto mt-16">
+        <h2 className="text-2xl font-semibold mb-8 text-center">See It In Action</h2>
+        <Card className="bg-gradient-to-br from-primary/5 to-accent/5 border-primary/20">
+          <CardContent className="p-8">
+            <div className="grid gap-8 lg:grid-cols-2">
+              <div>
+                <h3 className="font-semibold mb-3 flex items-center gap-2">
+                  <div className="w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">1</div>
+                  Copy a prompt from our library
+                </h3>
+                <div className="bg-background rounded-lg border p-4 text-sm">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs text-muted-foreground">Email Marketing Prompt</span>
+                    <Copy className="h-4 w-4 text-muted-foreground" />
+                  </div>
+                  <p className="font-mono text-xs leading-relaxed">
+                    "Write a compelling email subject line and 150-word email body for [PRODUCT/SERVICE] that [MAIN BENEFIT]. Target audience: [AUDIENCE]. Tone: [professional/casual/urgent]. Include a clear call-to-action."
+                  </p>
+                </div>
+              </div>
+              
+              <div>
+                <h3 className="font-semibold mb-3 flex items-center gap-2">
+                  <div className="w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">2</div>
+                  Paste into ChatGPT & get results
+                </h3>
+                <div className="bg-background rounded-lg border p-4 text-sm">
+                  <div className="text-xs text-muted-foreground mb-2">ChatGPT Output:</div>
+                  <div className="space-y-2">
+                    <p className="font-semibold text-primary">Subject: "Save 3+ hours daily with AI automation"</p>
+                    <p className="text-xs leading-relaxed">Hi [Name], Imagine finishing your daily tasks 3 hours early. Our AI automation platform handles repetitive work so you can focus on strategy. Join 10,000+ professionals already saving time...</p>
+                    <div className="text-xs text-muted-foreground">⚡ Ready in 30 seconds</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* User Success Stories */}
+      <section className="max-w-4xl mx-auto mt-12">
+        <h2 className="text-2xl font-semibold mb-8 text-center">Users Love How Simple It Is</h2>
+        <div className="grid gap-6 md:grid-cols-3">
+          <Card className="bg-gradient-to-br from-green-50 to-transparent border-green-200 dark:from-green-950 dark:border-green-800">
+            <CardContent className="p-6">
+              <div className="flex items-start gap-3 mb-4">
+                <div className="text-yellow-500">⭐⭐⭐⭐⭐</div>
+              </div>
+              <p className="text-sm text-muted-foreground mb-4">"I went from struggling with prompts to getting perfect results in minutes. The copy-paste approach is genius."</p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-green-500/10 rounded-full flex items-center justify-center text-sm font-semibold">TR</div>
+                <div>
+                  <p className="text-sm font-medium">Taylor R.</p>
+                  <p className="text-xs text-muted-foreground">Content Creator</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-blue-50 to-transparent border-blue-200 dark:from-blue-950 dark:border-blue-800">
+            <CardContent className="p-6">
+              <div className="flex items-start gap-3 mb-4">
+                <div className="text-yellow-500">⭐⭐⭐⭐⭐</div>
+              </div>
+              <p className="text-sm text-muted-foreground mb-4">"No learning curve at all. I found a prompt, pasted it into Claude, and got exactly what I needed for my business pitch."</p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-blue-500/10 rounded-full flex items-center justify-center text-sm font-semibold">KC</div>
+                <div>
+                  <p className="text-sm font-medium">Kevin C.</p>
+                  <p className="text-xs text-muted-foreground">Startup Founder</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-purple-50 to-transparent border-purple-200 dark:from-purple-950 dark:border-purple-800">
+            <CardContent className="p-6">
+              <div className="flex items-start gap-3 mb-4">
+                <div className="text-yellow-500">⭐⭐⭐⭐⭐</div>
+              </div>
+              <p className="text-sm text-muted-foreground mb-4">"Finally, prompts that actually work! No guesswork, no trial and error. Just paste and go."</p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-purple-500/10 rounded-full flex items-center justify-center text-sm font-semibold">MJ</div>
+                <div>
+                  <p className="text-sm font-medium">Maria J.</p>
+                  <p className="text-xs text-muted-foreground">Marketing Manager</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Quick FAQ */}
+      <section className="max-w-3xl mx-auto mt-12">
+        <h2 className="text-2xl font-semibold mb-6 text-center">Still Have Questions?</h2>
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="border-l-4 border-primary pl-4 py-2">
+            <h3 className="font-semibold mb-1">Is it really that simple?</h3>
+            <p className="text-sm text-muted-foreground">Yes! No technical knowledge required. If you can copy and paste, you can use our prompts.</p>
+          </div>
+          
+          <div className="border-l-4 border-primary pl-4 py-2">
+            <h3 className="font-semibold mb-1">Do I need to pay?</h3>
+            <p className="text-sm text-muted-foreground">Start completely free. Upgrade to power packs only when you want specialized prompts.</p>
+          </div>
+          
+          <div className="border-l-4 border-primary pl-4 py-2">
+            <h3 className="font-semibold mb-1">Which AI tools work?</h3>
+            <p className="text-sm text-muted-foreground">ChatGPT, Claude, Gemini, Perplexity, and basically any text-based AI tool.</p>
+          </div>
+          
+          <div className="border-l-4 border-primary pl-4 py-2">
+            <h3 className="font-semibold mb-1">How fast will I see results?</h3>
+            <p className="text-sm text-muted-foreground">Instantly! Browse, copy, paste, and get your first great output in under 2 minutes.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Newsletter Signup */}
+      <section className="max-w-2xl mx-auto mt-12">
+        <Card className="bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
+          <CardContent className="p-8 text-center">
+            <h2 className="text-2xl font-semibold mb-3">🎯 Get Weekly Prompting Tips</h2>
+            <p className="text-muted-foreground mb-6">Join 25,000+ users getting our best prompts and AI productivity tips every Tuesday.</p>
+            <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+              <input 
+                type="email" 
+                placeholder="Enter your email" 
+                className="flex-1 px-4 py-2 rounded-md border bg-background"
+              />
+              <Button variant="hero" className="px-6">
+                Subscribe Free
+              </Button>
+            </div>
+            <p className="text-xs text-muted-foreground mt-3">No spam. Unsubscribe anytime. Free forever.</p>
+          </CardContent>
+        </Card>
       </section>
 
       {/* Additional About content from promptandgo.ai/about */}
@@ -170,18 +301,6 @@ const HowItWorks = () => {
             <Button asChild size="lg" variant="inverted">
               <Link to="/packs">⚡️Power Packs</Link>
             </Button>
-            <Button asChild size="lg" variant="secondary">
-              <Link to="/toolkit"><Bot className="h-4 w-4 mr-2 text-blue-500" />AI Tools</Link>
-            </Button>
-            {user ? (
-              <Button asChild size="lg" variant="secondary">
-                <Link to="/account/favorites"><Heart className="h-4 w-4 mr-2" />My Prompts</Link>
-              </Button>
-            ) : (
-              <Button asChild size="lg" variant="secondary">
-                <Link to="/auth">Login</Link>
-              </Button>
-            )}
           </div>
         </div>
       </section>
