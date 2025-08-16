@@ -8,6 +8,7 @@ import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 import { PromptCard } from "@/components/prompt/PromptCard";
 import { usePersonalizedPrompts } from "@/hooks/usePersonalizedPrompts";
 import AIPromptWidget from "@/components/ai/AIPromptWidget";
@@ -18,6 +19,7 @@ const Index = () => {
   const { user } = useSupabaseAuth();
   const navigate = useNavigate();
   const { personalizedPrompts, hasPersonalization } = usePersonalizedPrompts();
+  const { toast } = useToast();
 
   type HP = {
     id: string;
@@ -34,6 +36,8 @@ const Index = () => {
   const [slides, setSlides] = useState<HP[]>([]);
   const [homeCategories, setHomeCategories] = useState<CategoryType[]>([]);
   const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null);
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterSubmitting, setNewsletterSubmitting] = useState(false);
 
   useEffect(() => {
     const load = async () => {
@@ -72,6 +76,79 @@ const Index = () => {
     }, 5000);
     return () => window.clearInterval(id);
   }, [carouselApi]);
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!newsletterEmail.trim()) {
+      toast({
+        title: "Email required",
+        description: "Please enter your email address to subscribe.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(newsletterEmail)) {
+      toast({
+        title: "Invalid email",
+        description: "Please enter a valid email address.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setNewsletterSubmitting(true);
+    try {
+      // Check if user is already subscribed
+      const { data: existingSubscriber } = await supabase
+        .from('subscribers')
+        .select('id, subscribed')
+        .eq('email', newsletterEmail.toLowerCase())
+        .single();
+
+      if (existingSubscriber?.subscribed) {
+        toast({
+          title: "Already subscribed",
+          description: "You're already on our mailing list!",
+        });
+        return;
+      }
+
+      // Add new subscriber or reactivate existing one
+      const { error } = await supabase
+        .from('subscribers')
+        .upsert({
+          email: newsletterEmail.toLowerCase(),
+          subscribed: true,
+          user_id: user?.id || null
+        }, {
+          onConflict: 'email'
+        });
+
+      if (error) {
+        throw error;
+      }
+
+      toast({
+        title: "Successfully subscribed!",
+        description: "Welcome to our weekly prompt tips. Check your email for confirmation."
+      });
+      
+      setNewsletterEmail("");
+    } catch (error: any) {
+      console.error('Newsletter signup error:', error);
+      toast({
+        title: "Subscription failed",
+        description: "Sorry, something went wrong. Please try again later.",
+        variant: "destructive"
+      });
+    } finally {
+      setNewsletterSubmitting(false);
+    }
+  };
 
   return (
     <>
@@ -341,16 +418,24 @@ const Index = () => {
             <CardContent className="p-8 text-center">
               <h2 className="text-2xl font-semibold mb-3">🚀 Get Weekly Prompt Tips</h2>
               <p className="text-muted-foreground mb-6">Join 25,000+ professionals getting our best prompts, tips, and AI updates delivered to their inbox every Tuesday.</p>
-              <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+              <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
                 <input 
                   type="email" 
+                  value={newsletterEmail}
+                  onChange={(e) => setNewsletterEmail(e.target.value)}
                   placeholder="Enter your email" 
                   className="flex-1 px-4 py-2 rounded-md border bg-background"
+                  disabled={newsletterSubmitting}
                 />
-                <Button variant="hero" className="px-6">
-                  Subscribe Free
+                <Button 
+                  type="submit" 
+                  variant="hero" 
+                  className="px-6"
+                  disabled={newsletterSubmitting}
+                >
+                  {newsletterSubmitting ? "Subscribing..." : "Subscribe Free"}
                 </Button>
-              </div>
+              </form>
               <p className="text-xs text-muted-foreground mt-3">No spam. Unsubscribe anytime. Free forever.</p>
               
               {/* Social proof for newsletter */}
