@@ -302,7 +302,7 @@ const Index = () => {
               <p className="text-muted-foreground text-sm mt-1 mb-3">Email campaigns, ad copy, social media content, and sales outreach that converts.</p>
               <div className="flex gap-2">
                 <Button asChild variant="hero" size="sm">
-                  <Link to="/library?search=marketing">Browse Marketing</Link>
+                  <Link to="/library?q=marketing#library-filters">Browse Marketing</Link>
                 </Button>
               </div>
             </article>
@@ -311,7 +311,7 @@ const Index = () => {
               <p className="text-muted-foreground text-sm mt-1 mb-3">Blog posts, articles, creative writing, and storytelling prompts for any audience.</p>
               <div className="flex gap-2">
                 <Button asChild variant="hero" size="sm">
-                  <Link to="/library?search=content">Browse Content</Link>
+                  <Link to="/library?q=content#library-filters">Browse Content</Link>
                 </Button>
               </div>
             </article>
@@ -320,7 +320,7 @@ const Index = () => {
               <p className="text-muted-foreground text-sm mt-1 mb-3">Professional emails, presentations, and customer support responses.</p>
               <div className="flex gap-2">
                 <Button asChild variant="hero" size="sm">
-                  <Link to="/library?search=email">Browse Communication</Link>
+                  <Link to="/library?q=email#library-filters">Browse Communication</Link>
                 </Button>
               </div>
             </article>
@@ -329,7 +329,7 @@ const Index = () => {
               <p className="text-muted-foreground text-sm mt-1 mb-3">Resume writing, interview prep, LinkedIn optimization, and job search strategies.</p>
               <div className="flex gap-2">
                 <Button asChild variant="hero" size="sm">
-                  <Link to="/library?search=career">Browse Career</Link>
+                  <Link to="/library?q=career#library-filters">Browse Career</Link>
                 </Button>
               </div>
             </article>
@@ -338,7 +338,7 @@ const Index = () => {
               <p className="text-muted-foreground text-sm mt-1 mb-3">Research, data analysis, reporting, and insights generation for better decisions.</p>
               <div className="flex gap-2">
                 <Button asChild variant="hero" size="sm">
-                  <Link to="/library?search=analysis">Browse Analysis</Link>
+                  <Link to="/library?q=analysis#library-filters">Browse Analysis</Link>
                 </Button>
               </div>
             </article>
@@ -347,7 +347,7 @@ const Index = () => {
               <p className="text-muted-foreground text-sm mt-1 mb-3">Lesson plans, explanations, tutorials, and educational content creation.</p>
               <div className="flex gap-2">
                 <Button asChild variant="hero" size="sm">
-                  <Link to="/library?search=education">Browse Education</Link>
+                  <Link to="/library?q=education#library-filters">Browse Education</Link>
                 </Button>
               </div>
             </article>
