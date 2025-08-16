@@ -38,7 +38,7 @@ const HowItWorks = () => {
           Using AI shouldn’t feel like a guessing game. At PromptAndGo, we make it easy to get great results, fast. Just pick a prompt, paste it into your favourite AI tool (like ChatGPT or Claude), and go. No engineering jargon. No wasted time. Just results.
         </>
       }
-      minHeightClass="min-h-[56vh]"
+      minHeightClass="min-h-[35vh]"
     >
       <Button asChild size="lg" variant="hero" className="px-6">
         <Link to="/library"><Search className="h-4 w-4 mr-2" />Browse Library</Link>

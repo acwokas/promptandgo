@@ -34,7 +34,7 @@ const CheckoutSuccess = () => {
   return (
     <>
       <SEO title="Checkout Success" description="Your payment was successful." />
-      <PageHero title={<>Payment <span className="text-gradient-brand">Successful</span></>} subtitle={<>We are finalising your access.</>} minHeightClass="min-h-[40vh]" />
+      <PageHero title={<>Payment <span className="text-gradient-brand">Successful</span></>} subtitle={<>We are finalising your access.</>} minHeightClass="min-h-[28vh]" />
       <main className="container py-8">
         <div className="rounded-xl border bg-card p-6 text-center text-muted-foreground">{status}</div>
       </main>

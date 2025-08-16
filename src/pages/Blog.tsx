@@ -10,7 +10,7 @@ const Blog = () => {
   const canonical = origin ? `${origin}/blog` : undefined;
   return (
   <>
-    <PageHero title={<>Tips</>} subtitle={<>Tips, tricks and examples to get the most out of your prompting.</>} minHeightClass="min-h-[40vh]">
+    <PageHero title={<>Tips</>} subtitle={<>Tips, tricks and examples to get the most out of your prompting.</>} minHeightClass="min-h-[28vh]">
       <Button asChild size="lg" variant="hero" className="px-6">
         <Link to="/library#library-filters">Browse Prompt Library</Link>
       </Button>

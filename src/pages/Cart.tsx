@@ -81,7 +81,7 @@ const CartPage = () => {
   return (
     <>
       <SEO title="Your Cart" description="Review your selected prompts and packs before checkout." />
-      <PageHero title={<><span className="text-gradient-brand">Your</span> Cart</>} subtitle={<>Complete your purchase securely. Subscription option available at checkout.</>} minHeightClass="min-h-[35vh]"/>
+      <PageHero title={<><span className="text-gradient-brand">Your</span> Cart</>} subtitle={<>Complete your purchase securely. Subscription option available at checkout.</>} minHeightClass="min-h-[25vh]"/>
       <main className="container py-8">
         {items.length === 0 ? (
           <Card>

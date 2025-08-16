@@ -23,7 +23,7 @@ const SubscriptionSuccess = () => {
   return (
     <>
       <SEO title="Subscription Success" description="Your subscription is now active." />
-      <PageHero title={<>Subscription <span className="text-gradient-brand">Active</span></>} subtitle={<>Thanks for subscribing!</>} minHeightClass="min-h-[40vh]" />
+      <PageHero title={<>Subscription <span className="text-gradient-brand">Active</span></>} subtitle={<>Thanks for subscribing!</>} minHeightClass="min-h-[28vh]" />
       <main className="container py-8">
         <div className="rounded-xl border bg-card p-6 text-center text-muted-foreground">Activating your subscription…</div>
       </main>

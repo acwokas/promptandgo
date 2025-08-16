@@ -59,7 +59,7 @@ const SecurityPage = () => {
   return (
     <>
       <SEO title="My Account – Security" description="Change your password and manage account security." />
-      <PageHero title={<>Security</>} subtitle={<>Keep your account secure.</>} minHeightClass="min-h-[36vh]" />
+      <PageHero title={<>Security</>} subtitle={<>Keep your account secure.</>} minHeightClass="min-h-[25vh]" />
 
       <main className="container py-8 max-w-3xl">
         <div className="rounded-xl border bg-card p-6 grid gap-5">
