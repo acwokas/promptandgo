@@ -283,7 +283,7 @@ const PromptPacks = () => {
         />
         
         {/* Popular Searches Section */}
-        <section className="mb-8">
+        <section id="popular-power-packs" className="mb-8 scroll-mt-24">
           <Card className="bg-gradient-to-r from-primary/5 to-accent/5 border-primary/20">
             <CardContent className="p-6">
               <div className="text-center mb-4">
@@ -463,7 +463,7 @@ const PromptPacks = () => {
                 variant="outline" 
                 className="w-full"
                 onClick={() => {
-                  const element = document.getElementById("pack-filters");
+                  const element = document.getElementById("popular-power-packs");
                   element?.scrollIntoView({ behavior: "smooth", block: "start" });
                 }}
               >
