@@ -799,7 +799,42 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      subscribers_admin_view: {
+        Row: {
+          created_at: string | null
+          email_status: string | null
+          id: string | null
+          stripe_status: string | null
+          subscribed: boolean | null
+          subscription_end: string | null
+          subscription_tier: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email_status?: never
+          id?: string | null
+          stripe_status?: never
+          subscribed?: boolean | null
+          subscription_end?: string | null
+          subscription_tier?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email_status?: never
+          id?: string | null
+          stripe_status?: never
+          subscribed?: boolean | null
+          subscription_end?: string | null
+          subscription_tier?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       check_and_increment_usage: {
@@ -810,6 +845,10 @@ export type Database = {
           daily_limit: number
           remaining: number
         }[]
+      }
+      get_decrypted_subscriber_email: {
+        Args: { p_key: string; p_user_id: string }
+        Returns: string
       }
       get_subscriber_info: {
         Args: { p_user_id: string }
