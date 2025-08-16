@@ -54,11 +54,20 @@ serve(async (req: Request) => {
       });
     }
 
+    // Derive a deterministic UUID from email when user_id not provided (so we can upsert safely)
+    let effectiveUserId = user_id || null as string | null;
+    if (!effectiveUserId) {
+      const encoder = new TextEncoder();
+      const digest = await crypto.subtle.digest("SHA-256", encoder.encode(lowerEmail));
+      const hex = Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, "0")).join("");
+      effectiveUserId = `${hex.slice(0,8)}-${hex.slice(8,12)}-${hex.slice(12,16)}-${hex.slice(16,20)}-${hex.slice(20,32)}`;
+    }
+
     // Use the secure RPC function to handle all subscriber operations (insert/update)
     // This function handles encryption and all database constraints properly
     const { error: rpcError } = await supabase.rpc("secure_upsert_subscriber", {
       p_key: key,
-      p_user_id: user_id || null,
+      p_user_id: effectiveUserId,
       p_email: lowerEmail,
       p_stripe_customer_id: null,
       p_subscribed: true,
