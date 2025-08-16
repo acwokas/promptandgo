@@ -14,7 +14,7 @@ export const LoginWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [mode, setMode] = useState<"signin" | "signup">("signup");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -225,7 +225,7 @@ export const LoginWidget = () => {
             aria-label="Open login form"
           >
             <LogIn className="h-5 w-5 mr-2" />
-            Login / Sign up
+            Sign Up / Log In
           </Button>
           <Button
             onClick={() => setIsDismissed(true)}
@@ -243,7 +243,7 @@ export const LoginWidget = () => {
             <div className="flex items-center justify-between">
               <CardTitle className="flex items-center gap-2 text-lg">
                 <LogIn className="h-5 w-5" />
-                {mode === "signin" ? "Log in" : "Create account"}
+                {mode === "signup" ? "Create account" : "Log in"}
               </CardTitle>
               <div className="flex gap-1">
                 <Button
@@ -268,18 +268,18 @@ export const LoginWidget = () => {
           <CardContent>
             <div className="mb-4 inline-flex rounded-lg border p-1 bg-background">
               <Button 
-                variant={mode === "signin" ? "default" : "ghost"} 
-                size="sm"
-                onClick={() => setMode("signin")}
-              >
-                Log in
-              </Button>
-              <Button 
                 variant={mode === "signup" ? "default" : "ghost"} 
                 size="sm"
                 onClick={() => setMode("signup")}
               >
                 Sign up
+              </Button>
+              <Button 
+                variant={mode === "signin" ? "default" : "ghost"} 
+                size="sm"
+                onClick={() => setMode("signin")}
+              >
+                Log in
               </Button>
             </div>
 
@@ -413,21 +413,10 @@ export const LoginWidget = () => {
               )}
 
               <Button type="submit" disabled={loading} className="w-full">
-                {loading ? "Please wait..." : mode === "signin" ? "Log in" : "Create Account & Claim FREE ⚡️Power Pack"}
+                {loading ? "Please wait..." : mode === "signup" ? "Create Account & Claim FREE ⚡️Power Pack" : "Log in"}
               </Button>
 
-              {mode === "signin" ? (
-                <div className="text-center">
-                  <Button
-                    type="button"
-                    variant="link"
-                    onClick={() => setMode("signup")}
-                    className="text-xs p-0 h-auto"
-                  >
-                    Don't have an account? Sign up
-                  </Button>
-                </div>
-              ) : (
+              {mode === "signup" ? (
                 <div className="text-center">
                   <Button
                     type="button"
@@ -436,6 +425,17 @@ export const LoginWidget = () => {
                     className="text-xs p-0 h-auto"
                   >
                     Already have an account? Log in
+                  </Button>
+                </div>
+              ) : (
+                <div className="text-center">
+                  <Button
+                    type="button"
+                    variant="link"
+                    onClick={() => setMode("signup")}
+                    className="text-xs p-0 h-auto"
+                  >
+                    Don't have an account? Sign up
                   </Button>
                 </div>
               )}
