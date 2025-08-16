@@ -4,10 +4,71 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
-import { ShieldCheck, Zap, Clock, BadgeCheck, Globe, Scale, Search, Heart, Bot, Copy } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { useState } from "react";
+import { ShieldCheck, Zap, Clock, BadgeCheck, Globe, Scale, Search, Heart, Bot, Copy, Check } from "lucide-react";
 
 const HowItWorks = () => {
   const { user } = useSupabaseAuth();
+  const { toast } = useToast();
+  const [copied, setCopied] = useState(false);
+  const [isFavorited, setIsFavorited] = useState(false);
+  const [isLoadingFavorite, setIsLoadingFavorite] = useState(false);
+
+  // Example prompt data
+  const examplePrompt = {
+    id: "demo-prompt-123",
+    title: "Email Marketing Prompt",
+    prompt: "Write a compelling email subject line and 150-word email body for [PRODUCT/SERVICE] that [MAIN BENEFIT]. Target audience: [AUDIENCE]. Tone: [professional/casual/urgent]. Include a clear call-to-action."
+  };
+
+  const handleCopyPrompt = async () => {
+    try {
+      await navigator.clipboard.writeText(examplePrompt.prompt);
+      setCopied(true);
+      toast({
+        title: "Copied to clipboard!",
+        description: "Prompt copied successfully. Paste it into your AI tool.",
+      });
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      toast({
+        title: "Copy failed",
+        description: "Please try selecting and copying manually.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleAddToFavorites = async () => {
+    if (!user) {
+      toast({
+        title: "Login required",
+        description: "Please log in to save prompts to your favorites.",
+      });
+      return;
+    }
+
+    setIsLoadingFavorite(true);
+    try {
+      // This is a demo, so we'll just simulate the action
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
+      setIsFavorited(!isFavorited);
+      toast({
+        title: isFavorited ? "Removed from favorites" : "Added to favorites",
+        description: isFavorited ? "Demo prompt removed from your collection." : "Demo prompt saved to your favorites!",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoadingFavorite(false);
+    }
+  };
   const origin = typeof window !== 'undefined' ? window.location.origin : 'https://promptandgo.ai';
   const howToSchema = {
     "@context": "https://schema.org",
@@ -102,13 +163,61 @@ const HowItWorks = () => {
                   Copy a prompt from our library
                 </h3>
                 <div className="bg-background rounded-lg border p-4 text-sm">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs text-muted-foreground">Email Marketing Prompt</span>
-                    <Copy className="h-4 w-4 text-muted-foreground" />
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-xs text-muted-foreground">{examplePrompt.title}</span>
+                    <div className="flex gap-1">
+                      <Button 
+                        size="sm" 
+                        variant="ghost" 
+                        onClick={handleCopyPrompt}
+                        className="h-6 px-2 text-xs"
+                      >
+                        {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+                      </Button>
+                      <Button 
+                        size="sm" 
+                        variant="ghost" 
+                        onClick={handleAddToFavorites}
+                        disabled={isLoadingFavorite}
+                        className="h-6 px-2 text-xs"
+                      >
+                        <Heart className={`h-3 w-3 ${isFavorited ? 'fill-red-500 text-red-500' : 'text-muted-foreground'}`} />
+                      </Button>
+                    </div>
                   </div>
-                  <p className="font-mono text-xs leading-relaxed">
-                    "Write a compelling email subject line and 150-word email body for [PRODUCT/SERVICE] that [MAIN BENEFIT]. Target audience: [AUDIENCE]. Tone: [professional/casual/urgent]. Include a clear call-to-action."
+                  <p className="font-mono text-xs leading-relaxed mb-3">
+                    "{examplePrompt.prompt}"
                   </p>
+                  <div className="flex gap-2">
+                    <Button 
+                      size="sm" 
+                      onClick={handleCopyPrompt}
+                      variant="outline"
+                      className="h-7 px-3 text-xs"
+                    >
+                      {copied ? (
+                        <>
+                          <Check className="h-3 w-3 mr-1" />
+                          Copied!
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="h-3 w-3 mr-1" />
+                          Copy Prompt
+                        </>
+                      )}
+                    </Button>
+                    <Button 
+                      size="sm" 
+                      onClick={handleAddToFavorites}
+                      disabled={isLoadingFavorite}
+                      variant="outline"
+                      className="h-7 px-3 text-xs"
+                    >
+                      <Heart className={`h-3 w-3 mr-1 ${isFavorited ? 'fill-red-500 text-red-500' : ''}`} />
+                      {isLoadingFavorite ? 'Saving...' : isFavorited ? 'Saved' : 'Save'}
+                    </Button>
+                  </div>
                 </div>
               </div>
               
