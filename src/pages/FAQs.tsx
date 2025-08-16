@@ -2,8 +2,11 @@ import SEO from "@/components/SEO";
 import PageHero from "@/components/layout/PageHero";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
+import { MessageCircle, Sparkles, Heart, Search } from "lucide-react";
 interface FAQItem {
   question: string;
   answer: string;
@@ -174,34 +177,153 @@ const FAQs = () => {
         </Button>
       </PageHero>
 
-      <main className="container py-10 max-w-4xl">
+      <main className="container py-10 max-w-6xl">
         {/* Structured data for SEO */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
 
-        {sections.map((section, idx) => (
-          <section key={section.title} className={idx === 0 ? "mb-6" : "mt-6 mb-6"} aria-labelledby={`heading-${idx}`}>
-            <h2 id={`heading-${idx}`} className="text-xl md:text-2xl font-semibold tracking-tight mb-3">
-              {section.title}
-            </h2>
-            <div className="rounded-2xl border bg-card text-card-foreground shadow-sm overflow-hidden animate-fade-in">
-              <Accordion type="single" collapsible className="divide-y">
-                {section.items.map((qa, i) => (
-                  <AccordionItem key={qa.question} value={`item-${idx}-${i}`} className="px-3 md:px-5">
-                    <AccordionTrigger className="text-[15px] md:text-base text-foreground">
-                      {qa.question}
-                    </AccordionTrigger>
-                    <AccordionContent className="text-sm md:text-base text-muted-foreground max-w-prose">
-                      {qa.answer}
-                    </AccordionContent>
-                  </AccordionItem>
+        {/* Quick Stats Section */}
+        <section className="mb-12">
+          <div className="grid gap-6 md:grid-cols-3">
+            <Card className="text-center p-6 bg-gradient-to-br from-primary/5 to-accent/5 border-primary/20">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+                <MessageCircle className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="text-lg font-semibold mb-2">1600+ Prompts</h3>
+              <p className="text-sm text-muted-foreground">Tested and curated for real-world use</p>
+            </Card>
+            <Card className="text-center p-6 bg-gradient-to-br from-accent/5 to-primary/5 border-accent/20">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-accent/10 flex items-center justify-center">
+                <Sparkles className="w-6 h-6 text-accent" />
+              </div>
+              <h3 className="text-lg font-semibold mb-2">⚡ Power Packs</h3>
+              <p className="text-sm text-muted-foreground">Curated bundles for specific goals</p>
+            </Card>
+            <Card className="text-center p-6 bg-gradient-to-br from-secondary/5 to-primary/5 border-secondary/20">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-secondary/10 flex items-center justify-center">
+                <Heart className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="text-lg font-semibold mb-2">My Prompts</h3>
+              <p className="text-sm text-muted-foreground">Save your favorites for quick access</p>
+            </Card>
+          </div>
+        </section>
+
+        <div className="grid gap-8 lg:grid-cols-3">
+          {/* FAQ Sections */}
+          <div className="lg:col-span-2 space-y-8">
+            {sections.map((section, idx) => (
+              <Card key={section.title} className="overflow-hidden">
+                <CardHeader className="bg-gradient-to-r from-primary/5 to-accent/5 border-b">
+                  <div className="flex items-center gap-3">
+                    <Badge variant="secondary" className="px-3 py-1">{section.items.length}</Badge>
+                    <CardTitle className="text-xl font-semibold text-foreground">
+                      {section.title}
+                    </CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <Accordion type="single" collapsible className="w-full">
+                    {section.items.map((qa, i) => (
+                      <AccordionItem key={qa.question} value={`item-${idx}-${i}`} className="border-b last:border-b-0">
+                        <AccordionTrigger className="px-6 py-4 text-left font-medium hover:bg-muted/50 transition-colors">
+                          {qa.question}
+                        </AccordionTrigger>
+                        <AccordionContent className="px-6 pb-4 text-muted-foreground leading-relaxed">
+                          {qa.answer}
+                        </AccordionContent>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Quick Actions */}
+            <Card className="bg-gradient-to-br from-primary/5 to-accent/5 border-primary/20">
+              <CardHeader>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <Search className="w-5 h-5" />
+                  Quick Actions
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <Button asChild variant="outline" className="w-full justify-start">
+                  <Link to="/library">
+                    <MessageCircle className="w-4 h-4 mr-2" />
+                    Browse All Prompts
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" className="w-full justify-start">
+                  <Link to="/packs">
+                    <Sparkles className="w-4 h-4 mr-2" />
+                    Explore ⚡Power Packs
+                  </Link>
+                </Button>
+                {user ? (
+                  <Button asChild variant="outline" className="w-full justify-start">
+                    <Link to="/account/favorites">
+                      <Heart className="w-4 h-4 mr-2" />
+                      My Saved Prompts
+                    </Link>
+                  </Button>
+                ) : (
+                  <Button asChild variant="outline" className="w-full justify-start">
+                    <Link to="/auth">Get Started Free</Link>
+                  </Button>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* Popular Categories */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">Popular Categories</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                {[
+                  "Content Creation",
+                  "Social Media",
+                  "Email Marketing", 
+                  "Career Development",
+                  "Business Strategy"
+                ].map((category) => (
+                  <Button
+                    key={category}
+                    asChild
+                    variant="ghost"
+                    size="sm"
+                    className="w-full justify-start text-sm"
+                  >
+                    <Link to={`/library?category=${encodeURIComponent(category)}`}>
+                      {category}
+                    </Link>
+                  </Button>
                 ))}
-              </Accordion>
-            </div>
-          </section>
-        ))}
+              </CardContent>
+            </Card>
+
+            {/* Contact Support */}
+            <Card className="bg-gradient-to-br from-accent/5 to-primary/5 border-accent/20">
+              <CardHeader>
+                <CardTitle className="text-lg">Still Need Help?</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Can't find what you're looking for? Our support team is here to help.
+                </p>
+                <Button asChild className="w-full" variant="secondary">
+                  <Link to="/contact">Contact Support</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
 
         <section aria-labelledby="cta-tail" className="relative bg-hero hero-grid mt-12">
           <div className="container p-8 md:p-12 text-center text-primary-foreground">
