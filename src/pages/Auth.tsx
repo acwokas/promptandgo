@@ -9,18 +9,21 @@ import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { validateEmailInput, sanitizeInput } from "@/lib/inputValidation";
+import PostGoogleAuthForm from "@/components/auth/PostGoogleAuthForm";
 
 const Auth = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { session } = useSupabaseAuth();
+  const { session, user } = useSupabaseAuth();
   const [mode, setMode] = useState<"signin" | "signup">(searchParams.get("mode") === "signup" ? "signup" : "signin");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showPostGoogleForm, setShowPostGoogleForm] = useState(false);
+  const [isGoogleSignup, setIsGoogleSignup] = useState(false);
   
   // Optional context fields for better prompt personalization
   const [industry, setIndustry] = useState("");
@@ -47,10 +50,20 @@ const Auth = () => {
   ];
 
   useEffect(() => {
-    if (session) {
+    if (session && user) {
+      // Check if this is a new Google signup that needs additional info
+      const isNewUser = searchParams.get('new_user') === 'true';
+      const loginMethod = user.app_metadata?.provider;
+      
+      if (isNewUser && loginMethod === 'google') {
+        setIsGoogleSignup(true);
+        setShowPostGoogleForm(true);
+        return;
+      }
+      
       navigate("/", { replace: true });
     }
-  }, [session, navigate]);
+  }, [session, user, navigate, searchParams]);
 
   const handleSignIn = async () => {
     setLoading(true);
@@ -123,6 +136,26 @@ const Auth = () => {
       toast({ title: "Sign up error", description: error.message, variant: "destructive" });
     } else {
       toast({ title: "Check your email", description: "Confirm your address to finish sign up and get your ⚡️Power Pack!" });
+      
+      // Send signup notification email for email signups
+      try {
+        await supabase.functions.invoke('send-signup-notification', {
+          body: {
+            user: {
+              email,
+              name: sanitizedName,
+              signupMethod: 'email',
+              industry: sanitizedIndustry,
+              projectType: sanitizedProjectType,
+              preferredTone: sanitizedPreferredTone,
+              desiredOutcome: sanitizedDesiredOutcome,
+            }
+          }
+        });
+      } catch (emailError) {
+        console.error("Failed to send signup notification:", emailError);
+        // Don't block the user flow if email fails
+      }
     }
   };
 
@@ -142,7 +175,7 @@ const Auth = () => {
 
   const handleGoogle = async () => {
     try {
-      const redirectTo = `${window.location.origin}/`;
+      const redirectTo = `${window.location.origin}/?new_user=true`;
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: { redirectTo },
@@ -153,12 +186,26 @@ const Auth = () => {
     }
   };
 
+  const handlePostGoogleFormComplete = () => {
+    setShowPostGoogleForm(false);
+    navigate("/", { replace: true });
+  };
+
   return (
     <>
       <SEO
         title="Login or Sign Up | promptandgo"
         description="Access your promptandgo account to save prompts and personalize your experience. Log in or create a new account."
       />
+      
+      {showPostGoogleForm && isGoogleSignup && user && (
+        <PostGoogleAuthForm
+          onComplete={handlePostGoogleFormComplete}
+          userEmail={user.email || ''}
+          userName={user.user_metadata?.full_name || user.user_metadata?.name}
+        />
+      )}
+      
       <main className="container py-12">
         <section className="mx-auto max-w-md rounded-2xl border bg-card p-6 md:p-8">
           <h1 className="text-2xl font-semibold mb-6">{mode === "signin" ? "Log in" : "Create your account"}</h1>
@@ -282,7 +329,7 @@ const Auth = () => {
 
             {mode === "signin" ? (
               <p className="text-xs text-muted-foreground text-center">
-                Don’t have an account? <button type="button" onClick={() => setMode("signup")} className="underline text-primary">Sign up</button>
+                Don't have an account? <button type="button" onClick={() => setMode("signup")} className="underline text-primary">Sign up</button>
               </p>
             ) : (
               <p className="text-xs text-muted-foreground text-center">
