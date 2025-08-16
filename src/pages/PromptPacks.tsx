@@ -32,6 +32,7 @@ const PromptPacks = () => {
   const [searchParams] = useSearchParams();
   const [highlight, setHighlight] = useState<string | null>(null);
   const [query, setQuery] = useState("");
+  const [filter, setFilter] = useState("all");
   const [contents, setContents] = useState<Record<string, PromptLite[]>>({});
   const [ownedPromptIds, setOwnedPromptIds] = useState<Set<string>>(new Set());
   const [ownedPackIds, setOwnedPackIds] = useState<Set<string>>(new Set());
@@ -183,6 +184,7 @@ const PromptPacks = () => {
 
   const handleClear = () => {
     setQuery("");
+    setFilter("all");
   };
 
   const normalize = (s: string) => s
@@ -192,22 +194,34 @@ const PromptPacks = () => {
     .replace(/\s+/g, ' ')
     .trim();
 
-  const filteredPacks = query.trim()
-    ? packs.filter((pk) => {
-        const items = contents[pk.id] || [];
-        const q = query.toLowerCase();
-        
-        // Search in pack name, description, tags, and prompt contents
-        const packNameMatch = pk.name.toLowerCase().includes(q);
-        const packDescMatch = (pk.description || '').toLowerCase().includes(q);
-        const packTagsMatch = pk.tags.some(tag => tag.toLowerCase().includes(q));
-        const promptContentMatch = items.some((it) => 
-          (it.title?.toLowerCase().includes(q) || (it.excerpt || '').toLowerCase().includes(q))
-        );
-        
-        return packNameMatch || packDescMatch || packTagsMatch || promptContentMatch;
-      })
-    : packs;
+  const filteredPacks = packs.filter((pk) => {
+    // Apply filter first
+    const items = contents[pk.id] || [];
+    const packOwned = ownedPackIds.has(pk.id);
+    
+    if (filter === "my-packs" && !packOwned) return false;
+    if (filter === "recommended") {
+      // Add logic for recommended packs (for now, include bestsellers)
+      const isBestseller = [
+        'Social Media Power Pack',
+        'Content Marketing Goldmine',
+      ].some((n) => normalize(pk.name) === normalize(n));
+      if (!isBestseller) return false;
+    }
+    
+    // Then apply query filter
+    if (!query.trim()) return true;
+    
+    const q = query.toLowerCase();
+    const packNameMatch = pk.name.toLowerCase().includes(q);
+    const packDescMatch = (pk.description || '').toLowerCase().includes(q);
+    const packTagsMatch = pk.tags.some(tag => tag.toLowerCase().includes(q));
+    const promptContentMatch = items.some((it) => 
+      (it.title?.toLowerCase().includes(q) || (it.excerpt || '').toLowerCase().includes(q))
+    );
+    
+    return packNameMatch || packDescMatch || packTagsMatch || promptContentMatch;
+  });
 
   const origin = typeof window !== 'undefined' ? window.location.origin : 'https://promptandgo.ai';
   const productSchemas = useMemo(() => (
@@ -285,7 +299,9 @@ const PromptPacks = () => {
         <section id="pack-filters" className="scroll-mt-36 md:scroll-mt-40 sticky top-20 z-40 bg-background/95 backdrop-blur-sm border-b border-border/50 py-4 -mx-4 px-4 shadow-sm mb-6">
           <PackFilters
             query={query}
+            filter={filter}
             onChange={setQuery}
+            onFilterChange={setFilter}
             onSearch={handleSearch}
             onClear={handleClear}
           />
@@ -429,7 +445,14 @@ const PromptPacks = () => {
               <div className="text-2xl font-bold text-primary mb-4">
                 ${(PACK_DISCOUNT_CENTS / 100).toFixed(2)} <span className="text-sm line-through text-muted-foreground">${(PACK_ORIGINAL_CENTS / 100).toFixed(2)}</span>
               </div>
-              <Button variant="outline" className="w-full">
+              <Button 
+                variant="outline" 
+                className="w-full"
+                onClick={() => {
+                  const element = document.getElementById("pack-filters");
+                  element?.scrollIntoView({ behavior: "smooth", block: "center" });
+                }}
+              >
                 Browse Packs Above
               </Button>
             </Card>
@@ -446,7 +469,11 @@ const PromptPacks = () => {
               <div className="text-2xl font-bold text-primary mb-4">
                 ${(SUB_DISCOUNT_CENTS / 100).toFixed(2)}/mo
               </div>
-              <Button variant="hero" className="w-full">
+              <Button 
+                variant="hero" 
+                className="w-full"
+                onClick={handleSubscribe}
+              >
                 Start Monthly Plan
               </Button>
             </Card>
@@ -463,7 +490,19 @@ const PromptPacks = () => {
               <div className="text-2xl font-bold text-primary mb-4">
                 ${(LIFETIME_DISCOUNT_CENTS / 100).toFixed(2)} <span className="text-sm line-through text-muted-foreground">${(LIFETIME_ORIGINAL_CENTS / 100).toFixed(2)}</span>
               </div>
-              <Button variant="secondary" className="w-full">
+              <Button 
+                variant="secondary" 
+                className="w-full"
+                onClick={() => {
+                  const exists = getCart().some((i) => i.type === 'membership' && i.id === 'lifetime');
+                  if (exists) {
+                    toast({ title: 'Already in cart', description: 'Lifetime Access is already in your cart.' });
+                    return;
+                  }
+                  addToCart({ id: 'lifetime', type: 'membership', title: 'Lifetime All-Access', unitAmountCents: LIFETIME_DISCOUNT_CENTS, quantity: 1 }, !!user);
+                  toast({ title: 'Lifetime access added to cart', description: `Lifetime All-Access — ${fmtUSD(LIFETIME_DISCOUNT_CENTS)}` });
+                }}
+              >
                 Get Lifetime Access
               </Button>
             </Card>
