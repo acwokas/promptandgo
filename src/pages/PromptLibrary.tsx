@@ -491,7 +491,7 @@ const PromptLibrary = () => {
             <span className="text-gradient-brand">Prompt</span> Library
           </>
         }
-        subtitle={<>Find the perfect prompt fast: browse free prompts by category or subcategory, save your favourites for later <Link to="/my-prompts" className="text-accent hover:underline">My Prompts</Link>, add <Link to="/library?proOnly=true" className="text-accent hover:underline">PRO prompts</Link> to your cart to review later, or <Link to="/cart" className="text-accent hover:underline">subscribe</Link> to immediately unlock all premium items.</>}
+        subtitle={<>Find the perfect prompt fast: browse free prompts by category or subcategory, save your favourites for later <Link to="/account/favorites" className="text-accent hover:underline">My Prompts</Link>, add <Link to="/library?proOnly=true" className="text-accent hover:underline">PRO prompts</Link> to your cart to review later, or <Link to="/cart" className="text-accent hover:underline">subscribe</Link> to immediately unlock all premium items.</>}
       >
         <Button asChild size="lg" variant="hero" className="px-6">
           <a href="#library-filters"><Search className="h-4 w-4 mr-2" />Browse Prompt Library</a>
@@ -501,7 +501,7 @@ const PromptLibrary = () => {
         </Button>
         {user ? (
           <Button asChild size="lg" variant="outline">
-            <Link to="/my-prompts"><Heart className="h-4 w-4 mr-2" />My Prompts</Link>
+            <Link to="/account/favorites"><Heart className="h-4 w-4 mr-2" />My Prompts</Link>
           </Button>
         ) : (
           <Button asChild size="lg" variant="outline">

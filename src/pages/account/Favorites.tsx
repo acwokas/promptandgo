@@ -1,6 +1,8 @@
 import SEO from "@/components/SEO";
 import PageHero from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { PromptCard } from "@/components/prompt/PromptCard";
 import { PromptFilters } from "@/components/prompt/PromptFilters";
 import { supabase } from "@/integrations/supabase/client";
@@ -9,6 +11,7 @@ import { useEffect, useState, useCallback } from "react";
 import type { Category as CategoryType } from "@/data/prompts";
 import { Link } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
+import { Heart, Bot, Trash2, Search } from "lucide-react";
 
 interface PromptUI {
   id: string;
@@ -21,6 +24,15 @@ interface PromptUI {
   excerpt?: string | null;
   tags: string[];
   is_pro?: boolean;
+}
+
+interface UserGeneratedPrompt {
+  id: string;
+  title: string;
+  prompt: string;
+  description?: string;
+  tags: string[];
+  created_at: string;
 }
 
 
@@ -54,6 +66,10 @@ const FavoritesPage = () => {
 
   // Favorites scope
   const [favIds, setFavIds] = useState<string[]>([]);
+  
+  // AI-generated prompts state
+  const [userGeneratedPrompts, setUserGeneratedPrompts] = useState<UserGeneratedPrompt[]>([]);
+  const [generatedPromptsLoading, setGeneratedPromptsLoading] = useState(false);
 
   // Filters and UI state (mirrors Prompt Library)
   const [categories, setCategories] = useState<CategoryType[]>([]);
@@ -144,6 +160,55 @@ const FavoritesPage = () => {
       .filter((c) => c.subcategories.length > 0);
     setCategories(built);
   }, []);
+
+  // Load user's AI-generated prompts
+  const loadUserGeneratedPrompts = useCallback(async () => {
+    if (!user) return;
+    
+    setGeneratedPromptsLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from('user_generated_prompts')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setUserGeneratedPrompts(data || []);
+    } catch (error: any) {
+      console.error('Error loading user generated prompts:', error);
+      toast({ title: "Failed to load AI-generated prompts", variant: "destructive" });
+    } finally {
+      setGeneratedPromptsLoading(false);
+    }
+  }, [user]);
+
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast({ title: "Copied!", description: "Prompt copied to clipboard." });
+    } catch (error) {
+      toast({ title: "Copy failed", description: "Failed to copy prompt to clipboard.", variant: "destructive" });
+    }
+  };
+
+  const handleDeleteGeneratedPrompt = async (promptId: string) => {
+    try {
+      const { error } = await supabase
+        .from('user_generated_prompts')
+        .delete()
+        .eq('id', promptId)
+        .eq('user_id', user?.id);
+
+      if (error) throw error;
+
+      setUserGeneratedPrompts(prev => prev.filter(p => p.id !== promptId));
+      toast({ title: "Prompt deleted", description: "Your generated prompt has been removed." });
+    } catch (error: any) {
+      console.error('Error deleting prompt:', error);
+      toast({ title: "Delete failed", description: "Failed to delete the prompt.", variant: "destructive" });
+    }
+  };
 
   // Internal fetcher for a specific page (mirrors Prompt Library but scoped to favorites)
   const fetchPromptsPage = useCallback(
@@ -256,8 +321,11 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
 
   // Initial loads
   useEffect(() => {
-    if (user) loadFavoriteIds();
-  }, [user, loadFavoriteIds]);
+    if (user) {
+      loadFavoriteIds();
+      loadUserGeneratedPrompts();
+    }
+  }, [user, loadFavoriteIds, loadUserGeneratedPrompts]);
 
   // Rebuild narrowed category options when favorites change
   useEffect(() => {
@@ -279,93 +347,239 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
       />
       <PageHero
         title={<><span className="text-gradient-brand">My</span> Prompts</>}
-        subtitle={<>All the prompts you've saved in one place.</>}
+        subtitle={<>Manage your saved prompts and AI-generated custom prompts</>}
       >
         <Button asChild variant="hero" className="px-6">
-          <a href="#favorites-filters">Browse My Prompts</a>
+          <a href="#my-saved-prompts">Browse My Prompts</a>
         </Button>
         <Button asChild variant="secondary">
           <Link to="/library">Back to Library</Link>
+        </Button>
+        <Button asChild variant="outline">
+          <Link to="/toolkit">
+            <Bot className="h-4 w-4 mr-2" />
+            AI Tools
+          </Link>
         </Button>
       </PageHero>
       <main className="container py-8">
         {!user ? (
           <div className="rounded-xl border bg-card p-6 text-center">
-            <p className="mb-4">Please log in to view your favourite prompts.</p>
+            <p className="mb-4">Please log in to view your prompts.</p>
             <Button asChild variant="hero"><Link to="/auth">Login / Sign up</Link></Button>
-          </div>
-        ) : favIds.length === 0 ? (
-          <div className="rounded-xl border bg-card p-6 text-center">
-            <p className="mb-4">You haven't added any favourites yet.</p>
-            <Button asChild variant="hero"><Link to="/library">Browse Prompts</Link></Button>
           </div>
         ) : (
           <>
-            <section id="favorites-filters" className="scroll-mt-28 md:scroll-mt-28">
-              <PromptFilters
-                categories={categories}
-                categoryId={categoryId}
-                subcategoryId={subcategoryId}
-                query={query}
-                onChange={(n) => {
-                  if (n.categoryId !== undefined) setCategoryId(n.categoryId || undefined);
-                  if (n.subcategoryId !== undefined) setSubcategoryId(n.subcategoryId || undefined);
-                  if (n.query !== undefined) {
-                    setQuery(n.query);
-                    setSelectedTag(undefined); // typing a query clears tag filter
-                  }
-                }}
-                onSearch={refresh}
-                onClear={() => {
-                  setCategoryId(undefined);
-                  setSubcategoryId(undefined);
-                  setQuery("");
-                  setSelectedTag(undefined);
-                  setPage(1);
-                  // useEffect triggers refresh
-                }}
-                searchLabel="Search My Prompts:"
-                searchPlaceholder="Search My Prompts..."
-                categoryLabel="My Prompt Categories:"
-                subcategoryLabel="My Prompt Subcategories:"
-              />
-            </section>
-
-            <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-6">
-              {items.map((p) => (
-                <PromptCard
-                  key={p.id}
-                  prompt={p as any}
-                  categories={categories}
-                  onTagClick={(t) => {
-                    setSelectedTag(t);
-                    setQuery(t); // reflect in input
-                    setCategoryId(undefined);
-                    setSubcategoryId(undefined);
-                  }}
-                  onCategoryClick={(cid) => {
-                    setCategoryId(cid);
-                    setSubcategoryId(undefined);
-                    setSelectedTag(undefined);
-                    setQuery("");
-                  }}
-                  onSubcategoryClick={(sid, cid) => {
-                    setCategoryId(cid);
-                    setSubcategoryId(sid);
-                    setSelectedTag(undefined);
-                    setQuery("");
-                  }}
-                />
-              ))}
-            </section>
-
-            {hasMore && (
-              <div className="flex justify-center mt-8">
-                <Button variant="secondary" onClick={loadMore} disabled={busy}>
-                  {busy ? "Loading..." : "Load more"}
+            {/* Quick navigation for sections */}
+            <section className="mb-12">
+              <div className="flex justify-center gap-4 mb-6">
+                <Button asChild variant="outline" size="sm">
+                  <a href="#my-saved-prompts">
+                    <Heart className="h-4 w-4 mr-2" />
+                    My Saved Prompts ({favIds.length})
+                  </a>
+                </Button>
+                <Button asChild variant="outline" size="sm">
+                  <a href="#my-generated-prompts">
+                    <Bot className="h-4 w-4 mr-2" />
+                    My AI-Generated Prompts ({userGeneratedPrompts.length})
+                  </a>
                 </Button>
               </div>
-            )}
+            </section>
+
+            {/* My Saved Prompts section */}
+            <section id="my-saved-prompts" className="mb-16">
+              <div className="text-center mb-8">
+                <h2 className="text-2xl font-bold mb-2">My Saved Prompts</h2>
+                <p className="text-muted-foreground">
+                  Prompts you've saved for quick access
+                </p>
+              </div>
+
+              {favIds.length === 0 ? (
+                <Card className="text-center py-16">
+                  <CardContent>
+                    <Heart className="h-16 w-16 mx-auto mb-4 text-muted-foreground/50" />
+                    <h3 className="text-lg font-semibold mb-2">No saved prompts yet</h3>
+                    <p className="text-muted-foreground mb-6">
+                      Start exploring prompts and click the heart icon to save your favorites.
+                    </p>
+                    <Button asChild>
+                      <Link to="/library">Browse Prompts</Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+              ) : (
+                <>
+                  <section id="favorites-filters" className="scroll-mt-28 md:scroll-mt-28">
+                    <PromptFilters
+                      categories={categories}
+                      categoryId={categoryId}
+                      subcategoryId={subcategoryId}
+                      query={query}
+                      onChange={(n) => {
+                        if (n.categoryId !== undefined) setCategoryId(n.categoryId || undefined);
+                        if (n.subcategoryId !== undefined) setSubcategoryId(n.subcategoryId || undefined);
+                        if (n.query !== undefined) {
+                          setQuery(n.query);
+                          setSelectedTag(undefined); // typing a query clears tag filter
+                        }
+                      }}
+                      onSearch={refresh}
+                      onClear={() => {
+                        setCategoryId(undefined);
+                        setSubcategoryId(undefined);
+                        setQuery("");
+                        setSelectedTag(undefined);
+                        setPage(1);
+                        // useEffect triggers refresh
+                      }}
+                      searchLabel="Search My Prompts:"
+                      searchPlaceholder="Search My Prompts..."
+                      categoryLabel="My Prompt Categories:"
+                      subcategoryLabel="My Prompt Subcategories:"
+                    />
+                  </section>
+
+                  <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-6">
+                    {items.map((p) => (
+                      <PromptCard
+                        key={p.id}
+                        prompt={p as any}
+                        categories={categories}
+                        onTagClick={(t) => {
+                          setSelectedTag(t);
+                          setQuery(t); // reflect in input
+                          setCategoryId(undefined);
+                          setSubcategoryId(undefined);
+                        }}
+                        onCategoryClick={(cid) => {
+                          setCategoryId(cid);
+                          setSubcategoryId(undefined);
+                          setSelectedTag(undefined);
+                          setQuery("");
+                        }}
+                        onSubcategoryClick={(sid, cid) => {
+                          setCategoryId(cid);
+                          setSubcategoryId(sid);
+                          setSelectedTag(undefined);
+                          setQuery("");
+                        }}
+                      />
+                    ))}
+                  </section>
+
+                  {hasMore && (
+                    <div className="flex justify-center mt-8">
+                      <Button variant="secondary" onClick={loadMore} disabled={busy}>
+                        {busy ? "Loading..." : "Load more"}
+                      </Button>
+                    </div>
+                  )}
+                </>
+              )}
+            </section>
+
+            {/* My AI-Generated Prompts section */}
+            <section id="my-generated-prompts" className="mb-16">
+              <div className="text-center mb-8">
+                <h2 className="text-2xl font-bold mb-2">My AI-Generated Prompts</h2>
+                <p className="text-muted-foreground">
+                  Custom prompts you've generated with our AI tools
+                </p>
+              </div>
+
+              {generatedPromptsLoading ? (
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <div key={i} className="animate-pulse">
+                      <div className="bg-muted rounded-lg h-48"></div>
+                    </div>
+                  ))}
+                </div>
+              ) : userGeneratedPrompts.length === 0 ? (
+                <Card className="text-center py-16">
+                  <CardContent>
+                    <Bot className="h-16 w-16 mx-auto mb-4 text-muted-foreground/50" />
+                    <h3 className="text-lg font-semibold mb-2">No AI-generated prompts yet</h3>
+                    <p className="text-muted-foreground mb-6">
+                      Use our AI tools to generate custom prompts tailored to your needs.
+                    </p>
+                    <div className="flex gap-3 justify-center">
+                      <Button asChild>
+                        <Link to="/ai/generator">Generate Your First Prompt</Link>
+                      </Button>
+                      <Button asChild variant="outline">
+                        <Link to="/ai-assistant">Try AI Assistant</Link>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ) : (
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  {userGeneratedPrompts.map((promptData) => (
+                    <Card key={promptData.id} className="hover:shadow-lg transition-shadow">
+                      <CardHeader>
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="flex-1 min-w-0">
+                            <CardTitle className="text-lg line-clamp-2">
+                              {promptData.title}
+                            </CardTitle>
+                            {promptData.description && (
+                              <CardDescription className="line-clamp-2 mt-1">
+                                {promptData.description}
+                              </CardDescription>
+                            )}
+                          </div>
+                        </div>
+                      </CardHeader>
+                      
+                      <CardContent className="space-y-4">
+                        <div className="bg-muted/50 rounded-lg p-3 text-sm max-h-32 overflow-y-auto">
+                          <pre className="whitespace-pre-wrap font-mono text-xs">
+                            {promptData.prompt.substring(0, 200)}
+                            {promptData.prompt.length > 200 && '...'}
+                          </pre>
+                        </div>
+
+                        <div className="flex flex-wrap gap-1">
+                          {promptData.tags.map((tag, index) => (
+                            <Badge key={index} variant="secondary" className="text-xs">
+                              {tag}
+                            </Badge>
+                          ))}
+                        </div>
+
+                        <div className="flex items-center justify-between pt-2 border-t">
+                          <span className="text-xs text-muted-foreground">
+                            {new Date(promptData.created_at).toLocaleDateString()}
+                          </span>
+                          
+                          <div className="flex gap-1">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => copyToClipboard(promptData.prompt)}
+                            >
+                              Copy
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleDeleteGeneratedPrompt(promptData.id)}
+                              className="text-destructive hover:text-destructive/90"
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </section>
           </>
         )}
       </main>

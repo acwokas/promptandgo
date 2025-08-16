@@ -213,7 +213,7 @@ const FAQs = () => {
               </Button>
               {user ? (
                 <Button asChild size="lg" variant="secondary">
-                  <Link to="/my-prompts">My Prompts</Link>
+                  <Link to="/account/favorites">My Prompts</Link>
                 </Button>
               ) : (
                 <Button asChild size="lg" variant="secondary">

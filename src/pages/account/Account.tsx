@@ -26,7 +26,7 @@ const AccountPage = () => {
         minHeightClass="min-h-[28vh]"
       >
         <Button asChild variant="hero" className="px-6">
-          <Link to="/my-prompts">My Prompts</Link>
+          <Link to="/account/favorites">My Prompts</Link>
         </Button>
         <Button asChild variant="secondary">
           <Link to="/account/generated">AI Generated</Link>
