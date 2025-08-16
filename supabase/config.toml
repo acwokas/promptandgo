@@ -38,3 +38,6 @@ verify_jwt = false
 
 [functions.backfill-subscribers]
 verify_jwt = true
+
+[functions.newsletter-subscribe]
+verify_jwt = false

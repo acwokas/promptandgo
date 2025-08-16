@@ -102,35 +102,14 @@ const Index = () => {
 
     setNewsletterSubmitting(true);
     try {
-      // Check if user is already subscribed
-      const { data: existingSubscriber } = await supabase
-        .from('subscribers')
-        .select('id, subscribed')
-        .eq('email', newsletterEmail.toLowerCase())
-        .single();
-
-      if (existingSubscriber?.subscribed) {
-        toast({
-          title: "Already subscribed",
-          description: "You're already on our mailing list!",
-        });
-        return;
-      }
-
-      // Add new subscriber or reactivate existing one
-      const { error } = await supabase
-        .from('subscribers')
-        .upsert({
+      const { data, error } = await supabase.functions.invoke('newsletter-subscribe', {
+        body: {
           email: newsletterEmail.toLowerCase(),
-          subscribed: true,
-          user_id: user?.id || null
-        }, {
-          onConflict: 'email'
-        });
+          user_id: user?.id || null,
+        }
+      });
 
-      if (error) {
-        throw error;
-      }
+      if (error) throw error;
 
       toast({
         title: "Successfully subscribed!",
