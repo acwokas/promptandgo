@@ -460,9 +460,45 @@ const PromptLibrary = () => {
                 </div>
                 <p className="text-sm text-muted-foreground mb-4">Most popular prompts this week</p>
                 <div className="space-y-2">
-                  <Badge variant="secondary" className="text-xs">LinkedIn content strategy</Badge>
-                  <Badge variant="secondary" className="text-xs">Email marketing</Badge>
-                  <Badge variant="secondary" className="text-xs">Interview prep</Badge>
+                  <Badge 
+                    variant="secondary" 
+                    className="text-xs cursor-pointer hover:bg-primary/20 transition-colors"
+                    onClick={() => {
+                      clearRandom();
+                      setQuery("LinkedIn content strategy");
+                      setCategoryId(undefined);
+                      setSubcategoryId(undefined);
+                      setRibbon(undefined);
+                    }}
+                  >
+                    LinkedIn content strategy
+                  </Badge>
+                  <Badge 
+                    variant="secondary" 
+                    className="text-xs cursor-pointer hover:bg-primary/20 transition-colors"
+                    onClick={() => {
+                      clearRandom();
+                      setQuery("email marketing");
+                      setCategoryId(undefined);
+                      setSubcategoryId(undefined);
+                      setRibbon(undefined);
+                    }}
+                  >
+                    Email marketing
+                  </Badge>
+                  <Badge 
+                    variant="secondary" 
+                    className="text-xs cursor-pointer hover:bg-primary/20 transition-colors"
+                    onClick={() => {
+                      clearRandom();
+                      setQuery("interview prep");
+                      setCategoryId(undefined);
+                      setSubcategoryId(undefined);
+                      setRibbon(undefined);
+                    }}
+                  >
+                    Interview prep
+                  </Badge>
                 </div>
               </CardContent>
             </Card>
@@ -477,9 +513,45 @@ const PromptLibrary = () => {
                 </div>
                 <p className="text-sm text-muted-foreground mb-4">Fresh prompts added recently</p>
                 <div className="space-y-2">
-                  <Badge variant="secondary" className="text-xs">Crisis response</Badge>
-                  <Badge variant="secondary" className="text-xs">Content series</Badge>
-                  <Badge variant="secondary" className="text-xs">Data storytelling</Badge>
+                  <Badge 
+                    variant="secondary" 
+                    className="text-xs cursor-pointer hover:bg-primary/20 transition-colors"
+                    onClick={() => {
+                      clearRandom();
+                      setQuery("crisis response");
+                      setCategoryId(undefined);
+                      setSubcategoryId(undefined);
+                      setRibbon(undefined);
+                    }}
+                  >
+                    Crisis response
+                  </Badge>
+                  <Badge 
+                    variant="secondary" 
+                    className="text-xs cursor-pointer hover:bg-primary/20 transition-colors"
+                    onClick={() => {
+                      clearRandom();
+                      setQuery("content series");
+                      setCategoryId(undefined);
+                      setSubcategoryId(undefined);
+                      setRibbon(undefined);
+                    }}
+                  >
+                    Content series
+                  </Badge>
+                  <Badge 
+                    variant="secondary" 
+                    className="text-xs cursor-pointer hover:bg-primary/20 transition-colors"
+                    onClick={() => {
+                      clearRandom();
+                      setQuery("data storytelling");
+                      setCategoryId(undefined);
+                      setSubcategoryId(undefined);
+                      setRibbon(undefined);
+                    }}
+                  >
+                    Data storytelling
+                  </Badge>
                 </div>
               </CardContent>
             </Card>
@@ -494,9 +566,45 @@ const PromptLibrary = () => {
                 </div>
                 <p className="text-sm text-muted-foreground mb-4">Highest rated by our community</p>
                 <div className="space-y-2">
-                  <Badge variant="secondary" className="text-xs">STAR method stories</Badge>
-                  <Badge variant="secondary" className="text-xs">Viral trend adaptation</Badge>
-                  <Badge variant="secondary" className="text-xs">Content calendar</Badge>
+                  <Badge 
+                    variant="secondary" 
+                    className="text-xs cursor-pointer hover:bg-primary/20 transition-colors"
+                    onClick={() => {
+                      clearRandom();
+                      setQuery("STAR method stories");
+                      setCategoryId(undefined);
+                      setSubcategoryId(undefined);
+                      setRibbon(undefined);
+                    }}
+                  >
+                    STAR method stories
+                  </Badge>
+                  <Badge 
+                    variant="secondary" 
+                    className="text-xs cursor-pointer hover:bg-primary/20 transition-colors"
+                    onClick={() => {
+                      clearRandom();
+                      setQuery("viral trend adaptation");
+                      setCategoryId(undefined);
+                      setSubcategoryId(undefined);
+                      setRibbon(undefined);
+                    }}
+                  >
+                    Viral trend adaptation
+                  </Badge>
+                  <Badge 
+                    variant="secondary" 
+                    className="text-xs cursor-pointer hover:bg-primary/20 transition-colors"
+                    onClick={() => {
+                      clearRandom();
+                      setQuery("content calendar");
+                      setCategoryId(undefined);
+                      setSubcategoryId(undefined);
+                      setRibbon(undefined);
+                    }}
+                  >
+                    Content calendar
+                  </Badge>
                 </div>
               </CardContent>
             </Card>
