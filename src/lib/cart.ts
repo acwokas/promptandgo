@@ -45,6 +45,19 @@ export function addToCart(newItem: CartItem, isAuthenticated: boolean = true) {
   }
   
   const items = getCart();
+  const hasLifetime = items.some((i) => i.type === 'lifetime');
+  const hasMembership = items.some((i) => i.type === 'membership');
+  
+  // If adding lifetime and other items exist (except membership), show message
+  if (newItem.type === 'lifetime' && items.some(i => i.type !== 'membership')) {
+    // Allow adding lifetime, other items will become free
+  }
+  
+  // If lifetime exists and adding other items, they'll be free anyway
+  if (hasLifetime && (newItem.type === 'prompt' || newItem.type === 'pack')) {
+    // Allow adding but they'll show as free
+  }
+  
   // merge by id+type
   const idx = items.findIndex((i) => i.id === newItem.id && i.type === newItem.type);
   if (idx >= 0) {
@@ -80,5 +93,13 @@ export function getCartCount(isAuthenticated: boolean = true): number {
 }
 
 export function getCartTotalCents(isAuthenticated: boolean = true): number {
-  return getCartForUser(isAuthenticated).reduce((sum, i) => sum + i.unitAmountCents * i.quantity, 0);
+  const cartItems = getCartForUser(isAuthenticated);
+  const hasLifetime = cartItems.some((i) => i.type === 'lifetime');
+  const hasMembership = cartItems.some((i) => i.type === 'membership');
+  
+  return cartItems.reduce((sum, i) => {
+    // If lifetime or membership is in cart, other items are free
+    const unit = (hasLifetime || hasMembership) && (i.type === 'prompt' || i.type === 'pack') ? 0 : i.unitAmountCents;
+    return sum + unit * i.quantity;
+  }, 0);
 }

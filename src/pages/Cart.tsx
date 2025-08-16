@@ -36,9 +36,11 @@ const CartPage = () => {
   };
 
   const hasMembership = items.some((i) => i.type === 'membership');
+  const hasLifetime = items.some((i) => i.type === 'lifetime');
 
   const total = items.reduce((sum, i) => {
-    const unit = hasMembership && (i.type === 'prompt' || i.type === 'pack') ? 0 : i.unitAmountCents;
+    // If lifetime or membership is in cart, other items are free
+    const unit = (hasLifetime || hasMembership) && (i.type === 'prompt' || i.type === 'pack') ? 0 : i.unitAmountCents;
     return sum + unit * i.quantity;
   }, 0);
   const originalTotal = items.reduce((sum, i) => sum + originalUnitCents(i) * i.quantity, 0);
@@ -58,17 +60,14 @@ const CartPage = () => {
     const hasLifetime = cartItems.some((i) => i.type === 'lifetime');
 
     try {
-      if (hasMembership) {
-        const { data, error } = await supabase.functions.invoke('create-checkout');
+      if (hasMembership || hasLifetime) {
+        // Use create-checkout for recurring memberships or lifetime purchases
+        const { data, error } = await supabase.functions.invoke('create-checkout', { body: { items: cartItems } });
         if (error) throw error;
         window.open((data as any).url, '_blank');
         return;
       }
 
-      if (hasLifetime && cartItems.length > 1) {
-        alert('Lifetime purchase must be the only item in the cart.');
-        return;
-      }
 
       const { data, error } = await supabase.functions.invoke('create-payment', { body: { items: cartItems } });
       if (error) throw error;
@@ -102,10 +101,11 @@ const CartPage = () => {
                   </CardHeader>
                   <CardContent className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    {hasMembership && (i.type === 'prompt' || i.type === 'pack') ? (
+                    {(hasLifetime || hasMembership) && (i.type === 'prompt' || i.type === 'pack') ? (
                       <>
                         <span className="text-muted-foreground line-through">{centsToUSD(originalUnitCents(i))}</span>
-                        <span className="text-xl font-semibold">{centsToUSD(0)}</span>
+                        <span className="text-xl font-semibold text-primary">{centsToUSD(0)}</span>
+                        <span className="text-xs text-primary font-medium">FREE with {hasLifetime ? 'Lifetime' : 'Membership'}</span>
                       </>
                     ) : originalUnitCents(i) > i.unitAmountCents ? (
                       <>

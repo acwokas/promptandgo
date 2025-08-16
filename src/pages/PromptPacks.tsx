@@ -156,20 +156,40 @@ const PromptPacks = () => {
       toast({ title: 'Already owned', description: `${p.name} is already in your library.` });
       return;
     }
-    const exists = getCart().some((i) => i.type === 'pack' && i.id === p.id);
+    const cart = getCart();
+    const hasLifetime = cart.some((i) => i.type === 'lifetime');
+    
+    const exists = cart.some((i) => i.type === 'pack' && i.id === p.id);
     if (exists) {
       toast({ title: 'Already in cart', description: `${p.name} is already in your cart.` });
       return;
     }
+    
     addToCart({ id: p.id, type: 'pack', title: p.name, unitAmountCents: PACK_DISCOUNT_CENTS, quantity: 1 }, !!user);
-    toast({ title: 'Added to cart', description: `${p.name} — ${fmtUSD(PACK_DISCOUNT_CENTS)}` });
+    
+    if (hasLifetime) {
+      toast({ 
+        title: 'Pack added - FREE with Lifetime!', 
+        description: `${p.name} is FREE with your Lifetime Access.` 
+      });
+    } else {
+      toast({ title: 'Added to cart', description: `${p.name} — ${fmtUSD(PACK_DISCOUNT_CENTS)}` });
+    }
   };
   const handleSubscribe = async () => {
     if (!user) {
       navigate('/auth');
       return;
     }
-    const exists = getCart().some((i) => i.type === 'membership' && i.id === 'monthly');
+    const cart = getCart();
+    const hasLifetime = cart.some((i) => i.type === 'lifetime');
+    
+    if (hasLifetime) {
+      toast({ title: 'Already have Lifetime Access', description: 'You already have Lifetime Access in your cart!' });
+      return;
+    }
+    
+    const exists = cart.some((i) => i.type === 'membership' && i.id === 'monthly');
     if (exists) {
       toast({ title: 'Already in cart', description: 'Monthly All-Access Membership is already in your cart.' });
       return;
@@ -494,13 +514,25 @@ const PromptPacks = () => {
                 variant="secondary" 
                 className="w-full"
                 onClick={() => {
-                  const exists = getCart().some((i) => i.type === 'membership' && i.id === 'lifetime');
+                  if (!user) {
+                    navigate('/auth');
+                    return;
+                  }
+                  const cart = getCart();
+                  const hasMembership = cart.some((i) => i.type === 'membership');
+                  
+                  if (hasMembership) {
+                    toast({ title: 'Already have a membership', description: 'You already have a membership in your cart!' });
+                    return;
+                  }
+                  
+                  const exists = cart.some((i) => i.type === 'lifetime' && i.id === 'lifetime');
                   if (exists) {
                     toast({ title: 'Already in cart', description: 'Lifetime Access is already in your cart.' });
                     return;
                   }
-                  addToCart({ id: 'lifetime', type: 'membership', title: 'Lifetime All-Access', unitAmountCents: LIFETIME_DISCOUNT_CENTS, quantity: 1 }, !!user);
-                  toast({ title: 'Lifetime access added to cart', description: `Lifetime All-Access — ${fmtUSD(LIFETIME_DISCOUNT_CENTS)}` });
+                  addToCart({ id: 'lifetime', type: 'lifetime', title: 'Lifetime All-Access', unitAmountCents: LIFETIME_DISCOUNT_CENTS, quantity: 1 }, !!user);
+                  toast({ title: 'Lifetime access added to cart', description: `Lifetime All-Access — ${fmtUSD(LIFETIME_DISCOUNT_CENTS)}. All other items in your cart are now FREE!` });
                 }}
               >
                 Get Lifetime Access
