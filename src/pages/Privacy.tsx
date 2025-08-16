@@ -27,7 +27,7 @@ const Privacy = () => (
         <li><strong>Content Submissions</strong> – prompts, AI-generated content, comments, feedback, favorites, or other materials you submit or interact with.</li>
         <li><strong>AI Interaction Data</strong> – conversations with AI tools, prompt inputs, generated outputs, usage frequency, and personalization data for Smart Suggestions.</li>
         <li><strong>Profile Context</strong> – industry, project type, preferred tone, desired outcomes, and other context you provide to enhance AI recommendations.</li>
-        <li><strong>Transactional Data</strong> – payment details (processed securely via third-party payment providers; we do not store full credit card details).</li>
+        <li><strong>Transactional Data</strong> – payment details are processed securely via Stripe and other third-party payment providers; we do not store full credit card details.</li>
         <li><strong>Analytics Data</strong> – aggregated usage statistics, feature adoption metrics, and performance data for our AI services.</li>
       </ul>
 
@@ -49,7 +49,8 @@ const Privacy = () => (
       <p>We do not sell your personal data. We may share your data with:</p>
       <ul>
         <li><strong>AI Service Providers</strong> – third-party AI providers (including OpenAI) to process your prompts and generate AI responses. These providers have their own privacy policies and data handling practices.</li>
-        <li><strong>Service Providers</strong> – third parties who help us operate the Site, such as hosting, analytics, payment processing, and infrastructure services (including Supabase).</li>
+        <li><strong>Payment Processors</strong> – transactions are processed by Stripe and other secure payment providers who have their own privacy policies and data handling practices.</li>
+        <li><strong>Service Providers</strong> – third parties who help us operate the Site, such as hosting, analytics, and infrastructure services (including Supabase).</li>
         <li><strong>Legal Authorities</strong> – if required by law, court order, or government regulation.</li>
         <li><strong>Business Transfers</strong> – if PromptAndGo is acquired, merged, or reorganised.</li>
         <li><strong>Aggregated Data</strong> – we may share anonymized, aggregated usage statistics that do not identify individual users.</li>

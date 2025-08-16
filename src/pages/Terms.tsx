@@ -79,7 +79,8 @@ const Terms = () => (
       <p>If you purchase premium prompts, downloads, membership services, or AI tool access:</p>
       <ul>
         <li>All prices are listed in Singapore Dollars (SGD) unless otherwise stated</li>
-        <li>Payment processing is handled by secure third-party providers; we do not store full payment details</li>
+        <li>Payment processing is handled by Stripe and other secure third-party providers; we do not store full payment details</li>
+        <li>You may see "PromptAndGo" or an affiliated entity on your payment statements</li>
         <li>Membership fees are billed in advance and are non-refundable unless required by law</li>
         <li>AI usage limits are tied to your subscription tier and may change as services evolve</li>
         <li>Beta services may affect pricing or access levels without prior notice</li>
