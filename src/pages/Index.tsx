@@ -252,8 +252,6 @@ const Index = () => {
             </div>
           </div>
         </section>
-
-        {/* Popular Categories */}
         <section className="container py-4">
           <h2 className="text-xl font-semibold mb-1">Popular Categories</h2>
           <p className="text-muted-foreground text-sm mb-4">Jump directly to our most popular prompt collections with thousands of ready-to-use examples.</p>
