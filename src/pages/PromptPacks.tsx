@@ -369,7 +369,7 @@ const PromptPacks = () => {
         )}
 
         {/* Call to Action Section */}
-        <section className="bg-gradient-subtle py-12 mt-16 rounded-lg">
+        <section className="bg-gradient-subtle py-12 mt-8 rounded-lg">
           <div className="text-center mb-8">
             <h2 className="text-2xl md:text-3xl font-bold mb-3">Unlock Premium AI Prompts</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
