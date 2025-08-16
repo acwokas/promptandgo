@@ -479,7 +479,10 @@ const PromptLibrary = () => {
         if (listRef.current) {
           const header = document.querySelector('header');
           const headerHeight = header ? (header as HTMLElement).getBoundingClientRect().height : 0;
-          const y = listRef.current.getBoundingClientRect().top + window.scrollY - headerHeight - 20;
+          const filtersEl = document.getElementById('library-filters');
+          const filtersHeight = filtersEl ? (filtersEl as HTMLElement).getBoundingClientRect().height : 0;
+          const extra = 16; // breathing room
+          const y = listRef.current.getBoundingClientRect().top + window.scrollY - headerHeight - filtersHeight - extra;
           window.scrollTo({ top: y, behavior: 'smooth' });
         }
       }, 100);
@@ -495,7 +498,10 @@ const PromptLibrary = () => {
     if (items.length > 0 && listRef.current) {
       const header = document.querySelector('header');
       const headerHeight = header ? (header as HTMLElement).getBoundingClientRect().height : 0;
-      const y = listRef.current.getBoundingClientRect().top + window.scrollY - headerHeight - 8;
+      const filtersEl = document.getElementById('library-filters');
+      const filtersHeight = filtersEl ? (filtersEl as HTMLElement).getBoundingClientRect().height : 0;
+      const extra = 8;
+      const y = listRef.current.getBoundingClientRect().top + window.scrollY - headerHeight - filtersHeight - extra;
       window.scrollTo({ top: y, behavior: 'auto' });
     }
   }, [items, loading, randomMode]);
@@ -1059,7 +1065,7 @@ const PromptLibrary = () => {
              hasPersonalization && personalizedPrompts.length > 0 && ribbon !== "RECOMMENDED" ? "All Prompts" : 
              "Browse All Prompts"}
           </h2>
-          <div ref={listRef} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div id="library-results" ref={listRef} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 scroll-mt-40 md:scroll-mt-48">
             {ribbon === "RECOMMENDED" && hasPersonalization && personalizedPrompts.length > 0 ? (
               // Show personalized prompts when "Recommended" is selected
               personalizedPrompts.map((p) => (

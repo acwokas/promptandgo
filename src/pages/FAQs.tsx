@@ -310,7 +310,7 @@ const FAQs = () => {
                     size="sm"
                     className="w-full justify-start text-sm"
                   >
-                    <Link to={`/library?q=${encodeURIComponent(category)}#library-filters`}>
+                    <Link to={`/library?q=${encodeURIComponent(category)}#library-results`}>
                       {category}
                     </Link>
                   </Button>
