@@ -16,7 +16,7 @@ const Blog = () => {
       </Button>
       {user ? (
         <Button asChild size="lg" variant="secondary">
-          <Link to="/account/favorites">My Prompts</Link>
+          <Link to="/my-prompts">My Prompts</Link>
         </Button>
       ) : (
         <Button asChild size="lg" variant="secondary">
@@ -214,7 +214,7 @@ const Blog = () => {
           </Button>
           {user ? (
             <Button asChild size="lg" variant="secondary">
-              <Link to="/account/favorites">My Prompts</Link>
+              <Link to="/my-prompts">My Prompts</Link>
             </Button>
           ) : (
             <Button asChild size="lg" variant="secondary">

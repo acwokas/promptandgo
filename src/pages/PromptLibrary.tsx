@@ -2,11 +2,11 @@ import SEO from "@/components/SEO";
 import { PromptFilters } from "@/components/prompt/PromptFilters";
 import { PromptCard } from "@/components/prompt/PromptCard";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import PageHero from "@/components/layout/PageHero";
 import { Link, useSearchParams } from "react-router-dom";
-import { Search, Heart, Bot, TrendingUp, Clock, Star, Users, Copy, Sparkles, Bookmark, Trash2, ExternalLink } from "lucide-react";
+import { Search, Heart, Bot, TrendingUp, Clock, Star, Users, Copy, Sparkles } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useCallback, useEffect, useState, useRef } from "react";
@@ -27,15 +27,6 @@ interface PromptUI {
   excerpt?: string | null;
   tags: string[];
   isPro?: boolean;
-}
-
-interface UserGeneratedPrompt {
-  id: string;
-  title: string;
-  prompt: string;
-  description?: string;
-  tags: string[];
-  created_at: string;
 }
 
 // Deduplicate prompts by normalized title to avoid showing near-identical entries
@@ -98,12 +89,6 @@ const PromptLibrary = () => {
   const [loading, setLoading] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
   const isRandomActiveRef = useRef<boolean>(false);
-  
-  // My Prompts state
-  const [savedPrompts, setSavedPrompts] = useState<PromptUI[]>([]);
-  const [userGeneratedPrompts, setUserGeneratedPrompts] = useState<UserGeneratedPrompt[]>([]);
-  const [savedPromptsLoading, setSavedPromptsLoading] = useState(false);
-  const [generatedPromptsLoading, setGeneratedPromptsLoading] = useState(false);
   
   const clearRandom = () => {
     if (randomMode || searchParams.get('random')) {
@@ -441,112 +426,12 @@ const PromptLibrary = () => {
     setPage(next);
   }, [page, hasMore, loading, fetchPromptsPage]);
 
-  // Load user's saved prompts (favorites)
-  const loadSavedPrompts = useCallback(async () => {
-    if (!user) return;
-    
-    setSavedPromptsLoading(true);
-    try {
-      const { data: favoriteIds } = await supabase
-        .from("favorites")
-        .select("prompt_id")
-        .eq("user_id", user.id);
-
-      if (!favoriteIds || favoriteIds.length === 0) {
-        setSavedPrompts([]);
-        return;
-      }
-
-      const { data, error } = await supabase
-        .from("prompts")
-        .select("id, category_id, subcategory_id, title, what_for, prompt, excerpt, is_pro")
-        .in("id", favoriteIds.map(f => f.prompt_id))
-        .order("created_at", { ascending: false });
-
-      if (error) throw error;
-
-      const mappedPrompts = (data || []).map((r: any) => ({
-        id: r.id,
-        categoryId: r.category_id,
-        subcategoryId: r.subcategory_id,
-        title: r.title,
-        whatFor: r.what_for,
-        prompt: r.prompt,
-        excerpt: r.excerpt,
-        tags: [],
-        isPro: !!r.is_pro,
-      }));
-
-      setSavedPrompts(mappedPrompts);
-    } catch (error: any) {
-      console.error('Error loading saved prompts:', error);
-      toast({ title: "Failed to load saved prompts", variant: "destructive" });
-    } finally {
-      setSavedPromptsLoading(false);
-    }
-  }, [user]);
-
-  // Load user's AI-generated prompts
-  const loadUserGeneratedPrompts = useCallback(async () => {
-    if (!user) return;
-    
-    setGeneratedPromptsLoading(true);
-    try {
-      const { data, error } = await supabase
-        .from('user_generated_prompts')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-      setUserGeneratedPrompts(data || []);
-    } catch (error: any) {
-      console.error('Error loading user generated prompts:', error);
-      toast({ title: "Failed to load AI-generated prompts", variant: "destructive" });
-    } finally {
-      setGeneratedPromptsLoading(false);
-    }
-  }, [user]);
-
-  const copyToClipboard = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      toast({ title: "Copied!", description: "Prompt copied to clipboard." });
-    } catch (error) {
-      toast({ title: "Copy failed", description: "Failed to copy prompt to clipboard.", variant: "destructive" });
-    }
-  };
-
-  const handleDeleteGeneratedPrompt = async (promptId: string) => {
-    try {
-      const { error } = await supabase
-        .from('user_generated_prompts')
-        .delete()
-        .eq('id', promptId)
-        .eq('user_id', user?.id);
-
-      if (error) throw error;
-
-      setUserGeneratedPrompts(prev => prev.filter(p => p.id !== promptId));
-      toast({ title: "Prompt deleted", description: "Your generated prompt has been removed." });
-    } catch (error: any) {
-      console.error('Error deleting prompt:', error);
-      toast({ title: "Delete failed", description: "Failed to delete the prompt.", variant: "destructive" });
-    }
-  };
 
   // Always land at top when visiting Library
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
   }, []);
 
-  // Load user's saved prompts and generated prompts when user changes
-  useEffect(() => {
-    if (user) {
-      loadSavedPrompts();
-      loadUserGeneratedPrompts();
-    }
-  }, [user, loadSavedPrompts, loadUserGeneratedPrompts]);
 
   useEffect(() => {
     const isRandom = !!searchParams.get('random');
@@ -606,7 +491,7 @@ const PromptLibrary = () => {
             <span className="text-gradient-brand">Prompt</span> Library
           </>
         }
-        subtitle={<>Find the perfect prompt fast: browse free prompts by category or subcategory, save your favourites for later <Link to="/account/favorites" className="text-accent hover:underline">My Prompts</Link>, add <Link to="/library?proOnly=true" className="text-accent hover:underline">PRO prompts</Link> to your cart to review later, or <Link to="/cart" className="text-accent hover:underline">subscribe</Link> to immediately unlock all premium items.</>}
+        subtitle={<>Find the perfect prompt fast: browse free prompts by category or subcategory, save your favourites for later <Link to="/my-prompts" className="text-accent hover:underline">My Prompts</Link>, add <Link to="/library?proOnly=true" className="text-accent hover:underline">PRO prompts</Link> to your cart to review later, or <Link to="/cart" className="text-accent hover:underline">subscribe</Link> to immediately unlock all premium items.</>}
       >
         <Button asChild size="lg" variant="hero" className="px-6">
           <a href="#library-filters"><Search className="h-4 w-4 mr-2" />Browse Prompt Library</a>
@@ -616,7 +501,7 @@ const PromptLibrary = () => {
         </Button>
         {user ? (
           <Button asChild size="lg" variant="outline">
-            <a href="#my-prompts-section"><Heart className="h-4 w-4 mr-2" />My Prompts</a>
+            <Link to="/my-prompts"><Heart className="h-4 w-4 mr-2" />My Prompts</Link>
           </Button>
         ) : (
           <Button asChild size="lg" variant="outline">
@@ -625,26 +510,6 @@ const PromptLibrary = () => {
         )}
       </PageHero>
       <main className="container py-10">
-
-        {/* Quick navigation for My Prompts */}
-        {user && (
-          <section className="mb-8">
-            <div className="flex justify-center gap-4 mb-6">
-              <Button asChild variant="outline" size="sm">
-                <a href="#my-saved-prompts">
-                  <Heart className="h-4 w-4 mr-2" />
-                  My Saved Prompts ({savedPrompts.length})
-                </a>
-              </Button>
-              <Button asChild variant="outline" size="sm">
-                <a href="#my-generated-prompts">
-                  <Bot className="h-4 w-4 mr-2" />
-                  My AI-Generated Prompts ({userGeneratedPrompts.length})
-                </a>
-              </Button>
-            </div>
-          </section>
-        )}
         <SEO
           title="Prompt Library – Ready-to-use AI Prompts"
           description="Browse prompts by category and subcategory with fast search. Copy-ready cards for marketing, productivity, and sales."
@@ -1281,180 +1146,6 @@ const PromptLibrary = () => {
               {loading ? "Loading..." : "Load more"}
             </Button>
           </div>
-        )}
-
-        {/* My Saved Prompts section */}
-        {user && (
-          <section id="my-saved-prompts" className="mt-16 mb-16">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold mb-2">My Saved Prompts</h2>
-              <p className="text-muted-foreground">
-                Prompts you've saved for quick access
-              </p>
-            </div>
-
-            {savedPromptsLoading ? (
-              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {Array.from({ length: 6 }).map((_, i) => (
-                  <div key={i} className="animate-pulse">
-                    <div className="bg-muted rounded-lg h-48"></div>
-                  </div>
-                ))}
-              </div>
-            ) : savedPrompts.length === 0 ? (
-              <Card className="text-center py-16">
-                <CardContent>
-                  <Heart className="h-16 w-16 mx-auto mb-4 text-muted-foreground/50" />
-                  <h3 className="text-lg font-semibold mb-2">No saved prompts yet</h3>
-                  <p className="text-muted-foreground mb-6">
-                    Start exploring prompts and click the heart icon to save your favorites.
-                  </p>
-                  <Button asChild>
-                    <a href="#library-filters">Browse Prompts</a>
-                  </Button>
-                </CardContent>
-              </Card>
-            ) : (
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {savedPrompts.map((prompt) => (
-                  <PromptCard
-                    key={prompt.id}
-                    prompt={prompt as any}
-                    categories={categories}
-                    onTagClick={(t) => { 
-                      clearRandom();
-                      setSelectedTag(t);
-                      setQuery(t);
-                      setCategoryId(undefined);
-                      setSubcategoryId(undefined);
-                      setRibbon(undefined);
-                    }}
-                    onCategoryClick={(cid) => { 
-                      clearRandom();
-                      setCategoryId(cid);
-                      setSubcategoryId(undefined);
-                      setSelectedTag(undefined);
-                      setProOnly(false);
-                      setIncludePro(true);
-                      setRibbon(undefined);
-                    }}
-                    onSubcategoryClick={(sid, cid) => { 
-                      clearRandom();
-                      setCategoryId(cid);
-                      setSubcategoryId(sid);
-                      setSelectedTag(undefined);
-                      setProOnly(false);
-                      setIncludePro(true);
-                      setRibbon(undefined);
-                    }}
-                    onCopyClick={() => {}}
-                  />
-                ))}
-              </div>
-            )}
-          </section>
-        )}
-
-        {/* My AI-Generated Prompts section */}
-        {user && (
-          <section id="my-generated-prompts" className="mt-16 mb-16">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold mb-2">My AI-Generated Prompts</h2>
-              <p className="text-muted-foreground">
-                Custom prompts you've generated with our AI tools
-              </p>
-            </div>
-
-            {generatedPromptsLoading ? (
-              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {Array.from({ length: 6 }).map((_, i) => (
-                  <div key={i} className="animate-pulse">
-                    <div className="bg-muted rounded-lg h-48"></div>
-                  </div>
-                ))}
-              </div>
-            ) : userGeneratedPrompts.length === 0 ? (
-              <Card className="text-center py-16">
-                <CardContent>
-                  <Bot className="h-16 w-16 mx-auto mb-4 text-muted-foreground/50" />
-                  <h3 className="text-lg font-semibold mb-2">No AI-generated prompts yet</h3>
-                  <p className="text-muted-foreground mb-6">
-                    Use our AI tools to generate custom prompts tailored to your needs.
-                  </p>
-                  <div className="flex gap-3 justify-center">
-                    <Button asChild>
-                      <Link to="/ai/generator">Generate Your First Prompt</Link>
-                    </Button>
-                    <Button asChild variant="outline">
-                      <Link to="/ai-assistant">Try AI Assistant</Link>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ) : (
-              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {userGeneratedPrompts.map((promptData) => (
-                  <Card key={promptData.id} className="hover:shadow-lg transition-shadow">
-                    <CardHeader>
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="flex-1 min-w-0">
-                          <CardTitle className="text-lg line-clamp-2">
-                            {promptData.title}
-                          </CardTitle>
-                          {promptData.description && (
-                            <CardDescription className="line-clamp-2 mt-1">
-                              {promptData.description}
-                            </CardDescription>
-                          )}
-                        </div>
-                      </div>
-                    </CardHeader>
-                    
-                    <CardContent className="space-y-4">
-                      <div className="bg-muted/50 rounded-lg p-3 text-sm max-h-32 overflow-y-auto">
-                        <pre className="whitespace-pre-wrap font-mono text-xs">
-                          {promptData.prompt.substring(0, 200)}
-                          {promptData.prompt.length > 200 && '...'}
-                        </pre>
-                      </div>
-
-                      <div className="flex flex-wrap gap-1">
-                        {promptData.tags.map((tag, index) => (
-                          <Badge key={index} variant="secondary" className="text-xs">
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-
-                      <div className="flex items-center justify-between pt-2 border-t">
-                        <span className="text-xs text-muted-foreground">
-                          {new Date(promptData.created_at).toLocaleDateString()}
-                        </span>
-                        
-                        <div className="flex gap-1">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => copyToClipboard(promptData.prompt)}
-                          >
-                            Copy
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleDeleteGeneratedPrompt(promptData.id)}
-                            className="text-destructive hover:text-destructive/90"
-                          >
-                            <Trash2 className="h-3 w-3" />
-                          </Button>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            )}
-          </section>
         )}
 
         {/* Submit a Prompt Section */}
