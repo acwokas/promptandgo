@@ -11,6 +11,22 @@ const supabase = createClient(
   Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
 );
 
+// Input validation
+function validateUrl(url: string): boolean {
+  try {
+    const urlObj = new URL(url);
+    // Only allow https and specific domains
+    return urlObj.protocol === 'https:' && 
+           (urlObj.hostname === 'promptandgo.ai' || urlObj.hostname.endsWith('.promptandgo.ai'));
+  } catch {
+    return false;
+  }
+}
+
+function sanitizeInput(input: string): string {
+  return input.trim().replace(/[<>]/g, '').substring(0, 255);
+}
+
 // Generate a random short code
 function generateShortCode(): string {
   const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -34,7 +50,7 @@ serve(async (req: Request) => {
     // Verify authentication
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
-      return new Response('Unauthorized', { status: 401, headers: corsHeaders });
+      return new Response('Authentication required', { status: 401, headers: corsHeaders });
     }
 
     // Create Supabase client with the user's auth token
@@ -47,20 +63,22 @@ serve(async (req: Request) => {
     // Verify the user is authenticated
     const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
     if (authError || !user) {
-      return new Response('Unauthorized', { status: 401, headers: corsHeaders });
+      return new Response('Invalid authentication', { status: 401, headers: corsHeaders });
     }
 
     const { original_url, content_type, content_id, title } = await req.json();
 
+    // Validate inputs
     if (!original_url || !content_type || !content_id) {
       return new Response('Missing required fields', { status: 400, headers: corsHeaders });
     }
 
-    // Validate URL format
-    try {
-      new URL(original_url);
-    } catch {
-      return new Response('Invalid URL format', { status: 400, headers: corsHeaders });
+    // Validate URL for security
+    if (!validateUrl(original_url)) {
+      return new Response('Invalid URL - only HTTPS URLs from promptandgo.ai are allowed', { 
+        status: 400, 
+        headers: corsHeaders 
+      });
     }
 
     // Validate content type
@@ -69,12 +87,17 @@ serve(async (req: Request) => {
       return new Response('Invalid content type', { status: 400, headers: corsHeaders });
     }
 
-    // Prevent creating too many links per user
+    // Sanitize inputs
+    const sanitizedTitle = title ? sanitizeInput(title) : null;
+    const sanitizedContentType = sanitizeInput(content_type);
+    const sanitizedContentId = sanitizeInput(content_id);
+
+    // Rate limiting: prevent creating too many links per user
     const { count } = await supabase
       .from('shared_links')
       .select('*', { count: 'exact', head: true })
       .eq('shared_by', user.id)
-      .gte('created_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()); // Last 24 hours
+      .gte('created_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString());
 
     if (count && count > 50) {
       return new Response('Rate limit exceeded', { status: 429, headers: corsHeaders });
@@ -84,8 +107,8 @@ serve(async (req: Request) => {
     const { data: existing } = await supabase
       .from('shared_links')
       .select('short_code')
-      .eq('content_type', content_type)
-      .eq('content_id', content_id)
+      .eq('content_type', sanitizedContentType)
+      .eq('content_id', sanitizedContentId)
       .eq('shared_by', user.id)
       .single();
 
@@ -126,9 +149,9 @@ serve(async (req: Request) => {
       .insert({
         short_code: shortCode,
         original_url,
-        content_type,
-        content_id,
-        title: title ? title.substring(0, 255) : null, // Limit title length
+        content_type: sanitizedContentType,
+        content_id: sanitizedContentId,
+        title: sanitizedTitle,
         shared_by: user.id
       })
       .select('short_code')

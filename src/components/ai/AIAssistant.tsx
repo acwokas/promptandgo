@@ -11,8 +11,8 @@ import { Bot, Send, User, Loader2, Lightbulb, Search } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useAIUsage } from "@/hooks/useAIUsage";
 import UsageDisplay from "@/components/ai/UsageDisplay";
-import { validatePromptInput, sanitizeInput } from "@/lib/inputValidation";
-import DOMPurify from "dompurify";
+import DOMPurify from 'dompurify';
+import { validateSecureInput, sanitizeHtml } from "@/lib/securityUtils";
 
 
 interface Message {
@@ -54,8 +54,8 @@ const AIAssistant = () => {
   const handleSendMessage = async () => {
     if (!inputMessage.trim()) return;
 
-    // Validate and sanitize input
-    const validation = validatePromptInput(inputMessage);
+    // Validate input for security
+    const validation = validateSecureInput(inputMessage);
     if (!validation.isValid) {
       toast({
         title: "Invalid input",
@@ -65,12 +65,10 @@ const AIAssistant = () => {
       return;
     }
 
-    const sanitizedInput = sanitizeInput(inputMessage);
-
     const userMessage: Message = {
       id: Date.now().toString(),
       role: 'user',
-      content: sanitizedInput,
+      content: inputMessage,
       timestamp: new Date()
     };
 
@@ -82,7 +80,7 @@ const AIAssistant = () => {
       const { data, error } = await supabase.functions.invoke('ai-prompt-assistant', {
         body: {
           type: 'assistant',
-          prompt: sanitizedInput,
+          prompt: inputMessage,
           context: `User is ${user ? 'logged in' : 'not logged in'}. Previous conversation: ${JSON.stringify(messages.slice(-3))}`
         }
       });
@@ -214,16 +212,12 @@ const AIAssistant = () => {
                         <div 
                           className="prose prose-sm max-w-none dark:prose-invert"
                           dangerouslySetInnerHTML={{
-                            __html: DOMPurify.sanitize(
+                            __html: sanitizeHtml(
                               message.content
                                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                                 .replace(/\*(.*?)\*/g, '<em>$1</em>')
                                 .replace(/`(.*?)`/g, '<code>$1</code>')
-                                .replace(/\n/g, '<br>'),
-                              {
-                                ALLOWED_TAGS: ['strong', 'em', 'code', 'br', 'p', 'ul', 'ol', 'li'],
-                                ALLOWED_ATTR: []
-                              }
+                                .replace(/\n/g, '<br>')
                             )
                           }}
                         />

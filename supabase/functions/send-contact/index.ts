@@ -14,28 +14,48 @@ interface ContactPayload {
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
-// Simple rate limiting using in-memory store
+// Rate limiting store (in production, use a persistent store like Redis)
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT_WINDOW = 60000; // 1 minute
+const RATE_LIMIT_MAX = 5; // 5 messages per minute per IP
 
-const checkRateLimit = (ip: string): boolean => {
+function getRateLimitKey(req: Request): string {
+  const forwarded = req.headers.get('x-forwarded-for');
+  const ip = forwarded ? forwarded.split(',')[0] : req.headers.get('cf-connecting-ip') || 'unknown';
+  return `contact_${ip}`;
+}
+
+function checkRateLimit(key: string): { allowed: boolean; resetTime?: number } {
   const now = Date.now();
-  const windowMs = 15 * 60 * 1000; // 15 minutes
-  const maxRequests = 5;
-
-  const record = rateLimitStore.get(ip);
+  const record = rateLimitStore.get(key);
   
   if (!record || now > record.resetTime) {
-    rateLimitStore.set(ip, { count: 1, resetTime: now + windowMs });
-    return true;
+    rateLimitStore.set(key, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
+    return { allowed: true };
   }
   
-  if (record.count >= maxRequests) {
-    return false;
+  if (record.count >= RATE_LIMIT_MAX) {
+    return { allowed: false, resetTime: record.resetTime };
   }
   
   record.count++;
-  return true;
-};
+  return { allowed: true };
+}
+
+function validateEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email) && email.length <= 254;
+}
+
+function sanitizeInput(input: string): string {
+  return input.trim().replace(/[<>]/g, '').substring(0, 1000);
+}
+
+function escapeHtml(input: string): string {
+  return input.replace(/[<>&"']/g, (char) => 
+    ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#x27;' }[char] || char)
+  );
+}
 
 serve(async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
@@ -50,10 +70,15 @@ serve(async (req: Request): Promise<Response> => {
       });
     }
 
-    // Rate limiting
-    const clientIp = req.headers.get('x-forwarded-for') || 'unknown';
-    if (!checkRateLimit(clientIp)) {
-      return new Response(JSON.stringify({ error: "Rate limit exceeded" }), {
+    // Check rate limit
+    const rateLimitKey = getRateLimitKey(req);
+    const rateLimitCheck = checkRateLimit(rateLimitKey);
+    
+    if (!rateLimitCheck.allowed) {
+      return new Response(JSON.stringify({ 
+        error: "Rate limit exceeded. Please try again later.",
+        resetTime: rateLimitCheck.resetTime 
+      }), {
         status: 429,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
@@ -61,6 +86,7 @@ serve(async (req: Request): Promise<Response> => {
 
     const { name, email, message }: ContactPayload = await req.json();
 
+    // Validate inputs
     if (!name || !email || !message) {
       return new Response(JSON.stringify({ error: "Missing fields" }), {
         status: 400,
@@ -68,18 +94,16 @@ serve(async (req: Request): Promise<Response> => {
       });
     }
 
-    // Validate input lengths and content
-    if (name.length > 100 || email.length > 254 || message.length > 2000) {
-      return new Response(JSON.stringify({ error: "Input too long" }), {
+    if (!validateEmail(email)) {
+      return new Response(JSON.stringify({ error: "Invalid email address" }), {
         status: 400,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
     }
 
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return new Response(JSON.stringify({ error: "Invalid email format" }), {
+    // Check length limits
+    if (name.length > 100 || message.length > 2000) {
+      return new Response(JSON.stringify({ error: "Input too long" }), {
         status: 400,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
@@ -98,6 +122,10 @@ serve(async (req: Request): Promise<Response> => {
       });
     }
 
+    // Sanitize inputs
+    const sanitizedName = sanitizeInput(name);
+    const sanitizedMessage = sanitizeInput(message);
+
     // Send contact message directly to hello@promptandgo.ai
     const contactHtml = `
       <div style="font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -108,8 +136,8 @@ serve(async (req: Request): Promise<Response> => {
         <div style="background: white; padding: 30px; border: 1px solid #e5e7eb; border-radius: 0 0 8px 8px;">
           <div style="margin-bottom: 20px;">
             <p style="margin: 0 0 8px; font-weight: 600; color: #374151;">Contact Information:</p>
-            <p style="margin: 0 0 5px; color: #6b7280;"><strong>Name:</strong> ${name.replace(/[<>&"']/g, (char) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#x27;' }[char] || char))}</p>
-            <p style="margin: 0 0 15px; color: #6b7280;"><strong>Email:</strong> ${email.replace(/[<>&"']/g, (char) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#x27;' }[char] || char))}</p>
+            <p style="margin: 0 0 5px; color: #6b7280;"><strong>Name:</strong> ${escapeHtml(sanitizedName)}</p>
+            <p style="margin: 0 0 15px; color: #6b7280;"><strong>Email:</strong> ${escapeHtml(email)}</p>
           </div>
           
           <hr style="border: none; border-top: 2px solid #e5e7eb; margin: 20px 0;">
@@ -117,7 +145,7 @@ serve(async (req: Request): Promise<Response> => {
           <div>
             <p style="margin: 0 0 10px; font-weight: 600; color: #374151;">Message:</p>
             <div style="background: #f9fafb; padding: 20px; border-radius: 6px; border-left: 4px solid #667eea; white-space: pre-wrap; line-height: 1.6; color: #374151;">
-${message.replace(/</g, "&lt;").replace(/>/g, "&gt;")}
+${escapeHtml(sanitizedMessage)}
             </div>
           </div>
           
@@ -134,7 +162,7 @@ ${message.replace(/</g, "&lt;").replace(/>/g, "&gt;")}
       from: "PromptAndGo Contact <noreply@promptandgo.ai>",
       to: ["hello@promptandgo.ai"],
       replyTo: email,
-      subject: `New Contact Message: ${name}`,
+      subject: `New Contact Message: ${sanitizedName}`,
       html: contactHtml,
     });
 
