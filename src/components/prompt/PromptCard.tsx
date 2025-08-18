@@ -5,6 +5,7 @@ import { toast } from "@/hooks/use-toast";
 import type { Prompt, Category } from "@/data/prompts";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
+import { useLoginWidget } from "@/hooks/useLoginWidget";
 import { Heart, Lock, Copy, MessageSquare, Megaphone, ShoppingBag, BarChart2, Briefcase, User, HeartPulse, Clock, Sparkles, Tag, CheckCircle, Star } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Link, useNavigate } from "react-router-dom";
@@ -99,6 +100,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
 
   // Auth and user state
   const { user } = useSupabaseAuth();
+  const { openLoginWidget } = useLoginWidget();
 
   // Rating state management
   const [averageRating, setAverageRating] = useState<number>(0);
@@ -576,7 +578,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="outline" size="sm" className="w-full btn-subtle-stroke" onClick={() => navigate('/auth')} aria-label="Add to My Prompts" title="Add to My Prompts">
+                    <Button variant="outline" size="sm" className="w-full btn-subtle-stroke" onClick={openLoginWidget} aria-label="Add to My Prompts" title="Add to My Prompts">
                       <Heart className="h-5 w-5" />
                       <span>Add to My Prompts</span>
                     </Button>

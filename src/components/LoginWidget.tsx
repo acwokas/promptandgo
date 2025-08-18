@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -9,8 +9,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { validateEmailInput, sanitizeInput } from "@/lib/inputValidation";
 import { useNavigate } from "react-router-dom";
+import { useLoginWidget } from "@/hooks/useLoginWidget";
 
 export const LoginWidget = () => {
+  const { isOpen: externalIsOpen, closeLoginWidget } = useLoginWidget();
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
@@ -30,6 +32,13 @@ export const LoginWidget = () => {
 
   const { toast } = useToast();
   const navigate = useNavigate();
+
+  // Sync external open state with internal state
+  useEffect(() => {
+    if (externalIsOpen) {
+      setIsOpen(true);
+    }
+  }, [externalIsOpen]);
 
   const industries = [
     "Technology", "Healthcare", "Finance", "Education", "Retail", "Manufacturing",
@@ -82,6 +91,7 @@ export const LoginWidget = () => {
       toast({ title: "Welcome back!" });
       resetForm();
       setIsOpen(false);
+      closeLoginWidget();
     }
   };
 
@@ -134,6 +144,7 @@ export const LoginWidget = () => {
       toast({ title: "Check your email", description: "Confirm your address to finish sign up and get your ⚡️Power Pack!" });
       resetForm();
       setIsOpen(false);
+      closeLoginWidget();
       
       // Send signup notification email for email signups
       try {
@@ -254,14 +265,17 @@ export const LoginWidget = () => {
                 >
                   <ChevronDown className="h-4 w-4" />
                 </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setIsOpen(false)}
-                  aria-label="Close login"
-                >
-                  <X className="h-4 w-4" />
-                </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      setIsOpen(false);
+                      closeLoginWidget();
+                    }}
+                    aria-label="Close login"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
               </div>
             </div>
           </CardHeader>
