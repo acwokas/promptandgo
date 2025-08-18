@@ -33,10 +33,24 @@ serve(async (req: Request) => {
 
     if (error || !sharedLink) {
       console.error('Shared link not found:', error);
-      // Redirect to homepage if link not found
+      // Get the referrer domain or fallback to promptandgo.ai
+      const referer = req.headers.get('referer');
+      let redirectUrl = 'https://promptandgo.ai';
+      
+      if (referer) {
+        try {
+          const refererUrl = new URL(referer);
+          if (refererUrl.hostname.endsWith('.lovableproject.com')) {
+            redirectUrl = `${refererUrl.protocol}//${refererUrl.hostname}`;
+          }
+        } catch {
+          // Use default if referer parsing fails
+        }
+      }
+      
       return new Response(null, {
         status: 302,
-        headers: { 'Location': 'https://promptandgo.ai' }
+        headers: { 'Location': redirectUrl }
       });
     }
 
@@ -52,9 +66,24 @@ serve(async (req: Request) => {
 
   } catch (error) {
     console.error('Share redirect error:', error);
+    // Get the referrer domain or fallback to promptandgo.ai
+    const referer = req.headers.get('referer');
+    let redirectUrl = 'https://promptandgo.ai';
+    
+    if (referer) {
+      try {
+        const refererUrl = new URL(referer);
+        if (refererUrl.hostname.endsWith('.lovableproject.com')) {
+          redirectUrl = `${refererUrl.protocol}//${refererUrl.hostname}`;
+        }
+      } catch {
+        // Use default if referer parsing fails
+      }
+    }
+    
     return new Response(null, {
       status: 302,
-      headers: { 'Location': 'https://promptandgo.ai' }
+      headers: { 'Location': redirectUrl }
     });
   }
 });

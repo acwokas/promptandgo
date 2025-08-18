@@ -17,7 +17,9 @@ function validateUrl(url: string): boolean {
     const urlObj = new URL(url);
     // Only allow https and specific domains
     return urlObj.protocol === 'https:' && 
-           (urlObj.hostname === 'promptandgo.ai' || urlObj.hostname.endsWith('.promptandgo.ai'));
+           (urlObj.hostname === 'promptandgo.ai' || 
+            urlObj.hostname.endsWith('.promptandgo.ai') ||
+            urlObj.hostname.endsWith('.lovableproject.com'));
   } catch {
     return false;
   }
@@ -75,7 +77,7 @@ serve(async (req: Request) => {
 
     // Validate URL for security
     if (!validateUrl(original_url)) {
-      return new Response('Invalid URL - only HTTPS URLs from promptandgo.ai are allowed', { 
+      return new Response('Invalid URL - only HTTPS URLs from promptandgo.ai or lovableproject.com domains are allowed', { 
         status: 400, 
         headers: corsHeaders 
       });
