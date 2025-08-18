@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.54.0";
+import { Resend } from "npm:resend@2.0.0";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -15,6 +16,8 @@ const supabase = createClient(
   Deno.env.get("SUPABASE_URL")!,
   Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
 );
+
+const resend = new Resend(Deno.env.get("RESEND_API_KEY")!);
 
 serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
@@ -105,6 +108,28 @@ serve(async (req: Request) => {
           headers: { "Content-Type": "application/json", ...corsHeaders },
         });
       }
+    }
+
+    // Send notification email to admin
+    try {
+      await resend.emails.send({
+        from: "Newsletter Signup <onboarding@resend.dev>",
+        to: ["hello@promptandgo.ai"],
+        subject: "New Newsletter Subscription",
+        html: `
+          <h2>New Newsletter Subscription</h2>
+          <p><strong>Email:</strong> ${lowerEmail}</p>
+          <p><strong>User ID:</strong> ${user_id || 'Anonymous'}</p>
+          <p><strong>Timestamp:</strong> ${new Date().toISOString()}</p>
+          <p><strong>Request Type:</strong> Weekly Prompt Tips Newsletter</p>
+          <hr>
+          <p>This is an automated notification from the Prompt & Go website newsletter signup form.</p>
+        `,
+      });
+      console.log('Admin notification email sent successfully');
+    } catch (emailError) {
+      console.error('Failed to send admin notification email:', emailError);
+      // Don't fail the request if email fails
     }
 
     return new Response(JSON.stringify({ ok: true }), {
