@@ -103,6 +103,8 @@ const Index = () => {
 
     setNewsletterSubmitting(true);
     try {
+      console.log('Newsletter signup starting for:', newsletterEmail);
+      
       const { data, error } = await supabase.functions.invoke('newsletter-subscribe', {
         body: {
           email: newsletterEmail.toLowerCase(),
@@ -110,8 +112,14 @@ const Index = () => {
         }
       });
 
-      if (error) throw error;
+      console.log('Newsletter signup response:', { data, error });
 
+      if (error) {
+        console.error('Newsletter signup error details:', error);
+        throw error;
+      }
+
+      console.log('Newsletter signup successful');
       toast({
         title: "Successfully subscribed!",
         description: "Welcome to our weekly prompt tips. Check your email for confirmation."
@@ -120,10 +128,10 @@ const Index = () => {
       setNewsletterEmail("");
       setNewsletterSuccess(true);
     } catch (error: any) {
-      console.error('Newsletter signup error:', error);
+      console.error('Newsletter signup catch block:', error);
       toast({
         title: "Subscription failed",
-        description: "Sorry, something went wrong. Please try again later.",
+        description: error?.message || "Sorry, something went wrong. Please try again later.",
         variant: "destructive"
       });
     } finally {

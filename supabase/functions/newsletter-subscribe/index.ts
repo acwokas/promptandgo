@@ -25,13 +25,19 @@ serve(async (req: Request) => {
   }
 
   try {
+    console.log('Newsletter subscribe request received');
+    
     if (req.method !== "POST") {
+      console.log('Invalid method:', req.method);
       return new Response("Method not allowed", { status: 405, headers: corsHeaders });
     }
 
     const { email, user_id }: SubscribeRequest = await req.json();
 
+    console.log('Parsed request data:', { email, user_id });
+
     if (!email || typeof email !== "string") {
+      console.log('Invalid email provided:', email);
       return new Response(JSON.stringify({ error: "Email is required" }), {
         status: 400,
         headers: { "Content-Type": "application/json", ...corsHeaders },
@@ -39,22 +45,35 @@ serve(async (req: Request) => {
     }
 
     const lowerEmail = email.toLowerCase().trim();
+    console.log('Processing email:', lowerEmail);
+    
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(lowerEmail)) {
+      console.log('Invalid email format:', lowerEmail);
       return new Response(JSON.stringify({ error: "Invalid email" }), {
         status: 400,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
     }
 
+    // Create email hash for lookup
+    const encoder = new TextEncoder();
+    const digest = await crypto.subtle.digest("SHA-256", encoder.encode(lowerEmail));
+    const emailHash = Array.from(new Uint8Array(digest))
+      .map(b => b.toString(16).padStart(2, "0"))
+      .join("");
+
+    console.log('Generated email hash for lookup');
+
     // Simple direct insert/update to subscribers table (for newsletter signups only)
     // This bypasses the encrypted storage complexity for simple newsletter subscriptions
     
-    // First check if user already exists by email
+    // First check if user already exists by email hash
+    console.log('Checking for existing subscriber by email hash...');
     const { data: existingUser, error: selectError } = await supabase
       .from('subscribers')
-      .select('id, subscribed')
-      .eq('email', lowerEmail)
+      .select('id, subscribed, user_id')
+      .eq('email_hash', emailHash)
       .maybeSingle();
 
     if (selectError && selectError.code !== 'PGRST116') {
@@ -66,6 +85,7 @@ serve(async (req: Request) => {
     }
 
     if (existingUser) {
+      console.log('Found existing subscriber, updating...');
       // Update existing subscriber
       const { error: updateError } = await supabase
         .from('subscribers')
@@ -84,13 +104,8 @@ serve(async (req: Request) => {
         });
       }
     } else {
-      // Insert new subscriber with email set to placeholder and hash computed
-      const encoder = new TextEncoder();
-      const digest = await crypto.subtle.digest("SHA-256", encoder.encode(lowerEmail));
-      const emailHash = Array.from(new Uint8Array(digest))
-        .map(b => b.toString(16).padStart(2, "0"))
-        .join("");
-
+      console.log('No existing subscriber found, creating new one...');
+      // Insert new subscriber with email hash
       const { error: insertError } = await supabase
         .from('subscribers')
         .insert({
@@ -132,6 +147,8 @@ serve(async (req: Request) => {
       // Don't fail the request if email fails
     }
 
+    console.log('Newsletter subscription completed successfully');
+    
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,
       headers: { "Content-Type": "application/json", ...corsHeaders },
