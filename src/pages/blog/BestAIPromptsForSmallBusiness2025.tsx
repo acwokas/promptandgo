@@ -1,8 +1,10 @@
 import SEO from "@/components/SEO";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import RelatedPrompts from "@/components/prompt/RelatedPrompts";
 import PrevNextNav from "@/components/blog/PrevNextNav";
 import AuthorBio from "@/components/blog/AuthorBio";
@@ -43,7 +45,7 @@ const BestAIPromptsForSmallBusiness2025 = () => {
   };
 
   return (
-    <main className="container py-10">
+    <main className="container mx-auto px-6 py-6 max-w-4xl">
       <SEO title={seoTitle} description={description} canonical={canonical} image={origin ? `${origin}${heroImage}` : heroImage} ogType="article" publishedTime={lastmod} modifiedTime={lastmod} />
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(schema)}</script>
@@ -55,6 +57,36 @@ const BestAIPromptsForSmallBusiness2025 = () => {
         ))}
         <link rel="preload" as="image" href={heroImage} fetchPriority="high" />
       </Helmet>
+
+      {/* Breadcrumb */}
+      <Breadcrumb className="mb-6">
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link to="/">Home</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link to="/blog">Tips</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Best AI Prompts for Small Business 2025</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+
+      {/* Back Button */}
+      <Link 
+        to="/blog" 
+        className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors"
+      >
+        <ArrowLeft className="h-4 w-4" />
+        Back to Tips
+      </Link>
 
       <article className="mx-auto max-w-3xl">
         <header>
@@ -77,74 +109,96 @@ const BestAIPromptsForSmallBusiness2025 = () => {
           </p>
         </header>
 
-        <section className="mt-8 space-y-6">
-          <h2 className="text-2xl font-semibold">Why AI Prompts Are a Game-Changer for Small Businesses</h2>
-          <ul className="list-disc pl-6 space-y-2">
-            <li>Produce professional content without hiring extra staff</li>
-            <li>Automate repetitive processes like reporting and scheduling</li>
-            <li>Generate fresh ideas for products, services, and marketing campaigns</li>
-            <li>Analyse customer data to make better decisions</li>
-          </ul>
-          <p>By learning how to use targeted prompts, you can get more done in less time while maintaining quality and consistency.</p>
+        <section className="mt-8 space-y-8">
+          <div>
+            <h2 className="text-2xl font-bold mb-4">Why AI Prompts Are a Game-Changer for Small Businesses</h2>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>Produce professional content without hiring extra staff</li>
+              <li>Automate repetitive processes like reporting and scheduling</li>
+              <li>Generate fresh ideas for products, services, and marketing campaigns</li>
+              <li>Analyse customer data to make better decisions</li>
+            </ul>
+            <p className="mt-4">By learning how to use targeted prompts, you can get more done in less time while maintaining quality and consistency.</p>
+          </div>
 
-          <h2 className="text-2xl font-semibold">1. Marketing Prompts to Attract More Customers</h2>
-          <img
-            src="/lovable-uploads/52cbbe6e-ce85-414e-a722-2d313ed8e827.png"
-            alt="Team planning marketing content with AI insights"
-            className="mt-3 w-full rounded-lg border aspect-[16/9] object-cover"
-            loading="lazy"
-            decoding="async"
-            width="1280" height="720"
-          />
-          <p>Your marketing strategy is the lifeline of your business. These prompts are designed to help you create engaging, high-quality content quickly.</p>
-          <p><strong>Social Media Caption Prompt:</strong><br />
-            Write five attention-grabbing Instagram captions for [product/service]. Each caption should highlight a unique benefit, include a call to action, and use an approachable, friendly tone.</p>
-          <p><strong>Email Campaign Prompt:</strong><br />
-            Create a three-part email sequence for [product/service] targeting [audience type]. The first email should introduce the offer, the second should provide value with tips or a guide, and the third should create urgency with a limited-time deal.</p>
-          <p><strong>Blog Post Idea Generator:</strong><br />
-            Generate 10 blog post ideas for [industry] that will attract organic search traffic and position my business as an authority.</p>
+          <div>
+            <h2 className="text-2xl font-bold mb-4">1. Marketing Prompts to Attract More Customers</h2>
+            <img
+              src="/lovable-uploads/52cbbe6e-ce85-414e-a722-2d313ed8e827.png"
+              alt="Team planning marketing content with AI insights"
+              className="mt-3 w-full rounded-lg border aspect-[16/9] object-cover"
+              loading="lazy"
+              decoding="async"
+              width="1280" height="720"
+            />
+            <p className="mt-4">Your marketing strategy is the lifeline of your business. These prompts are designed to help you create engaging, high-quality content quickly.</p>
+            
+            <div className="space-y-4 mt-4">
+              <p><strong>Social Media Caption Prompt:</strong><br />
+                Write five attention-grabbing Instagram captions for [product/service]. Each caption should highlight a unique benefit, include a call to action, and use an approachable, friendly tone.</p>
+              <p><strong>Email Campaign Prompt:</strong><br />
+                Create a three-part email sequence for [product/service] targeting [audience type]. The first email should introduce the offer, the second should provide value with tips or a guide, and the third should create urgency with a limited-time deal.</p>
+              <p><strong>Blog Post Idea Generator:</strong><br />
+                Generate 10 blog post ideas for [industry] that will attract organic search traffic and position my business as an authority.</p>
+            </div>
+          </div>
 
-          <h2 className="text-2xl font-semibold">2. Operations Prompts to Streamline Your Workflow</h2>
-          <p>Efficiency is key to running a profitable small business. These prompts help you create processes and tools that make your day-to-day easier.</p>
-          <p><strong>Standard Operating Procedure (SOP) Prompt:</strong><br />
-            Create a step-by-step standard operating procedure for [task] that includes tools needed, responsible roles, and expected timelines.</p>
-          <p><strong>Meeting Summary Prompt:</strong><br />
-            Summarise the following meeting notes into key takeaways, decisions made, and next steps. Highlight any deadlines or assigned responsibilities.</p>
-          <p><strong>Inventory Management Prompt:</strong><br />
-            Develop an inventory tracking template for [type of business], including reorder alerts, supplier contact details, and monthly stock reports.</p>
+          <div>
+            <h2 className="text-2xl font-bold mb-4">2. Operations Prompts to Streamline Your Workflow</h2>
+            <p>Efficiency is key to running a profitable small business. These prompts help you create processes and tools that make your day-to-day easier.</p>
+            
+            <div className="space-y-4 mt-4">
+              <p><strong>Standard Operating Procedure (SOP) Prompt:</strong><br />
+                Create a step-by-step standard operating procedure for [task] that includes tools needed, responsible roles, and expected timelines.</p>
+              <p><strong>Meeting Summary Prompt:</strong><br />
+                Summarise the following meeting notes into key takeaways, decisions made, and next steps. Highlight any deadlines or assigned responsibilities.</p>
+              <p><strong>Inventory Management Prompt:</strong><br />
+                Develop an inventory tracking template for [type of business], including reorder alerts, supplier contact details, and monthly stock reports.</p>
+            </div>
+          </div>
 
-          <h2 className="text-2xl font-semibold">3. Sales Prompts to Close More Deals</h2>
-          <img
-            src="/lovable-uploads/d42c2e40-6ba5-4101-b1d5-e6dcec93dd18.png"
-            alt="Happy customer with completed sale in a small business"
-            className="mt-3 w-full rounded-lg border aspect-[16/9] object-cover"
-            loading="lazy"
-            decoding="async"
-            width="1280" height="720"
-          />
-          <p>Closing sales requires the right words at the right time. These prompts can help you craft persuasive messaging.</p>
-          <p><strong>Sales Pitch Script Prompt:</strong><br />
-            Write a short but compelling sales pitch for [product/service] that addresses a key customer pain point, explains the benefits, and includes a clear call to action.</p>
-          <p><strong>Objection Handling Prompt:</strong><br />
-            List the most common objections customers have about [product/service] and provide persuasive, customer-focused responses to overcome them.</p>
-          <p><strong>Follow-Up Email Prompt:</strong><br />
-            Write a follow-up email to a prospect who showed interest but has not responded. Make it polite, offer additional value, and include a reason to act now.</p>
+          <div>
+            <h2 className="text-2xl font-bold mb-4">3. Sales Prompts to Close More Deals</h2>
+            <img
+              src="/lovable-uploads/d42c2e40-6ba5-4101-b1d5-e6dcec93dd18.png"
+              alt="Happy customer with completed sale in a small business"
+              className="mt-3 w-full rounded-lg border aspect-[16/9] object-cover"
+              loading="lazy"
+              decoding="async"
+              width="1280" height="720"
+            />
+            <p className="mt-4">Closing sales requires the right words at the right time. These prompts can help you craft persuasive messaging.</p>
+            
+            <div className="space-y-4 mt-4">
+              <p><strong>Sales Pitch Script Prompt:</strong><br />
+                Write a short but compelling sales pitch for [product/service] that addresses a key customer pain point, explains the benefits, and includes a clear call to action.</p>
+              <p><strong>Objection Handling Prompt:</strong><br />
+                List the most common objections customers have about [product/service] and provide persuasive, customer-focused responses to overcome them.</p>
+              <p><strong>Follow-Up Email Prompt:</strong><br />
+                Write a follow-up email to a prospect who showed interest but has not responded. Make it polite, offer additional value, and include a reason to act now.</p>
+            </div>
+          </div>
 
-          <h2 className="text-2xl font-semibold">Tips for Getting the Best Results from AI Prompts</h2>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Be specific:</strong> The more details you provide, the better the output.</li>
-            <li><strong>Test and refine:</strong> Run prompts multiple times and tweak them until you get the result you want.</li>
-            <li><strong>Keep your brand voice consistent:</strong> Adjust the tone and style to match your business.</li>
-            <li><strong>Combine prompts:</strong> Use multiple prompts together to create complete campaigns or workflows.</li>
-          </ul>
+          <div>
+            <h2 className="text-2xl font-bold mb-4">Tips for Getting the Best Results from AI Prompts</h2>
+            <ul className="list-disc pl-6 space-y-2">
+              <li><strong>Be specific:</strong> The more details you provide, the better the output.</li>
+              <li><strong>Test and refine:</strong> Run prompts multiple times and tweak them until you get the result you want.</li>
+              <li><strong>Keep your brand voice consistent:</strong> Adjust the tone and style to match your business.</li>
+              <li><strong>Combine prompts:</strong> Use multiple prompts together to create complete campaigns or workflows.</li>
+            </ul>
+          </div>
 
-          <h2 className="text-2xl font-semibold">Final Thoughts</h2>
-          <p>
-            AI is no longer a futuristic tool reserved for large corporations. In 2025, small business owners can use AI prompts to compete on a larger scale, improve efficiency, and free up time for higher-value work. Start with the prompts in this guide, adapt them to your industry, and watch how quickly they transform your daily operations.
-          </p>
-          <p>
-            For even more ready-to-use prompts, explore the PromptAndGo library and find the perfect tools for your business.
-          </p>
+          <div>
+            <h2 className="text-2xl font-bold mb-4">Final Thoughts</h2>
+            <p>
+              AI is no longer a futuristic tool reserved for large corporations. In 2025, small business owners can use AI prompts to compete on a larger scale, improve efficiency, and free up time for higher-value work. Start with the prompts in this guide, adapt them to your industry, and watch how quickly they transform your daily operations.
+            </p>
+            
+            <p className="mt-4">
+              For even more ready-to-use prompts, explore the PromptAndGo library and find the perfect tools for your business.
+            </p>
+          </div>
 
           <div className="mt-8">
             <Button asChild variant="cta">

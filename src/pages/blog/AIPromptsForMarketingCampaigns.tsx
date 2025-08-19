@@ -1,8 +1,10 @@
 import SEO from "@/components/SEO";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import RelatedPrompts from "@/components/prompt/RelatedPrompts";
 import PrevNextNav from "@/components/blog/PrevNextNav";
 import AuthorBio from "@/components/blog/AuthorBio";

@@ -1,8 +1,10 @@
 import SEO from "@/components/SEO";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import RelatedPrompts from "@/components/prompt/RelatedPrompts";
 import PrevNextNav from "@/components/blog/PrevNextNav";
 import AuthorBio from "@/components/blog/AuthorBio";
@@ -54,7 +56,7 @@ const schema = {
   };
 
   return (
-    <main className="container py-10">
+    <main className="container mx-auto px-6 py-6 max-w-4xl">
       <SEO title={seoTitle} description={description} canonical={canonical} image={origin ? `${origin}${imagePath}` : imagePath} ogType="article" publishedTime={lastmod} modifiedTime={lastmod} />
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(schema)}</script>
@@ -65,6 +67,36 @@ const schema = {
         ))}
         <link rel="preload" as="image" href={imagePath} fetchPriority="high" />
       </Helmet>
+
+      {/* Breadcrumb */}
+      <Breadcrumb className="mb-6">
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link to="/">Home</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link to="/blog">Tips</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Welcome to PromptAndGo.ai</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+
+      {/* Back Button */}
+      <Link 
+        to="/blog" 
+        className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors"
+      >
+        <ArrowLeft className="h-4 w-4" />
+        Back to Tips
+      </Link>
 
       <article className="mx-auto max-w-3xl">
         <header>
@@ -101,7 +133,7 @@ const schema = {
             That’s where PromptAndGo.ai comes in. We give you ready-to-use, field-tested prompts designed for real work. No vague ideas, no guesswork, just clear instructions you can drop straight into ChatGPT, Claude, Gemini, or your favourite AI tool and get high-quality results immediately.
           </p>
 
-          <h2 className="text-2xl font-semibold">Why We Built PromptAndGo.ai</h2>
+          <h2 className="text-2xl font-bold mb-4">Why We Built PromptAndGo.ai</h2>
           <ul className="list-disc pl-6 space-y-2">
             <li>People waste time writing and rewriting prompts from scratch</li>
             <li>Most “prompt lists” online are either too generic or too gimmicky</li>
@@ -111,7 +143,7 @@ const schema = {
             So we built a library where every prompt has a purpose, tested in real scenarios, with structure and context baked in.
           </p>
 
-          <h2 className="text-2xl font-semibold">How the Prompt Library Works</h2>
+          <h2 className="text-2xl font-bold mb-4">How the Prompt Library Works</h2>
           <img
             src="/lovable-uploads/f78e24df-2952-481d-8924-76e902ee2000.png"
             alt="How the PromptAndGo.ai prompt library works – AI prompts overview"
@@ -138,7 +170,7 @@ const schema = {
           </ul>
           <p>If you’ve ever thought, “There must be a faster way to do this,” there’s a good chance we’ve already written the prompt.</p>
 
-          <h2 className="text-2xl font-semibold">Why Our Prompts Work</h2>
+          <h2 className="text-2xl font-bold mb-4">Why Our Prompts Work</h2>
           <ul className="list-disc pl-6 space-y-2">
             <li><strong>Real-world tested:</strong> Built from live client work and startup challenges.</li>
             <li><strong>Platform-ready:</strong> Works in ChatGPT, Claude, Gemini, and more without rewrites.</li>
