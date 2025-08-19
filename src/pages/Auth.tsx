@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +13,7 @@ import PostGoogleAuthForm from "@/components/auth/PostGoogleAuthForm";
 
 const Auth = () => {
   const [searchParams] = useSearchParams();
+  const location = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
   const { session, user } = useSupabaseAuth();
@@ -50,6 +51,17 @@ const Auth = () => {
   ];
 
   useEffect(() => {
+    // Prefill email from navigation state (from newsletter form)
+    const stateEmail = location.state?.email;
+    if (stateEmail && !email) {
+      setEmail(stateEmail);
+      // Show a helpful message that they should log in
+      toast({
+        title: "Welcome back!",
+        description: "Please enter your password to access your account and prompts.",
+      });
+    }
+
     if (session && user) {
       // Check if this is a Google signup that needs additional info
       const isNewUser = searchParams.get('new_user') === 'true';
@@ -70,7 +82,7 @@ const Auth = () => {
       
       navigate("/", { replace: true });
     }
-  }, [session, user, navigate, searchParams]);
+  }, [session, user, navigate, searchParams, location.state, email, toast]);
 
   const handleSignIn = async () => {
     setLoading(true);
@@ -91,8 +103,19 @@ const Auth = () => {
       setError(error.message);
       toast({ title: "Login failed", description: error.message, variant: "destructive" });
     } else {
-      toast({ title: "Welcome back" });
-      navigate("/", { replace: true });
+      // Check if they came from newsletter signup
+      const fromNewsletter = location.state?.email;
+      if (fromNewsletter) {
+        toast({ 
+          title: "Welcome back!", 
+          description: "You're already signed up for our newsletter! Access your saved prompts below.",
+        });
+        // Show success state with redirect to favorites/prompts
+        navigate("/account/favorites", { replace: true });
+      } else {
+        toast({ title: "Welcome back" });
+        navigate("/", { replace: true });
+      }
     }
   };
 

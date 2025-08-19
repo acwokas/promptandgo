@@ -5,6 +5,7 @@ import PageHero from "@/components/layout/PageHero";
 import { Sparkles, Zap, ShieldCheck, ListChecks, Wand2, Rocket, Check, Search, Heart, Bot } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
+import { useSubscriptionStatus } from "@/hooks/useSubscriptionStatus";
 import { supabase } from "@/integrations/supabase/client";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
@@ -17,6 +18,7 @@ import type { Category as CategoryType } from "@/data/prompts";
 
 const Index = () => {
   const { user } = useSupabaseAuth();
+  const { isSubscribed } = useSubscriptionStatus();
   const navigate = useNavigate();
   const { personalizedPrompts, hasPersonalization } = usePersonalizedPrompts();
   const { toast } = useToast();
@@ -39,6 +41,8 @@ const Index = () => {
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [newsletterSubmitting, setNewsletterSubmitting] = useState(false);
   const [newsletterSuccess, setNewsletterSuccess] = useState(false);
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+  const [existingUserEmail, setExistingUserEmail] = useState("");
 
   useEffect(() => {
     const load = async () => {
@@ -105,6 +109,25 @@ const Index = () => {
     try {
       console.log('Newsletter signup starting for:', newsletterEmail);
       
+      // First check if this email belongs to an existing subscriber (indicating they likely have an account)
+      if (!user) {
+        const emailHash = await generateEmailHash(newsletterEmail.toLowerCase());
+        const { data: existingSubscriber } = await supabase
+          .from('subscribers')
+          .select('user_id')
+          .eq('email_hash', emailHash)
+          .not('user_id', 'is', null)
+          .maybeSingle();
+        
+        if (existingSubscriber?.user_id) {
+          // User exists but not logged in - show login prompt
+          setExistingUserEmail(newsletterEmail);
+          setShowLoginPrompt(true);
+          setNewsletterSubmitting(false);
+          return;
+        }
+      }
+      
       const { data, error } = await supabase.functions.invoke('newsletter-subscribe', {
         body: {
           email: newsletterEmail.toLowerCase(),
@@ -137,6 +160,24 @@ const Index = () => {
     } finally {
       setNewsletterSubmitting(false);
     }
+  };
+
+  const generateEmailHash = async (email: string) => {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(email);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  };
+
+  const handleLogin = () => {
+    // Redirect to auth page - we'll pass the email in the URL state
+    navigate('/auth', { state: { email: existingUserEmail } });
+    
+    toast({
+      title: "Please complete your login",
+      description: "You already have an account! Please enter your password to log in.",
+    });
   };
 
   return (
@@ -401,54 +442,84 @@ const Index = () => {
           <PromptsOfTheDay />
         )}
 
-        {/* Newsletter Signup */}
-        <section className="container py-6">
-          <Card className="max-w-2xl mx-auto bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
-            <CardContent className="p-8 text-center">
-              <h2 className="text-2xl font-semibold mb-3">🚀 Get Weekly Prompt Tips</h2>
-              <p className="text-muted-foreground mb-6">Join 25,000+ professionals getting our best prompts, tips, and AI updates delivered to their inbox every Tuesday.</p>
-              {!newsletterSuccess ? (
-                <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                  <input 
-                    type="email" 
-                    value={newsletterEmail}
-                    onChange={(e) => setNewsletterEmail(e.target.value)}
-                    placeholder="Enter your email" 
-                    className="flex-1 px-4 py-2 rounded-md border bg-background"
-                    disabled={newsletterSubmitting}
-                  />
-                  <Button 
-                    type="submit" 
-                    variant="hero" 
-                    className="px-6"
-                    disabled={newsletterSubmitting}
-                  >
-                    {newsletterSubmitting ? "Subscribing..." : "Subscribe Free"}
-                  </Button>
-                </form>
-              ) : (
-                <div className="bg-green-50 border border-green-200 rounded-lg p-4 max-w-md mx-auto">
-                  <div className="flex items-center justify-center text-green-600 mb-2">
-                    <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span className="font-medium">Successfully subscribed!</span>
+        {/* Newsletter Signup - Only show if user is not logged in or not subscribed */}
+        {(!user || !isSubscribed) && (
+          <section className="container py-6">
+            <Card className="max-w-2xl mx-auto bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
+              <CardContent className="p-8 text-center">
+                <h2 className="text-2xl font-semibold mb-3">🚀 Get Weekly Prompt Tips</h2>
+                <p className="text-muted-foreground mb-6">Join 25,000+ professionals getting our best prompts, tips, and AI updates delivered to their inbox every Tuesday.</p>
+                
+                {showLoginPrompt ? (
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-md mx-auto">
+                    <div className="flex items-center justify-center text-blue-600 mb-2">
+                      <Bot className="h-5 w-5 mr-2" />
+                      <span className="font-medium">Welcome back!</span>
+                    </div>
+                    <p className="text-blue-600 text-sm text-center mb-4">
+                      You already have an account with us! Please log in to access your prompts.
+                    </p>
+                    <div className="space-y-3">
+                      <Button onClick={handleLogin} variant="hero" className="w-full">
+                        Log In to Access My Prompts
+                      </Button>
+                      <Button 
+                        onClick={() => setShowLoginPrompt(false)} 
+                        variant="ghost" 
+                        size="sm"
+                      >
+                        Back to Newsletter
+                      </Button>
+                    </div>
                   </div>
-                  <p className="text-green-600 text-sm text-center">Welcome to our weekly prompt tips. Check your email for confirmation.</p>
-                </div>
-              )}
-              <p className="text-xs text-muted-foreground mt-3">No spam. Unsubscribe anytime. Free forever.</p>
-              
-              {/* Social proof for newsletter */}
-              <div className="mt-6 pt-4 border-t border-primary/10">
-                <p className="text-xs text-muted-foreground mb-2">Recent subscriber feedback:</p>
-                <div className="text-xs text-muted-foreground italic">
-                  "These weekly tips have made me 3x better at prompting. Best AI newsletter I subscribe to!" — Jenny K.
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </section>
+                ) : !newsletterSuccess ? (
+                  <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                    <input 
+                      type="email" 
+                      value={newsletterEmail}
+                      onChange={(e) => setNewsletterEmail(e.target.value)}
+                      placeholder="Enter your email" 
+                      className="flex-1 px-4 py-2 rounded-md border bg-background"
+                      disabled={newsletterSubmitting}
+                    />
+                    <Button 
+                      type="submit" 
+                      variant="hero" 
+                      className="px-6"
+                      disabled={newsletterSubmitting}
+                    >
+                      {newsletterSubmitting ? "Subscribing..." : "Subscribe Free"}
+                    </Button>
+                  </form>
+                ) : (
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-4 max-w-md mx-auto">
+                    <div className="flex items-center justify-center text-green-600 mb-2">
+                      <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="font-medium">Successfully subscribed!</span>
+                    </div>
+                    <p className="text-green-600 text-sm text-center">Welcome to our weekly prompt tips. Check your email for confirmation.</p>
+                  </div>
+                )}
+                
+                {!showLoginPrompt && (
+                  <>
+                    <p className="text-xs text-muted-foreground mt-3">No spam. Unsubscribe anytime. Free forever.</p>
+                    
+                    {/* Social proof for newsletter */}
+                    <div className="mt-6 pt-4 border-t border-primary/10">
+                      <p className="text-xs text-muted-foreground mb-2">Recent subscriber feedback:</p>
+                      <div className="text-xs text-muted-foreground italic">
+                        "These weekly tips have made me 3x better at prompting. Best AI newsletter I subscribe to!" — Jenny K.
+                      </div>
+                    </div>
+                  </>
+                )}
+              </CardContent>
+            </Card>
+          </section>
+        )}
 
         {/* AI Tools Section */}
         <section className="container py-6">
