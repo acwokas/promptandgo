@@ -87,11 +87,13 @@ serve(async (req: Request) => {
     if (existingUser) {
       console.log('Found existing subscriber, updating...');
       // Update existing subscriber
+      // Use a special UUID for anonymous newsletter subscribers
+      const anonymousUserId = "00000000-0000-0000-0000-000000000000";
       const { error: updateError } = await supabase
         .from('subscribers')
         .update({
           subscribed: true,
-          user_id: user_id || existingUser.user_id || null,
+          user_id: user_id || existingUser.user_id || anonymousUserId,
           updated_at: new Date().toISOString()
         })
         .eq('id', existingUser.id);
@@ -106,10 +108,12 @@ serve(async (req: Request) => {
     } else {
       console.log('No existing subscriber found, creating new one...');
       // Insert new subscriber with email hash
+      // Use a special UUID for anonymous newsletter subscribers
+      const anonymousUserId = "00000000-0000-0000-0000-000000000000";
       const { error: insertError } = await supabase
         .from('subscribers')
         .insert({
-          user_id: user_id || null,
+          user_id: user_id || anonymousUserId,
           email: '[encrypted]', // Placeholder to satisfy constraint
           subscribed: true,
           email_hash: emailHash,
