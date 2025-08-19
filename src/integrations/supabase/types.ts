@@ -591,7 +591,7 @@ export type Database = {
       subscribers: {
         Row: {
           created_at: string
-          email: string
+          email: string | null
           email_enc: string | null
           email_hash: string | null
           id: string
@@ -605,7 +605,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
-          email: string
+          email?: string | null
           email_enc?: string | null
           email_hash?: string | null
           id?: string
@@ -619,7 +619,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
-          email?: string
+          email?: string | null
           email_enc?: string | null
           email_hash?: string | null
           id?: string
