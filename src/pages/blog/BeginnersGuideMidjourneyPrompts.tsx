@@ -15,7 +15,7 @@ const BeginnersGuideMidjourneyPrompts = () => {
     "@context": "https://schema.org",
     "@type": "Article",
     "headline": "Beginner's Guide: Creating Detailed Prompts for MidJourney",
-    "description": "Mastering MidJourney starts with the right words. This beginner's guide breaks down how to create detailed prompts that deliver consistent, creative results — with examples, pro tips, and parameters you can use today.",
+    "description": "Mastering MidJourney starts with the right words. This beginner's guide breaks down how to create detailed prompts that deliver consistent, creative results: with examples, pro tips, and parameters you can use today.",
     "image": "/lovable-uploads/24c8f315-67e8-4022-abec-e096e61d0202.png",
     "datePublished": publishDate,
     "dateModified": lastModified,
@@ -42,7 +42,7 @@ const BeginnersGuideMidjourneyPrompts = () => {
     <>
       <SEO 
         title="Beginner's Guide: Creating Detailed Prompts for MidJourney"
-        description="Mastering MidJourney starts with the right words. This beginner's guide breaks down how to create detailed prompts that deliver consistent, creative results — with examples, pro tips, and parameters you can use today."
+        description="Mastering MidJourney starts with the right words. This beginner's guide breaks down how to create detailed prompts that deliver consistent, creative results: with examples, pro tips, and parameters you can use today."
         canonical="https://promptandgo.ai/blog/beginners-guide-midjourney-prompts"
         structuredData={structuredData}
         ogType="article"
@@ -62,7 +62,7 @@ const BeginnersGuideMidjourneyPrompts = () => {
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link to="/blog">Blog</Link>
+                <Link to="/blog">Tips</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
@@ -78,7 +78,7 @@ const BeginnersGuideMidjourneyPrompts = () => {
           className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to Blog
+          Back to Tips
         </Link>
 
         {/* Article Header */}
@@ -167,7 +167,7 @@ const BeginnersGuideMidjourneyPrompts = () => {
             
             <h3>Step 1: Define the Subject</h3>
             <ul>
-              <li><strong>Be specific:</strong> "Victorian house" → "Weathered Victorian mansion with ivy-covered walls."</li>
+              <li><strong>Be specific:</strong> "Victorian house" to "Weathered Victorian mansion with ivy-covered walls."</li>
               <li>Use nouns that set a clear focal point.</li>
             </ul>
 
@@ -195,9 +195,9 @@ const BeginnersGuideMidjourneyPrompts = () => {
               <li><strong>Example:</strong> "With floating lanterns in the sky, river reflections below."</li>
             </ul>
 
-            <h3>Step 6: Use Exclusions (the '–no' tag)</h3>
+            <h3>Step 6: Use Exclusions (the '--no' tag)</h3>
             <ul>
-              <li>Remove unwanted objects/styles: "–no text –no watermark –no blurry".</li>
+              <li>Remove unwanted objects/styles: "--no text --no watermark --no blurry".</li>
             </ul>
           </section>
 
@@ -206,10 +206,10 @@ const BeginnersGuideMidjourneyPrompts = () => {
             
             <div className="bg-muted p-4 rounded-lg my-6">
               <ul className="space-y-2 mb-0">
-                <li><code className="bg-background px-2 py-1 rounded">--ar 16:9</code> → Aspect ratio (e.g. widescreen)</li>
-                <li><code className="bg-background px-2 py-1 rounded">--v 6</code> → Model version (newest one usually best)</li>
-                <li><code className="bg-background px-2 py-1 rounded">--q 2</code> → Higher quality (uses more credits)</li>
-                <li><code className="bg-background px-2 py-1 rounded">--stylize 1000</code> → Adds stronger artistic flair</li>
+                <li><code className="bg-background px-2 py-1 rounded">--ar 16:9</code> : Aspect ratio (e.g. widescreen)</li>
+                <li><code className="bg-background px-2 py-1 rounded">--v 6</code> : Model version (newest one usually best)</li>
+                <li><code className="bg-background px-2 py-1 rounded">--q 2</code> : Higher quality (uses more credits)</li>
+                <li><code className="bg-background px-2 py-1 rounded">--stylize 1000</code> : Adds stronger artistic flair</li>
               </ul>
             </div>
           </section>
@@ -220,7 +220,7 @@ const BeginnersGuideMidjourneyPrompts = () => {
             <ol className="space-y-2">
               <li>"Golden retriever puppy in a flower field, ultra-realistic, soft focus, warm sunlight, pastel tones."</li>
               <li>"Steampunk airship over London skyline, intricate brass details, cinematic lighting, in Jules Verne illustration style."</li>
-              <li>"Futuristic cityscape at night, neon holograms, rainy streets, anime cyberpunk style, –no people."</li>
+              <li>"Futuristic cityscape at night, neon holograms, rainy streets, anime cyberpunk style, --no people."</li>
             </ol>
           </section>
 
@@ -251,7 +251,7 @@ const BeginnersGuideMidjourneyPrompts = () => {
             <h2 className="font-bold">Final Thoughts</h2>
             
             <p>
-              Detailed prompts are the difference between random images and art you're proud of. Once you get comfortable layering subject, style, lighting, and mood, you'll find MidJourney isn't just an AI tool — it's a canvas for your imagination.
+              Detailed prompts are the difference between random images and art you're proud of. Once you get comfortable layering subject, style, lighting, and mood, you'll find MidJourney isn't just an AI tool: it's a canvas for your imagination.
             </p>
             
             <p>

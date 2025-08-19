@@ -214,7 +214,7 @@ const Blog = () => {
             <CardContent className="pt-4">
               <h2 className="text-xl font-semibold leading-snug">Beginner's Guide: Creating Detailed Prompts for MidJourney</h2>
               <p className="mt-2 text-muted-foreground">
-                Mastering MidJourney starts with the right words. This beginner's guide breaks down how to create detailed prompts that deliver consistent, creative results — with examples, pro tips, and parameters you can use today.
+                Mastering MidJourney starts with the right words. This beginner's guide breaks down how to create detailed prompts that deliver consistent, creative results: with examples, pro tips, and parameters you can use today.
               </p>
               <span className="mt-3 inline-block font-medium text-primary">Read more →</span>
             </CardContent>
