@@ -120,22 +120,26 @@ const BeginnersGuideMidjourneyPrompts = () => {
         </header>
 
         {/* Article Content */}
-        <article className="prose prose-lg max-w-none">
+        <article className="prose prose-lg max-w-none space-y-8">
           <section>
             <h2>Why Prompting Matters in MidJourney</h2>
+            
             <p>
               MidJourney is powerful, but it's only as good as the instructions you give it. A vague prompt like "dog in a park" might give you a generic image, while a detailed prompt like "Golden retriever puppy chasing butterflies in a spring meadow, cinematic lighting, ultra-realistic" creates a polished, vivid result.
             </p>
+            
             <p>
               Learning how to build detailed prompts gives you more control, unlocks stylistic variety, and saves hours of trial and error.
             </p>
           </section>
 
           <section>
-            <h2>The Core Structure of a MidJourney Prompt</h2>
+            <h3>The Core Structure of a MidJourney Prompt</h3>
+            
             <p>
               Think of a MidJourney prompt as a recipe. The best ones usually follow this structure:
             </p>
+            
             <div className="bg-muted p-4 rounded-lg my-6">
               <p className="font-mono text-sm mb-2">
                 [Subject] with [Key Attributes], in [Style and Mood], featuring [Colors and Lighting], including [Optional Elements]. [Exclusions].
@@ -148,6 +152,18 @@ const BeginnersGuideMidjourneyPrompts = () => {
 
           <section>
             <h2>Step-by-Step Prompt Building</h2>
+            
+            <div className="my-8">
+              <img 
+                src="/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png"
+                alt="Golden retriever puppy in flower field demonstrating detailed prompt results"
+                className="w-full rounded-lg shadow-lg"
+                loading="lazy"
+              />
+              <p className="text-sm text-muted-foreground mt-2 text-center">
+                Example of detailed prompting: "Golden retriever puppy in flower field, ultra-realistic, soft focus, warm sunlight"
+              </p>
+            </div>
             
             <h3>Step 1: Define the Subject</h3>
             <ul>
@@ -166,18 +182,6 @@ const BeginnersGuideMidjourneyPrompts = () => {
               <li>Reference art movements (Art Deco, Surrealism, Minimalism) or mediums (oil painting, digital art, clay model).</li>
               <li>Add mood descriptors (dreamy, ominous, playful).</li>
             </ul>
-
-            <div className="my-8">
-              <img 
-                src="/lovable-uploads/99bf0dfb-e060-4107-b99e-72ccd5ec5ad7.png"
-                alt="Medieval knight with glowing lightsaber demonstrating creative prompt combinations"
-                className="w-full rounded-lg shadow-lg"
-                loading="lazy"
-              />
-              <p className="text-sm text-muted-foreground mt-2 text-center">
-                Creative combinations like "Medieval knight with neon weapon" showcase MidJourney's ability to blend contrasting elements
-              </p>
-            </div>
 
             <h3>Step 4: Layer in Colors and Lighting</h3>
             <ul>
@@ -198,7 +202,8 @@ const BeginnersGuideMidjourneyPrompts = () => {
           </section>
 
           <section>
-            <h2>Useful MidJourney Parameters for Beginners</h2>
+            <h3>Useful MidJourney Parameters for Beginners</h3>
+            
             <div className="bg-muted p-4 rounded-lg my-6">
               <ul className="space-y-2 mb-0">
                 <li><code className="bg-background px-2 py-1 rounded">--ar 16:9</code> → Aspect ratio (e.g. widescreen)</li>
@@ -212,28 +217,29 @@ const BeginnersGuideMidjourneyPrompts = () => {
           <section>
             <h2>Example Beginner Prompts</h2>
             
-            <div className="my-8">
-              <img 
-                src="/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png"
-                alt="Golden retriever puppy in flower field demonstrating detailed prompt results"
-                className="w-full rounded-lg shadow-lg"
-                loading="lazy"
-              />
-              <p className="text-sm text-muted-foreground mt-2 text-center">
-                Example of detailed prompting: "Golden retriever puppy in flower field, ultra-realistic, soft focus, warm sunlight"
-              </p>
-            </div>
-
-            <ol>
+            <ol className="space-y-2">
               <li>"Golden retriever puppy in a flower field, ultra-realistic, soft focus, warm sunlight, pastel tones."</li>
               <li>"Steampunk airship over London skyline, intricate brass details, cinematic lighting, in Jules Verne illustration style."</li>
               <li>"Futuristic cityscape at night, neon holograms, rainy streets, anime cyberpunk style, –no people."</li>
             </ol>
           </section>
 
+          <div className="my-12">
+            <img 
+              src="/lovable-uploads/99bf0dfb-e060-4107-b99e-72ccd5ec5ad7.png"
+              alt="Medieval knight with glowing lightsaber demonstrating creative prompt combinations"
+              className="w-full rounded-lg shadow-lg"
+              loading="lazy"
+            />
+            <p className="text-sm text-muted-foreground mt-2 text-center">
+              Creative combinations like "Medieval knight with neon weapon" showcase MidJourney's ability to blend contrasting elements
+            </p>
+          </div>
+
           <section>
             <h2>Pro Tips to Level Up</h2>
-            <ul>
+            
+            <ul className="space-y-2">
               <li><strong>Combine opposites:</strong> "Medieval knight with a neon sword."</li>
               <li><strong>Reference artists:</strong> "In the style of Studio Ghibli."</li>
               <li><strong>Iterate:</strong> Run variations, upscale, then refine.</li>
@@ -242,10 +248,12 @@ const BeginnersGuideMidjourneyPrompts = () => {
           </section>
 
           <section>
-            <h2>Final Thoughts</h2>
+            <h3>Final Thoughts</h3>
+            
             <p>
               Detailed prompts are the difference between random images and art you're proud of. Once you get comfortable layering subject, style, lighting, and mood, you'll find MidJourney isn't just an AI tool — it's a canvas for your imagination.
             </p>
+            
             <p>
               Start with the basic structure, experiment with the examples provided, and don't be afraid to get creative with your combinations. The more specific and descriptive your prompts, the more impressive your results will be.
             </p>
