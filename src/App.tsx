@@ -27,6 +27,7 @@ import AIPromptsForCustomerSupport from "./pages/blog/AIPromptsForCustomerSuppor
 import AIPromptsForSocialMediaContent from "./pages/blog/AIPromptsForSocialMediaContent";
 import AIPromptsForContentWriters from "./pages/blog/AIPromptsForContentWriters";
 import AIPromptsForBusinessStrategy from "./pages/blog/AIPromptsForBusinessStrategy";
+import BeginnersGuideMidjourneyPrompts from "./pages/blog/BeginnersGuideMidjourneyPrompts";
 import Auth from "./pages/Auth";
 import AdminBulkUpload from "./pages/AdminBulkUpload";
 import AdminTools from "./pages/AdminTools";
@@ -105,6 +106,7 @@ const AppContent = () => {
         <Route path="/blog/ai-prompts-for-social-media-content" element={<AIPromptsForSocialMediaContent />} />
         <Route path="/blog/ai-prompts-for-content-writers" element={<AIPromptsForContentWriters />} />
         <Route path="/blog/ai-prompts-for-business-strategy" element={<AIPromptsForBusinessStrategy />} />
+        <Route path="/blog/beginners-guide-midjourney-prompts" element={<BeginnersGuideMidjourneyPrompts />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
