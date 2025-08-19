@@ -26,7 +26,7 @@ const AIPromptsForSocialMediaContent = () => {
     "TikTok",
     "LinkedIn",
   ];
-  const lastmod = "2025-08-13";
+  const lastmod = "2025-05-19";
 
   const schema = {
     "@context": "https://schema.org",

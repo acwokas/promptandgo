@@ -30,7 +30,7 @@ const AIPromptsForContentWriters = () => {
     "Claude",
     "Gemini",
   ];
-  const lastmod = "2025-08-13";
+  const lastmod = "2025-06-19";
 
   const schema = {
     "@context": "https://schema.org",

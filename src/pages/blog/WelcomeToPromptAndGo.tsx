@@ -24,7 +24,7 @@ const WelcomeToPromptAndGo = () => {
     "prompt library", "AI workflow", "AI tips", "AI writing",
     "startup tools", "marketing AI", "productivity tools", "welcome"
 ];
-const lastmod = "2025-08-12";
+const lastmod = "2024-11-19";
 
 const schema = {
     "@context": "https://schema.org",

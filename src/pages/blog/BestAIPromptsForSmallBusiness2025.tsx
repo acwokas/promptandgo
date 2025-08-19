@@ -23,7 +23,7 @@ const BestAIPromptsForSmallBusiness2025 = () => {
     "AI prompts", "small business", "marketing", "operations", "sales",
     "productivity", "ChatGPT", "Claude", "Gemini", "2025"
   ];
-  const lastmod = "2025-08-12";
+  const lastmod = "2024-12-19";
 
   const schema = {
     "@context": "https://schema.org",

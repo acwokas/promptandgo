@@ -28,7 +28,7 @@ const AIPromptsForBusinessStrategy = () => {
     "market research",
     "AI prompts",
   ];
-  const lastmod = "2025-08-13";
+  const lastmod = "2025-07-19";
 
   const schema = {
     "@context": "https://schema.org",

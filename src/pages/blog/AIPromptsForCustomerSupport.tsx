@@ -29,7 +29,7 @@ const AIPromptsForCustomerSupport = () => {
     "FAQ",
     "CSAT",
   ];
-  const lastmod = "2025-08-12";
+  const lastmod = "2025-04-19";
 
   const schema = {
     "@context": "https://schema.org",

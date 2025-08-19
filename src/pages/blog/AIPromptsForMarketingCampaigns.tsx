@@ -30,7 +30,7 @@ const AIPromptsForMarketingCampaigns = () => {
     "copywriting",
     "conversion",
   ];
-  const lastmod = "2025-08-12";
+  const lastmod = "2025-03-19";
 
   const schema = {
     "@context": "https://schema.org",

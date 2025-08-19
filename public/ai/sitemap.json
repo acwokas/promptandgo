@@ -6,12 +6,15 @@
     { "url": "https://promptandgo.ai/ai/packs.json", "lastmod": "2025-08-12" },
     { "url": "https://promptandgo.ai/ai/faqs.json", "lastmod": "2025-08-12" },
     { "url": "https://promptandgo.ai/ai/how-it-works.json", "lastmod": "2025-08-12" },
-    { "url": "https://promptandgo.ai/ai/blog-welcome.json", "lastmod": "2025-08-12" },
-    { "url": "https://promptandgo.ai/ai/blog-how-to-write.json", "lastmod": "2025-08-12" },
-    { "url": "https://promptandgo.ai/ai/blog-save-hours.json", "lastmod": "2025-08-12" },
-    { "url": "https://promptandgo.ai/ai/blog-customer-support.json", "lastmod": "2025-08-12" },
-    { "url": "https://promptandgo.ai/ai/blog-small-business.json", "lastmod": "2025-08-12" },
-    { "url": "https://promptandgo.ai/ai/blog-marketing-campaigns.json", "lastmod": "2025-08-12" },
-    { "url": "https://promptandgo.ai/ai/blog-beginners-guide-midjourney-prompts.json", "lastmod": "2025-01-19" }
+    { "url": "https://promptandgo.ai/ai/blog-welcome.json", "lastmod": "2024-11-19" },
+    { "url": "https://promptandgo.ai/ai/blog-small-business.json", "lastmod": "2024-12-19" },
+    { "url": "https://promptandgo.ai/ai/blog-how-to-write.json", "lastmod": "2025-01-19" },
+    { "url": "https://promptandgo.ai/ai/blog-save-hours.json", "lastmod": "2025-02-19" },
+    { "url": "https://promptandgo.ai/ai/blog-marketing-campaigns.json", "lastmod": "2025-03-19" },
+    { "url": "https://promptandgo.ai/ai/blog-customer-support.json", "lastmod": "2025-04-19" },
+    { "url": "https://promptandgo.ai/ai/blog-social-media-content.json", "lastmod": "2025-05-19" },
+    { "url": "https://promptandgo.ai/ai/blog-content-writers.json", "lastmod": "2025-06-19" },
+    { "url": "https://promptandgo.ai/ai/blog-business-strategy.json", "lastmod": "2025-07-19" },
+    { "url": "https://promptandgo.ai/ai/blog-beginners-guide-midjourney-prompts.json", "lastmod": "2025-08-19" }
   ]
 }
