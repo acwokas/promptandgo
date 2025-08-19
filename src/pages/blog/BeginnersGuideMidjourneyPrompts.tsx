@@ -122,7 +122,7 @@ const BeginnersGuideMidjourneyPrompts = () => {
         {/* Article Content */}
         <article className="prose prose-lg max-w-none space-y-8">
           <section>
-            <h2>Why Prompting Matters in MidJourney</h2>
+            <h2 className="font-bold">Why Prompting Matters in MidJourney</h2>
             
             <p>
               MidJourney is powerful, but it's only as good as the instructions you give it. A vague prompt like "dog in a park" might give you a generic image, while a detailed prompt like "Golden retriever puppy chasing butterflies in a spring meadow, cinematic lighting, ultra-realistic" creates a polished, vivid result.
@@ -151,7 +151,7 @@ const BeginnersGuideMidjourneyPrompts = () => {
           </section>
 
           <section>
-            <h2>Step-by-Step Prompt Building</h2>
+            <h2 className="font-bold">Step-by-Step Prompt Building</h2>
             
             <div className="my-8">
               <img 
@@ -215,7 +215,7 @@ const BeginnersGuideMidjourneyPrompts = () => {
           </section>
 
           <section>
-            <h2>Example Beginner Prompts</h2>
+            <h2 className="font-bold">Example Beginner Prompts</h2>
             
             <ol className="space-y-2">
               <li>"Golden retriever puppy in a flower field, ultra-realistic, soft focus, warm sunlight, pastel tones."</li>
@@ -237,7 +237,7 @@ const BeginnersGuideMidjourneyPrompts = () => {
           </div>
 
           <section>
-            <h2>Pro Tips to Level Up</h2>
+            <h2 className="font-bold">Pro Tips to Level Up</h2>
             
             <ul className="space-y-2">
               <li><strong>Combine opposites:</strong> "Medieval knight with a neon sword."</li>
@@ -248,7 +248,7 @@ const BeginnersGuideMidjourneyPrompts = () => {
           </section>
 
           <section>
-            <h3>Final Thoughts</h3>
+            <h2 className="font-bold">Final Thoughts</h2>
             
             <p>
               Detailed prompts are the difference between random images and art you're proud of. Once you get comfortable layering subject, style, lighting, and mood, you'll find MidJourney isn't just an AI tool — it's a canvas for your imagination.
