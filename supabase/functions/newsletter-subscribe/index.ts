@@ -129,7 +129,7 @@ serve(async (req: Request) => {
     try {
       console.log('Attempting to send admin notification email...');
       const emailResponse = await resend.emails.send({
-        from: "Newsletter Signup <onboarding@resend.dev>",
+        from: "Newsletter Signup <noreply@promptandgo.ai>",
         to: ["hello@promptandgo.ai"],
         subject: "New Newsletter Subscription",
         html: `
