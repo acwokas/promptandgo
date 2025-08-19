@@ -127,7 +127,8 @@ serve(async (req: Request) => {
 
     // Send notification email to admin
     try {
-      await resend.emails.send({
+      console.log('Attempting to send admin notification email...');
+      const emailResponse = await resend.emails.send({
         from: "Newsletter Signup <onboarding@resend.dev>",
         to: ["hello@promptandgo.ai"],
         subject: "New Newsletter Subscription",
@@ -141,9 +142,14 @@ serve(async (req: Request) => {
           <p>This is an automated notification from the Prompt & Go website newsletter signup form.</p>
         `,
       });
-      console.log('Admin notification email sent successfully');
+      console.log('Admin notification email sent successfully. Response:', emailResponse);
     } catch (emailError) {
-      console.error('Failed to send admin notification email:', emailError);
+      console.error('Failed to send admin notification email. Full error:', emailError);
+      console.error('Error details:', {
+        name: emailError?.name,
+        message: emailError?.message,
+        stack: emailError?.stack
+      });
       // Don't fail the request if email fails
     }
 
