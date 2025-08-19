@@ -202,6 +202,25 @@ const Blog = () => {
           </Card>
         </Link>
       </article>
+      <article>
+        <Link to="/blog/beginners-guide-midjourney-prompts" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+          <Card className="overflow-hidden">
+            <img
+              src="/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png"
+              alt="Beginner's Guide: Creating Detailed Prompts for MidJourney"
+              loading="lazy"
+              className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+            />
+            <CardContent className="pt-4">
+              <h2 className="text-xl font-semibold leading-snug">Beginner's Guide: Creating Detailed Prompts for MidJourney</h2>
+              <p className="mt-2 text-muted-foreground">
+                Mastering MidJourney starts with the right words. This beginner's guide breaks down how to create detailed prompts that deliver consistent, creative results — with examples, pro tips, and parameters you can use today.
+              </p>
+              <span className="mt-3 inline-block font-medium text-primary">Read more →</span>
+            </CardContent>
+          </Card>
+        </Link>
+      </article>
     </section>
 
     <section aria-labelledby="cta-tail" className="relative bg-hero hero-grid mt-16">
