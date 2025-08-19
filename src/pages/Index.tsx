@@ -122,7 +122,7 @@ const Index = () => {
       console.log('Newsletter signup successful');
       toast({
         title: "Successfully subscribed!",
-        description: "Welcome to our weekly prompt tips. Check your email for confirmation."
+        description: "Welcome to our weekly prompt tips! Please check your email (and spam folder) for confirmation."
       });
       
       setNewsletterEmail("");

@@ -125,10 +125,40 @@ serve(async (req: Request) => {
       }
     }
 
+    // Send confirmation email to subscriber
+    try {
+      console.log('Attempting to send confirmation email to subscriber...');
+      const confirmationResponse = await resend.emails.send({
+        from: "Prompt & Go <noreply@promptandgo.ai>",
+        to: [lowerEmail],
+        subject: "Welcome to Prompt & Go Newsletter! 🎉",
+        html: `
+          <h2>Thank you for subscribing!</h2>
+          <p>Hi there!</p>
+          <p>You've successfully signed up for the Prompt & Go newsletter. You'll now receive weekly AI prompt tips and insights directly to your inbox.</p>
+          <p><strong>What to expect:</strong></p>
+          <ul>
+            <li>Weekly curated AI prompts</li>
+            <li>Expert tips and tricks</li>
+            <li>Latest AI prompt trends</li>
+            <li>Exclusive content and resources</li>
+          </ul>
+          <p>Welcome aboard! 🚀</p>
+          <p>Best regards,<br>The Prompt & Go Team</p>
+          <hr>
+          <p style="font-size: 12px; color: #666;">If you didn't sign up for this newsletter, you can safely ignore this email.</p>
+        `,
+      });
+      console.log('Confirmation email sent successfully. Response:', confirmationResponse);
+    } catch (emailError) {
+      console.error('Failed to send confirmation email. Full error:', emailError);
+      // Don't fail the request if confirmation email fails
+    }
+
     // Send notification email to admin
     try {
       console.log('Attempting to send admin notification email...');
-      const emailResponse = await resend.emails.send({
+      const adminResponse = await resend.emails.send({
         from: "Newsletter Signup <noreply@promptandgo.ai>",
         to: ["hello@promptandgo.ai"],
         subject: "New Newsletter Subscription",
@@ -142,7 +172,7 @@ serve(async (req: Request) => {
           <p>This is an automated notification from the Prompt & Go website newsletter signup form.</p>
         `,
       });
-      console.log('Admin notification email sent successfully. Response:', emailResponse);
+      console.log('Admin notification email sent successfully. Response:', adminResponse);
     } catch (emailError) {
       console.error('Failed to send admin notification email. Full error:', emailError);
       console.error('Error details:', {
