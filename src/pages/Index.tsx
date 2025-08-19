@@ -109,24 +109,6 @@ const Index = () => {
     try {
       console.log('Newsletter signup starting for:', newsletterEmail);
       
-      // First check if this email belongs to an existing subscriber (indicating they likely have an account)
-      if (!user) {
-        const emailHash = await generateEmailHash(newsletterEmail.toLowerCase());
-        const { data: existingSubscriber } = await supabase
-          .from('subscribers')
-          .select('user_id')
-          .eq('email_hash', emailHash)
-          .not('user_id', 'is', null)
-          .maybeSingle();
-        
-        if (existingSubscriber?.user_id) {
-          // User exists but not logged in - show login prompt
-          setExistingUserEmail(newsletterEmail);
-          setShowLoginPrompt(true);
-          setNewsletterSubmitting(false);
-          return;
-        }
-      }
       
       const { data, error } = await supabase.functions.invoke('newsletter-subscribe', {
         body: {
@@ -140,6 +122,16 @@ const Index = () => {
       if (error) {
         console.error('Newsletter signup error details:', error);
         throw error;
+      }
+
+      if (data?.existed && !user) {
+        setExistingUserEmail(newsletterEmail);
+        setShowLoginPrompt(true);
+        toast({
+          title: "You're already subscribed",
+          description: "Please log in to access your prompts. We've prefilled your email.",
+        });
+        return;
       }
 
       console.log('Newsletter signup successful');
@@ -499,7 +491,7 @@ const Index = () => {
                       </svg>
                       <span className="font-medium">Successfully subscribed!</span>
                     </div>
-                    <p className="text-green-600 text-sm text-center">Welcome to our weekly prompt tips. Check your email for confirmation.</p>
+                    <p className="text-green-600 text-sm text-center">Welcome to our weekly prompt tips. Check your email (and spam folder) for confirmation.</p>
                   </div>
                 )}
                 

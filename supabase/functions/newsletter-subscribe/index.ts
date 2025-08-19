@@ -84,7 +84,11 @@ serve(async (req: Request) => {
       });
     }
 
+    let existed = false;
+    let had_user_id = false;
     if (existingUser) {
+      existed = true;
+      had_user_id = !!existingUser.user_id;
       console.log('Found existing subscriber, updating...');
       // Update existing subscriber
       const { error: updateError } = await supabase
@@ -185,7 +189,7 @@ serve(async (req: Request) => {
 
     console.log('Newsletter subscription completed successfully');
     
-    return new Response(JSON.stringify({ ok: true }), {
+    return new Response(JSON.stringify({ ok: true, existed, has_user_id: had_user_id }), {
       status: 200,
       headers: { "Content-Type": "application/json", ...corsHeaders },
     });
