@@ -8,8 +8,8 @@ import PrevNextNav from "@/components/blog/PrevNextNav";
 import { AUTHOR_MAIN } from "./authors";
 
 const BeginnersGuideMidjourneyPrompts = () => {
-  const publishDate = "2025-01-19";
-  const lastModified = "2025-01-19";
+  const publishDate = "2025-08-19";
+  const lastModified = "2025-08-19";
 
   const structuredData = {
     "@context": "https://schema.org",

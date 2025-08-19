@@ -24,7 +24,7 @@ const WelcomeToPromptAndGo = () => {
     "prompt library", "AI workflow", "AI tips", "AI writing",
     "startup tools", "marketing AI", "productivity tools", "welcome"
 ];
-const lastmod = "2024-11-19";
+const lastmod = "2024-11-22";
 
 const schema = {
     "@context": "https://schema.org",
@@ -101,6 +101,13 @@ const schema = {
       <article className="mx-auto max-w-3xl">
         <header>
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight">{title}</h1>
+          <div className="flex items-center gap-4 text-sm text-muted-foreground mt-2">
+            <time dateTime={lastmod}>
+              {new Date(lastmod).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </time>
+            <span>•</span>
+            <span>6 min read</span>
+          </div>
           <img
             src={imagePath}
             alt="PromptAndGo.ai – ready-to-use prompts for better AI results"

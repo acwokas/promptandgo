@@ -68,6 +68,13 @@ const AIPromptsThatSaveYouHours = () => {
       <article className="mx-auto max-w-3xl">
         <header>
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight">{title}</h1>
+          <div className="flex items-center gap-4 text-sm text-muted-foreground mt-2">
+            <time dateTime={lastmod}>
+              {new Date(lastmod).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </time>
+            <span>•</span>
+            <span>9 min read</span>
+          </div>
           <img
             src={heroImage}
             alt="AI prompts that save time and boost productivity"
