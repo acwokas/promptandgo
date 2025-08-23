@@ -10,7 +10,7 @@ import { Wand2, Copy, Plus, Loader2, History, ExternalLink } from "lucide-react"
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useAIUsage } from "@/hooks/useAIUsage";
 import UsageDisplay from "@/components/ai/UsageDisplay";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 interface RecentPrompt {
   id: string;
@@ -20,6 +20,7 @@ interface RecentPrompt {
 }
 
 const AIPromptGenerator = () => {
+  const [searchParams] = useSearchParams();
   const [description, setDescription] = useState("");
   const [context, setContext] = useState("");
   const [generatedPrompt, setGeneratedPrompt] = useState("");
@@ -31,6 +32,14 @@ const AIPromptGenerator = () => {
   const { refreshUsage } = useAIUsage();
 
   
+  // Load prompt from URL parameters if provided
+  useEffect(() => {
+    const promptFromUrl = searchParams.get('prompt');
+    if (promptFromUrl) {
+      setDescription(promptFromUrl);
+    }
+  }, [searchParams]);
+
   // Load recent prompts when user is available
   useEffect(() => {
     if (user) {

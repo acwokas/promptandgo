@@ -129,7 +129,7 @@ const AIPromptWidget = () => {
             )}
           </Button>
           <Button asChild variant="outline" size="sm">
-            <Link to="/toolkit">
+            <Link to={`/toolkit${description.trim() ? `?prompt=${encodeURIComponent(description.trim())}` : ''}`}>
               <ArrowRight className="h-4 w-4" />
             </Link>
           </Button>
@@ -151,7 +151,7 @@ const AIPromptWidget = () => {
                 Copy
               </Button>
               <Button asChild variant="outline" size="sm">
-                <Link to="/toolkit">
+                <Link to={`/ai/generator${description.trim() ? `?prompt=${encodeURIComponent(description.trim())}` : ''}`}>
                   View Full Generator →
                 </Link>
               </Button>

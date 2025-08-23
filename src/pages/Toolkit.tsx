@@ -114,7 +114,12 @@ const ToolkitPage = () => {
                   </div>
                   
                   <Button asChild className="w-full group-hover:shadow-md transition-shadow">
-                    <Link to={tool.path}>
+                    <Link to={tool.path === "/ai/generator" && typeof window !== 'undefined' ? 
+                      `${tool.path}${new URLSearchParams(window.location.search).get('prompt') ? 
+                        `?prompt=${encodeURIComponent(new URLSearchParams(window.location.search).get('prompt') || '')}` : 
+                        ''}` : 
+                      tool.path
+                    }>
                       Open Tool
                       <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
                     </Link>
