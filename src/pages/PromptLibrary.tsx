@@ -750,113 +750,112 @@ const PromptLibrary = () => {
           </div>
         </section>
 
-        {/* Popular Categories - Visual Cards */}
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Browse by Category</h2>
-          <p className="text-muted-foreground mb-6">Jump directly to the prompt categories you need most</p>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <Card 
-              className="group hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 cursor-pointer bg-gradient-to-br from-blue-50 to-transparent border-blue-200 dark:from-blue-950 dark:border-blue-800"
-              onClick={() => {
-                clearRandom();
-                setQuery("marketing");
-                setCategoryId(undefined);
-                setSubcategoryId(undefined);
-                setRibbon(undefined);
-              }}
-            >
-              <CardContent className="p-6 text-center">
-                <div className="w-12 h-12 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <TrendingUp className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-                </div>
-                <h3 className="font-semibold mb-2">Marketing</h3>
-                <p className="text-xs text-muted-foreground">850+ prompts</p>
-              </CardContent>
-            </Card>
+        {/* Compact Browse & Search Section */}
+        <section className="mb-6">
+          <div className="grid gap-6 lg:grid-cols-3">
+            {/* Browse by Category - Compact */}
+            <div className="lg:col-span-2">
+              <h2 className="text-xl font-semibold mb-3">Browse by Category</h2>
+              <div className="grid gap-3 grid-cols-2 md:grid-cols-4">
+                <Card 
+                  className="group hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 cursor-pointer bg-gradient-to-br from-blue-50 to-transparent border-blue-200 dark:from-blue-950 dark:border-blue-800"
+                  onClick={() => {
+                    clearRandom();
+                    setQuery("marketing");
+                    setCategoryId(undefined);
+                    setSubcategoryId(undefined);
+                    setRibbon(undefined);
+                  }}
+                >
+                  <CardContent className="p-4 text-center">
+                    <div className="w-8 h-8 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <TrendingUp className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                    </div>
+                    <h3 className="font-medium text-sm mb-1">Marketing</h3>
+                    <p className="text-xs text-muted-foreground">850+</p>
+                  </CardContent>
+                </Card>
 
-            <Card 
-              className="group hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 cursor-pointer bg-gradient-to-br from-green-50 to-transparent border-green-200 dark:from-green-950 dark:border-green-800"
-              onClick={() => {
-                clearRandom();
-                setQuery("career");
-                setCategoryId(undefined);
-                setSubcategoryId(undefined);
-                setRibbon(undefined);
-              }}
-            >
-              <CardContent className="p-6 text-center">
-                <div className="w-12 h-12 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Users className="h-6 w-6 text-green-600 dark:text-green-400" />
-                </div>
-                <h3 className="font-semibold mb-2">Career</h3>
-                <p className="text-xs text-muted-foreground">420+ prompts</p>
-              </CardContent>
-            </Card>
+                <Card 
+                  className="group hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 cursor-pointer bg-gradient-to-br from-green-50 to-transparent border-green-200 dark:from-green-950 dark:border-green-800"
+                  onClick={() => {
+                    clearRandom();
+                    setQuery("career");
+                    setCategoryId(undefined);
+                    setSubcategoryId(undefined);
+                    setRibbon(undefined);
+                  }}
+                >
+                  <CardContent className="p-4 text-center">
+                    <div className="w-8 h-8 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <Users className="h-4 w-4 text-green-600 dark:text-green-400" />
+                    </div>
+                    <h3 className="font-medium text-sm mb-1">Career</h3>
+                    <p className="text-xs text-muted-foreground">420+</p>
+                  </CardContent>
+                </Card>
 
-            <Card 
-              className="group hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 cursor-pointer bg-gradient-to-br from-purple-50 to-transparent border-purple-200 dark:from-purple-950 dark:border-purple-800"
-              onClick={() => {
-                clearRandom();
-                setQuery("content");
-                setCategoryId(undefined);
-                setSubcategoryId(undefined);
-                setRibbon(undefined);
-              }}
-            >
-              <CardContent className="p-6 text-center">
-                <div className="w-12 h-12 bg-purple-500/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Copy className="h-6 w-6 text-purple-600 dark:text-purple-400" />
-                </div>
-                <h3 className="font-semibold mb-2">Content</h3>
-                <p className="text-xs text-muted-foreground">380+ prompts</p>
-              </CardContent>
-            </Card>
+                <Card 
+                  className="group hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 cursor-pointer bg-gradient-to-br from-purple-50 to-transparent border-purple-200 dark:from-purple-950 dark:border-purple-800"
+                  onClick={() => {
+                    clearRandom();
+                    setQuery("content");
+                    setCategoryId(undefined);
+                    setSubcategoryId(undefined);
+                    setRibbon(undefined);
+                  }}
+                >
+                  <CardContent className="p-4 text-center">
+                    <div className="w-8 h-8 bg-purple-500/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <Copy className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+                    </div>
+                    <h3 className="font-medium text-sm mb-1">Content</h3>
+                    <p className="text-xs text-muted-foreground">380+</p>
+                  </CardContent>
+                </Card>
 
-            <Card 
-              className="group hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 cursor-pointer bg-gradient-to-br from-orange-50 to-transparent border-orange-200 dark:from-orange-950 dark:border-orange-800"
-              onClick={() => {
-                clearRandom();
-                setQuery("productivity");
-                setCategoryId(undefined);
-                setSubcategoryId(undefined);
-                setRibbon(undefined);
-              }}
-            >
-              <CardContent className="p-6 text-center">
-                <div className="w-12 h-12 bg-orange-500/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Clock className="h-6 w-6 text-orange-600 dark:text-orange-400" />
-                </div>
-                <h3 className="font-semibold mb-2">Productivity</h3>
-                <p className="text-xs text-muted-foreground">290+ prompts</p>
-              </CardContent>
-            </Card>
-          </div>
-          
-          <div className="mt-4 text-center">
-            <Button 
-              variant="ghost" 
-              onClick={() => {
-                clearRandom();
-                setCategoryId(undefined);
-                setSubcategoryId(undefined);
-                setQuery("");
-                setRibbon(undefined);
-              }}
-            >
-              View All Categories →
-            </Button>
-          </div>
-        </section>
-
-        {/* Enhanced Search Section */}
-        <section className="mb-8">
-          <Card className="bg-gradient-to-r from-primary/5 to-accent/5 border-primary/20">
-            <CardContent className="p-6">
-              <div className="text-center mb-4">
-                <h3 className="text-lg font-semibold mb-2">🔍 Popular Searches</h3>
-                <p className="text-sm text-muted-foreground">Quick access to what others are looking for</p>
+                <Card 
+                  className="group hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 cursor-pointer bg-gradient-to-br from-orange-50 to-transparent border-orange-200 dark:from-orange-950 dark:border-orange-800"
+                  onClick={() => {
+                    clearRandom();
+                    setQuery("productivity");
+                    setCategoryId(undefined);
+                    setSubcategoryId(undefined);
+                    setRibbon(undefined);
+                  }}
+                >
+                  <CardContent className="p-4 text-center">
+                    <div className="w-8 h-8 bg-orange-500/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <Clock className="h-4 w-4 text-orange-600 dark:text-orange-400" />
+                    </div>
+                    <h3 className="font-medium text-sm mb-1">Productivity</h3>
+                    <p className="text-xs text-muted-foreground">290+</p>
+                  </CardContent>
+                </Card>
               </div>
-              <div className="flex flex-wrap justify-center gap-2">
+              
+              <div className="mt-3 text-center">
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={() => {
+                    clearRandom();
+                    setCategoryId(undefined);
+                    setSubcategoryId(undefined);
+                    setQuery("");
+                    setRibbon(undefined);
+                  }}
+                >
+                  View All Categories →
+                </Button>
+              </div>
+            </div>
+
+            {/* Popular Searches - Compact */}
+            <div>
+              <h3 className="text-lg font-semibold mb-3">🔍 Popular Searches</h3>
+              <p className="text-sm text-muted-foreground mb-4">Quick access to trending searches</p>
+              <div className="flex flex-wrap gap-2">
                 {[
                   "email marketing", "resume writing", "social media", "interview prep", 
                   "content calendar", "crisis response", "LinkedIn strategy", "data analysis"
@@ -865,7 +864,7 @@ const PromptLibrary = () => {
                     key={searchTerm}
                     variant="outline"
                     size="sm"
-                    className="text-xs"
+                    className="text-xs h-8"
                     onClick={() => {
                       clearRandom();
                       setQuery(searchTerm);
@@ -878,8 +877,8 @@ const PromptLibrary = () => {
                   </Button>
                 ))}
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </section>
 
         <section id="library-filters" className="scroll-mt-36 md:scroll-mt-40 sticky top-20 z-40 bg-background/95 backdrop-blur-sm border-b border-border/50 py-4 -mx-4 px-4 shadow-sm mb-6">
