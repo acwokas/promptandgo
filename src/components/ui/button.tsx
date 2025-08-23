@@ -13,7 +13,7 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90 transform hover:-translate-y-0.5 hover:scale-[1.03]",
         outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground transform hover:-translate-y-0.5 hover:scale-[1.03]",
+          "text-foreground border border-input bg-background hover:bg-accent hover:text-accent-foreground transform hover:-translate-y-0.5 hover:scale-[1.03]",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80 transform hover:-translate-y-0.5 hover:scale-[1.03]",
         tertiary:
@@ -22,7 +22,7 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         hero: "bg-gradient-primary text-primary-foreground shadow-glow transform transition-transform hover:-translate-y-0.5 hover:scale-[1.03] ring-1 ring-primary/40 hover:ring-primary/60 hover:shadow-glow-strong",
         cta: "bg-primary text-primary-foreground shadow-glow hover:bg-primary/85 transform transition-transform hover:-translate-y-0.5 hover:scale-[1.03] ring-1 ring-primary/40 hover:ring-primary/60 hover:shadow-glow-strong",
-        inverted: "bg-transparent text-foreground border border-primary-foreground/80 hover:bg-primary-foreground/10"
+        inverted: "bg-transparent text-primary-foreground border border-primary-foreground/80 hover:bg-primary-foreground/10"
       },
       size: {
         default: "h-10 px-4 py-2",
