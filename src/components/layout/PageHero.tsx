@@ -9,7 +9,7 @@ interface PageHeroProps {
   variant?: "default" | "prompt" | "admin";
 }
 
-const PageHero = ({ title, subtitle, children, minHeightClass = "min-h-[40vh]", variant = "prompt" }: PageHeroProps) => {
+const PageHero = ({ title, subtitle, children, minHeightClass = "min-h-[25vh]", variant = "prompt" }: PageHeroProps) => {
   const bgClass = variant === "admin" ? "bg-hero-admin" : variant === "prompt" ? "bg-hero-prompt" : "bg-hero";
   return (
     <section className={`relative ${bgClass} hero-grid`}>
@@ -56,16 +56,16 @@ const PageHero = ({ title, subtitle, children, minHeightClass = "min-h-[40vh]", 
           }`} />
         </div>
       )}
-      <div className={`relative z-10 container ${minHeightClass} flex flex-col items-center justify-center text-center py-20 text-primary-foreground`}>
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight max-w-5xl leading-tight">
+      <div className={`relative z-10 container ${minHeightClass} flex flex-col items-center justify-center text-center py-12 text-primary-foreground`}>
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight max-w-5xl leading-tight">
           {title}
         </h1>
         {subtitle && (
-          <p className="text-lg md:text-xl text-primary-foreground/85 mt-5 max-w-3xl">
+          <p className="text-base md:text-lg text-primary-foreground/85 mt-4 max-w-3xl">
             {subtitle}
           </p>
         )}
-        {children && <div className="mt-8 flex flex-col sm:flex-row gap-3">{children}</div>}
+        {children && <div className="mt-6 flex flex-col sm:flex-row gap-3">{children}</div>}
       </div>
     </section>
   );
