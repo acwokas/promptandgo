@@ -19,15 +19,42 @@ serve(async (req: Request): Promise<Response> => {
   }
 
   try {
-    if (req.method !== "GET") {
-      return new Response("Method not allowed", { status: 405 });
-    }
-
     const url = new URL(req.url);
     const token = url.searchParams.get("token");
 
-    if (!token) {
-      return new Response("Missing confirmation token", { status: 400 });
+    // Enhanced token validation
+    if (!token || typeof token !== 'string' || token.length < 10) {
+      return new Response(`
+        <html>
+          <head><title>Invalid Link</title></head>
+          <body style="font-family: system-ui, sans-serif; text-align: center; padding: 50px;">
+            <h1>Invalid Confirmation Link</h1>
+            <p>The confirmation link is invalid or malformed.</p>
+            <a href="https://promptandgo.ai/contact" style="color: #667eea;">Contact Us Again</a>
+          </body>
+        </html>
+      `, { 
+        status: 400,
+        headers: { "Content-Type": "text/html; charset=utf-8", ...corsHeaders }
+      });
+    }
+
+    // Basic token format validation
+    const tokenRegex = /^[a-zA-Z0-9-_]{10,}$/;
+    if (!tokenRegex.test(token)) {
+      return new Response(`
+        <html>
+          <head><title>Invalid Token</title></head>
+          <body style="font-family: system-ui, sans-serif; text-align: center; padding: 50px;">
+            <h1>Invalid Token Format</h1>
+            <p>The confirmation token format is invalid.</p>
+            <a href="https://promptandgo.ai/contact" style="color: #667eea;">Contact Us Again</a>
+          </body>
+        </html>
+      `, { 
+        status: 400,
+        headers: { "Content-Type": "text/html; charset=utf-8", ...corsHeaders }
+      });
     }
 
     // Find and update the pending contact

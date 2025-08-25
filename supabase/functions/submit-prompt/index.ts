@@ -9,10 +9,8 @@ const supabase = createClient(
   Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
 );
 
-// Rate limiting map (in production, use Redis or similar)
-const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
-
-// Security validation functions
+// Remove the in-memory rate limiting since we're using database now
+// Enhanced security validation functions
 const validateSecureInput = (input: string, maxLength = 5000): { isValid: boolean; error?: string } => {
   if (!input || typeof input !== 'string') {
     return { isValid: false, error: 'Input is required and must be a string' };
@@ -64,21 +62,51 @@ const sanitizeInput = (input: string): string => {
   return input.trim().replace(/\s+/g, ' ').substring(0, 5000);
 };
 
-const checkRateLimit = (key: string, limit = 5, windowMs = 3600000): { allowed: boolean; resetTime?: number } => {
-  const now = Date.now();
-  const userLimit = rateLimitMap.get(key);
+const checkRateLimit = async (key: string, limit = 3, windowMs = 3600000): Promise<{ allowed: boolean; resetTime?: number }> => {
+  const now = new Date();
+  const windowStart = new Date(now.getTime() - windowMs);
   
-  if (!userLimit || now > userLimit.resetTime) {
-    rateLimitMap.set(key, { count: 1, resetTime: now + windowMs });
+  try {
+    // Clean old entries
+    await supabase
+      .from('rate_limits')
+      .delete()
+      .lt('window_start', windowStart.toISOString());
+    
+    // Get current count
+    const { data: existing } = await supabase
+      .from('rate_limits')
+      .select('count, window_start')
+      .eq('key', key)
+      .gte('window_start', windowStart.toISOString())
+      .single();
+    
+    if (!existing) {
+      // First request in window
+      await supabase
+        .from('rate_limits')
+        .insert({ key, count: 1, window_start: now.toISOString() });
+      return { allowed: true };
+    }
+    
+    if (existing.count >= limit) {
+      const resetTime = new Date(existing.window_start).getTime() + windowMs;
+      return { allowed: false, resetTime };
+    }
+    
+    // Increment count
+    await supabase
+      .from('rate_limits')
+      .update({ count: existing.count + 1 })
+      .eq('key', key)
+      .eq('window_start', existing.window_start);
+    
+    return { allowed: true };
+  } catch (error) {
+    console.error('Rate limit check failed:', error);
+    // Allow request on error to avoid blocking legitimate users
     return { allowed: true };
   }
-  
-  if (userLimit.count >= limit) {
-    return { allowed: false, resetTime: userLimit.resetTime };
-  }
-  
-  userLimit.count++;
-  return { allowed: true };
 };
 
 const corsHeaders = {
@@ -112,14 +140,16 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     const { title, whatFor, prompt, excerpt, submitterEmail, submitterName }: SubmitPromptRequest = await req.json();
     
-    // Get user IP for rate limiting
+    // Enhanced IP-based rate limiting with persistent storage
     const userIP = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown';
+    const rateLimitKey = `submit_prompt_${userIP}`;
     
-    // Check rate limit (5 submissions per hour per IP)
-    const rateLimitCheck = checkRateLimit(userIP, 5, 3600000);
+    // Check rate limit (2 submissions per hour per IP) 
+    const rateLimitCheck = await checkRateLimit(rateLimitKey, 2, 3600000);
     if (!rateLimitCheck.allowed) {
+      console.log(`Rate limit exceeded for prompt submission from IP: ${userIP}`);
       return new Response(JSON.stringify({ 
-        error: 'Rate limit exceeded. Please try again later.',
+        error: 'Submission limit reached. Please try again later.',
         resetTime: rateLimitCheck.resetTime 
       }), {
         status: 429,

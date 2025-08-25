@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.54.0';
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -13,11 +14,58 @@ interface ContactPayload {
 }
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+const supabase = createClient(
+  Deno.env.get('SUPABASE_URL')!,
+  Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+);
 
-// Rate limiting store (in production, use a persistent store like Redis)
-const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
-const RATE_LIMIT_WINDOW = 60000; // 1 minute
-const RATE_LIMIT_MAX = 5; // 5 messages per minute per IP
+// Enhanced persistent rate limiting
+const checkRateLimit = async (key: string, limit: number = 3, windowMs: number = 3600000): Promise<{ allowed: boolean; resetTime?: number }> => {
+  const now = new Date();
+  const windowStart = new Date(now.getTime() - windowMs);
+  
+  try {
+    // Clean old entries
+    await supabase
+      .from('rate_limits')
+      .delete()
+      .lt('window_start', windowStart.toISOString());
+    
+    // Get current count
+    const { data: existing } = await supabase
+      .from('rate_limits')
+      .select('count, window_start')
+      .eq('key', key)
+      .gte('window_start', windowStart.toISOString())
+      .single();
+    
+    if (!existing) {
+      // First request in window
+      await supabase
+        .from('rate_limits')
+        .insert({ key, count: 1, window_start: now.toISOString() });
+      return { allowed: true };
+    }
+    
+    if (existing.count >= limit) {
+      const resetTime = new Date(existing.window_start).getTime() + windowMs;
+      return { allowed: false, resetTime };
+    }
+    
+    // Increment count
+    await supabase
+      .from('rate_limits')
+      .update({ count: existing.count + 1 })
+      .eq('key', key)
+      .eq('window_start', existing.window_start);
+    
+    return { allowed: true };
+  } catch (error) {
+    console.error('Rate limit check failed:', error);
+    // Allow request on error to avoid blocking legitimate users
+    return { allowed: true };
+  }
+};
 
 function getRateLimitKey(req: Request): string {
   const forwarded = req.headers.get('x-forwarded-for');
@@ -25,26 +73,39 @@ function getRateLimitKey(req: Request): string {
   return `contact_${ip}`;
 }
 
-function checkRateLimit(key: string): { allowed: boolean; resetTime?: number } {
-  const now = Date.now();
-  const record = rateLimitStore.get(key);
-  
-  if (!record || now > record.resetTime) {
-    rateLimitStore.set(key, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
-    return { allowed: true };
-  }
-  
-  if (record.count >= RATE_LIMIT_MAX) {
-    return { allowed: false, resetTime: record.resetTime };
-  }
-  
-  record.count++;
-  return { allowed: true };
+function validateEmail(email: string): boolean {
+  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+  return emailRegex.test(email) && email.length >= 5 && email.length <= 254;
 }
 
-function validateEmail(email: string): boolean {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email) && email.length <= 254;
+function validateInput(input: string, minLength: number = 2, maxLength: number = 1000): { valid: boolean; error?: string } {
+  if (!input || typeof input !== 'string') {
+    return { valid: false, error: 'Input is required' };
+  }
+  
+  const trimmed = input.trim();
+  if (trimmed.length < minLength) {
+    return { valid: false, error: `Minimum length is ${minLength} characters` };
+  }
+  
+  if (trimmed.length > maxLength) {
+    return { valid: false, error: `Maximum length is ${maxLength} characters` };
+  }
+  
+  // Check for suspicious patterns
+  const suspiciousPatterns = [
+    /<script/i, /javascript:/i, /on\w+=/i, /data:text\/html/i,
+    /union.*select/i, /insert.*into/i, /delete.*from/i,
+    /ignore\s+previous\s+instructions/i, /system\s*:\s*you\s+are/i
+  ];
+  
+  for (const pattern of suspiciousPatterns) {
+    if (pattern.test(trimmed)) {
+      return { valid: false, error: 'Invalid content detected' };
+    }
+  }
+  
+  return { valid: true };
 }
 
 function sanitizeInput(input: string): string {
@@ -70,13 +131,14 @@ serve(async (req: Request): Promise<Response> => {
       });
     }
 
-    // Check rate limit
+    // Enhanced rate limiting with persistent storage
     const rateLimitKey = getRateLimitKey(req);
-    const rateLimitCheck = checkRateLimit(rateLimitKey);
+    const rateLimitCheck = await checkRateLimit(rateLimitKey, 3, 3600000); // 3 messages per hour
     
     if (!rateLimitCheck.allowed) {
+      console.log(`Rate limit exceeded for contact submission`);
       return new Response(JSON.stringify({ 
-        error: "Rate limit exceeded. Please try again later.",
+        error: "Too many contact requests. Please try again later.",
         resetTime: rateLimitCheck.resetTime 
       }), {
         status: 429,
@@ -86,37 +148,32 @@ serve(async (req: Request): Promise<Response> => {
 
     const { name, email, message }: ContactPayload = await req.json();
 
-    // Validate inputs
+    // Enhanced validation
     if (!name || !email || !message) {
-      return new Response(JSON.stringify({ error: "Missing fields" }), {
+      return new Response(JSON.stringify({ error: "Name, email, and message are all required" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
+    }
+
+    const nameValidation = validateInput(name, 2, 100);
+    if (!nameValidation.valid) {
+      return new Response(JSON.stringify({ error: `Name: ${nameValidation.error}` }), {
+        status: 400,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
+    }
+
+    const messageValidation = validateInput(message, 10, 2000);
+    if (!messageValidation.valid) {
+      return new Response(JSON.stringify({ error: `Message: ${messageValidation.error}` }), {
         status: 400,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
     }
 
     if (!validateEmail(email)) {
-      return new Response(JSON.stringify({ error: "Invalid email address" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      });
-    }
-
-    // Check length limits
-    if (name.length > 100 || message.length > 2000) {
-      return new Response(JSON.stringify({ error: "Input too long" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      });
-    }
-
-    // Check for suspicious patterns
-    const suspiciousPatterns = [
-      /<script/i, /javascript:/i, /on\w+=/i, /data:text\/html/i
-    ];
-    
-    const allInput = `${name} ${email} ${message}`;
-    if (suspiciousPatterns.some(pattern => pattern.test(allInput))) {
-      return new Response(JSON.stringify({ error: "Invalid input content" }), {
+      return new Response(JSON.stringify({ error: "Please provide a valid email address" }), {
         status: 400,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
