@@ -883,42 +883,6 @@ export type Database = {
         }
         Relationships: []
       }
-      subscribers_admin_view: {
-        Row: {
-          created_at: string | null
-          email_status: string | null
-          id: string | null
-          stripe_status: string | null
-          subscribed: boolean | null
-          subscription_end: string | null
-          subscription_tier: string | null
-          updated_at: string | null
-          user_id: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          email_status?: never
-          id?: string | null
-          stripe_status?: never
-          subscribed?: boolean | null
-          subscription_end?: string | null
-          subscription_tier?: string | null
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          email_status?: never
-          id?: string | null
-          stripe_status?: never
-          subscribed?: boolean | null
-          subscription_end?: string | null
-          subscription_tier?: string | null
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
     }
     Functions: {
       check_and_increment_usage: {
