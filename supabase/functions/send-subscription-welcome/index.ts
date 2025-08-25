@@ -42,44 +42,41 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Get tier-specific benefits
     const getTierBenefits = (tier: string) => {
-      switch (tier.toLowerCase()) {
-        case 'basic':
-        case 'monthly':
-          return {
-            title: 'Monthly Membership',
-            benefits: [
-              '🚀 30 AI prompt generations per day',
-              '💡 30 AI suggestions per day', 
-              '🤖 40 AI assistant interactions per day',
-              '📚 Access to exclusive prompt packs',
-              '⭐ Premium prompt library access'
-            ]
-          };
-        case 'premium':
-        case 'lifetime':
-          return {
-            title: 'Lifetime Membership',
-            benefits: [
-              '🚀 60 AI prompt generations per day',
-              '💡 60 AI suggestions per day',
-              '🤖 60 AI assistant interactions per day', 
-              '📚 Access to ALL prompt packs',
-              '⭐ Full premium prompt library',
-              '🎯 Priority customer support',
-              '🔄 Future updates included'
-            ]
-          };
-        default:
-          return {
-            title: 'Premium Membership',
-            benefits: [
-              '🚀 Enhanced AI prompt generation',
-              '💡 Advanced AI suggestions',
-              '🤖 Premium AI assistant access',
-              '📚 Exclusive prompt collections',
-              '⭐ Premium feature access'
-            ]
-          };
+      const isLifetime = tier.toLowerCase().includes('lifetime') || tier.toLowerCase().includes('premium');
+      
+      if (isLifetime) {
+        return {
+          title: 'Lifetime Membership',
+          description: 'One payment, lifetime access to everything!',
+          billingInfo: 'No recurring charges - you own this forever!',
+          benefits: [
+            '🚀 60 AI prompt generations per day',
+            '💡 60 AI suggestions per day',
+            '🤖 60 AI assistant interactions per day', 
+            '📚 Access to ALL current & future prompt packs',
+            '⭐ Complete premium prompt library',
+            '🎯 Priority customer support',
+            '🔄 All future updates & features included',
+            '💎 Exclusive lifetime member badge',
+            '🎁 Early access to new features'
+          ]
+        };
+      } else {
+        return {
+          title: 'Monthly Membership',
+          description: 'Flexible monthly subscription with premium features!',
+          billingInfo: formattedEndDate ? `Next billing: ${formattedEndDate}` : 'Recurring monthly billing',
+          benefits: [
+            '🚀 30 AI prompt generations per day',
+            '💡 30 AI suggestions per day', 
+            '🤖 40 AI assistant interactions per day',
+            '📚 Access to premium prompt packs',
+            '⭐ Premium prompt library access',
+            '📧 Monthly feature updates',
+            '💬 Standard customer support',
+            '🔄 Cancel anytime'
+          ]
+        };
       }
     };
 
@@ -102,8 +99,11 @@ const handler = async (req: Request): Promise<Response> => {
             <h1 style="margin: 0 0 15px 0; font-size: 28px;">
               🎉 Welcome to ${tierInfo.title}!
             </h1>
-            <p style="font-size: 18px; line-height: 1.6; margin: 0;">
+            <p style="font-size: 18px; line-height: 1.6; margin: 0 0 15px 0;">
               Hi ${userName || 'there'}! Your subscription is now active and ready to supercharge your AI prompting.
+            </p>
+            <p style="font-size: 16px; line-height: 1.5; margin: 0; opacity: 0.9;">
+              ${tierInfo.description}
             </p>
           </div>
 
@@ -136,12 +136,10 @@ const handler = async (req: Request): Promise<Response> => {
                   <td style="padding: 10px 0; font-weight: bold; border-bottom: 1px solid #eee;">Email:</td>
                   <td style="padding: 10px 0; border-bottom: 1px solid #eee;">${userEmail}</td>
                 </tr>
-                ${formattedEndDate ? `
-                <tr>
-                  <td style="padding: 10px 0; font-weight: bold;">Next Billing:</td>
-                  <td style="padding: 10px 0;">${formattedEndDate}</td>
-                </tr>
-                ` : ''}
+                 <tr>
+                   <td style="padding: 10px 0; font-weight: bold; border-bottom: 1px solid #eee;">Billing:</td>
+                   <td style="padding: 10px 0; border-bottom: 1px solid #eee;">${tierInfo.billingInfo}</td>
+                 </tr>
               </table>
             </div>
           </div>
@@ -228,12 +226,10 @@ const handler = async (req: Request): Promise<Response> => {
                   <td style="padding: 8px 15px 8px 0; font-weight: bold;">Plan:</td>
                   <td style="padding: 8px 0;">${tierInfo.title}</td>
                 </tr>
-                ${formattedEndDate ? `
-                <tr>
-                  <td style="padding: 8px 15px 8px 0; font-weight: bold;">Next Billing:</td>
-                  <td style="padding: 8px 0;">${formattedEndDate}</td>
-                </tr>
-                ` : ''}
+                 <tr>
+                   <td style="padding: 8px 15px 8px 0; font-weight: bold;">Billing:</td>
+                   <td style="padding: 8px 0;">${tierInfo.billingInfo}</td>
+                 </tr>
                 <tr>
                   <td style="padding: 8px 15px 8px 0; font-weight: bold;">Date:</td>
                   <td style="padding: 8px 0;">${new Date().toLocaleDateString('en-US', { 
