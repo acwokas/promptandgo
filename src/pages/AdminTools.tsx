@@ -26,7 +26,13 @@ const AdminTools = () => {
     return <div>Loading...</div>;
   }
 
-  if (!isAdmin) {
+  // Allowlisted email as a temporary safety net while we debug admin role checks
+  const emailAllow = ["me@adrianwatkins.com"];
+  const effectiveIsAdmin = isAdmin || (user?.email ? emailAllow.includes(user.email) : false);
+
+  console.log("AdminTools: Access decision", { isAdmin, effectiveIsAdmin, userEmail: user?.email });
+
+  if (!effectiveIsAdmin) {
     console.log("AdminTools: User is not admin, redirecting to home");
     return <Navigate to="/" replace />;
   }
