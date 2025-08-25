@@ -578,71 +578,83 @@ const Index = () => {
           </section>
         )}
 
-        {/* Quick FAQ Section */}
-        <section className="container py-6">
-          <h2 className="text-2xl font-semibold mb-6 text-center">Quick Questions</h2>
-          <div className="max-w-3xl mx-auto">
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="border-l-4 border-primary pl-4 py-2">
-                <h3 className="font-semibold mb-1">Do I need to sign up?</h3>
-                <p className="text-sm text-muted-foreground">Nope! Browse and copy prompts for free. Sign up only to save favorites and access power packs.</p>
+        {/* Bottom Section - FAQ, Pricing, and CTA combined */}
+        <section className="container py-8">
+          <div className="grid gap-8 lg:grid-cols-3">
+            {/* FAQ Column */}
+            <div className="lg:col-span-2">
+              <h2 className="text-2xl font-semibold mb-6">Quick Questions</h2>
+              <div className="grid gap-6 md:grid-cols-2">
+                <div className="space-y-4">
+                  <div className="border-l-4 border-primary pl-4 py-2">
+                    <h3 className="font-semibold mb-1">Do I need to sign up?</h3>
+                    <p className="text-sm text-muted-foreground">Nope! Browse and copy prompts for free. Sign up only to save favorites and access power packs.</p>
+                  </div>
+                  
+                  <div className="border-l-4 border-primary pl-4 py-2">
+                    <h3 className="font-semibold mb-1">How much does it cost?</h3>
+                    <p className="text-sm text-muted-foreground">Browsing is free forever. Premium packs start at $9.99 for specialized collections.</p>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="border-l-4 border-primary pl-4 py-2">
+                    <h3 className="font-semibold mb-1">Works with free AI tools?</h3>
+                    <p className="text-sm text-muted-foreground">Yes! Most prompts work perfectly with free versions of ChatGPT, Claude, and other AI tools.</p>
+                  </div>
+                  
+                  <div className="border-l-4 border-primary pl-4 py-2">
+                    <h3 className="font-semibold mb-1">Can I use them commercially?</h3>
+                    <p className="text-sm text-muted-foreground">Yes! Use prompts and their outputs for any personal or commercial project.</p>
+                  </div>
+                </div>
               </div>
               
-              <div className="border-l-4 border-primary pl-4 py-2">
-                <h3 className="font-semibold mb-1">Works with free AI tools?</h3>
-                <p className="text-sm text-muted-foreground">Yes! Most prompts work perfectly with free versions of ChatGPT, Claude, and other AI tools.</p>
-              </div>
-              
-              <div className="border-l-4 border-primary pl-4 py-2">
-                <h3 className="font-semibold mb-1">How much does it cost?</h3>
-                <p className="text-sm text-muted-foreground">Browsing is free forever. Premium packs start at $9.99 for specialized collections.</p>
-              </div>
-              
-              <div className="border-l-4 border-primary pl-4 py-2">
-                <h3 className="font-semibold mb-1">Can I use them commercially?</h3>
-                <p className="text-sm text-muted-foreground">Yes! Use prompts and their outputs for any personal or commercial project.</p>
+              <div className="mt-6">
+                <Button asChild variant="ghost" size="sm">
+                  <Link to="/faqs#top">See All FAQs →</Link>
+                </Button>
               </div>
             </div>
-          </div>
-          
-          <div className="text-center mt-6">
-            <Button asChild variant="ghost" size="sm">
-              <Link to="/faqs#top">See All FAQs →</Link>
-            </Button>
-          </div>
-        </section>
 
-        {/* Pricing transparency hint */}
-        <section className="container py-4">
-          <div className="text-center bg-gradient-to-r from-primary/5 to-accent/5 rounded-lg p-6 max-w-2xl mx-auto">
-            <h3 className="font-semibold mb-2">💡 Start Free, Upgrade When Ready</h3>
-            <p className="text-sm text-muted-foreground">
-              Browse thousands of prompts for free. Get premium collections starting at $9.99 when you need specialized prompts for your industry or project.
-            </p>
-            <div className="flex justify-center gap-4 mt-4 text-xs text-muted-foreground mb-4">
-              <span className="flex items-center gap-1">
-                <div className="w-3 h-3 bg-green-500 rounded-full flex items-center justify-center">
-                  <span className="text-white text-[8px]">✓</span>
+            {/* Pricing/CTA Column */}
+            <div className="lg:col-span-1">
+              <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl p-6 h-fit sticky top-6">
+                <h3 className="font-semibold mb-3 text-center">💡 Start Free, Upgrade When Ready</h3>
+                <p className="text-sm text-muted-foreground mb-6 text-center">
+                  Browse thousands of prompts for free. Get premium collections when you need specialized prompts.
+                </p>
+                
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center gap-3 text-sm">
+                    <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Check className="w-3 h-3 text-white" />
+                    </div>
+                    <span>Free browsing forever</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm">
+                    <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Check className="w-3 h-3 text-white" />
+                    </div>
+                    <span>No trial limits or time restrictions</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm">
+                    <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Check className="w-3 h-3 text-white" />
+                    </div>
+                    <span>No credit card needed</span>
+                  </div>
                 </div>
-                Free browsing
-              </span>
-              <span className="flex items-center gap-1">
-                <div className="w-3 h-3 bg-green-500 rounded-full flex items-center justify-center">
-                  <span className="text-white text-[8px]">✓</span>
+                
+                <div className="space-y-3">
+                  <Button asChild variant="hero" size="sm" className="w-full">
+                    <Link to="/library">Browse Prompt Library</Link>
+                  </Button>
+                  <Button asChild variant="outline" size="sm" className="w-full">
+                    <Link to="/packs">View Premium Packs</Link>
+                  </Button>
                 </div>
-                No trial limits
-              </span>
-              <span className="flex items-center gap-1">
-                <div className="w-3 h-3 bg-green-500 rounded-full flex items-center justify-center">
-                  <span className="text-white text-[8px]">✓</span>
-                </div>
-                No credit card needed
-              </span>
-            </div>
-            <div className="mt-4">
-              <Button asChild variant="hero" size="sm">
-                <Link to="/library">Browse Prompt Library</Link>
-              </Button>
+              </div>
             </div>
           </div>
         </section>
