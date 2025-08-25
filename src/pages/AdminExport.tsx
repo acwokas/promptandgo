@@ -45,6 +45,8 @@ const AdminExport = () => {
           ribbon,
           category_id,
           subcategory_id,
+          created_at,
+          updated_at,
           categories:category_id(name, slug),
           subcategories:subcategory_id(name, slug)
         `);
@@ -93,6 +95,7 @@ const AdminExport = () => {
       const csvData = prompts?.map((prompt: any) => {
         const packInfo = packsByPrompt.get(prompt.id);
         return {
+          id: prompt.id,
           title: prompt.title,
           what_for: prompt.what_for || "",
           prompt: prompt.prompt,
@@ -107,15 +110,18 @@ const AdminExport = () => {
           pack_name: packInfo?.name || "",
           pack_price_cents: packInfo?.price_cents || "",
           is_pro: prompt.is_pro,
-          ribbon: prompt.ribbon || ""
+          ribbon: prompt.ribbon || "",
+          created_at: prompt.created_at,
+          updated_at: prompt.updated_at
         };
       });
 
       // Convert to CSV string
       const headers = [
-        "title", "what_for", "prompt", "image_prompt", "excerpt",
+        "id", "title", "what_for", "prompt", "image_prompt", "excerpt",
         "category_slug", "category_name", "subcategory_slug", "subcategory_name",
-        "tags", "pack_slug", "pack_name", "pack_price_cents", "is_pro", "ribbon"
+        "tags", "pack_slug", "pack_name", "pack_price_cents", "is_pro", "ribbon",
+        "created_at", "updated_at"
       ];
 
       const csvContent = [
@@ -263,6 +269,8 @@ const AdminExport = () => {
             ribbon,
             category_id,
             subcategory_id,
+            created_at,
+            updated_at,
             categories:category_id(name, slug),
             subcategories:subcategory_id(name, slug)
           `),
@@ -357,6 +365,7 @@ const AdminExport = () => {
         
         return {
           // Prompt data
+          prompt_id: prompt.id,
           prompt_title: prompt.title,
           prompt_what_for: prompt.what_for || "",
           prompt_content: prompt.prompt,
@@ -364,6 +373,8 @@ const AdminExport = () => {
           prompt_excerpt: prompt.excerpt || "",
           prompt_is_pro: prompt.is_pro,
           prompt_ribbon: prompt.ribbon || "",
+          prompt_created_at: prompt.created_at,
+          prompt_updated_at: prompt.updated_at,
           
           // Category data
           category_name: prompt.categories?.name || "",
@@ -389,8 +400,8 @@ const AdminExport = () => {
 
       // Convert to CSV string
       const headers = [
-        "prompt_title", "prompt_what_for", "prompt_content", "prompt_image_prompt", "prompt_excerpt",
-        "prompt_is_pro", "prompt_type", "prompt_ribbon",
+        "prompt_id", "prompt_title", "prompt_what_for", "prompt_content", "prompt_image_prompt", "prompt_excerpt",
+        "prompt_is_pro", "prompt_type", "prompt_ribbon", "prompt_created_at", "prompt_updated_at",
         "category_name", "category_slug", "subcategory_name", "subcategory_slug",
         "prompt_tags", "in_power_pack", "pack_name", "pack_slug", "pack_price_cents", "pack_price_dollars", "pack_tags"
       ];
