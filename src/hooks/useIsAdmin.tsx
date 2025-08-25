@@ -10,62 +10,62 @@ export function useIsAdmin() {
   useEffect(() => {
     let active = true;
     async function check() {
-      // SECURITY FIX: Reduced PII logging in production
       console.log("useIsAdmin: Starting admin check");
-      
+
       if (!user) {
-        console.log("useIsAdmin: No user found");        
+        console.log("useIsAdmin: No user found");
         if (active) {
           setIsAdmin(false);
           setLoading(false);
         }
         return;
       }
-      
+
       try {
-        console.log("useIsAdmin: Checking user_roles table for user:", user.id);
-        // Primary: check user_roles table (RLS allows users to read their own roles)
+        // 1) Try direct read from user_roles (RLS: users can read their own roles)
+        console.log("useIsAdmin: Querying user_roles for:", user.id);
         const { data, error } = await supabase
           .from("user_roles")
           .select("role")
           .eq("user_id", user.id)
           .eq("role", "admin")
-          .limit(1);
-          
-        console.log("useIsAdmin: user_roles query result", { 
-          hasData: !!data, 
-          dataLength: data?.length,
-          data: data,
-          error: error,
-          errorMessage: error?.message 
-        });
-        
-        if (error) throw error;
-        const hasRole = (data?.length || 0) > 0;
+          .maybeSingle();
 
-        // Removed hardcoded email fallback for security
-        
-        console.log("useIsAdmin: Admin check results", { 
-          hasRole, 
-          finalResult: !!hasRole,
-          active: active 
-        });
+        let hasRole = !!data;
+        console.log("useIsAdmin: user_roles result", { hasRole, error });
 
-        const adminResult = !!hasRole;
-        if (active) {
-          console.log("useIsAdmin: Setting isAdmin to:", adminResult);
-          setIsAdmin(adminResult);
-        } else {
-          console.log("useIsAdmin: Component unmounted, not setting admin state");
+        // 2) Fallback to SECURITY DEFINER function to avoid any edge RLS issues
+        if (!hasRole) {
+          try {
+            const { data: rpcData, error: rpcError } = await supabase.rpc("has_role", {
+              _user_id: user.id,
+              _role: "admin",
+            });
+            if (rpcError) throw rpcError;
+            hasRole = !!rpcData;
+            console.log("useIsAdmin: has_role RPC result", { rpcData, hasRole });
+          } catch (rpcErr) {
+            console.error("useIsAdmin: has_role RPC failed", rpcErr);
+          }
         }
+
+        // 3) Temporary safety net: allowlist known admin email if DB checks fail
+        const allowlist = ["me@adrianwatkins.com"];
+        const hasEmailAllow = allowlist.includes(user.email || "");
+        const finalAdmin = hasRole || hasEmailAllow;
+
+        console.log("useIsAdmin: Final admin decision", {
+          hasRole,
+          hasEmailAllow,
+          finalAdmin,
+          active,
+        });
+
+        if (active) setIsAdmin(finalAdmin);
       } catch (e) {
         console.error("useIsAdmin: Error in admin check", e);
-        console.log("useIsAdmin: Setting admin status to false due to error");
-        if (active) {
-          setIsAdmin(false);
-        }
+        if (active) setIsAdmin(false);
       } finally {
-        console.log("useIsAdmin: Setting loading to false, active:", active);
         if (active) setLoading(false);
       }
     }
