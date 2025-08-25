@@ -11,7 +11,6 @@ interface UsageData {
 
 interface AIUsageState {
   generator: UsageData | null;
-  suggestions: UsageData | null;
   assistant: UsageData | null;
   loading: boolean;
   error: string | null;
@@ -21,13 +20,12 @@ export function useAIUsage() {
   const { user } = useSupabaseAuth();
   const [usage, setUsage] = useState<AIUsageState>({
     generator: null,
-    suggestions: null,
     assistant: null,
     loading: false,
     error: null
   });
 
-  const fetchUsage = async (usageType: 'generator' | 'suggestions' | 'assistant') => {
+  const fetchUsage = async (usageType: 'generator' | 'assistant') => {
     if (!user) return null;
 
     try {
@@ -58,9 +56,6 @@ export function useAIUsage() {
           case 'generator':
             dailyLimit = limits.daily_generator_limit;
             break;
-          case 'suggestions':
-            dailyLimit = limits.daily_suggestions_limit;
-            break;
           case 'assistant':
             dailyLimit = limits.daily_assistant_limit;
             break;
@@ -86,7 +81,6 @@ export function useAIUsage() {
       setUsage(prev => ({ 
         ...prev, 
         generator: null, 
-        suggestions: null, 
         assistant: null,
         loading: false 
       }));
@@ -96,16 +90,14 @@ export function useAIUsage() {
     setUsage(prev => ({ ...prev, loading: true, error: null }));
 
     try {
-      const [generatorUsage, suggestionsUsage, assistantUsage] = await Promise.all([
+      const [generatorUsage, assistantUsage] = await Promise.all([
         fetchUsage('generator'),
-        fetchUsage('suggestions'),
         fetchUsage('assistant')
       ]);
 
       setUsage(prev => ({
         ...prev,
         generator: generatorUsage,
-        suggestions: suggestionsUsage,
         assistant: assistantUsage,
         loading: false
       }));

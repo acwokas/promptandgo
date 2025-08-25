@@ -23,7 +23,6 @@ const AICreditsExhausted = ({
   const getUsageTypeLabel = (type: string) => {
     switch (type) {
       case 'generator': return 'Scout Prompt Generator';
-      case 'suggestions': return 'Smart Suggestions';
       case 'assistant': return 'Scout Assistant';
       default: return 'AI Tools';
     }
@@ -137,9 +136,8 @@ const AICreditsExhausted = ({
               <div className="space-y-2">
                 <h4 className="font-semibold">Free Plan (Current)</h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• 5 Scout Prompt Generator queries/day</li>
-                  <li>• 3 Smart Suggestions queries/day</li>
-                  <li>• 10 Scout Assistant messages/day</li>
+                  <li>• 10 Scout Prompt Generator queries/day</li>
+                  <li>• 20 Scout Assistant messages/day</li>
                   <li>• Access to free prompt library</li>
                 </ul>
               </div>
@@ -147,10 +145,10 @@ const AICreditsExhausted = ({
               <div className="space-y-2">
                 <h4 className="font-semibold text-primary">Premium Plan</h4>
                 <ul className="text-sm space-y-1">
-                  <li>• <strong>50</strong> Scout Prompt Generator queries/day</li>
-                  <li>• <strong>25</strong> Smart Suggestions queries/day</li>
-                  <li>• <strong>100</strong> Scout Assistant messages/day</li>
+                  <li>• <strong>30</strong> Scout Prompt Generator queries/day</li>
+                  <li>• <strong>40</strong> Scout Assistant messages/day</li>
                   <li>• Access to premium prompts & packs</li>
+                  <li>• Priority support</li>
                 </ul>
               </div>
             </div>

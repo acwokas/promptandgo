@@ -14,7 +14,7 @@ interface SubscriptionInfo {
 }
 
 interface UsageDisplayProps {
-  usageType?: 'generator' | 'suggestions' | 'assistant' | 'all';
+  usageType?: 'generator' | 'assistant' | 'all';
   compact?: boolean;
 }
 
@@ -72,7 +72,6 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
   const getUsageTypeLabel = (type: string) => {
     switch (type) {
       case 'generator': return 'Scout Prompt Generator';
-      case 'suggestions': return 'Smart Suggestions';
       case 'assistant': return 'Scout Assistant';
       default: return 'AI Tools';
     }
@@ -112,9 +111,8 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
 
   const usageData = usageType === 'all' 
     ? [
-        { type: 'generator', data: usage.generator, label: 'Generator' },
-        { type: 'suggestions', data: usage.suggestions, label: 'Suggestions' },
-        { type: 'assistant', data: usage.assistant, label: 'Assistant' }
+        { type: 'generator', data: usage.generator, label: 'Scout Prompt Generator' },
+        { type: 'assistant', data: usage.assistant, label: 'Scout Assistant' }
       ]
     : [{ type: usageType, data: usage[usageType], label: getUsageTypeLabel(usageType) }];
 
@@ -202,7 +200,7 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
                 <h4 className="font-medium">Need more queries?</h4>
                 <p className="text-sm text-muted-foreground mt-1">
                   {!subscriptionInfo?.subscribed ? (
-                    <>Upgrade to get <strong>up to 40 queries/day</strong> with monthly membership or <strong>up to 60 queries/day</strong> with lifetime access.</>
+                    <>Upgrade to get <strong>30 generator + 40 assistant queries/day</strong> with monthly membership or <strong>60 queries/day each</strong> with lifetime access.</>
                   ) : (
                     <>You've reached your enhanced daily limits. Your queries will reset at midnight UTC.</>
                   )}
@@ -211,11 +209,11 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
                   <div className="flex gap-2 mt-2">
                     <Button size="sm" variant="outline">
                       <Crown className="h-4 w-4 mr-1" />
-                      Monthly (30-40/day) - $12.99/mo
+                      Monthly (30+40/day) - $12.99/mo
                     </Button>
                     <Button size="sm" variant="secondary">
                       <Infinity className="h-4 w-4 mr-1" />
-                      Lifetime (60/day) - $99.50
+                      Lifetime (60 each/day) - $99.50
                     </Button>
                   </div>
                 )}
