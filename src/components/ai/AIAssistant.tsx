@@ -148,7 +148,7 @@ const AIAssistant = () => {
         <div className="flex justify-center">
           <div className="relative">
             <video 
-              src="/scout-animation.mp4" 
+              src="/scout-animation-v2.mp4" 
               autoPlay 
               loop 
               muted 
