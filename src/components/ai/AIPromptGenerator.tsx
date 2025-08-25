@@ -211,22 +211,6 @@ const AIPromptGenerator = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6">
-      {/* AI Assistant Upsell */}
-      <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-lg p-4 border border-green-500/20 mb-6">
-        <div className="flex items-center gap-3 mb-3">
-          <Bot className="h-5 w-5 text-green-500" />
-          <h3 className="font-semibold text-green-700 dark:text-green-300">{AI_PERSONA.ui.upsellTitle}</h3>
-        </div>
-        <p className="text-sm text-muted-foreground mb-3">
-          {AI_PERSONA.ui.upsellDescription}
-        </p>
-        <Button asChild size="sm" className="bg-green-500 hover:bg-green-600">
-          <Link to="/ai/assistant">
-            {AI_PERSONA.ui.upsellButton}
-            <ArrowRight className="h-4 w-4 ml-2" />
-          </Link>
-        </Button>
-      </div>
       <div className="text-center space-y-2">
         <div className="flex items-center justify-center gap-2">
           <Wand2 className="h-6 w-6 text-primary" />
@@ -459,6 +443,23 @@ const AIPromptGenerator = () => {
           </div>
         </CardContent>
       </Card>
+
+      {/* AI Assistant Upsell - Moved to bottom */}
+      <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-lg p-4 border border-green-500/20">
+        <div className="flex items-center gap-3 mb-3">
+          <Bot className="h-5 w-5 text-green-500" />
+          <h3 className="font-semibold text-green-700 dark:text-green-300">{AI_PERSONA.ui.upsellTitle}</h3>
+        </div>
+        <p className="text-sm text-muted-foreground mb-3">
+          {AI_PERSONA.ui.upsellDescription}
+        </p>
+        <Button asChild size="sm" className="bg-green-500 hover:bg-green-600">
+          <Link to="/ai/assistant">
+            {AI_PERSONA.ui.upsellButton}
+            <ArrowRight className="h-4 w-4 ml-2" />
+          </Link>
+        </Button>
+      </div>
     </div>
   );
 };
