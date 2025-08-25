@@ -5,8 +5,10 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.54.0';
 const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
 const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
 
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
+const supabaseService = createClient(supabaseUrl, supabaseServiceKey);
+const supabaseAnon = createClient(supabaseUrl, supabaseAnonKey);
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -84,12 +86,26 @@ serve(async (req) => {
 
     // Extract user ID from auth header if present
     let userId = null;
+    let userSupabase = supabaseAnon;
+    
     if (authHeader) {
       try {
         const token = authHeader.replace('Bearer ', '');
-        const { data: { user }, error } = await supabase.auth.getUser(token);
+        // Create a supabase client with the user's token
+        userSupabase = createClient(supabaseUrl, supabaseAnonKey, {
+          global: {
+            headers: {
+              Authorization: authHeader,
+            },
+          },
+        });
+        
+        const { data: { user }, error } = await userSupabase.auth.getUser();
         if (!error && user) {
           userId = user.id;
+          console.log('Successfully authenticated user:', userId);
+        } else {
+          console.log('Failed to get user:', error);
         }
       } catch (e) {
         console.log('Failed to get user from token:', e);
@@ -97,7 +113,7 @@ serve(async (req) => {
     }
 
     // Check usage limits for authenticated users
-    if (userId) {
+    if (userId && authHeader) {
       const usageTypeMap = {
         'generate_prompt': 'generator',
         'smart_suggestions': 'suggestions',
@@ -106,7 +122,9 @@ serve(async (req) => {
       
       const usageType = usageTypeMap[type as keyof typeof usageTypeMap];
       if (usageType) {
-        const { data: usageResult, error: usageError } = await supabase
+        console.log('Checking usage for user:', userId, 'type:', usageType);
+        
+        const { data: usageResult, error: usageError } = await userSupabase
           .rpc('check_and_increment_usage', {
             user_id_param: userId,
             usage_type_param: usageType
@@ -117,6 +135,7 @@ serve(async (req) => {
           throw new Error('Failed to check usage limits');
         }
 
+        console.log('Usage check result:', usageResult);
         const usageData = usageResult?.[0];
         if (!usageData?.allowed) {
           return new Response(JSON.stringify({
