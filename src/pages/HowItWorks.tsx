@@ -241,7 +241,7 @@ const HowItWorks = () => {
       </section>
 
       {/* User Success Stories */}
-      <section className="max-w-4xl mx-auto mt-12">
+      <section className="max-w-6xl mx-auto mt-12">
         <h2 className="text-2xl font-semibold mb-8 text-center">Users Love How Simple It Is</h2>
         <div className="grid gap-6 md:grid-cols-3">
           <Card className="bg-gradient-to-br from-green-50 to-transparent border-green-200 dark:from-green-950 dark:border-green-800">
@@ -294,110 +294,148 @@ const HowItWorks = () => {
         </div>
       </section>
 
-      {/* Quick FAQ */}
-      <section className="max-w-3xl mx-auto mt-12">
-        <h2 className="text-2xl font-semibold mb-6 text-center">Still Have Questions?</h2>
-        <div className="grid gap-4 md:grid-cols-2">
-          <div className="border-l-4 border-primary pl-4 py-2">
-            <h3 className="font-semibold mb-1">Is it really that simple?</h3>
-            <p className="text-sm text-muted-foreground">Yes! No technical knowledge required. If you can copy and paste, you can use our prompts.</p>
+      {/* FAQ and Newsletter Combined Section */}
+      <section className="container py-12 mt-8">
+        <div className="grid gap-12 lg:grid-cols-3">
+          {/* FAQ Column */}
+          <div className="lg:col-span-2">
+            <h2 className="text-2xl font-semibold mb-8">Still Have Questions?</h2>
+            <div className="grid gap-6 md:grid-cols-2">
+              <div className="space-y-6">
+                <div className="border-l-4 border-primary pl-4 py-2">
+                  <h3 className="font-semibold mb-1">Is it really that simple?</h3>
+                  <p className="text-sm text-muted-foreground">Yes! No technical knowledge required. If you can copy and paste, you can use our prompts.</p>
+                </div>
+                
+                <div className="border-l-4 border-primary pl-4 py-2">
+                  <h3 className="font-semibold mb-1">How fast will I see results?</h3>
+                  <p className="text-sm text-muted-foreground">Instantly! Browse, copy, paste, and get your first great output in under 2 minutes.</p>
+                </div>
+              </div>
+              
+              <div className="space-y-6">
+                <div className="border-l-4 border-primary pl-4 py-2">
+                  <h3 className="font-semibold mb-1">Do I need to pay?</h3>
+                  <p className="text-sm text-muted-foreground">Start completely free. Upgrade to power packs only when you want specialized prompts.</p>
+                </div>
+                
+                <div className="border-l-4 border-primary pl-4 py-2">
+                  <h3 className="font-semibold mb-1">Which AI tools work?</h3>
+                  <p className="text-sm text-muted-foreground">ChatGPT, Claude, Gemini, Perplexity, and basically any text-based AI tool.</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-8">
+              <Button asChild variant="outline" size="sm">
+                <Link to="/faqs">See All FAQs →</Link>
+              </Button>
+            </div>
           </div>
-          
-          <div className="border-l-4 border-primary pl-4 py-2">
-            <h3 className="font-semibold mb-1">Do I need to pay?</h3>
-            <p className="text-sm text-muted-foreground">Start completely free. Upgrade to power packs only when you want specialized prompts.</p>
-          </div>
-          
-          <div className="border-l-4 border-primary pl-4 py-2">
-            <h3 className="font-semibold mb-1">Which AI tools work?</h3>
-            <p className="text-sm text-muted-foreground">ChatGPT, Claude, Gemini, Perplexity, and basically any text-based AI tool.</p>
-          </div>
-          
-          <div className="border-l-4 border-primary pl-4 py-2">
-            <h3 className="font-semibold mb-1">How fast will I see results?</h3>
-            <p className="text-sm text-muted-foreground">Instantly! Browse, copy, paste, and get your first great output in under 2 minutes.</p>
+
+          {/* Newsletter Sidebar */}
+          <div className="lg:col-span-1">
+            <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl p-6 border-primary/20 border h-fit sticky top-6">
+              <h3 className="text-xl font-semibold mb-3 text-center">🎯 Get Weekly Tips</h3>
+              <p className="text-muted-foreground mb-6 text-center text-sm">Join 25,000+ users getting our best prompts and AI productivity tips every Tuesday.</p>
+              
+              <div className="space-y-3 mb-6">
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Check className="w-3 h-3 text-white" />
+                  </div>
+                  <span>Weekly prompting tips</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Check className="w-3 h-3 text-white" />
+                  </div>
+                  <span>AI productivity insights</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Check className="w-3 h-3 text-white" />
+                  </div>
+                  <span>No spam, unsubscribe anytime</span>
+                </div>
+              </div>
+              
+              <div className="space-y-3">
+                <input 
+                  type="email" 
+                  placeholder="Enter your email" 
+                  className="w-full px-4 py-2 rounded-md border bg-background"
+                />
+                <Button variant="hero" className="w-full">
+                  Subscribe Free
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Newsletter Signup */}
-      <section className="max-w-2xl mx-auto mt-12">
-        <Card className="bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
-          <CardContent className="p-8 text-center">
-            <h2 className="text-2xl font-semibold mb-3">🎯 Get Weekly Prompting Tips</h2>
-            <p className="text-muted-foreground mb-6">Join 25,000+ users getting our best prompts and AI productivity tips every Tuesday.</p>
-            <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <input 
-                type="email" 
-                placeholder="Enter your email" 
-                className="flex-1 px-4 py-2 rounded-md border bg-background"
-              />
-              <Button variant="hero" className="px-6">
-                Subscribe Free
-              </Button>
+      {/* About and Features Section */}
+      <section className="max-w-6xl mx-auto mt-12">
+        <div className="grid gap-12 lg:grid-cols-2">
+          {/* About Content */}
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-xl font-semibold mb-4">Built for Real Tasks. Used by Real People.</h3>
+              <p className="text-muted-foreground">PromptAndGo exists to remove the friction of working with AI. We believe the power of generative tools shouldn't be locked behind hype or hidden behind complexity. We focus on what matters: clear, practical prompts that make writing, planning, and thinking easier, one click at a time.</p>
             </div>
-            <p className="text-xs text-muted-foreground mt-3">No spam. Unsubscribe anytime. Free forever.</p>
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Additional About content from promptandgo.ai/about */}
-      <section className="max-w-4xl mx-auto mt-12">
-        <article className="space-y-6">
-          <div>
-            <h3 className="text-xl font-semibold">Built for Real Tasks. Used by Real People.</h3>
-            <p className="mt-2 text-muted-foreground">PromptAndGo exists to remove the friction of working with AI. We believe the power of generative tools shouldn’t be locked behind hype or hidden behind complexity. We focus on what matters: clear, practical prompts that make writing, planning, and thinking easier, one click at a time.</p>
+            
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Trusted by Thousands, from Startups to Enterprises</h4>
+              <p className="text-muted-foreground">Most people don't want to become prompt engineers — they just want better results. We built a simple way to skip the struggle and get to the output.</p>
+            </div>
+            
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded-xl border p-6 text-center bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10">
+                <div className="text-3xl font-bold tracking-tight">12+</div>
+                <div className="text-muted-foreground">Prompt Categories</div>
+              </div>
+              <div className="rounded-xl border p-6 text-center bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10">
+                <div className="text-3xl font-bold tracking-tight">1600+</div>
+                <div className="text-muted-foreground">Prompts</div>
+              </div>
+            </div>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+          {/* Features Grid */}
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/5 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
               <ShieldCheck className="h-6 w-6 text-primary mb-2" aria-hidden="true" />
-              <h4 className="font-semibold">Human Curated Prompts</h4>
-              <p className="mt-1 text-muted-foreground">Each prompt is crafted for real use cases — not generic fluff.</p>
+              <h4 className="font-semibold">Human Curated</h4>
+              <p className="mt-1 text-muted-foreground text-sm">Each prompt is crafted for real use cases — not generic fluff.</p>
             </div>
-            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/5 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
               <Zap className="h-6 w-6 text-primary mb-2" aria-hidden="true" />
-              <h4 className="font-semibold">Instant Use, No Learning Curve</h4>
-              <p className="mt-1 text-muted-foreground">Copy into your AI tool and run instantly — no setup required.</p>
+              <h4 className="font-semibold">Instant Use</h4>
+              <p className="mt-1 text-muted-foreground text-sm">Copy into your AI tool and run instantly — no setup required.</p>
             </div>
-            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/5 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
               <Clock className="h-6 w-6 text-primary mb-2" aria-hidden="true" />
               <h4 className="font-semibold">Built for Busy People</h4>
-              <p className="mt-1 text-muted-foreground">Made for educators, creators, jobseekers, and more.</p>
+              <p className="mt-1 text-muted-foreground text-sm">Made for educators, creators, jobseekers, and more.</p>
             </div>
-            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/5 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
               <BadgeCheck className="h-6 w-6 text-primary mb-2" aria-hidden="true" />
               <h4 className="font-semibold">Free + Pro Options</h4>
-              <p className="mt-1 text-muted-foreground">Choose what you need. Upgrade only when it’s worth it.</p>
+              <p className="mt-1 text-muted-foreground text-sm">Choose what you need. Upgrade only when it's worth it.</p>
             </div>
-            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/5 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
               <Globe className="h-6 w-6 text-primary mb-2" aria-hidden="true" />
-              <h4 className="font-semibold">Works with All AI Platforms</h4>
-              <p className="mt-1 text-muted-foreground">Use with ChatGPT, GPT-4, Claude, Gemini, and more.</p>
+              <h4 className="font-semibold">Universal Compatibility</h4>
+              <p className="mt-1 text-muted-foreground text-sm">Use with ChatGPT, GPT-4, Claude, Gemini, and more.</p>
             </div>
-            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/5 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
               <Scale className="h-6 w-6 text-primary mb-2" aria-hidden="true" />
               <h4 className="font-semibold">Ethically Created</h4>
-              <p className="mt-1 text-muted-foreground">No fake personas. No scraped content. Always clear, honest use.</p>
+              <p className="mt-1 text-muted-foreground text-sm">No fake personas. No scraped content. Always clear, honest use.</p>
             </div>
           </div>
-
-          <div className="grid gap-4 sm:grid-cols-2 mt-2">
-            <div className="rounded-xl border p-6 text-center bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10 shadow-sm hover:shadow-md transition-all duration-200">
-              <div className="text-3xl font-bold tracking-tight">12+</div>
-              <div className="text-muted-foreground">Prompt Categories</div>
-            </div>
-            <div className="rounded-xl border p-6 text-center bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10 shadow-sm hover:shadow-md transition-all duration-200">
-              <div className="text-3xl font-bold tracking-tight">1600+</div>
-              <div className="text-muted-foreground">Prompts</div>
-            </div>
-          </div>
-
-          <div className="pt-2">
-            <h3 className="text-xl font-semibold">Trusted by Thousands, from Startups to Enterprises</h3>
-            <p className="mt-2 text-muted-foreground">Most people don’t want to become prompt engineers — they just want better results. We built a simple way to skip the struggle and get to the output.</p>
-          </div>
-        </article>
+        </div>
       </section>
       <section aria-labelledby="cta-tail" className="relative bg-hero hero-grid mt-16">
         <div className="container p-8 md:p-12 text-center text-primary-foreground">
