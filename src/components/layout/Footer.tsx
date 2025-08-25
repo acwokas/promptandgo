@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
-import { User as UserIcon, Bot } from "lucide-react";
+import { User as UserIcon, Bot, Search, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Footer = () => {
@@ -42,7 +42,10 @@ const Footer = () => {
             <span className="text-foreground font-medium">Main sections</span>
             <Link to="/" className="text-muted-foreground hover:text-foreground">Welcome</Link>
             <Link to="/how-it-works" className="text-muted-foreground hover:text-foreground">How it Works</Link>
-            <Link to="/library" className="text-muted-foreground hover:text-foreground">Browse Library</Link>
+            <Link to="/library" className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
+              <Search className="h-3 w-3" />
+              Browse Library
+            </Link>
             <Link to="/packs" className="text-muted-foreground hover:text-foreground">⚡️Power Packs</Link>
             <Link to="/scout" className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
               <Bot className="h-3 w-3 text-blue-500" />
@@ -63,6 +66,10 @@ const Footer = () => {
                 <span className="inline-flex items-center gap-2"><UserIcon className="h-4 w-4" aria-hidden="true" /> My Account</span>
               </Link>
             )}
+            <Link to={user ? "/account/favorites" : "/auth"} className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
+              <Heart className="h-3 w-3 text-red-500" />
+              My Prompts
+            </Link>
           </nav>
         </div>
         <div className="md:col-span-3 col-span-full justify-self-end text-right text-muted-foreground">© 2025 <strong>prompt</strong>andgo  |  <Link to="/terms" className="hover:text-foreground">Terms & Conditions</Link>  |  <Link to="/privacy" className="hover:text-foreground">Privacy Policy</Link></div>
