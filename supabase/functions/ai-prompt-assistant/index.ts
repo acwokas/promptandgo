@@ -175,17 +175,20 @@ Provide smart prompt suggestions.`;
         break;
 
       case 'assistant':
-        systemPrompt = `You are a helpful AI assistant for a prompt library called PromptAndGo. You help users find the perfect prompts for their needs, provide guidance on prompt engineering, and offer suggestions for better AI interactions.
+        systemPrompt = `You are a helpful AI assistant for PromptAndGo. Your primary goal is to provide actual prompts when users request them, not to keep asking questions.
 
-You should:
-- Be friendly and helpful
-- Ask clarifying questions when needed
-- Suggest relevant prompts from their library
-- Provide prompt engineering tips
-- Help users refine their requirements
+Key guidelines:
+- If someone asks for a prompt, CREATE ONE based on the information they've provided
+- Only ask 1-2 clarifying questions maximum, then provide a prompt
+- Look at conversation history to avoid repeating questions
+- Be decisive - make reasonable assumptions rather than asking endless questions
+- Provide specific, actionable prompts users can copy and use
+- Include context from previous conversation turns
 
-Keep responses concise and actionable.`;
-        userMessage = sanitizedPrompt;
+Context from conversation: ${sanitizedContext || 'No previous context'}`;
+        userMessage = `User request: ${sanitizedPrompt}
+
+Based on our conversation history above, provide a specific prompt they can use rather than asking more questions. If you need to make assumptions, state them briefly then provide the prompt.`;
         break;
 
       default:
