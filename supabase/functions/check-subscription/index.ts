@@ -98,6 +98,34 @@ serve(async (req) => {
       }, { onConflict: 'user_id' });
     }
 
+    // Send welcome email for new subscribers
+    if (hasActive && tier) {
+      try {
+        const welcomeResponse = await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/send-subscription-welcome`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${Deno.env.get('SUPABASE_ANON_KEY')}`,
+          },
+          body: JSON.stringify({
+            userEmail: user.email,
+            userName: user.user_metadata?.full_name || user.user_metadata?.name,
+            subscriptionTier: tier,
+            subscriptionEnd: subEnd,
+          }),
+        });
+        
+        if (!welcomeResponse.ok) {
+          console.error('Failed to send welcome email:', await welcomeResponse.text());
+        } else {
+          console.log('Welcome email sent successfully');
+        }
+      } catch (emailError) {
+        console.error('Error sending welcome email:', emailError);
+        // Don't fail the subscription check if email fails
+      }
+    }
+
     return new Response(JSON.stringify({ subscribed: hasActive, subscription_tier: tier, subscription_end: subEnd }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 });
   } catch (error: any) {
     const msg = error?.message || String(error);
