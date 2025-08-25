@@ -11,6 +11,7 @@ import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useAIUsage } from "@/hooks/useAIUsage";
 import UsageDisplay from "@/components/ai/UsageDisplay";
 import { Link, useSearchParams } from "react-router-dom";
+import { AI_PERSONA } from "@/lib/aiPersona";
 
 interface RecentPrompt {
   id: string;
@@ -214,14 +215,14 @@ const AIPromptGenerator = () => {
       <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-lg p-4 border border-green-500/20 mb-6">
         <div className="flex items-center gap-3 mb-3">
           <Bot className="h-5 w-5 text-green-500" />
-          <h3 className="font-semibold text-green-700 dark:text-green-300">Need Help Getting Started?</h3>
+          <h3 className="font-semibold text-green-700 dark:text-green-300">{AI_PERSONA.ui.upsellTitle}</h3>
         </div>
         <p className="text-sm text-muted-foreground mb-3">
-          Not sure what to create? Chat with our AI Assistant for personalized recommendations and expert guidance.
+          {AI_PERSONA.ui.upsellDescription}
         </p>
         <Button asChild size="sm" className="bg-green-500 hover:bg-green-600">
           <Link to="/ai/assistant">
-            Chat with AI Assistant
+            {AI_PERSONA.ui.upsellButton}
             <ArrowRight className="h-4 w-4 ml-2" />
           </Link>
         </Button>
@@ -229,10 +230,11 @@ const AIPromptGenerator = () => {
       <div className="text-center space-y-2">
         <div className="flex items-center justify-center gap-2">
           <Wand2 className="h-6 w-6 text-primary" />
-          <h1 className="text-3xl font-bold">AI Prompt Generator</h1>
+          <h1 className="text-3xl font-bold">{AI_PERSONA.ui.generatorTitle}</h1>
+          <Badge variant="secondary" className="text-xs">{AI_PERSONA.greetings.generator}</Badge>
         </div>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Create custom AI prompts from your description or get smart suggestions tailored to your needs. Perfect for ChatGPT, Claude, Gemini, and more.
+          {AI_PERSONA.ui.generatorSubtitle}
         </p>
       </div>
 

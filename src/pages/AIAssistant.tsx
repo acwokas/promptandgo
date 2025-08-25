@@ -7,8 +7,8 @@ const AIAssistantPage = () => {
   return (
     <>
       <SEO 
-        title="AI Assistant - Get Help with Prompts and AI"
-        description="Chat with our AI assistant to find the perfect prompts, get prompt engineering tips, and improve your AI interactions."
+        title="Scout AI Assistant - Your AI Prompt Explorer"
+        description="Chat with Scout, your AI prompt explorer, to find perfect prompts, get expert prompt engineering tips, and improve your AI interactions."
       />
       <div className="container mx-auto px-6 py-6">
         <Breadcrumb className="mb-6">

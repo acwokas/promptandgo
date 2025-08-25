@@ -17,8 +17,8 @@ const ToolkitPage = () => {
       color: "from-purple-500 to-pink-500"
     },
     {
-      title: "AI Assistant",
-      description: "Chat with our AI to find prompts and get expert guidance",
+      title: "Scout AI Assistant",
+      description: "Chat with Scout to find prompts and get expert guidance",
       icon: Bot,
       path: "/ai/assistant",
       features: ["Interactive chat", "Prompt discovery", "Expert tips"],
@@ -125,14 +125,14 @@ const ToolkitPage = () => {
         <div className="mt-12 bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-lg p-6 border border-green-500/20">
           <div className="flex items-center gap-3 mb-4">
             <Bot className="h-6 w-6 text-green-500" />
-            <h3 className="text-xl font-semibold">Need Help Choosing?</h3>
+            <h3 className="text-xl font-semibold">Meet Scout - Your AI Prompt Explorer</h3>
           </div>
           <p className="text-muted-foreground mb-4">
-            Not sure what prompt to create? Chat with our AI Assistant for personalized recommendations and expert guidance.
+            Not sure what prompt to create? Chat with Scout for personalized recommendations and expert guidance on finding the perfect prompts for any task.
           </p>
           <Button asChild className="bg-green-500 hover:bg-green-600">
             <Link to="/ai/assistant">
-              Chat with AI Assistant
+              Chat with Scout
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>
           </Button>

@@ -13,6 +13,7 @@ import { useAIUsage } from "@/hooks/useAIUsage";
 import UsageDisplay from "@/components/ai/UsageDisplay";
 import DOMPurify from 'dompurify';
 import { validateSecureInput, sanitizeHtml } from "@/lib/securityUtils";
+import { AI_PERSONA } from "@/lib/aiPersona";
 
 
 interface Message {
@@ -27,7 +28,7 @@ const AIAssistant = () => {
     {
       id: '1',
       role: 'assistant',
-      content: "Hi! I'm your AI assistant for PromptAndGo. I can help you find the perfect prompts, provide prompt engineering tips, and answer questions about getting better AI results. What would you like help with today?",
+      content: AI_PERSONA.greetings.assistant,
       timestamp: new Date()
     }
   ]);
@@ -131,12 +132,10 @@ const AIAssistant = () => {
     }
   };
 
-  const quickActions = [
-    { label: "Find prompts for marketing", icon: Search },
-    { label: "How to write better prompts?", icon: Lightbulb },
-    { label: "Best prompts for writing", icon: Search },
-    { label: "Prompt engineering tips", icon: Lightbulb },
-  ];
+  const quickActions = AI_PERSONA.quickActions.map(action => ({
+    label: action.label,
+    icon: action.icon === "Search" ? Search : Lightbulb
+  }));
 
   const handleQuickAction = (action: string) => {
     setInputMessage(action);
@@ -147,10 +146,11 @@ const AIAssistant = () => {
       <div className="text-center space-y-2 mb-6">
         <div className="flex items-center justify-center gap-2">
           <Bot className="h-6 w-6 text-primary" />
-          <h1 className="text-3xl font-bold">AI Assistant</h1>
+          <h1 className="text-3xl font-bold">{AI_PERSONA.name}</h1>
+          <Badge variant="secondary" className="text-xs">{AI_PERSONA.tagline}</Badge>
         </div>
         <p className="text-muted-foreground">
-          Get personalized help finding and creating the perfect prompts
+          {AI_PERSONA.ui.assistantSubtitle}
         </p>
       </div>
 
@@ -179,7 +179,7 @@ const AIAssistant = () => {
         <CardHeader className="pb-3 flex-shrink-0">
           <CardTitle className="flex items-center gap-2 text-lg">
             <Bot className="h-5 w-5" />
-            Chat with AI Assistant
+            {AI_PERSONA.ui.assistantTitle}
           </CardTitle>
         </CardHeader>
         
@@ -286,7 +286,7 @@ const AIAssistant = () => {
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Ask me anything about prompts..."
+                placeholder="Ask Scout anything about prompts..."
                 disabled={isLoading}
               />
               <Button 
