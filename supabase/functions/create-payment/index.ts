@@ -87,6 +87,7 @@ serve(async (req) => {
     const session = await stripe.checkout.sessions.create({
       line_items,
       mode: 'payment',
+      statement_descriptor: 'PROMPTANDGO',  // Max 22 chars, alphanumeric only
       success_url: `${origin}/checkout/success?order_id=${orderId}&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/checkout/canceled`,
       // SECURITY: Add metadata for additional verification
