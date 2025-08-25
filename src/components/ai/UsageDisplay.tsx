@@ -150,9 +150,18 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Zap className="h-5 w-5 text-primary" />
-            <span>AI Usage Today</span>
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <video 
+                src="/scout-animation-v2.mp4" 
+                autoPlay 
+                loop 
+                muted 
+                playsInline
+                className="w-8 h-8 rounded-full object-cover border-2 border-primary/20"
+              />
+            </div>
+            <span>Scout AI Usage Today</span>
             {getSubscriptionBadge()}
           </div>
           <Button
