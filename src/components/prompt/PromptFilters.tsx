@@ -71,14 +71,14 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
       <div className="space-y-3 md:hidden">
         {/* Search first on mobile for immediate access */}
         <div className="space-y-1">
-          <Label htmlFor="search-input-mobile">{searchLabel ?? "Search:"}</Label>
+          <Label htmlFor="search-input-mobile" className="text-xs">{searchLabel ?? "Search:"}</Label>
           <Input
             id="search-input-mobile"
             value={query}
             onChange={(e) => onChange({ query: e.target.value })}
             placeholder={searchPlaceholder ?? "Search prompts..."}
             aria-label={searchLabel ?? "Search prompts"}
-            className="bg-muted/60 border shadow-sm focus:ring-2 focus:ring-ring"
+            className="bg-muted/60 border shadow-sm focus:ring-2 focus:ring-ring h-8 text-sm px-3 py-1"
           />
         </div>
 
