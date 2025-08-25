@@ -336,9 +336,15 @@ const AIPromptGenerator = () => {
               </div>
             ) : (
               <div className="text-center text-muted-foreground py-12">
-                <div className="flex items-center justify-center gap-2 mb-4">
-                  <Bot className="h-12 w-12 opacity-50" />
-                  <Wand2 className="h-8 w-8 opacity-50" />
+                <div className="flex justify-center mb-4">
+                  <video 
+                    src="/scout-animation-v2.mp4" 
+                    autoPlay 
+                    loop 
+                    muted 
+                    playsInline
+                    className="w-16 h-16 rounded-full object-cover border-2 border-primary/20"
+                  />
                 </div>
                 <p className="text-base font-medium mb-1">Scout is ready to help!</p>
                 <p className="text-sm">Describe what you want the AI to do and Scout will create the perfect prompt</p>
