@@ -73,7 +73,7 @@ const Header = () => {
           <li>
             <NavLink to="/scout" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
               <Bot className="h-4 w-4 inline mr-1 text-blue-500" />
-              AI Tools
+              Scout AI
             </NavLink>
           </li>
           <li><NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Tips</NavLink></li>
@@ -104,7 +104,7 @@ const Header = () => {
                   <NavLink to="/packs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>⚡️Power Packs</NavLink>
                   <NavLink to="/scout" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
                     <Bot className="h-4 w-4 inline mr-1 text-blue-500" />
-                    AI Tools
+                    Scout AI
                   </NavLink>
                   <NavLink to="/cart" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Cart</NavLink>
                   <NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Tips</NavLink>
