@@ -1176,6 +1176,170 @@ const PromptLibrary = () => {
           </div>
         )}
 
+        {/* Quick Discovery Sections */}
+        <section className="mt-16 mb-8">
+          <div className="grid gap-6 lg:grid-cols-3">
+            <Card className="bg-gradient-to-br from-primary/5 to-transparent border-primary/20">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                    <TrendingUp className="h-5 w-5 text-primary" />
+                  </div>
+                  <h3 className="font-semibold">Trending Now</h3>
+                </div>
+                <p className="text-sm text-muted-foreground mb-4">Most popular prompts this week</p>
+                <div className="space-y-2">
+                  <Badge 
+                    variant="secondary" 
+                    className="text-xs cursor-pointer hover:bg-primary/20 transition-colors"
+                    onClick={() => {
+                      clearRandom();
+                      setQuery("LinkedIn content strategy");
+                      setCategoryId(undefined);
+                      setSubcategoryId(undefined);
+                      setRibbon(undefined);
+                    }}
+                  >
+                    LinkedIn content strategy
+                  </Badge>
+                  <Badge 
+                    variant="secondary" 
+                    className="text-xs cursor-pointer hover:bg-primary/20 transition-colors"
+                    onClick={() => {
+                      clearRandom();
+                      setQuery("email marketing");
+                      setCategoryId(undefined);
+                      setSubcategoryId(undefined);
+                      setRibbon(undefined);
+                    }}
+                  >
+                    Email marketing
+                  </Badge>
+                  <Badge 
+                    variant="secondary" 
+                    className="text-xs cursor-pointer hover:bg-primary/20 transition-colors"
+                    onClick={() => {
+                      clearRandom();
+                      setQuery("interview prep");
+                      setCategoryId(undefined);
+                      setSubcategoryId(undefined);
+                      setRibbon(undefined);
+                    }}
+                  >
+                    Interview prep
+                  </Badge>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-green-50 to-transparent border-green-200 dark:from-green-950 dark:border-green-800">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 bg-green-500/10 rounded-full flex items-center justify-center">
+                    <Clock className="h-5 w-5 text-green-600 dark:text-green-400" />
+                  </div>
+                  <h3 className="font-semibold">New This Week</h3>
+                </div>
+                <p className="text-sm text-muted-foreground mb-4">Fresh prompts added recently</p>
+                <div className="space-y-2">
+                  <Badge 
+                    variant="secondary" 
+                    className="text-xs cursor-pointer hover:bg-primary/20 transition-colors"
+                    onClick={() => {
+                      clearRandom();
+                      setQuery("crisis response");
+                      setCategoryId(undefined);
+                      setSubcategoryId(undefined);
+                      setRibbon(undefined);
+                    }}
+                  >
+                    Crisis response
+                  </Badge>
+                  <Badge 
+                    variant="secondary" 
+                    className="text-xs cursor-pointer hover:bg-primary/20 transition-colors"
+                    onClick={() => {
+                      clearRandom();
+                      setQuery("content series");
+                      setCategoryId(undefined);
+                      setSubcategoryId(undefined);
+                      setRibbon(undefined);
+                    }}
+                  >
+                    Content series
+                  </Badge>
+                  <Badge 
+                    variant="secondary" 
+                    className="text-xs cursor-pointer hover:bg-primary/20 transition-colors"
+                    onClick={() => {
+                      clearRandom();
+                      setQuery("data storytelling");
+                      setCategoryId(undefined);
+                      setSubcategoryId(undefined);
+                      setRibbon(undefined);
+                    }}
+                  >
+                    Data storytelling
+                  </Badge>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-purple-50 to-transparent border-purple-200 dark:from-purple-950 dark:border-purple-800">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 bg-purple-500/10 rounded-full flex items-center justify-center">
+                    <Sparkles className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                  </div>
+                  <h3 className="font-semibold">Most Effective</h3>
+                </div>
+                <p className="text-sm text-muted-foreground mb-4">Highest rated by our community</p>
+                <div className="space-y-2">
+                  <Badge 
+                    variant="secondary" 
+                    className="text-xs cursor-pointer hover:bg-primary/20 transition-colors"
+                    onClick={() => {
+                      clearRandom();
+                      setQuery("STAR method stories");
+                      setCategoryId(undefined);
+                      setSubcategoryId(undefined);
+                      setRibbon(undefined);
+                    }}
+                  >
+                    STAR method stories
+                  </Badge>
+                  <Badge 
+                    variant="secondary" 
+                    className="text-xs cursor-pointer hover:bg-primary/20 transition-colors"
+                    onClick={() => {
+                      clearRandom();
+                      setQuery("viral trend adaptation");
+                      setCategoryId(undefined);
+                      setSubcategoryId(undefined);
+                      setRibbon(undefined);
+                    }}
+                  >
+                    Viral trend adaptation
+                  </Badge>
+                  <Badge 
+                    variant="secondary" 
+                    className="text-xs cursor-pointer hover:bg-primary/20 transition-colors"
+                    onClick={() => {
+                      clearRandom();
+                      setQuery("content calendar");
+                      setCategoryId(undefined);
+                      setSubcategoryId(undefined);
+                      setRibbon(undefined);
+                    }}
+                  >
+                    Content calendar
+                  </Badge>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
         {/* Submit a Prompt Section */}
         <section className="mt-16 pt-12 border-t border-border">
           <div className="text-center max-w-3xl mx-auto">
