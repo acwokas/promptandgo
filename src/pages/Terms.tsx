@@ -1,11 +1,28 @@
 import SEO from "@/components/SEO";
 import PageHero from "@/components/layout/PageHero";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { Link } from "react-router-dom";
 
 const Terms = () => (
   <>
     <PageHero title={<>Terms &amp; Conditions</>} subtitle={<>Usage rules, IP, payments, privacy, liability, and your rights.</>} minHeightClass="min-h-[28vh]" />
     <main className="container py-10">
       <SEO title="Terms & Conditions" description="PromptAndGo.ai Terms & Conditions (Singapore): usage rules, IP, payments, privacy, liability, and your rights." />
+
+      {/* Breadcrumb */}
+      <Breadcrumb className="mb-6">
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link to="/">Home</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Terms & Conditions</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
 
     <p className="text-sm text-muted-foreground">Effective Date: 01 January 2025</p>
     <p className="text-sm text-muted-foreground mb-6">Jurisdiction: Singapore</p>

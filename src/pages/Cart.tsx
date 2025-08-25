@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { toast } from "@/hooks/use-toast";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { Link } from "react-router-dom";
 
 const centsToUSD = (cents: number) => `$${(cents / 100).toFixed(2)}`;
 
@@ -114,6 +116,20 @@ const CartPage = () => {
       <SEO title="Your Cart" description="Review your selected prompts and packs before checkout." />
       <PageHero title={<><span className="text-gradient-brand">Your</span> Cart</>} subtitle={<>Complete your purchase securely. Membership option available at checkout.</>} minHeightClass="min-h-[25vh]"/>
       <main className="container py-8">
+        {/* Breadcrumb */}
+        <Breadcrumb className="mb-6">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link to="/">Home</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Your Cart</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
         {items.length === 0 ? (
           <Card>
             <CardContent className="p-6 text-center text-muted-foreground">

@@ -10,6 +10,7 @@ import { validatePromptInput, sanitizeInput, validateEmailInput } from "@/lib/in
 import { supabase } from "@/integrations/supabase/client";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
 const SubmitPrompt = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -113,6 +114,21 @@ const SubmitPrompt = () => {
       <PageHero title={<>Submit a Prompt</>} subtitle={<>Have a great prompt? Share it and help others work smarter.</>} minHeightClass="min-h-[28vh]" />
       <main className="container py-10">
         <SEO title="Submit a Prompt" description="Share your best workflow prompts with the community." />
+
+        {/* Breadcrumb */}
+        <Breadcrumb className="mb-6">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link to="/">Home</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Submit a Prompt</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
 
         <form onSubmit={onSubmit} className="grid gap-4 max-w-2xl">
           <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-lg p-4 mb-4">

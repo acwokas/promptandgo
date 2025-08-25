@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import PageHero from "@/components/layout/PageHero";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 const Blog = () => {
   const { user } = useSupabaseAuth();
   const origin = typeof window !== "undefined" ? window.location.origin : "";
@@ -29,6 +30,21 @@ const Blog = () => {
     </PageHero>
     <main className="container py-10">
       <SEO title="Tips – Prompt tips, tricks & examples" description="Tips, tricks and examples to get the most out of your prompting." canonical={canonical} />
+
+      {/* Breadcrumb */}
+      <Breadcrumb className="mb-6">
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link to="/">Home</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Tips</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
 
     <section className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       <article>

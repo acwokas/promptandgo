@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
+import { useNavigate, useSearchParams, useLocation, Link } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,6 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { validateEmailInput, sanitizeInput } from "@/lib/inputValidation";
 import PostGoogleAuthForm from "@/components/auth/PostGoogleAuthForm";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
 const Auth = () => {
   const [searchParams] = useSearchParams();
@@ -237,6 +238,21 @@ const Auth = () => {
       )}
       
       <main className="container py-12">
+        {/* Breadcrumb */}
+        <Breadcrumb className="mb-6">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link to="/">Home</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>{mode === "signin" ? "Login" : "Sign Up"}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+
         <section className="mx-auto max-w-md rounded-2xl border bg-card p-6 md:p-8">
           <h1 className="text-2xl font-semibold mb-6">{mode === "signin" ? "Log in" : "Create your account"}</h1>
 

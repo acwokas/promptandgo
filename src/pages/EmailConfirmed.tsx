@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, Gift, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
 const EmailConfirmed = () => {
   const [searchParams] = useSearchParams();
@@ -22,6 +23,21 @@ const EmailConfirmed = () => {
       
       <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5">
         <div className="container mx-auto px-4 py-16">
+          {/* Breadcrumb */}
+          <Breadcrumb className="mb-6">
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link to="/">Home</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Email Confirmed</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+
           <div className="max-w-2xl mx-auto">
             <Card className="border-0 shadow-2xl bg-card/80 backdrop-blur-sm">
               <CardContent className="p-12 text-center">

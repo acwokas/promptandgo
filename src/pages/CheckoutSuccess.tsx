@@ -1,9 +1,10 @@
 import SEO from "@/components/SEO";
 import PageHero from "@/components/layout/PageHero";
 import { useEffect, useState } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
 const CheckoutSuccess = () => {
   const [search] = useSearchParams();
@@ -36,6 +37,21 @@ const CheckoutSuccess = () => {
       <SEO title="Checkout Success" description="Your payment was successful." />
       <PageHero title={<>Payment <span className="text-gradient-brand">Successful</span></>} subtitle={<>We are finalising your access.</>} minHeightClass="min-h-[28vh]" />
       <main className="container py-8">
+        {/* Breadcrumb */}
+        <Breadcrumb className="mb-6">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link to="/">Home</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Checkout Success</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+
         <div className="rounded-xl border bg-card p-6 text-center text-muted-foreground">{status}</div>
       </main>
     </>

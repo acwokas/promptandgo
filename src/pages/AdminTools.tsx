@@ -2,6 +2,7 @@ import SEO from "@/components/SEO";
 import PageHero from "@/components/layout/PageHero";
 import { AdminBreadcrumb } from "@/components/admin/AdminBreadcrumb";
 import { Button } from "@/components/ui/button";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
@@ -89,6 +90,21 @@ const AdminTools = () => {
       />
 
       <div className="container mx-auto px-4 py-12">
+        {/* Breadcrumb */}
+        <Breadcrumb className="mb-6">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link to="/">Home</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Admin Tools</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {tools.map((tool) => (
             <Card key={tool.href} className="hover:shadow-lg transition-shadow">
