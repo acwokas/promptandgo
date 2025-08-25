@@ -52,6 +52,23 @@ const ToolkitPage = () => {
           </Breadcrumb>
           {/* Hero Section */}
           <div className="text-center mb-16 space-y-6">
+            {/* Scout's Avatar */}
+            <div className="flex justify-center mb-6">
+              <div className="relative">
+                <video 
+                  src="/scout-animation-v2.mp4" 
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline
+                  className="w-32 h-32 rounded-full object-cover border-4 border-primary/20 shadow-xl hover-scale"
+                />
+                <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-primary rounded-full border-4 border-background flex items-center justify-center">
+                  <div className="w-3 h-3 bg-white rounded-full animate-pulse"></div>
+                </div>
+              </div>
+            </div>
+            
             <div className="flex items-center justify-center gap-3 mb-4">
               <div className="p-3 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-2xl">
                 <Sparkles className="h-8 w-8 text-primary" />
