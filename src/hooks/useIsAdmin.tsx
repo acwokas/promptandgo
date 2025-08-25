@@ -23,7 +23,7 @@ export function useIsAdmin() {
       }
       
       try {
-        console.log("useIsAdmin: Checking user_roles table");
+        console.log("useIsAdmin: Checking user_roles table for user:", user.id);
         // Primary: check user_roles table (RLS allows users to read their own roles)
         const { data, error } = await supabase
           .from("user_roles")
@@ -32,7 +32,13 @@ export function useIsAdmin() {
           .eq("role", "admin")
           .limit(1);
           
-        console.log("useIsAdmin: user_roles query result", { hasData: !!data, error: !!error });
+        console.log("useIsAdmin: user_roles query result", { 
+          hasData: !!data, 
+          dataLength: data?.length,
+          data: data,
+          error: error,
+          errorMessage: error?.message 
+        });
         
         if (error) throw error;
         const hasRole = (data?.length || 0) > 0;
