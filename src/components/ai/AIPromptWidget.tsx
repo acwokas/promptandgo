@@ -151,7 +151,7 @@ const AIPromptWidget = () => {
                 Copy
               </Button>
               <Button asChild variant="outline" size="sm">
-                <Link to={`/ai/generator${description.trim() ? `?prompt=${encodeURIComponent(description.trim())}` : ''}`}>
+                <Link to={`/ai/generator?prompt=${encodeURIComponent(description.trim())}&result=${encodeURIComponent(generatedPrompt)}`}>
                   View Full Generator →
                 </Link>
               </Button>

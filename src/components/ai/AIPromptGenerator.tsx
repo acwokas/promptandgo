@@ -32,11 +32,15 @@ const AIPromptGenerator = () => {
   const { refreshUsage } = useAIUsage();
 
   
-  // Load prompt from URL parameters if provided
+  // Load prompt and result from URL parameters if provided
   useEffect(() => {
     const promptFromUrl = searchParams.get('prompt');
+    const resultFromUrl = searchParams.get('result');
     if (promptFromUrl) {
       setDescription(promptFromUrl);
+    }
+    if (resultFromUrl) {
+      setGeneratedPrompt(resultFromUrl);
     }
   }, [searchParams]);
 
