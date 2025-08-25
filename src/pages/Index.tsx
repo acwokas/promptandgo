@@ -515,27 +515,27 @@ const Index = () => {
 
         {/* AI Tools Section */}
         <section className="container py-6">
-          <h2 className="text-2xl font-semibold mb-2">✨ Try our AI-Powered Tools</h2>
-          <p className="text-muted-foreground max-w-3xl mb-6">Enhance your prompting with our intelligent tools and personalized recommendations.</p>
+          <h2 className="text-2xl font-semibold mb-2">✨ Meet Scout - Your AI Prompt Explorer</h2>
+          <p className="text-muted-foreground max-w-3xl mb-6">Scout helps you discover perfect prompts and create custom ones tailored to your needs. Get expert guidance and personalized recommendations.</p>
           <div className="grid gap-6 md:grid-cols-2">
             <Card className="bg-gradient-to-br from-accent/10 to-transparent border-accent/20">
               <CardHeader className="pb-4">
                 <CardTitle className="flex items-center gap-2 text-lg">
                   <Sparkles className="h-5 w-5 text-accent" />
-                  🎯 Smart Suggestions
+                  🎯 Scout Recommendations
                 </CardTitle>
                 <p className="text-sm text-muted-foreground">
-                  Get personalized prompt recommendations based on your preferences
+                  Let Scout find the perfect prompts for your specific needs
                 </p>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="text-center text-muted-foreground py-4 text-sm">
                   <Sparkles className="h-8 w-8 mx-auto mb-2 text-accent" />
-                  <p>Discover prompts tailored just for you</p>
+                  <p>Scout knows exactly what you need</p>
                 </div>
                 <Button asChild variant="outline" size="sm" className="w-full">
                   <Link to="/scout">
-                    Get Smart Suggestions →
+                    Explore with Scout →
                   </Link>
                 </Button>
               </CardContent>
@@ -548,17 +548,17 @@ const Index = () => {
                   🤖 Scout Assistant
                 </CardTitle>
                 <p className="text-sm text-muted-foreground">
-                  Chat with our AI to refine and improve your prompts
+                  Chat with Scout to create custom prompts and get expert guidance
                 </p>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="text-center text-muted-foreground py-4 text-sm">
                   <Wand2 className="h-8 w-8 mx-auto mb-2 text-secondary" />
-                  <p>Get expert help crafting better prompts</p>
+                  <p>Scout creates prompts that work perfectly</p>
                 </div>
                 <Button asChild variant="outline" size="sm" className="w-full">
                   <Link to="/scout">
-                    Try Scout Assistant →
+                    Chat with Scout →
                   </Link>
                 </Button>
               </CardContent>
