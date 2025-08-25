@@ -128,6 +128,43 @@ serve(async (req) => {
     const customerId = typeof session.customer === 'string' ? session.customer : (session.customer as any)?.id;
     await grantEntitlements(supabaseService, user.id, user.email ?? null, orderId, customerId);
 
+    // Send purchase confirmation emails
+    try {
+      // Get order items for email
+      const { data: orderItems, error: itemsError } = await supabaseService
+        .from('order_items')
+        .select('*')
+        .eq('order_id', orderId);
+
+      if (!itemsError && orderItems && orderItems.length > 0) {
+        const items = orderItems.map(item => ({
+          type: item.item_type,
+          title: item.title || `${item.item_type} item`,
+          unitAmount: item.unit_amount,
+          quantity: item.quantity
+        }));
+
+        // Extract user name from metadata if available
+        const userName = user.user_metadata?.full_name || user.user_metadata?.name;
+
+        await supabaseService.functions.invoke('send-purchase-confirmation', {
+          body: {
+            orderId: orderId,
+            userEmail: user.email,
+            userName: userName,
+            totalAmount: session.amount_total ?? order.amount,
+            currency: order.currency || 'usd',
+            items: items
+          }
+        });
+
+        console.log('Purchase confirmation emails sent successfully');
+      }
+    } catch (emailError) {
+      console.error('Failed to send purchase confirmation emails:', emailError);
+      // Don't fail the whole transaction if email fails
+    }
+
     return new Response(JSON.stringify({ ok: true }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 });
   } catch (error: any) {
     const msg = error?.message || String(error);
