@@ -36,11 +36,11 @@ const Footer = () => {
             <span className="text-foreground font-medium">Main sections</span>
             <Link to="/" className="text-muted-foreground hover:text-foreground">Welcome</Link>
             <Link to="/how-it-works" className="text-muted-foreground hover:text-foreground">How it Works</Link>
-            <Link to="/library" className="text-muted-foreground hover:text-foreground">Library</Link>
+            <Link to="/library" className="text-muted-foreground hover:text-foreground">Browse Library</Link>
             <Link to="/packs" className="text-muted-foreground hover:text-foreground">⚡️Power Packs</Link>
             <Link to="/scout" className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
               <Bot className="h-3 w-3 text-blue-500" />
-              AI Tools
+              Scout AI
             </Link>
             <Link to="/blog" className="text-muted-foreground hover:text-foreground">Tips</Link>
             <Link to="/faqs" className="text-muted-foreground hover:text-foreground">FAQs</Link>
