@@ -147,7 +147,7 @@ export const FeedbackWidget = ({ promptId }: FeedbackWidgetProps) => {
 
   if (isMinimized) {
     return (
-      <div className="fixed bottom-4 right-4 z-50">
+      <div className="fixed bottom-4 right-4 z-50 hidden md:block">
         <div className="flex items-center gap-2">
           <Button
             onClick={() => setIsMinimized(false)}
@@ -174,7 +174,7 @@ export const FeedbackWidget = ({ promptId }: FeedbackWidgetProps) => {
   }
 
   return (
-    <div className="fixed bottom-4 right-4 z-50">
+    <div className="fixed bottom-4 right-4 z-50 hidden md:block">
       {!isOpen ? (
         <div className="flex items-center gap-2">
           <Button
