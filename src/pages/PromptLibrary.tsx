@@ -1178,6 +1178,14 @@ const PromptLibrary = () => {
 
         {/* Quick Discovery Sections */}
         <section className="mt-16 mb-8">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-3">
+              Discover What's Popular
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Explore trending prompts, fresh additions, and community favorites to find exactly what you need.
+            </p>
+          </div>
           <div className="grid gap-6 lg:grid-cols-3">
             <Card className="bg-gradient-to-br from-primary/5 to-transparent border-primary/20">
               <CardContent className="p-6">
