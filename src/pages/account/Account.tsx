@@ -40,32 +40,6 @@ const AccountPage = () => {
             <Link to="/admin">Admin Tools</Link>
           </Button>
         )}
-        {user && (
-          <Button
-            variant="inverted"
-            onClick={async () => {
-              try {
-                // Try to sign out normally first
-                const { error } = await supabase.auth.signOut();
-                
-                if (error) {
-                  // If normal signout fails (e.g., session expired), force local signout
-                  console.warn("Normal signout failed, forcing local signout:", error.message);
-                  await supabase.auth.signOut({ scope: 'local' });
-                }
-                
-                toast({ title: "Signed out successfully" });
-              } catch (err: any) {
-                // Fallback: force local signout even if everything fails
-                console.error("All signout methods failed, clearing local state:", err);
-                await supabase.auth.signOut({ scope: 'local' });
-                toast({ title: "Signed out" });
-              }
-            }}
-          >
-            Log out
-          </Button>
-        )}
       </PageHero>
 
       <main className="container py-8">
@@ -103,8 +77,8 @@ const AccountPage = () => {
             <p className="text-muted-foreground text-sm mt-1">Change your password and log out.</p>
           </Link>
           <Link to="/account/favorites#my-generated-prompts" className="rounded-xl border bg-card p-5 block group hover:shadow-md transition-all">
-            <h2 className="font-semibold">My Generated Prompts</h2>
-            <p className="text-muted-foreground text-sm mt-1">View and manage AI-generated prompts.</p>
+            <h2 className="font-semibold">My Saved Prompts</h2>
+            <p className="text-muted-foreground text-sm mt-1">View and manage your saved and AI-generated prompts.</p>
           </Link>
         </section>
       </main>
