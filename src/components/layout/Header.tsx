@@ -71,7 +71,7 @@ const Header = () => {
           <li><NavLink to="/library" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}><Search className="h-4 w-4 inline mr-1" />Browse Library</NavLink></li>
           <li><NavLink to="/packs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>⚡️Power Packs</NavLink></li>
           <li>
-            <NavLink to="/toolkit" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
+            <NavLink to="/scout" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
               <Bot className="h-4 w-4 inline mr-1 text-blue-500" />
               AI Tools
             </NavLink>
@@ -102,7 +102,7 @@ const Header = () => {
                   <NavLink to="/how-it-works" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>How it Works</NavLink>
                   <NavLink to="/library" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}><Search className="h-4 w-4 inline mr-1" />Browse Library</NavLink>
                   <NavLink to="/packs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>⚡️Power Packs</NavLink>
-                  <NavLink to="/toolkit" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
+                  <NavLink to="/scout" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
                     <Bot className="h-4 w-4 inline mr-1 text-blue-500" />
                     AI Tools
                   </NavLink>

@@ -132,7 +132,7 @@ const AppContent = () => {
         <Route path="/membership/canceled" element={<MembershipCanceled />} />
         <Route path="/email-confirmed" element={<EmailConfirmed />} />
         <Route path="/s/:shortCode" element={<ShareRedirect />} />
-        <Route path="/toolkit" element={<ToolkitPage />} />
+        <Route path="/scout" element={<ToolkitPage />} />
         <Route path="/ai/generator" element={<AIPromptGeneratorPage />} />
         
         <Route path="/ai/assistant" element={<AIAssistantPage />} />

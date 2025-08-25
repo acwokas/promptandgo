@@ -38,7 +38,7 @@ const Footer = () => {
             <Link to="/how-it-works" className="text-muted-foreground hover:text-foreground">How it Works</Link>
             <Link to="/library" className="text-muted-foreground hover:text-foreground">Library</Link>
             <Link to="/packs" className="text-muted-foreground hover:text-foreground">⚡️Power Packs</Link>
-            <Link to="/toolkit" className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
+            <Link to="/scout" className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
               <Bot className="h-3 w-3 text-blue-500" />
               AI Tools
             </Link>

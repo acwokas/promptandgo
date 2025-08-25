@@ -129,7 +129,7 @@ const AIPromptWidget = () => {
             )}
           </Button>
           <Button asChild variant="outline" size="sm">
-            <Link to={`/toolkit${description.trim() ? `?prompt=${encodeURIComponent(description.trim())}` : ''}`}>
+            <Link to={`/scout${description.trim() ? `?prompt=${encodeURIComponent(description.trim())}` : ''}`}>
               <ArrowRight className="h-4 w-4" />
             </Link>
           </Button>

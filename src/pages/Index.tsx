@@ -534,7 +534,7 @@ const Index = () => {
                   <p>Discover prompts tailored just for you</p>
                 </div>
                 <Button asChild variant="outline" size="sm" className="w-full">
-                  <Link to="/toolkit">
+                  <Link to="/scout">
                     Get Smart Suggestions →
                   </Link>
                 </Button>
@@ -557,7 +557,7 @@ const Index = () => {
                   <p>Get expert help crafting better prompts</p>
                 </div>
                 <Button asChild variant="outline" size="sm" className="w-full">
-                  <Link to="/toolkit">
+                  <Link to="/scout">
                     Try Scout Assistant →
                   </Link>
                 </Button>

@@ -21,7 +21,7 @@ const AIPromptGeneratorPage = () => {
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link to="/toolkit">Interactive</Link>
+                <Link to="/scout">Interactive</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
