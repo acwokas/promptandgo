@@ -147,9 +147,12 @@ const AIAssistant = () => {
         {/* Scout's Avatar */}
         <div className="flex justify-center">
           <div className="relative">
-            <img 
-              src="/lovable-uploads/cfdddb7e-ffa3-488c-82b4-c5405f24ee25.png" 
-              alt="Scout AI Assistant" 
+            <video 
+              src="/scout-animation.mp4" 
+              autoPlay 
+              loop 
+              muted 
+              playsInline
               className="w-24 h-24 rounded-full object-cover border-2 border-primary/20 shadow-lg hover-scale"
             />
             <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-primary rounded-full border-2 border-background flex items-center justify-center">
