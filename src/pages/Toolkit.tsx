@@ -29,7 +29,7 @@ const ToolkitPage = () => {
   return (
     <>
       <SEO 
-        title="Scout AI Tools - Meet Your AI Prompt Explorer"
+        title="Meet Scout - Your AI Prompt Explorer"
         description="Meet Scout, your AI prompt explorer. Discover powerful tools for creating perfect prompts, getting expert guidance, and enhancing your AI interactions."
       />
       
@@ -57,7 +57,7 @@ const ToolkitPage = () => {
                 <Sparkles className="h-8 w-8 text-primary" />
               </div>
             <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-                Scout
+                Meet Scout
               </h1>
             </div>
             
