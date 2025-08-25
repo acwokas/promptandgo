@@ -37,6 +37,12 @@ const Footer = () => {
             <Link to="/library?q=productivity" className="text-muted-foreground hover:text-foreground">Productivity prompts</Link>
             <Link to="/library?q=sales" className="text-muted-foreground hover:text-foreground">Sales prompts</Link>
             <Link to="/library?q=seo" className="text-muted-foreground hover:text-foreground">SEO prompts</Link>
+            <Link to="/library?q=content" className="text-muted-foreground hover:text-foreground">Content creation prompts</Link>
+            <Link to="/library?q=social%20media" className="text-muted-foreground hover:text-foreground">Social media prompts</Link>
+            <Link to="/library?q=business" className="text-muted-foreground hover:text-foreground">Business strategy prompts</Link>
+            <Link to="/library?q=writing" className="text-muted-foreground hover:text-foreground">Writing prompts</Link>
+            <Link to="/library?q=customer%20service" className="text-muted-foreground hover:text-foreground">Customer service prompts</Link>
+            <Link to="/library?q=creative" className="text-muted-foreground hover:text-foreground">Creative prompts</Link>
           </nav>
           <nav className="flex flex-col gap-2">
             <span className="text-foreground font-medium">Main sections</span>
