@@ -96,7 +96,7 @@ serve(async (req: Request) => {
 
     // Rate limiting: prevent creating too many links per user (only for authenticated users)
     if (user?.id) {
-      const { count } = await supabase
+      const { count } = await supabaseClient
         .from('shared_links')
         .select('*', { count: 'exact', head: true })
         .eq('shared_by', user.id)
@@ -110,7 +110,7 @@ serve(async (req: Request) => {
     // Check if a share link already exists for this content (only for authenticated users)
     let existing = null;
     if (user?.id) {
-      const { data } = await supabase
+      const { data } = await supabaseClient
         .from('shared_links')
         .select('short_code')
         .eq('content_type', sanitizedContentType)
@@ -135,8 +135,8 @@ serve(async (req: Request) => {
     let attempts = 0;
     
     while (attempts < 10) {
-      const { data } = await supabase
-        .from('shared_links')
+      const { data } = await supabaseClient
+        .from('shared_links_public')
         .select('short_code')
         .eq('short_code', shortCode)
         .single();
@@ -152,7 +152,7 @@ serve(async (req: Request) => {
     }
 
     // Create the shared link
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
       .from('shared_links')
       .insert({
         short_code: shortCode,

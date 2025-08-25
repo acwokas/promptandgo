@@ -853,6 +853,36 @@ export type Database = {
       }
     }
     Views: {
+      shared_links_public: {
+        Row: {
+          content_id: string | null
+          content_type: string | null
+          created_at: string | null
+          original_url: string | null
+          short_code: string | null
+          title: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          content_id?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          original_url?: string | null
+          short_code?: string | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          content_id?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          original_url?: string | null
+          short_code?: string | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       subscribers_admin_view: {
         Row: {
           created_at: string | null

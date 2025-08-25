@@ -9,7 +9,6 @@ const corsHeaders = {
 
 interface SubscribeRequest {
   email: string;
-  user_id?: string | null;
 }
 
 const supabase = createClient(
@@ -32,9 +31,26 @@ serve(async (req: Request) => {
       return new Response("Method not allowed", { status: 405, headers: corsHeaders });
     }
 
-    const { email, user_id }: SubscribeRequest = await req.json();
+    // Get authentication if provided
+    const authHeader = req.headers.get('Authorization');
+    let authenticatedUserId = null;
+    
+    if (authHeader) {
+      const supabaseAuth = createClient(
+        Deno.env.get("SUPABASE_URL")!,
+        Deno.env.get("SUPABASE_ANON_KEY")!,
+        { global: { headers: { Authorization: authHeader } } }
+      );
+      
+      const { data: { user } } = await supabaseAuth.auth.getUser();
+      if (user) {
+        authenticatedUserId = user.id;
+      }
+    }
 
-    console.log('Parsed request data:', { email, user_id });
+    const { email }: SubscribeRequest = await req.json();
+
+    console.log('Parsed request data:', { email, authenticatedUserId: !!authenticatedUserId });
 
     if (!email || typeof email !== "string") {
       console.log('Invalid email provided:', email);
@@ -95,7 +111,7 @@ serve(async (req: Request) => {
         .from('subscribers')
         .update({
           subscribed: true,
-          user_id: user_id || existingUser.user_id || null,
+          user_id: authenticatedUserId || existingUser.user_id || null,
           updated_at: new Date().toISOString()
         })
         .eq('id', existingUser.id);
@@ -113,7 +129,7 @@ serve(async (req: Request) => {
       const { error: insertError } = await supabase
         .from('subscribers')
         .insert({
-          user_id: user_id || null,
+          user_id: authenticatedUserId || null,
           email: null, // Use NULL to satisfy unique(email) and pass CHECK
           subscribed: true,
           email_hash: emailHash,
@@ -169,7 +185,7 @@ serve(async (req: Request) => {
         html: `
           <h2>New Newsletter Subscription</h2>
           <p><strong>Email:</strong> ${lowerEmail}</p>
-          <p><strong>User ID:</strong> ${user_id || 'Anonymous'}</p>
+          <p><strong>User ID:</strong> ${authenticatedUserId || 'Anonymous'}</p>
           <p><strong>Timestamp:</strong> ${new Date().toISOString()}</p>
           <p><strong>Request Type:</strong> Weekly Prompt Tips Newsletter</p>
           <hr>

@@ -15,15 +15,30 @@ async function grantEntitlements(supabaseService: any, userId: string, userEmail
     } else if (it.item_type === 'pack' && it.item_id) {
       await supabaseService.from('pack_access').insert({ user_id: userId, pack_id: it.item_id }).onConflict('user_id,pack_id').ignore();
     } else if (it.item_type === 'lifetime') {
-      await supabaseService.from('subscribers').upsert({
-        user_id: userId,
-        email: userEmail,
-        subscribed: true,
-        subscription_tier: 'Lifetime',
-        subscription_end: null,
-        stripe_customer_id: customerId ?? null,
-        updated_at: new Date().toISOString(),
-      }, { onConflict: 'user_id' });
+      // Use secure_upsert_subscriber function for encrypted storage if key is available
+      const encryptionKey = Deno.env.get("SUBSCRIBERS_ENCRYPTION_KEY");
+      if (encryptionKey) {
+        await supabaseService.rpc('secure_upsert_subscriber', {
+          p_key: encryptionKey,
+          p_user_id: userId,
+          p_email: userEmail,
+          p_stripe_customer_id: customerId ?? null,
+          p_subscribed: true,
+          p_subscription_tier: 'Lifetime',
+          p_subscription_end: null
+        });
+      } else {
+        // Fallback to direct update (less secure)
+        await supabaseService.from('subscribers').upsert({
+          user_id: userId,
+          email: '[encrypted]', // Don't store plain text email
+          subscribed: true,
+          subscription_tier: 'Lifetime',
+          subscription_end: null,
+          stripe_customer_id: null, // Don't store plain text stripe ID
+          updated_at: new Date().toISOString(),
+        }, { onConflict: 'user_id' });
+      }
     }
   }
 }

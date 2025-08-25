@@ -49,19 +49,12 @@ export function useIsAdmin() {
           }
         }
 
-        // 3) Temporary safety net: allowlist known admin email if DB checks fail
-        const allowlist = ["me@adrianwatkins.com"];
-        const hasEmailAllow = allowlist.includes(user.email || "");
-        const finalAdmin = hasRole || hasEmailAllow;
-
         console.log("useIsAdmin: Final admin decision", {
           hasRole,
-          hasEmailAllow,
-          finalAdmin,
           active,
         });
 
-        if (active) setIsAdmin(finalAdmin);
+        if (active) setIsAdmin(hasRole);
       } catch (e) {
         console.error("useIsAdmin: Error in admin check", e);
         if (active) setIsAdmin(false);
