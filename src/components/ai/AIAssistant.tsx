@@ -143,9 +143,22 @@ const AIAssistant = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <div className="text-center space-y-2 mb-6">
+      <div className="text-center space-y-4 mb-6">
+        {/* Scout's Avatar */}
+        <div className="flex justify-center">
+          <div className="relative">
+            <img 
+              src="/lovable-uploads/cfdddb7e-ffa3-488c-82b4-c5405f24ee25.png" 
+              alt="Scout AI Assistant" 
+              className="w-24 h-24 rounded-full object-cover border-2 border-primary/20 shadow-lg hover-scale"
+            />
+            <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-primary rounded-full border-2 border-background flex items-center justify-center">
+              <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+        
         <div className="flex items-center justify-center gap-2">
-          <Bot className="h-6 w-6 text-primary" />
           <h1 className="text-3xl font-bold">{AI_PERSONA.name}</h1>
           <Badge variant="secondary" className="text-xs">{AI_PERSONA.tagline}</Badge>
         </div>
