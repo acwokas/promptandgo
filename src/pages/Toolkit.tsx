@@ -9,11 +9,11 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 const ToolkitPage = () => {
   const tools = [
     {
-      title: "AI Prompt Generator",
-      description: "Create custom prompts from scratch or get AI-powered suggestions tailored to your needs",
+      title: "Scout Prompt Generator",
+      description: "Let Scout create custom prompts from scratch or get AI-powered suggestions tailored to your needs",
       icon: Wand2,
       path: "/ai/generator",
-      features: ["Custom prompt creation", "Smart suggestions", "Copy & save prompts", "Professional quality"],
+      features: ["Scout-powered creation", "Custom prompts", "Copy & save", "Professional quality"],
       color: "from-purple-500 to-pink-500"
     },
     {
@@ -163,15 +163,15 @@ const ToolkitPage = () => {
                 </p>
               </div>
               
-              <div className="space-y-3">
-                <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mx-auto">
-                  <Bot className="h-5 w-5 text-primary" />
+                <div className="space-y-3">
+                  <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mx-auto">
+                    <Bot className="h-5 w-5 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-semibold">Meet Scout</h3>
+                  <p className="text-muted-foreground text-sm">
+                    Get help from Scout, your AI prompt explorer trained on prompt engineering best practices
+                  </p>
                 </div>
-                <h3 className="text-lg font-semibold">Expert Guidance</h3>
-                <p className="text-muted-foreground text-sm">
-                  Get help from our AI assistant trained on prompt engineering best practices
-                </p>
-              </div>
             </div>
 
             <div className="pt-6">

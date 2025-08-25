@@ -7,7 +7,9 @@ export const AI_PERSONA = {
   // Greetings and messages
   greetings: {
     assistant: "Hi! I'm Scout, your AI prompt explorer. I'm here to help you find the perfect prompts, provide prompt engineering tips, and guide you to better AI results. What would you like to explore today?",
-    generator: "Powered by Scout"
+    generator: "Created by Scout",
+    generatingMessage: "Scout is crafting your prompt...",
+    successMessage: "Scout has created your perfect prompt!"
   },
   
   // Quick actions for the assistant
@@ -23,9 +25,13 @@ export const AI_PERSONA = {
     assistantTitle: "Chat with Scout",
     assistantSubtitle: "Get personalized help finding and creating the perfect prompts",
     generatorTitle: "Scout AI Prompt Generator",
-    generatorSubtitle: "Let Scout create custom AI prompts tailored to your needs. Perfect for ChatGPT, Claude, Gemini, and more.",
+    generatorSubtitle: "Let Scout create custom AI prompts tailored to your needs. Scout understands what makes prompts effective for ChatGPT, Claude, Gemini, and more.",
     upsellTitle: "Need Help Getting Started?",
     upsellDescription: "Not sure what to create? Chat with Scout for personalized recommendations and expert guidance.",
-    upsellButton: "Chat with Scout"
+    upsellButton: "Chat with Scout",
+    generateButton: "Ask Scout to Generate",
+    generatingButton: "Scout is Working...",
+    placeholderText: "Tell Scout what you want the AI to do...",
+    contextPlaceholder: "Any additional context for Scout..."
   }
 } as const;

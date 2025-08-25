@@ -108,7 +108,7 @@ const AIPromptGenerator = () => {
       refreshUsage();
       
       toast({
-        title: "Prompt generated!",
+        title: AI_PERSONA.greetings.successMessage,
         description: "Your AI prompt has been created successfully."
       });
     } catch (error: any) {
@@ -256,9 +256,10 @@ const AIPromptGenerator = () => {
             <div>
               <label className="text-sm font-medium mb-2 block">
                 What do you want the AI to do? *
+                <span className="text-xs text-muted-foreground ml-2">(Tell Scout what you need)</span>
               </label>
               <Textarea
-                placeholder="e.g., Write a professional email to decline a job offer politely..."
+                placeholder={AI_PERSONA.ui.placeholderText}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 className="min-h-[120px]"
@@ -268,9 +269,10 @@ const AIPromptGenerator = () => {
             <div>
               <label className="text-sm font-medium mb-2 block">
                 Additional Context (Optional)
+                <span className="text-xs text-muted-foreground ml-2">(Help Scout understand your needs better)</span>
               </label>
               <Input
-                placeholder="e.g., For a marketing manager position, include gratitude..."
+                placeholder={AI_PERSONA.ui.contextPlaceholder}
                 value={context}
                 onChange={(e) => setContext(e.target.value)}
               />
@@ -284,12 +286,12 @@ const AIPromptGenerator = () => {
               {isGenerating ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                  Generating...
+                  {AI_PERSONA.ui.generatingButton}
                 </>
               ) : (
                 <>
                   <Wand2 className="h-4 w-4 mr-2" />
-                  Generate Prompt
+                  {AI_PERSONA.ui.generateButton}
                 </>
               )}
             </Button>
@@ -299,7 +301,10 @@ const AIPromptGenerator = () => {
         {/* Output Section */}
         <Card>
           <CardHeader>
-            <CardTitle>Generated Prompt</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <Bot className="h-5 w-5 text-primary" />
+              Scout's Generated Prompt
+            </CardTitle>
           </CardHeader>
           <CardContent>
             {generatedPrompt ? (
@@ -322,14 +327,21 @@ const AIPromptGenerator = () => {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <Badge variant="secondary">AI Generated</Badge>
+                  <Badge variant="secondary" className="flex items-center gap-1">
+                    <Bot className="h-3 w-3" />
+                    Created by Scout
+                  </Badge>
                   <Badge variant="outline">Ready to Use</Badge>
                 </div>
               </div>
             ) : (
               <div className="text-center text-muted-foreground py-12">
-                <Wand2 className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <p>Your generated prompt will appear here</p>
+                <div className="flex items-center justify-center gap-2 mb-4">
+                  <Bot className="h-12 w-12 opacity-50" />
+                  <Wand2 className="h-8 w-8 opacity-50" />
+                </div>
+                <p className="text-base font-medium mb-1">Scout is ready to help!</p>
+                <p className="text-sm">Describe what you want the AI to do and Scout will create the perfect prompt</p>
               </div>
             )}
           </CardContent>
@@ -343,7 +355,7 @@ const AIPromptGenerator = () => {
             <div className="flex items-center justify-between">
               <CardTitle className="flex items-center gap-2">
                 <History className="h-5 w-5" />
-                Recent Generated Prompts
+                Your Scout Creations
               </CardTitle>
               <Button asChild variant="outline" size="sm">
                 <Link to="/account/favorites#my-generated-prompts">
