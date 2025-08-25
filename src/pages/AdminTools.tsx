@@ -9,10 +9,16 @@ import { Navigate, Link } from "react-router-dom";
 import { Upload, Plus, Download, Settings, MessageCircle } from "lucide-react";
 
 const AdminTools = () => {
-  const { loading: authLoading } = useSupabaseAuth();
+  const { user, loading: authLoading } = useSupabaseAuth();
   const { isAdmin, loading: adminLoading } = useIsAdmin();
 
-  console.log("AdminTools: Component state", { isAdmin, adminLoading, authLoading });
+  console.log("AdminTools: Component state", { 
+    isAdmin, 
+    adminLoading, 
+    authLoading, 
+    userEmail: user?.email,
+    userId: user?.id 
+  });
 
   // Wait for both auth and admin checks to complete
   if (authLoading || adminLoading) {
