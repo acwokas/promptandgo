@@ -513,91 +513,68 @@ const Index = () => {
           </section>
         )}
 
-        {/* AI Tools Section */}
+        {/* Meet Scout Section */}
         <section className="container py-6">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="relative">
-              <video 
-                src="/scout-animation-v2.mp4" 
-                autoPlay 
-                loop 
-                muted 
-                playsInline
-                className="w-16 h-16 rounded-full object-cover border-2 border-primary/20 shadow-lg"
-              />
-              <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-primary rounded-full border-2 border-background flex items-center justify-center">
-                <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="relative">
+                <video 
+                  src="/scout-animation-v2.mp4" 
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline
+                  className="w-12 h-12 rounded-full object-cover border-2 border-primary/20 shadow-lg"
+                />
+                <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-primary rounded-full border-2 border-background flex items-center justify-center">
+                  <div className="w-1 h-1 bg-white rounded-full animate-pulse"></div>
+                </div>
+              </div>
+              <h2 className="text-2xl font-semibold">✨ Meet Scout - Your AI Prompt Explorer</h2>
+            </div>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Scout helps you discover perfect prompts and create custom ones tailored to your needs.
+            </p>
+          </div>
+          
+          <div className="grid gap-4 md:grid-cols-2 max-w-4xl mx-auto">
+            <div className="group rounded-xl border bg-gradient-to-br from-accent/5 to-transparent p-6 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0">
+                  <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
+                    <Search className="h-5 w-5 text-accent" />
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold mb-2">🎯 Scout Recommendations</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Let Scout analyze your needs and find the perfect prompts from our curated library.
+                  </p>
+                  <Button asChild variant="outline" size="sm" className="group-hover:bg-accent/10">
+                    <Link to="/scout">Explore with Scout →</Link>
+                  </Button>
+                </div>
               </div>
             </div>
-            <div>
-              <h2 className="text-2xl font-semibold mb-2">✨ Meet Scout - Your AI Prompt Explorer</h2>
-              <p className="text-muted-foreground max-w-3xl mb-0">Scout helps you discover perfect prompts and create custom ones tailored to your needs. Get expert guidance and personalized recommendations.</p>
-            </div>
-          </div>
-          <div className="grid gap-6 md:grid-cols-2">
-            <Card className="bg-gradient-to-br from-accent/10 to-transparent border-accent/20">
-              <CardHeader className="pb-4">
-                <CardTitle className="flex items-center gap-2 text-lg">
-                  <Sparkles className="h-5 w-5 text-accent" />
-                  🎯 Scout Recommendations
-                </CardTitle>
-                <p className="text-sm text-muted-foreground">
-                  Let Scout find the perfect prompts for your specific needs
-                </p>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="text-center text-muted-foreground py-4 text-sm">
-                  <div className="flex justify-center mb-2">
-                    <video 
-                      src="/scout-animation-v2.mp4" 
-                      autoPlay 
-                      loop 
-                      muted 
-                      playsInline
-                      className="w-12 h-12 rounded-full object-cover"
-                    />
-                  </div>
-                  <p>Scout knows exactly what you need</p>
-                </div>
-                <Button asChild variant="outline" size="sm" className="w-full">
-                  <Link to="/scout">
-                    Explore with Scout →
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
 
-            <Card className="bg-gradient-to-br from-secondary/10 to-transparent border-secondary/20">
-              <CardHeader className="pb-4">
-                <CardTitle className="flex items-center gap-2 text-lg">
-                  <Wand2 className="h-5 w-5 text-secondary" />
-                  🤖 Scout Assistant
-                </CardTitle>
-                <p className="text-sm text-muted-foreground">
-                  Chat with Scout to create custom prompts and get expert guidance
-                </p>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="text-center text-muted-foreground py-4 text-sm">
-                  <div className="flex justify-center mb-2">
-                    <video 
-                      src="/scout-animation-v2.mp4" 
-                      autoPlay 
-                      loop 
-                      muted 
-                      playsInline
-                      className="w-12 h-12 rounded-full object-cover"
-                    />
+            <div className="group rounded-xl border bg-gradient-to-br from-secondary/5 to-transparent p-6 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0">
+                  <div className="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center">
+                    <Bot className="h-5 w-5 text-secondary" />
                   </div>
-                  <p>Scout creates prompts that work perfectly</p>
                 </div>
-                <Button asChild variant="outline" size="sm" className="w-full">
-                  <Link to="/scout">
-                    Chat with Scout →
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
+                <div className="flex-1">
+                  <h3 className="font-semibold mb-2">🤖 Scout Assistant</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Chat with Scout to create custom prompts and get expert guidance for any task.
+                  </p>
+                  <Button asChild variant="outline" size="sm" className="group-hover:bg-secondary/10">
+                    <Link to="/scout">Chat with Scout →</Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
