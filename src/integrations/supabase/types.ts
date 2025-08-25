@@ -853,36 +853,7 @@ export type Database = {
       }
     }
     Views: {
-      shared_links_public: {
-        Row: {
-          content_id: string | null
-          content_type: string | null
-          created_at: string | null
-          original_url: string | null
-          short_code: string | null
-          title: string | null
-          updated_at: string | null
-        }
-        Insert: {
-          content_id?: string | null
-          content_type?: string | null
-          created_at?: string | null
-          original_url?: string | null
-          short_code?: string | null
-          title?: string | null
-          updated_at?: string | null
-        }
-        Update: {
-          content_id?: string | null
-          content_type?: string | null
-          created_at?: string | null
-          original_url?: string | null
-          short_code?: string | null
-          title?: string | null
-          updated_at?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       check_and_increment_usage: {
@@ -916,13 +887,11 @@ export type Database = {
           user_id: string
         }[]
       }
-      get_subscribers_admin_data: {
+      get_subscribers_admin_view: {
         Args: Record<PropertyKey, never>
         Returns: {
-          email: string
           email_hash: string
           id: string
-          stripe_customer_id: string
           subscribed: boolean
           subscription_end: string
           subscription_tier: string
