@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { validateEmailInput, validatePromptInput, sanitizeInput } from "@/lib/inputValidation";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
 const Contact = () => {
   const { user } = useSupabaseAuth();
@@ -178,6 +179,21 @@ const Contact = () => {
         minHeightClass="min-h-[28vh]"
       />
       <main className="container py-10">
+        {/* Breadcrumb */}
+        <Breadcrumb className="mb-6">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link to="/">Home</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Contact</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+
         <SEO title="Contact PromptAndGo" description="Send us a message — we'd love to hear from you." />
 
         <div className="grid gap-10 lg:grid-cols-12">

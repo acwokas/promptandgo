@@ -13,6 +13,7 @@ import { useCallback, useEffect, useState, useRef } from "react";
 import type { Category as CategoryType } from "@/data/prompts";
 import { toast } from "@/hooks/use-toast";
 import { usePersonalizedPrompts } from "@/hooks/usePersonalizedPrompts";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
 const PAGE_SIZE = 6;
 
@@ -534,6 +535,21 @@ const PromptLibrary = () => {
         )}
       </PageHero>
       <main className="container py-10">
+        {/* Breadcrumb */}
+        <Breadcrumb className="mb-6">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link to="/">Home</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Browse Library</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+
         <SEO
           title="Prompt Library – Ready-to-use AI Prompts"
           description="Browse prompts by category and subcategory with fast search. Copy-ready cards for marketing, productivity, and sales."
