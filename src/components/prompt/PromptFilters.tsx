@@ -138,8 +138,8 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
           </div>
         </div>
 
-        {/* Special filter full width */}
-        <div className="space-y-1">
+        {/* Special filter - hidden on mobile, shown on desktop */}
+        <div className="space-y-1 hidden md:block">
           <Label htmlFor="ribbon-select-mobile" className="text-sm">Special:</Label>
           <Select
             value={ribbon ?? "all"}
