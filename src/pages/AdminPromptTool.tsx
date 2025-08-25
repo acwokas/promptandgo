@@ -37,7 +37,7 @@ interface Pack {
 }
 
 const AdminPromptTool = () => {
-  const { loading: authLoading } = useSupabaseAuth();
+  const { user, loading: authLoading } = useSupabaseAuth();
   const { isAdmin, loading: adminLoading } = useIsAdmin();
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -431,7 +431,11 @@ const AdminPromptTool = () => {
     return <div>Loading...</div>;
   }
 
-  if (!isAdmin) {
+  // Allowlisted email as a temporary safety net while we debug admin role checks
+  const emailAllow = ["me@adrianwatkins.com"];
+  const effectiveIsAdmin = isAdmin || (user?.email ? emailAllow.includes(user.email) : false);
+
+  if (!effectiveIsAdmin) {
     return <Navigate to="/" replace />;
   }
 

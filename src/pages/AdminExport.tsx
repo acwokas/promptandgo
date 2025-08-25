@@ -12,7 +12,7 @@ import { useState } from "react";
 import { Download, FileSpreadsheet, Archive } from "lucide-react";
 
 const AdminExport = () => {
-  const { loading: authLoading } = useSupabaseAuth();
+  const { user, loading: authLoading } = useSupabaseAuth();
   const { isAdmin, loading: adminLoading } = useIsAdmin();
   const [loading, setLoading] = useState(false);
 
@@ -21,7 +21,10 @@ const AdminExport = () => {
     return <div>Loading...</div>;
   }
 
-  if (!isAdmin) {
+  const emailAllow = ["me@adrianwatkins.com"];
+  const effectiveIsAdmin = isAdmin || (user?.email ? emailAllow.includes(user.email) : false);
+
+  if (!effectiveIsAdmin) {
     return <Navigate to="/" replace />;
   }
 

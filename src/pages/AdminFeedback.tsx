@@ -35,7 +35,7 @@ interface Feedback {
 }
 
 const AdminFeedback = () => {
-  const { loading: authLoading } = useSupabaseAuth();
+  const { user, loading: authLoading } = useSupabaseAuth();
   const { isAdmin, loading: adminLoading } = useIsAdmin();
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -127,7 +127,10 @@ const AdminFeedback = () => {
     return <div>Loading...</div>;
   }
 
-  if (!isAdmin) {
+  const emailAllow = ["me@adrianwatkins.com"];
+  const effectiveIsAdmin = isAdmin || (user?.email ? emailAllow.includes(user.email) : false);
+
+  if (!effectiveIsAdmin) {
     navigate("/");
     return null;
   }
