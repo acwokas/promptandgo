@@ -56,8 +56,8 @@ const ToolkitPage = () => {
               <div className="p-3 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-2xl">
                 <Sparkles className="h-8 w-8 text-primary" />
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-                Meet Scout
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+                Scout
               </h1>
             </div>
             
@@ -77,7 +77,7 @@ const ToolkitPage = () => {
           </div>
 
           {/* Tools Grid */}
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 mb-16">
+          <div className="grid gap-8 md:grid-cols-2 mb-16">
             {tools.map((tool) => (
               <Card key={tool.title} className="group hover:shadow-xl transition-all duration-300 border-0 bg-card/50 backdrop-blur-sm hover:bg-card/80">
                 <CardHeader className="space-y-4">
