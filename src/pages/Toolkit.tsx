@@ -10,19 +10,11 @@ const ToolkitPage = () => {
   const tools = [
     {
       title: "AI Prompt Generator",
-      description: "Describe what you want and get perfectly crafted AI prompts",
+      description: "Create custom prompts from scratch or get AI-powered suggestions tailored to your needs",
       icon: Wand2,
       path: "/ai/generator",
-      features: ["Custom prompt creation", "Copy & save prompts", "Professional quality"],
+      features: ["Custom prompt creation", "Smart suggestions", "Copy & save prompts", "Professional quality"],
       color: "from-purple-500 to-pink-500"
-    },
-    {
-      title: "Smart Suggestions",
-      description: "AI-powered recommendations tailored to your needs and context",
-      icon: Brain,
-      path: "/ai/suggestions",
-      features: ["Personalized recommendations", "Confidence scoring", "Context-aware"],
-      color: "from-blue-500 to-cyan-500"
     },
     {
       title: "AI Assistant",
@@ -127,7 +119,24 @@ const ToolkitPage = () => {
                 </CardContent>
               </Card>
             ))}
+        </div>
+
+        {/* AI Assistant Upsell */}
+        <div className="mt-12 bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-lg p-6 border border-green-500/20">
+          <div className="flex items-center gap-3 mb-4">
+            <Bot className="h-6 w-6 text-green-500" />
+            <h3 className="text-xl font-semibold">Need Help Choosing?</h3>
           </div>
+          <p className="text-muted-foreground mb-4">
+            Not sure what prompt to create? Chat with our AI Assistant for personalized recommendations and expert guidance.
+          </p>
+          <Button asChild className="bg-green-500 hover:bg-green-600">
+            <Link to="/ai/assistant">
+              Chat with AI Assistant
+              <ArrowRight className="h-4 w-4 ml-2" />
+            </Link>
+          </Button>
+        </div>
 
           {/* Features Section */}
           <div className="text-center space-y-8 bg-muted/30 rounded-3xl p-8 md:p-12">

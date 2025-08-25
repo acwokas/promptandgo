@@ -57,7 +57,7 @@ import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { LoginWidgetProvider } from "@/hooks/useLoginWidget";
 import { usePageVisitTracker } from "@/hooks/usePageVisitTracker";
 import AIPromptGeneratorPage from "./pages/AIPromptGenerator";
-import SmartSuggestionsPage from "./pages/SmartSuggestions";
+
 import AIAssistantPage from "./pages/AIAssistant";
 import ToolkitPage from "./pages/Toolkit";
 
@@ -134,7 +134,7 @@ const AppContent = () => {
         <Route path="/s/:shortCode" element={<ShareRedirect />} />
         <Route path="/toolkit" element={<ToolkitPage />} />
         <Route path="/ai/generator" element={<AIPromptGeneratorPage />} />
-        <Route path="/ai/suggestions" element={<SmartSuggestionsPage />} />
+        
         <Route path="/ai/assistant" element={<AIAssistantPage />} />
         <Route path="/ai-credits-exhausted" element={<AICreditsExhaustedPage />} />
         
