@@ -66,7 +66,7 @@ const Header = () => {
           <img
             src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
             alt="promptandgo logo"
-            className="h-14 md:h-[5.25rem] w-auto align-middle object-contain"
+            className="h-16 md:h-[5.25rem] w-auto align-middle object-contain"
             loading="eager"
             decoding="async"
           />
