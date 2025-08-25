@@ -13,6 +13,7 @@ const Header = () => {
   const { user } = useSupabaseAuth();
   const { toast } = useToast();
   useEnsureProfile();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const [cartCount, setCartCount] = useState<number>(getCartCount(!!user));
   useEffect(() => {
@@ -24,6 +25,10 @@ const Header = () => {
       window.removeEventListener('storage', onChange);
     };
   }, [user]);
+
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+  };
 
   const handleLogout = async () => {
     try {
@@ -45,6 +50,7 @@ const Header = () => {
       clearCartOnLogout();
       toast({ title: "Signed out" });
     }
+    closeMobileMenu(); // Close mobile menu after logout
   };
 
   // Clear cart when user logs out (detect auth state change)
@@ -90,7 +96,7 @@ const Header = () => {
         <div className="flex items-center gap-2">
           {/* Mobile menu */}
           <div className="md:hidden">
-            <Sheet>
+            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" aria-label="Open menu">
                   <Menu className="h-6 w-6" aria-hidden="true" />
@@ -98,38 +104,38 @@ const Header = () => {
               </SheetTrigger>
               <SheetContent side="right">
                 <nav className="mt-8 grid gap-3 text-base">
-                  <NavLink to="/" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Welcome</NavLink>
-                  <NavLink to="/how-it-works" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>How it Works</NavLink>
-                  <NavLink to="/library" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}><Search className="h-4 w-4 inline mr-1" />Browse Library</NavLink>
-                  <NavLink to="/packs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>⚡️Power Packs</NavLink>
-                  <NavLink to="/scout" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
+                  <NavLink to="/" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Welcome</NavLink>
+                  <NavLink to="/how-it-works" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>How it Works</NavLink>
+                  <NavLink to="/library" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}><Search className="h-4 w-4 inline mr-1" />Browse Library</NavLink>
+                  <NavLink to="/packs" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>⚡️Power Packs</NavLink>
+                  <NavLink to="/scout" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
                     <Bot className="h-4 w-4 inline mr-1 text-blue-500" />
                     Scout AI
                   </NavLink>
-                  <NavLink to="/cart" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Cart</NavLink>
-                  <NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Tips</NavLink>
-                  <NavLink to="/faqs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>FAQs</NavLink>
+                  <NavLink to="/cart" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Cart</NavLink>
+                  <NavLink to="/blog" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Tips</NavLink>
+                  <NavLink to="/faqs" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>FAQs</NavLink>
                   
                   {user && (
                     <>
-                      <NavLink to="/account/favorites" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
+                      <NavLink to="/account/favorites" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
                         <Heart className="h-4 w-4 inline mr-1 text-red-500" />
                         My Prompts
                       </NavLink>
-                      <NavLink to="/account" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>My Account</NavLink>
+                      <NavLink to="/account" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>My Account</NavLink>
                     </>
                   )}
                   {user ? (
                     <Button variant="secondary" onClick={handleLogout} className="mt-2">Log out</Button>
                   ) : (
-                    <NavLink to="/auth" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Login / Sign up</NavLink>
+                    <NavLink to="/auth" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Login / Sign up</NavLink>
                   )}
                   {user ? (
-                    <Button asChild variant="hero" className="mt-4">
+                    <Button asChild variant="hero" className="mt-4" onClick={closeMobileMenu}>
                       <Link to="/library?random=1">Inspire Me!</Link>
                     </Button>
                   ) : (
-                    <Button asChild variant="cta" className="mt-4">
+                    <Button asChild variant="cta" className="mt-4" onClick={closeMobileMenu}>
                       <Link to="/auth?mode=signup">Get 1 FREE ⚡️Power Pack!</Link>
                     </Button>
                   )}
