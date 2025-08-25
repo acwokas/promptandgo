@@ -19,9 +19,15 @@ const Footer = () => {
             />
           </Link>
           <div className="ml-1.5 mt-3">
-            <Button asChild variant="cta" size="sm" aria-label="Get 1 FREE ⚡️Power Pack!">
-              <Link to="/auth?mode=signup">Get 1 FREE ⚡️Power Pack!</Link>
-            </Button>
+            {user ? (
+              <Button asChild variant="hero" size="sm" aria-label="Inspire Me!">
+                <Link to="/library?random=1">Inspire Me!</Link>
+              </Button>
+            ) : (
+              <Button asChild variant="cta" size="sm" aria-label="Get 1 FREE ⚡️Power Pack!">
+                <Link to="/auth?mode=signup">Get 1 FREE ⚡️Power Pack!</Link>
+              </Button>
+            )}
           </div>
         </div>
         <div className="md:col-span-2 grid grid-cols-3 gap-4">
