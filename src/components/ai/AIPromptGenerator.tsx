@@ -131,7 +131,9 @@ const AIPromptGenerator = () => {
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(generatedPrompt);
+      // Remove surrounding quotes if present
+      const cleanPrompt = generatedPrompt.replace(/^"(.*)"$/, '$1');
+      await navigator.clipboard.writeText(cleanPrompt);
       toast({
         title: "Copied!",
         description: "Prompt copied to clipboard."
@@ -190,7 +192,9 @@ const AIPromptGenerator = () => {
 
   const handleCopyRecentPrompt = async (prompt: string) => {
     try {
-      await navigator.clipboard.writeText(prompt);
+      // Remove surrounding quotes if present
+      const cleanPrompt = prompt.replace(/^"(.*)"$/, '$1');
+      await navigator.clipboard.writeText(cleanPrompt);
       toast({
         title: "Copied!",
         description: "Prompt copied to clipboard."
