@@ -212,7 +212,7 @@ const Index = () => {
               </ul>
             </div>
             
-            {/* AI Prompt Generator Widget */}
+            {/* Scout Prompt Generator Widget */}
             <div className="w-full">
               <AIPromptWidget />
             </div>
@@ -545,7 +545,7 @@ const Index = () => {
               <CardHeader className="pb-4">
                 <CardTitle className="flex items-center gap-2 text-lg">
                   <Wand2 className="h-5 w-5 text-secondary" />
-                  🤖 AI Assistant
+                  🤖 Scout Assistant
                 </CardTitle>
                 <p className="text-sm text-muted-foreground">
                   Chat with our AI to refine and improve your prompts
@@ -558,7 +558,7 @@ const Index = () => {
                 </div>
                 <Button asChild variant="outline" size="sm" className="w-full">
                   <Link to="/toolkit">
-                    Try AI Assistant →
+                    Try Scout Assistant →
                   </Link>
                 </Button>
               </CardContent>

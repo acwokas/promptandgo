@@ -71,9 +71,9 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
 
   const getUsageTypeLabel = (type: string) => {
     switch (type) {
-      case 'generator': return 'AI Prompt Generator';
+      case 'generator': return 'Scout Prompt Generator';
       case 'suggestions': return 'Smart Suggestions';
-      case 'assistant': return 'AI Assistant';
+      case 'assistant': return 'Scout Assistant';
       default: return 'AI Tools';
     }
   };

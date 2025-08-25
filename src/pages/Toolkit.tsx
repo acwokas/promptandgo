@@ -29,8 +29,8 @@ const ToolkitPage = () => {
   return (
     <>
       <SEO 
-        title="Interactive AI Tools - Advanced Prompt Tools"
-        description="Discover our powerful interactive AI tools featuring prompt generation, smart recommendations, and an AI assistant to enhance your AI interactions."
+        title="Scout AI Tools - Meet Your AI Prompt Explorer"
+        description="Meet Scout, your AI prompt explorer. Discover powerful tools for creating perfect prompts, getting expert guidance, and enhancing your AI interactions."
       />
       
       <main className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
@@ -57,22 +57,22 @@ const ToolkitPage = () => {
                 <Sparkles className="h-8 w-8 text-primary" />
               </div>
               <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-                Interactive
+                Meet Scout
               </h1>
             </div>
             
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Advanced AI-powered tools to create, discover, and optimize your prompts. 
-              Get professional results with our intelligent interactive tools.
+              Your friendly AI prompt explorer. Scout helps you create perfect prompts, discover new ideas, 
+              and get expert guidance for any AI task. Let's explore what Scout can do for you!
             </p>
             
             <div className="flex flex-wrap items-center justify-center gap-3">
               <Badge variant="secondary" className="text-sm">
                 <Sparkles className="h-3 w-3 mr-1" />
-                AI-Powered
+                Scout-Powered
               </Badge>
               <Badge variant="outline" className="text-sm">Free to Use</Badge>
-              <Badge variant="outline" className="text-sm">Professional Quality</Badge>
+              <Badge variant="outline" className="text-sm">Expert Quality</Badge>
             </div>
           </div>
 
@@ -140,16 +140,16 @@ const ToolkitPage = () => {
 
           {/* Features Section */}
           <div className="text-center space-y-8 bg-muted/30 rounded-3xl p-8 md:p-12">
-            <h2 className="text-3xl font-bold mb-6">Why Use Our Interactive Tools?</h2>
+            <h2 className="text-3xl font-bold mb-6">Why Choose Scout?</h2>
             
             <div className="grid gap-6 md:grid-cols-3">
               <div className="space-y-3">
                 <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mx-auto">
                   <Wand2 className="h-5 w-5 text-primary" />
                 </div>
-                <h3 className="text-lg font-semibold">Professional Quality</h3>
+                <h3 className="text-lg font-semibold">Expert Quality</h3>
                 <p className="text-muted-foreground text-sm">
-                  Generate prompts that rival those created by expert prompt engineers
+                  Scout creates prompts that rival those made by expert prompt engineers
                 </p>
               </div>
               
@@ -159,7 +159,7 @@ const ToolkitPage = () => {
                 </div>
                 <h3 className="text-lg font-semibold">Smart & Personalized</h3>
                 <p className="text-muted-foreground text-sm">
-                  Get recommendations tailored to your industry, goals, and preferences
+                  Scout learns your preferences and tailors recommendations to your specific needs
                 </p>
               </div>
               
@@ -177,7 +177,7 @@ const ToolkitPage = () => {
             <div className="pt-6">
               <Button asChild size="lg" className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70">
                 <Link to="/ai/generator">
-                  Start Creating Prompts
+                  Start Creating with Scout
                   <ArrowRight className="h-4 w-4 ml-2" />
                 </Link>
               </Button>

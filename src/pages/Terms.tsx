@@ -30,9 +30,9 @@ const Terms = () => (
       <h2>2.&nbsp;&nbsp;AI Tools and Beta Services</h2>
       <p>PromptAndGo provides AI-powered tools including but not limited to:</p>
       <ul>
-        <li><strong>AI Prompt Generator</strong> – generates customized prompts based on your inputs</li>
+        <li><strong>Scout Prompt Generator</strong> – generates customized prompts based on your inputs</li>
         <li><strong>Smart Suggestions</strong> – provides AI-powered recommendations</li>
-        <li><strong>AI Assistant</strong> – interactive AI chat assistance</li>
+        <li><strong>Scout Assistant</strong> – interactive AI chat assistance</li>
       </ul>
       <p><strong>IMPORTANT BETA DISCLAIMER:</strong> All AI tools are currently in beta testing. We reserve the right to:</p>
       <ul>

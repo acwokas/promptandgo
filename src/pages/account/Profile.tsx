@@ -108,7 +108,7 @@ const ProfilePage = () => {
             <div>
               <div className="text-sm text-muted-foreground">Signed in as <span className="font-medium text-foreground">{user?.email}</span></div>
               <div className="text-xs text-muted-foreground mt-1">
-                Your avatar is used in interactive AI toolkits and chat responses
+                Your avatar is used in Scout conversations and interactive tools
               </div>
             </div>
           </div>

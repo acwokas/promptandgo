@@ -47,9 +47,9 @@ const Footer = () => {
           </nav>
           <nav className="flex flex-col gap-2">
             <span className="text-foreground font-medium">AI Tools</span>
-            <Link to="/ai/generator" className="text-muted-foreground hover:text-foreground">AI Prompt Generator</Link>
-            
-            <Link to="/ai/assistant" className="text-muted-foreground hover:text-foreground">AI Assistant</Link>
+            <Link to="/ai/generator" className="text-muted-foreground hover:text-foreground">Scout Prompt Generator</Link>
+            <Link to="/library" className="text-muted-foreground hover:text-foreground">Prompt Library</Link>
+            <Link to="/ai/assistant" className="text-muted-foreground hover:text-foreground">Scout Assistant</Link>
             <Link to="/submit" className="text-muted-foreground hover:text-foreground">Submit a Prompt</Link>
             <Link to="/contact" className="text-muted-foreground hover:text-foreground">Contact Us</Link>
             {user && (

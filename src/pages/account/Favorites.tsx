@@ -767,7 +767,7 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
                         <Link to="/ai/generator">Generate Your First Prompt</Link>
                       </Button>
                       <Button asChild variant="outline">
-                        <Link to="/ai-assistant">Try AI Assistant</Link>
+                        <Link to="/ai/assistant">Try Scout Assistant</Link>
                       </Button>
                     </div>
                   </CardContent>

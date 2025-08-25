@@ -26,7 +26,7 @@ const AIAssistantPage = () => {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage>AI Assistant</BreadcrumbPage>
+              <BreadcrumbPage>Scout Assistant</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>

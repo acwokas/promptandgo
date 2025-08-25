@@ -26,7 +26,7 @@ const AIPromptGeneratorPage = () => {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage>AI Prompt Generator</BreadcrumbPage>
+              <BreadcrumbPage>Scout Prompt Generator</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>

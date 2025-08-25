@@ -117,7 +117,7 @@ const AIAssistant = () => {
 
       toast({
         title: "Assistant unavailable",
-        description: "Failed to get response from AI assistant. Please try again.",
+        description: "Failed to get response from Scout. Please try again.",
         variant: "destructive"
       });
     } finally {

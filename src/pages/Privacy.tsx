@@ -36,7 +36,7 @@ const Privacy = () => (
       <ul>
         <li>Provide, maintain, and improve our services, including AI tools and personalized recommendations.</li>
         <li>Process your account registration and authenticate your access.</li>
-        <li>Generate AI-powered prompts, suggestions, and assist with your queries through our AI Assistant.</li>
+        <li>Generate AI-powered prompts, suggestions, and assist with your queries through Scout, our AI Assistant.</li>
         <li>Track usage limits and quotas for our AI services (currently in beta).</li>
         <li>Personalize your experience based on your industry, project type, and preferences.</li>
         <li>Respond to your enquiries and support requests.</li>
@@ -98,7 +98,7 @@ const Privacy = () => (
 
       <h2>9.&nbsp;&nbsp;AI Services and Beta Features</h2>
       <p>
-        Our AI tools (including AI Prompt Generator, Smart Suggestions, and AI Assistant) are currently in beta. 
+        Our AI tools (including Scout Prompt Generator, Smart Suggestions, and Scout Assistant) are currently in beta. 
         Please note that:
       </p>
       <ul>
