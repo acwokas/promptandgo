@@ -903,15 +903,6 @@ const PromptLibrary = () => {
                   <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full border-2 border-background shadow-sm">
                     Match: {Math.round(p.relevanceScore)}%
                   </div>
-                  {/* Match reasons - only show if there are reasons and hide if empty */}
-                  {p.matchReason && p.matchReason.length > 0 && p.matchReason.some(r => r.trim()) && (
-                    <div className="mt-2 bg-muted/50 rounded-md p-2 border">
-                      <div className="text-xs text-muted-foreground">
-                        <span className="font-medium">Why this matches: </span>
-                        {p.matchReason.filter(r => r.trim()).join(" • ")}
-                      </div>
-                    </div>
-                  )}
                 </div>
               ))}
             </div>
@@ -987,15 +978,6 @@ const PromptLibrary = () => {
                   <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full border-2 border-background shadow-sm">
                     Match: {Math.round(p.relevanceScore)}%
                   </div>
-                  {/* Match reasons - only show if there are reasons and hide if empty */}
-                  {p.matchReason && p.matchReason.length > 0 && p.matchReason.some(r => r.trim()) && (
-                    <div className="mt-2 bg-muted/50 rounded-md p-2 border">
-                      <div className="text-xs text-muted-foreground">
-                        <span className="font-medium">Why this matches: </span>
-                        {p.matchReason.filter(r => r.trim()).join(" • ")}
-                      </div>
-                    </div>
-                  )}
                 </div>
               ))
             ) : (
