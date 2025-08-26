@@ -297,8 +297,8 @@ const PromptPacks = () => {
           <Card className="bg-gradient-to-r from-primary/5 to-accent/5 border-primary/20">
             <CardContent className="p-6">
               <div className="text-center mb-4">
-                <h3 className="text-lg font-semibold mb-2">⚡ Popular Power Packs</h3>
-                <p className="text-sm text-muted-foreground">Quick access to our most sought-after pack categories</p>
+                <h3 className="text-lg font-semibold mb-2">⚡ Popular Packs</h3>
+                <p className="text-sm text-muted-foreground">Most popular categories</p>
               </div>
               <div className="flex flex-wrap justify-center gap-2">
                 {[
