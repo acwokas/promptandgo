@@ -503,7 +503,7 @@ const Index = () => {
               <p className="text-muted-foreground max-w-3xl mb-8">Get started by exploring some of our most popular prompts, or set up your preferences for personalized recommendations.</p>
               <div className="text-center space-y-4">
                 <Button asChild variant="hero">
-                  <Link to="/smart-suggestions">Set Up Personalized Suggestions</Link>
+                  <Link to="/account/profile">Set Up Personalized Suggestions</Link>
                 </Button>
                 <Button asChild variant="outline">
                   <Link to="/library">Browse All Prompts</Link>
