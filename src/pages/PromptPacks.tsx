@@ -10,7 +10,7 @@ import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
-import { Lock, Check, Heart, Search, Zap, Crown, Infinity, Sparkles } from "lucide-react";
+import { Lock, Check, Heart, Search, Zap, Crown, Infinity, Sparkles, ChevronDown, ChevronUp } from "lucide-react";
 import ShareButton from "@/components/ShareButton";
 import { PackFilters } from "@/components/prompt/PackFilters";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
@@ -37,6 +37,8 @@ const PromptPacks = () => {
   const [contents, setContents] = useState<Record<string, PromptLite[]>>({});
   const [ownedPromptIds, setOwnedPromptIds] = useState<Set<string>>(new Set());
   const [ownedPackIds, setOwnedPackIds] = useState<Set<string>>(new Set());
+  const [showPopularPacks, setShowPopularPacks] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
   const navigate = useNavigate();
   const { user } = useSupabaseAuth();
 
@@ -293,9 +295,33 @@ const PromptPacks = () => {
         />
         
 
+        {/* Mobile Toggle Buttons */}
+        <div className="lg:hidden mb-4 flex gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowPopularPacks(!showPopularPacks)}
+            className="flex-1"
+          >
+            <Sparkles className="h-4 w-4 mr-2" />
+            Popular Packs
+            {showPopularPacks ? <ChevronUp className="h-4 w-4 ml-2" /> : <ChevronDown className="h-4 w-4 ml-2" />}
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowFilters(!showFilters)}
+            className="flex-1"
+          >
+            <Search className="h-4 w-4 mr-2" />
+            Search & Filter
+            {showFilters ? <ChevronUp className="h-4 w-4 ml-2" /> : <ChevronDown className="h-4 w-4 ml-2" />}
+          </Button>
+        </div>
+
         <div className="flex flex-col lg:flex-row gap-6 mb-6">
           {/* Popular Power Packs Section */}
-          <section id="popular-power-packs" className="lg:w-1/2">
+          <section id="popular-power-packs" className={`lg:w-1/2 ${!showPopularPacks && 'hidden lg:block'}`}>
             <Card className="bg-gradient-to-r from-primary/5 to-accent/5 border-primary/20">
               <CardContent className="p-4">
                 <div className="mb-3">
@@ -323,7 +349,7 @@ const PromptPacks = () => {
           </section>
 
           {/* Pack Filters Section */}
-          <section id="pack-filters" className="lg:w-1/2">
+          <section id="pack-filters" className={`lg:w-1/2 ${!showFilters && 'hidden lg:block'}`}>
             <PackFilters
               query={query}
               filter={filter}
