@@ -461,43 +461,60 @@ const Index = () => {
 
         {/* Conditional Content Based on Login Status */}
         {user ? (
-          // Logged-in users: Show Personalized Recommendations
-          personalizedPrompts.length > 0 ? (
+          // Check if user has personalization set up
+          hasPersonalization ? (
+            // User has personalization - show recommendations (even if empty)
             <section className="container py-6">
               <h2 className="text-2xl font-semibold mb-2">🎯 Recommended for You</h2>
-              <p className="text-muted-foreground max-w-3xl mb-8">Based on your preferences, here are some prompts we think you'll love.</p>
-              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {personalizedPrompts.slice(0, 3).map((p) => (
-                  <div key={p.id} className="relative group">
-                    <PromptCard
-                      prompt={p as any}
-                      categories={homeCategories}
-                      onCategoryClick={(cid) => navigate(`/library?categoryId=${cid}`)}
-                      onSubcategoryClick={(sid, cid) => navigate(`/library?categoryId=${cid}&subcategoryId=${sid}`)}
-                      onCopyClick={() => navigate(`/library?categoryId=${p.categoryId || ""}${p.subcategoryId ? `&subcategoryId=${p.subcategoryId}` : ""}`)}
-                    />
-                    <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full border-2 border-background shadow-sm">
-                      {Math.round(p.relevanceScore)}% match
-                    </div>
+              {personalizedPrompts.length > 0 ? (
+                <>
+                  <p className="text-muted-foreground max-w-3xl mb-8">Based on your preferences, here are some prompts we think you'll love.</p>
+                  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    {personalizedPrompts.slice(0, 3).map((p) => (
+                      <div key={p.id} className="relative group">
+                        <PromptCard
+                          prompt={p as any}
+                          categories={homeCategories}
+                          onCategoryClick={(cid) => navigate(`/library?categoryId=${cid}`)}
+                          onSubcategoryClick={(sid, cid) => navigate(`/library?categoryId=${cid}&subcategoryId=${sid}`)}
+                          onCopyClick={() => navigate(`/library?categoryId=${p.categoryId || ""}${p.subcategoryId ? `&subcategoryId=${p.subcategoryId}` : ""}`)}
+                        />
+                        <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full border-2 border-background shadow-sm">
+                          {Math.round(p.relevanceScore)}% match
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-              <div className="mt-6 text-center space-x-3">
-                <Button asChild variant="outline">
-                  <Link to="/library">See All Your Recommendations →</Link>
-                </Button>
-                <Button 
-                  onClick={() => window.location.reload()} 
-                  variant="ghost" 
-                  size="sm"
-                  className="text-xs"
-                >
-                  🔄 Refresh
-                </Button>
-              </div>
+                  <div className="mt-6 text-center space-x-3">
+                    <Button asChild variant="outline">
+                      <Link to="/library">See All Your Recommendations →</Link>
+                    </Button>
+                    <Button 
+                      onClick={() => window.location.reload()} 
+                      variant="ghost" 
+                      size="sm"
+                      className="text-xs"
+                    >
+                      🔄 Refresh
+                    </Button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="text-muted-foreground max-w-3xl mb-8">We're still analyzing prompts based on your preferences. Check back soon or browse our library!</p>
+                  <div className="text-center space-y-4">
+                    <Button asChild variant="outline">
+                      <Link to="/library">Browse All Prompts</Link>
+                    </Button>
+                    <Button asChild variant="ghost">
+                      <Link to="/account/profile">Update Preferences</Link>
+                    </Button>
+                  </div>
+                </>
+              )}
             </section>
           ) : (
-            // Logged-in users without personalization: Show generic recommendations
+            // User doesn't have personalization set up
             <section className="container py-6">
               <h2 className="text-2xl font-semibold mb-2">🎯 Recommended for You</h2>
               <p className="text-muted-foreground max-w-3xl mb-8">Get started by exploring some of our most popular prompts, or set up your preferences for personalized recommendations.</p>
