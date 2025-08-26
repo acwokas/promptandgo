@@ -135,8 +135,8 @@ serve(async (req: Request) => {
     let attempts = 0;
     
     while (attempts < 10) {
-      const { data } = await supabaseClient
-        .from('shared_links_public')
+      const { data } = await supabase
+        .from('shared_links')
         .select('short_code')
         .eq('short_code', shortCode)
         .single();
