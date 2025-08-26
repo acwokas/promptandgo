@@ -277,13 +277,12 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
           </Select>
         </div>
 
-        <div className="md:col-span-3 flex items-center gap-2 justify-end md:justify-start flex-wrap">
+        <div className="md:col-span-2 flex items-center gap-2 justify-end">
           <Button variant="cta" className="border border-foreground" onClick={onSearch} aria-label="Run search">
             Search
           </Button>
-          <span className="text-foreground">or</span>
           <Button variant="secondary" className="border border-foreground" onClick={onClear} aria-label="Reset filters and search">
-            Reset Filters
+            Reset
           </Button>
         </div>
       </div>
