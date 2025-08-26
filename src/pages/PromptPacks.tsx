@@ -10,7 +10,7 @@ import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
-import { Lock, Check, Heart, Search, Zap, Crown, Infinity } from "lucide-react";
+import { Lock, Check, Heart, Search, Zap, Crown, Infinity, Sparkles } from "lucide-react";
 import ShareButton from "@/components/ShareButton";
 import { PackFilters } from "@/components/prompt/PackFilters";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
@@ -263,15 +263,9 @@ const PromptPacks = () => {
     <>
       <PageHero title={<>⚡️<span className="text-gradient-brand">Power</span> Packs</>} subtitle={<>Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results.</>} minHeightClass="min-h-[28vh]">
         <Button asChild variant="hero">
-          <Link to="/library">
-            <Search className="h-4 w-4 mr-2" />
-            Back to Library
-          </Link>
-        </Button>
-        <Button asChild variant="outline" className="text-foreground hover:text-foreground">
-          <Link to="/account/favorites">
-            <Heart className="h-4 w-4 mr-2" />
-            My Prompts
+          <Link to="#pack-filters">
+            <Sparkles className="h-4 w-4 mr-2" />
+            Explore Power Packs
           </Link>
         </Button>
       </PageHero>
