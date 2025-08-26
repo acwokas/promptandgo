@@ -404,8 +404,8 @@ const Index = () => {
         </section>
 
         {/* Meet Scout Section */}
-        <section className="container py-6">
-          <div className="text-center mb-8">
+        <section className="container py-3 sm:py-6">
+          <div className="text-center mb-4 sm:mb-8">
             <div className="flex items-center justify-center gap-3 mb-4">
               <div className="relative">
                 <video 
