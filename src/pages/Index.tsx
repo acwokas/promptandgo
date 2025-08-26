@@ -429,12 +429,7 @@ const Index = () => {
           
           <div className="grid gap-4 md:grid-cols-2 max-w-4xl mx-auto">
             <div className="group rounded-xl border bg-gradient-to-br from-accent/5 to-transparent p-4 sm:p-6 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4">
-                <div className="flex-shrink-0 self-start sm:self-auto">
-                  <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
-                    <Search className="h-5 w-5 text-accent" />
-                  </div>
-                </div>
+              <div className="flex flex-col sm:flex-row sm:items-start">
                 <div className="flex-1 min-w-0">
                   <h3 className="font-semibold mb-2">🎯 Scout Recommendations</h3>
                   <p className="text-sm text-muted-foreground mb-4">
@@ -448,12 +443,7 @@ const Index = () => {
             </div>
 
             <div className="group rounded-xl border bg-gradient-to-br from-secondary/5 to-transparent p-4 sm:p-6 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4">
-                <div className="flex-shrink-0 self-start sm:self-auto">
-                  <div className="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center">
-                    <Bot className="h-5 w-5 text-secondary" />
-                  </div>
-                </div>
+              <div className="flex flex-col sm:flex-row sm:items-start">
                 <div className="flex-1 min-w-0">
                   <h3 className="font-semibold mb-2">🤖 Scout Assistant</h3>
                   <p className="text-sm text-muted-foreground mb-4">
