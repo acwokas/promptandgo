@@ -16,10 +16,12 @@ function validateUrl(url: string): boolean {
   try {
     const urlObj = new URL(url);
     // Only allow https and specific domains
-    return urlObj.protocol === 'https:' && 
-           (urlObj.hostname === 'promptandgo.ai' || 
-            urlObj.hostname.endsWith('.promptandgo.ai') ||
-            urlObj.hostname.endsWith('.lovableproject.com'));
+      return urlObj.protocol === 'https:' && (
+             urlObj.hostname === 'promptandgo.ai' || 
+             urlObj.hostname.endsWith('.promptandgo.ai') ||
+             urlObj.hostname.endsWith('.lovableproject.com') ||
+             urlObj.hostname.endsWith('.lovable.dev')
+           );
   } catch {
     return false;
   }
