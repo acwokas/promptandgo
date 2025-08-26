@@ -287,7 +287,7 @@ const Index = () => {
         <section className="container pt-2 pb-6">
           <div className="text-center">
             <p className="text-sm text-muted-foreground mb-4">Works seamlessly with your favourite AI tools</p>
-            <div className="flex items-center justify-center gap-8 text-xs text-muted-foreground">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:items-center lg:justify-center gap-4 lg:gap-8 text-xs text-muted-foreground max-w-4xl mx-auto">
               <span className="flex items-center gap-2">
                 <div className="w-6 h-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
                   <span className="text-white font-bold text-xs">✓</span>
@@ -311,6 +311,18 @@ const Index = () => {
                   <span className="text-white font-bold text-xs">✓</span>
                 </div>
                 Perplexity
+              </span>
+              <span className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-gradient-to-r from-indigo-500 to-blue-600 rounded-full flex items-center justify-center">
+                  <span className="text-white font-bold text-xs">✓</span>
+                </div>
+                Midjourney
+              </span>
+              <span className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full flex items-center justify-center">
+                  <span className="text-white font-bold text-xs">✓</span>
+                </div>
+                Ideogram
               </span>
             </div>
           </div>
