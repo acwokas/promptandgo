@@ -2,7 +2,7 @@ import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
-import { Sparkles, Zap, ShieldCheck, ListChecks, Wand2, Rocket, Check, Search, Heart, Bot } from "lucide-react";
+import { Sparkles, Zap, ShieldCheck, ListChecks, Wand2, Rocket, Check, Search, Heart, Bot, Star, Briefcase } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useSubscriptionStatus } from "@/hooks/useSubscriptionStatus";
@@ -235,11 +235,16 @@ const Index = () => {
           <div className="grid gap-6 md:grid-cols-3 mb-4">
             <Card className="bg-gradient-to-br from-primary/5 to-transparent">
               <CardContent className="p-6">
-                <div className="flex items-start gap-3 mb-4">
-                  <div className="text-yellow-500">⭐⭐⭐⭐⭐</div>
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-10 h-10 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Star className="h-5 w-5 text-white fill-white" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="text-yellow-500 mb-2">⭐⭐⭐⭐⭐</div>
+                    <p className="text-sm text-muted-foreground">"These prompts saved me 5 hours per week on content creation. The marketing category alone paid for itself in one campaign."</p>
+                  </div>
                 </div>
-                <p className="text-sm text-muted-foreground mb-4">"These prompts saved me 5 hours per week on content creation. The marketing category alone paid for itself in one campaign."</p>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 pl-14">
                   <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">SJ</div>
                   <div>
                     <p className="text-sm font-medium">Sarah Johnson</p>
@@ -251,11 +256,16 @@ const Index = () => {
 
             <Card className="bg-gradient-to-br from-primary/5 to-transparent">
               <CardContent className="p-6">
-                <div className="flex items-start gap-3 mb-4">
-                  <div className="text-yellow-500">⭐⭐⭐⭐⭐</div>
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Briefcase className="h-5 w-5 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="text-yellow-500 mb-2">⭐⭐⭐⭐⭐</div>
+                    <p className="text-sm text-muted-foreground">"As a freelancer, these prompts help me deliver better work faster. The career section helped me land three new clients this month."</p>
+                  </div>
                 </div>
-                <p className="text-sm text-muted-foreground mb-4">"As a freelancer, these prompts help me deliver better work faster. The career section helped me land three new clients this month."</p>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 pl-14">
                   <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">MR</div>
                   <div>
                     <p className="text-sm font-medium">Michael Rodriguez</p>
@@ -267,11 +277,16 @@ const Index = () => {
 
             <Card className="bg-gradient-to-br from-primary/5 to-transparent">
               <CardContent className="p-6">
-                <div className="flex items-start gap-3 mb-4">
-                  <div className="text-yellow-500">⭐⭐⭐⭐⭐</div>
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-teal-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Rocket className="h-5 w-5 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="text-yellow-500 mb-2">⭐⭐⭐⭐⭐</div>
+                    <p className="text-sm text-muted-foreground">"Game changer for our startup. We use the business prompts daily for everything from investor pitches to customer emails."</p>
+                  </div>
                 </div>
-                <p className="text-sm text-muted-foreground mb-4">"Game changer for our startup. We use the business prompts daily for everything from investor pitches to customer emails."</p>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 pl-14">
                   <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">AL</div>
                   <div>
                     <p className="text-sm font-medium">Alex Liu</p>
