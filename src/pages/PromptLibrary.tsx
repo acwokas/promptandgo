@@ -6,13 +6,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import PageHero from "@/components/layout/PageHero";
 import { Link, useSearchParams } from "react-router-dom";
-import { Search, Heart, Bot, TrendingUp, Clock, Star, Users, Copy, Sparkles } from "lucide-react";
+import { Search, Heart, Bot, TrendingUp, Clock, Star, Users, Copy, Sparkles, ChevronDown, ChevronUp } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useCallback, useEffect, useState, useRef } from "react";
 import type { Category as CategoryType } from "@/data/prompts";
 import { toast } from "@/hooks/use-toast";
 import { usePersonalizedPrompts } from "@/hooks/usePersonalizedPrompts";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
 const PAGE_SIZE = 6;
@@ -82,6 +83,8 @@ const PromptLibrary = () => {
   const [proOnly, setProOnly] = useState(false);
   const [ribbon, setRibbon] = useState<string | undefined>();
   const [userExplicitlySelectedAll, setUserExplicitlySelectedAll] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
+  const isMobile = useIsMobile();
 
 
   const [page, setPage] = useState(1);
@@ -734,95 +737,114 @@ const PromptLibrary = () => {
         </section>
 
         <section id="library-filters" className="scroll-mt-36 md:scroll-mt-40 sticky top-20 z-40 bg-background/95 backdrop-blur-sm border-b border-border/50 py-4 -mx-4 px-4 shadow-sm mb-6">
-          <PromptFilters
-            categories={categories}
-            categoryId={categoryId}
-            subcategoryId={subcategoryId}
-            query={query}
-            includePro={includePro}
-            proOnly={proOnly}
-            ribbon={ribbon}
-            onChange={(n) => {
-              clearRandom();
-              const newSearchParams = new URLSearchParams(searchParams);
-              
-              if ('categoryId' in n) {
-                setCategoryId(n.categoryId || undefined);
-                if (n.categoryId) {
-                  newSearchParams.set('categoryId', n.categoryId);
-                } else {
-                  newSearchParams.delete('categoryId');
-                }
-                // Clear subcategory when changing category
-                setSubcategoryId(undefined);
-                newSearchParams.delete('subcategoryId');
-                // Clear ribbon when selecting category
-                setRibbon(undefined);
-                setUserExplicitlySelectedAll(false);
-                newSearchParams.delete('ribbon');
-              }
-              
-              if ('subcategoryId' in n) {
-                setSubcategoryId(n.subcategoryId || undefined);
-                if (n.subcategoryId) {
-                  newSearchParams.set('subcategoryId', n.subcategoryId);
-                } else {
+          {isMobile && (
+            <div className="mb-4">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowFilters(!showFilters)}
+                className="w-full flex items-center justify-between"
+              >
+                <span className="flex items-center gap-2">
+                  <Search className="h-4 w-4" />
+                  Search & Filters
+                </span>
+                {showFilters ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+              </Button>
+            </div>
+          )}
+          
+          <div className={isMobile ? (showFilters ? "block" : "hidden") : "block"}>
+            <PromptFilters
+              categories={categories}
+              categoryId={categoryId}
+              subcategoryId={subcategoryId}
+              query={query}
+              includePro={includePro}
+              proOnly={proOnly}
+              ribbon={ribbon}
+              onChange={(n) => {
+                clearRandom();
+                const newSearchParams = new URLSearchParams(searchParams);
+                
+                if ('categoryId' in n) {
+                  setCategoryId(n.categoryId || undefined);
+                  if (n.categoryId) {
+                    newSearchParams.set('categoryId', n.categoryId);
+                  } else {
+                    newSearchParams.delete('categoryId');
+                  }
+                  // Clear subcategory when changing category
+                  setSubcategoryId(undefined);
                   newSearchParams.delete('subcategoryId');
-                }
-              }
-              
-              if (n.query !== undefined) {
-                setQuery(n.query);
-                setSelectedTag(undefined); // typing a query clears tag filter
-                if (n.query) {
-                  newSearchParams.set('q', n.query);
-                } else {
-                  newSearchParams.delete('q');
-                }
-                // Clear ribbon when searching
-                setRibbon(undefined);
-                setUserExplicitlySelectedAll(false);
-                newSearchParams.delete('ribbon');
-              }
-              
-              if (n.includePro !== undefined) setIncludePro(!!n.includePro);
-              
-              if ('ribbon' in n) {
-                setRibbon(n.ribbon || undefined);
-                // Track when user explicitly selects "All"
-                if (!n.ribbon) {
-                  setUserExplicitlySelectedAll(true);
-                } else {
+                  // Clear ribbon when selecting category
+                  setRibbon(undefined);
                   setUserExplicitlySelectedAll(false);
-                }
-                // Update URL to reflect ribbon change
-                if (n.ribbon) {
-                  newSearchParams.set('ribbon', n.ribbon);
-                } else {
                   newSearchParams.delete('ribbon');
                 }
-              }
-              
-              setSearchParams(newSearchParams, { replace: true });
-            }}
-            onSearch={() => { clearRandom(); refresh(); }}
-            onClear={() => {
-              clearRandom();
-              setCategoryId(undefined);
-              setSubcategoryId(undefined);
-              setQuery("");
-              setSelectedTag(undefined);
-              setProOnly(false);
-              setIncludePro(true);
-              setPage(1);
-              setUserExplicitlySelectedAll(true); // User explicitly wants to see all prompts
-              // Clear ribbon completely - don't auto-set to RECOMMENDED
-              setRibbon(undefined);
-              // Clear all URL search params
-              const newSearchParams = new URLSearchParams();
-              setSearchParams(newSearchParams, { replace: true });
-            }}
-          />
+                
+                if ('subcategoryId' in n) {
+                  setSubcategoryId(n.subcategoryId || undefined);
+                  if (n.subcategoryId) {
+                    newSearchParams.set('subcategoryId', n.subcategoryId);
+                  } else {
+                    newSearchParams.delete('subcategoryId');
+                  }
+                }
+                
+                if (n.query !== undefined) {
+                  setQuery(n.query);
+                  setSelectedTag(undefined); // typing a query clears tag filter
+                  if (n.query) {
+                    newSearchParams.set('q', n.query);
+                  } else {
+                    newSearchParams.delete('q');
+                  }
+                  // Clear ribbon when searching
+                  setRibbon(undefined);
+                  setUserExplicitlySelectedAll(false);
+                  newSearchParams.delete('ribbon');
+                }
+                
+                if (n.includePro !== undefined) setIncludePro(!!n.includePro);
+                
+                if ('ribbon' in n) {
+                  setRibbon(n.ribbon || undefined);
+                  // Track when user explicitly selects "All"
+                  if (!n.ribbon) {
+                    setUserExplicitlySelectedAll(true);
+                  } else {
+                    setUserExplicitlySelectedAll(false);
+                  }
+                  // Update URL to reflect ribbon change
+                  if (n.ribbon) {
+                    newSearchParams.set('ribbon', n.ribbon);
+                  } else {
+                    newSearchParams.delete('ribbon');
+                  }
+                }
+                
+                setSearchParams(newSearchParams, { replace: true });
+              }}
+              onSearch={() => { clearRandom(); refresh(); }}
+              onClear={() => {
+                clearRandom();
+                setCategoryId(undefined);
+                setSubcategoryId(undefined);
+                setQuery("");
+                setSelectedTag(undefined);
+                setProOnly(false);
+                setIncludePro(true);
+                setPage(1);
+                setUserExplicitlySelectedAll(true); // User explicitly wants to see all prompts
+                // Clear ribbon completely - don't auto-set to RECOMMENDED
+                setRibbon(undefined);
+                // Clear all URL search params
+                const newSearchParams = new URLSearchParams();
+                setSearchParams(newSearchParams, { replace: true });
+              }}
+            />
+          </div>
         </section>
 
         {/* Personalized Recommendations - show when no active filters */}
