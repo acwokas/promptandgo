@@ -16,6 +16,7 @@ import FAQs from "./pages/FAQs";
 import HowItWorks from "./pages/HowItWorks";
 import Contact from "./pages/Contact";
 import Header from "@/components/layout/Header";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import Footer from "@/components/layout/Footer";
 import GlobalStructuredData from "@/components/seo/GlobalStructuredData";
 import WelcomeToPromptAndGo from "./pages/blog/WelcomeToPromptAndGo";
@@ -89,6 +90,7 @@ const AppContent = () => {
     <LoginWidgetProvider>
       <GlobalStructuredData />
       <Header />
+      <ScrollToTop />
       <AuthEffects />
       <Routes>
         <Route path="/" element={<Index />} />
