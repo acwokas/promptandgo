@@ -88,7 +88,7 @@ serve(async (req: Request) => {
     }
 
     // Validate content type
-    const validContentTypes = ['prompt', 'pack', 'blog'];
+    const validContentTypes = ['prompt', 'pack', 'blog', 'poll'];
     if (!validContentTypes.includes(content_type)) {
       return new Response('Invalid content type', { status: 400, headers: corsHeaders });
     }

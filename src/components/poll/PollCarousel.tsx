@@ -181,10 +181,15 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
   }
 
   return (
-    <Card className="w-full max-w-2xl mx-auto bg-gradient-to-br from-primary/5 to-accent/5 border-primary/20">
-      <CardHeader className="pb-4">
+    <Card className="w-full max-w-2xl mx-auto bg-gradient-to-br from-primary/10 via-accent/10 to-secondary/10 border-2 border-primary/30 shadow-lg">
+      <CardHeader className="pb-4 relative overflow-hidden">
+        {/* Eye-catching "Poll" badge */}
+        <div className="absolute top-0 right-0 bg-gradient-to-r from-primary to-accent text-primary-foreground px-3 py-1 rounded-bl-lg font-bold text-sm">
+          🗳️ POLL
+        </div>
+        
         <div className="flex items-center justify-between">
-          <CardTitle className="text-xl font-bold text-foreground">
+          <CardTitle className="text-xl font-bold text-foreground pr-16">
             {currentPoll.title}
           </CardTitle>
           <div className="flex items-center gap-2">
@@ -222,9 +227,11 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
             </Button>
           </div>
         </div>
-        <p className="text-sm text-muted-foreground whitespace-pre-line">
-          {currentPoll.intro_copy}
-        </p>
+        <div className="bg-gradient-to-r from-primary/5 to-accent/5 p-3 rounded-lg border border-primary/10 mt-4">
+          <p className="text-sm text-muted-foreground whitespace-pre-line font-medium">
+            {currentPoll.intro_copy}
+          </p>
+        </div>
       </CardHeader>
 
       <CardContent className="space-y-4">
@@ -244,8 +251,9 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
                 <div className="relative">
                   <Button
                     variant={showResults ? "default" : (isSelected ? "default" : "outline")}
-                    className={`w-full justify-between text-left h-auto p-4 relative overflow-hidden ${
-                      showResults ? 'bg-foreground/80 text-primary-foreground hover:bg-foreground/80' : ''
+                    className={`w-full justify-between text-left h-auto p-4 relative overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-md ${
+                      showResults ? 'bg-foreground/80 text-primary-foreground hover:bg-foreground/80' : 
+                      isSelected ? 'ring-2 ring-primary/50' : 'hover:border-primary/40 hover:bg-primary/5'
                     }`}
                     onClick={() => handleVote(option.id)}
                     disabled={showResults || userVote !== null}
@@ -281,9 +289,14 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
         </div>
 
         {!showResults && (
-          <p className="text-xs text-muted-foreground text-center">
-            Click an option to vote and see results
-          </p>
+          <div className="text-center p-3 bg-gradient-to-r from-primary/5 to-accent/5 rounded-lg border border-primary/10">
+            <p className="text-sm font-medium text-foreground mb-1">
+              🗳️ Cast Your Vote!
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Click an option to vote and see live results
+            </p>
+          </div>
         )}
       </CardContent>
     </Card>
