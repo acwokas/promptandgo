@@ -254,8 +254,10 @@ const AdminExport = () => {
   const exportAll = async () => {
     setLoading(true);
     try {
-      // Fetch everything in parallel
-      const [promptsResult, packsResult, categoriesResult, subcategoriesResult, tagsResult, packPromptsResult, promptTagsResult, packTagsResult] = await Promise.all([
+      console.log("Starting complete export...");
+      
+      // Step 1: Fetch core data first
+      const [promptsResult, packsResult, categoriesResult, subcategoriesResult, tagsResult] = await Promise.all([
         supabase
           .from("prompts")
           .select(`
@@ -270,9 +272,7 @@ const AdminExport = () => {
             category_id,
             subcategory_id,
             created_at,
-            updated_at,
-            categories:category_id(name, slug),
-            subcategories:subcategory_id(name, slug)
+            updated_at
           `),
         supabase
           .from("packs")
@@ -289,55 +289,112 @@ const AdminExport = () => {
         supabase
           .from("tags")
           .select("*")
-          .order("name"),
-        supabase
-          .from("pack_prompts")
-          .select(`
-            prompt_id,
-            pack_id,
-            packs:pack_id(name, slug, price_cents)
-          `),
-        supabase
-          .from("prompt_tags")
-          .select(`
-            prompt_id,
-            tags:tag_id(name)
-          `),
-        supabase
-          .from("pack_tags")
-          .select(`
-            pack_id,
-            tags:tag_id(name)
-          `)
+          .order("name")
       ]);
 
-      // Check for errors
-      if (promptsResult.error) throw promptsResult.error;
-      if (packsResult.error) throw packsResult.error;
-      if (categoriesResult.error) throw categoriesResult.error;
-      if (subcategoriesResult.error) throw subcategoriesResult.error;
-      if (tagsResult.error) throw tagsResult.error;
-      if (packPromptsResult.error) throw packPromptsResult.error;
-      if (promptTagsResult.error) throw promptTagsResult.error;
-      if (packTagsResult.error) throw packTagsResult.error;
+      // Check for errors in core data
+      if (promptsResult.error) {
+        console.error("Prompts query error:", promptsResult.error);
+        throw new Error(`Failed to fetch prompts: ${promptsResult.error.message}`);
+      }
+      if (packsResult.error) {
+        console.error("Packs query error:", packsResult.error);
+        throw new Error(`Failed to fetch packs: ${packsResult.error.message}`);
+      }
+      if (categoriesResult.error) {
+        console.error("Categories query error:", categoriesResult.error);
+        throw new Error(`Failed to fetch categories: ${categoriesResult.error.message}`);
+      }
+      if (subcategoriesResult.error) {
+        console.error("Subcategories query error:", subcategoriesResult.error);
+        throw new Error(`Failed to fetch subcategories: ${subcategoriesResult.error.message}`);
+      }
+      if (tagsResult.error) {
+        console.error("Tags query error:", tagsResult.error);
+        throw new Error(`Failed to fetch tags: ${tagsResult.error.message}`);
+      }
+
+      console.log(`Fetched ${promptsResult.data?.length || 0} prompts, ${packsResult.data?.length || 0} packs`);
+
+      // Step 2: Fetch relationship data
+      const [packPromptsResult, promptTagsResult, packTagsResult] = await Promise.all([
+        supabase
+          .from("pack_prompts")
+          .select("prompt_id, pack_id"),
+        supabase
+          .from("prompt_tags")
+          .select("prompt_id, tag_id"),
+        supabase
+          .from("pack_tags")
+          .select("pack_id, tag_id")
+      ]);
+
+      if (packPromptsResult.error) {
+        console.error("Pack prompts query error:", packPromptsResult.error);
+        throw new Error(`Failed to fetch pack prompts: ${packPromptsResult.error.message}`);
+      }
+      if (promptTagsResult.error) {
+        console.error("Prompt tags query error:", promptTagsResult.error);
+        throw new Error(`Failed to fetch prompt tags: ${promptTagsResult.error.message}`);
+      }
+      if (packTagsResult.error) {
+        console.error("Pack tags query error:", packTagsResult.error);  
+        throw new Error(`Failed to fetch pack tags: ${packTagsResult.error.message}`);
+      }
+
+      console.log("Successfully fetched all relationship data");
 
       // Create maps for quick lookup
+      console.log("Building lookup maps...");
+      
+      // Create category lookup map
+      const categoriesMap = new Map<string, any>();
+      categoriesResult.data?.forEach((cat: any) => {
+        categoriesMap.set(cat.id, cat);
+      });
+      
+      // Create subcategory lookup map
+      const subcategoriesMap = new Map<string, any>();
+      subcategoriesResult.data?.forEach((subcat: any) => {
+        subcategoriesMap.set(subcat.id, subcat);
+      });
+      
+      // Create tags lookup map
+      const tagsMap = new Map<string, any>();
+      tagsResult.data?.forEach((tag: any) => {
+        tagsMap.set(tag.id, tag);
+      });
+      
+      // Create packs lookup map
+      const packsMap = new Map<string, any>();
+      packsResult.data?.forEach((pack: any) => {
+        packsMap.set(pack.id, pack);
+      });
+
+      // Build prompt tags map
       const tagsByPrompt = new Map<string, string[]>();
       promptTagsResult.data?.forEach((pt: any) => {
         if (!tagsByPrompt.has(pt.prompt_id)) {
           tagsByPrompt.set(pt.prompt_id, []);
         }
-        tagsByPrompt.get(pt.prompt_id)?.push(pt.tags.name);
+        const tag = tagsMap.get(pt.tag_id);
+        if (tag) {
+          tagsByPrompt.get(pt.prompt_id)?.push(tag.name);
+        }
       });
 
+      // Build pack prompts map
       const packsByPrompt = new Map<string, { slug: string, name: string, price_cents: number, pack_id: string }>();
       packPromptsResult.data?.forEach((pp: any) => {
-        packsByPrompt.set(pp.prompt_id, {
-          slug: pp.packs.slug,
-          name: pp.packs.name,
-          price_cents: pp.packs.price_cents || 0,
-          pack_id: pp.pack_id
-        });
+        const pack = packsMap.get(pp.pack_id);
+        if (pack) {
+          packsByPrompt.set(pp.prompt_id, {
+            slug: pack.slug,
+            name: pack.name,
+            price_cents: pack.price_cents || 0,
+            pack_id: pp.pack_id
+          });
+        }
       });
 
       // Create map for pack tags
@@ -346,7 +403,10 @@ const AdminExport = () => {
         if (!tagsByPack.has(pt.pack_id)) {
           tagsByPack.set(pt.pack_id, []);
         }
-        tagsByPack.get(pt.pack_id)?.push(pt.tags.name);
+        const tag = tagsMap.get(pt.tag_id);
+        if (tag) {
+          tagsByPack.get(pt.pack_id)?.push(tag.name);
+        }
       });
 
       // Create pack info map with tags
@@ -358,10 +418,14 @@ const AdminExport = () => {
         });
       });
 
+      console.log("Starting data processing...");
+
       // Create comprehensive data with all relationships
       const comprehensiveData = promptsResult.data?.map((prompt: any) => {
         const packInfo = packsByPrompt.get(prompt.id);
         const fullPackInfo = packInfo ? packInfoMap.get(packInfo.pack_id) : null;
+        const category = categoriesMap.get(prompt.category_id);
+        const subcategory = subcategoriesMap.get(prompt.subcategory_id);
         
         return {
           // Prompt data
@@ -377,10 +441,10 @@ const AdminExport = () => {
           prompt_updated_at: prompt.updated_at,
           
           // Category data
-          category_name: prompt.categories?.name || "",
-          category_slug: prompt.categories?.slug || "",
-          subcategory_name: prompt.subcategories?.name || "",
-          subcategory_slug: prompt.subcategories?.slug || "",
+          category_name: category?.name || "",
+          category_slug: category?.slug || "",
+          subcategory_name: subcategory?.name || "",
+          subcategory_slug: subcategory?.slug || "",
           
           // Prompt Tags
           prompt_tags: tagsByPrompt.get(prompt.id)?.join("; ") || "",
@@ -397,6 +461,8 @@ const AdminExport = () => {
           prompt_type: prompt.is_pro ? "PRO" : "Free"
         };
       }) || [];
+
+      console.log(`Processed ${comprehensiveData.length} prompts for export`);
 
       // Convert to CSV string
       const headers = [
@@ -438,9 +504,10 @@ const AdminExport = () => {
 
     } catch (error) {
       console.error("Export error:", error);
+      const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
       toast({
         title: "Export failed",
-        description: "Failed to export complete data",
+        description: `Failed to export complete data: ${errorMessage}. Check console for details.`,
         variant: "destructive",
       });
     } finally {
