@@ -2,9 +2,12 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.54.0";
 import { Resend } from "npm:resend@2.0.0";
 
+// SECURITY: Restrictive CORS headers for production security
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Origin": "https://promptandgo.ai,https://www.promptandgo.ai,http://localhost:3000,https://796ef56a-0e56-472b-bbac-4eedfcf2a4d0.sandbox.lovable.dev",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Max-Age": "86400",
 };
 
 interface SubscribeRequest {
@@ -18,6 +21,55 @@ const supabase = createClient(
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY")!);
 
+// SECURITY: Rate limiting helper function
+async function checkRateLimit(emailHash: string, ipAddress: string): Promise<{ allowed: boolean; resetTime?: number }> {
+  const windowMs = 5 * 60 * 1000; // 5 minutes
+  const maxAttempts = 3; // 3 attempts per 5 minutes per email/IP combination
+  
+  try {
+    // Clean up old rate limit records
+    await supabase.rpc('cleanup_newsletter_rate_limits');
+    
+    const { data: existing } = await supabase
+      .from('newsletter_rate_limits')
+      .select('*')
+      .eq('email_hash', emailHash)
+      .eq('ip_address', ipAddress)
+      .gte('created_at', new Date(Date.now() - windowMs).toISOString())
+      .single();
+    
+    if (existing) {
+      if (existing.attempt_count >= maxAttempts) {
+        return { 
+          allowed: false, 
+          resetTime: new Date(existing.created_at).getTime() + windowMs 
+        };
+      }
+      
+      // Increment attempt count
+      await supabase
+        .from('newsletter_rate_limits')
+        .update({ attempt_count: existing.attempt_count + 1 })
+        .eq('id', existing.id);
+    } else {
+      // Create new rate limit record
+      await supabase
+        .from('newsletter_rate_limits')
+        .insert({ 
+          email_hash: emailHash, 
+          ip_address: ipAddress,
+          attempt_count: 1 
+        });
+    }
+    
+    return { allowed: true };
+  } catch (error) {
+    console.error('Rate limiting error:', error);
+    // Allow request if rate limiting fails (fail open)
+    return { allowed: true };
+  }
+}
+
 serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -25,6 +77,11 @@ serve(async (req: Request) => {
 
   try {
     console.log('Newsletter subscribe request received');
+    
+    // SECURITY: Get client IP address for rate limiting
+    const clientIP = req.headers.get('x-forwarded-for')?.split(',')[0] || 
+                    req.headers.get('x-real-ip') || 
+                    '127.0.0.1';
     
     if (req.method !== "POST") {
       console.log('Invalid method:', req.method);
@@ -61,25 +118,61 @@ serve(async (req: Request) => {
     }
 
     const lowerEmail = email.toLowerCase().trim();
-    console.log('Processing email:', lowerEmail);
+    console.log('Processing email for validation');
     
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(lowerEmail)) {
-      console.log('Invalid email format:', lowerEmail);
-      return new Response(JSON.stringify({ error: "Invalid email" }), {
+    // SECURITY: Enhanced email validation
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    if (!emailRegex.test(lowerEmail) || lowerEmail.length > 254) {
+      console.log('Invalid email format or length');
+      return new Response(JSON.stringify({ error: "Invalid email format" }), {
         status: 400,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
     }
 
-    // Create email hash for lookup
+    // SECURITY: Check for suspicious email patterns
+    const suspiciousPatterns = [
+      /^[0-9]+@/,  // emails starting with only numbers
+      /test@test/,  // obvious test emails
+      /noreply@/,   // no-reply emails
+      /admin@.*test/,  // admin test emails
+      /temp@/,      // temporary emails
+    ];
+    
+    if (suspiciousPatterns.some(pattern => pattern.test(lowerEmail))) {
+      console.log('Suspicious email pattern detected');
+      return new Response(JSON.stringify({ error: "Invalid email address" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
+    }
+
+    // Create email hash for lookup and rate limiting
     const encoder = new TextEncoder();
     const digest = await crypto.subtle.digest("SHA-256", encoder.encode(lowerEmail));
     const emailHash = Array.from(new Uint8Array(digest))
       .map(b => b.toString(16).padStart(2, "0"))
       .join("");
 
-    console.log('Generated email hash for lookup');
+    console.log('Generated email hash for security checks');
+
+    // SECURITY: Check rate limiting before proceeding
+    const rateLimitResult = await checkRateLimit(emailHash, clientIP);
+    if (!rateLimitResult.allowed) {
+      const timeRemaining = Math.ceil((rateLimitResult.resetTime! - Date.now()) / 60000);
+      console.log('Rate limit exceeded for email hash');
+      return new Response(JSON.stringify({ 
+        error: `Too many attempts. Please try again in ${timeRemaining} minutes.`,
+        retryAfter: timeRemaining 
+      }), {
+        status: 429,
+        headers: { 
+          "Content-Type": "application/json", 
+          "Retry-After": timeRemaining.toString(),
+          ...corsHeaders 
+        },
+      });
+    }
 
     // Simple direct insert/update to subscribers table (for newsletter signups only)
     // This bypasses the encrypted storage complexity for simple newsletter subscriptions

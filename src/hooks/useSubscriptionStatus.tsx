@@ -16,18 +16,16 @@ export function useSubscriptionStatus() {
       }
 
       try {
+        // SECURITY FIX: Use secure RPC function instead of direct table access
         const { data, error } = await supabase
-          .from('subscribers')
-          .select('subscribed')
-          .eq('user_id', user.id)
-          .eq('subscribed', true)
+          .rpc('get_user_subscription_status')
           .maybeSingle();
 
         if (error) {
           console.error('Error checking subscription:', error);
           setIsSubscribed(false);
         } else {
-          setIsSubscribed(!!data);
+          setIsSubscribed(!!data?.subscribed);
         }
       } catch (error) {
         console.error('Error checking subscription:', error);
