@@ -81,7 +81,7 @@ const Header = () => {
               Scout AI
             </NavLink>
           </li>
-          <li><NavLink to="/how-it-works" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>How it Works</NavLink></li>
+          <li><NavLink to="/how-it-works" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>🤓 How it Works</NavLink></li>
           <li><NavLink to="/tips" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Tips</NavLink></li>
           <li><NavLink to="/faqs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>FAQs</NavLink></li>
           {user && (
@@ -111,7 +111,7 @@ const Header = () => {
                     <Bot className="h-4 w-4 inline mr-1 text-blue-500" />
                     Scout AI
                   </NavLink>
-                  <NavLink to="/how-it-works" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>How it Works</NavLink>
+                  <NavLink to="/how-it-works" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>🤓 How it Works</NavLink>
                   <NavLink to="/cart" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Cart</NavLink>
                   <NavLink to="/tips" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Tips</NavLink>
                   <NavLink to="/faqs" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>FAQs</NavLink>
