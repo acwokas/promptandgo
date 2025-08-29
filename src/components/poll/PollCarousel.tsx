@@ -250,9 +250,9 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
               <div key={option.id} className="space-y-2">
                 <div className="relative">
                   <Button
-                    variant={showResults ? "default" : (isSelected ? "default" : "outline")}
-                    className={`w-full justify-between text-left h-auto p-4 relative overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-md ${
-                      showResults ? 'bg-foreground/80 text-primary-foreground hover:bg-foreground/80' : 
+                    variant={showResults ? "ghost" : (isSelected ? "default" : "outline")}
+                    className={`w-full justify-between text-left h-auto p-4 relative overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-md border ${
+                      showResults ? 'bg-transparent hover:bg-transparent text-foreground border-border' : 
                       isSelected ? 'ring-2 ring-primary/50' : 'hover:border-primary/40 hover:bg-primary/5'
                     }`}
                     onClick={() => handleVote(option.id)}
