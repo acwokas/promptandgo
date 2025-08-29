@@ -593,7 +593,7 @@ const Index = () => {
               {/* If logged in and newsletter subscribed, show matched power packs instead */}
               {user && isNewsletterSubscribed ? (
                 <MatchedPowerPacks />
-              ) : (!user || !isNewsletterSubscribed) && (
+              ) : (
                 <Card className="bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
                   <CardContent className="p-6">
                     <h3 className="text-lg font-semibold mb-2">🚀 Get Weekly Prompt Tips</h3>
