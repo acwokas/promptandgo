@@ -365,6 +365,78 @@ const AdminPolls = () => {
     }
   };
 
+  const startEditingPoll = (poll: Poll) => {
+    setEditingPoll(poll);
+    setTitle(poll.title);
+    setIntroCopy(poll.intro_copy);
+    setDisplayPages(poll.display_pages);
+    setOptions(poll.poll_options.map(opt => ({ text: opt.text, icon: opt.icon })));
+    setShowCreateDialog(true);
+  };
+
+  const handleUpdatePoll = async () => {
+    if (!editingPoll || !title.trim() || !introCopy.trim() || options.some(opt => !opt.text.trim() || !opt.icon.trim())) {
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      // Update poll
+      const { error: pollError } = await supabase
+        .from('polls')
+        .update({
+          title: title.trim(),
+          intro_copy: introCopy.trim(),
+          display_pages: displayPages
+        })
+        .eq('id', editingPoll.id);
+
+      if (pollError) throw pollError;
+
+      // Delete existing options
+      const { error: deleteError } = await supabase
+        .from('poll_options')
+        .delete()
+        .eq('poll_id', editingPoll.id);
+
+      if (deleteError) throw deleteError;
+
+      // Insert new options
+      const optionsData = options.map((opt, index) => ({
+        poll_id: editingPoll.id,
+        text: opt.text.trim(),
+        icon: opt.icon.trim(),
+        order_index: index + 1
+      }));
+
+      const { error: optionsError } = await supabase
+        .from('poll_options')
+        .insert(optionsData);
+
+      if (optionsError) throw optionsError;
+
+      toast({
+        title: "Success",
+        description: "Poll updated successfully"
+      });
+
+      setShowCreateDialog(false);
+      resetForm();
+      loadPolls();
+    } catch (error) {
+      console.error('Error updating poll:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update poll",
+        variant: "destructive"
+      });
+    }
+  };
+
   if (loading) {
     return <div className="container mx-auto px-6 py-6">Loading...</div>;
   }
@@ -409,7 +481,7 @@ const AdminPolls = () => {
             </DialogTrigger>
             <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
               <DialogHeader>
-                <DialogTitle>Create New Poll</DialogTitle>
+                <DialogTitle>{editingPoll ? 'Edit Poll' : 'Create New Poll'}</DialogTitle>
               </DialogHeader>
               
               <div className="space-y-4">
@@ -497,11 +569,11 @@ const AdminPolls = () => {
                 </div>
 
                 <div className="flex justify-end gap-2">
-                  <Button variant="outline" onClick={() => setShowCreateDialog(false)}>
+                  <Button variant="outline" onClick={() => { setShowCreateDialog(false); resetForm(); }}>
                     Cancel
                   </Button>
-                  <Button onClick={handleCreatePoll}>
-                    Create Poll
+                  <Button onClick={editingPoll ? handleUpdatePoll : handleCreatePoll}>
+                    {editingPoll ? 'Update Poll' : 'Create Poll'}
                   </Button>
                 </div>
               </div>
@@ -540,6 +612,13 @@ const AdminPolls = () => {
                     </div>
                     
                     <div className="flex gap-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => startEditingPoll(poll)}
+                      >
+                        <Edit className="w-4 h-4" />
+                      </Button>
                       <Button
                         variant="ghost"
                         size="sm"
