@@ -328,25 +328,31 @@ export type Database = {
           created_at: string
           icon: string
           id: string
+          manual_percentage: number | null
           order_index: number
           poll_id: string
           text: string
+          use_manual_percentage: boolean | null
         }
         Insert: {
           created_at?: string
           icon: string
           id?: string
+          manual_percentage?: number | null
           order_index?: number
           poll_id: string
           text: string
+          use_manual_percentage?: boolean | null
         }
         Update: {
           created_at?: string
           icon?: string
           id?: string
+          manual_percentage?: number | null
           order_index?: number
           poll_id?: string
           text?: string
+          use_manual_percentage?: boolean | null
         }
         Relationships: [
           {
@@ -982,6 +988,17 @@ export type Database = {
       get_poll_results: {
         Args: { poll_id_param: string }
         Returns: {
+          option_icon: string
+          option_id: string
+          option_text: string
+          percentage: number
+          vote_count: number
+        }[]
+      }
+      get_poll_results_with_manual: {
+        Args: { poll_id_param: string }
+        Returns: {
+          is_manual: boolean
           option_icon: string
           option_id: string
           option_text: string
