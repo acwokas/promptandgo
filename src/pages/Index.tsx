@@ -534,121 +534,112 @@ const Index = () => {
           <PromptsOfTheDay />
         )}
 
-        {/* Newsletter Signup - Only show if user is not logged in or not subscribed */}
-        {(!user || !isSubscribed) && (
-          <section className="container py-6">
-            <Card className="max-w-2xl mx-auto bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
-              <CardContent className="p-8 text-center">
-                <h2 className="text-2xl font-semibold mb-3">🚀 Get Weekly Prompt Tips</h2>
-                <p className="text-muted-foreground mb-6">Join 25,000+ professionals getting our best prompts, tips, and AI updates delivered to their inbox every Tuesday.</p>
-                
-                {showLoginPrompt ? (
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-md mx-auto">
-                    <div className="flex items-center justify-center text-blue-600 mb-2">
-                      <Bot className="h-5 w-5 mr-2" />
-                      <span className="font-medium">Welcome back!</span>
-                    </div>
-                    <p className="text-blue-600 text-sm text-center mb-4">
-                      You already have an account with us! Please log in to access your prompts.
-                    </p>
-                    <div className="space-y-3">
-                      <Button onClick={handleLogin} variant="hero" className="w-full">
-                        Log In to Access My Prompts
-                      </Button>
-                      <Button 
-                        onClick={() => setShowLoginPrompt(false)} 
-                        variant="ghost" 
-                        size="sm"
-                      >
-                        Back to Newsletter
-                      </Button>
-                    </div>
-                  </div>
-                ) : !newsletterSuccess ? (
-                  <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                    <input 
-                      type="email" 
-                      value={newsletterEmail}
-                      onChange={(e) => setNewsletterEmail(e.target.value)}
-                      placeholder="Enter your email" 
-                      className="flex-1 px-4 py-2 rounded-md border bg-background"
-                      disabled={newsletterSubmitting}
-                    />
-                    <Button 
-                      type="submit" 
-                      variant="hero" 
-                      className="px-6"
-                      disabled={newsletterSubmitting}
-                    >
-                      {newsletterSubmitting ? "Subscribing..." : "Subscribe Free"}
-                    </Button>
-                  </form>
-                ) : (
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-4 max-w-md mx-auto">
-                    <div className="flex items-center justify-center text-green-600 mb-2">
-                      <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
-                      <span className="font-medium">Successfully subscribed!</span>
-                    </div>
-                    <p className="text-green-600 text-sm text-center">Welcome to our weekly prompt tips. Check your email (and spam folder) for confirmation.</p>
-                  </div>
-                )}
-                
-                {!showLoginPrompt && (
-                  <>
-                    <p className="text-xs text-muted-foreground mt-3">No spam. Unsubscribe anytime. Free forever.</p>
-                    
-                    {/* Social proof for newsletter */}
-                    <div className="mt-6 pt-4 border-t border-primary/10">
-                      <p className="text-xs text-muted-foreground mb-2">Recent subscriber feedback:</p>
-                      <div className="text-xs text-muted-foreground italic">
-                        "These weekly tips have made me 3x better at prompting. Best AI newsletter I subscribe to!" — Jenny K.
-                      </div>
-                    </div>
-                  </>
-                )}
-              </CardContent>
-            </Card>
-          </section>
-        )}
-
         {/* Bottom Section - FAQ, Pricing, and CTA combined */}
         <section className="container py-8">
           <div className="grid gap-8 lg:grid-cols-3">
             {/* FAQ Column */}
-            <div className="lg:col-span-2">
-              <h2 className="text-2xl font-semibold mb-6">Quick Questions</h2>
-              <div className="grid gap-6 md:grid-cols-2">
-                <div className="space-y-4">
-                  <div className="border-l-4 border-primary pl-4 py-2">
-                    <h3 className="font-semibold mb-1">Do I need to sign up?</h3>
-                    <p className="text-sm text-muted-foreground">Nope! Browse and copy prompts for free. Sign up only to save favorites and access power packs.</p>
+            <div className="lg:col-span-2 space-y-8">
+              {/* Newsletter Signup - Only show if user is not logged in or not subscribed */}
+              {(!user || !isSubscribed) && (
+                <Card className="bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
+                  <CardContent className="p-6">
+                    <h3 className="text-lg font-semibold mb-2">🚀 Get Weekly Prompt Tips</h3>
+                    <p className="text-muted-foreground text-sm mb-4">Join 25,000+ professionals getting our best prompts, tips, and AI updates every Tuesday.</p>
+                    
+                    {showLoginPrompt ? (
+                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <div className="flex items-center text-blue-600 mb-2">
+                          <Bot className="h-4 w-4 mr-2" />
+                          <span className="font-medium text-sm">Welcome back!</span>
+                        </div>
+                        <p className="text-blue-600 text-xs mb-3">
+                          You already have an account with us! Please log in to access your prompts.
+                        </p>
+                        <div className="space-y-2">
+                          <Button onClick={handleLogin} variant="hero" size="sm" className="w-full">
+                            Log In to Access My Prompts
+                          </Button>
+                          <Button 
+                            onClick={() => setShowLoginPrompt(false)} 
+                            variant="ghost" 
+                            size="sm"
+                            className="w-full"
+                          >
+                            Back to Newsletter
+                          </Button>
+                        </div>
+                      </div>
+                    ) : !newsletterSuccess ? (
+                      <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
+                        <input 
+                          type="email" 
+                          value={newsletterEmail}
+                          onChange={(e) => setNewsletterEmail(e.target.value)}
+                          placeholder="Enter your email" 
+                          className="flex-1 px-3 py-2 text-sm rounded-md border bg-background"
+                          disabled={newsletterSubmitting}
+                        />
+                        <Button 
+                          type="submit" 
+                          variant="hero" 
+                          size="sm"
+                          disabled={newsletterSubmitting}
+                        >
+                          {newsletterSubmitting ? "..." : "Subscribe"}
+                        </Button>
+                      </form>
+                    ) : (
+                      <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                        <div className="flex items-center text-green-600 mb-1">
+                          <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                          </svg>
+                          <span className="font-medium text-sm">Successfully subscribed!</span>
+                        </div>
+                        <p className="text-green-600 text-xs">Welcome to our weekly prompt tips. Check your email for confirmation.</p>
+                      </div>
+                    )}
+                    
+                    {!showLoginPrompt && (
+                      <p className="text-xs text-muted-foreground mt-2">No spam. Unsubscribe anytime. Free forever.</p>
+                    )}
+                  </CardContent>
+                </Card>
+              )}
+
+              <div>
+                <h2 className="text-2xl font-semibold mb-6">Quick Questions</h2>
+                <div className="grid gap-6 md:grid-cols-2">
+                  <div className="space-y-4">
+                    <div className="border-l-4 border-primary pl-4 py-2">
+                      <h3 className="font-semibold mb-1">Do I need to sign up?</h3>
+                      <p className="text-sm text-muted-foreground">Nope! Browse and copy prompts for free. Sign up only to save favorites and access power packs.</p>
+                    </div>
+                    
+                    <div className="border-l-4 border-primary pl-4 py-2">
+                      <h3 className="font-semibold mb-1">How much does it cost?</h3>
+                      <p className="text-sm text-muted-foreground">Browsing is free forever. Premium packs start at $9.99 for specialized collections.</p>
+                    </div>
                   </div>
                   
-                  <div className="border-l-4 border-primary pl-4 py-2">
-                    <h3 className="font-semibold mb-1">How much does it cost?</h3>
-                    <p className="text-sm text-muted-foreground">Browsing is free forever. Premium packs start at $9.99 for specialized collections.</p>
+                  <div className="space-y-4">
+                    <div className="border-l-4 border-primary pl-4 py-2">
+                      <h3 className="font-semibold mb-1">Works with free AI tools?</h3>
+                      <p className="text-sm text-muted-foreground">Yes! Most prompts work perfectly with free versions of ChatGPT, Claude, and other AI tools.</p>
+                    </div>
+                    
+                    <div className="border-l-4 border-primary pl-4 py-2">
+                      <h3 className="font-semibold mb-1">Can I use them commercially?</h3>
+                      <p className="text-sm text-muted-foreground">Yes! Use prompts and their outputs for any personal or commercial project.</p>
+                    </div>
                   </div>
                 </div>
                 
-                <div className="space-y-4">
-                  <div className="border-l-4 border-primary pl-4 py-2">
-                    <h3 className="font-semibold mb-1">Works with free AI tools?</h3>
-                    <p className="text-sm text-muted-foreground">Yes! Most prompts work perfectly with free versions of ChatGPT, Claude, and other AI tools.</p>
-                  </div>
-                  
-                  <div className="border-l-4 border-primary pl-4 py-2">
-                    <h3 className="font-semibold mb-1">Can I use them commercially?</h3>
-                    <p className="text-sm text-muted-foreground">Yes! Use prompts and their outputs for any personal or commercial project.</p>
-                  </div>
+                <div className="mt-6">
+                  <Button asChild variant="ghost" size="sm">
+                    <Link to="/faqs#top">See All FAQs →</Link>
+                  </Button>
                 </div>
-              </div>
-              
-              <div className="mt-6">
-                <Button asChild variant="ghost" size="sm">
-                  <Link to="/faqs#top">See All FAQs →</Link>
-                </Button>
               </div>
             </div>
 
