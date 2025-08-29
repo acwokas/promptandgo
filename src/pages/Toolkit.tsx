@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { Wand2, Brain, Bot, ArrowRight, Sparkles } from "lucide-react";
+import { PollCarousel } from "@/components/poll/PollCarousel";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
 const ToolkitPage = () => {
@@ -154,6 +155,11 @@ const ToolkitPage = () => {
             </Link>
           </Button>
         </div>
+
+          {/* Poll Section */}
+          <div className="flex justify-center mb-12">
+            <PollCarousel currentPage="scout" />
+          </div>
 
           {/* Features Section */}
           <div className="text-center space-y-8 bg-muted/30 rounded-3xl p-8 md:p-12">

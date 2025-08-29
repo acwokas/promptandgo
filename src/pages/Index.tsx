@@ -14,6 +14,7 @@ import { PromptCard } from "@/components/prompt/PromptCard";
 import { usePersonalizedPrompts } from "@/hooks/usePersonalizedPrompts";
 import AIPromptWidget from "@/components/ai/AIPromptWidget";
 import PromptsOfTheDay from "@/components/prompt/PromptsOfTheDay";
+import { PollCarousel } from "@/components/poll/PollCarousel";
 import type { Category as CategoryType } from "@/data/prompts";
 
 const Index = () => {
@@ -611,6 +612,13 @@ const Index = () => {
             </Card>
           </section>
         )}
+
+        {/* Poll Section */}
+        <section className="container py-8">
+          <div className="flex justify-center">
+            <PollCarousel currentPage="home" />
+          </div>
+        </section>
 
         {/* Bottom Section - FAQ, Pricing, and CTA combined */}
         <section className="container py-8">

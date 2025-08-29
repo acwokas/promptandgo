@@ -40,6 +40,13 @@ const AdminTools = () => {
 
   const tools = [
     {
+      title: "Poll Management",
+      description: "Create and manage polls, view voting results, and control poll display settings",
+      icon: MessageCircle,
+      href: "/admin/polls",
+      color: "bg-purple-50 hover:bg-purple-100 border-purple-200"
+    },
+    {
       title: "Bulk Upload",
       description: "Upload categories, subcategories, tags, and prompts in bulk via JSON or CSV",
       icon: Upload,

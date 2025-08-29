@@ -36,6 +36,7 @@ import AdminPromptTool from "./pages/AdminPromptTool";
 import AdminExport from "./pages/AdminExport";
 import AdminWidgetSettings from "./pages/AdminWidgetSettings";
 import AdminFeedback from "./pages/AdminFeedback";
+import AdminPolls from "./pages/AdminPolls";
 import FavoritesPage from "./pages/account/Favorites";
 import AccountPage from "./pages/account/Account";
 import PurchasesPage from "./pages/account/Purchases";
@@ -116,6 +117,7 @@ const AppContent = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/admin" element={<AdminTools />} />
+        <Route path="/admin/polls" element={<AdminPolls />} />
         <Route path="/admin/upload" element={<AdminBulkUpload />} />
         <Route path="/admin/prompts" element={<AdminPromptTool />} />
         <Route path="/admin/export" element={<AdminExport />} />

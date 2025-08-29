@@ -1,6 +1,7 @@
 import SEO from "@/components/SEO";
 import { PromptFilters } from "@/components/prompt/PromptFilters";
 import { PromptCard } from "@/components/prompt/PromptCard";
+import { PollCarousel } from "@/components/poll/PollCarousel";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -1206,6 +1207,13 @@ const PromptLibrary = () => {
           </div>
         </section>
 
+
+        {/* Poll Section */}
+        <section className="mt-16 pt-12 border-t border-border">
+          <div className="flex justify-center mb-16">
+            <PollCarousel currentPage="library" />
+          </div>
+        </section>
 
         {/* Submit a Prompt Section */}
         <section className="mt-16 pt-12 border-t border-border">

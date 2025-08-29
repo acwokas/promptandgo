@@ -13,6 +13,7 @@ import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { Lock, Check, Heart, Search, Zap, Crown, Infinity, Sparkles, ChevronDown, ChevronUp } from "lucide-react";
 import ShareButton from "@/components/ShareButton";
 import { PackFilters } from "@/components/prompt/PackFilters";
+import { PollCarousel } from "@/components/poll/PollCarousel";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
 const PACK_ORIGINAL_CENTS = 999;
@@ -476,6 +477,13 @@ const PromptPacks = () => {
             })}
           </section>
         )}
+
+        {/* Poll Section */}
+        <section className="py-8">
+          <div className="flex justify-center">
+            <PollCarousel currentPage="packs" />
+          </div>
+        </section>
 
         {/* Call to Action Section */}
         <section className="bg-gradient-subtle py-12 mt-8 rounded-lg">
