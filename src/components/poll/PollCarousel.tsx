@@ -252,10 +252,11 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
                   {/* Progress bar background - moved outside button */}
                   {showResults && (
                     <div 
-                      className="absolute left-0 top-0 h-full rounded-md transition-all duration-1000 ease-out z-0"
+                      className="absolute left-0 top-0 h-full rounded-md transition-all duration-1000 ease-out"
                       style={{ 
                         width: `${option.percentage}%`,
-                        backgroundColor: '#2563eb'
+                        backgroundColor: '#2563eb !important',
+                        zIndex: 1
                       }}
                     />
                   )}
@@ -270,7 +271,7 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
                     disabled={showResults || userVote !== null}
                   >
                     {/* Content */}
-                    <div className="flex items-center gap-3 relative z-10">
+                    <div className="flex items-center gap-3 relative" style={{ zIndex: 2 }}>
                       <span className="text-lg">{option.icon}</span>
                       <span className="flex-1 font-medium">
                         {option.text}
@@ -279,7 +280,7 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
                     
                     {/* Results display on the right */}
                     {showResults && (
-                      <div className="text-right text-sm relative z-10">
+                      <div className="text-right text-sm relative" style={{ zIndex: 2 }}>
                         <div className="font-semibold">{option.percentage}%</div>
                         <div className="opacity-90">{option.vote_count} votes</div>
                       </div>
