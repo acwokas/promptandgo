@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Share2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { useSharing } from "@/hooks/useSharing";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -35,7 +34,6 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
   const [countdown, setCountdown] = useState(0);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
-  const { shareToClipboard, isSharing } = useSharing();
 
   const currentPoll = polls[currentPollIndex];
 
@@ -155,12 +153,22 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
   const handleShare = async () => {
     if (!currentPoll) return;
 
-    await shareToClipboard({
-      url: window.location.href,
-      contentType: 'poll',
-      contentId: currentPoll.id,
-      title: `Vote on: ${currentPoll.title}`
-    });
+    // Fallback for sharing when edge function fails
+    try {
+      const shareUrl = `${window.location.origin}/?poll=${currentPoll.id}`;
+      await navigator.clipboard.writeText(shareUrl);
+      toast({
+        title: "Poll link copied!",
+        description: "Share this link to let others vote on this poll."
+      });
+    } catch (error) {
+      console.error('Share failed:', error);
+      toast({
+        title: "Share failed", 
+        description: "Could not copy poll link. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   const navigatePoll = (direction: 'prev' | 'next') => {
@@ -181,15 +189,15 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
   }
 
   return (
-    <Card className="w-full max-w-2xl mx-auto bg-gradient-to-br from-primary/10 via-accent/10 to-secondary/10 border-2 border-primary/30 shadow-lg">
+    <Card className="w-full max-w-2xl mx-auto bg-card border-2 border-primary/30 shadow-lg">
       <CardHeader className="pb-4 relative overflow-hidden">
-        {/* Eye-catching "Poll" badge */}
-        <div className="absolute top-0 right-0 bg-gradient-to-r from-primary to-accent text-primary-foreground px-3 py-1 rounded-bl-lg font-bold text-sm">
+        {/* Eye-catching "POLL" badge */}
+        <div className="absolute top-0 right-0 bg-primary text-primary-foreground px-4 py-2 rounded-bl-lg font-bold text-lg">
           🗳️ POLL
         </div>
         
         <div className="flex items-center justify-between">
-          <CardTitle className="text-xl font-bold text-foreground pr-16">
+          <CardTitle className="text-xl font-bold text-foreground pr-20">
             {currentPoll.title}
           </CardTitle>
           <div className="flex items-center gap-2">
@@ -203,8 +211,8 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
                 >
                   <ChevronLeft className="h-4 w-4" />
                 </Button>
-                <Badge variant="secondary" className="text-xs">
-                  {currentPollIndex + 1} / {polls.length}
+                <Badge variant="secondary" className="text-xs whitespace-nowrap">
+                  {currentPollIndex + 1}&nbsp;/&nbsp;{polls.length}
                 </Badge>
                 <Button
                   variant="ghost"
@@ -220,28 +228,20 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
               variant="ghost"
               size="sm"
               onClick={handleShare}
-              disabled={isSharing}
               className="h-8 w-8 p-0"
             >
               <Share2 className="h-4 w-4" />
             </Button>
           </div>
         </div>
-        <div className="bg-gradient-to-r from-primary/5 to-accent/5 p-3 rounded-lg border border-primary/10 mt-4">
-          <p className="text-sm text-muted-foreground whitespace-pre-line font-medium">
+        <div className="bg-muted/30 p-3 rounded-lg border border-border mt-4">
+          <p className="text-sm text-foreground whitespace-pre-line font-medium">
             {currentPoll.intro_copy}
           </p>
         </div>
       </CardHeader>
 
       <CardContent className="space-y-4">
-        {showResults && countdown > 0 && polls.length > 1 && currentPollIndex < polls.length - 1 && (
-          <div className="text-center p-4 bg-muted/50 rounded-lg">
-            <p className="text-sm font-medium mb-2">Loading next question in...</p>
-            <div className="text-2xl font-bold text-primary">{countdown}</div>
-          </div>
-        )}
-
         <div className="space-y-3">
           {currentPoll.options.map((option) => {
             const isSelected = userVote === option.id;
@@ -288,8 +288,16 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
           })}
         </div>
 
+        {/* Move countdown here - below the last poll option */}
+        {showResults && countdown > 0 && polls.length > 1 && currentPollIndex < polls.length - 1 && (
+          <div className="text-center p-4 bg-muted/50 rounded-lg">
+            <p className="text-sm font-medium mb-2">Loading next question in...</p>
+            <div className="text-2xl font-bold text-primary">{countdown}</div>
+          </div>
+        )}
+
         {!showResults && (
-          <div className="text-center p-3 bg-gradient-to-r from-primary/5 to-accent/5 rounded-lg border border-primary/10">
+          <div className="text-center p-3 bg-muted/30 rounded-lg border border-border">
             <p className="text-sm font-medium text-foreground mb-1">
               🗳️ Cast Your Vote!
             </p>
