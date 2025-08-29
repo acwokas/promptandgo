@@ -128,7 +128,7 @@ serve(async (req: Request) => {
       // Return existing short link
       return new Response(JSON.stringify({
         short_code: existing.short_code,
-        short_url: `https://mncxspmtqvqgvtrxbxzb.supabase.co/functions/v1/share-redirect/${existing.short_code}`
+        short_url: `https://promptandgo.ai/s/${existing.short_code}`
       }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });
@@ -171,7 +171,7 @@ serve(async (req: Request) => {
 
     if (error) throw error;
 
-    const shortUrl = `https://mncxspmtqvqgvtrxbxzb.supabase.co/functions/v1/share-redirect/${shortCode}`;
+    const shortUrl = `https://promptandgo.ai/s/${shortCode}`;
 
     return new Response(JSON.stringify({
       short_code: shortCode,
