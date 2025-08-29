@@ -76,8 +76,11 @@ const AdminPolls = () => {
   }, [user, adminLoading]);
 
   if (adminLoading) return <div>Loading...</div>;
+  
+  // Allowlisted email as a temporary safety net while we debug admin role checks
   const emailAllow = ["me@adrianwatkins.com"];
   const effectiveIsAdmin = isAdmin || (user?.email ? emailAllow.includes(user.email) : false);
+  
   if (!user || !effectiveIsAdmin) return <Navigate to="/" replace />;
 
   const loadPolls = async () => {
