@@ -81,7 +81,7 @@ const FavoritesPage = () => {
   // Favorites scope
   const [favIds, setFavIds] = useState<string[]>([]);
   
-  // AI-generated prompts state
+  // Scout-generated prompts state
   const [userGeneratedPrompts, setUserGeneratedPrompts] = useState<UserGeneratedPrompt[]>([]);
   const [generatedPromptsLoading, setGeneratedPromptsLoading] = useState(false);
   const [promptToDelete, setPromptToDelete] = useState<{ id: string; title: string } | null>(null);
@@ -181,7 +181,7 @@ const FavoritesPage = () => {
     setCategories(built);
   }, []);
 
-  // Load user's AI-generated prompts
+  // Load user's Scout-generated prompts
   const loadUserGeneratedPrompts = useCallback(async () => {
     if (!user) return;
     
@@ -197,7 +197,7 @@ const FavoritesPage = () => {
       setUserGeneratedPrompts(data || []);
     } catch (error: any) {
       console.error('Error loading user generated prompts:', error);
-      toast({ title: "Failed to load AI-generated prompts", variant: "destructive" });
+      toast({ title: "Failed to load Scout-generated prompts", variant: "destructive" });
     } finally {
       setGeneratedPromptsLoading(false);
     }
@@ -457,7 +457,7 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
       />
       <PageHero
         title={<><span className="text-gradient-brand">My</span> Prompts</>}
-        subtitle={<>Manage your saved prompts and AI-generated custom prompts</>}
+        subtitle={<>Manage your saved prompts and Scout-generated custom prompts</>}
       >
         <Button asChild variant="hero" className="px-6">
           <a href="#my-saved-prompts">
@@ -468,7 +468,7 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
         <Button asChild variant="secondary">
           <a href="#my-generated-prompts">
             <Bot className="h-4 w-4 mr-2" />
-            My AI-Generated Prompts ({userGeneratedPrompts.length})
+            My Scout-Generated Prompts ({userGeneratedPrompts.length})
           </a>
         </Button>
         <Button asChild variant="inverted">
@@ -598,7 +598,7 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
               )}
             </section>
 
-            {/* My AI-Generated Prompts section */}
+            {/* My Scout-Generated Prompts section */}
             <section id="my-generated-prompts" className="mb-16">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold">Custom prompts you've generated with Scout AI</h2>
@@ -780,7 +780,7 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
                 <Card className="text-center py-16">
                   <CardContent>
                     <Bot className="h-16 w-16 mx-auto mb-4 text-muted-foreground/50" />
-                    <h3 className="text-lg font-semibold mb-2">No AI-generated prompts yet</h3>
+                    <h3 className="text-lg font-semibold mb-2">No Scout-generated prompts yet</h3>
                     <p className="text-muted-foreground mb-6">
                       Use our AI tools to generate custom prompts tailored to your needs.
                     </p>
@@ -800,7 +800,7 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
               {userGeneratedPrompts.length > 0 && (
                 <Card className="mt-8">
                   <CardHeader>
-                    <CardTitle className="text-lg">💡 Tips for Managing Your AI-Generated Prompts</CardTitle>
+                    <CardTitle className="text-lg">💡 Tips for Managing Your Scout-Generated Prompts</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="grid md:grid-cols-2 gap-4 text-sm">
