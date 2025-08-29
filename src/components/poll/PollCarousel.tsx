@@ -85,7 +85,7 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
       const pollsWithResults = await Promise.all(
         filteredPolls.map(async (poll) => {
           const { data: results } = await supabase
-            .rpc('get_poll_results', { poll_id_param: poll.id });
+            .rpc('get_poll_results_with_manual', { poll_id_param: poll.id });
 
           return {
             id: poll.id,
