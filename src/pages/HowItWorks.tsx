@@ -314,7 +314,7 @@ const HowItWorks = () => {
       </section>
 
       {/* About and Features Section */}
-      <section aria-labelledby="about-features" className="container py-12 bg-gradient-to-br from-primary/[0.03] to-accent/[0.05] rounded-xl border border-primary/10">
+      <section aria-labelledby="about-features" className="container py-12 mt-16 bg-gradient-to-br from-primary/[0.03] to-accent/[0.05] rounded-xl border border-primary/10">
         <div className="max-w-6xl mx-auto grid gap-8 lg:grid-cols-2">
           <div>
             <h2 id="about-features" className="text-2xl font-semibold mb-4">About and Features</h2>
