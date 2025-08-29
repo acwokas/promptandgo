@@ -447,8 +447,10 @@ export type Database = {
           id: string
           intro_copy: string
           is_active: boolean
+          manual_total_votes: number | null
           title: string
           updated_at: string
+          use_manual_total_votes: boolean | null
         }
         Insert: {
           created_at?: string
@@ -457,8 +459,10 @@ export type Database = {
           id?: string
           intro_copy: string
           is_active?: boolean
+          manual_total_votes?: number | null
           title: string
           updated_at?: string
+          use_manual_total_votes?: boolean | null
         }
         Update: {
           created_at?: string
@@ -467,8 +471,10 @@ export type Database = {
           id?: string
           intro_copy?: string
           is_active?: boolean
+          manual_total_votes?: number | null
           title?: string
           updated_at?: string
+          use_manual_total_votes?: boolean | null
         }
         Relationships: []
       }

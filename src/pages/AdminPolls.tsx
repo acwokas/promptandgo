@@ -25,6 +25,8 @@ interface Poll {
   intro_copy: string;
   is_active: boolean;
   display_pages: string[];
+  manual_total_votes: number | null;
+  use_manual_total_votes: boolean | null;
   poll_options: PollOption[];
 }
 
@@ -57,6 +59,7 @@ const AdminPolls = () => {
   const [editingPercentages, setEditingPercentages] = useState<Record<string, boolean>>({});
   const [tempPercentages, setTempPercentages] = useState<Record<string, Record<string, number>>>({});
   const [tempVoteCounts, setTempVoteCounts] = useState<Record<string, Record<string, number>>>({});
+  const [tempTotalVotes, setTempTotalVotes] = useState<Record<string, number>>({});
   
   // Form states
   const [title, setTitle] = useState("");
@@ -87,6 +90,8 @@ const AdminPolls = () => {
           intro_copy,
           is_active,
           display_pages,
+          manual_total_votes,
+          use_manual_total_votes,
           poll_options (
             id,
             text,
@@ -275,6 +280,14 @@ const AdminPolls = () => {
     });
     setTempPercentages(prev => ({ ...prev, [pollId]: tempPercs }));
     setTempVoteCounts(prev => ({ ...prev, [pollId]: tempVotes }));
+    
+    // Initialize manual total votes with current override or calculated total
+    const poll = polls.find(p => p.id === pollId);
+    const sumVotes = pollResults.reduce((sum, r) => sum + r.vote_count, 0);
+    const initialTotal = (poll?.use_manual_total_votes && poll?.manual_total_votes != null)
+      ? (poll.manual_total_votes as number)
+      : sumVotes;
+    setTempTotalVotes(prev => ({ ...prev, [pollId]: initialTotal }));
   };
 
   const cancelEditingPercentages = (pollId: string) => {
@@ -285,6 +298,11 @@ const AdminPolls = () => {
       return newTemp;
     });
     setTempVoteCounts(prev => {
+      const newTemp = { ...prev };
+      delete newTemp[pollId];
+      return newTemp;
+    });
+    setTempTotalVotes(prev => {
       const newTemp = { ...prev };
       delete newTemp[pollId];
       return newTemp;
@@ -309,6 +327,10 @@ const AdminPolls = () => {
         [optionId]: value
       }
     }));
+  };
+  
+  const updateTempTotalVotes = (pollId: string, value: number) => {
+    setTempTotalVotes(prev => ({ ...prev, [pollId]: value }));
   };
 
   const saveManualPercentages = async (pollId: string) => {
@@ -344,9 +366,19 @@ const AdminPolls = () => {
         }
       }
 
+      // Update poll-level manual total votes if provided
+      const totalOverride = tempTotalVotes[pollId];
+      if (totalOverride !== undefined) {
+        const { error: pollUpdateError } = await supabase
+          .from('polls')
+          .update({ manual_total_votes: totalOverride, use_manual_total_votes: true })
+          .eq('id', pollId);
+        if (pollUpdateError) throw pollUpdateError;
+      }
+
       toast({
         title: "Success",
-        description: "Manual percentages and vote counts saved"
+        description: "Manual settings saved"
       });
 
       setEditingPercentages(prev => ({ ...prev, [pollId]: false }));
@@ -356,6 +388,11 @@ const AdminPolls = () => {
         return newTemp;
       });
       setTempVoteCounts(prev => {
+        const newTemp = { ...prev };
+        delete newTemp[pollId];
+        return newTemp;
+      });
+      setTempTotalVotes(prev => {
         const newTemp = { ...prev };
         delete newTemp[pollId];
         return newTemp;
@@ -388,9 +425,16 @@ const AdminPolls = () => {
         if (error) throw error;
       }
 
+      // Also toggle poll-level manual total usage
+      const { error: pollToggleError } = await supabase
+        .from('polls')
+        .update({ use_manual_total_votes: useManual })
+        .eq('id', pollId);
+      if (pollToggleError) throw pollToggleError;
+
       toast({
         title: "Success",
-        description: useManual ? "Switched to manual mode (percentages & votes)" : "Switched to automatic mode"
+        description: useManual ? "Switched to manual mode" : "Switched to automatic mode"
       });
 
       loadPolls();
@@ -650,7 +694,8 @@ const AdminPolls = () => {
           {polls.map((poll) => {
             const pollResults = results[poll.id] || [];
             const totalVotes = pollResults.reduce((sum, result) => sum + result.vote_count, 0);
-
+            const manualTotalActive = !!poll.use_manual_total_votes && poll.manual_total_votes !== null;
+            const displayTotalVotes = manualTotalActive ? (poll.manual_total_votes as number) : totalVotes;
             return (
               <Card key={poll.id}>
                 <CardHeader>
@@ -707,7 +752,20 @@ const AdminPolls = () => {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <BarChart3 className="w-4 h-4" />
-                        Total votes: {totalVotes}
+                        <span className="flex items-center gap-2">
+                          Total votes: {displayTotalVotes}
+                          {editingPercentages[poll.id] && (
+                            <Input
+                              type="number"
+                              min="0"
+                              step="1"
+                              value={tempTotalVotes[poll.id] ?? (poll.manual_total_votes ?? totalVotes)}
+                              onChange={(e) => updateTempTotalVotes(poll.id, parseInt(e.target.value) || 0)}
+                              className="w-24 h-7 text-xs"
+                              placeholder="Total"
+                            />
+                          )}
+                        </span>
                         {pollResults.some(r => r.is_manual) && (
                           <Badge variant="outline" className="text-xs">Manual Override</Badge>
                         )}
