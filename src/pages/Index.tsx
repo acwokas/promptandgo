@@ -641,6 +641,36 @@ const Index = () => {
                   </Button>
                 </div>
               </div>
+
+              {/* Latest Articles Section */}
+              <div className="mt-8">
+                <h2 className="text-2xl font-semibold mb-4">Latest Articles</h2>
+                <div className="space-y-4">
+                  <article className="border-l-4 border-primary pl-4 py-3 hover:bg-card/50 transition-colors rounded-r-lg">
+                    <h3 className="font-semibold mb-1 text-sm">
+                      <Link to="/blog/welcome-to-promptandgo-ai" className="hover:text-primary transition-colors">
+                        Welcome to PromptAndGo.ai: Your Shortcut to Smarter AI Prompts
+                      </Link>
+                    </h3>
+                    <p className="text-xs text-muted-foreground">Discover how our curated prompt library can transform your AI workflow and boost productivity.</p>
+                  </article>
+                  
+                  <article className="border-l-4 border-primary pl-4 py-3 hover:bg-card/50 transition-colors rounded-r-lg">
+                    <h3 className="font-semibold mb-1 text-sm">
+                      <Link to="/blog/best-ai-prompts-for-small-business-2025" className="hover:text-primary transition-colors">
+                        Best AI Prompts for Small Business Owners in 2025
+                      </Link>
+                    </h3>
+                    <p className="text-xs text-muted-foreground">Essential AI prompts every small business owner needs to streamline operations and drive growth.</p>
+                  </article>
+                </div>
+                
+                <div className="mt-4">
+                  <Button asChild variant="ghost" size="sm">
+                    <Link to="/blog">Read All Articles →</Link>
+                  </Button>
+                </div>
+              </div>
             </div>
 
             {/* Right Column - Poll and Pricing/CTA */}
