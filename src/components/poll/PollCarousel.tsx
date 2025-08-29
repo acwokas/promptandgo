@@ -258,9 +258,9 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
                   )}
                   
                   <Button
-                    variant={showResults ? "ghost" : (isSelected ? "default" : "outline")}
+                    variant={showResults ? "secondary" : (isSelected ? "default" : "outline")}
                     className={`w-full justify-between text-left h-auto p-4 relative overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-md border ${
-                      showResults ? 'bg-transparent hover:bg-transparent text-foreground border-border' : 
+                      showResults ? 'bg-gray-600 hover:bg-gray-600 text-white border-gray-500' : 
                       isSelected ? 'ring-2 ring-primary/50' : 'hover:border-primary/40 hover:bg-primary/5'
                     }`}
                     onClick={() => handleVote(option.id)}
