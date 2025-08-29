@@ -539,6 +539,41 @@ const Index = () => {
           <div className="grid gap-8 lg:grid-cols-3">
             {/* FAQ Column */}
             <div className="lg:col-span-2 space-y-8">
+              <div>
+                <h2 className="text-2xl font-semibold mb-6">Quick Questions</h2>
+                <div className="grid gap-6 md:grid-cols-2">
+                  <div className="space-y-4">
+                    <div className="border-l-4 border-primary pl-4 py-2">
+                      <h3 className="font-semibold mb-1">Do I need to sign up?</h3>
+                      <p className="text-sm text-muted-foreground">Nope! Browse and copy prompts for free. Sign up only to save favorites and access power packs.</p>
+                    </div>
+                    
+                    <div className="border-l-4 border-primary pl-4 py-2">
+                      <h3 className="font-semibold mb-1">How much does it cost?</h3>
+                      <p className="text-sm text-muted-foreground">Browsing is free forever. Premium packs start at $9.99 for specialized collections.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="border-l-4 border-primary pl-4 py-2">
+                      <h3 className="font-semibold mb-1">Works with free AI tools?</h3>
+                      <p className="text-sm text-muted-foreground">Yes! Most prompts work perfectly with free versions of ChatGPT, Claude, and other AI tools.</p>
+                    </div>
+                    
+                    <div className="border-l-4 border-primary pl-4 py-2">
+                      <h3 className="font-semibold mb-1">Can I use them commercially?</h3>
+                      <p className="text-sm text-muted-foreground">Yes! Use prompts and their outputs for any personal or commercial project.</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="mt-6">
+                  <Button asChild variant="ghost" size="sm">
+                    <Link to="/faqs#top">See All FAQs →</Link>
+                  </Button>
+                </div>
+              </div>
+
               {/* Newsletter Signup - Only show if user is not logged in or not subscribed */}
               {(!user || !isSubscribed) && (
                 <Card className="bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
@@ -606,41 +641,6 @@ const Index = () => {
                   </CardContent>
                 </Card>
               )}
-
-              <div>
-                <h2 className="text-2xl font-semibold mb-6">Quick Questions</h2>
-                <div className="grid gap-6 md:grid-cols-2">
-                  <div className="space-y-4">
-                    <div className="border-l-4 border-primary pl-4 py-2">
-                      <h3 className="font-semibold mb-1">Do I need to sign up?</h3>
-                      <p className="text-sm text-muted-foreground">Nope! Browse and copy prompts for free. Sign up only to save favorites and access power packs.</p>
-                    </div>
-                    
-                    <div className="border-l-4 border-primary pl-4 py-2">
-                      <h3 className="font-semibold mb-1">How much does it cost?</h3>
-                      <p className="text-sm text-muted-foreground">Browsing is free forever. Premium packs start at $9.99 for specialized collections.</p>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <div className="border-l-4 border-primary pl-4 py-2">
-                      <h3 className="font-semibold mb-1">Works with free AI tools?</h3>
-                      <p className="text-sm text-muted-foreground">Yes! Most prompts work perfectly with free versions of ChatGPT, Claude, and other AI tools.</p>
-                    </div>
-                    
-                    <div className="border-l-4 border-primary pl-4 py-2">
-                      <h3 className="font-semibold mb-1">Can I use them commercially?</h3>
-                      <p className="text-sm text-muted-foreground">Yes! Use prompts and their outputs for any personal or commercial project.</p>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="mt-6">
-                  <Button asChild variant="ghost" size="sm">
-                    <Link to="/faqs#top">See All FAQs →</Link>
-                  </Button>
-                </div>
-              </div>
 
               {/* Latest Articles Section */}
               <div className="mt-8">
