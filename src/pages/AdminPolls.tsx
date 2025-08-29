@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Plus, Edit, Trash2, BarChart3, Eye, EyeOff } from "lucide-react";
+import { Plus, Edit, Trash2, BarChart3, Eye, EyeOff, Settings } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
@@ -41,6 +41,7 @@ interface PollResult {
   option_icon: string;
   vote_count: number;
   percentage: number;
+  is_manual: boolean;
 }
 
 const AdminPolls = () => {
@@ -53,6 +54,8 @@ const AdminPolls = () => {
   const [loading, setLoading] = useState(true);
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [editingPoll, setEditingPoll] = useState<Poll | null>(null);
+  const [editingPercentages, setEditingPercentages] = useState<Record<string, boolean>>({});
+  const [tempPercentages, setTempPercentages] = useState<Record<string, Record<string, number>>>({});
   
   // Form states
   const [title, setTitle] = useState("");
@@ -100,7 +103,7 @@ const AdminPolls = () => {
       const resultsData: Record<string, PollResult[]> = {};
       for (const poll of data || []) {
         const { data: pollResults } = await supabase
-          .rpc('get_poll_results', { poll_id_param: poll.id });
+          .rpc('get_poll_results_with_manual', { poll_id_param: poll.id });
         resultsData[poll.id] = pollResults || [];
       }
       setResults(resultsData);
@@ -257,6 +260,110 @@ const AdminPolls = () => {
     { value: 'packs', label: 'Packs' },
     { value: 'scout', label: 'Scout' }
   ];
+
+  const startEditingPercentages = (pollId: string) => {
+    const pollResults = results[pollId] || [];
+    setEditingPercentages(prev => ({ ...prev, [pollId]: true }));
+    
+    // Initialize temp percentages with current values
+    const tempPercs: Record<string, number> = {};
+    pollResults.forEach(result => {
+      tempPercs[result.option_id] = result.percentage;
+    });
+    setTempPercentages(prev => ({ ...prev, [pollId]: tempPercs }));
+  };
+
+  const cancelEditingPercentages = (pollId: string) => {
+    setEditingPercentages(prev => ({ ...prev, [pollId]: false }));
+    setTempPercentages(prev => {
+      const newTemp = { ...prev };
+      delete newTemp[pollId];
+      return newTemp;
+    });
+  };
+
+  const updateTempPercentage = (pollId: string, optionId: string, value: number) => {
+    setTempPercentages(prev => ({
+      ...prev,
+      [pollId]: {
+        ...prev[pollId],
+        [optionId]: value
+      }
+    }));
+  };
+
+  const saveManualPercentages = async (pollId: string) => {
+    const tempPercs = tempPercentages[pollId] || {};
+    const pollResults = results[pollId] || [];
+
+    try {
+      // Update each option with manual percentage
+      for (const result of pollResults) {
+        const newPercentage = tempPercs[result.option_id];
+        if (newPercentage !== undefined) {
+          const { error } = await supabase
+            .from('poll_options')
+            .update({
+              manual_percentage: newPercentage,
+              use_manual_percentage: true
+            })
+            .eq('id', result.option_id);
+
+          if (error) throw error;
+        }
+      }
+
+      toast({
+        title: "Success",
+        description: "Manual percentages saved"
+      });
+
+      setEditingPercentages(prev => ({ ...prev, [pollId]: false }));
+      setTempPercentages(prev => {
+        const newTemp = { ...prev };
+        delete newTemp[pollId];
+        return newTemp;
+      });
+      
+      loadPolls();
+    } catch (error) {
+      console.error('Error saving manual percentages:', error);
+      toast({
+        title: "Error",
+        description: "Failed to save manual percentages",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const toggleManualMode = async (pollId: string, useManual: boolean) => {
+    const pollResults = results[pollId] || [];
+
+    try {
+      for (const result of pollResults) {
+        const { error } = await supabase
+          .from('poll_options')
+          .update({ use_manual_percentage: useManual })
+          .eq('id', result.option_id);
+
+        if (error) throw error;
+      }
+
+      toast({
+        title: "Success",
+        description: useManual ? "Switched to manual mode" : "Switched to automatic mode"
+      });
+
+      loadPolls();
+    } catch (error) {
+      console.error('Error toggling manual mode:', error);
+      toast({
+        title: "Error",
+        description: "Failed to toggle manual mode",
+        variant: "destructive"
+      });
+    }
+  };
 
   if (loading) {
     return <div className="container mx-auto px-6 py-6">Loading...</div>;
@@ -453,9 +560,51 @@ const AdminPolls = () => {
 
                 <CardContent>
                   <div className="space-y-4">
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <BarChart3 className="w-4 h-4" />
-                      Total votes: {totalVotes}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <BarChart3 className="w-4 h-4" />
+                        Total votes: {totalVotes}
+                        {pollResults.some(r => r.is_manual) && (
+                          <Badge variant="outline" className="text-xs">Manual Override</Badge>
+                        )}
+                      </div>
+                      
+                      <div className="flex gap-2">
+                        {editingPercentages[poll.id] ? (
+                          <>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => cancelEditingPercentages(poll.id)}
+                            >
+                              Cancel
+                            </Button>
+                            <Button
+                              size="sm"
+                              onClick={() => saveManualPercentages(poll.id)}
+                            >
+                              Save
+                            </Button>
+                          </>
+                        ) : (
+                          <>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => toggleManualMode(poll.id, !pollResults.some(r => r.is_manual))}
+                            >
+                              {pollResults.some(r => r.is_manual) ? 'Auto Mode' : 'Manual Mode'}
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => startEditingPercentages(poll.id)}
+                            >
+                              <Settings className="w-4 h-4" />
+                            </Button>
+                          </>
+                        )}
+                      </div>
                     </div>
                     
                     <div className="space-y-3">
@@ -468,13 +617,39 @@ const AdminPolls = () => {
                               {index === 0 && totalVotes > 0 && (
                                 <Badge className="text-xs">Winner</Badge>
                               )}
+                              {result.is_manual && (
+                                <Badge variant="secondary" className="text-xs">Manual</Badge>
+                              )}
                             </span>
-                            <div className="text-right text-sm">
-                              <div>{result.percentage}%</div>
-                              <div className="text-muted-foreground">{result.vote_count} votes</div>
+                            <div className="text-right text-sm flex items-center gap-2">
+                              {editingPercentages[poll.id] ? (
+                                <div className="flex items-center gap-1">
+                                  <Input
+                                    type="number"
+                                    min="0"
+                                    max="100"
+                                    step="0.1"
+                                    value={tempPercentages[poll.id]?.[result.option_id] ?? result.percentage}
+                                    onChange={(e) => updateTempPercentage(poll.id, result.option_id, parseFloat(e.target.value) || 0)}
+                                    className="w-16 h-6 text-xs"
+                                  />
+                                  <span className="text-xs">%</span>
+                                </div>
+                              ) : (
+                                <div>
+                                  <div>{result.percentage}%</div>
+                                  <div className="text-muted-foreground">{result.vote_count} votes</div>
+                                </div>
+                              )}
                             </div>
                           </div>
-                          <Progress value={result.percentage} className="h-2" />
+                          <Progress 
+                            value={editingPercentages[poll.id] 
+                              ? tempPercentages[poll.id]?.[result.option_id] ?? result.percentage
+                              : result.percentage
+                            } 
+                            className="h-2" 
+                          />
                         </div>
                       ))}
                     </div>
