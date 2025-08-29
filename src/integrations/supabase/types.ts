@@ -97,6 +97,33 @@ export type Database = {
           },
         ]
       }
+      newsletter_rate_limits: {
+        Row: {
+          attempt_count: number | null
+          created_at: string | null
+          email_hash: string
+          id: string
+          ip_address: unknown | null
+          window_start: string | null
+        }
+        Insert: {
+          attempt_count?: number | null
+          created_at?: string | null
+          email_hash: string
+          id?: string
+          ip_address?: unknown | null
+          window_start?: string | null
+        }
+        Update: {
+          attempt_count?: number | null
+          created_at?: string | null
+          email_hash?: string
+          id?: string
+          ip_address?: unknown | null
+          window_start?: string | null
+        }
+        Relationships: []
+      }
       order_items: {
         Row: {
           created_at: string
@@ -981,6 +1008,10 @@ export type Database = {
           remaining: number
         }[]
       }
+      cleanup_newsletter_rate_limits: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       get_decrypted_subscriber_email: {
         Args: { p_key: string; p_user_id: string }
         Returns: string
@@ -1042,6 +1073,14 @@ export type Database = {
           daily_assistant_limit: number
           daily_generator_limit: number
           daily_suggestions_limit: number
+        }[]
+      }
+      get_user_subscription_status: {
+        Args: { p_user_id?: string }
+        Returns: {
+          subscribed: boolean
+          subscription_end: string
+          subscription_tier: string
         }[]
       }
       has_role: {
