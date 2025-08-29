@@ -32,10 +32,9 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
       }
 
       try {
+        // SECURITY FIX: Use secure RPC instead of direct table access
         const { data, error } = await supabase
-          .from('subscribers')
-          .select('subscribed, subscription_tier')
-          .eq('user_id', user.id)
+          .rpc('get_user_subscription_status')
           .maybeSingle();
 
         if (error) throw error;

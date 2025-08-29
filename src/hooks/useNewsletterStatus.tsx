@@ -16,11 +16,9 @@ export function useNewsletterStatus() {
       }
 
       try {
-        // Check if user has a newsletter subscription in the subscribers table
+        // SECURITY FIX: Use secure RPC instead of direct table access
         const { data, error } = await supabase
-          .from('subscribers')
-          .select('subscribed, email_hash')
-          .eq('user_id', user.id)
+          .rpc('get_user_newsletter_status')
           .maybeSingle();
 
         if (error) {
@@ -28,7 +26,7 @@ export function useNewsletterStatus() {
           setIsNewsletterSubscribed(false);
         } else {
           // User is newsletter subscribed if they have an entry with email_hash (indicating newsletter signup)
-          setIsNewsletterSubscribed(!!data?.email_hash);
+          setIsNewsletterSubscribed(!!data?.newsletter_subscribed);
         }
       } catch (error) {
         console.error('Error checking newsletter subscription:', error);

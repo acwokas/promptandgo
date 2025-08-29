@@ -1087,6 +1087,12 @@ export type Database = {
           daily_suggestions_limit: number
         }[]
       }
+      get_user_newsletter_status: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          newsletter_subscribed: boolean
+        }[]
+      }
       get_user_subscription_status: {
         Args: { p_user_id?: string }
         Returns: {
