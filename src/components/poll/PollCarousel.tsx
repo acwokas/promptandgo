@@ -245,7 +245,7 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
                   <Button
                     variant={isSelected ? "default" : "outline"}
                     className={`w-full justify-between text-left h-auto p-4 relative overflow-hidden ${
-                      showResults ? 'bg-muted/20 border-muted' : ''
+                      showResults ? 'bg-background border-muted' : ''
                     }`}
                     onClick={() => handleVote(option.id)}
                     disabled={showResults || userVote !== null}
@@ -261,14 +261,16 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
                     {/* Content */}
                     <div className="flex items-center gap-3 relative z-10">
                       <span className="text-lg">{option.icon}</span>
-                      <span className="flex-1">{option.text}</span>
+                      <span className={`flex-1 ${showResults ? 'text-primary-foreground font-medium' : ''}`}>
+                        {option.text}
+                      </span>
                     </div>
                     
                     {/* Results display on the right */}
                     {showResults && (
-                      <div className="text-right text-sm relative z-10">
-                        <div className="font-medium">{option.percentage}%</div>
-                        <div className="text-muted-foreground">{option.vote_count} votes</div>
+                      <div className="text-right text-sm relative z-10 text-primary-foreground">
+                        <div className="font-semibold">{option.percentage}%</div>
+                        <div className="opacity-90">{option.vote_count} votes</div>
                       </div>
                     )}
                   </Button>
