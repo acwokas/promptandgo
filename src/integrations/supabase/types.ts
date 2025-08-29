@@ -356,30 +356,36 @@ export type Database = {
           icon: string
           id: string
           manual_percentage: number | null
+          manual_vote_count: number | null
           order_index: number
           poll_id: string
           text: string
           use_manual_percentage: boolean | null
+          use_manual_vote_count: boolean | null
         }
         Insert: {
           created_at?: string
           icon: string
           id?: string
           manual_percentage?: number | null
+          manual_vote_count?: number | null
           order_index?: number
           poll_id: string
           text: string
           use_manual_percentage?: boolean | null
+          use_manual_vote_count?: boolean | null
         }
         Update: {
           created_at?: string
           icon?: string
           id?: string
           manual_percentage?: number | null
+          manual_vote_count?: number | null
           order_index?: number
           poll_id?: string
           text?: string
           use_manual_percentage?: boolean | null
+          use_manual_vote_count?: boolean | null
         }
         Relationships: [
           {

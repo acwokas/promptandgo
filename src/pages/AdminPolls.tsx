@@ -56,6 +56,7 @@ const AdminPolls = () => {
   const [editingPoll, setEditingPoll] = useState<Poll | null>(null);
   const [editingPercentages, setEditingPercentages] = useState<Record<string, boolean>>({});
   const [tempPercentages, setTempPercentages] = useState<Record<string, Record<string, number>>>({});
+  const [tempVoteCounts, setTempVoteCounts] = useState<Record<string, Record<string, number>>>({});
   
   // Form states
   const [title, setTitle] = useState("");
@@ -265,17 +266,25 @@ const AdminPolls = () => {
     const pollResults = results[pollId] || [];
     setEditingPercentages(prev => ({ ...prev, [pollId]: true }));
     
-    // Initialize temp percentages with current values
+    // Initialize temp percentages and vote counts with current values
     const tempPercs: Record<string, number> = {};
+    const tempVotes: Record<string, number> = {};
     pollResults.forEach(result => {
       tempPercs[result.option_id] = result.percentage;
+      tempVotes[result.option_id] = result.vote_count;
     });
     setTempPercentages(prev => ({ ...prev, [pollId]: tempPercs }));
+    setTempVoteCounts(prev => ({ ...prev, [pollId]: tempVotes }));
   };
 
   const cancelEditingPercentages = (pollId: string) => {
     setEditingPercentages(prev => ({ ...prev, [pollId]: false }));
     setTempPercentages(prev => {
+      const newTemp = { ...prev };
+      delete newTemp[pollId];
+      return newTemp;
+    });
+    setTempVoteCounts(prev => {
       const newTemp = { ...prev };
       delete newTemp[pollId];
       return newTemp;
@@ -292,30 +301,51 @@ const AdminPolls = () => {
     }));
   };
 
+  const updateTempVoteCount = (pollId: string, optionId: string, value: number) => {
+    setTempVoteCounts(prev => ({
+      ...prev,
+      [pollId]: {
+        ...prev[pollId],
+        [optionId]: value
+      }
+    }));
+  };
+
   const saveManualPercentages = async (pollId: string) => {
     const tempPercs = tempPercentages[pollId] || {};
+    const tempVotes = tempVoteCounts[pollId] || {};
     const pollResults = results[pollId] || [];
 
     try {
-      // Update each option with manual percentage
+      // Update each option with manual percentage and vote count
       for (const result of pollResults) {
         const newPercentage = tempPercs[result.option_id];
+        const newVoteCount = tempVotes[result.option_id];
+        
+        const updateData: any = {
+          use_manual_percentage: true,
+          use_manual_vote_count: true
+        };
+        
         if (newPercentage !== undefined) {
-          const { error } = await supabase
-            .from('poll_options')
-            .update({
-              manual_percentage: newPercentage,
-              use_manual_percentage: true
-            })
-            .eq('id', result.option_id);
-
-          if (error) throw error;
+          updateData.manual_percentage = newPercentage;
         }
+        
+        if (newVoteCount !== undefined) {
+          updateData.manual_vote_count = Math.floor(newVoteCount);
+        }
+
+        const { error } = await supabase
+          .from('poll_options')
+          .update(updateData)
+          .eq('id', result.option_id);
+
+        if (error) throw error;
       }
 
       toast({
         title: "Success",
-        description: "Manual percentages saved"
+        description: "Manual percentages and vote counts saved"
       });
 
       setEditingPercentages(prev => ({ ...prev, [pollId]: false }));
@@ -324,13 +354,18 @@ const AdminPolls = () => {
         delete newTemp[pollId];
         return newTemp;
       });
+      setTempVoteCounts(prev => {
+        const newTemp = { ...prev };
+        delete newTemp[pollId];
+        return newTemp;
+      });
       
       loadPolls();
     } catch (error) {
-      console.error('Error saving manual percentages:', error);
+      console.error('Error saving manual data:', error);
       toast({
         title: "Error",
-        description: "Failed to save manual percentages",
+        description: "Failed to save manual data",
         variant: "destructive"
       });
     }
@@ -343,7 +378,10 @@ const AdminPolls = () => {
       for (const result of pollResults) {
         const { error } = await supabase
           .from('poll_options')
-          .update({ use_manual_percentage: useManual })
+          .update({ 
+            use_manual_percentage: useManual,
+            use_manual_vote_count: useManual
+          })
           .eq('id', result.option_id);
 
         if (error) throw error;
@@ -351,7 +389,7 @@ const AdminPolls = () => {
 
       toast({
         title: "Success",
-        description: useManual ? "Switched to manual mode" : "Switched to automatic mode"
+        description: useManual ? "Switched to manual mode (percentages & votes)" : "Switched to automatic mode"
       });
 
       loadPolls();
@@ -725,17 +763,34 @@ const AdminPolls = () => {
                             </span>
                             <div className="text-right text-sm flex items-center gap-2">
                               {editingPercentages[poll.id] ? (
-                                <div className="flex items-center gap-1">
-                                  <Input
-                                    type="number"
-                                    min="0"
-                                    max="100"
-                                    step="0.1"
-                                    value={tempPercentages[poll.id]?.[result.option_id] ?? result.percentage}
-                                    onChange={(e) => updateTempPercentage(poll.id, result.option_id, parseFloat(e.target.value) || 0)}
-                                    className="w-16 h-6 text-xs"
-                                  />
-                                  <span className="text-xs">%</span>
+                                <div className="flex items-center gap-2">
+                                  <div className="flex flex-col items-end">
+                                    <div className="flex items-center gap-1">
+                                      <Input
+                                        type="number"
+                                        min="0"
+                                        max="100"
+                                        step="0.1"
+                                        value={tempPercentages[poll.id]?.[result.option_id] ?? result.percentage}
+                                        onChange={(e) => updateTempPercentage(poll.id, result.option_id, parseFloat(e.target.value) || 0)}
+                                        className="w-16 h-6 text-xs"
+                                        placeholder="%"
+                                      />
+                                      <span className="text-xs">%</span>
+                                    </div>
+                                    <div className="flex items-center gap-1 mt-1">
+                                      <Input
+                                        type="number"
+                                        min="0"
+                                        step="1"
+                                        value={tempVoteCounts[poll.id]?.[result.option_id] ?? result.vote_count}
+                                        onChange={(e) => updateTempVoteCount(poll.id, result.option_id, parseInt(e.target.value) || 0)}
+                                        className="w-16 h-6 text-xs"
+                                        placeholder="votes"
+                                      />
+                                      <span className="text-xs text-muted-foreground">votes</span>
+                                    </div>
+                                  </div>
                                 </div>
                               ) : (
                                 <div>
