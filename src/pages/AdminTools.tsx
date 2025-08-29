@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { Navigate, Link } from "react-router-dom";
-import { Upload, Plus, Download, Settings, MessageCircle } from "lucide-react";
+import { Upload, Plus, Download, Settings, MessageCircle, BarChart3 } from "lucide-react";
 
 const AdminTools = () => {
   const { user, loading: authLoading } = useSupabaseAuth();
@@ -42,9 +42,9 @@ const AdminTools = () => {
     {
       title: "Poll Management",
       description: "Create and manage polls, view voting results, and control poll display settings",
-      icon: MessageCircle,
+      icon: BarChart3,
       href: "/admin/polls",
-      color: "bg-purple-50 hover:bg-purple-100 border-purple-200"
+      color: "text-purple-500"
     },
     {
       title: "Bulk Upload",
