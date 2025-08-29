@@ -241,21 +241,38 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
 
             return (
               <div key={option.id} className="space-y-2">
-                <Button
-                  variant={isSelected ? "default" : "outline"}
-                  className={`w-full justify-start text-left h-auto p-4`}
-                  onClick={() => handleVote(option.id)}
-                  disabled={showResults || userVote !== null}
-                >
-                  <span className="text-lg mr-3">{option.icon}</span>
-                  <span className="flex-1">{option.text}</span>
-                </Button>
-
-                {showResults && (
-                  <div className="mt-2">
-                    <Progress value={option.percentage} className="h-3" />
-                  </div>
-                )}
+                <div className="relative">
+                  <Button
+                    variant={isSelected ? "default" : "outline"}
+                    className={`w-full justify-between text-left h-auto p-4 relative overflow-hidden ${
+                      showResults ? 'bg-muted/20 border-muted' : ''
+                    }`}
+                    onClick={() => handleVote(option.id)}
+                    disabled={showResults || userVote !== null}
+                  >
+                    {/* Progress bar background when showing results */}
+                    {showResults && (
+                      <div 
+                        className="absolute left-0 top-0 h-full bg-primary/20 transition-all duration-1000 ease-out"
+                        style={{ width: `${option.percentage}%` }}
+                      />
+                    )}
+                    
+                    {/* Content */}
+                    <div className="flex items-center gap-3 relative z-10">
+                      <span className="text-lg">{option.icon}</span>
+                      <span className="flex-1">{option.text}</span>
+                    </div>
+                    
+                    {/* Results display on the right */}
+                    {showResults && (
+                      <div className="text-right text-sm relative z-10">
+                        <div className="font-medium">{option.percentage}%</div>
+                        <div className="text-muted-foreground">{option.vote_count} votes</div>
+                      </div>
+                    )}
+                  </Button>
+                </div>
               </div>
             );
           })}
