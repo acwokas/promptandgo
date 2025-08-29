@@ -323,6 +323,116 @@ export type Database = {
         }
         Relationships: []
       }
+      poll_options: {
+        Row: {
+          created_at: string
+          icon: string
+          id: string
+          order_index: number
+          poll_id: string
+          text: string
+        }
+        Insert: {
+          created_at?: string
+          icon: string
+          id?: string
+          order_index?: number
+          poll_id: string
+          text: string
+        }
+        Update: {
+          created_at?: string
+          icon?: string
+          id?: string
+          order_index?: number
+          poll_id?: string
+          text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "poll_options_poll_id_fkey"
+            columns: ["poll_id"]
+            isOneToOne: false
+            referencedRelation: "polls"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      poll_votes: {
+        Row: {
+          created_at: string
+          id: string
+          ip_address: unknown | null
+          option_id: string
+          poll_id: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          ip_address?: unknown | null
+          option_id: string
+          poll_id: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          ip_address?: unknown | null
+          option_id?: string
+          poll_id?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "poll_votes_option_id_fkey"
+            columns: ["option_id"]
+            isOneToOne: false
+            referencedRelation: "poll_options"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "poll_votes_poll_id_fkey"
+            columns: ["poll_id"]
+            isOneToOne: false
+            referencedRelation: "polls"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      polls: {
+        Row: {
+          created_at: string
+          description: string | null
+          display_pages: string[]
+          id: string
+          intro_copy: string
+          is_active: boolean
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          display_pages?: string[]
+          id?: string
+          intro_copy: string
+          is_active?: boolean
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          display_pages?: string[]
+          id?: string
+          intro_copy?: string
+          is_active?: boolean
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -868,6 +978,16 @@ export type Database = {
       get_decrypted_subscriber_email: {
         Args: { p_key: string; p_user_id: string }
         Returns: string
+      }
+      get_poll_results: {
+        Args: { poll_id_param: string }
+        Returns: {
+          option_icon: string
+          option_id: string
+          option_text: string
+          percentage: number
+          vote_count: number
+        }[]
       }
       get_prompt_rating: {
         Args: { prompt_id_param: string }
