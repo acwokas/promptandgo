@@ -255,7 +255,7 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
                       className="absolute left-0 top-0 h-full rounded-md transition-all duration-1000 ease-out"
                       style={{ 
                         width: `${option.percentage}%`,
-                        backgroundColor: '#2563eb !important',
+                        backgroundColor: 'rgb(37, 99, 235)',
                         zIndex: 1
                       }}
                     />
