@@ -646,22 +646,44 @@ const Index = () => {
               <div className="mt-8">
                 <h2 className="text-2xl font-semibold mb-4">Latest Articles</h2>
                 <div className="space-y-4">
-                  <article className="border-l-4 border-primary pl-4 py-3 hover:bg-card/50 transition-colors rounded-r-lg">
-                    <h3 className="font-semibold mb-1 text-sm">
-                      <Link to="/blog/welcome-to-promptandgo-ai" className="hover:text-primary transition-colors">
-                        Welcome to PromptAndGo.ai: Your Shortcut to Smarter AI Prompts
-                      </Link>
-                    </h3>
-                    <p className="text-xs text-muted-foreground">Discover how our curated prompt library can transform your AI workflow and boost productivity.</p>
+                  <article>
+                    <Link to="/blog/welcome-to-promptandgo-ai" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                      <Card className="overflow-hidden">
+                        <img
+                          src="/lovable-uploads/66b1134b-1d55-416b-b7ea-2719a1a22ec1.png"
+                          alt="Welcome to promptandgo: Your Shortcut to Smarter AI Prompts"
+                          loading="lazy"
+                          className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                        />
+                        <CardContent className="pt-3 pb-3">
+                          <h3 className="text-sm font-semibold leading-snug">Welcome to PromptAndGo.ai: Your Shortcut to Smarter AI Prompts</h3>
+                          <p className="mt-1 text-xs text-muted-foreground">
+                            Welcome to a platform which has ready-to-use, field-tested prompts for the likes of ChatGPT, Claude, Gemini, and others.
+                          </p>
+                          <span className="mt-2 inline-block text-xs font-medium text-primary">Read more →</span>
+                        </CardContent>
+                      </Card>
+                    </Link>
                   </article>
                   
-                  <article className="border-l-4 border-primary pl-4 py-3 hover:bg-card/50 transition-colors rounded-r-lg">
-                    <h3 className="font-semibold mb-1 text-sm">
-                      <Link to="/blog/best-ai-prompts-for-small-business-2025" className="hover:text-primary transition-colors">
-                        Best AI Prompts for Small Business Owners in 2025
-                      </Link>
-                    </h3>
-                    <p className="text-xs text-muted-foreground">Essential AI prompts every small business owner needs to streamline operations and drive growth.</p>
+                  <article>
+                    <Link to="/blog/best-ai-prompts-for-small-business-2025" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                      <Card className="overflow-hidden">
+                        <img
+                          src="/lovable-uploads/f23788ee-b45e-4f84-808a-691c7e3c5e52.png"
+                          alt="Best AI Prompts for Small Business Owners in 2025"
+                          loading="lazy"
+                          className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                        />
+                        <CardContent className="pt-3 pb-3">
+                          <h3 className="text-sm font-semibold leading-snug">Best AI Prompts for Small Business Owners in 2025</h3>
+                          <p className="mt-1 text-xs text-muted-foreground">
+                            Discover ready-to-run prompts to boost sales, streamline operations, and save hours each week.
+                          </p>
+                          <span className="mt-2 inline-block text-xs font-medium text-primary">Read more →</span>
+                        </CardContent>
+                      </Card>
+                    </Link>
                   </article>
                 </div>
                 
