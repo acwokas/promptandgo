@@ -478,108 +478,113 @@ const PromptPacks = () => {
           </section>
         )}
 
-        {/* Poll Section */}
+        {/* Poll and Call to Action Section */}
         <section className="py-8">
-          <div className="flex justify-center">
-            <PollCarousel currentPage="packs" />
-          </div>
-        </section>
+          <div className="grid gap-8 lg:grid-cols-3">
+            {/* Call to Action Column */}
+            <div className="lg:col-span-2">
+              <div className="bg-gradient-subtle py-12 rounded-lg">
+                <div className="text-center mb-8">
+                  <h2 className="text-2xl md:text-3xl font-bold mb-3">Unlock Premium AI Prompts</h2>
+                  <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                    Choose how you want to access our premium content - buy individual packs or unlock everything with a membership.
+                  </p>
+                </div>
+                
+                <div className="grid gap-6 md:grid-cols-3 max-w-4xl mx-auto">
+                  {/* Individual Packs */}
+                  <Card className="text-center p-6 hover:shadow-lg transition-shadow">
+                    <div className="mb-4">
+                      <Zap className="h-12 w-12 mx-auto text-yellow-500" />
+                    </div>
+                    <h3 className="text-xl font-bold mb-2">Individual Packs</h3>
+                    <p className="text-muted-foreground mb-4">
+                      Purchase specific Power Packs that match your needs. Perfect for targeted projects.
+                    </p>
+                    <div className="text-2xl font-bold text-primary mb-4">
+                      ${(PACK_DISCOUNT_CENTS / 100).toFixed(2)} <span className="text-sm line-through text-muted-foreground">${(PACK_ORIGINAL_CENTS / 100).toFixed(2)}</span>
+                    </div>
+                    <Button 
+                      variant="outline" 
+                      className="w-full"
+                      onClick={() => {
+                        const element = document.getElementById("popular-power-packs");
+                        element?.scrollIntoView({ behavior: "smooth", block: "start" });
+                      }}
+                    >
+                      Browse Power Packs
+                    </Button>
+                  </Card>
 
-        {/* Call to Action Section */}
-        <section className="bg-gradient-subtle py-12 mt-8 rounded-lg">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold mb-3">Unlock Premium AI Prompts</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Choose how you want to access our premium content - buy individual packs or unlock everything with a membership.
-            </p>
-          </div>
-          
-          <div className="grid gap-6 md:grid-cols-3 max-w-5xl mx-auto">
-            {/* Individual Packs */}
-            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
-              <div className="mb-4">
-                <Zap className="h-12 w-12 mx-auto text-yellow-500" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Individual Packs</h3>
-              <p className="text-muted-foreground mb-4">
-                Purchase specific Power Packs that match your needs. Perfect for targeted projects.
-              </p>
-              <div className="text-2xl font-bold text-primary mb-4">
-                ${(PACK_DISCOUNT_CENTS / 100).toFixed(2)} <span className="text-sm line-through text-muted-foreground">${(PACK_ORIGINAL_CENTS / 100).toFixed(2)}</span>
-              </div>
-              <Button 
-                variant="outline" 
-                className="w-full"
-                onClick={() => {
-                  const element = document.getElementById("popular-power-packs");
-                  element?.scrollIntoView({ behavior: "smooth", block: "start" });
-                }}
-              >
-                Browse Power Packs
-              </Button>
-            </Card>
+                  {/* Monthly Membership */}
+                  <Card className="text-center p-6 hover:shadow-lg transition-shadow border-primary">
+                    <div className="mb-4">
+                      <Crown className="h-12 w-12 mx-auto text-primary" />
+                    </div>
+                    <h3 className="text-xl font-bold mb-2">Monthly Member</h3>
+                    <p className="text-muted-foreground mb-4">
+                      Unlock ALL premium prompts and Power Packs and unlock additional AI Tools queries. Cancel anytime.
+                    </p>
+                    <div className="text-2xl font-bold text-primary mb-4">
+                      ${(SUB_DISCOUNT_CENTS / 100).toFixed(2)}/mo
+                    </div>
+                    <Button 
+                      variant="hero" 
+                      className="w-full"
+                      onClick={handleSubscribe}
+                    >
+                      Start Monthly Plan
+                    </Button>
+                  </Card>
 
-            {/* Monthly Membership */}
-            <Card className="text-center p-6 hover:shadow-lg transition-shadow border-primary">
-              <div className="mb-4">
-                <Crown className="h-12 w-12 mx-auto text-primary" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Monthly Member</h3>
-              <p className="text-muted-foreground mb-4">
-                Unlock ALL premium prompts and Power Packs and unlock additional AI Tools queries. Cancel anytime.
-              </p>
-              <div className="text-2xl font-bold text-primary mb-4">
-                ${(SUB_DISCOUNT_CENTS / 100).toFixed(2)}/mo
-              </div>
-              <Button 
-                variant="hero" 
-                className="w-full"
-                onClick={handleSubscribe}
-              >
-                Start Monthly Plan
-              </Button>
-            </Card>
+                  {/* Lifetime Membership */}
+                  <Card className="text-center p-6 hover:shadow-lg transition-shadow">
+                    <div className="mb-4">
+                      <Infinity className="h-12 w-12 mx-auto text-gradient-brand" />
+                    </div>
+                    <h3 className="text-xl font-bold mb-2">Lifetime Access</h3>
+                    <p className="text-muted-foreground mb-4">
+                      One-time payment for permanent access to all current and future premium content.
+                    </p>
+                    <div className="text-2xl font-bold text-primary mb-4">
+                      ${(LIFETIME_DISCOUNT_CENTS / 100).toFixed(2)} <span className="text-sm line-through text-muted-foreground">${(LIFETIME_ORIGINAL_CENTS / 100).toFixed(2)}</span>
+                    </div>
+                    <Button 
+                      variant="secondary" 
+                      className="w-full"
+                      onClick={() => {
+                        if (!user) {
+                          navigate('/auth');
+                          return;
+                        }
+                        const cart = getCart();
+                        
+                        const exists = cart.some((i) => i.type === 'lifetime' && i.id === 'lifetime');
+                        if (exists) {
+                          toast({ title: 'Already in cart', description: 'Lifetime Access is already in your cart.' });
+                          return;
+                        }
+                        addToCart({ id: 'lifetime', type: 'lifetime', title: 'Lifetime All-Access', unitAmountCents: LIFETIME_DISCOUNT_CENTS, quantity: 1 }, !!user);
+                        toast({ title: 'Lifetime access added to cart', description: `Lifetime All-Access — ${fmtUSD(LIFETIME_DISCOUNT_CENTS)}. All other items in your cart are now FREE!` });
+                      }}
+                    >
+                      Get Lifetime Access
+                    </Button>
+                  </Card>
+                </div>
 
-            {/* Lifetime Membership */}
-            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
-              <div className="mb-4">
-                <Infinity className="h-12 w-12 mx-auto text-gradient-brand" />
+                <div className="text-center mt-8">
+                  <p className="text-sm text-muted-foreground">
+                    All purchases include instant access • 30-day money-back guarantee • No hidden fees
+                  </p>
+                </div>
               </div>
-              <h3 className="text-xl font-bold mb-2">Lifetime Access</h3>
-              <p className="text-muted-foreground mb-4">
-                One-time payment for permanent access to all current and future premium content.
-              </p>
-              <div className="text-2xl font-bold text-primary mb-4">
-                ${(LIFETIME_DISCOUNT_CENTS / 100).toFixed(2)} <span className="text-sm line-through text-muted-foreground">${(LIFETIME_ORIGINAL_CENTS / 100).toFixed(2)}</span>
-              </div>
-              <Button 
-                variant="secondary" 
-                className="w-full"
-                onClick={() => {
-                  if (!user) {
-                    navigate('/auth');
-                    return;
-                  }
-                  const cart = getCart();
-                  
-                  const exists = cart.some((i) => i.type === 'lifetime' && i.id === 'lifetime');
-                  if (exists) {
-                    toast({ title: 'Already in cart', description: 'Lifetime Access is already in your cart.' });
-                    return;
-                  }
-                  addToCart({ id: 'lifetime', type: 'lifetime', title: 'Lifetime All-Access', unitAmountCents: LIFETIME_DISCOUNT_CENTS, quantity: 1 }, !!user);
-                  toast({ title: 'Lifetime access added to cart', description: `Lifetime All-Access — ${fmtUSD(LIFETIME_DISCOUNT_CENTS)}. All other items in your cart are now FREE!` });
-                }}
-              >
-                Get Lifetime Access
-              </Button>
-            </Card>
-          </div>
+            </div>
 
-          <div className="text-center mt-8">
-            <p className="text-sm text-muted-foreground">
-              All purchases include instant access • 30-day money-back guarantee • No hidden fees
-            </p>
+            {/* Right Column - Poll */}
+            <div className="lg:col-span-1">
+              <PollCarousel currentPage="packs" />
+            </div>
           </div>
         </section>
       </main>

@@ -156,54 +156,59 @@ const ToolkitPage = () => {
           </Button>
         </div>
 
-          {/* Poll Section */}
-          <div className="flex justify-center mb-12">
-            <PollCarousel currentPage="scout" />
-          </div>
-
-          {/* Features Section */}
-          <div className="text-center space-y-8 bg-muted/30 rounded-3xl p-8 md:p-12">
-            <h2 className="text-3xl font-bold mb-6">Why Choose Scout?</h2>
-            
-            <div className="grid gap-6 md:grid-cols-3">
-              <div className="space-y-3">
-                <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mx-auto">
-                  <Wand2 className="h-5 w-5 text-primary" />
-                </div>
-                <h3 className="text-lg font-semibold">Expert Quality</h3>
-                <p className="text-muted-foreground text-sm">
-                  Scout creates prompts that rival those made by expert prompt engineers
-                </p>
-              </div>
-              
-              <div className="space-y-3">
-                <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mx-auto">
-                  <Brain className="h-5 w-5 text-primary" />
-                </div>
-                <h3 className="text-lg font-semibold">Smart & Personalized</h3>
-                <p className="text-muted-foreground text-sm">
-                  Scout learns your preferences and tailors recommendations to your specific needs
-                </p>
-              </div>
-              
-                <div className="space-y-3">
-                  <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mx-auto">
-                    <Bot className="h-5 w-5 text-primary" />
+          {/* Poll and Features Section */}
+          <div className="grid gap-8 lg:grid-cols-3 mb-12">
+            {/* Features Column */}
+            <div className="lg:col-span-2">
+              <div className="text-center space-y-8 bg-muted/30 rounded-3xl p-8 md:p-12">
+                <h2 className="text-3xl font-bold mb-6">Why Choose Scout?</h2>
+                
+                <div className="grid gap-6 md:grid-cols-3">
+                  <div className="space-y-3">
+                    <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mx-auto">
+                      <Wand2 className="h-5 w-5 text-primary" />
+                    </div>
+                    <h3 className="text-lg font-semibold">Expert Quality</h3>
+                    <p className="text-muted-foreground text-sm">
+                      Scout creates prompts that rival those made by expert prompt engineers
+                    </p>
                   </div>
-                  <h3 className="text-lg font-semibold">Meet Scout</h3>
-                  <p className="text-muted-foreground text-sm">
-                    Get help from Scout, your AI prompt explorer trained on prompt engineering best practices
-                  </p>
+                  
+                  <div className="space-y-3">
+                    <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mx-auto">
+                      <Brain className="h-5 w-5 text-primary" />
+                    </div>
+                    <h3 className="text-lg font-semibold">Smart & Personalized</h3>
+                    <p className="text-muted-foreground text-sm">
+                      Scout learns your preferences and tailors recommendations to your specific needs
+                    </p>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mx-auto">
+                      <Bot className="h-5 w-5 text-primary" />
+                    </div>
+                    <h3 className="text-lg font-semibold">Meet Scout</h3>
+                    <p className="text-muted-foreground text-sm">
+                      Get help from Scout, your AI prompt explorer trained on prompt engineering best practices
+                    </p>
+                  </div>
                 </div>
+
+                <div className="pt-6">
+                  <Button asChild size="lg" className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70">
+                    <Link to="/ai/generator">
+                      Start Creating with Scout
+                      <ArrowRight className="h-4 w-4 ml-2" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
             </div>
 
-            <div className="pt-6">
-              <Button asChild size="lg" className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70">
-                <Link to="/ai/generator">
-                  Start Creating with Scout
-                  <ArrowRight className="h-4 w-4 ml-2" />
-                </Link>
-              </Button>
+            {/* Right Column - Poll */}
+            <div className="lg:col-span-1">
+              <PollCarousel currentPage="scout" />
             </div>
           </div>
         </div>
