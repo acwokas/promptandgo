@@ -614,9 +614,6 @@ const AdminPolls = () => {
                             <span className="flex items-center gap-2">
                               <span className="text-lg">{result.option_icon}</span>
                               <span>{result.option_text}</span>
-                              {index === 0 && totalVotes > 0 && (
-                                <Badge className="text-xs">Winner</Badge>
-                              )}
                               {result.is_manual && (
                                 <Badge variant="secondary" className="text-xs">Manual</Badge>
                               )}
