@@ -162,7 +162,7 @@ const HowItWorks = () => {
                 <div className="shrink-0 w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold">3</div>
                 <div>
                   <h3 className="text-lg font-semibold">Tweak &amp; Go</h3>
-                  <p className="mt-1 text-muted-foreground">Edit, regenerate, or stack prompts as needed. Get better results without starting from scratch.</p>
+                  <p className="mt-1 text-muted-foreground">Edit, regenerate, or stack prompts as needed. Get better results without starting from scratch, or chat with <Link to="/scout" className="text-primary hover:underline">Scout</Link> for more help.</p>
                 </div>
               </div>
             </article>
