@@ -245,7 +245,7 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
                   <Button
                     variant={showResults ? "default" : (isSelected ? "default" : "outline")}
                     className={`w-full justify-between text-left h-auto p-4 relative overflow-hidden ${
-                      showResults ? 'bg-blue-800 text-white hover:bg-blue-800' : ''
+                      showResults ? 'bg-foreground/80 text-primary-foreground hover:bg-foreground/80' : ''
                     }`}
                     onClick={() => handleVote(option.id)}
                     disabled={showResults || userVote !== null}
@@ -253,7 +253,7 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
                     {/* Progress bar background when showing results */}
                     {showResults && (
                       <div 
-                        className="absolute left-0 top-0 h-full bg-primary transition-all duration-1000 ease-out"
+                        className="absolute left-0 top-0 h-full bg-primary ring-1 ring-primary/40 rounded-md transition-all duration-1000 ease-out"
                         style={{ width: `${option.percentage}%` }}
                       />
                     )}
