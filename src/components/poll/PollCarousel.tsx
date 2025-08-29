@@ -261,8 +261,11 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
                     {/* Progress bar background when showing results */}
                     {showResults && (
                       <div 
-                        className="absolute left-0 top-0 h-full bg-blue-600 rounded-md transition-all duration-1000 ease-out"
-                        style={{ width: `${option.percentage}%` }}
+                        className="absolute left-0 top-0 h-full rounded-md transition-all duration-1000 ease-out z-0"
+                        style={{ 
+                          width: `${option.percentage}%`,
+                          backgroundColor: '#2563eb !important'
+                        }}
                       />
                     )}
                     
