@@ -131,7 +131,7 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
 
       setUserVote(optionId);
       setShowResults(true);
-      setCountdown(5);
+      setCountdown(10);
       
       // Refresh results
       loadPolls();
@@ -228,7 +228,7 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
       </CardHeader>
 
       <CardContent className="space-y-4">
-        {showResults && countdown > 0 && (
+        {showResults && countdown > 0 && polls.length > 1 && currentPollIndex < polls.length - 1 && (
           <div className="text-center p-4 bg-muted/50 rounded-lg">
             <p className="text-sm font-medium mb-2">Loading next question in...</p>
             <div className="text-2xl font-bold text-primary">{countdown}</div>
@@ -236,23 +236,19 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
         )}
 
         <div className="space-y-3">
-          {currentPoll.options.map((option, index) => {
+          {currentPoll.options.map((option) => {
             const isSelected = userVote === option.id;
-            const isWinner = showResults && index === 0; // Results are ordered by vote count
 
             return (
               <div key={option.id} className="space-y-2">
                 <Button
                   variant={isSelected ? "default" : "outline"}
-                  className={`w-full justify-start text-left h-auto p-4 ${
-                    isWinner ? 'ring-2 ring-primary' : ''
-                  }`}
+                  className={`w-full justify-start text-left h-auto p-4`}
                   onClick={() => handleVote(option.id)}
                   disabled={showResults || userVote !== null}
                 >
                   <span className="text-lg mr-3">{option.icon}</span>
                   <span className="flex-1">{option.text}</span>
-                  {isWinner && <Badge className="ml-2">Winner!</Badge>}
                 </Button>
 
                 {showResults && (
