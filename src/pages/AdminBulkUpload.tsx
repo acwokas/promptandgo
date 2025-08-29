@@ -392,16 +392,23 @@ const AdminBulkUpload = () => {
           data = rows.map((r) => {
             const packs = splitMulti(getField(r, ["propack", "packs", "pack"]) ?? r.pro_pack ?? r.Pro_Pack ?? r.pack ?? r.packs);
             const is_pro = parseBool(getField(r, ["ispro", "pro", "proprompt"]) ?? r.is_pro ?? r.pro ?? r.Pro_Prompt ?? r.pro_prompt ?? r.Pro);
+            const normalizeSlug = (s: string) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+            const rawCatSlug = getField(r, ["categoryslug", "category"]) ?? r.category_slug ?? r.category;
+            const catName = String(getField(r, ["categoryname", "category"]) ?? r.category_name ?? "").trim();
+            const finalCatSlug = String(rawCatSlug || (catName ? normalizeSlug(catName) : "")).trim();
+            const rawSubSlug = getField(r, ["subcategoryslug", "subcategory"]) ?? r.subcategory_slug;
+            const subName = String(getField(r, ["subcategoryname", "subcategory"]) ?? r.subcategory_name ?? "").trim();
+            const finalSubSlug = String(rawSubSlug || (subName ? normalizeSlug(subName) : "")).trim() || undefined;
             return {
               title: String(r.title ?? "").trim(),
               what_for: r.what_for ? String(r.what_for).trim() : undefined,
               prompt: String(r.prompt ?? "").trim(),
               image_prompt: r.image_prompt ? String(r.image_prompt).trim() : undefined,
               excerpt: r.excerpt ? String(r.excerpt).trim() : undefined,
-              category_slug: String(r.category_slug ?? r.category ?? "").trim(),
-              category_name: String(r.category_name ?? r.category ?? r.category_slug ?? "").trim(),
-              subcategory_slug: r.subcategory_slug ? String(r.subcategory_slug).trim() : undefined,
-              subcategory_name: r.subcategory_name ? String(r.subcategory_name).trim() : undefined,
+              category_slug: finalCatSlug,
+              category_name: catName || finalCatSlug,
+              subcategory_slug: finalSubSlug,
+              subcategory_name: subName || finalSubSlug,
               tags: splitTags(r.tags),
               is_pro,
               packs,
@@ -418,10 +425,10 @@ const AdminBulkUpload = () => {
       if (entity === "prompts") {
         // Auto-create categories and subcategories from CSV when names are provided
         const catMapInput = new Map<string, { slug: string; name: string }>();
-        rows.forEach((r) => {
-          const slug = String(r.category_slug ?? "").trim();
+        (data as any[]).forEach((d) => {
+          const slug = String(d.category_slug ?? "").trim();
           if (!slug) return;
-          const name = String((r.category_name ?? slug)).trim();
+          const name = String((d.category_name ?? slug)).trim();
           if (!catMapInput.has(slug)) catMapInput.set(slug, { slug, name });
         });
         const catPayload = Array.from(catMapInput.values()).filter((c) => c.slug);
@@ -437,17 +444,17 @@ const AdminBulkUpload = () => {
         const catIdBySlug = new Map<string, string>((cats || []).map((c: any) => [c.slug, c.id]));
 
         // Prepare and upsert subcategories
-        const rawSubs = rows
-          .map((r) => {
-            const cslug = String(r.category_slug ?? "").trim();
-            const sslug = String(r.subcategory_slug ?? "").trim();
+        const rawSubs = (data as any[])
+          .map((d) => {
+            const cslug = String(d.category_slug ?? "").trim();
+            const sslug = String(d.subcategory_slug ?? "").trim();
             if (!cslug || !sslug) return null;
             const category_id = catIdBySlug.get(cslug);
             if (!category_id) return null;
             return {
               category_id,
               slug: sslug,
-              name: String((r.subcategory_name ?? sslug)).trim(),
+              name: String((d.subcategory_name ?? sslug)).trim(),
             };
           })
           .filter(Boolean) as { category_id: string; slug: string; name: string }[];
@@ -531,19 +538,30 @@ const AdminBulkUpload = () => {
         }
         return undefined;
       };
-      const data = rows.map((r) => ({
-        title: String(r.title ?? "").trim(),
-        what_for: r.what_for ? String(r.what_for).trim() : undefined,
-        prompt: String(r.prompt ?? "").trim(),
-        image_prompt: r.image_prompt ? String(r.image_prompt).trim() : undefined,
-        excerpt: r.excerpt ? String(r.excerpt).trim() : undefined,
-        category_slug: String(r.category_slug ?? "").trim(),
-        subcategory_slug: r.subcategory_slug ? String(r.subcategory_slug).trim() : undefined,
-        tags: splitTags(r.tags),
-        is_pro: parseBool(getField(r, ["ispro", "pro", "proprompt"]) ?? r.is_pro ?? r.pro ?? r.Pro_Prompt ?? r.pro_prompt ?? r.Pro),
-        packs: splitMulti(getField(r, ["propack", "packs", "pack"]) ?? r.pro_pack ?? r.Pro_Pack ?? r.pack ?? r.packs),
-        ribbon: r.ribbon ? String(r.ribbon).trim() : undefined,
-      }));
+      const data = rows.map((r) => {
+        const normalizeSlug = (s: string) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+        const rawCatSlug = getField(r, ["categoryslug", "category"]) ?? r.category_slug ?? r.category;
+        const catName = String(getField(r, ["categoryname", "category"]) ?? r.category_name ?? "").trim();
+        const finalCatSlug = String(rawCatSlug || (catName ? normalizeSlug(catName) : "")).trim();
+        const rawSubSlug = getField(r, ["subcategoryslug", "subcategory"]) ?? r.subcategory_slug;
+        const subName = String(getField(r, ["subcategoryname", "subcategory"]) ?? r.subcategory_name ?? "").trim();
+        const finalSubSlug = String(rawSubSlug || (subName ? normalizeSlug(subName) : "")).trim() || undefined;
+        return {
+          title: String(r.title ?? "").trim(),
+          what_for: r.what_for ? String(r.what_for).trim() : undefined,
+          prompt: String(r.prompt ?? "").trim(),
+          image_prompt: r.image_prompt ? String(r.image_prompt).trim() : undefined,
+          excerpt: r.excerpt ? String(r.excerpt).trim() : undefined,
+          category_slug: finalCatSlug,
+          category_name: catName || finalCatSlug,
+          subcategory_slug: finalSubSlug,
+          subcategory_name: subName || finalSubSlug,
+          tags: splitTags(r.tags),
+          is_pro: parseBool(getField(r, ["ispro", "pro", "proprompt"]) ?? r.is_pro ?? r.pro ?? r.Pro_Prompt ?? r.pro_prompt ?? r.Pro),
+          packs: splitMulti(getField(r, ["propack", "packs", "pack"]) ?? r.pro_pack ?? r.Pro_Pack ?? r.pack ?? r.packs),
+          ribbon: r.ribbon ? String(r.ribbon).trim() : undefined,
+        };
+      });
 
       // DELETE in dependency order
       await supabase.from("prompt_tags").delete().not("prompt_id", "is", null);
@@ -556,10 +574,10 @@ const AdminBulkUpload = () => {
 
       // Recreate categories and subcategories from CSV using provided names when present
       const catMapInput = new Map<string, { slug: string; name: string }>();
-      rows.forEach((r) => {
-        const slug = String(r.category_slug ?? "").trim();
+      (data as any[]).forEach((d) => {
+        const slug = String(d.category_slug ?? "").trim();
         if (!slug) return;
-        const name = String((r.category_name ?? slug)).trim();
+        const name = String((d.category_name ?? slug)).trim();
         if (!catMapInput.has(slug)) catMapInput.set(slug, { slug, name });
       });
       const catPayload = Array.from(catMapInput.values()).filter((c) => c.slug);
@@ -573,14 +591,14 @@ const AdminBulkUpload = () => {
       if (catSelErr) throw catSelErr;
       const catIdBySlug = new Map<string, string>((cats || []).map((c: any) => [c.slug, c.id]));
 
-      const rawSubs = rows
-        .map((r) => {
-          const cslug = String(r.category_slug ?? "").trim();
-          const sslug = String(r.subcategory_slug ?? "").trim();
+      const rawSubs = (data as any[])
+        .map((d) => {
+          const cslug = String(d.category_slug ?? "").trim();
+          const sslug = String(d.subcategory_slug ?? "").trim();
           if (!cslug || !sslug) return null;
           const category_id = catIdBySlug.get(cslug);
           if (!category_id) return null;
-          return { category_id, slug: sslug, name: String((r.subcategory_name ?? sslug)).trim() };
+          return { category_id, slug: sslug, name: String((d.subcategory_name ?? sslug)).trim() };
         })
         .filter(Boolean) as { category_id: string; slug: string; name: string }[];
 
