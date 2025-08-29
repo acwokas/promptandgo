@@ -313,6 +313,63 @@ const HowItWorks = () => {
         </div>
       </section>
 
+      {/* About and Features Section */}
+      <section aria-labelledby="about-features" className="container py-12 bg-gradient-to-br from-primary/[0.03] to-accent/[0.05] rounded-xl border border-primary/10">
+        <div className="max-w-6xl mx-auto grid gap-8 lg:grid-cols-2">
+          <div>
+            <h2 id="about-features" className="text-2xl font-semibold mb-4">About and Features</h2>
+            <div className="space-y-4">
+              <p className="text-muted-foreground leading-relaxed">Most people don't want to become prompt engineers — they just want better results. We built a simple way to skip the struggle and get to the output.</p>
+            </div>
+            
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded-xl border p-6 text-center bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10">
+                <div className="text-3xl font-bold tracking-tight">12+</div>
+                <div className="text-muted-foreground">Prompt Categories</div>
+              </div>
+              <div className="rounded-xl border p-6 text-center bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10">
+                <div className="text-3xl font-bold tracking-tight">1600+</div>
+                <div className="text-muted-foreground">Prompts</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Features Grid */}
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/5 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <ShieldCheck className="h-6 w-6 text-primary mb-2" aria-hidden="true" />
+              <h4 className="font-semibold">Human Curated</h4>
+              <p className="mt-1 text-muted-foreground text-sm">Each prompt is crafted for real use cases — not generic fluff.</p>
+            </div>
+            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/5 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <Zap className="h-6 w-6 text-primary mb-2" aria-hidden="true" />
+              <h4 className="font-semibold">Instant Use</h4>
+              <p className="mt-1 text-muted-foreground text-sm">Copy into your AI tool and run instantly — no setup required.</p>
+            </div>
+            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/5 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <Clock className="h-6 w-6 text-primary mb-2" aria-hidden="true" />
+              <h4 className="font-semibold">Built for Busy People</h4>
+              <p className="mt-1 text-muted-foreground text-sm">Made for educators, creators, jobseekers, and more.</p>
+            </div>
+            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/5 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <BadgeCheck className="h-6 w-6 text-primary mb-2" aria-hidden="true" />
+              <h4 className="font-semibold">Free + Pro Options</h4>
+              <p className="mt-1 text-muted-foreground text-sm">Choose what you need. Upgrade only when it's worth it.</p>
+            </div>
+            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/5 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <Globe className="h-6 w-6 text-primary mb-2" aria-hidden="true" />
+              <h4 className="font-semibold">Universal Compatibility</h4>
+              <p className="mt-1 text-muted-foreground text-sm">Use with ChatGPT, GPT-4, Claude, Gemini, and more.</p>
+            </div>
+            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/5 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <Scale className="h-6 w-6 text-primary mb-2" aria-hidden="true" />
+              <h4 className="font-semibold">Ethically Created</h4>
+              <p className="mt-1 text-muted-foreground text-sm">No fake personas. No scraped content. Always clear, honest use.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* FAQ and Newsletter Combined Section */}
       <section className="container py-12 mt-8">
         <div className="grid gap-12 lg:grid-cols-3">
@@ -360,105 +417,55 @@ const HowItWorks = () => {
               </div>
             ) : (
               <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl p-6 border-primary/20 border h-fit sticky top-6">
-                <h3 className="text-xl font-semibold mb-3 text-center">🎯 Get Weekly Tips</h3>
-                <p className="text-muted-foreground mb-6 text-center text-sm">Join 25,000+ users getting our best prompts and AI productivity tips every Tuesday.</p>
+                <h3 className="font-semibold mb-3 flex items-center gap-2">
+                  🎯 Get Weekly Tips
+                </h3>
+                <p className="text-sm text-muted-foreground mb-4">Join 25,000+ users getting our best prompts and AI productivity tips every Tuesday.</p>
                 
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-center gap-3 text-sm">
-                    <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Check className="w-3 h-3 text-white" />
-                    </div>
-                    <span>Weekly prompting tips</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm">
-                    <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Check className="w-3 h-3 text-white" />
-                    </div>
-                    <span>AI productivity insights</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm">
-                    <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Check className="w-3 h-3 text-white" />
-                    </div>
-                    <span>No spam, unsubscribe anytime</span>
-                  </div>
-                </div>
+                <ul className="text-xs text-muted-foreground space-y-1 mb-4">
+                  <li>✓ Weekly prompting tips</li>
+                  <li>✓ AI productivity insights</li>
+                  <li>✓ No spam, unsubscribe anytime</li>
+                </ul>
                 
-                <div className="space-y-3">
-                  <input 
-                    type="email" 
-                    placeholder="Enter your email" 
-                    className="w-full px-4 py-2 rounded-md border bg-background"
+                <form onSubmit={async (e) => {
+                  e.preventDefault();
+                  const formData = new FormData(e.currentTarget);
+                  const email = formData.get('email') as string;
+                  
+                  try {
+                    const { error } = await supabase.functions.invoke('newsletter-subscribe', {
+                      body: JSON.stringify({ email }),
+                      headers: { 'Content-Type': 'application/json' }
+                    });
+                    
+                    if (error) throw error;
+                    
+                    toast({
+                      title: "Welcome aboard! 🎉",
+                      description: "Check your email to confirm your subscription.",
+                    });
+                  } catch (error) {
+                    toast({
+                      title: "Subscription failed",
+                      description: "Please try again or check your email address.",
+                      variant: "destructive",
+                    });
+                  }
+                }} className="space-y-3">
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+                    className="w-full px-3 py-2 text-sm rounded-lg border border-input bg-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   />
-                  <Button asChild variant="hero" className="w-full">
-                    <Link to="/">Subscribe Free</Link>
+                  <Button type="submit" size="sm" className="w-full">
+                    Subscribe Free
                   </Button>
-                </div>
+                </form>
               </div>
             )}
-          </div>
-        </div>
-      </section>
-
-      {/* About and Features Section */}
-      <section className="max-w-6xl mx-auto mt-12">
-        <div className="grid gap-12 lg:grid-cols-2">
-          {/* About Content */}
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-xl font-semibold mb-4">Built for Real Tasks. Used by Real People.</h3>
-              <p className="text-muted-foreground">PromptAndGo exists to remove the friction of working with AI. We believe the power of generative tools shouldn't be locked behind hype or hidden behind complexity. We focus on what matters: clear, practical prompts that make writing, planning, and thinking easier, one click at a time.</p>
-            </div>
-            
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Trusted by Thousands, from Startups to Enterprises</h4>
-              <p className="text-muted-foreground">Most people don't want to become prompt engineers — they just want better results. We built a simple way to skip the struggle and get to the output.</p>
-            </div>
-            
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-xl border p-6 text-center bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10">
-                <div className="text-3xl font-bold tracking-tight">12+</div>
-                <div className="text-muted-foreground">Prompt Categories</div>
-              </div>
-              <div className="rounded-xl border p-6 text-center bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10">
-                <div className="text-3xl font-bold tracking-tight">1600+</div>
-                <div className="text-muted-foreground">Prompts</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Features Grid */}
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/5 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <ShieldCheck className="h-6 w-6 text-primary mb-2" aria-hidden="true" />
-              <h4 className="font-semibold">Human Curated</h4>
-              <p className="mt-1 text-muted-foreground text-sm">Each prompt is crafted for real use cases — not generic fluff.</p>
-            </div>
-            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/5 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <Zap className="h-6 w-6 text-primary mb-2" aria-hidden="true" />
-              <h4 className="font-semibold">Instant Use</h4>
-              <p className="mt-1 text-muted-foreground text-sm">Copy into your AI tool and run instantly — no setup required.</p>
-            </div>
-            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/5 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <Clock className="h-6 w-6 text-primary mb-2" aria-hidden="true" />
-              <h4 className="font-semibold">Built for Busy People</h4>
-              <p className="mt-1 text-muted-foreground text-sm">Made for educators, creators, jobseekers, and more.</p>
-            </div>
-            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/5 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <BadgeCheck className="h-6 w-6 text-primary mb-2" aria-hidden="true" />
-              <h4 className="font-semibold">Free + Pro Options</h4>
-              <p className="mt-1 text-muted-foreground text-sm">Choose what you need. Upgrade only when it's worth it.</p>
-            </div>
-            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/5 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <Globe className="h-6 w-6 text-primary mb-2" aria-hidden="true" />
-              <h4 className="font-semibold">Universal Compatibility</h4>
-              <p className="mt-1 text-muted-foreground text-sm">Use with ChatGPT, GPT-4, Claude, Gemini, and more.</p>
-            </div>
-            <div className="group rounded-xl border p-5 bg-card/50 bg-gradient-to-br from-primary/5 to-transparent ring-1 ring-primary/10 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <Scale className="h-6 w-6 text-primary mb-2" aria-hidden="true" />
-              <h4 className="font-semibold">Ethically Created</h4>
-              <p className="mt-1 text-muted-foreground text-sm">No fake personas. No scraped content. Always clear, honest use.</p>
-            </div>
           </div>
         </div>
       </section>
