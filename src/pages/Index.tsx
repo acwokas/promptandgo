@@ -613,13 +613,6 @@ const Index = () => {
           </section>
         )}
 
-        {/* Poll Section */}
-        <section className="container py-8">
-          <div className="flex justify-center">
-            <PollCarousel currentPage="home" />
-          </div>
-        </section>
-
         {/* Bottom Section - FAQ, Pricing, and CTA combined */}
         <section className="container py-8">
           <div className="grid gap-8 lg:grid-cols-3">
@@ -659,8 +652,14 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Pricing/CTA Column */}
-            <div className="lg:col-span-1">
+            {/* Right Column - Poll and Pricing/CTA */}
+            <div className="lg:col-span-1 space-y-6">
+              {/* Poll Section */}
+              <div>
+                <PollCarousel currentPage="home" />
+              </div>
+              
+              {/* Pricing/CTA Section */}
               <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl p-6 h-fit sticky top-6">
                 <h3 className="font-semibold mb-3 text-center">💡 Start Free, Upgrade When Ready</h3>
                 <p className="text-sm text-muted-foreground mb-6 text-center">
