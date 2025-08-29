@@ -200,39 +200,6 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
           <CardTitle className="text-xl font-bold text-foreground pr-20">
             {currentPoll.title}
           </CardTitle>
-          <div className="flex items-center gap-2">
-            {polls.length > 1 && (
-              <>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => navigatePoll('prev')}
-                  className="h-8 w-8 p-0"
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                </Button>
-                <Badge variant="secondary" className="text-xs whitespace-nowrap">
-                  {currentPollIndex + 1}&nbsp;/&nbsp;{polls.length}
-                </Badge>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => navigatePoll('next')}
-                  className="h-8 w-8 p-0"
-                >
-                  <ChevronRight className="h-4 w-4" />
-                </Button>
-              </>
-            )}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleShare}
-              className="h-8 w-8 p-0"
-            >
-              <Share2 className="h-4 w-4" />
-            </Button>
-          </div>
         </div>
         <div className="bg-muted/30 p-3 rounded-lg border border-border mt-4">
           <p className="text-sm text-foreground whitespace-pre-line font-medium">
@@ -242,6 +209,18 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
       </CardHeader>
 
       <CardContent className="space-y-4">
+        {/* Cast Your Vote section - moved above poll choices */}
+        {!showResults && (
+          <div className="text-center p-3 bg-muted/30 rounded-lg border border-border">
+            <p className="text-sm font-medium text-foreground mb-1">
+              🗳️ Cast Your Vote!
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Click an option to vote and see live results
+            </p>
+          </div>
+        )}
+
         <div className="space-y-3">
           {currentPoll.options.map((option) => {
             const isSelected = userVote === option.id;
@@ -291,16 +270,49 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
           </div>
         )}
 
-        {!showResults && (
-          <div className="text-center p-3 bg-muted/30 rounded-lg border border-border">
-            <p className="text-sm font-medium text-foreground mb-1">
-              🗳️ Cast Your Vote!
+        {/* Share section and poll navigation - moved to bottom */}
+        <div className="border-t border-border pt-4 mt-6">
+          <div className="text-center mb-4">
+            <p className="text-sm text-muted-foreground mb-3">
+              Share this poll with a friend and their vote could decide what comes next.
             </p>
-            <p className="text-xs text-muted-foreground">
-              Click an option to vote and see live results
-            </p>
+            <div className="flex items-center justify-center gap-3">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleShare}
+                className="gap-2"
+              >
+                <Share2 className="h-4 w-4" />
+                Share Poll
+              </Button>
+              
+              {polls.length > 1 && (
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => navigatePoll('prev')}
+                    className="h-8 w-8 p-0"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </Button>
+                  <Badge variant="secondary" className="text-xs whitespace-nowrap">
+                    Poll {currentPollIndex + 1}&nbsp;/&nbsp;{polls.length}
+                  </Badge>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => navigatePoll('next')}
+                    className="h-8 w-8 p-0"
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </div>
+              )}
+            </div>
           </div>
-        )}
+        </div>
       </CardContent>
     </Card>
   );
