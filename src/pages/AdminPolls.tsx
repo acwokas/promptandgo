@@ -334,6 +334,25 @@ const AdminPolls = () => {
   
   const updateTempTotalVotes = (pollId: string, value: number) => {
     setTempTotalVotes(prev => ({ ...prev, [pollId]: value }));
+    
+    // Recalculate individual vote counts based on current percentages
+    const pollResults = results[pollId] || [];
+    if (pollResults.length > 0 && value > 0) {
+      const newVoteCounts: Record<string, number> = {};
+      
+      // Calculate current percentages (use manual if available, otherwise current percentages)
+      pollResults.forEach(result => {
+        const currentPercentage = tempPercentages[pollId]?.[result.option_id] ?? result.percentage;
+        const newVoteCount = Math.round((currentPercentage / 100) * value);
+        newVoteCounts[result.option_id] = newVoteCount;
+      });
+      
+      // Update vote counts to match the new total
+      setTempVoteCounts(prev => ({
+        ...prev,
+        [pollId]: newVoteCounts
+      }));
+    }
   };
 
   const saveManualPercentages = async (pollId: string) => {
