@@ -390,8 +390,8 @@ const AdminBulkUpload = () => {
             return undefined;
           };
           data = rows.map((r) => {
-            const packs = splitMulti(getField(r, ["propack", "packs", "pack"]) ?? r.pro_pack ?? r.Pro_Pack ?? r.pack ?? r.packs);
-            const is_pro = parseBool(getField(r, ["ispro", "pro", "proprompt"]) ?? r.is_pro ?? r.pro ?? r.Pro_Prompt ?? r.pro_prompt ?? r.Pro);
+            const packs = splitMulti(getField(r, ["propack", "packs", "pack", "packname"]) ?? r.pro_pack ?? r.Pro_Pack ?? r.pack ?? r.packs ?? r.pack_name);
+            const is_pro = parseBool(getField(r, ["ispro", "pro", "proprompt", "promptispro"]) ?? r.is_pro ?? r.pro ?? r.Pro_Prompt ?? r.pro_prompt ?? r.Pro ?? r.prompt_is_pro);
             const normalizeSlug = (s: string) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
             const rawCatSlug = getField(r, ["categoryslug", "category"]) ?? r.category_slug ?? r.category;
             const catName = String(getField(r, ["categoryname", "category"]) ?? r.category_name ?? "").trim();
@@ -400,19 +400,19 @@ const AdminBulkUpload = () => {
             const subName = String(getField(r, ["subcategoryname", "subcategory"]) ?? r.subcategory_name ?? "").trim();
             const finalSubSlug = String(rawSubSlug || (subName ? normalizeSlug(subName) : "")).trim() || undefined;
             return {
-              title: String(r.title ?? "").trim(),
-              what_for: r.what_for ? String(r.what_for).trim() : undefined,
-              prompt: String(r.prompt ?? "").trim(),
-              image_prompt: r.image_prompt ? String(r.image_prompt).trim() : undefined,
-              excerpt: r.excerpt ? String(r.excerpt).trim() : undefined,
+              title: String(getField(r, ["title", "prompttitle"]) ?? r.title ?? r.prompt_title ?? "").trim(),
+              what_for: (getField(r, ["whatfor", "promptwhatfor"]) ?? r.what_for ?? r.prompt_what_for) ? String(getField(r, ["whatfor", "promptwhatfor"]) ?? r.what_for ?? r.prompt_what_for).trim() : undefined,
+              prompt: String(getField(r, ["prompt", "promptcontent"]) ?? r.prompt ?? r.prompt_content ?? "").trim(),
+              image_prompt: (getField(r, ["imageprompt", "promptimageprompt"]) ?? r.image_prompt ?? r.prompt_image_prompt) ? String(getField(r, ["imageprompt", "promptimageprompt"]) ?? r.image_prompt ?? r.prompt_image_prompt).trim() : undefined,
+              excerpt: (getField(r, ["excerpt", "promptexcerpt"]) ?? r.excerpt ?? r.prompt_excerpt) ? String(getField(r, ["excerpt", "promptexcerpt"]) ?? r.excerpt ?? r.prompt_excerpt).trim() : undefined,
               category_slug: finalCatSlug,
               category_name: catName || finalCatSlug,
               subcategory_slug: finalSubSlug,
               subcategory_name: subName || finalSubSlug,
-              tags: splitTags(r.tags),
+              tags: splitTags(getField(r, ["tags", "prompttags"]) ?? r.tags ?? r.prompt_tags),
               is_pro,
               packs,
-              ribbon: r.ribbon ? String(r.ribbon).trim() : undefined,
+              ribbon: (getField(r, ["ribbon", "promptribbon"]) ?? r.ribbon ?? r.prompt_ribbon) ? String(getField(r, ["ribbon", "promptribbon"]) ?? r.ribbon ?? r.prompt_ribbon).trim() : undefined,
             };
           });
           break;
@@ -547,19 +547,19 @@ const AdminBulkUpload = () => {
         const subName = String(getField(r, ["subcategoryname", "subcategory"]) ?? r.subcategory_name ?? "").trim();
         const finalSubSlug = String(rawSubSlug || (subName ? normalizeSlug(subName) : "")).trim() || undefined;
         return {
-          title: String(r.title ?? "").trim(),
-          what_for: r.what_for ? String(r.what_for).trim() : undefined,
-          prompt: String(r.prompt ?? "").trim(),
-          image_prompt: r.image_prompt ? String(r.image_prompt).trim() : undefined,
-          excerpt: r.excerpt ? String(r.excerpt).trim() : undefined,
+          title: String(getField(r, ["title", "prompttitle"]) ?? r.title ?? r.prompt_title ?? "").trim(),
+          what_for: (getField(r, ["whatfor", "promptwhatfor"]) ?? r.what_for ?? r.prompt_what_for) ? String(getField(r, ["whatfor", "promptwhatfor"]) ?? r.what_for ?? r.prompt_what_for).trim() : undefined,
+          prompt: String(getField(r, ["prompt", "promptcontent"]) ?? r.prompt ?? r.prompt_content ?? "").trim(),
+          image_prompt: (getField(r, ["imageprompt", "promptimageprompt"]) ?? r.image_prompt ?? r.prompt_image_prompt) ? String(getField(r, ["imageprompt", "promptimageprompt"]) ?? r.image_prompt ?? r.prompt_image_prompt).trim() : undefined,
+          excerpt: (getField(r, ["excerpt", "promptexcerpt"]) ?? r.excerpt ?? r.prompt_excerpt) ? String(getField(r, ["excerpt", "promptexcerpt"]) ?? r.excerpt ?? r.prompt_excerpt).trim() : undefined,
           category_slug: finalCatSlug,
           category_name: catName || finalCatSlug,
           subcategory_slug: finalSubSlug,
           subcategory_name: subName || finalSubSlug,
-          tags: splitTags(r.tags),
-          is_pro: parseBool(getField(r, ["ispro", "pro", "proprompt"]) ?? r.is_pro ?? r.pro ?? r.Pro_Prompt ?? r.pro_prompt ?? r.Pro),
-          packs: splitMulti(getField(r, ["propack", "packs", "pack"]) ?? r.pro_pack ?? r.Pro_Pack ?? r.pack ?? r.packs),
-          ribbon: r.ribbon ? String(r.ribbon).trim() : undefined,
+          tags: splitTags(getField(r, ["tags", "prompttags"]) ?? r.tags ?? r.prompt_tags),
+          is_pro: parseBool(getField(r, ["ispro", "pro", "proprompt", "promptispro"]) ?? r.is_pro ?? r.pro ?? r.Pro_Prompt ?? r.pro_prompt ?? r.Pro ?? r.prompt_is_pro),
+          packs: splitMulti(getField(r, ["propack", "packs", "pack", "packname"]) ?? r.pro_pack ?? r.Pro_Pack ?? r.pack ?? r.packs ?? r.pack_name),
+          ribbon: (getField(r, ["ribbon", "promptribbon"]) ?? r.ribbon ?? r.prompt_ribbon) ? String(getField(r, ["ribbon", "promptribbon"]) ?? r.ribbon ?? r.prompt_ribbon).trim() : undefined,
         };
       });
 
