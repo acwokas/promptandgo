@@ -2,7 +2,7 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.54.0';
 
 const corsHeaders = {
-  'Access-Control-Allow-Origin': 'https://promptandgo.ai,https://www.promptandgo.ai,http://localhost:3000,https://796ef56a-0e56-472b-bbac-4eedfcf2a4d0.sandbox.lovable.dev',
+  'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Max-Age': '86400',
@@ -128,7 +128,7 @@ serve(async (req: Request) => {
       // Return existing short link
       return new Response(JSON.stringify({
         short_code: existing.short_code,
-        short_url: `https://promptandgo.ai/s/${existing.short_code}`
+        short_url: `https://mncxspmtqvqgvtrxbxzb.supabase.co/functions/v1/share-redirect/${existing.short_code}`
       }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });
@@ -171,7 +171,7 @@ serve(async (req: Request) => {
 
     if (error) throw error;
 
-    const shortUrl = `https://promptandgo.ai/s/${shortCode}`;
+    const shortUrl = `https://mncxspmtqvqgvtrxbxzb.supabase.co/functions/v1/share-redirect/${shortCode}`;
 
     return new Response(JSON.stringify({
       short_code: shortCode,
