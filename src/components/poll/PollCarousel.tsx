@@ -249,6 +249,14 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
             return (
               <div key={option.id} className="space-y-2">
                 <div className="relative">
+                  {/* Progress bar background - moved outside button */}
+                  {showResults && (
+                    <div 
+                      className="absolute left-0 top-0 h-full !bg-blue-600 rounded-md transition-all duration-1000 ease-out z-0"
+                      style={{ width: `${option.percentage}%` }}
+                    />
+                  )}
+                  
                   <Button
                     variant={showResults ? "ghost" : (isSelected ? "default" : "outline")}
                     className={`w-full justify-between text-left h-auto p-4 relative overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-md border ${
@@ -258,14 +266,6 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
                     onClick={() => handleVote(option.id)}
                     disabled={showResults || userVote !== null}
                   >
-                    {/* Progress bar background when showing results */}
-                    {showResults && (
-                      <div 
-                        className="absolute left-0 top-0 h-full !bg-blue-600 rounded-md transition-all duration-1000 ease-out z-0"
-                        style={{ width: `${option.percentage}%` }}
-                      />
-                    )}
-                    
                     {/* Content */}
                     <div className="flex items-center gap-3 relative z-10">
                       <span className="text-lg">{option.icon}</span>
