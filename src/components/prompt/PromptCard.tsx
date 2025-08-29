@@ -455,7 +455,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
       <CardHeader>
         <div className="mb-2 flex gap-2 flex-wrap">
           {(prompt as any).ribbon === "RECOMMENDED" && (
-            <div className="recommended-ribbon inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-yellow-400 to-orange-500 text-white">
+            <div className="recommended-ribbon inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-primary text-primary-foreground">
               <Sparkles className="h-3.5 w-3.5" aria-hidden />
               <span>RECOMMENDED</span>
             </div>
