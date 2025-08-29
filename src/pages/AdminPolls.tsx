@@ -62,14 +62,16 @@ const AdminPolls = () => {
     { text: "", icon: "" }
   ]);
 
+  useEffect(() => {
+    if (!adminLoading && user) {
+      loadPolls();
+    }
+  }, [user, adminLoading]);
+
   if (adminLoading) return <div>Loading...</div>;
   const emailAllow = ["me@adrianwatkins.com"];
   const effectiveIsAdmin = isAdmin || (user?.email ? emailAllow.includes(user.email) : false);
   if (!user || !effectiveIsAdmin) return <Navigate to="/" replace />;
-
-  useEffect(() => {
-    loadPolls();
-  }, []);
 
   const loadPolls = async () => {
     try {
