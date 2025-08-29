@@ -16,7 +16,7 @@ const AIPromptsForContentWriters = () => {
   const midImage1 = "/lovable-uploads/f32d80cf-413a-416b-958e-97f023e82320.png"; // Image 1 (file 1)
   const midImage2 = "/lovable-uploads/cf547dfa-ef34-4643-811a-b6b8c6ef4c19.png"; // Image 2 (file 3)
   const origin = typeof window !== "undefined" ? window.location.origin : "";
-  const canonical = origin ? `${origin}/blog/ai-prompts-for-content-writers` : undefined;
+  const canonical = origin ? `${origin}/tips/ai-prompts-for-content-writers` : undefined;
   const category = "Copywriting";
   const tags = [
     "AI prompts",

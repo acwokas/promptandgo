@@ -34,7 +34,7 @@ const BeginnersGuideMidjourneyPrompts = () => {
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://promptandgo.ai/blog/beginners-guide-midjourney-prompts"
+      "@id": "https://promptandgo.ai/tips/beginners-guide-midjourney-prompts"
     }
   };
 
@@ -43,7 +43,7 @@ const BeginnersGuideMidjourneyPrompts = () => {
       <SEO 
         title="Beginner's Guide: Creating Detailed Prompts for MidJourney"
         description="Mastering MidJourney starts with the right words. This beginner's guide breaks down how to create detailed prompts that deliver consistent, creative results: with examples, pro tips, and parameters you can use today."
-        canonical="https://promptandgo.ai/blog/beginners-guide-midjourney-prompts"
+        canonical="https://promptandgo.ai/tips/beginners-guide-midjourney-prompts"
         structuredData={structuredData}
         ogType="article"
         publishedTime={publishDate}
@@ -62,7 +62,7 @@ const BeginnersGuideMidjourneyPrompts = () => {
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link to="/blog">Tips</Link>
+                <Link to="/tips">Tips</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
@@ -74,7 +74,7 @@ const BeginnersGuideMidjourneyPrompts = () => {
 
         {/* Back Button */}
         <Link 
-          to="/blog" 
+          to="/tips" 
           className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors"
         >
           <ArrowLeft className="h-4 w-4" />

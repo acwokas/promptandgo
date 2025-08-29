@@ -82,7 +82,7 @@ const Header = () => {
               Scout AI
             </NavLink>
           </li>
-          <li><NavLink to="/blog" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Tips</NavLink></li>
+          <li><NavLink to="/tips" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Tips</NavLink></li>
           <li><NavLink to="/faqs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>FAQs</NavLink></li>
           {user && (
             <li>
@@ -113,7 +113,7 @@ const Header = () => {
                     Scout AI
                   </NavLink>
                   <NavLink to="/cart" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Cart</NavLink>
-                  <NavLink to="/blog" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Tips</NavLink>
+                  <NavLink to="/tips" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Tips</NavLink>
                   <NavLink to="/faqs" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>FAQs</NavLink>
                   
                   {user && (

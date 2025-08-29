@@ -8,7 +8,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 const Blog = () => {
   const { user } = useSupabaseAuth();
   const origin = typeof window !== "undefined" ? window.location.origin : "";
-  const canonical = origin ? `${origin}/blog` : undefined;
+  const canonical = origin ? `${origin}/tips` : undefined;
   return (
   <>
     <PageHero title={<>Tips</>} subtitle={<>Tips, tricks and examples to get the most out of your prompting.</>} minHeightClass="min-h-[28vh]">
@@ -48,7 +48,7 @@ const Blog = () => {
 
     <section className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       <article>
-        <Link to="/blog/welcome-to-promptandgo-ai" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+        <Link to="/tips/welcome-to-promptandgo-ai" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
           <Card className="overflow-hidden">
             <img
               src="/lovable-uploads/66b1134b-1d55-416b-b7ea-2719a1a22ec1.png"
@@ -67,7 +67,7 @@ const Blog = () => {
         </Link>
       </article>
       <article>
-        <Link to="/blog/best-ai-prompts-for-small-business-2025" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+        <Link to="/tips/best-ai-prompts-for-small-business-2025" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
           <Card className="overflow-hidden">
             <img
               src="/lovable-uploads/f23788ee-b45e-4f84-808a-691c7e3c5e52.png"
@@ -86,7 +86,7 @@ const Blog = () => {
         </Link>
       </article>
       <article>
-        <Link to="/blog/how-to-write-ai-prompts" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+        <Link to="/tips/how-to-write-ai-prompts" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
           <Card className="overflow-hidden">
             <img
               src="/lovable-uploads/cc4584af-ecc2-4ea7-9eb7-f6ec463c8ac6.png"
@@ -105,7 +105,7 @@ const Blog = () => {
         </Link>
       </article>
       <article>
-        <Link to="/blog/ai-prompts-that-save-you-hours" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+        <Link to="/tips/ai-prompts-that-save-you-hours" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
           <Card className="overflow-hidden">
             <img
               src="/lovable-uploads/94ca5534-1070-4bf0-a579-0445f417c302.png"
@@ -124,7 +124,7 @@ const Blog = () => {
         </Link>
       </article>
       <article>
-        <Link to="/blog/ai-prompts-for-marketing-campaigns" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+        <Link to="/tips/ai-prompts-for-marketing-campaigns" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
           <Card className="overflow-hidden">
             <img
               src="/ai-prompts-email-social-icons.png"
@@ -143,7 +143,7 @@ const Blog = () => {
         </Link>
       </article>
       <article>
-        <Link to="/blog/ai-prompts-for-customer-support" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+        <Link to="/tips/ai-prompts-for-customer-support" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
           <Card className="overflow-hidden">
             <img
               src="/lovable-uploads/b9bbcee0-042a-4751-9c30-dfc61fe9a846.png"
@@ -162,7 +162,7 @@ const Blog = () => {
         </Link>
       </article>
       <article>
-        <Link to="/blog/ai-prompts-for-social-media-content" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+        <Link to="/tips/ai-prompts-for-social-media-content" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
           <Card className="overflow-hidden">
             <img
               src="/lovable-uploads/a619c09b-001e-470b-beff-59e90dcd0a60.png"
@@ -181,7 +181,7 @@ const Blog = () => {
         </Link>
       </article>
       <article>
-        <Link to="/blog/ai-prompts-for-content-writers" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+        <Link to="/tips/ai-prompts-for-content-writers" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
           <Card className="overflow-hidden">
             <img
               src="/lovable-uploads/d350e5ca-08b4-4c34-adae-de4287b5aedb.png"
@@ -200,7 +200,7 @@ const Blog = () => {
         </Link>
       </article>
       <article>
-        <Link to="/blog/ai-prompts-for-business-strategy" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+        <Link to="/tips/ai-prompts-for-business-strategy" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
           <Card className="overflow-hidden">
             <img
               src="/lovable-uploads/f0a62b1b-6fae-4b41-8211-30a3c0ed8ee7.png"
@@ -219,7 +219,7 @@ const Blog = () => {
         </Link>
       </article>
       <article>
-        <Link to="/blog/beginners-guide-midjourney-prompts" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+        <Link to="/tips/beginners-guide-midjourney-prompts" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
           <Card className="overflow-hidden">
             <img
               src="/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png"

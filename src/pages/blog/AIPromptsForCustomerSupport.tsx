@@ -19,7 +19,7 @@ const AIPromptsForCustomerSupport = () => {
   const imageTwo = "/lovable-uploads/e645ef3a-9d9a-40e8-9f29-bc98b810fe80.png"; // in-article image
   const imageThree = "/lovable-uploads/b9bbcee0-042a-4751-9c30-dfc61fe9a846.png"; // also used as blog index thumbnail
   const origin = typeof window !== "undefined" ? window.location.origin : "";
-  const canonical = origin ? `${origin}/blog/ai-prompts-for-customer-support` : undefined;
+  const canonical = origin ? `${origin}/tips/ai-prompts-for-customer-support` : undefined;
   const category = "Customer Support";
   const tags = [
     "AI prompts",

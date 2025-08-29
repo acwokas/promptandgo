@@ -100,17 +100,17 @@ const AppContent = () => {
         <Route path="/submit" element={<SubmitPrompt />} />
         <Route path="/submit-prompt" element={<SubmitPrompt />} />
         <Route path="/faqs" element={<FAQs />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/blog/welcome-to-promptandgo-ai" element={<WelcomeToPromptAndGo />} />
-        <Route path="/blog/best-ai-prompts-for-small-business-2025" element={<BestAIPromptsForSmallBusiness2025 />} />
-        <Route path="/blog/how-to-write-ai-prompts" element={<HowToWriteAIPrompts />} />
-        <Route path="/blog/ai-prompts-that-save-you-hours" element={<AIPromptsThatSaveYouHours />} />
-        <Route path="/blog/ai-prompts-for-marketing-campaigns" element={<AIPromptsForMarketingCampaigns />} />
-        <Route path="/blog/ai-prompts-for-customer-support" element={<AIPromptsForCustomerSupport />} />
-        <Route path="/blog/ai-prompts-for-social-media-content" element={<AIPromptsForSocialMediaContent />} />
-        <Route path="/blog/ai-prompts-for-content-writers" element={<AIPromptsForContentWriters />} />
-        <Route path="/blog/ai-prompts-for-business-strategy" element={<AIPromptsForBusinessStrategy />} />
-        <Route path="/blog/beginners-guide-midjourney-prompts" element={<BeginnersGuideMidjourneyPrompts />} />
+        <Route path="/tips" element={<Blog />} />
+        <Route path="/tips/welcome-to-promptandgo-ai" element={<WelcomeToPromptAndGo />} />
+        <Route path="/tips/best-ai-prompts-for-small-business-2025" element={<BestAIPromptsForSmallBusiness2025 />} />
+        <Route path="/tips/how-to-write-ai-prompts" element={<HowToWriteAIPrompts />} />
+        <Route path="/tips/ai-prompts-that-save-you-hours" element={<AIPromptsThatSaveYouHours />} />
+        <Route path="/tips/ai-prompts-for-marketing-campaigns" element={<AIPromptsForMarketingCampaigns />} />
+        <Route path="/tips/ai-prompts-for-customer-support" element={<AIPromptsForCustomerSupport />} />
+        <Route path="/tips/ai-prompts-for-social-media-content" element={<AIPromptsForSocialMediaContent />} />
+        <Route path="/tips/ai-prompts-for-content-writers" element={<AIPromptsForContentWriters />} />
+        <Route path="/tips/ai-prompts-for-business-strategy" element={<AIPromptsForBusinessStrategy />} />
+        <Route path="/tips/beginners-guide-midjourney-prompts" element={<BeginnersGuideMidjourneyPrompts />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/how-it-works" element={<HowItWorks />} />

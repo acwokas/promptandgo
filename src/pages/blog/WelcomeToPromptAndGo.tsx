@@ -79,7 +79,7 @@ const schema = {
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link to="/blog">Tips</Link>
+              <Link to="/tips">Tips</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
@@ -91,7 +91,7 @@ const schema = {
 
       {/* Back Button */}
       <Link 
-        to="/blog" 
+        to="/tips" 
         className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors"
       >
         <ArrowLeft className="h-4 w-4" />
@@ -125,7 +125,7 @@ const schema = {
 
         <div className="mb-4 flex justify-end">
           <ShareButton
-            url={canonical || `${origin}/blog/welcome-to-promptandgo-ai`}
+            url={canonical || `${origin}/tips/welcome-to-promptandgo-ai`}
             contentType="blog"
             contentId="welcome-to-promptandgo-ai"
             title={title}

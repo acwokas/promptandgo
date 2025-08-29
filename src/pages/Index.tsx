@@ -647,7 +647,7 @@ const Index = () => {
                 <h2 className="text-2xl font-semibold mb-4">Latest Articles</h2>
                 <div className="space-y-4">
                   <article>
-                    <Link to="/blog/welcome-to-promptandgo-ai" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                    <Link to="/tips/welcome-to-promptandgo-ai" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                       <Card className="overflow-hidden">
                         <img
                           src="/lovable-uploads/66b1134b-1d55-416b-b7ea-2719a1a22ec1.png"
@@ -667,7 +667,7 @@ const Index = () => {
                   </article>
                   
                   <article>
-                    <Link to="/blog/best-ai-prompts-for-small-business-2025" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                    <Link to="/tips/best-ai-prompts-for-small-business-2025" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                       <Card className="overflow-hidden">
                         <img
                           src="/lovable-uploads/f23788ee-b45e-4f84-808a-691c7e3c5e52.png"
@@ -689,7 +689,7 @@ const Index = () => {
                 
                 <div className="mt-4">
                   <Button asChild variant="ghost" size="sm">
-                    <Link to="/blog">Read All Articles →</Link>
+                    <Link to="/tips">Read All Articles →</Link>
                   </Button>
                 </div>
               </div>

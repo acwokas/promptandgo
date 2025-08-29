@@ -88,7 +88,7 @@ const EmailConfirmed = () => {
                       </Card>
                     </Link>
                     
-                    <Link to="/blog">
+                    <Link to="/tips">
                       <Card className="group hover:shadow-lg transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-primary/20">
                         <CardContent className="p-6">
                           <div className="text-2xl mb-3">✍️</div>

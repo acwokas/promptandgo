@@ -57,7 +57,7 @@ const Footer = () => {
               <Bot className="h-3 w-3 text-blue-500" />
               Scout AI
             </Link>
-            <Link to="/blog" className="text-muted-foreground hover:text-foreground">Tips</Link>
+            <Link to="/tips" className="text-muted-foreground hover:text-foreground">Tips</Link>
             <Link to="/faqs" className="text-muted-foreground hover:text-foreground">FAQs</Link>
           </nav>
           <nav className="flex flex-col gap-2">

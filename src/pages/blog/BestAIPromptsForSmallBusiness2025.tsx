@@ -17,7 +17,7 @@ const BestAIPromptsForSmallBusiness2025 = () => {
   const description = "Discover the best AI prompts for small business owners in 2025. Use these ready-to-run examples to boost sales, streamline operations, and save hours each week.";
   const heroImage = "/lovable-uploads/f23788ee-b45e-4f84-808a-691c7e3c5e52.png";
   const origin = typeof window !== "undefined" ? window.location.origin : "";
-  const canonical = origin ? `${origin}/blog/best-ai-prompts-for-small-business-2025` : undefined;
+  const canonical = origin ? `${origin}/tips/best-ai-prompts-for-small-business-2025` : undefined;
   const category = "Small Business";
   const tags = [
     "AI prompts", "small business", "marketing", "operations", "sales",
@@ -69,7 +69,7 @@ const BestAIPromptsForSmallBusiness2025 = () => {
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link to="/blog">Tips</Link>
+              <Link to="/tips">Tips</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
@@ -81,7 +81,7 @@ const BestAIPromptsForSmallBusiness2025 = () => {
 
       {/* Back Button */}
       <Link 
-        to="/blog" 
+        to="/tips" 
         className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors"
       >
         <ArrowLeft className="h-4 w-4" />

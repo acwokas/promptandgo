@@ -19,7 +19,7 @@ const AIPromptsThatSaveYouHours = () => {
   const secondaryImage = "/lovable-uploads/94ca5534-1070-4bf0-a579-0445f417c302.png";
   const thirdImage = "/lovable-uploads/c85bfc5c-8d77-4e8d-af37-6c58b9647269.png";
   const origin = typeof window !== "undefined" ? window.location.origin : "";
-  const canonical = origin ? `${origin}/blog/ai-prompts-that-save-you-hours` : undefined;
+  const canonical = origin ? `${origin}/tips/ai-prompts-that-save-you-hours` : undefined;
   const category = "Productivity";
   const tags = [
     "AI prompts",

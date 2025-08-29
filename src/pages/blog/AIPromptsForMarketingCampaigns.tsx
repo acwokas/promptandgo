@@ -19,7 +19,7 @@ const AIPromptsForMarketingCampaigns = () => {
   const midImage1 = "/lovable-uploads/02a7a5fd-f6f6-49c6-9f45-e70c7d3ba6be.png";
   const midImage2 = "/lovable-uploads/0240be2e-4b38-4a77-a2f7-46db36807679.png";
   const origin = typeof window !== "undefined" ? window.location.origin : "";
-  const canonical = origin ? `${origin}/blog/ai-prompts-for-marketing-campaigns` : undefined;
+  const canonical = origin ? `${origin}/tips/ai-prompts-for-marketing-campaigns` : undefined;
   const category = "Marketing";
   const tags = [
     "AI prompts",

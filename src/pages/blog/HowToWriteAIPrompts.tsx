@@ -19,7 +19,7 @@ const HowToWriteAIPrompts = () => {
   const secondaryImage = "/lovable-uploads/cc4584af-ecc2-4ea7-9eb7-f6ec463c8ac6.png"; // Image 2
   const thirdImage = "/lovable-uploads/dc900dd9-dbc7-43f2-a4d5-4fef2011cea4.png"; // Image 3
   const origin = typeof window !== "undefined" ? window.location.origin : "";
-  const canonical = origin ? `${origin}/blog/how-to-write-ai-prompts` : undefined;
+  const canonical = origin ? `${origin}/tips/how-to-write-ai-prompts` : undefined;
   const category = "Prompting";
   const tags = [
     "AI prompts",
