@@ -322,25 +322,26 @@ const AdminPolls = () => {
         const newPercentage = tempPercs[result.option_id];
         const newVoteCount = tempVotes[result.option_id];
         
-        const updateData: any = {
-          use_manual_percentage: true,
-          use_manual_vote_count: true
-        };
+        const updateData: any = {};
         
         if (newPercentage !== undefined) {
           updateData.manual_percentage = newPercentage;
+          updateData.use_manual_percentage = true;
         }
         
         if (newVoteCount !== undefined) {
-          updateData.manual_vote_count = Math.floor(newVoteCount);
+          updateData.manual_vote_count = newVoteCount;
+          updateData.use_manual_vote_count = true;
         }
+        
+        if (Object.keys(updateData).length > 0) {
+          const { error } = await supabase
+            .from('poll_options')
+            .update(updateData)
+            .eq('id', result.option_id);
 
-        const { error } = await supabase
-          .from('poll_options')
-          .update(updateData)
-          .eq('id', result.option_id);
-
-        if (error) throw error;
+          if (error) throw error;
+        }
       }
 
       toast({
