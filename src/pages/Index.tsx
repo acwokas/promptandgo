@@ -6,6 +6,8 @@ import { Sparkles, Zap, ShieldCheck, ListChecks, Wand2, Rocket, Check, Search, H
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useSubscriptionStatus } from "@/hooks/useSubscriptionStatus";
+import { useNewsletterStatus } from "@/hooks/useNewsletterStatus";
+import { MatchedPowerPacks } from "@/components/MatchedPowerPacks";
 import { supabase } from "@/integrations/supabase/client";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
@@ -20,6 +22,7 @@ import type { Category as CategoryType } from "@/data/prompts";
 const Index = () => {
   const { user } = useSupabaseAuth();
   const { isSubscribed } = useSubscriptionStatus();
+  const { isNewsletterSubscribed } = useNewsletterStatus();
   const navigate = useNavigate();
   const { personalizedPrompts, hasPersonalization } = usePersonalizedPrompts();
   const { toast } = useToast();
@@ -586,8 +589,11 @@ const Index = () => {
                 </div>
               </div>
 
-              {/* Newsletter Signup - Only show if user is not logged in or not subscribed */}
-              {(!user || !isSubscribed) && (
+              {/* Newsletter Signup - Only show if user is not logged in or not subscribed to newsletter */}
+              {/* If logged in and newsletter subscribed, show matched power packs instead */}
+              {user && isNewsletterSubscribed ? (
+                <MatchedPowerPacks />
+              ) : (!user || !isNewsletterSubscribed) && (
                 <Card className="bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
                   <CardContent className="p-6">
                     <h3 className="text-lg font-semibold mb-2">🚀 Get Weekly Prompt Tips</h3>

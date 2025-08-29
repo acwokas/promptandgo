@@ -4,14 +4,17 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
+import { useNewsletterStatus } from "@/hooks/useNewsletterStatus";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
 import { ShieldCheck, Zap, Clock, BadgeCheck, Globe, Scale, Search, Heart, Bot, Copy, Check } from "lucide-react";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { MatchedPowerPacks } from "@/components/MatchedPowerPacks";
 
 const HowItWorks = () => {
   const { user } = useSupabaseAuth();
+  const { isNewsletterSubscribed } = useNewsletterStatus();
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
@@ -349,44 +352,50 @@ const HowItWorks = () => {
             </div>
           </div>
 
-          {/* Newsletter Sidebar */}
+          {/* Newsletter Sidebar or Matched Packs */}
           <div className="lg:col-span-1">
-            <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl p-6 border-primary/20 border h-fit sticky top-6">
-              <h3 className="text-xl font-semibold mb-3 text-center">🎯 Get Weekly Tips</h3>
-              <p className="text-muted-foreground mb-6 text-center text-sm">Join 25,000+ users getting our best prompts and AI productivity tips every Tuesday.</p>
-              
-              <div className="space-y-3 mb-6">
-                <div className="flex items-center gap-3 text-sm">
-                  <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Check className="w-3 h-3 text-white" />
+            {user && isNewsletterSubscribed ? (
+              <div className="sticky top-6">
+                <MatchedPowerPacks />
+              </div>
+            ) : (
+              <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl p-6 border-primary/20 border h-fit sticky top-6">
+                <h3 className="text-xl font-semibold mb-3 text-center">🎯 Get Weekly Tips</h3>
+                <p className="text-muted-foreground mb-6 text-center text-sm">Join 25,000+ users getting our best prompts and AI productivity tips every Tuesday.</p>
+                
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center gap-3 text-sm">
+                    <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Check className="w-3 h-3 text-white" />
+                    </div>
+                    <span>Weekly prompting tips</span>
                   </div>
-                  <span>Weekly prompting tips</span>
+                  <div className="flex items-center gap-3 text-sm">
+                    <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Check className="w-3 h-3 text-white" />
+                    </div>
+                    <span>AI productivity insights</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm">
+                    <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Check className="w-3 h-3 text-white" />
+                    </div>
+                    <span>No spam, unsubscribe anytime</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-3 text-sm">
-                  <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Check className="w-3 h-3 text-white" />
-                  </div>
-                  <span>AI productivity insights</span>
-                </div>
-                <div className="flex items-center gap-3 text-sm">
-                  <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Check className="w-3 h-3 text-white" />
-                  </div>
-                  <span>No spam, unsubscribe anytime</span>
+                
+                <div className="space-y-3">
+                  <input 
+                    type="email" 
+                    placeholder="Enter your email" 
+                    className="w-full px-4 py-2 rounded-md border bg-background"
+                  />
+                  <Button asChild variant="hero" className="w-full">
+                    <Link to="/">Subscribe Free</Link>
+                  </Button>
                 </div>
               </div>
-              
-              <div className="space-y-3">
-                <input 
-                  type="email" 
-                  placeholder="Enter your email" 
-                  className="w-full px-4 py-2 rounded-md border bg-background"
-                />
-                <Button variant="hero" className="w-full">
-                  Subscribe Free
-                </Button>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </section>
