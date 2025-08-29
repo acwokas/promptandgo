@@ -252,26 +252,17 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
                   <Button
                     variant={showResults ? "secondary" : (isSelected ? "default" : "outline")}
                     className={`w-full justify-between text-left h-auto p-4 relative overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-md border ${
-                      showResults ? 'bg-gray-600 hover:bg-gray-600 text-white border-gray-500' : 
+                      showResults ? 'text-white border-gray-500' : 
                       isSelected ? 'ring-2 ring-primary/50' : 'hover:border-primary/40 hover:bg-primary/5'
                     }`}
+                    style={showResults ? {
+                      background: `linear-gradient(to right, rgb(37, 99, 235) ${option.percentage}%, rgb(75, 85, 99) ${option.percentage}%)`
+                    } : {}}
                     onClick={() => handleVote(option.id)}
                     disabled={showResults || userVote !== null}
                   >
-                    {/* Progress bar background - back inside button */}
-                    {showResults && (
-                      <div 
-                        className="absolute left-0 top-0 h-full rounded-md transition-all duration-1000 ease-out"
-                        style={{ 
-                          width: `${option.percentage}%`,
-                          backgroundColor: 'rgb(37, 99, 235)',
-                          zIndex: 1
-                        }}
-                      />
-                    )}
-                    
                     {/* Content */}
-                    <div className="flex items-center gap-3 relative" style={{ zIndex: 10 }}>
+                    <div className="flex items-center gap-3">
                       <span className="text-lg">{option.icon}</span>
                       <span className="flex-1 font-medium">
                         {option.text}
@@ -280,7 +271,7 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
                     
                     {/* Results display on the right */}
                     {showResults && (
-                      <div className="text-right text-sm relative" style={{ zIndex: 10 }}>
+                      <div className="text-right text-sm">
                         <div className="font-semibold">{option.percentage}%</div>
                         <div className="opacity-90">{option.vote_count} votes</div>
                       </div>
