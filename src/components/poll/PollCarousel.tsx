@@ -252,12 +252,8 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
                 </Button>
 
                 {showResults && (
-                  <div className="space-y-1">
-                    <div className="flex justify-between text-sm">
-                      <span>{option.percentage}%</span>
-                      <span>{option.vote_count} votes</span>
-                    </div>
-                    <Progress value={option.percentage} className="h-2" />
+                  <div className="mt-2">
+                    <Progress value={option.percentage} className="h-3" />
                   </div>
                 )}
               </div>
