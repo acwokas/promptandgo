@@ -243,9 +243,9 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
               <div key={option.id} className="space-y-2">
                 <div className="relative">
                   <Button
-                    variant={isSelected ? "default" : "outline"}
+                    variant={showResults ? "default" : (isSelected ? "default" : "outline")}
                     className={`w-full justify-between text-left h-auto p-4 relative overflow-hidden ${
-                      showResults ? 'bg-background border-muted' : ''
+                      showResults ? 'bg-primary text-primary-foreground' : ''
                     }`}
                     onClick={() => handleVote(option.id)}
                     disabled={showResults || userVote !== null}
@@ -253,7 +253,7 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
                     {/* Progress bar background when showing results */}
                     {showResults && (
                       <div 
-                        className="absolute left-0 top-0 h-full bg-primary transition-all duration-1000 ease-out"
+                        className="absolute left-0 top-0 h-full bg-primary/60 transition-all duration-1000 ease-out"
                         style={{ width: `${option.percentage}%` }}
                       />
                     )}
@@ -261,14 +261,14 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
                     {/* Content */}
                     <div className="flex items-center gap-3 relative z-10">
                       <span className="text-lg">{option.icon}</span>
-                      <span className={`flex-1 ${showResults ? 'text-primary-foreground font-medium' : ''}`}>
+                      <span className="flex-1 font-medium">
                         {option.text}
                       </span>
                     </div>
                     
                     {/* Results display on the right */}
                     {showResults && (
-                      <div className="text-right text-sm relative z-10 text-primary-foreground">
+                      <div className="text-right text-sm relative z-10">
                         <div className="font-semibold">{option.percentage}%</div>
                         <div className="opacity-90">{option.vote_count} votes</div>
                       </div>
