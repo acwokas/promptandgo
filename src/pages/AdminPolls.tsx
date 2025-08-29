@@ -385,7 +385,7 @@ const AdminPolls = () => {
     }
 
     try {
-      // Update poll
+      // Update poll basic info
       const { error: pollError } = await supabase
         .from('polls')
         .update({
@@ -397,31 +397,57 @@ const AdminPolls = () => {
 
       if (pollError) throw pollError;
 
-      // Delete existing options
-      const { error: deleteError } = await supabase
-        .from('poll_options')
-        .delete()
-        .eq('poll_id', editingPoll.id);
-
-      if (deleteError) throw deleteError;
-
-      // Insert new options
-      const optionsData = options.map((opt, index) => ({
-        poll_id: editingPoll.id,
-        text: opt.text.trim(),
-        icon: opt.icon.trim(),
-        order_index: index + 1
-      }));
-
-      const { error: optionsError } = await supabase
-        .from('poll_options')
-        .insert(optionsData);
-
-      if (optionsError) throw optionsError;
+      // Get current options to preserve vote data
+      const currentOptions = editingPoll.poll_options;
+      
+      // Update existing options or create new ones (preserve votes and manual percentages)
+      for (let i = 0; i < options.length; i++) {
+        const newOption = options[i];
+        const existingOption = currentOptions[i];
+        
+        if (existingOption) {
+          // Update existing option (preserves votes and manual percentages)
+          const { error: updateError } = await supabase
+            .from('poll_options')
+            .update({
+              text: newOption.text.trim(),
+              icon: newOption.icon.trim(),
+              order_index: i + 1
+            })
+            .eq('id', existingOption.id);
+            
+          if (updateError) throw updateError;
+        } else {
+          // Create new option
+          const { error: insertError } = await supabase
+            .from('poll_options')
+            .insert({
+              poll_id: editingPoll.id,
+              text: newOption.text.trim(),
+              icon: newOption.icon.trim(),
+              order_index: i + 1
+            });
+            
+          if (insertError) throw insertError;
+        }
+      }
+      
+      // Delete any extra options if the new list is shorter
+      if (options.length < currentOptions.length) {
+        const optionsToDelete = currentOptions.slice(options.length);
+        for (const optionToDelete of optionsToDelete) {
+          const { error: deleteError } = await supabase
+            .from('poll_options')
+            .delete()
+            .eq('id', optionToDelete.id);
+            
+          if (deleteError) throw deleteError;
+        }
+      }
 
       toast({
         title: "Success",
-        description: "Poll updated successfully"
+        description: "Poll updated successfully (vote data preserved)"
       });
 
       setShowCreateDialog(false);
