@@ -152,7 +152,7 @@ const HowItWorks = () => {
                 <div className="shrink-0 w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold">2</div>
                 <div>
                   <h3 className="text-lg font-semibold">Paste into an AI chatbot (e.g. ChatGPT)</h3>
-                  <p className="mt-1 text-muted-foreground">Copy the prompt and paste it into ChatGPT, GPT-4, Claude, Gemini, or your AI of choice.</p>
+                  <p className="mt-1 text-muted-foreground">Copy the prompt and paste it into ChatGPT, Claude, Gemini, Midjourney, ideogram (etc), or your AI of choice.</p>
                 </div>
               </div>
             </article>
