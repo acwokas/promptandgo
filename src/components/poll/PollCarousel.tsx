@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, Share2 } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import ShareButton from "@/components/ShareButton";
 
 interface PollOption {
   id: string;
@@ -129,7 +130,7 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
 
       setUserVote(optionId);
       setShowResults(true);
-      setCountdown(10);
+      setCountdown(20);
       
       // Refresh results
       loadPolls();
@@ -277,15 +278,15 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
               Share this poll with a friend and their vote could decide what comes next.
             </p>
             <div className="flex items-center justify-center gap-3">
-              <Button
+              <ShareButton
+                url={`${window.location.origin}/?poll=${currentPoll.id}`}
+                contentType="poll"
+                contentId={currentPoll.id}
+                title={`Vote on: ${currentPoll.title}`}
                 variant="outline"
                 size="sm"
-                onClick={handleShare}
-                className="gap-2"
-              >
-                <Share2 className="h-4 w-4" />
-                Share Poll
-              </Button>
+                showText={true}
+              />
               
               {polls.length > 1 && (
                 <div className="flex items-center gap-2">
