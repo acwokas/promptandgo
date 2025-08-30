@@ -534,13 +534,13 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               {prompt.prompt}
             </pre>
             {showLock && (
-              <div className="absolute inset-0 rounded-md glass-overlay flex flex-col items-center justify-center min-h-full p-4">
-                <div className="text-center space-y-3 w-full max-w-xs">
+              <div className="absolute inset-0 rounded-md glass-overlay flex flex-col items-center justify-center min-h-[200px] p-4">
+                <div className="text-center space-y-4 w-full max-w-xs">
                   <div className="inline-flex items-center gap-2 text-sm font-medium px-3 py-1 rounded-full bg-background/40 border border-brand/30">
                     <Lock className="h-4 w-4" aria-hidden />
                     <span>Unlock premium prompt</span>
                   </div>
-                  <div className="text-xs text-muted-foreground space-y-1">
+                  <div className="text-xs text-muted-foreground space-y-2">
                     <div>
                       One‑time <span className="line-through">{fmtUSD(PROMPT_ORIGINAL_CENTS)}</span> <span className="text-primary font-medium">{fmtUSD(PROMPT_DISCOUNT_CENTS)}</span>
                     </div>
@@ -548,9 +548,9 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                       Or subscribe <span className="line-through">{fmtUSD(SUB_ORIGINAL_CENTS)}</span> <span className="text-primary font-medium">{fmtUSD(SUB_DISCOUNT_CENTS)}</span> / month
                     </div>
                   </div>
-                  <div className="flex flex-col gap-2 w-full">
-                    <Button size="sm" variant="hero" className="w-full text-xs" onClick={addPromptToCart}>Buy Prompt {fmtUSD(PROMPT_DISCOUNT_CENTS)}</Button>
-                    <Button size="sm" variant="secondary" className="w-full btn-subtle-stroke text-xs" onClick={handleSubscribeClick}>Subscribe for {fmtUSD(SUB_DISCOUNT_CENTS)}/mo</Button>
+                  <div className="flex flex-col gap-3 w-full">
+                    <Button size="sm" variant="hero" className="w-full text-xs py-2" onClick={addPromptToCart}>Buy Prompt {fmtUSD(PROMPT_DISCOUNT_CENTS)}</Button>
+                    <Button size="sm" variant="secondary" className="w-full btn-subtle-stroke text-xs py-2" onClick={handleSubscribeClick}>Subscribe for {fmtUSD(SUB_DISCOUNT_CENTS)}/mo</Button>
                   </div>
                 </div>
               </div>
