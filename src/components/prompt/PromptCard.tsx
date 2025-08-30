@@ -529,12 +529,12 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
       <CardContent>
         <div>
           <div className="text-xs font-medium mb-1">{prompt.excerpt?.replace(/\.$/, '')}:</div>
-          <div className="relative">
-            <pre className={cn("whitespace-pre-wrap prompt-editorial p-4 sm:p-5 rounded-md text-[0.975rem] sm:text-[1.05rem] leading-7 transition shadow-elegant", showLock && "blur-sm select-none pointer-events-none")}> 
+          <div className="relative min-h-[320px] sm:min-h-[300px]">
+            <pre className={cn("whitespace-pre-wrap prompt-editorial p-4 sm:p-5 rounded-md text-[0.975rem] sm:text-[1.05rem] leading-7 transition shadow-elegant min-h-[320px] sm:min-h-[300px]", showLock && "blur-sm select-none pointer-events-none")}>
               {prompt.prompt}
             </pre>
             {showLock && (
-              <div className="absolute inset-0 rounded-md glass-overlay flex flex-col items-center justify-center min-h-[200px] p-4">
+              <div className="absolute inset-0 rounded-md glass-overlay flex flex-col items-center justify-center min-h-full p-4">
                 <div className="text-center space-y-4 w-full max-w-xs">
                   <div className="inline-flex items-center gap-2 text-sm font-medium px-3 py-1 rounded-full bg-background/40 border border-brand/30">
                     <Lock className="h-4 w-4" aria-hidden />
