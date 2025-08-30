@@ -417,19 +417,21 @@ const PromptLibrary = () => {
     setPage(1);
     const res = await fetchPromptsPage(1);
     const data = res.data || [];
-    setItems(reorderByLockedBuckets(dedupeByTitle(data)));
+    const transform = (arr: PromptUI[]) => (ribbon === "PRO_ONLY" ? arr : reorderByLockedBuckets(dedupeByTitle(arr)));
+    setItems(transform(data));
     setHasMore(!!res.hasMore);
-  }, [fetchPromptsPage]);
+  }, [fetchPromptsPage, ribbon]);
 
   const loadMore = useCallback(async () => {
     if (loading || !hasMore) return;
     const next = page + 1;
     const res = await fetchPromptsPage(next);
     const data = res.data || [];
-    setItems((prev) => reorderByLockedBuckets(dedupeByTitle([...prev, ...data])));
+    const transform = (arr: PromptUI[]) => (ribbon === "PRO_ONLY" ? arr : reorderByLockedBuckets(dedupeByTitle(arr)));
+    setItems((prev) => transform([...(prev || []), ...data]));
     setHasMore(!!res.hasMore);
     setPage(next);
-  }, [page, hasMore, loading, fetchPromptsPage]);
+  }, [page, hasMore, loading, fetchPromptsPage, ribbon]);
 
 
   // Always land at top when visiting Library
