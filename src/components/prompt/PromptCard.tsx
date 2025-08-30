@@ -320,8 +320,14 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
           return;
         }
 
-        // Check subscription
+        // Check subscription with better error handling
         const subRes = await supabase.rpc('get_subscriber_info', { p_user_id: user.id });
+        if (subRes.error) {
+          console.warn('Failed to check subscription:', subRes.error);
+          // If auth error, assume no access but don't crash
+          if (!cancelled) setHasAccess(false);
+          return;
+        }
         if (subRes.data?.[0]?.subscribed) {
           if (!cancelled) setHasAccess(true);
           return;
@@ -329,6 +335,11 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
 
         // Check direct prompt access
         const pa = await supabase.from('prompt_access').select('user_id').eq('user_id', user.id).eq('prompt_id', prompt.id).maybeSingle();
+        if (pa.error) {
+          console.warn('Failed to check prompt access:', pa.error);
+          if (!cancelled) setHasAccess(false);
+          return;
+        }
         if (pa.data) {
           if (!cancelled) setHasAccess(true);
           return;
@@ -337,6 +348,11 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
         // Check pack access intersect
         if (packIds.length) {
           const pacc = await supabase.from('pack_access').select('pack_id').eq('user_id', user.id).in('pack_id', packIds);
+          if (pacc.error) {
+            console.warn('Failed to check pack access:', pacc.error);
+            if (!cancelled) setHasAccess(false);
+            return;
+          }
           if ((pacc.data || []).length > 0) {
             if (!cancelled) setHasAccess(true);
             return;
@@ -344,7 +360,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
         }
         if (!cancelled) setHasAccess(false);
       } catch (e) {
-        console.error(e);
+        console.error('Access check failed:', e);
         if (!cancelled) setHasAccess(false);
       }
     };
