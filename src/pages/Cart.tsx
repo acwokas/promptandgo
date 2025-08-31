@@ -114,6 +114,8 @@ const CartPage = () => {
   };
 
   const handleAddMembership = (type: 'monthly' | 'lifetime') => {
+    console.log('🔍 Adding membership:', type, 'User authenticated:', !!user);
+    
     if (type === 'monthly') {
       addToCart({
         id: 'monthly-membership',
@@ -131,6 +133,13 @@ const CartPage = () => {
         quantity: 1
       }, !!user);
     }
+    
+    // Force update cart items
+    setTimeout(() => {
+      const updatedItems = getCartForUser(!!user);
+      console.log('🔍 Cart after adding:', updatedItems);
+      setItems(updatedItems);
+    }, 100);
     
     toast({
       title: "Added to Cart!",
