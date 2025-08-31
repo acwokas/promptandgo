@@ -3,7 +3,7 @@ import PageHero from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { getCartForUser, getCartTotalCents, removeFromCart, clearCart, addToMyPrompts, type CartItem } from "@/lib/cart";
+import { getCartForUser, getCartTotalCents, removeFromCart, clearCart, addToMyPrompts, addToCart, type CartItem } from "@/lib/cart";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
@@ -113,6 +113,31 @@ const CartPage = () => {
     setAddingToFavorites(false);
   };
 
+  const handleAddMembership = (type: 'monthly' | 'lifetime') => {
+    if (type === 'monthly') {
+      addToCart({
+        id: 'monthly-membership',
+        type: 'membership',
+        title: 'Monthly Membership',
+        unitAmountCents: 1299, // $12.99 (50% off from $24.99)
+        quantity: 1
+      }, !!user);
+    } else {
+      addToCart({
+        id: 'lifetime-membership', 
+        type: 'lifetime',
+        title: 'Lifetime Access',
+        unitAmountCents: 9950, // $99.50 (50% off from $199.00)
+        quantity: 1
+      }, !!user);
+    }
+    
+    toast({
+      title: "Added to Cart!",
+      description: `${type === 'monthly' ? 'Monthly Membership' : 'Lifetime Access'} added to your cart.`
+    });
+  };
+
   return (
     <>
       <SEO title="Your Cart" description="Review your selected prompts and packs before checkout." />
@@ -199,7 +224,16 @@ const CartPage = () => {
                       <span className="text-sm text-muted-foreground line-through">$24.99</span>
                       <Badge variant="secondary" className="text-xs">50% OFF</Badge>
                     </div>
-                    <p className="text-sm text-muted-foreground">Perfect for regular users</p>
+                    <p className="text-sm text-muted-foreground mb-3">Perfect for regular users</p>
+                    <Button 
+                      onClick={() => handleAddMembership('monthly')}
+                      variant="outline" 
+                      size="sm" 
+                      className="w-full"
+                      disabled={hasMembership}
+                    >
+                      {hasMembership ? "In Cart" : "Add to Cart"}
+                    </Button>
                   </div>
 
                   <div className="p-4 bg-background text-foreground rounded-lg border border-accent/50 relative">
@@ -215,7 +249,16 @@ const CartPage = () => {
                       <span className="text-sm text-muted-foreground line-through">$199.00</span>
                       <Badge variant="secondary" className="text-xs">50% OFF</Badge>
                     </div>
-                    <p className="text-sm text-muted-foreground">One-time payment, unlimited access forever</p>
+                    <p className="text-sm text-muted-foreground mb-3">One-time payment, unlimited access forever</p>
+                    <Button 
+                      onClick={() => handleAddMembership('lifetime')}
+                      variant="default" 
+                      size="sm" 
+                      className="w-full"
+                      disabled={hasLifetime}
+                    >
+                      {hasLifetime ? "In Cart" : "Add to Cart"}
+                    </Button>
                   </div>
                 </div>
 
