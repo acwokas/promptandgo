@@ -15,7 +15,7 @@ import { Star, Zap, Library, Calendar, Infinity, ArrowRight } from "lucide-react
 const centsToUSD = (cents: number) => `$${(cents / 100).toFixed(2)}`;
 
 const CartPage = () => {
-  const { user } = useSupabaseAuth();
+  const { user, loading } = useSupabaseAuth();
   const [items, setItems] = useState<CartItem[]>([]);
   const [addingToFavorites, setAddingToFavorites] = useState<boolean>(false);
 
@@ -59,14 +59,23 @@ const CartPage = () => {
   const savings = Math.max(0, originalTotal - total);
 
   const beginCheckout = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
+    if (!user || loading) {
+      toast({
+        title: "Authentication Required",
+        description: "Please log in to continue with checkout."
+      });
       window.location.href = '/auth';
       return;
     }
 
     const cartItems = getCartForUser(!!user);
-    if (cartItems.length === 0) return;
+    if (cartItems.length === 0) {
+      toast({
+        title: "Empty Cart", 
+        description: "Add some items to your cart first."
+      });
+      return;
+    }
 
     const hasMembership = cartItems.some((i) => i.type === 'membership');
     const hasLifetime = cartItems.some((i) => i.type === 'lifetime');
@@ -80,12 +89,15 @@ const CartPage = () => {
         return;
       }
 
-
       const { data, error } = await supabase.functions.invoke('create-payment', { body: { items: cartItems } });
       if (error) throw error;
       window.open((data as any).url, '_blank');
     } catch (e: any) {
-      alert('Checkout error: ' + (e?.message || String(e)));
+      console.error('Checkout error:', e);
+      toast({
+        title: "Checkout Error",
+        description: e?.message || 'Something went wrong. Please try again.'
+      });
     }
   };
 
@@ -114,7 +126,13 @@ const CartPage = () => {
   };
 
   const handleAddMembership = (type: 'monthly' | 'lifetime') => {
-    console.log('🔍 Adding membership:', type, 'User authenticated:', !!user);
+    if (!user || loading) {
+      toast({
+        title: "Please wait",
+        description: "Loading your session. Please try again in a moment."
+      });
+      return;
+    }
     
     if (type === 'monthly') {
       addToCart({
@@ -133,13 +151,6 @@ const CartPage = () => {
         quantity: 1
       }, !!user);
     }
-    
-    // Force update cart items
-    setTimeout(() => {
-      const updatedItems = getCartForUser(!!user);
-      console.log('🔍 Cart after adding:', updatedItems);
-      setItems(updatedItems);
-    }, 100);
     
     toast({
       title: "Added to Cart!",
@@ -239,9 +250,9 @@ const CartPage = () => {
                       variant="default" 
                       size="sm" 
                       className="w-full"
-                      disabled={hasMembership}
+                      disabled={hasMembership || loading || !user}
                     >
-                      {hasMembership ? "In Cart" : "Add to Cart"}
+                      {loading ? "Loading..." : hasMembership ? "In Cart" : "Add to Cart"}
                     </Button>
                   </div>
 
@@ -264,9 +275,9 @@ const CartPage = () => {
                       variant="default" 
                       size="sm" 
                       className="w-full"
-                      disabled={hasLifetime}
+                      disabled={hasLifetime || loading || !user}
                     >
-                      {hasLifetime ? "In Cart" : "Add to Cart"}
+                      {loading ? "Loading..." : hasLifetime ? "In Cart" : "Add to Cart"}
                     </Button>
                   </div>
                 </div>
