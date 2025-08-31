@@ -67,7 +67,12 @@ serve(async (req) => {
         {
           price_data: {
             currency: 'usd',
-            product_data: { name: 'Monthly All-Access Membership' },
+            product_data: { 
+              name: 'Monthly All-Access Membership',
+              metadata: {
+                business_name: 'PromptandGo.ai'
+              }
+            },
             unit_amount: 1299,
             recurring: { interval: 'month' },
           },
@@ -76,6 +81,14 @@ serve(async (req) => {
       ],
       success_url: `${origin}/membership/success`,
       cancel_url: `${origin}/membership/canceled`,
+      subscription_data: {
+        metadata: {
+          business_name: 'PromptandGo.ai'
+        }
+      },
+      metadata: {
+        business_name: 'PromptandGo.ai'
+      }
     });
 
     logStep("Checkout session created successfully", { sessionId: session.id, url: session.url });
