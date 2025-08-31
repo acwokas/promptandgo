@@ -18,15 +18,24 @@ import AIPromptWidget from "@/components/ai/AIPromptWidget";
 import PromptsOfTheDay from "@/components/prompt/PromptsOfTheDay";
 import { PollCarousel } from "@/components/poll/PollCarousel";
 import type { Category as CategoryType } from "@/data/prompts";
-
 const Index = () => {
-  const { user } = useSupabaseAuth();
-  const { isSubscribed } = useSubscriptionStatus();
-  const { isNewsletterSubscribed } = useNewsletterStatus();
+  const {
+    user
+  } = useSupabaseAuth();
+  const {
+    isSubscribed
+  } = useSubscriptionStatus();
+  const {
+    isNewsletterSubscribed
+  } = useNewsletterStatus();
   const navigate = useNavigate();
-  const { personalizedPrompts, hasPersonalization } = usePersonalizedPrompts();
-  const { toast } = useToast();
-
+  const {
+    personalizedPrompts,
+    hasPersonalization
+  } = usePersonalizedPrompts();
+  const {
+    toast
+  } = useToast();
   type HP = {
     id: string;
     categoryId?: string | null;
@@ -38,7 +47,6 @@ const Index = () => {
     tags: string[];
     isPro?: boolean;
   };
-
   const [slides, setSlides] = useState<HP[]>([]);
   const [homeCategories, setHomeCategories] = useState<CategoryType[]>([]);
   const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null);
@@ -47,27 +55,29 @@ const Index = () => {
   const [newsletterSuccess, setNewsletterSuccess] = useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const [existingUserEmail, setExistingUserEmail] = useState("");
-
   useEffect(() => {
     const load = async () => {
       try {
-        const [catsRes, subsRes] = await Promise.all([
-          supabase.from("categories").select("id,name,slug").order("name"),
-          supabase.from("subcategories").select("id,name,slug,category_id").order("name"),
-        ]);
+        const [catsRes, subsRes] = await Promise.all([supabase.from("categories").select("id,name,slug").order("name"), supabase.from("subcategories").select("id,name,slug,category_id").order("name")]);
 
         // Build categories list for PromptCard labels
         if (!catsRes.error && !subsRes.error) {
-          const subcatByCategory = new Map<string, { id: string; name: string }[]>();
+          const subcatByCategory = new Map<string, {
+            id: string;
+            name: string;
+          }[]>();
           (subsRes.data || []).forEach((s: any) => {
             const list = subcatByCategory.get(s.category_id as string) || [];
-            list.push({ id: s.id as string, name: s.name as string });
+            list.push({
+              id: s.id as string,
+              name: s.name as string
+            });
             subcatByCategory.set(s.category_id as string, list);
           });
           const built: CategoryType[] = (catsRes.data || []).map((c: any) => ({
             id: c.id as string,
             name: c.name as string,
-            subcategories: subcatByCategory.get(c.id as string) || [],
+            subcategories: subcatByCategory.get(c.id as string) || []
           }));
           setHomeCategories(built);
         }
@@ -77,18 +87,17 @@ const Index = () => {
     };
     load();
   }, []);
-
   useEffect(() => {
     if (!carouselApi) return;
     const id = window.setInterval(() => {
-      try { carouselApi.scrollNext(); } catch {}
+      try {
+        carouselApi.scrollNext();
+      } catch {}
     }, 5000);
     return () => window.clearInterval(id);
   }, [carouselApi]);
-
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     if (!newsletterEmail.trim()) {
       toast({
         title: "Email required",
@@ -108,42 +117,40 @@ const Index = () => {
       });
       return;
     }
-
     setNewsletterSubmitting(true);
     try {
       console.log('Newsletter signup starting for:', newsletterEmail);
-      
-      
-      const { data, error } = await supabase.functions.invoke('newsletter-subscribe', {
+      const {
+        data,
+        error
+      } = await supabase.functions.invoke('newsletter-subscribe', {
         body: {
           email: newsletterEmail.toLowerCase(),
-          user_id: user?.id || null,
+          user_id: user?.id || null
         }
       });
-
-      console.log('Newsletter signup response:', { data, error });
-
+      console.log('Newsletter signup response:', {
+        data,
+        error
+      });
       if (error) {
         console.error('Newsletter signup error details:', error);
         throw error;
       }
-
       if (data?.existed && !user) {
         setExistingUserEmail(newsletterEmail);
         setShowLoginPrompt(true);
         toast({
           title: "You're already subscribed",
-          description: "Please log in to access your prompts. We've prefilled your email.",
+          description: "Please log in to access your prompts. We've prefilled your email."
         });
         return;
       }
-
       console.log('Newsletter signup successful');
       toast({
         title: "Successfully subscribed!",
         description: "Welcome to our weekly prompt tips! Please check your email (and spam folder) for confirmation."
       });
-      
       setNewsletterEmail("");
       setNewsletterSuccess(true);
     } catch (error: any) {
@@ -157,7 +164,6 @@ const Index = () => {
       setNewsletterSubmitting(false);
     }
   };
-
   const generateEmailHash = async (email: string) => {
     const encoder = new TextEncoder();
     const data = encoder.encode(email);
@@ -165,32 +171,26 @@ const Index = () => {
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
   };
-
   const handleLogin = () => {
     // Redirect to auth page - we'll pass the email in the URL state
-    navigate('/auth', { state: { email: existingUserEmail } });
-    
+    navigate('/auth', {
+      state: {
+        email: existingUserEmail
+      }
+    });
     toast({
       title: "Please complete your login",
-      description: "You already have an account! Please enter your password to log in.",
+      description: "You already have an account! Please enter your password to log in."
     });
   };
-
-  return (
-    <>
-      <SEO
-        title="Ready-to-use prompts for real-world work"
-        description="PromptAndGo.ai gives you ready-to-use prompts designed for real-world work — writing pitches, planning launches, or automating outreach."
-      />
+  return <>
+      <SEO title="Ready-to-use prompts for real-world work" description="PromptAndGo.ai gives you ready-to-use prompts designed for real-world work — writing pitches, planning launches, or automating outreach." />
 
       <main>
         {/* Hero */}
-        <PageHero
-          title={<>
+        <PageHero title={<>
             Find your perfect <span className="text-gradient-brand">AI</span> <span className="text-gradient-brand">prompt</span>, fast.
-          </>}
-          subtitle={<>Browse thousands of human-curated prompts to help you write better, work smarter, and think bigger.</>}
-        >
+          </>} subtitle={<>Browse thousands of human-curated prompts to help you write better, work smarter, and think bigger.</>}>
           <Button asChild size="default" variant="hero" className="px-6">
             <Link to="/library"><Search className="h-4 w-4 mr-2" />Browse Library</Link>
           </Button>
@@ -248,9 +248,9 @@ const Index = () => {
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-0.5 mb-2">
-                      {Array.from({ length: 5 }, (_, i) => (
-                        <Star key={i} className="h-4 w-4 fill-primary text-primary" />
-                      ))}
+                      {Array.from({
+                      length: 5
+                    }, (_, i) => <Star key={i} className="h-4 w-4 fill-primary text-primary" />)}
                     </div>
                     <p className="text-sm text-muted-foreground">"These prompts saved me 5 hours per week on content creation. The marketing category alone paid for itself in one campaign."</p>
                   </div>
@@ -273,9 +273,9 @@ const Index = () => {
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-0.5 mb-2">
-                      {Array.from({ length: 5 }, (_, i) => (
-                        <Star key={i} className="h-4 w-4 fill-primary text-primary" />
-                      ))}
+                      {Array.from({
+                      length: 5
+                    }, (_, i) => <Star key={i} className="h-4 w-4 fill-primary text-primary" />)}
                     </div>
                     <p className="text-sm text-muted-foreground">"As a freelancer, these prompts help me deliver better work faster. The career section helped me land three new clients this month."</p>
                   </div>
@@ -298,9 +298,9 @@ const Index = () => {
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-0.5 mb-2">
-                      {Array.from({ length: 5 }, (_, i) => (
-                        <Star key={i} className="h-4 w-4 fill-primary text-primary" />
-                      ))}
+                      {Array.from({
+                      length: 5
+                    }, (_, i) => <Star key={i} className="h-4 w-4 fill-primary text-primary" />)}
                     </div>
                     <p className="text-sm text-muted-foreground">"Game changer for our startup. We use the business prompts daily for everything from investor pitches to customer emails."</p>
                   </div>
@@ -320,7 +320,7 @@ const Index = () => {
         {/* AI Tools Compatibility */}
         <section className="container pt-2 pb-6">
           <div className="text-center">
-            <p className="text-sm text-muted-foreground mb-4">Works seamlessly with your favourite AI tools</p>
+            <p className="text-sm text-muted-foreground mb-4">Works seamlessly with your favourite AI tools, including:</p>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:items-center lg:justify-center gap-4 lg:gap-8 text-xs text-muted-foreground max-w-4xl mx-auto">
               <span className="flex items-center gap-2">
                 <div className="w-6 h-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
@@ -427,14 +427,7 @@ const Index = () => {
           <div className="text-center mb-4 sm:mb-8">
             <div className="flex items-center justify-center gap-3 mb-4">
               <div className="relative">
-                <video 
-                  src="/scout-animation-v2.mp4" 
-                  autoPlay 
-                  loop 
-                  muted 
-                  playsInline
-                  className="w-12 h-12 rounded-full object-cover border-2 border-primary/20 shadow-lg"
-                />
+                <video src="/scout-animation-v2.mp4" autoPlay loop muted playsInline className="w-12 h-12 rounded-full object-cover border-2 border-primary/20 shadow-lg" />
                 <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-primary rounded-full border-2 border-background flex items-center justify-center">
                   <div className="w-1 h-1 bg-white rounded-full animate-pulse"></div>
                 </div>
@@ -479,47 +472,31 @@ const Index = () => {
 
 
         {/* Conditional Content Based on Login Status */}
-        {user ? (
-          // Check if user has personalization set up
-          hasPersonalization ? (
-            // User has personalization - show recommendations (even if empty)
-            <section className="container py-6">
+        {user ?
+      // Check if user has personalization set up
+      hasPersonalization ?
+      // User has personalization - show recommendations (even if empty)
+      <section className="container py-6">
               <h2 className="text-2xl font-semibold mb-2">🎯 Recommended for You</h2>
-              {personalizedPrompts.length > 0 ? (
-                <>
+              {personalizedPrompts.length > 0 ? <>
                   <p className="text-muted-foreground max-w-3xl mb-8">Based on your preferences, here are some prompts we think you'll love.</p>
                   <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                    {personalizedPrompts.slice(0, 3).map((p) => (
-                      <div key={p.id} className="relative group">
-                        <PromptCard
-                          prompt={p as any}
-                          categories={homeCategories}
-                          onCategoryClick={(cid) => navigate(`/library?categoryId=${cid}`)}
-                          onSubcategoryClick={(sid, cid) => navigate(`/library?categoryId=${cid}&subcategoryId=${sid}`)}
-                          onCopyClick={() => navigate(`/library?categoryId=${p.categoryId || ""}${p.subcategoryId ? `&subcategoryId=${p.subcategoryId}` : ""}`)}
-                        />
+                    {personalizedPrompts.slice(0, 3).map(p => <div key={p.id} className="relative group">
+                        <PromptCard prompt={p as any} categories={homeCategories} onCategoryClick={cid => navigate(`/library?categoryId=${cid}`)} onSubcategoryClick={(sid, cid) => navigate(`/library?categoryId=${cid}&subcategoryId=${sid}`)} onCopyClick={() => navigate(`/library?categoryId=${p.categoryId || ""}${p.subcategoryId ? `&subcategoryId=${p.subcategoryId}` : ""}`)} />
                         <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full border-2 border-background shadow-sm">
                           {Math.round(p.relevanceScore)}% match
                         </div>
-                      </div>
-                    ))}
+                      </div>)}
                   </div>
                   <div className="mt-6 text-center space-x-3">
                     <Button asChild variant="outline">
                       <Link to="/library">See All Your Recommendations →</Link>
                     </Button>
-                    <Button 
-                      onClick={() => window.location.reload()} 
-                      variant="ghost" 
-                      size="sm"
-                      className="text-xs"
-                    >
+                    <Button onClick={() => window.location.reload()} variant="ghost" size="sm" className="text-xs">
                       🔄 Refresh
                     </Button>
                   </div>
-                </>
-              ) : (
-                <>
+                </> : <>
                   <p className="text-muted-foreground max-w-3xl mb-8">We're still analyzing prompts based on your preferences. Check back soon or browse our library!</p>
                   <div className="text-center space-y-4">
                     <Button asChild variant="outline">
@@ -529,12 +506,10 @@ const Index = () => {
                       <Link to="/account/profile">Update Preferences</Link>
                     </Button>
                   </div>
-                </>
-              )}
-            </section>
-          ) : (
-            // User doesn't have personalization set up
-            <section className="container py-6">
+                </>}
+            </section> :
+      // User doesn't have personalization set up
+      <section className="container py-6">
               <h2 className="text-2xl font-semibold mb-2">🎯 Recommended for You</h2>
               <p className="text-muted-foreground max-w-3xl mb-8">Get started by exploring some of our most popular prompts, or set up your preferences for personalized recommendations.</p>
               <div className="text-center space-y-4">
@@ -545,12 +520,9 @@ const Index = () => {
                   <Link to="/library">Browse All Prompts</Link>
                 </Button>
               </div>
-            </section>
-          )
-        ) : (
-          // Non-logged-in users: Show Prompts of the Day
-          <PromptsOfTheDay />
-        )}
+            </section> :
+      // Non-logged-in users: Show Prompts of the Day
+      <PromptsOfTheDay />}
 
         {/* Bottom Section - FAQ, Pricing, and CTA combined */}
         <section className="container py-8">
@@ -594,16 +566,12 @@ const Index = () => {
 
               {/* Newsletter Signup - Only show if user is not logged in or not subscribed to newsletter */}
               {/* If logged in and newsletter subscribed, show matched power packs instead */}
-              {user && isNewsletterSubscribed ? (
-                <MatchedPowerPacks />
-              ) : (
-                <Card className="bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
+              {user && isNewsletterSubscribed ? <MatchedPowerPacks /> : <Card className="bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
                   <CardContent className="p-6">
                     <h3 className="text-lg font-semibold mb-2">🚀 Get Weekly Prompt Tips</h3>
                     <p className="text-muted-foreground text-sm mb-4">Join 25,000+ professionals getting our best prompts, tips, and AI updates every Tuesday.</p>
                     
-                    {showLoginPrompt ? (
-                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    {showLoginPrompt ? <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                         <div className="flex items-center text-blue-600 mb-2">
                           <Bot className="h-4 w-4 mr-2" />
                           <span className="font-medium text-sm">Welcome back!</span>
@@ -615,37 +583,16 @@ const Index = () => {
                           <Button onClick={handleLogin} variant="hero" size="sm" className="w-full">
                             Log In to Access My Prompts
                           </Button>
-                          <Button 
-                            onClick={() => setShowLoginPrompt(false)} 
-                            variant="ghost" 
-                            size="sm"
-                            className="w-full"
-                          >
+                          <Button onClick={() => setShowLoginPrompt(false)} variant="ghost" size="sm" className="w-full">
                             Back to Newsletter
                           </Button>
                         </div>
-                      </div>
-                    ) : !newsletterSuccess ? (
-                      <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
-                        <input 
-                          type="email" 
-                          value={newsletterEmail}
-                          onChange={(e) => setNewsletterEmail(e.target.value)}
-                          placeholder="Enter your email" 
-                          className="flex-1 px-3 py-2 text-sm rounded-md border bg-background"
-                          disabled={newsletterSubmitting}
-                        />
-                        <Button 
-                          type="submit" 
-                          variant="hero" 
-                          size="sm"
-                          disabled={newsletterSubmitting}
-                        >
+                      </div> : !newsletterSuccess ? <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
+                        <input type="email" value={newsletterEmail} onChange={e => setNewsletterEmail(e.target.value)} placeholder="Enter your email" className="flex-1 px-3 py-2 text-sm rounded-md border bg-background" disabled={newsletterSubmitting} />
+                        <Button type="submit" variant="hero" size="sm" disabled={newsletterSubmitting}>
                           {newsletterSubmitting ? "..." : "Subscribe"}
                         </Button>
-                      </form>
-                    ) : (
-                      <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                      </form> : <div className="bg-green-50 border border-green-200 rounded-lg p-3">
                         <div className="flex items-center text-green-600 mb-1">
                           <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -653,15 +600,11 @@ const Index = () => {
                           <span className="font-medium text-sm">Successfully subscribed!</span>
                         </div>
                         <p className="text-green-600 text-xs">Welcome to our weekly prompt tips. Check your email for confirmation.</p>
-                      </div>
-                    )}
+                      </div>}
                     
-                    {!showLoginPrompt && (
-                      <p className="text-xs text-muted-foreground mt-2">No spam. Unsubscribe anytime. Free forever.</p>
-                    )}
+                    {!showLoginPrompt && <p className="text-xs text-muted-foreground mt-2">No spam. Unsubscribe anytime. Free forever.</p>}
                   </CardContent>
-                </Card>
-              )}
+                </Card>}
 
               {/* Latest Articles Section */}
               <div className="mt-8">
@@ -670,12 +613,7 @@ const Index = () => {
                   <article>
                     <Link to="/tips/welcome-to-promptandgo-ai" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                       <Card className="overflow-hidden">
-                        <img
-                          src="/lovable-uploads/66b1134b-1d55-416b-b7ea-2719a1a22ec1.png"
-                          alt="Welcome to promptandgo: Your Shortcut to Smarter AI Prompts"
-                          loading="lazy"
-                          className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-                        />
+                        <img src="/lovable-uploads/66b1134b-1d55-416b-b7ea-2719a1a22ec1.png" alt="Welcome to promptandgo: Your Shortcut to Smarter AI Prompts" loading="lazy" className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
                         <CardContent className="pt-3 pb-3">
                           <h3 className="text-sm font-semibold leading-snug">Welcome to PromptAndGo.ai: Your Shortcut to Smarter AI Prompts</h3>
                           <p className="mt-1 text-xs text-muted-foreground">
@@ -759,8 +697,6 @@ const Index = () => {
           </div>
         </section>
       </main>
-    </>
-  );
+    </>;
 };
-
 export default Index;
