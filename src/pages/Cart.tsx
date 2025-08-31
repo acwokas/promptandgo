@@ -135,10 +135,10 @@ const CartPage = () => {
 
         {/* Cross-sell Section */}
         <div className="mb-8">
-          <Card className="bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
+          <Card className="bg-primary/20 border-primary/30">
             <CardContent className="p-6">
               <div className="text-center mb-6">
-                <Badge className="mb-3 bg-gradient-to-r from-primary to-accent text-white font-semibold px-4 py-1">
+                <Badge className="mb-3 bg-primary text-white font-semibold px-4 py-1">
                   🎉 Late Summer Sale - 50% Off Everything!
                 </Badge>
                 <h2 className="text-2xl font-bold mb-2">Unlock Your AI Potential</h2>
@@ -146,7 +146,7 @@ const CartPage = () => {
               </div>
 
               <div className="grid gap-4 md:grid-cols-3 mb-6">
-                <Card className="group hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+                <Card className="group hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 bg-card">
                   <CardContent className="p-4 text-center">
                     <Library className="h-8 w-8 text-primary mx-auto mb-2" />
                     <h3 className="font-semibold mb-1">Prompt Library</h3>
@@ -157,7 +157,7 @@ const CartPage = () => {
                   </CardContent>
                 </Card>
 
-                <Card className="group hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+                <Card className="group hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 bg-card">
                   <CardContent className="p-4 text-center">
                     <Star className="h-8 w-8 text-primary mx-auto mb-2" />
                     <h3 className="font-semibold mb-1">Pro Prompts</h3>
@@ -168,7 +168,7 @@ const CartPage = () => {
                   </CardContent>
                 </Card>
 
-                <Card className="group hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+                <Card className="group hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 bg-card">
                   <CardContent className="p-4 text-center">
                     <Zap className="h-8 w-8 text-primary mx-auto mb-2" />
                     <h3 className="font-semibold mb-1">Power Packs</h3>
@@ -180,16 +180,16 @@ const CartPage = () => {
                 </Card>
               </div>
 
-              <div className="bg-card/50 backdrop-blur-sm rounded-lg p-6 border">
+              <div className="bg-primary text-primary-foreground rounded-lg p-6 border">
                 <div className="text-center mb-4">
-                  <h3 className="text-lg font-semibold mb-2">🚀 Get Unlimited Access</h3>
-                  <p className="text-sm text-muted-foreground">
+                  <h3 className="text-lg font-semibold mb-2 text-primary-foreground">🚀 Get Unlimited Access</h3>
+                  <p className="text-sm text-primary-foreground/80">
                     Choose a membership to unlock all paid prompts and increase your AI token usage limits
                   </p>
                 </div>
                 
                 <div className="grid gap-3 md:grid-cols-2">
-                  <div className="p-4 bg-background rounded-lg border">
+                  <div className="p-4 bg-background text-foreground rounded-lg border">
                     <div className="flex items-center gap-2 mb-2">
                       <Calendar className="h-5 w-5 text-primary" />
                       <span className="font-semibold">Monthly Membership</span>
@@ -202,8 +202,8 @@ const CartPage = () => {
                     <p className="text-sm text-muted-foreground">Perfect for regular users</p>
                   </div>
 
-                  <div className="p-4 bg-background rounded-lg border border-primary/50 relative">
-                    <Badge className="absolute -top-2 -right-2 bg-gradient-to-r from-primary to-accent text-white text-xs">
+                  <div className="p-4 bg-background text-foreground rounded-lg border border-accent/50 relative">
+                    <Badge className="absolute -top-2 -right-2 bg-accent text-accent-foreground text-xs">
                       BEST VALUE
                     </Badge>
                     <div className="flex items-center gap-2 mb-2">
@@ -220,7 +220,7 @@ const CartPage = () => {
                 </div>
 
                 <div className="mt-4 text-center">
-                  <Button asChild className="bg-gradient-to-r from-primary to-accent text-white hover:opacity-90">
+                  <Button asChild className="bg-accent text-accent-foreground hover:bg-accent/90">
                     <Link to="/packs" className="inline-flex items-center gap-2">
                       Upgrade Now <ArrowRight className="h-4 w-4" />
                     </Link>
