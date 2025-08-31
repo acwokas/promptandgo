@@ -93,12 +93,21 @@ const Terms = () => (
       </ul>
 
       <h2>6.&nbsp;&nbsp;Payment and Memberships</h2>
-      <p>If you purchase premium prompts, downloads, membership services, or AI tool access:</p>
+      <p>We offer the following paid services:</p>
       <ul>
-        <li>All prices are listed in Singapore Dollars (SGD) unless otherwise stated</li>
+        <li><strong>Monthly Membership</strong> - $12.99 USD per month with enhanced AI usage limits (30 generator + 40 assistant queries daily)</li>
+        <li><strong>Lifetime Access</strong> - $99.50 USD one-time payment with premium AI usage limits (60 queries daily each tool)</li>
+        <li><strong>Prompt Packs</strong> - Individual collections at $9.99 USD each (Social Media, Career, Real Estate, Business Automation, Content Marketing, Wellness & Lifestyle, Midjourney Essentials, Ideogram Essentials)</li>
+        <li><strong>AI Tools</strong> - Access to Scout Prompt Generator, Smart Suggestions, and Scout Assistant with usage limits based on your plan</li>
+      </ul>
+      <p>Payment terms:</p>
+      <ul>
+        <li>All prices are listed in US Dollars (USD) unless otherwise stated</li>
         <li>Payment processing is handled by Stripe and other secure third-party providers; we do not store full payment details</li>
         <li>You may see "PromptAndGo" or an affiliated entity on your payment statements</li>
-        <li>Membership fees are billed in advance and are non-refundable unless required by law</li>
+        <li>Monthly memberships are billed in advance and renew automatically until cancelled</li>
+        <li>Lifetime access is a one-time payment for ongoing access subject to these Terms</li>
+        <li>Individual prompt packs are one-time purchases</li>
         <li>AI usage limits are tied to your subscription tier and may change as services evolve</li>
         <li>Beta services may affect pricing or access levels without prior notice</li>
       </ul>
@@ -161,10 +170,45 @@ const Terms = () => (
         Jurisdiction: Singapore
       </p>
 
-      <h2>17.&nbsp;&nbsp;Refunds &amp; Cancellations</h2>
-      <p>All sales of digital products, including prompt packs, downloads, and memberships, are final. We do not offer refunds, exchanges, or cancellations once a purchase is completed, except as required under Singapore law.</p>
+      <h2>17.&nbsp;&nbsp;Refunds, Cancellations &amp; Business Discontinuation</h2>
+      
+      <h3>Standard Refund Policy</h3>
+      <p>All sales of digital products, including prompt packs, downloads, and memberships, are final. We do not offer refunds, exchanges, or cancellations once a purchase is completed, except as required under Singapore law or as specified below.</p>
       <p>If a digital product is defective, inaccessible, or not as described, you must notify us within 7 days of purchase at <a href="mailto:legal@promptandgo.ai">legal@promptandgo.ai</a> so we can investigate and, if appropriate, provide a replacement or alternative remedy.</p>
       <p>Note that changes to AI service limits, features, or availability do not constitute grounds for refunds, as these services are clearly marked as beta and subject to modification.</p>
+      
+      <h3>Monthly Membership Cancellation</h3>
+      <p>Monthly memberships ($12.99/month) can be cancelled at any time. Upon cancellation, your membership benefits will continue until the end of your current billing period, after which no further charges will occur.</p>
+      
+      <h3>Business Discontinuation Rights</h3>
+      <p><strong>IMPORTANT:</strong> We reserve the absolute right to discontinue, suspend, or terminate PromptAndGo's operations at any time, for any reason, with or without notice. This includes but is not limited to:</p>
+      <ul>
+        <li>Permanent closure of the website and services</li>
+        <li>Discontinuation of specific features, AI tools, or product lines</li>
+        <li>Changes in business model or operational structure</li>
+        <li>Technical, financial, or legal constraints</li>
+      </ul>
+      
+      <h3>Lifetime Access Limitations</h3>
+      <p>Lifetime Access purchases ($99.50) provide ongoing access to PromptAndGo services <strong>for as long as the business operates</strong>. "Lifetime" refers to the operational life of PromptAndGo, not the user's natural lifetime. In the event of business discontinuation:</p>
+      <ul>
+        <li>No refunds will be provided for Lifetime Access purchases</li>
+        <li>We may, at our sole discretion, provide reasonable advance notice when possible</li>
+        <li>We may attempt to provide alternative access or export tools, but this is not guaranteed</li>
+        <li>Users acknowledge that business closure is a normal commercial risk</li>
+      </ul>
+      
+      <h3>Force Majeure and Service Interruption</h3>
+      <p>We are not liable for service interruptions, data loss, or business discontinuation due to circumstances beyond our reasonable control, including but not limited to:</p>
+      <ul>
+        <li>Technical failures, cyber attacks, or infrastructure issues</li>
+        <li>Changes in third-party AI provider policies or availability</li>
+        <li>Legal or regulatory changes</li>
+        <li>Economic conditions or market changes</li>
+        <li>Natural disasters, pandemics, or other force majeure events</li>
+      </ul>
+      
+      <p><strong>By purchasing any services, including Lifetime Access, you acknowledge and agree that PromptAndGo may discontinue operations without liability for refunds or damages.</strong></p>
     </section>
   </main>
   </>

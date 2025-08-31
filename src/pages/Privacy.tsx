@@ -44,7 +44,7 @@ const Privacy = () => (
         <li><strong>Content Submissions</strong> – prompts, AI-generated content, comments, feedback, favorites, or other materials you submit or interact with.</li>
         <li><strong>AI Interaction Data</strong> – conversations with AI tools, prompt inputs, generated outputs, usage frequency, and personalization data for Smart Suggestions.</li>
         <li><strong>Profile Context</strong> – industry, project type, preferred tone, desired outcomes, and other context you provide to enhance AI recommendations.</li>
-        <li><strong>Transactional Data</strong> – payment details are processed securely via Stripe and other third-party payment providers; we do not store full credit card details.</li>
+        <li><strong>Transactional Data</strong> – payment details are processed securely via Stripe and other third-party payment providers; we do not store full credit card details. This includes purchases of Monthly Memberships ($12.99 USD/month), Lifetime Access ($99.50 USD), and individual Prompt Packs ($9.99 USD each).</li>
         <li><strong>Analytics Data</strong> – aggregated usage statistics, feature adoption metrics, and performance data for our AI services.</li>
       </ul>
 
@@ -79,13 +79,25 @@ const Privacy = () => (
         transfer complies with the PDPA and that the receiving party offers a comparable level of data protection.
       </p>
 
-      <h2>5.&nbsp;&nbsp;Data Retention</h2>
+      <h2>5.&nbsp;&nbsp;Data Retention and Business Continuity</h2>
       <p>We retain your personal data only for as long as necessary to fulfil the purposes stated in this policy or as required by law. Specifically:</p>
       <ul>
         <li><strong>AI Conversation Data</strong> – stored for up to 30 days to improve service quality and provide support.</li>
         <li><strong>Account Data</strong> – retained while your account is active and for a reasonable period thereafter.</li>
         <li><strong>Usage Analytics</strong> – aggregated data may be retained indefinitely in anonymized form.</li>
         <li><strong>User-Generated Content</strong> – prompts and favorites are retained until you delete them or close your account.</li>
+        <li><strong>Payment Records</strong> – transaction history retained for legal and accounting purposes as required by Singapore law.</li>
+        <li><strong>Membership Data</strong> – subscription status and access rights maintained for active memberships and lifetime purchases.</li>
+      </ul>
+      
+      <h3>Business Discontinuation and Data Handling</h3>
+      <p>In the event that PromptAndGo discontinues operations:</p>
+      <ul>
+        <li>We will make reasonable efforts to provide advance notice when possible</li>
+        <li>User data will be handled in accordance with this privacy policy during any transition period</li>
+        <li>We may provide data export tools or instructions where technically feasible</li>
+        <li>All personal data will be securely deleted according to our standard retention schedule unless legally required otherwise</li>
+        <li>No personal data will be transferred to third parties without explicit consent, except as required by law</li>
       </ul>
 
       <h2>6.&nbsp;&nbsp;Security</h2>
