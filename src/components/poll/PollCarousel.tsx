@@ -42,6 +42,19 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
     loadPolls();
   }, [currentPage]);
 
+  // Check for existing votes when poll changes
+  useEffect(() => {
+    if (currentPoll) {
+      // Check if user has already voted (for anonymous users)
+      const voteKey = `poll_vote_${currentPoll.id}`;
+      const hasVoted = localStorage.getItem(voteKey);
+      if (hasVoted) {
+        setShowResults(true);
+        // Don't set userVote here as we don't know which option they picked
+      }
+    }
+  }, [currentPoll]);
+
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (countdown > 0) {
@@ -119,14 +132,44 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
     if (!currentPoll || userVote) return;
 
     try {
+      // Get user ID if authenticated
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      // Prepare vote data
+      const voteData: any = {
+        poll_id: currentPoll.id,
+        option_id: optionId
+      };
+
+      // Add user_id if authenticated
+      if (user) {
+        voteData.user_id = user.id;
+      }
+
+      // For anonymous users, we'll rely on browser session storage to prevent duplicate votes
+      if (!user) {
+        const voteKey = `poll_vote_${currentPoll.id}`;
+        const hasVoted = localStorage.getItem(voteKey);
+        if (hasVoted) {
+          toast({
+            title: "Already voted",
+            description: "You've already voted on this poll",
+            variant: "destructive"
+          });
+          return;
+        }
+      }
+
       const { error } = await supabase
         .from('poll_votes')
-        .insert({
-          poll_id: currentPoll.id,
-          option_id: optionId
-        });
+        .insert(voteData);
 
       if (error) throw error;
+
+      // For anonymous users, mark as voted in local storage
+      if (!user) {
+        localStorage.setItem(`poll_vote_${currentPoll.id}`, 'true');
+      }
 
       setUserVote(optionId);
       setShowResults(true);
@@ -143,9 +186,9 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
       console.error('Error voting:', error);
       toast({
         title: "Error",
-        description: error.message.includes('duplicate') 
+        description: error.message.includes('duplicate') || error.message.includes('already voted')
           ? "You've already voted on this poll" 
-          : "Failed to record vote",
+          : "Failed to record vote. Please try again.",
         variant: "destructive"
       });
     }
