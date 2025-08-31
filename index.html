@@ -23,7 +23,8 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      gtag('config', 'G-K67F088N0D');
+      // Disable automatic page_view to avoid duplicates in SPA; handled in GAListener
+      gtag('config', 'G-K67F088N0D', { send_page_view: false });
     </script>
   </head>
 

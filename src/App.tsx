@@ -64,6 +64,7 @@ import AIAssistantPage from "./pages/AIAssistant";
 import ToolkitPage from "./pages/Toolkit";
 
 import AICreditsExhaustedPage from "./pages/AICreditsExhausted";
+import GAListener from "@/components/analytics/GAListener";
 
 const queryClient = new QueryClient();
 
@@ -92,6 +93,7 @@ const AppContent = () => {
       <GlobalStructuredData />
       <Header />
       <ScrollToTop />
+      <GAListener />
       <AuthEffects />
       <Routes>
         <Route path="/" element={<Index />} />
