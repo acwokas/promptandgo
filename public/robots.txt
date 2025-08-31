@@ -1,17 +1,43 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
 User-agent: *
 Allow: /
 
+# Priority pages
+Allow: /library
+Allow: /packs
+Allow: /tips/
+Allow: /faqs
+Allow: /how-it-works
+
+# Block admin and sensitive areas
+Disallow: /admin/
+Disallow: /auth
+Disallow: /account/
+Disallow: /checkout/
+Disallow: /s/
+
+# Block search result pages with parameters
+Disallow: /*?*categoryId=*
+Disallow: /*?*subcategoryId=*
+Disallow: /*?*proOnly=*
+Disallow: /*?*random=*
+
+# Allow important assets
+Allow: /assets/
+Allow: /lovable-uploads/
+Allow: /*.css
+Allow: /*.js
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.gif
+Allow: /*.svg
+Allow: /*.webp
+Allow: /*.ico
+
+# Crawl delay
+Crawl-delay: 1
+
+# Sitemap location
 Sitemap: https://promptandgo.ai/sitemap.xml
+Sitemap: https://promptandgo.ai/rss.xml
 

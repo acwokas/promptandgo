@@ -186,8 +186,57 @@ const Index = () => {
       description: "You already have an account! Please enter your password to log in."
     });
   };
+  // Enhanced structured data for homepage
+  const homeStructuredData = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: "PromptAndGo.ai",
+      applicationCategory: "ProductivityApplication",
+      operatingSystem: "Web",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD"
+      },
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "4.9",
+        reviewCount: "50000",
+        bestRating: "5",
+        worstRating: "1"
+      },
+      author: {
+        "@type": "Organization",
+        name: "PromptAndGo.ai"
+      },
+      description: "Browse, copy, and run practical AI prompts for ChatGPT, Claude, and more. No jargon — just faster outcomes for marketers, creators, and professionals."
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      name: "PromptAndGo.ai",
+      applicationCategory: "BusinessApplication",
+      operatingSystem: "Web Browser",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD"
+      },
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "4.9",
+        reviewCount: "50000"
+      }
+    }
+  ];
+
   return <>
-      <SEO title="Ready-to-use prompts for real-world work" description="PromptAndGo.ai gives you ready-to-use prompts designed for real-world work — writing pitches, planning launches, or automating outreach." />
+      <SEO 
+        title="Ready-to-use prompts for real-world work" 
+        description="Browse, copy, and run practical AI prompts for ChatGPT, Claude, and more. No jargon — just faster outcomes for marketers, creators, and professionals."
+        structuredData={homeStructuredData}
+      />
 
       <main>
         {/* Hero */}

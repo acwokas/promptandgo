@@ -513,8 +513,31 @@ const PromptLibrary = () => {
     }
   }, [items, loading, randomMode]);
 
+  // Enhanced structured data for prompt library
+  const libraryStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "AI Prompts Library",
+    description: "Discover thousands of ready-to-use AI prompts for ChatGPT, Claude, and more. Copy prompts instantly and get better results from your AI tools.",
+    numberOfItems: items.length,
+    about: {
+      "@type": "Thing",
+      name: "AI Prompts",
+      description: "Curated collection of AI prompts for various use cases"
+    },
+    provider: {
+      "@type": "Organization",
+      name: "PromptAndGo.ai"
+    }
+  };
+
   return (
     <>
+      <SEO 
+        title="Browse AI Prompts Library" 
+        description="Discover thousands of ready-to-use AI prompts for ChatGPT, Claude, and more. Copy prompts instantly and get better results from your AI tools."
+        structuredData={libraryStructuredData}
+      />
       <PageHero
         variant="prompt"
         title={

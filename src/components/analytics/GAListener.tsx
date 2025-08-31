@@ -27,10 +27,31 @@ const GAListener = () => {
     }
 
     try {
+      // Enhanced tracking with more detailed page information
+      const pageTitle = document.title;
+      const pageUrl = window.location.href;
+      const referrer = document.referrer;
+      
       window.gtag("config", GA_MEASUREMENT_ID, {
         page_path: location.pathname + location.search,
-        page_title: document.title,
-        page_location: window.location.href,
+        page_title: pageTitle,
+        page_location: pageUrl,
+        custom_map: {
+          custom_parameter_1: 'page_category'
+        }
+      });
+
+      // Track page category for better analytics
+      let pageCategory = 'general';
+      if (location.pathname.includes('/library')) pageCategory = 'library';
+      else if (location.pathname.includes('/packs')) pageCategory = 'packs';
+      else if (location.pathname.includes('/tips')) pageCategory = 'blog';
+      else if (location.pathname.includes('/scout')) pageCategory = 'ai-tools';
+      else if (location.pathname === '/') pageCategory = 'homepage';
+
+      window.gtag("event", "page_view", {
+        page_category: pageCategory,
+        page_referrer: referrer
       });
     } catch (_) {
       // no-op

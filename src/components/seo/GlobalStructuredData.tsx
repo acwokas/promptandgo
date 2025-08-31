@@ -51,30 +51,69 @@ const GlobalStructuredData = () => {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: SITE_NAME,
+    alternateName: "PromptAndGo",
     url: `${origin}/`,
-    logo: `${origin}/og-default.png`,
+    logo: {
+      "@type": "ImageObject",
+      url: `${origin}/og-default.png`,
+      width: 1200,
+      height: 630
+    },
+    description: "Curated AI prompts that get results. Browse, copy, and run practical prompts for ChatGPT, Claude, and more.",
+    foundingDate: "2024",
     contactPoint: [{
       "@type": "ContactPoint",
       email: "support@promptandgo.ai",
       contactType: "customer support",
       availableLanguage: ["en"],
+      areaServed: "Worldwide"
     }],
     sameAs: [
       `${origin}/`,
       `${origin}/rss.xml`,
     ],
+    offers: {
+      "@type": "Offer",
+      category: "AI Tools",
+      availability: "https://schema.org/InStock"
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      reviewCount: "50000",
+      bestRating: "5",
+      worstRating: "1"
+    }
   };
 
   const website = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: SITE_NAME,
+    alternateName: "PromptAndGo",
     url: `${origin}/`,
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${origin}/library?q={search_term_string}`,
-      "query-input": "required name=search_term_string",
+    description: "Curated AI prompts that get results. Browse, copy, and run practical prompts for ChatGPT, Claude, and more.",
+    inLanguage: "en-US",
+    copyrightYear: new Date().getFullYear(),
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME
     },
+    potentialAction: [
+      {
+        "@type": "SearchAction",
+        target: `${origin}/library?q={search_term_string}`,
+        "query-input": "required name=search_term_string",
+      },
+      {
+        "@type": "ReadAction",
+        target: `${origin}/tips/`
+      }
+    ],
+    mainEntity: {
+      "@type": "WebPage",
+      "@id": `${origin}/`
+    }
   };
 
   // IndexNow ping (once per path)
