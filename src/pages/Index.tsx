@@ -19,23 +19,26 @@ import PromptsOfTheDay from "@/components/prompt/PromptsOfTheDay";
 import { PollCarousel } from "@/components/poll/PollCarousel";
 import type { Category as CategoryType } from "@/data/prompts";
 const Index = () => {
-  const {
-    user
-  } = useSupabaseAuth();
-  const {
-    isSubscribed
-  } = useSubscriptionStatus();
-  const {
-    isNewsletterSubscribed
-  } = useNewsletterStatus();
+  const { user } = useSupabaseAuth();
+  const { isSubscribed } = useSubscriptionStatus();
+  const { isNewsletterSubscribed } = useNewsletterStatus();
   const navigate = useNavigate();
-  const {
-    personalizedPrompts,
-    hasPersonalization
-  } = usePersonalizedPrompts();
-  const {
-    toast
-  } = useToast();
+  const { personalizedPrompts, hasPersonalization } = usePersonalizedPrompts();
+  const { toast } = useToast();
+  
+  // Check if user is new or returning
+  const [isReturningUser, setIsReturningUser] = useState(false);
+  
+  useEffect(() => {
+    // Check if user is logged in or has visited before
+    const hasVisitedBefore = localStorage.getItem('promptandgo-visited') === 'true';
+    setIsReturningUser(!!user || hasVisitedBefore);
+    
+    // Mark as visited for future visits
+    if (!hasVisitedBefore) {
+      localStorage.setItem('promptandgo-visited', 'true');
+    }
+  }, [user]);
   type HP = {
     id: string;
     categoryId?: string | null;
@@ -659,21 +662,40 @@ const Index = () => {
 
               {/* Latest Articles Section */}
               <div className="mt-8">
-                <h2 className="text-2xl font-semibold mb-4">Latest Article</h2>
+                <h2 className="text-2xl font-semibold mb-4">
+                  {isReturningUser ? 'Latest Article' : 'Welcome'}
+                </h2>
                 <div className="space-y-4">
                   <article>
-                    <Link to="/tips/welcome-to-promptandgo-ai" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                      <Card className="overflow-hidden">
-                        <img src="/lovable-uploads/66b1134b-1d55-416b-b7ea-2719a1a22ec1.png" alt="Welcome to promptandgo: Your Shortcut to Smarter AI Prompts" loading="lazy" className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
-                        <CardContent className="pt-3 pb-3">
-                          <h3 className="text-sm font-semibold leading-snug">Welcome to PromptAndGo.ai: Your Shortcut to Smarter AI Prompts</h3>
-                          <p className="mt-1 text-xs text-muted-foreground">
-                            Welcome to a platform which has ready-to-use, field-tested prompts for the likes of ChatGPT, Claude, Gemini, and others.
-                          </p>
-                          <span className="mt-2 inline-block text-xs font-medium text-primary">Read more →</span>
-                        </CardContent>
-                      </Card>
-                    </Link>
+                    {isReturningUser ? (
+                      // Latest Article for returning users
+                      <Link to="/tips/beginners-guide-midjourney-prompts" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        <Card className="overflow-hidden">
+                          <img src="/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png" alt="Beginner's Guide to MidJourney Prompts" loading="lazy" className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
+                          <CardContent className="pt-3 pb-3">
+                            <h3 className="text-sm font-semibold leading-snug">Beginner's Guide to MidJourney Prompts That Actually Work</h3>
+                            <p className="mt-1 text-xs text-muted-foreground">
+                              Learn how to build detailed prompts that give you more control, unlock stylistic variety, and save hours of trial and error in MidJourney.
+                            </p>
+                            <span className="mt-2 inline-block text-xs font-medium text-primary">Read more →</span>
+                          </CardContent>
+                        </Card>
+                      </Link>
+                    ) : (
+                      // Welcome content for new users
+                      <Link to="/tips/welcome-to-promptandgo-ai" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        <Card className="overflow-hidden">
+                          <img src="/lovable-uploads/66b1134b-1d55-416b-b7ea-2719a1a22ec1.png" alt="Welcome to PromptAndGo.ai: Your Shortcut to Smarter AI Prompts" loading="lazy" className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
+                          <CardContent className="pt-3 pb-3">
+                            <h3 className="text-sm font-semibold leading-snug">Welcome to PromptAndGo.ai: Your Shortcut to Smarter AI Prompts</h3>
+                            <p className="mt-1 text-xs text-muted-foreground">
+                              We give you ready-to-use, field-tested prompts designed for real work. No vague ideas, no guesswork, just clear instructions you can drop straight into ChatGPT, Claude, or Gemini.
+                            </p>
+                            <span className="mt-2 inline-block text-xs font-medium text-primary">Read more →</span>
+                          </CardContent>
+                        </Card>
+                      </Link>
+                    )}
                   </article>
                 </div>
                 
