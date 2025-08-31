@@ -198,7 +198,7 @@ const Index = () => {
             <Link to="/packs">⚡️Power Packs</Link>
           </Button>
           <Button asChild size="default" variant="secondary">
-            <Link to="/ai-assistant">💬 Ask Scout</Link>
+            <Link to="/scout">💬 Ask Scout</Link>
           </Button>
         </PageHero>
 
