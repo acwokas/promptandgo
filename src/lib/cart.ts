@@ -60,16 +60,28 @@ export function addToCart(newItem: CartItem, isAuthenticated: boolean = true) {
 export async function addToMyPrompts(itemIds: string[], itemType: 'prompt' | 'pack'): Promise<boolean> {
   try {
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return false;
+    if (!user) {
+      console.error('addToMyPrompts: No authenticated user');
+      return false;
+    }
+
+    console.log('addToMyPrompts: Adding items', { itemIds, itemType, userId: user.id });
 
     if (itemType === 'prompt') {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('favorites')
         .upsert(
           itemIds.map(id => ({ user_id: user.id, prompt_id: id })),
           { onConflict: 'user_id,prompt_id' }
         );
-      return !error;
+      
+      if (error) {
+        console.error('addToMyPrompts: Supabase error', error);
+        return false;
+      }
+      
+      console.log('addToMyPrompts: Success', { data });
+      return true;
     }
     // For packs, we'd need to get all prompts in the pack and add them
     return true;
