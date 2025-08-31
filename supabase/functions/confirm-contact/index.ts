@@ -119,6 +119,13 @@ serve(async (req: Request): Promise<Response> => {
       throw new Error("Failed to process confirmation");
     }
 
+// Helper function to escape HTML entities for security
+    const escapeHtml = (text: string): string => {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    };
+
     // Send the contact message to hello@promptandgo.ai
     const contactHtml = `
       <div style="font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -129,8 +136,8 @@ serve(async (req: Request): Promise<Response> => {
         <div style="background: white; padding: 30px; border: 1px solid #e5e7eb; border-radius: 0 0 8px 8px;">
           <div style="margin-bottom: 20px;">
             <p style="margin: 0 0 8px; font-weight: 600; color: #374151;">Contact Information:</p>
-            <p style="margin: 0 0 5px; color: #6b7280;"><strong>Name:</strong> ${contact.name}</p>
-            <p style="margin: 0 0 5px; color: #6b7280;"><strong>Email:</strong> ${contact.email}</p>
+            <p style="margin: 0 0 5px; color: #6b7280;"><strong>Name:</strong> ${contact.name.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&#39;")}</p>
+            <p style="margin: 0 0 5px; color: #6b7280;"><strong>Email:</strong> ${contact.email.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&#39;")}</p>
             <p style="margin: 0 0 15px; color: #6b7280;">
               <strong>Free PowerPack Request:</strong> 
               <span style="padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; ${contact.newsletter_opt_in ? 'background: #10b981; color: white;' : 'background: #f3f4f6; color: #6b7280;'}">
@@ -179,7 +186,7 @@ ${contact.message.replace(/</g, "&lt;").replace(/>/g, "&gt;")}
         </div>
         
         <div style="background: white; padding: 40px; border-radius: 0 0 12px 12px; border: 1px solid #e5e7eb;">
-          <h2 style="color: #1f2937; margin: 0 0 20px;">Hi ${contact.name}! 👋</h2>
+          <h2 style="color: #1f2937; margin: 0 0 20px;">Hi ${contact.name.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&#39;")}! 👋</h2>
           
           <p style="color: #4b5563; line-height: 1.6; margin: 0 0 20px;">
             Thank you for confirming your email! We've received your message and our team will get back to you within 24 hours.
