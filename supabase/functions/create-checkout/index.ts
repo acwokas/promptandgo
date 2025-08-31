@@ -62,7 +62,7 @@ serve(async (req) => {
       customer: customerId,
       customer_email: customerId ? undefined : user.email,
       mode: 'subscription',
-      statement_descriptor: 'PROMPTANDGO',  // Max 22 chars, alphanumeric only
+      
       line_items: [
         {
           price_data: {
