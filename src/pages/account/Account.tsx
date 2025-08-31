@@ -1,20 +1,42 @@
 import SEO from "@/components/SEO";
 import PageHero from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 import UsageDisplay from "@/components/ai/UsageDisplay";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { LogOut } from "lucide-react";
 
 const AccountPage = () => {
   const { user } = useSupabaseAuth();
   const { isAdmin } = useIsAdmin();
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   console.log("Account page: Auth state", { user: user?.email, isAdmin });
+
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      
+      toast({
+        title: "Logged out successfully",
+        description: "You have been logged out of your account."
+      });
+      
+      navigate('/');
+    } catch (error: any) {
+      toast({
+        title: "Logout failed",
+        description: error.message,
+        variant: "destructive"
+      });
+    }
+  };
 
   return (
     <>
@@ -40,6 +62,10 @@ const AccountPage = () => {
             <Link to="/admin">Admin Tools</Link>
           </Button>
         )}
+        <Button variant="outline" onClick={handleLogout} className="ml-auto">
+          <LogOut className="h-4 w-4 mr-2" />
+          Logout
+        </Button>
       </PageHero>
 
       <main className="container py-8">
