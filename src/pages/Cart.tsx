@@ -227,7 +227,7 @@ const CartPage = () => {
                     <p className="text-sm text-muted-foreground mb-3">Perfect for regular users</p>
                     <Button 
                       onClick={() => handleAddMembership('monthly')}
-                      variant="outline" 
+                      variant="default" 
                       size="sm" 
                       className="w-full"
                       disabled={hasMembership}
@@ -260,14 +260,6 @@ const CartPage = () => {
                       {hasLifetime ? "In Cart" : "Add to Cart"}
                     </Button>
                   </div>
-                </div>
-
-                <div className="mt-4 text-center">
-                  <Button asChild className="bg-accent text-accent-foreground hover:bg-accent/90">
-                    <Link to="/packs" className="inline-flex items-center gap-2">
-                      Upgrade Now <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </Button>
                 </div>
               </div>
             </CardContent>
