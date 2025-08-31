@@ -420,8 +420,8 @@ const Index = () => {
             
             <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
               <div className="relative">
-                <div className="absolute -top-2 -right-2 bg-gradient-to-r from-primary to-accent text-white text-xs px-2 py-1 rounded-full font-medium shadow-sm">
-                  New Category
+                <div className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs px-2 py-1 rounded-full font-medium shadow-sm">
+                  Just Added
                 </div>
                 <h3 className="text-lg font-semibold flex items-center gap-2">
                   <ShoppingCart className="h-5 w-5" /> Ecommerce
@@ -447,8 +447,8 @@ const Index = () => {
             
             <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
               <div className="relative">
-                <div className="absolute -top-2 -right-2 bg-gradient-to-r from-primary to-accent text-white text-xs px-2 py-1 rounded-full font-medium shadow-sm">
-                  New Category
+                <div className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs px-2 py-1 rounded-full font-medium shadow-sm">
+                  Just Added
                 </div>
                 <h3 className="text-lg font-semibold flex items-center gap-2">
                   <Image className="h-5 w-5" /> Image Creation
