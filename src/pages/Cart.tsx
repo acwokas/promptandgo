@@ -2,6 +2,7 @@ import SEO from "@/components/SEO";
 import PageHero from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { getCartForUser, getCartTotalCents, removeFromCart, clearCart, addToMyPrompts, type CartItem } from "@/lib/cart";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -9,6 +10,7 @@ import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { toast } from "@/hooks/use-toast";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Link } from "react-router-dom";
+import { Star, Zap, Library, Calendar, Infinity, ArrowRight } from "lucide-react";
 
 const centsToUSD = (cents: number) => `$${(cents / 100).toFixed(2)}`;
 
@@ -130,6 +132,105 @@ const CartPage = () => {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+
+        {/* Cross-sell Section */}
+        <div className="mb-8">
+          <Card className="bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
+            <CardContent className="p-6">
+              <div className="text-center mb-6">
+                <Badge className="mb-3 bg-gradient-to-r from-primary to-accent text-white font-semibold px-4 py-1">
+                  🎉 Late Summer Sale - 50% Off Everything!
+                </Badge>
+                <h2 className="text-2xl font-bold mb-2">Unlock Your AI Potential</h2>
+                <p className="text-muted-foreground">Get unlimited access to premium prompts and boost your AI usage limits</p>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-3 mb-6">
+                <Card className="group hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+                  <CardContent className="p-4 text-center">
+                    <Library className="h-8 w-8 text-primary mx-auto mb-2" />
+                    <h3 className="font-semibold mb-1">Prompt Library</h3>
+                    <p className="text-sm text-muted-foreground mb-3">Browse 1600+ free and premium prompts</p>
+                    <Button asChild variant="outline" size="sm" className="w-full">
+                      <Link to="/library">Browse Library</Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                <Card className="group hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+                  <CardContent className="p-4 text-center">
+                    <Star className="h-8 w-8 text-primary mx-auto mb-2" />
+                    <h3 className="font-semibold mb-1">Pro Prompts</h3>
+                    <p className="text-sm text-muted-foreground mb-3">Premium prompts for advanced tasks</p>
+                    <Button asChild variant="outline" size="sm" className="w-full">
+                      <Link to="/library?isPro=true">View Pro Prompts</Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                <Card className="group hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+                  <CardContent className="p-4 text-center">
+                    <Zap className="h-8 w-8 text-primary mx-auto mb-2" />
+                    <h3 className="font-semibold mb-1">Power Packs</h3>
+                    <p className="text-sm text-muted-foreground mb-3">Curated collections for specific needs</p>
+                    <Button asChild variant="outline" size="sm" className="w-full">
+                      <Link to="/packs">Explore Packs</Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <div className="bg-card/50 backdrop-blur-sm rounded-lg p-6 border">
+                <div className="text-center mb-4">
+                  <h3 className="text-lg font-semibold mb-2">🚀 Get Unlimited Access</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Choose a membership to unlock all paid prompts and increase your AI token usage limits
+                  </p>
+                </div>
+                
+                <div className="grid gap-3 md:grid-cols-2">
+                  <div className="p-4 bg-background rounded-lg border">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Calendar className="h-5 w-5 text-primary" />
+                      <span className="font-semibold">Monthly Membership</span>
+                    </div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-2xl font-bold text-primary">$12.99</span>
+                      <span className="text-sm text-muted-foreground line-through">$24.99</span>
+                      <Badge variant="secondary" className="text-xs">50% OFF</Badge>
+                    </div>
+                    <p className="text-sm text-muted-foreground">Perfect for regular users</p>
+                  </div>
+
+                  <div className="p-4 bg-background rounded-lg border border-primary/50 relative">
+                    <Badge className="absolute -top-2 -right-2 bg-gradient-to-r from-primary to-accent text-white text-xs">
+                      BEST VALUE
+                    </Badge>
+                    <div className="flex items-center gap-2 mb-2">
+                      <Infinity className="h-5 w-5 text-primary" />
+                      <span className="font-semibold">Lifetime Access</span>
+                    </div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-2xl font-bold text-primary">$99.50</span>
+                      <span className="text-sm text-muted-foreground line-through">$199.00</span>
+                      <Badge variant="secondary" className="text-xs">50% OFF</Badge>
+                    </div>
+                    <p className="text-sm text-muted-foreground">One-time payment, unlimited access forever</p>
+                  </div>
+                </div>
+
+                <div className="mt-4 text-center">
+                  <Button asChild className="bg-gradient-to-r from-primary to-accent text-white hover:opacity-90">
+                    <Link to="/packs" className="inline-flex items-center gap-2">
+                      Upgrade Now <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
         {items.length === 0 ? (
           <Card>
             <CardContent className="p-6 text-center text-muted-foreground">
