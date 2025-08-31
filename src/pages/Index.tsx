@@ -2,7 +2,7 @@ import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
-import { Sparkles, Zap, ShieldCheck, ListChecks, Wand2, Rocket, Check, Search, Heart, Bot, Star, Briefcase } from "lucide-react";
+import { Sparkles, Zap, ShieldCheck, ListChecks, Wand2, Rocket, Check, Search, Heart, Bot, Star, Briefcase, Image, ShoppingCart, BarChart3 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useSubscriptionStatus } from "@/hooks/useSubscriptionStatus";
@@ -374,24 +374,7 @@ const Index = () => {
                 </Button>
               </div>
             </article>
-            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-lg font-semibold">✍️ Content Creation</h3>
-              <p className="text-muted-foreground text-sm mt-1 mb-3">Blog posts, articles, creative writing, and storytelling prompts for any audience.</p>
-              <div className="flex gap-2">
-                <Button asChild variant="hero" size="sm">
-                  <Link to="/library?q=content#library-results">Browse Content</Link>
-                </Button>
-              </div>
-            </article>
-            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-lg font-semibold">💬 Communication</h3>
-              <p className="text-muted-foreground text-sm mt-1 mb-3">Professional emails, presentations, and customer support responses.</p>
-              <div className="flex gap-2">
-                <Button asChild variant="hero" size="sm">
-                  <Link to="/library?q=email#library-results">Browse Communication</Link>
-                </Button>
-              </div>
-            </article>
+            
             <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
               <h3 className="text-lg font-semibold">🎯 Career Development</h3>
               <p className="text-muted-foreground text-sm mt-1 mb-3">Resume writing, interview prep, LinkedIn optimization, and job search strategies.</p>
@@ -401,6 +384,27 @@ const Index = () => {
                 </Button>
               </div>
             </article>
+            
+            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <h3 className="text-lg font-semibold">💬 Communication</h3>
+              <p className="text-muted-foreground text-sm mt-1 mb-3">Professional emails, presentations, and customer support responses.</p>
+              <div className="flex gap-2">
+                <Button asChild variant="hero" size="sm">
+                  <Link to="/library?q=email#library-results">Browse Communication</Link>
+                </Button>
+              </div>
+            </article>
+            
+            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <h3 className="text-lg font-semibold">✍️ Content Creation</h3>
+              <p className="text-muted-foreground text-sm mt-1 mb-3">Blog posts, articles, creative writing, and storytelling prompts for any audience.</p>
+              <div className="flex gap-2">
+                <Button asChild variant="hero" size="sm">
+                  <Link to="/library?q=content#library-results">Browse Content</Link>
+                </Button>
+              </div>
+            </article>
+            
             <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
               <h3 className="text-lg font-semibold">📊 Data & Analysis</h3>
               <p className="text-muted-foreground text-sm mt-1 mb-3">Research, data analysis, reporting, and insights generation for better decisions.</p>
@@ -410,12 +414,59 @@ const Index = () => {
                 </Button>
               </div>
             </article>
+            
+            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <div className="relative">
+                <div className="absolute -top-2 -right-2 bg-gradient-to-r from-primary to-accent text-white text-xs px-2 py-1 rounded-full font-medium shadow-sm">
+                  New Category
+                </div>
+                <h3 className="text-lg font-semibold flex items-center gap-2">
+                  <ShoppingCart className="h-5 w-5" /> Ecommerce
+                </h3>
+                <p className="text-muted-foreground text-sm mt-1 mb-3">Product descriptions, customer reviews, sales pages, and online store optimization.</p>
+                <div className="flex gap-2">
+                  <Button asChild variant="hero" size="sm">
+                    <Link to="/library?categoryId=dcd2e0d5-df88-456c-9cb5-adc17bd53dce">Browse Ecommerce</Link>
+                  </Button>
+                </div>
+              </div>
+            </article>
+            
             <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
               <h3 className="text-lg font-semibold">🎓 Education & Learning</h3>
               <p className="text-muted-foreground text-sm mt-1 mb-3">Lesson plans, explanations, tutorials, and educational content creation.</p>
               <div className="flex gap-2">
                 <Button asChild variant="hero" size="sm">
                   <Link to="/library?q=education#library-results">Browse Education</Link>
+                </Button>
+              </div>
+            </article>
+            
+            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <div className="relative">
+                <div className="absolute -top-2 -right-2 bg-gradient-to-r from-primary to-accent text-white text-xs px-2 py-1 rounded-full font-medium shadow-sm">
+                  New Category
+                </div>
+                <h3 className="text-lg font-semibold flex items-center gap-2">
+                  <Image className="h-5 w-5" /> Image Creation
+                </h3>
+                <p className="text-muted-foreground text-sm mt-1 mb-3">Midjourney and Ideogram prompts for stunning visuals, logos, and creative artwork.</p>
+                <div className="flex gap-2">
+                  <Button asChild variant="hero" size="sm">
+                    <Link to="/library?q=images">Browse Images</Link>
+                  </Button>
+                </div>
+              </div>
+            </article>
+            
+            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+              <h3 className="text-lg font-semibold flex items-center gap-2">
+                <BarChart3 className="h-5 w-5" /> Infographics
+              </h3>
+              <p className="text-muted-foreground text-sm mt-1 mb-3">Data visualization, charts, diagrams, and visual storytelling for impactful presentations.</p>
+              <div className="flex gap-2">
+                <Button asChild variant="hero" size="sm">
+                  <Link to="/library?q=infographic">Browse Infographics</Link>
                 </Button>
               </div>
             </article>
