@@ -36,6 +36,9 @@ export const LoginWidget = () => {
   // Sync external open state with internal state
   useEffect(() => {
     if (externalIsOpen) {
+      // Ensure widget can always be reopened via global trigger
+      setIsDismissed(false);
+      setIsMinimized(false);
       setIsOpen(true);
     }
   }, [externalIsOpen]);
