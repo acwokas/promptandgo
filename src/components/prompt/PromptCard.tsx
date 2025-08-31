@@ -160,7 +160,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   // Handle star rating click
   const handleStarClick = async (rating: number) => {
     if (!user) {
-      toast({ title: "Please log in to rate prompts" });
+      openLoginWidget();
       return;
     }
 
@@ -371,7 +371,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   const toggleFavorite = async () => {
     if (!user) {
       console.debug('[favorites] click ignored — no user')
-      toast({ title: "Please log in to save prompts" })
+      openLoginWidget();
       return;
     }
     setFavLoading(true);

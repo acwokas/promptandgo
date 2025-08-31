@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useNewsletterStatus } from "@/hooks/useNewsletterStatus";
 import { useToast } from "@/hooks/use-toast";
+import { useLoginWidget } from "@/hooks/useLoginWidget";
 import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
 import { ShieldCheck, Zap, Clock, BadgeCheck, Globe, Scale, Search, Heart, Bot, Copy, Check } from "lucide-react";
@@ -16,6 +17,7 @@ const HowItWorks = () => {
   const { user } = useSupabaseAuth();
   const { isNewsletterSubscribed } = useNewsletterStatus();
   const { toast } = useToast();
+  const { openLoginWidget } = useLoginWidget();
   const [copied, setCopied] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
   const [isLoadingFavorite, setIsLoadingFavorite] = useState(false);
@@ -47,10 +49,7 @@ const HowItWorks = () => {
 
   const handleAddToFavorites = async () => {
     if (!user) {
-      toast({
-        title: "Login required",
-        description: "Please log in to save prompts to your favorites.",
-      });
+      openLoginWidget();
       return;
     }
 

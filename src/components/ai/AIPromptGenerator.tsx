@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Wand2, Copy, Plus, Loader2, History, ExternalLink, Bot, ArrowRight } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
+import { useLoginWidget } from "@/hooks/useLoginWidget";
 import { useAIUsage } from "@/hooks/useAIUsage";
 import UsageDisplay from "@/components/ai/UsageDisplay";
 import { Link, useSearchParams } from "react-router-dom";
@@ -30,6 +31,7 @@ const AIPromptGenerator = () => {
   const [loadingRecent, setLoadingRecent] = useState(false);
   const { toast } = useToast();
   const { user } = useSupabaseAuth();
+  const { openLoginWidget } = useLoginWidget();
   const { refreshUsage } = useAIUsage();
 
   
@@ -150,11 +152,7 @@ const AIPromptGenerator = () => {
 
   const handleAddToMyPrompts = async () => {
     if (!user) {
-      toast({
-        title: "Login required",
-        description: "Please login to save prompts to your collection.",
-        variant: "destructive"
-      });
+      openLoginWidget();
       return;
     }
 
