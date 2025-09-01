@@ -315,21 +315,30 @@ const HowItWorks = () => {
       {/* About and Features Section */}
       <section aria-labelledby="about-features" className="container py-12 mt-16 bg-gradient-to-br from-primary/[0.03] to-accent/[0.05] rounded-xl border border-primary/10">
         <div className="max-w-6xl mx-auto grid gap-8 lg:grid-cols-2">
-          <div>
-            <h2 id="about-features" className="text-2xl font-semibold mb-4">About and Features</h2>
-            <div className="space-y-4">
-              <p className="text-muted-foreground leading-relaxed">Most people don't want to become prompt engineers — they just want better results. We built a simple way to skip the struggle and get to the output.</p>
+          <div className="space-y-6">
+            <div>
+              <h2 id="about-features" className="text-2xl font-semibold mb-4">About and Features</h2>
+              <p className="text-muted-foreground leading-relaxed mb-6">Most people don't want to become prompt engineers — they just want better results. We built a simple way to skip the struggle and get to the output.</p>
             </div>
             
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-4 sm:grid-cols-2 mb-6">
               <div className="rounded-xl border p-6 text-center bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10">
-                <div className="text-3xl font-bold tracking-tight">12+</div>
+                <div className="text-3xl font-bold tracking-tight">39+</div>
                 <div className="text-muted-foreground">Prompt Categories</div>
               </div>
               <div className="rounded-xl border p-6 text-center bg-card/50 bg-gradient-to-br from-primary/10 to-transparent ring-1 ring-primary/10">
-                <div className="text-3xl font-bold tracking-tight">1600+</div>
+                <div className="text-3xl font-bold tracking-tight">2700+</div>
                 <div className="text-muted-foreground">Prompts</div>
               </div>
+            </div>
+
+            <div className="flex justify-center">
+              <Button asChild size="lg" variant="hero" className="px-8">
+                <Link to="/library">
+                  <Search className="h-4 w-4 mr-2" />
+                  View Prompt Library
+                </Link>
+              </Button>
             </div>
           </div>
 
