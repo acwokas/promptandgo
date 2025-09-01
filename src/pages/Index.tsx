@@ -286,7 +286,7 @@ const Index = () => {
               <div className="flex items-center gap-1">
                 <div className="flex items-center gap-0.5">
                   {Array.from({ length: 5 }, (_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-primary text-primary" />
+                    <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                   ))}
                 </div>
                 <span className="ml-1">4.9/5</span>

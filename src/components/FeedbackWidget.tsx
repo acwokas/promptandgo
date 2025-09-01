@@ -259,7 +259,7 @@ export const FeedbackWidget = ({ promptId }: FeedbackWidgetProps) => {
                        <SelectItem value="5">
                          <div className="flex items-center gap-1">
                            {Array.from({ length: 5 }, (_, i) => (
-                             <Star key={i} className="h-3 w-3 fill-primary text-primary" />
+                             <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
                            ))}
                            <span className="ml-1">Excellent</span>
                          </div>
@@ -267,7 +267,7 @@ export const FeedbackWidget = ({ promptId }: FeedbackWidgetProps) => {
                        <SelectItem value="4">
                          <div className="flex items-center gap-1">
                            {Array.from({ length: 4 }, (_, i) => (
-                             <Star key={i} className="h-3 w-3 fill-primary text-primary" />
+                             <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
                            ))}
                            <span className="ml-1">Good</span>
                          </div>
@@ -275,7 +275,7 @@ export const FeedbackWidget = ({ promptId }: FeedbackWidgetProps) => {
                        <SelectItem value="3">
                          <div className="flex items-center gap-1">
                            {Array.from({ length: 3 }, (_, i) => (
-                             <Star key={i} className="h-3 w-3 fill-primary text-primary" />
+                             <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
                            ))}
                            <span className="ml-1">Average</span>
                          </div>
@@ -283,14 +283,14 @@ export const FeedbackWidget = ({ promptId }: FeedbackWidgetProps) => {
                        <SelectItem value="2">
                          <div className="flex items-center gap-1">
                            {Array.from({ length: 2 }, (_, i) => (
-                             <Star key={i} className="h-3 w-3 fill-primary text-primary" />
+                             <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
                            ))}
                            <span className="ml-1">Poor</span>
                          </div>
                        </SelectItem>
                        <SelectItem value="1">
                          <div className="flex items-center gap-1">
-                           <Star className="h-3 w-3 fill-primary text-primary" />
+                           <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
                            <span className="ml-1">Very Poor</span>
                          </div>
                        </SelectItem>

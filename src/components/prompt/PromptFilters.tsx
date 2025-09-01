@@ -158,7 +158,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
               <SelectItem value="MOST_POPULAR">🔥 Most Popular</SelectItem>
               <SelectItem value="HIGHEST_RATED">
                 <div className="flex items-center gap-1">
-                  <Star className="h-3 w-3 fill-primary text-primary" />
+                  <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
                   Highest Rated (4.5+)
                 </div>
               </SelectItem>
@@ -271,7 +271,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
               <SelectItem value="MOST_POPULAR">🔥 Most Popular</SelectItem>
               <SelectItem value="HIGHEST_RATED">
                 <div className="flex items-center gap-1">
-                  <Star className="h-3 w-3 fill-primary text-primary" />
+                  <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
                   Highest Rated (4.5+)
                 </div>
               </SelectItem>
