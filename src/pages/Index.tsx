@@ -309,7 +309,7 @@ const Index = () => {
                     <div className="flex items-center gap-0.5 mb-2">
                       {Array.from({
                       length: 5
-                    }, (_, i) => <Star key={i} className="h-4 w-4 fill-primary text-primary" />)}
+                    }, (_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
                     </div>
                     <p className="text-sm text-muted-foreground">"These prompts saved me 5 hours per week on content creation. The marketing category alone paid for itself in one campaign."</p>
                   </div>
@@ -334,7 +334,7 @@ const Index = () => {
                     <div className="flex items-center gap-0.5 mb-2">
                       {Array.from({
                       length: 5
-                    }, (_, i) => <Star key={i} className="h-4 w-4 fill-primary text-primary" />)}
+                    }, (_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
                     </div>
                     <p className="text-sm text-muted-foreground">"As a freelancer, these prompts help me deliver better work faster. The career section helped me land three new clients this month."</p>
                   </div>
@@ -359,7 +359,7 @@ const Index = () => {
                     <div className="flex items-center gap-0.5 mb-2">
                       {Array.from({
                       length: 5
-                    }, (_, i) => <Star key={i} className="h-4 w-4 fill-primary text-primary" />)}
+                    }, (_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
                     </div>
                     <p className="text-sm text-muted-foreground">"Game changer for our startup. We use the business prompts daily for everything from investor pitches to customer emails."</p>
                   </div>
