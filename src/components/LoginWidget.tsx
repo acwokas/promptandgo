@@ -35,13 +35,13 @@ export const LoginWidget = () => {
 
   // Sync external open state with internal state
   useEffect(() => {
-    if (externalIsOpen) {
+    if (externalIsOpen && !isOpen) {
       // Ensure widget can always be reopened via global trigger
       setIsDismissed(false);
       setIsMinimized(false);
       setIsOpen(true);
     }
-  }, [externalIsOpen]);
+  }, [externalIsOpen, isOpen]);
 
   const industries = [
     "Technology", "Healthcare", "Finance", "Education", "Retail", "Manufacturing",

@@ -37,21 +37,27 @@ export function usePageVisitTracker() {
 
     // Don't track if fields are completed or popup is dismissed
     if (profile.context_fields_completed || profile.context_popup_dismissed) {
+      setShouldShowPopup(false);
       return;
     }
 
-    // Get current visit count from sessionStorage
-    const currentCount = parseInt(sessionStorage.getItem('pageVisitCount') || '0');
-    const newCount = currentCount + 1;
-    
-    setVisitCount(newCount);
-    sessionStorage.setItem('pageVisitCount', newCount.toString());
+    // Only track on pathname changes, with a small delay to prevent rapid firing
+    const timer = setTimeout(() => {
+      // Get current visit count from sessionStorage
+      const currentCount = parseInt(sessionStorage.getItem('pageVisitCount') || '0');
+      const newCount = currentCount + 1;
+      
+      setVisitCount(newCount);
+      sessionStorage.setItem('pageVisitCount', newCount.toString());
 
-    // Show popup after 3 page visits
-    if (newCount >= 3) {
-      setShouldShowPopup(true);
-    }
-  }, [location.pathname, user, profile]);
+      // Show popup after 3 page visits
+      if (newCount >= 3) {
+        setShouldShowPopup(true);
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [location.pathname, user?.id, profile?.context_fields_completed, profile?.context_popup_dismissed]);
 
   const dismissPopup = async (permanently = false) => {
     setShouldShowPopup(false);
