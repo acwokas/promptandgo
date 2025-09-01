@@ -256,11 +256,44 @@ export const FeedbackWidget = ({ promptId }: FeedbackWidgetProps) => {
                       <SelectValue placeholder="Rate this prompt..." />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="5">⭐⭐⭐⭐⭐ Excellent</SelectItem>
-                      <SelectItem value="4">⭐⭐⭐⭐ Good</SelectItem>
-                      <SelectItem value="3">⭐⭐⭐ Average</SelectItem>
-                      <SelectItem value="2">⭐⭐ Poor</SelectItem>
-                      <SelectItem value="1">⭐ Very Poor</SelectItem>
+                       <SelectItem value="5">
+                         <div className="flex items-center gap-1">
+                           {Array.from({ length: 5 }, (_, i) => (
+                             <Star key={i} className="h-3 w-3 fill-primary text-primary" />
+                           ))}
+                           <span className="ml-1">Excellent</span>
+                         </div>
+                       </SelectItem>
+                       <SelectItem value="4">
+                         <div className="flex items-center gap-1">
+                           {Array.from({ length: 4 }, (_, i) => (
+                             <Star key={i} className="h-3 w-3 fill-primary text-primary" />
+                           ))}
+                           <span className="ml-1">Good</span>
+                         </div>
+                       </SelectItem>
+                       <SelectItem value="3">
+                         <div className="flex items-center gap-1">
+                           {Array.from({ length: 3 }, (_, i) => (
+                             <Star key={i} className="h-3 w-3 fill-primary text-primary" />
+                           ))}
+                           <span className="ml-1">Average</span>
+                         </div>
+                       </SelectItem>
+                       <SelectItem value="2">
+                         <div className="flex items-center gap-1">
+                           {Array.from({ length: 2 }, (_, i) => (
+                             <Star key={i} className="h-3 w-3 fill-primary text-primary" />
+                           ))}
+                           <span className="ml-1">Poor</span>
+                         </div>
+                       </SelectItem>
+                       <SelectItem value="1">
+                         <div className="flex items-center gap-1">
+                           <Star className="h-3 w-3 fill-primary text-primary" />
+                           <span className="ml-1">Very Poor</span>
+                         </div>
+                       </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

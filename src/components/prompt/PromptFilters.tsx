@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
+import { Star } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 import type { Category } from "@/data/prompts";
@@ -156,7 +156,12 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
               <SelectItem value="all">All</SelectItem>
               <SelectItem value="RECOMMENDED">🎯 Recommended</SelectItem>
               <SelectItem value="MOST_POPULAR">🔥 Most Popular</SelectItem>
-              <SelectItem value="HIGHEST_RATED">⭐ Highest Rated (4.5+)</SelectItem>
+              <SelectItem value="HIGHEST_RATED">
+                <div className="flex items-center gap-1">
+                  <Star className="h-3 w-3 fill-primary text-primary" />
+                  Highest Rated (4.5+)
+                </div>
+              </SelectItem>
               <SelectItem value="MY_PROMPTS">❤️ My Prompts</SelectItem>
               <SelectItem value="NEW_PROMPTS">✨ New Prompts</SelectItem>
               <SelectItem value="TRENDING">📈 Trending</SelectItem>
@@ -264,7 +269,12 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
               <SelectItem value="all">All</SelectItem>
               <SelectItem value="RECOMMENDED">🎯 Recommended</SelectItem>
               <SelectItem value="MOST_POPULAR">🔥 Most Popular</SelectItem>
-              <SelectItem value="HIGHEST_RATED">⭐ Highest Rated (4.5+)</SelectItem>
+              <SelectItem value="HIGHEST_RATED">
+                <div className="flex items-center gap-1">
+                  <Star className="h-3 w-3 fill-primary text-primary" />
+                  Highest Rated (4.5+)
+                </div>
+              </SelectItem>
               <SelectItem value="MY_PROMPTS">❤️ My Prompts</SelectItem>
               <SelectItem value="NEW_PROMPTS">✨ New Prompts</SelectItem>
               <SelectItem value="TRENDING">📈 Trending</SelectItem>

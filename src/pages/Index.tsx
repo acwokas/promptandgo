@@ -283,7 +283,14 @@ const Index = () => {
           <div className="text-center mb-8">
             <p className="text-muted-foreground mb-2">Trusted by 50,000+ professionals</p>
             <div className="flex items-center justify-center gap-8 text-sm text-muted-foreground">
-              <span>⭐⭐⭐⭐⭐ 4.9/5</span>
+              <div className="flex items-center gap-1">
+                <div className="flex items-center gap-0.5">
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-primary text-primary" />
+                  ))}
+                </div>
+                <span className="ml-1">4.9/5</span>
+              </div>
               <span>•</span>
               <span>1M+ prompts copied</span>
               <span>•</span>
