@@ -719,13 +719,20 @@ const PromptLibrary = () => {
                 <Button 
                   variant="ghost" 
                   size="sm"
-                  onClick={() => {
-                    clearRandom();
-                    setCategoryId(undefined);
-                    setSubcategoryId(undefined);
-                    setQuery("");
-                    setRibbon(undefined);
-                  }}
+                   onClick={() => {
+                     clearRandom();
+                     setCategoryId(undefined);
+                     setSubcategoryId(undefined);
+                     setQuery("");
+                     setSelectedTag(undefined);
+                     setProOnly(false);
+                     setIncludePro(true);
+                     setPage(1);
+                     setRibbon(undefined);
+                     setUserExplicitlySelectedAll(true);
+                     const newSearchParams = new URLSearchParams();
+                     setSearchParams(newSearchParams, { replace: true });
+                   }}
                 >
                   View All Categories →
                 </Button>
