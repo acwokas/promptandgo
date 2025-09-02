@@ -10,12 +10,14 @@ import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useToast } from "@/hooks/use-toast";
 import { validateEmailInput, validatePromptInput, sanitizeInput } from "@/lib/inputValidation";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface FeedbackWidgetProps {
   promptId?: string;
 }
 
 export const FeedbackWidget = ({ promptId }: FeedbackWidgetProps) => {
+  const isMobile = useIsMobile();
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
@@ -143,11 +145,12 @@ export const FeedbackWidget = ({ promptId }: FeedbackWidgetProps) => {
     }
   };
 
-  if (!isEnabled || isDismissed) return null;
+  // Don't render on mobile to prevent flickering
+  if (isMobile || !isEnabled || isDismissed) return null;
 
   if (isMinimized) {
     return (
-      <div className="fixed bottom-4 right-4 z-50 hidden md:block">
+      <div className="fixed bottom-4 right-4 z-50">
         <div className="flex items-center gap-2">
           <Button
             onClick={() => setIsMinimized(false)}
@@ -174,7 +177,7 @@ export const FeedbackWidget = ({ promptId }: FeedbackWidgetProps) => {
   }
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 hidden md:block">
+    <div className="fixed bottom-4 right-4 z-50">
       {!isOpen ? (
         <div className="flex items-center gap-2">
           <Button
@@ -235,7 +238,7 @@ export const FeedbackWidget = ({ promptId }: FeedbackWidgetProps) => {
                   <SelectTrigger id="feedback-type">
                     <SelectValue placeholder="Select type..." />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-background border shadow-lg z-[60]">
                     <SelectItem value="bug">Bug Report</SelectItem>
                     <SelectItem value="feature">Feature Request</SelectItem>
                     <SelectItem value="improvement">Improvement Suggestion</SelectItem>
@@ -255,7 +258,7 @@ export const FeedbackWidget = ({ promptId }: FeedbackWidgetProps) => {
                     <SelectTrigger id="rating">
                       <SelectValue placeholder="Rate this prompt..." />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-background border shadow-lg z-[60]">
                        <SelectItem value="5">
                          <div className="flex items-center gap-1">
                            {Array.from({ length: 5 }, (_, i) => (

@@ -203,7 +203,7 @@ const ContextPopup = ({ isOpen, onClose, onDismissPermanently, onComplete }: Con
               <SelectTrigger>
                 <SelectValue placeholder="Select your industry" />
               </SelectTrigger>
-              <SelectContent className="bg-background border shadow-lg z-50">
+              <SelectContent className="bg-background border shadow-lg z-[60]">
                 {industries.map((industry) => (
                   <SelectItem key={industry} value={industry}>{industry}</SelectItem>
                 ))}
@@ -217,7 +217,7 @@ const ContextPopup = ({ isOpen, onClose, onDismissPermanently, onComplete }: Con
               <SelectTrigger>
                 <SelectValue placeholder="What do you mainly use AI for?" />
               </SelectTrigger>
-              <SelectContent className="bg-background border shadow-lg z-50">
+              <SelectContent className="bg-background border shadow-lg z-[60]">
                 {projectTypes.map((type) => (
                   <SelectItem key={type} value={type}>{type}</SelectItem>
                 ))}
@@ -231,7 +231,7 @@ const ContextPopup = ({ isOpen, onClose, onDismissPermanently, onComplete }: Con
               <SelectTrigger>
                 <SelectValue placeholder="What tone do you prefer?" />
               </SelectTrigger>
-              <SelectContent className="bg-background border shadow-lg z-50">
+              <SelectContent className="bg-background border shadow-lg z-[60]">
                 {tones.map((tone) => (
                   <SelectItem key={tone} value={tone}>{tone}</SelectItem>
                 ))}

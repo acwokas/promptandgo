@@ -10,8 +10,10 @@ import { useToast } from "@/hooks/use-toast";
 import { validateEmailInput, sanitizeInput } from "@/lib/inputValidation";
 import { useNavigate } from "react-router-dom";
 import { useLoginWidget } from "@/hooks/useLoginWidget";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export const LoginWidget = () => {
+  const isMobile = useIsMobile();
   const { isOpen: externalIsOpen, closeLoginWidget } = useLoginWidget();
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
@@ -198,7 +200,9 @@ export const LoginWidget = () => {
     else handleSignUp();
   };
 
-  if (isDismissed) return null;
+  
+  // Don't render on mobile to prevent flickering
+  if (isMobile || isDismissed) return null;
 
   if (isMinimized) {
     return (
@@ -374,7 +378,7 @@ export const LoginWidget = () => {
                           <SelectTrigger className="h-8 text-xs">
                             <SelectValue placeholder="Select industry" />
                           </SelectTrigger>
-                          <SelectContent className="bg-background border shadow-lg z-50">
+                          <SelectContent className="bg-background border shadow-lg z-[60]">
                             {industries.map((ind) => (
                               <SelectItem key={ind} value={ind} className="text-xs">{ind}</SelectItem>
                             ))}
@@ -388,7 +392,7 @@ export const LoginWidget = () => {
                           <SelectTrigger className="h-8 text-xs">
                             <SelectValue placeholder="What do you mainly use AI for?" />
                           </SelectTrigger>
-                          <SelectContent className="bg-background border shadow-lg z-50">
+                          <SelectContent className="bg-background border shadow-lg z-[60]">
                             {projectTypes.map((type) => (
                               <SelectItem key={type} value={type} className="text-xs">{type}</SelectItem>
                             ))}
@@ -402,7 +406,7 @@ export const LoginWidget = () => {
                           <SelectTrigger className="h-8 text-xs">
                             <SelectValue placeholder="Select tone" />
                           </SelectTrigger>
-                          <SelectContent className="bg-background border shadow-lg z-50">
+                          <SelectContent className="bg-background border shadow-lg z-[60]">
                             {tones.map((tone) => (
                               <SelectItem key={tone} value={tone} className="text-xs">{tone}</SelectItem>
                             ))}
