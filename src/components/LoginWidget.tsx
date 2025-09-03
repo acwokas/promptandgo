@@ -256,7 +256,7 @@ export const LoginWidget = () => {
           </Button>
         </div>
       ) : (
-        <Card className="w-96 max-h-[80svh] overflow-y-auto shadow-xl">
+        <Card className="w-96 max-h-[80svh] overflow-y-auto shadow-xl transform-gpu will-change-transform">
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <CardTitle className="flex items-center gap-2 text-lg">
