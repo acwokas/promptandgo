@@ -162,7 +162,7 @@ const FAQs = () => {
       />
 
       <PageHero
-        minHeightClass="min-h-[32vh]"
+        minHeightClass="min-h-[32svh]"
         title={<>
           <span className="text-gradient-brand">Got Questions?</span> We’ve Got You
         </>}

@@ -777,7 +777,7 @@ const AdminPromptTool = () => {
                       Preview Prompt
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                  <DialogContent className="max-w-2xl max-h-[80svh] overflow-y-auto">
                     <DialogHeader>
                       <DialogTitle>Prompt Preview</DialogTitle>
                     </DialogHeader>

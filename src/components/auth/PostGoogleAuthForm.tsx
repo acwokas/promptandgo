@@ -151,7 +151,7 @@ const PostGoogleAuthForm = ({ onComplete, userEmail, userName }: PostGoogleAuthF
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-      <div className="bg-card rounded-lg p-6 max-w-md w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-card rounded-lg p-6 max-w-md w-full max-h-[90svh] overflow-y-auto">
         <div className="space-y-4">
           <div className="text-center">
             <h2 className="text-xl font-semibold">🎯 Personalize Your Experience</h2>

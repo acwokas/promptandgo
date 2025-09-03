@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Terms = () => (
   <>
-    <PageHero title={<>Terms &amp; Conditions</>} subtitle={<>Usage rules, IP, payments, privacy, liability, and your rights.</>} minHeightClass="min-h-[28vh]" />
+    <PageHero title={<>Terms &amp; Conditions</>} subtitle={<>Usage rules, IP, payments, privacy, liability, and your rights.</>} minHeightClass="min-h-[28svh]" />
     <main className="container py-10">
       <SEO title="Terms & Conditions" description="PromptAndGo.ai Terms & Conditions (Singapore): usage rules, IP, payments, privacy, liability, and your rights." />
 

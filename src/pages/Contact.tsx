@@ -176,7 +176,7 @@ const Contact = () => {
       <PageHero
         title={<><span className="text-brand">Got something</span> to share?</>}
         subtitle={<>We'd love to hear from you, whether it's a fresh idea, feedback, a request for more of a certain prompt type, or a challenge you would like us to tackle. Drop us a message, and remember to subscribe to our newsletter for new prompts, tips, and inspiration straight to your inbox.</>}
-        minHeightClass="min-h-[28vh]"
+        minHeightClass="min-h-[28svh]"
       />
       <main className="container py-10">
         {/* Breadcrumb */}

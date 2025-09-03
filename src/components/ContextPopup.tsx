@@ -188,7 +188,7 @@ const ContextPopup = ({ isOpen, onClose, onDismissPermanently, onComplete }: Con
 
   return (
     <Dialog open={isOpen} onOpenChange={() => {}}>
-      <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-md max-h-[90svh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>🎯 Get Better Prompts</DialogTitle>
           <DialogDescription className="mt-2">

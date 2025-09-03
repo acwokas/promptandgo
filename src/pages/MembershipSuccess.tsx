@@ -22,7 +22,7 @@ const MembershipSuccess = () => {
   return (
     <>
       <SEO title="Membership Success" description="Your membership is now active." />
-      <PageHero title={<>Membership <span className="text-gradient-brand">Active</span></>} subtitle={<>Thanks for your membership!</>} minHeightClass="min-h-[28vh]" />
+      <PageHero title={<>Membership <span className="text-gradient-brand">Active</span></>} subtitle={<>Thanks for your membership!</>} minHeightClass="min-h-[28svh]" />
       <main className="container py-10">
         {/* Breadcrumb */}
         <Breadcrumb className="mb-6">

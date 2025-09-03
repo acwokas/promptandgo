@@ -41,7 +41,7 @@ const AICreditsExhausted = ({
         title="Daily Limit Reached"
         subtitle="You've used all your free AI queries for today"
         variant="default"
-        minHeightClass="min-h-[28vh]"
+        minHeightClass="min-h-[28svh]"
       />
 
       <div className="container mx-auto px-4 py-12 max-w-4xl">

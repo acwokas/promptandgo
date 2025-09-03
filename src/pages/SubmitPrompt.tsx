@@ -111,7 +111,7 @@ const SubmitPrompt = () => {
 
   return (
     <>
-      <PageHero title={<>Submit a Prompt</>} subtitle={<>Have a great prompt? Share it and help others work smarter.</>} minHeightClass="min-h-[28vh]" />
+      <PageHero title={<>Submit a Prompt</>} subtitle={<>Have a great prompt? Share it and help others work smarter.</>} minHeightClass="min-h-[28svh]" />
       <main className="container py-10">
         <SEO title="Submit a Prompt" description="Share your best workflow prompts with the community." />
 

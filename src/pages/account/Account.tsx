@@ -46,7 +46,7 @@ const AccountPage = () => {
           <span className="text-gradient-brand">My</span> Account
         </>}
         subtitle={<>Access your prompts, view purchases, and manage your settings.</>}
-        minHeightClass="min-h-[28vh]"
+        minHeightClass="min-h-[28svh]"
       >
         <Button asChild variant="hero" className="px-6">
           <Link to="/account/favorites">My Prompts</Link>

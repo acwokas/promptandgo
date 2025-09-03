@@ -68,7 +68,7 @@ const PurchasesPage = () => {
       <PageHero
         title={<><span className="text-gradient-brand">My</span> Purchases</>}
         subtitle={<>A history of your purchases and downloads.</>}
-        minHeightClass="min-h-[28vh]"
+        minHeightClass="min-h-[28svh]"
       />
       <main className="container py-8 space-y-6">
         {/* Breadcrumb */}

@@ -610,7 +610,7 @@ const AdminPolls = () => {
                 Create Poll
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+            <DialogContent className="max-w-2xl max-h-[80svh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle>{editingPoll ? 'Edit Poll' : 'Create New Poll'}</DialogTitle>
               </DialogHeader>

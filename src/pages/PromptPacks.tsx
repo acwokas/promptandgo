@@ -264,7 +264,7 @@ const PromptPacks = () => {
 
   return (
     <>
-      <PageHero title={<>⚡️<span className="text-gradient-brand">Power</span> Packs</>} subtitle={<>Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results.</>} minHeightClass="min-h-[28vh]">
+      <PageHero title={<>⚡️<span className="text-gradient-brand">Power</span> Packs</>} subtitle={<>Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results.</>} minHeightClass="min-h-[28svh]">
         <Button asChild variant="hero">
           <Link to="#pack-filters">
             <Sparkles className="h-4 w-4 mr-2" />

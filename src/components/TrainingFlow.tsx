@@ -216,7 +216,7 @@ export const TrainingFlow = ({ onComplete, onClose }: TrainingFlowProps) => {
 
     return (
       <Dialog open={true} onOpenChange={() => {}}>
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-2xl max-h-[90svh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>🎉 Training Complete!</DialogTitle>
             <DialogDescription>
@@ -299,7 +299,7 @@ export const TrainingFlow = ({ onComplete, onClose }: TrainingFlowProps) => {
 
   return (
     <Dialog open={true} onOpenChange={() => {}}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-2xl max-h-[90svh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>🤖 Help Us Learn Your Preferences</DialogTitle>
           <DialogDescription>

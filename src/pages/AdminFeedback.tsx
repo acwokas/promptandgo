@@ -332,7 +332,7 @@ const AdminFeedback = () => {
         {/* Management Dialog */}
         {selectedFeedback && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-            <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <Card className="w-full max-w-2xl max-h-[90svh] overflow-y-auto">
               <CardHeader>
                 <CardTitle>Manage Feedback</CardTitle>
                 <CardDescription>Update status and add admin notes</CardDescription>

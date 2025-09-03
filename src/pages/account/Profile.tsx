@@ -98,7 +98,7 @@ const ProfilePage = () => {
   return (
     <>
       <SEO title="My Account – Profile" description="Edit your display name and avatar for PromptAndGo." />
-      <PageHero title={<>Profile</>} subtitle={<>Manage your personal details.</>} minHeightClass="min-h-[25vh]" />
+      <PageHero title={<>Profile</>} subtitle={<>Manage your personal details.</>} minHeightClass="min-h-[25svh]" />
 
       <main className="container py-8 max-w-3xl">
         {/* Breadcrumb */}

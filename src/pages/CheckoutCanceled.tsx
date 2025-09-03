@@ -7,7 +7,7 @@ const CheckoutCanceled = () => {
   return (
     <>
       <SEO title="Checkout Canceled" description="Your payment was canceled." />
-      <PageHero title={<>Checkout <span className="text-gradient-brand">Canceled</span></>} subtitle={<>You can retry your purchase anytime.</>} minHeightClass="min-h-[28vh]" />
+      <PageHero title={<>Checkout <span className="text-gradient-brand">Canceled</span></>} subtitle={<>You can retry your purchase anytime.</>} minHeightClass="min-h-[28svh]" />
       <main className="container py-8">
         {/* Breadcrumb */}
         <Breadcrumb className="mb-6">

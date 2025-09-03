@@ -7,7 +7,7 @@ const MembershipCanceled = () => {
   return (
     <>
       <SEO title="Membership Canceled" description="You canceled the membership checkout." />
-      <PageHero title={<>Membership <span className="text-gradient-brand">Canceled</span></>} subtitle={<>You can join anytime.</>} minHeightClass="min-h-[28vh]" />
+      <PageHero title={<>Membership <span className="text-gradient-brand">Canceled</span></>} subtitle={<>You can join anytime.</>} minHeightClass="min-h-[28svh]" />
       <main className="container py-10">
         {/* Breadcrumb */}
         <Breadcrumb className="mb-6">
