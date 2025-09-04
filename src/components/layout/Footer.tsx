@@ -46,7 +46,7 @@ const Footer = () => {
           </nav>
           <nav className="flex flex-col gap-2">
             <span className="text-foreground font-medium">Main sections</span>
-            <Link to="/" className="text-muted-foreground hover:text-foreground">Welcome</Link>
+            <Link to="/" className="text-muted-foreground hover:text-foreground">👋 Welcome</Link>
             <Link to="/library" className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
               <Search className="h-3 w-3" />
               Browse Library
@@ -57,8 +57,8 @@ const Footer = () => {
               Scout AI
             </Link>
             <Link to="/how-it-works" className="text-muted-foreground hover:text-foreground">🤓 How it Works</Link>
-            <Link to="/tips" className="text-muted-foreground hover:text-foreground">Tips</Link>
-            <Link to="/faqs" className="text-muted-foreground hover:text-foreground">FAQs</Link>
+            <Link to="/tips" className="text-muted-foreground hover:text-foreground">💡 Tips</Link>
+            <Link to="/faqs" className="text-muted-foreground hover:text-foreground">❓ FAQs</Link>
           </nav>
           <nav className="flex flex-col gap-2">
             <span className="text-foreground font-medium">Tools</span>
