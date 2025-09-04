@@ -51,7 +51,7 @@ const Footer = () => {
               <Search className="h-3 w-3" />
               Browse Library
             </Link>
-            <Link to="/packs" className="text-muted-foreground hover:text-foreground">⚡️Power Packs</Link>
+            <Link to="/packs" className="text-muted-foreground hover:text-foreground">⚡️ Power Packs</Link>
             <Link to="/scout" className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
               <Bot className="h-3 w-3 text-blue-500" />
               Scout AI

@@ -74,7 +74,7 @@ const Header = () => {
         <ul className="hidden md:flex items-center gap-6 text-sm">
           <li><NavLink to="/" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>👋 Welcome</NavLink></li>
           <li><NavLink to="/library" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}><Search className="h-4 w-4 inline mr-1" />Browse Library</NavLink></li>
-          <li><NavLink to="/packs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>⚡️Power Packs</NavLink></li>
+          <li><NavLink to="/packs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>⚡️ Power Packs</NavLink></li>
           <li>
             <NavLink to="/scout" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
               <Bot className="h-4 w-4 inline mr-1 text-blue-500" />
@@ -106,7 +106,7 @@ const Header = () => {
                 <nav className="mt-8 grid gap-3 text-base">
                   <NavLink to="/" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>👋 Welcome</NavLink>
                   <NavLink to="/library" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}><Search className="h-4 w-4 inline mr-1" />Browse Library</NavLink>
-                  <NavLink to="/packs" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>⚡️Power Packs</NavLink>
+                  <NavLink to="/packs" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>⚡️ Power Packs</NavLink>
                   <NavLink to="/scout" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
                     <Bot className="h-4 w-4 inline mr-1 text-blue-500" />
                     Scout AI
