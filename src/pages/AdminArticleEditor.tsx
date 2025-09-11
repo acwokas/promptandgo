@@ -1,0 +1,586 @@
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { Switch } from "@/components/ui/switch";
+import { Save, ArrowLeft, Plus, Trash2, Upload, ExternalLink } from "lucide-react";
+import { format } from "date-fns";
+import SEO from "@/components/SEO";
+
+interface Article {
+  id?: string;
+  title: string;
+  slug: string;
+  content: string;
+  synopsis: string;
+  thumbnail_url: string;
+  published_date: string | null;
+  is_published: boolean;
+  focus_keyword: string;
+  keyphrases: string[];
+  meta_description: string;
+  meta_title: string;
+}
+
+interface ArticleAsset {
+  id?: string;
+  article_id: string;
+  asset_type: string;
+  asset_url: string;
+  asset_title: string;
+  asset_description: string;
+  display_order: number;
+}
+
+const AdminArticleEditor = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  
+  const [article, setArticle] = useState<Article>({
+    title: '',
+    slug: '',
+    content: '',
+    synopsis: '',
+    thumbnail_url: '',
+    published_date: null,
+    is_published: false,
+    focus_keyword: '',
+    keyphrases: [],
+    meta_description: '',
+    meta_title: ''
+  });
+
+  const [assets, setAssets] = useState<ArticleAsset[]>([]);
+  const [newKeyphrase, setNewKeyphrase] = useState('');
+
+  useEffect(() => {
+    if (id && id !== 'new') {
+      fetchArticle(id);
+    }
+  }, [id]);
+
+  const fetchArticle = async (articleId: string) => {
+    setLoading(true);
+    try {
+      // Fetch article
+      const { data: articleData, error: articleError } = await supabase
+        .from('articles')
+        .select('*')
+        .eq('id', articleId)
+        .single();
+
+      if (articleError) throw articleError;
+      setArticle(articleData);
+
+      // Fetch assets
+      const { data: assetsData, error: assetsError } = await supabase
+        .from('article_assets')
+        .select('*')
+        .eq('article_id', articleId)
+        .order('display_order');
+
+      if (assetsError) throw assetsError;
+      setAssets(assetsData || []);
+
+    } catch (error: any) {
+      console.error('Error fetching article:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to load article',
+        variant: 'destructive'
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const generateSlug = (title: string) => {
+    return title
+      .toLowerCase()
+      .replace(/[^a-z0-9 -]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim();
+  };
+
+  const handleTitleChange = (value: string) => {
+    setArticle(prev => ({
+      ...prev,
+      title: value,
+      slug: prev.slug || generateSlug(value)
+    }));
+  };
+
+  const addKeyphrase = () => {
+    if (newKeyphrase.trim() && !article.keyphrases.includes(newKeyphrase.trim())) {
+      setArticle(prev => ({
+        ...prev,
+        keyphrases: [...prev.keyphrases, newKeyphrase.trim()]
+      }));
+      setNewKeyphrase('');
+    }
+  };
+
+  const removeKeyphrase = (keyphrase: string) => {
+    setArticle(prev => ({
+      ...prev,
+      keyphrases: prev.keyphrases.filter(kp => kp !== keyphrase)
+    }));
+  };
+
+  const addAsset = () => {
+    const newAsset: ArticleAsset = {
+      article_id: article.id || '',
+      asset_type: 'image',
+      asset_url: '',
+      asset_title: '',
+      asset_description: '',
+      display_order: assets.length
+    };
+    setAssets([...assets, newAsset]);
+  };
+
+  const updateAsset = (index: number, field: keyof ArticleAsset, value: any) => {
+    setAssets(prev => prev.map((asset, i) => 
+      i === index ? { ...asset, [field]: value } : asset
+    ));
+  };
+
+  const removeAsset = (index: number) => {
+    setAssets(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const saveArticle = async (publish = false) => {
+    setSaving(true);
+    try {
+      // Validation
+      if (!article.title.trim() || !article.content.trim()) {
+        toast({
+          title: 'Validation Error',
+          description: 'Title and content are required',
+          variant: 'destructive'
+        });
+        return;
+      }
+
+      const articleData = {
+        ...article,
+        is_published: publish || article.is_published,
+        published_date: publish && !article.published_date ? new Date().toISOString() : article.published_date
+      };
+
+      let savedArticle;
+
+      if (id === 'new' || !article.id) {
+        // Create new article
+        const { data, error } = await supabase
+          .from('articles')
+          .insert([articleData])
+          .select()
+          .single();
+
+        if (error) throw error;
+        savedArticle = data;
+        setArticle(savedArticle);
+      } else {
+        // Update existing article
+        const { data, error } = await supabase
+          .from('articles')
+          .update(articleData)
+          .eq('id', article.id)
+          .select()
+          .single();
+
+        if (error) throw error;
+        savedArticle = data;
+      }
+
+      // Save assets
+      if (assets.length > 0 && savedArticle.id) {
+        // Delete existing assets
+        await supabase
+          .from('article_assets')
+          .delete()
+          .eq('article_id', savedArticle.id);
+
+        // Insert new assets
+        const assetsToSave = assets
+          .filter(asset => asset.asset_url.trim())
+          .map(asset => ({
+            ...asset,
+            article_id: savedArticle.id
+          }));
+
+        if (assetsToSave.length > 0) {
+          const { error: assetsError } = await supabase
+            .from('article_assets')
+            .insert(assetsToSave);
+
+          if (assetsError) throw assetsError;
+        }
+      }
+
+      toast({
+        title: 'Success',
+        description: `Article ${publish ? 'published' : 'saved'} successfully`
+      });
+
+      // Navigate to edit page if this was a new article
+      if (id === 'new') {
+        navigate(`/admin/articles/edit/${savedArticle.id}`);
+      }
+
+    } catch (error: any) {
+      console.error('Error saving article:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to save article',
+        variant: 'destructive'
+      });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="animate-pulse space-y-4">
+          <div className="h-8 bg-muted rounded w-1/4"></div>
+          <div className="h-64 bg-muted rounded"></div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <SEO 
+        title={`${id === 'new' ? 'Create' : 'Edit'} Article`}
+        description="Article editor for managing blog content"
+        noindex={true}
+      />
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex flex-col gap-6">
+          <div className="flex items-center gap-4">
+            <Button variant="outline" onClick={() => navigate('/admin/articles')}>
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Articles
+            </Button>
+            <h1 className="text-3xl font-bold">
+              {id === 'new' ? 'Create New Article' : 'Edit Article'}
+            </h1>
+          </div>
+
+          <div className="flex gap-4 mb-6">
+            <Button 
+              onClick={() => saveArticle(false)}
+              disabled={saving}
+            >
+              <Save className="w-4 h-4 mr-2" />
+              {saving ? 'Saving...' : 'Save Draft'}
+            </Button>
+            <Button 
+              onClick={() => saveArticle(true)}
+              disabled={saving}
+              variant="default"
+            >
+              {saving ? 'Publishing...' : 'Publish'}
+            </Button>
+            {article.is_published && article.slug && (
+              <Button variant="outline" asChild>
+                <a href={`/tips/${article.slug}`} target="_blank">
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  View Live
+                </a>
+              </Button>
+            )}
+          </div>
+
+          <Tabs defaultValue="content" className="w-full">
+            <TabsList className="grid w-full grid-cols-4">
+              <TabsTrigger value="content">Content</TabsTrigger>
+              <TabsTrigger value="seo">SEO</TabsTrigger>
+              <TabsTrigger value="assets">Assets</TabsTrigger>
+              <TabsTrigger value="settings">Settings</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="content" className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Article Content</CardTitle>
+                  <CardDescription>The main content and basic information for your article</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="title">Title *</Label>
+                    <Input
+                      id="title"
+                      value={article.title}
+                      onChange={(e) => handleTitleChange(e.target.value)}
+                      placeholder="Enter article title"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="slug">URL Slug *</Label>
+                    <Input
+                      id="slug"
+                      value={article.slug}
+                      onChange={(e) => setArticle(prev => ({ ...prev, slug: e.target.value }))}
+                      placeholder="url-friendly-slug"
+                    />
+                    <p className="text-sm text-muted-foreground">
+                      Will be available at: /tips/{article.slug}
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="synopsis">Synopsis</Label>
+                    <Textarea
+                      id="synopsis"
+                      value={article.synopsis}
+                      onChange={(e) => setArticle(prev => ({ ...prev, synopsis: e.target.value }))}
+                      placeholder="Brief description of the article"
+                      rows={3}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="content">Content *</Label>
+                    <Textarea
+                      id="content"
+                      value={article.content}
+                      onChange={(e) => setArticle(prev => ({ ...prev, content: e.target.value }))}
+                      placeholder="Write your article content here..."
+                      rows={15}
+                      className="min-h-96"
+                    />
+                    <p className="text-sm text-muted-foreground">
+                      Supports Markdown formatting
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="thumbnail">Thumbnail URL</Label>
+                    <Input
+                      id="thumbnail"
+                      value={article.thumbnail_url}
+                      onChange={(e) => setArticle(prev => ({ ...prev, thumbnail_url: e.target.value }))}
+                      placeholder="https://example.com/image.jpg"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="seo" className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>SEO Settings</CardTitle>
+                  <CardDescription>Optimize your article for search engines</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="meta_title">Meta Title</Label>
+                    <Input
+                      id="meta_title"
+                      value={article.meta_title}
+                      onChange={(e) => setArticle(prev => ({ ...prev, meta_title: e.target.value }))}
+                      placeholder="SEO-optimized title (60 characters max)"
+                      maxLength={60}
+                    />
+                    <p className="text-sm text-muted-foreground">
+                      {article.meta_title.length}/60 characters
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="meta_description">Meta Description</Label>
+                    <Textarea
+                      id="meta_description"
+                      value={article.meta_description}
+                      onChange={(e) => setArticle(prev => ({ ...prev, meta_description: e.target.value }))}
+                      placeholder="Brief description for search results (160 characters max)"
+                      maxLength={160}
+                      rows={3}
+                    />
+                    <p className="text-sm text-muted-foreground">
+                      {article.meta_description.length}/160 characters
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="focus_keyword">Focus Keyword</Label>
+                    <Input
+                      id="focus_keyword"
+                      value={article.focus_keyword}
+                      onChange={(e) => setArticle(prev => ({ ...prev, focus_keyword: e.target.value }))}
+                      placeholder="Main keyword to target"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Keyphrases</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        value={newKeyphrase}
+                        onChange={(e) => setNewKeyphrase(e.target.value)}
+                        placeholder="Add a keyphrase"
+                        onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addKeyphrase())}
+                      />
+                      <Button onClick={addKeyphrase} type="button">
+                        <Plus className="w-4 h-4" />
+                      </Button>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {article.keyphrases.map((keyphrase, index) => (
+                        <Badge key={index} variant="secondary" className="flex items-center gap-1">
+                          {keyphrase}
+                          <button
+                            onClick={() => removeKeyphrase(keyphrase)}
+                            className="ml-1 text-xs"
+                          >
+                            ×
+                          </button>
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="assets" className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Article Assets</CardTitle>
+                  <CardDescription>Manage images, videos, and other media for your article</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <Button onClick={addAsset} className="mb-4">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Asset
+                  </Button>
+
+                  {assets.map((asset, index) => (
+                    <Card key={index} className="p-4">
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <Label>Asset #{index + 1}</Label>
+                          <Button
+                            variant="destructive"
+                            size="sm"
+                            onClick={() => removeAsset(index)}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <Label>Asset Type</Label>
+                            <select
+                              className="w-full p-2 border rounded-md"
+                              value={asset.asset_type}
+                              onChange={(e) => updateAsset(index, 'asset_type', e.target.value)}
+                            >
+                              <option value="image">Image</option>
+                              <option value="video">Video File</option>
+                              <option value="youtube">YouTube Video</option>
+                              <option value="link">External Link</option>
+                            </select>
+                          </div>
+
+                          <div className="space-y-2">
+                            <Label>Asset URL</Label>
+                            <Input
+                              value={asset.asset_url}
+                              onChange={(e) => updateAsset(index, 'asset_url', e.target.value)}
+                              placeholder={
+                                asset.asset_type === 'youtube' 
+                                  ? 'https://youtube.com/watch?v=...'
+                                  : 'https://example.com/file.jpg'
+                              }
+                            />
+                          </div>
+
+                          <div className="space-y-2">
+                            <Label>Title</Label>
+                            <Input
+                              value={asset.asset_title}
+                              onChange={(e) => updateAsset(index, 'asset_title', e.target.value)}
+                              placeholder="Asset title"
+                            />
+                          </div>
+
+                          <div className="space-y-2">
+                            <Label>Description</Label>
+                            <Input
+                              value={asset.asset_description}
+                              onChange={(e) => updateAsset(index, 'asset_description', e.target.value)}
+                              placeholder="Asset description"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </Card>
+                  ))}
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="settings" className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Publication Settings</CardTitle>
+                  <CardDescription>Control when and how your article is published</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex items-center space-x-2">
+                    <Switch
+                      id="is_published"
+                      checked={article.is_published}
+                      onCheckedChange={(checked) => 
+                        setArticle(prev => ({ ...prev, is_published: checked }))
+                      }
+                    />
+                    <Label htmlFor="is_published">Published</Label>
+                  </div>
+
+                  {article.published_date && (
+                    <div className="space-y-2">
+                      <Label>Published Date</Label>
+                      <Input
+                        type="datetime-local"
+                        value={article.published_date ? format(new Date(article.published_date), "yyyy-MM-dd'T'HH:mm") : ''}
+                        onChange={(e) => 
+                          setArticle(prev => ({ 
+                            ...prev, 
+                            published_date: e.target.value ? new Date(e.target.value).toISOString() : null 
+                          }))
+                        }
+                      />
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default AdminArticleEditor;

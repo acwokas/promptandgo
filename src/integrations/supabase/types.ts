@@ -44,6 +44,101 @@ export type Database = {
         }
         Relationships: []
       }
+      article_assets: {
+        Row: {
+          article_id: string
+          asset_description: string | null
+          asset_title: string | null
+          asset_type: string
+          asset_url: string
+          created_at: string
+          display_order: number | null
+          id: string
+        }
+        Insert: {
+          article_id: string
+          asset_description?: string | null
+          asset_title?: string | null
+          asset_type: string
+          asset_url: string
+          created_at?: string
+          display_order?: number | null
+          id?: string
+        }
+        Update: {
+          article_id?: string
+          asset_description?: string | null
+          asset_title?: string | null
+          asset_type?: string
+          asset_url?: string
+          created_at?: string
+          display_order?: number | null
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "article_assets_article_id_fkey"
+            columns: ["article_id"]
+            isOneToOne: false
+            referencedRelation: "articles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      articles: {
+        Row: {
+          author_id: string | null
+          content: string
+          created_at: string
+          focus_keyword: string | null
+          id: string
+          is_published: boolean
+          keyphrases: string[] | null
+          meta_description: string | null
+          meta_title: string | null
+          published_date: string | null
+          slug: string
+          synopsis: string | null
+          thumbnail_url: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author_id?: string | null
+          content: string
+          created_at?: string
+          focus_keyword?: string | null
+          id?: string
+          is_published?: boolean
+          keyphrases?: string[] | null
+          meta_description?: string | null
+          meta_title?: string | null
+          published_date?: string | null
+          slug: string
+          synopsis?: string | null
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string | null
+          content?: string
+          created_at?: string
+          focus_keyword?: string | null
+          id?: string
+          is_published?: boolean
+          keyphrases?: string[] | null
+          meta_description?: string | null
+          meta_title?: string | null
+          published_date?: string | null
+          slug?: string
+          synopsis?: string | null
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       categories: {
         Row: {
           created_at: string

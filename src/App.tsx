@@ -37,6 +37,10 @@ import AdminExport from "./pages/AdminExport";
 import AdminWidgetSettings from "./pages/AdminWidgetSettings";
 import AdminFeedback from "./pages/AdminFeedback";
 import AdminPolls from "./pages/AdminPolls";
+import AdminArticles from "./pages/AdminArticles";
+import AdminArticleEditor from "./pages/AdminArticleEditor";
+import TipsIndex from "./pages/TipsIndex";
+import ArticleView from "./pages/ArticleView";
 import FavoritesPage from "./pages/account/Favorites";
 import AccountPage from "./pages/account/Account";
 import PurchasesPage from "./pages/account/Purchases";
@@ -103,7 +107,9 @@ const AppContent = () => {
         <Route path="/submit" element={<SubmitPrompt />} />
         <Route path="/submit-prompt" element={<SubmitPrompt />} />
         <Route path="/faqs" element={<FAQs />} />
-        <Route path="/tips" element={<Blog />} />
+        <Route path="/tips" element={<TipsIndex />} />
+        <Route path="/tips/:slug" element={<ArticleView />} />
+        {/* Legacy blog routes - keep for SEO */}
         <Route path="/tips/welcome-to-promptandgo-ai" element={<WelcomeToPromptAndGo />} />
         <Route path="/tips/best-ai-prompts-for-small-business-2025" element={<BestAIPromptsForSmallBusiness2025 />} />
         <Route path="/tips/how-to-write-ai-prompts" element={<HowToWriteAIPrompts />} />
@@ -126,6 +132,9 @@ const AppContent = () => {
         <Route path="/admin/export" element={<AdminExport />} />
         <Route path="/admin/widgets" element={<AdminWidgetSettings />} />
         <Route path="/admin/feedback" element={<AdminFeedback />} />
+        <Route path="/admin/articles" element={<AdminArticles />} />
+        <Route path="/admin/articles/new" element={<AdminArticleEditor />} />
+        <Route path="/admin/articles/edit/:id" element={<AdminArticleEditor />} />
         <Route path="/account" element={<AccountPage />} />
         <Route path="/account/profile" element={<ProfilePage />} />
         <Route path="/account/notifications" element={<NotificationsPage />} />

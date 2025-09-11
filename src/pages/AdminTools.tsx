@@ -79,6 +79,13 @@ const AdminTools = () => {
       icon: MessageCircle,
       href: "/admin/feedback",
       color: "text-cyan-500"
+    },
+    {
+      title: "Article Management",
+      description: "Create and manage blog articles for the /tips section with SEO optimization",
+      icon: Plus,
+      href: "/admin/articles",
+      color: "text-indigo-500"
     }
   ];
 
