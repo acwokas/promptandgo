@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
@@ -29,11 +29,8 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated }
   const [powerWords, setPowerWords] = useState<string[]>([]);
   const [customDescription, setCustomDescription] = useState("");
 
-  const generatePrompt = () => {
-    if (!subjectMessage.trim()) {
-      toast.error("Please enter a subject/message for your CTA post");
-      return;
-    }
+  const buildPrompt = () => {
+    if (!subjectMessage.trim()) return "";
 
     const selectedOptions = [
       platform && `Platform: ${ctaPromptOptions.platforms.find(p => p.value === platform)?.label}`,
@@ -70,6 +67,37 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated }
     prompt += "- Optimal posting recommendations\n";
     prompt += "- Engagement tactics to maximize reach and interaction";
 
+    return prompt;
+  };
+
+  useEffect(() => {
+    const prompt = buildPrompt();
+    onPromptGenerated(prompt);
+  }, [
+    subjectMessage, 
+    platform, 
+    postFormat, 
+    contentType, 
+    toneOfVoice, 
+    audienceSegmentation, 
+    geoLocation, 
+    engagementGoal, 
+    visualStyle, 
+    ctaStyle, 
+    hashtagStrategy, 
+    postingTimeframe, 
+    powerWords, 
+    customDescription, 
+    onPromptGenerated
+  ]);
+
+  const generatePrompt = () => {
+    if (!subjectMessage.trim()) {
+      toast.error("Please enter a subject/message for your CTA post");
+      return;
+    }
+
+    const prompt = buildPrompt();
     onPromptGenerated(prompt);
     toast.success("CTA prompt generated successfully!");
   };
