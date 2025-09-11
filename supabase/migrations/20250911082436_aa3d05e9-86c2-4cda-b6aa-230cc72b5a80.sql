@@ -1,0 +1,147 @@
+-- Insert existing blog articles into the articles table
+INSERT INTO public.articles (
+  title, 
+  slug, 
+  content, 
+  synopsis, 
+  thumbnail_url, 
+  published_date, 
+  is_published, 
+  focus_keyword, 
+  keyphrases, 
+  meta_description, 
+  meta_title
+) VALUES 
+(
+  'Welcome to PromptAndGo.ai: Your Shortcut to Smarter AI Prompts',
+  'welcome-to-promptandgo-ai',
+  'Ready-to-use, field-tested prompts for ChatGPT, Claude, and Gemini. Stop wasting hours crafting prompts from scratch. Our curated library delivers high-quality results instantly, helping you work smarter, not harder.',
+  'Ready-to-use, field-tested prompts for ChatGPT, Claude, and Gemini to get high-quality results instantly.',
+  '/lovable-uploads/0d60754a-943c-420b-9b4c-ee1718135377.png',
+  '2024-11-22T00:00:00Z',
+  true,
+  'AI prompts',
+  ARRAY['AI productivity', 'AI tools', 'ChatGPT', 'Claude', 'Gemini', 'prompt library', 'AI workflow', 'AI tips', 'welcome'],
+  'Ready-to-use, field-tested prompts for ChatGPT, Claude, and Gemini to get high-quality results instantly.',
+  'Welcome to PromptAndGo.ai – Smarter AI Prompts Fast'
+),
+(
+  'Best AI Prompts for Small Business Owners in 2025',
+  'best-ai-prompts-for-small-business-2025',
+  'Discover the best AI prompts for small business owners in 2025. Ready-to-run examples that boost sales, streamline operations, and save hours each week.',
+  'Discover the best AI prompts for small business owners in 2025. Use these ready-to-run examples to boost sales, streamline operations, and save hours each week.',
+  '/lovable-uploads/f23788ee-b45e-4f84-808a-691c7e3c5e52.png',
+  '2024-12-11T00:00:00Z',
+  true,
+  'AI prompts',
+  ARRAY['small business', 'marketing', 'operations', 'sales', 'productivity', 'ChatGPT', 'Claude', 'Gemini', '2025'],
+  'Discover the best AI prompts for small business owners in 2025. Use these ready-to-run examples to boost sales, streamline operations, and save hours each week.',
+  'Best AI Prompts for Small Business Owners (2025)'
+),
+(
+  'How to Write AI Prompts That Actually Work',
+  'how-to-write-ai-prompts',
+  'Learn the art and science of writing effective AI prompts. From basic structure to advanced techniques, master the skills that get you better results from ChatGPT, Claude, and Gemini.',
+  'Master the art of writing effective AI prompts with proven techniques and examples. Get better results from ChatGPT, Claude, and Gemini.',
+  '/lovable-uploads/a85d016e-3f3c-40a8-af62-8b7eec00df23.png',
+  '2024-11-25T00:00:00Z',
+  true,
+  'AI prompt writing',
+  ARRAY['AI prompts', 'prompt engineering', 'ChatGPT', 'Claude', 'Gemini', 'AI tips', 'prompt techniques'],
+  'Master the art of writing effective AI prompts with proven techniques and examples. Get better results from ChatGPT, Claude, and Gemini.',
+  'How to Write AI Prompts That Actually Work'
+),
+(
+  'AI Prompts That Save You Hours Every Week',
+  'ai-prompts-that-save-you-hours',
+  'Discover time-saving AI prompts for busy professionals. From email templates to meeting summaries, these prompts help you reclaim hours in your workday.',
+  'Time-saving AI prompts for busy professionals. Email templates, meeting summaries, and productivity boosters that reclaim hours in your workday.',
+  '/lovable-uploads/9de93cdf-39c1-4acd-b341-1c0540bd28d3.png',
+  '2024-11-28T00:00:00Z',
+  true,
+  'productivity',
+  ARRAY['time management', 'productivity', 'AI automation', 'work efficiency', 'email templates', 'meeting summaries'],
+  'Time-saving AI prompts for busy professionals. Email templates, meeting summaries, and productivity boosters that reclaim hours in your workday.',
+  'AI Prompts That Save You Hours Every Week'
+),
+(
+  'AI Prompts for Marketing Campaigns That Convert',
+  'ai-prompts-for-marketing-campaigns',
+  'Transform your marketing with AI-powered prompts. Create compelling ad copy, social media content, and email campaigns that drive real results.',
+  'AI-powered marketing prompts for compelling ad copy, social media content, and email campaigns that drive conversions and engagement.',
+  '/lovable-uploads/ai-prompts-marketing-campaigns-hero.png',
+  '2024-12-01T00:00:00Z',
+  true,
+  'marketing',
+  ARRAY['marketing campaigns', 'ad copy', 'social media', 'email marketing', 'conversion optimization', 'content marketing'],
+  'AI-powered marketing prompts for compelling ad copy, social media content, and email campaigns that drive conversions and engagement.',
+  'AI Prompts for Marketing Campaigns That Convert'
+),
+(
+  'AI Prompts for Customer Support Excellence',
+  'ai-prompts-for-customer-support',
+  'Elevate your customer support with AI. Ready-to-use prompts for handling complaints, writing responses, and creating help documentation.',
+  'Professional AI prompts for customer support teams. Handle complaints, write responses, and create help documentation with confidence.',
+  '/lovable-uploads/24c8f315-67e8-4022-abec-e096e61d0202.png',
+  '2024-12-03T00:00:00Z',
+  true,
+  'customer support',
+  ARRAY['customer service', 'support tickets', 'help desk', 'customer satisfaction', 'communication', 'problem solving'],
+  'Professional AI prompts for customer support teams. Handle complaints, write responses, and create help documentation with confidence.',
+  'AI Prompts for Customer Support Excellence'
+),
+(
+  'AI Prompts for Social Media Content Creation',
+  'ai-prompts-for-social-media-content',
+  'Create engaging social media content with AI. Prompts for posts, captions, hashtags, and content calendars across all major platforms.',
+  'AI prompts for engaging social media content. Create posts, captions, hashtags, and content calendars for all major platforms.',
+  '/lovable-uploads/ai-prompts-email-social-icons.png',
+  '2024-12-05T00:00:00Z',
+  true,
+  'social media',
+  ARRAY['social media marketing', 'content creation', 'Instagram', 'Twitter', 'LinkedIn', 'Facebook', 'hashtags', 'engagement'],
+  'AI prompts for engaging social media content. Create posts, captions, hashtags, and content calendars for all major platforms.',
+  'AI Prompts for Social Media Content Creation'
+),
+(
+  'AI Prompts for Content Writers and Creators',
+  'ai-prompts-for-content-writers',
+  'Essential AI prompts for content creators. From blog outlines to SEO optimization, streamline your writing process and create better content faster.',
+  'Essential AI prompts for content writers. Blog outlines, SEO optimization, and writing techniques to create better content faster.',
+  '/lovable-uploads/5328cd62-1da8-46db-a7a4-4ee4d9124945.png',
+  '2024-12-07T00:00:00Z',
+  true,
+  'content writing',
+  ARRAY['content marketing', 'blog writing', 'SEO', 'copywriting', 'content strategy', 'writing tips'],
+  'Essential AI prompts for content writers. Blog outlines, SEO optimization, and writing techniques to create better content faster.',
+  'AI Prompts for Content Writers and Creators'
+),
+(
+  'AI Prompts for Business Strategy and Planning',
+  'ai-prompts-for-business-strategy',
+  'Strategic AI prompts for business leaders. Market analysis, competitive research, business planning, and strategic decision-making tools.',
+  'Strategic AI prompts for business leaders. Market analysis, competitive research, business planning, and decision-making tools.',
+  '/lovable-uploads/3d5f6466-6230-4876-9469-dcdac217ca80.png',
+  '2024-12-09T00:00:00Z',
+  true,
+  'business strategy',
+  ARRAY['business planning', 'market analysis', 'competitive research', 'strategic planning', 'business intelligence', 'decision making'],
+  'Strategic AI prompts for business leaders. Market analysis, competitive research, business planning, and decision-making tools.',
+  'AI Prompts for Business Strategy and Planning'
+),
+(
+  'Beginners Guide to Midjourney Prompts',
+  'beginners-guide-midjourney-prompts',
+  'Complete beginners guide to Midjourney prompts. Learn prompt structure, parameters, styles, and techniques to create stunning AI-generated images.',
+  'Complete beginners guide to Midjourney prompts. Master prompt structure, parameters, and techniques for stunning AI-generated images.',
+  '/lovable-uploads/66b1134b-1d55-416b-b7ea-2719a1a22ec1.png',
+  '2024-12-13T00:00:00Z',
+  true,
+  'Midjourney',
+  ARRAY['Midjourney', 'AI art', 'image generation', 'prompt engineering', 'AI tools', 'creative AI', 'digital art'],
+  'Complete beginners guide to Midjourney prompts. Master prompt structure, parameters, and techniques for stunning AI-generated images.',
+  'Beginners Guide to Midjourney Prompts'
+);
+
+-- Update the articles to have proper content from the existing blog pages
+-- Note: The content field contains a brief summary - the full content remains in the individual components
