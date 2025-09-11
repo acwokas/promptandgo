@@ -134,10 +134,10 @@ export const eventPromptOptions = {
   ] as PromptOption[],
 
   audienceSizes: [
-    { value: "large", label: "Large (200–1000)" },
-    { value: "massive", label: "Massive (1000+)" },
-    { value: "medium", label: "Medium (50–200)" },
-    { value: "small", label: "Small (under 50)" }
+    { value: "small", label: "Small (under 50)" },
+    { value: "medium", label: "Medium (50-200)" },
+    { value: "large", label: "Large (200-1000)" },
+    { value: "massive", label: "Massive (1000+)" }
   ] as PromptOption[],
 
   tones: [
@@ -167,11 +167,13 @@ export const eventPromptOptions = {
     { value: "conference-centre", label: "Conference centre" },
     { value: "hotel-ballroom", label: "Hotel ballroom" },
     { value: "hybrid-studio", label: "Hybrid studio setup" },
+    { value: "hybrid-venue", label: "Hybrid (In-person and Virtual)" },
     { value: "office-coworking", label: "Office / co-working space" },
     { value: "outdoor-venue", label: "Outdoor venue" },
+    { value: "quirky-venue", label: "Quirky (e.g. Church, Museum)" },
     { value: "restaurant-cafe", label: "Restaurant / café" },
     { value: "university-campus", label: "University / campus" },
-    { value: "virtual-platform", label: "Virtual platform (Zoom, Teams, Hopin)" }
+    { value: "virtual-platform", label: "Virtual platform (Zoom, TEAMS, Google, etc)" }
   ] as PromptOption[],
 
   geoLocations: [
@@ -184,6 +186,7 @@ export const eventPromptOptions = {
     { value: "latin-america", label: "Latin America" },
     { value: "middle-east", label: "Middle East" },
     { value: "north-america", label: "North America" },
+    { value: "single-country", label: "Single country" },
     { value: "southeast-asia", label: "Southeast Asia" }
   ] as PromptOption[],
 
