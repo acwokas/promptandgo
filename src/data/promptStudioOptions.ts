@@ -230,3 +230,136 @@ export const eventPromptOptions = {
     { value: "post-event-survey", label: "Post-event survey" }
   ] as PromptOption[]
 };
+
+// CTA Prompt Options
+export const ctaPromptOptions = {
+  platforms: [
+    { value: "facebook", label: "Facebook" },
+    { value: "instagram", label: "Instagram" },
+    { value: "linkedin", label: "LinkedIn" },
+    { value: "pinterest", label: "Pinterest" },
+    { value: "snapchat", label: "Snapchat" },
+    { value: "threads", label: "Threads" },
+    { value: "tiktok", label: "TikTok" },
+    { value: "twitter-x", label: "Twitter / X" },
+    { value: "youtube", label: "YouTube" }
+  ] as PromptOption[],
+
+  postFormats: [
+    { value: "carousel-multi-image", label: "Carousel / multi-image" },
+    { value: "gif-animation", label: "GIF / animation" },
+    { value: "infographic", label: "Infographic" },
+    { value: "live-stream", label: "Live stream" },
+    { value: "meme-humorous", label: "Meme / humorous post" },
+    { value: "poll-survey", label: "Poll / survey" },
+    { value: "single-image", label: "Single image post" },
+    { value: "story-ephemeral", label: "Story / ephemeral" },
+    { value: "text-only", label: "Text-only update" },
+    { value: "video-long-form", label: "Video (long-form)" },
+    { value: "video-short-form", label: "Video (short-form)" }
+  ] as PromptOption[],
+
+  contentTypes: [
+    { value: "behind-scenes", label: "Behind the scenes" },
+    { value: "case-study", label: "Case study / success story" },
+    { value: "customer-testimonial", label: "Customer testimonial" },
+    { value: "educational-howto", label: "Educational / how-to" },
+    { value: "event-promotion", label: "Event promotion" },
+    { value: "inspirational-motivational", label: "Inspirational / motivational" },
+    { value: "interactive-quiz", label: "Interactive / quiz" },
+    { value: "news-update", label: "News update" },
+    { value: "product-showcase", label: "Product showcase" },
+    { value: "team-spotlight", label: "Team spotlight" },
+    { value: "thought-leadership", label: "Thought leadership" },
+    { value: "trend-challenge", label: "Trend / challenge" },
+    { value: "user-generated", label: "User-generated content" }
+  ] as PromptOption[],
+
+  toneOfVoice: [
+    { value: "bold-disruptive", label: "Bold & disruptive" },
+    { value: "empathetic-supportive", label: "Empathetic & supportive" },
+    { value: "friendly-approachable", label: "Friendly & approachable" },
+    { value: "inspirational-uplifting", label: "Inspirational & uplifting" },
+    { value: "minimal-straightforward", label: "Minimal & straightforward" },
+    { value: "playful-witty", label: "Playful & witty" },
+    { value: "professional-authoritative", label: "Professional & authoritative" }
+  ] as PromptOption[],
+
+  audienceSegmentation: [
+    { value: "boomers", label: "Boomers (56+)" },
+    { value: "entrepreneurs", label: "Entrepreneurs" },
+    { value: "executives", label: "Executives / decision makers" },
+    { value: "gen-x", label: "Gen X (41–55)" },
+    { value: "gen-z", label: "Gen Z (18–25)" },
+    { value: "millennials", label: "Millennials (26–40)" },
+    { value: "parents", label: "Parents" },
+    { value: "students", label: "Students" },
+    { value: "young-professionals", label: "Young professionals" }
+  ] as PromptOption[],
+
+  geoLocations: [
+    { value: "africa", label: "Africa" },
+    { value: "apac", label: "APAC" },
+    { value: "asia", label: "Asia" },
+    { value: "europe", label: "Europe" },
+    { value: "global", label: "Global" },
+    { value: "india", label: "India" },
+    { value: "latin-america", label: "Latin America" },
+    { value: "middle-east", label: "Middle East" },
+    { value: "north-america", label: "North America" },
+    { value: "north-asia", label: "North Asia" },
+    { value: "southeast-asia", label: "Southeast Asia" }
+  ] as PromptOption[],
+
+  engagementGoals: [
+    { value: "awareness", label: "Awareness (reach new audience)" },
+    { value: "community-building", label: "Community building (discussion, loyalty)" },
+    { value: "conversion", label: "Conversion (sales, purchase)" },
+    { value: "employer-branding", label: "Employer branding (hiring, culture)" },
+    { value: "engagement", label: "Engagement (likes, comments, shares)" },
+    { value: "lead-generation", label: "Lead generation (signups, downloads)" },
+    { value: "traffic", label: "Traffic (drive to website)" }
+  ] as PromptOption[],
+
+  visualStyles: [
+    { value: "bold-vibrant", label: "Bold & vibrant" },
+    { value: "cinematic", label: "Cinematic" },
+    { value: "corporate-professional", label: "Corporate / professional" },
+    { value: "illustrated-cartoon", label: "Illustrated / cartoon" },
+    { value: "memes-pop-culture", label: "Memes / pop culture" },
+    { value: "minimalist-clean", label: "Minimalist / clean" },
+    { value: "pastel-soft", label: "Pastel & soft" },
+    { value: "retro-vintage", label: "Retro / vintage" },
+    { value: "user-generated-authentic", label: "User-generated raw / authentic" }
+  ] as PromptOption[],
+
+  ctaStyles: [
+    { value: "aspirational", label: "Aspirational (Be part of it)" },
+    { value: "conversational", label: "Conversational (Let's chat, Tell us…)" },
+    { value: "curious", label: "Curious (Did you know…?)" },
+    { value: "direct", label: "Direct (Shop now, Sign up)" },
+    { value: "engagement-based", label: "Engagement-based (Comment below, Tag a friend)" },
+    { value: "urgent", label: "Urgent (Don't miss out)" }
+  ] as PromptOption[],
+
+  hashtagStrategies: [
+    { value: "branded-hashtag", label: "Branded hashtag" },
+    { value: "campaign-specific", label: "Campaign-specific hashtag" },
+    { value: "community-hashtag", label: "Community hashtag" },
+    { value: "event-hashtag", label: "Event hashtag" },
+    { value: "maximal-hashtags", label: "Maximal hashtags (10–20)" },
+    { value: "minimal-hashtags", label: "Minimal hashtags (1–3)" },
+    { value: "niche-industry", label: "Niche industry hashtag" },
+    { value: "trending-hashtag", label: "Trending hashtag" }
+  ] as PromptOption[],
+
+  postingTimeframes: [
+    { value: "afternoon", label: "Afternoon" },
+    { value: "evening", label: "Evening" },
+    { value: "late-night", label: "Late night" },
+    { value: "lunchtime", label: "Lunchtime" },
+    { value: "morning", label: "Morning" },
+    { value: "weekday", label: "Weekday" },
+    { value: "weekend", label: "Weekend" }
+  ] as PromptOption[]
+};
