@@ -61,6 +61,21 @@ serve(async (req) => {
     }
 
     const customerId = customers.data[0].id;
+    
+    // Check if this is a new subscription BEFORE we update the record
+    let wasAlreadySubscribed = false;
+    try {
+      const { data: existingSubscriber } = await supabase
+        .from('subscribers')
+        .select('subscribed')
+        .eq('user_id', user.id)
+        .maybeSingle();
+      
+      wasAlreadySubscribed = existingSubscriber?.subscribed === true;
+    } catch (error) {
+      console.warn('Could not check existing subscription status:', error);
+    }
+    
     const subs = await stripe.subscriptions.list({ customer: customerId, status: 'active', limit: 1 });
     const hasActive = subs.data.length > 0;
     let tier: string | null = null;
@@ -130,8 +145,8 @@ serve(async (req) => {
       }, { onConflict: 'user_id' });
     }
 
-    // Send welcome email for new subscribers
-    if (hasActive && tier) {
+    // Only send welcome email for NEW subscribers (not already subscribed)
+    if (hasActive && tier && !wasAlreadySubscribed) {
       try {
         const welcomeResponse = await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/send-subscription-welcome`, {
           method: 'POST',
@@ -150,12 +165,14 @@ serve(async (req) => {
         if (!welcomeResponse.ok) {
           console.error('Failed to send welcome email:', await welcomeResponse.text());
         } else {
-          console.log('Welcome email sent successfully');
+          console.log('Welcome email sent successfully for new subscriber');
         }
       } catch (emailError) {
         console.error('Error sending welcome email:', emailError);
         // Don't fail the subscription check if email fails
       }
+    } else if (hasActive && wasAlreadySubscribed) {
+      console.log('Skipping welcome email - user already subscribed');
     }
 
     return new Response(JSON.stringify({ subscribed: hasActive, subscription_tier: tier, subscription_end: subEnd }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 });
