@@ -82,13 +82,15 @@ const PurchasesPage = () => {
       return {
         name: 'Lifetime All-Access Pass',
         description: 'Unlimited access to all prompts and future content',
-        icon: <Package className="w-5 h-5" />
+        icon: <Package className="w-5 h-5" />,
+        linkTo: '/library'
       };
     }
     return {
       name: title || itemType,
       description: `${itemType} pack`,
-      icon: <ShoppingBag className="w-5 h-5" />
+      icon: <ShoppingBag className="w-5 h-5" />,
+      linkTo: '/packs'
     };
   };
 
@@ -187,22 +189,25 @@ const PurchasesPage = () => {
                         {(items[o.id] || []).map((item) => {
                           const itemDisplay = getItemTypeDisplay(item.item_type, item.title);
                           return (
-                            <div key={item.id} className="flex items-center justify-between p-4 rounded-lg border bg-card/50">
-                              <div className="flex items-center gap-3">
-                                <div className="p-2 rounded-full bg-primary/10 text-primary">
+                            <div key={item.id} className="flex items-center justify-between p-4 rounded-lg border bg-card/50 hover:bg-card/80 transition-colors">
+                              <Link to={itemDisplay.linkTo} className="flex items-center gap-3 flex-1 group">
+                                <div className="p-2 rounded-full bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
                                   {itemDisplay.icon}
                                 </div>
-                                <div>
-                                  <div className="font-medium">{itemDisplay.name}</div>
+                                <div className="flex-1">
+                                  <div className="font-medium group-hover:text-primary transition-colors">{itemDisplay.name}</div>
                                   <div className="text-sm text-muted-foreground">{itemDisplay.description}</div>
                                   {item.quantity > 1 && (
                                     <div className="text-xs text-muted-foreground mt-1">
                                       Quantity: {item.quantity}
                                     </div>
                                   )}
+                                  <div className="text-xs text-primary opacity-0 group-hover:opacity-100 transition-opacity mt-1">
+                                    Click to view →
+                                  </div>
                                 </div>
-                              </div>
-                              <div className="text-right">
+                              </Link>
+                              <div className="text-right ml-4">
                                 <div className="font-semibold">${(item.unit_amount / 100).toFixed(2)}</div>
                                 {item.quantity > 1 && (
                                   <div className="text-xs text-muted-foreground">
