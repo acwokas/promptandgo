@@ -52,6 +52,7 @@ async function grantEntitlements(supabaseService: any, userId: string, userEmail
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
   try {
+    console.log("VERIFY-PAYMENT: Starting verification process");
     const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
     if (!stripeKey) throw new Error("Missing STRIPE_SECRET_KEY secret");
 
@@ -97,6 +98,7 @@ serve(async (req) => {
 
     const stripe = new Stripe(stripeKey, { apiVersion: "2023-10-16" });
     const session = await stripe.checkout.sessions.retrieve(sessionId);
+    console.log("VERIFY-PAYMENT: Retrieved Stripe session", { sessionId, paymentStatus: session.payment_status });
     
     // SECURITY: Additional validation - ensure session belongs to authenticated user
     if (session.customer) {
@@ -168,6 +170,7 @@ serve(async (req) => {
     return new Response(JSON.stringify({ ok: true }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 });
   } catch (error: any) {
     const msg = error?.message || String(error);
+    console.error("VERIFY-PAYMENT: Error occurred", { error: msg, stack: error?.stack });
     return new Response(JSON.stringify({ error: msg }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 });
   }
 });
