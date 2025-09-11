@@ -4,9 +4,11 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { toast } from "@/hooks/use-toast";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Link } from "react-router-dom";
+import { ShoppingBag, Calendar, DollarSign, Package, CheckCircle, Clock, XCircle } from "lucide-react";
 
 type Order = { id: string; status: string; amount: number | null; mode: string; created_at: string };
 
@@ -62,6 +64,34 @@ const PurchasesPage = () => {
     toast({ title: 'Membership refreshed' });
   };
 
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'completed':
+        return <Badge variant="default" className="bg-green-100 text-green-800 border-green-200"><CheckCircle className="w-3 h-3 mr-1" />Complete</Badge>;
+      case 'pending':
+        return <Badge variant="secondary" className="bg-yellow-100 text-yellow-800 border-yellow-200"><Clock className="w-3 h-3 mr-1" />Pending</Badge>;
+      case 'failed':
+        return <Badge variant="destructive"><XCircle className="w-3 h-3 mr-1" />Failed</Badge>;
+      default:
+        return <Badge variant="outline">{status}</Badge>;
+    }
+  };
+
+  const getItemTypeDisplay = (itemType: string, title: string | null) => {
+    if (itemType === 'lifetime') {
+      return {
+        name: 'Lifetime All-Access Pass',
+        description: 'Unlimited access to all prompts and future content',
+        icon: <Package className="w-5 h-5" />
+      };
+    }
+    return {
+      name: title || itemType,
+      description: `${itemType} pack`,
+      icon: <ShoppingBag className="w-5 h-5" />
+    };
+  };
+
   return (
     <>
       <SEO title="My Purchases" description="View your purchased prompt packs and invoices." />
@@ -96,38 +126,95 @@ const PurchasesPage = () => {
           <Button variant="secondary" onClick={refreshMembership}>Refresh Membership</Button>
           <Button variant="cta" onClick={manageMembership}>Manage Membership</Button>
         </div>
+        
         {orders.length === 0 ? (
-          <div className="rounded-xl border bg-card p-6 text-center text-muted-foreground">No purchases yet.</div>
+          <Card className="text-center py-12">
+            <CardContent className="space-y-4">
+              <ShoppingBag className="w-12 h-12 mx-auto text-muted-foreground" />
+              <div>
+                <h3 className="text-lg font-semibold mb-2">No purchases yet</h3>
+                <p className="text-muted-foreground mb-4">You haven't made any purchases. Check out our prompt packs to get started!</p>
+                <Button asChild variant="cta">
+                  <Link to="/packs">Browse Power Packs</Link>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         ) : (
-          <div className="grid gap-4">
+          <div className="grid gap-6">
             {orders.map((o) => (
-              <Card key={o.id}>
-                <CardHeader>
-                  <CardTitle className="flex items-center justify-between">
-                    <span>Order {o.id.slice(0, 8)}…</span>
-                    <span className="text-sm text-muted-foreground">{new Date(o.created_at).toLocaleString()}</span>
-                  </CardTitle>
+              <Card key={o.id} className="overflow-hidden">
+                <CardHeader className="bg-gradient-to-r from-primary/5 to-secondary/5 border-b">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <ShoppingBag className="w-5 h-5 text-primary" />
+                      <div>
+                        <CardTitle className="text-lg">Order #{o.id.slice(0, 8).toUpperCase()}</CardTitle>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <Calendar className="w-4 h-4" />
+                          {new Date(o.created_at).toLocaleDateString('en-US', { 
+                            year: 'numeric', 
+                            month: 'long', 
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      {getStatusBadge(o.status)}
+                      <div className="text-right">
+                        <div className="flex items-center gap-1 text-lg font-bold">
+                          <DollarSign className="w-4 h-4" />
+                          {((o.amount || 0) / 100).toFixed(2)}
+                        </div>
+                        <div className="text-xs text-muted-foreground uppercase tracking-wide">
+                          {o.mode}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex items-center justify-between text-sm">
-                    <span>Status</span>
-                    <span className="font-medium">{o.status}</span>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span>Mode</span>
-                    <span className="font-medium">{o.mode}</span>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span>Total</span>
-                    <span className="font-semibold">${((o.amount || 0) / 100).toFixed(2)}</span>
-                  </div>
-                  <div>
-                    <div className="font-medium mb-2">Items</div>
-                    <ul className="text-sm text-muted-foreground list-disc pl-5">
-                      {(items[o.id] || []).map((it) => (
-                        <li key={it.id}>{it.item_type === 'lifetime' ? 'Lifetime All-Access' : `${it.item_type}: ${it.title || ''}`} × {it.quantity} — ${ (it.unit_amount/100).toFixed(2) }</li>
-                      ))}
-                    </ul>
+                
+                <CardContent className="p-6">
+                  <div className="space-y-4">
+                    <h4 className="font-semibold text-base mb-3">Items Purchased</h4>
+                    {(items[o.id] || []).length === 0 ? (
+                      <p className="text-muted-foreground italic">No items found for this order</p>
+                    ) : (
+                      <div className="grid gap-3">
+                        {(items[o.id] || []).map((item) => {
+                          const itemDisplay = getItemTypeDisplay(item.item_type, item.title);
+                          return (
+                            <div key={item.id} className="flex items-center justify-between p-4 rounded-lg border bg-card/50">
+                              <div className="flex items-center gap-3">
+                                <div className="p-2 rounded-full bg-primary/10 text-primary">
+                                  {itemDisplay.icon}
+                                </div>
+                                <div>
+                                  <div className="font-medium">{itemDisplay.name}</div>
+                                  <div className="text-sm text-muted-foreground">{itemDisplay.description}</div>
+                                  {item.quantity > 1 && (
+                                    <div className="text-xs text-muted-foreground mt-1">
+                                      Quantity: {item.quantity}
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="text-right">
+                                <div className="font-semibold">${(item.unit_amount / 100).toFixed(2)}</div>
+                                {item.quantity > 1 && (
+                                  <div className="text-xs text-muted-foreground">
+                                    ${(item.unit_amount / 100).toFixed(2)} each
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
                 </CardContent>
               </Card>
