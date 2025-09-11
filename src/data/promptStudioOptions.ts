@@ -361,5 +361,20 @@ export const ctaPromptOptions = {
     { value: "morning", label: "Morning" },
     { value: "weekday", label: "Weekday" },
     { value: "weekend", label: "Weekend" }
+  ] as PromptOption[],
+
+  powerWords: [
+    { value: "bold", label: "Bold" },
+    { value: "create", label: "Create" },
+    { value: "culture", label: "Culture" },
+    { value: "future", label: "Future" },
+    { value: "growth", label: "Growth" },
+    { value: "human", label: "Human" },
+    { value: "impact", label: "Impact" },
+    { value: "momentum", label: "Momentum" },
+    { value: "spark", label: "Spark" },
+    { value: "together", label: "Together" },
+    { value: "trust", label: "Trust" },
+    { value: "vision", label: "Vision" }
   ] as PromptOption[]
 };

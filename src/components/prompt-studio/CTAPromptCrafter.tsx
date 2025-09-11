@@ -24,6 +24,7 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated }
   const [ctaStyle, setCtaStyle] = useState("");
   const [hashtagStrategy, setHashtagStrategy] = useState("");
   const [postingTimeframe, setPostingTimeframe] = useState("");
+  const [powerWords, setPowerWords] = useState("");
   const [customDescription, setCustomDescription] = useState("");
 
   const generatePrompt = () => {
@@ -44,6 +45,7 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated }
       ctaStyle && `CTA Style: ${ctaPromptOptions.ctaStyles.find(c => c.value === ctaStyle)?.label}`,
       hashtagStrategy && `Hashtag Strategy: ${ctaPromptOptions.hashtagStrategies.find(h => h.value === hashtagStrategy)?.label}`,
       postingTimeframe && `Posting Time: ${ctaPromptOptions.postingTimeframes.find(p => p.value === postingTimeframe)?.label}`,
+      powerWords && `Power Words: ${ctaPromptOptions.powerWords.find(pw => pw.value === powerWords)?.label}`,
     ].filter(Boolean);
 
     let prompt = "Create a compelling social media call-to-action post with the following specifications:\n\n";
@@ -82,6 +84,7 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated }
     setCtaStyle("");
     setHashtagStrategy("");
     setPostingTimeframe("");
+    setPowerWords("");
     setCustomDescription("");
   };
 
@@ -269,6 +272,22 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated }
             </SelectTrigger>
             <SelectContent>
               {ctaPromptOptions.postingTimeframes.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="powerWords">Power Words</Label>
+          <Select value={powerWords} onValueChange={setPowerWords}>
+            <SelectTrigger>
+              <SelectValue placeholder="Choose power words" />
+            </SelectTrigger>
+            <SelectContent>
+              {ctaPromptOptions.powerWords.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}
                 </SelectItem>
