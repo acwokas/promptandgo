@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ctaPromptOptions } from "@/data/promptStudioOptions";
 import { toast } from "sonner";
@@ -11,6 +12,7 @@ interface CTAPromptCrafterProps {
 }
 
 const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated }) => {
+  const [subjectMessage, setSubjectMessage] = useState("");
   const [platform, setPlatform] = useState("");
   const [postFormat, setPostFormat] = useState("");
   const [contentType, setContentType] = useState("");
@@ -25,6 +27,11 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated }
   const [customDescription, setCustomDescription] = useState("");
 
   const generatePrompt = () => {
+    if (!subjectMessage.trim()) {
+      toast.error("Please enter a subject/message for your CTA post");
+      return;
+    }
+
     const selectedOptions = [
       platform && `Platform: ${ctaPromptOptions.platforms.find(p => p.value === platform)?.label}`,
       postFormat && `Post Format: ${ctaPromptOptions.postFormats.find(f => f.value === postFormat)?.label}`,
@@ -39,13 +46,9 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated }
       postingTimeframe && `Posting Time: ${ctaPromptOptions.postingTimeframes.find(p => p.value === postingTimeframe)?.label}`,
     ].filter(Boolean);
 
-    if (selectedOptions.length === 0 && !customDescription) {
-      toast.error("Please select at least one option or add a custom description");
-      return;
-    }
-
     let prompt = "Create a compelling social media call-to-action post with the following specifications:\n\n";
     
+    prompt += `Subject/Message: ${subjectMessage}\n\n`;
     if (selectedOptions.length > 0) {
       prompt += selectedOptions.join("\n") + "\n\n";
     }
@@ -67,6 +70,7 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated }
   };
 
   const resetForm = () => {
+    setSubjectMessage("");
     setPlatform("");
     setPostFormat("");
     setContentType("");
@@ -83,6 +87,19 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated }
 
   return (
     <div className="space-y-6">
+      {/* Subject/Message - Mandatory Field */}
+      <div className="space-y-2">
+        <Label htmlFor="subjectMessage">Subject/Message *</Label>
+        <Input
+          id="subjectMessage"
+          placeholder="Enter the main topic or message for your CTA post..."
+          value={subjectMessage}
+          onChange={(e) => setSubjectMessage(e.target.value)}
+          className="w-full"
+          required
+        />
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <div className="space-y-2">
           <Label htmlFor="platform">Platform</Label>
