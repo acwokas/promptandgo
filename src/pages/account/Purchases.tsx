@@ -5,10 +5,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { toast } from "@/hooks/use-toast";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Link } from "react-router-dom";
-import { ShoppingBag, Calendar, DollarSign, Package, CheckCircle, Clock, XCircle } from "lucide-react";
+import { ShoppingBag, Calendar, DollarSign, Package, CheckCircle, Clock, XCircle, Trash2 } from "lucide-react";
 
 type Order = { id: string; status: string; amount: number | null; mode: string; created_at: string };
 
@@ -17,20 +18,60 @@ type OrderItem = { id: string; order_id: string; item_type: string; title: strin
 const PurchasesPage = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [items, setItems] = useState<Record<string, OrderItem[]>>({});
+  const [deletingOrder, setDeletingOrder] = useState<string | null>(null);
 
   useEffect(() => {
-    (async () => {
-      const { data: ords, error } = await supabase.from('orders').select('id,status,amount,mode,created_at').order('created_at', { ascending: false });
-      if (error) return;
-      setOrders(ords || []);
-      const ids = (ords || []).map(o => o.id);
-      if (!ids.length) return;
-      const { data: its } = await supabase.from('order_items').select('id,order_id,item_type,title,unit_amount,quantity').in('order_id', ids);
-      const grouped: Record<string, OrderItem[]> = {};
-      (its || []).forEach((it) => { (grouped[it.order_id] ||= []).push(it as any); });
-      setItems(grouped);
-    })();
+    fetchOrders();
   }, []);
+
+  const fetchOrders = async () => {
+    const { data: ords, error } = await supabase.from('orders').select('id,status,amount,mode,created_at').order('created_at', { ascending: false });
+    if (error) return;
+    setOrders(ords || []);
+    const ids = (ords || []).map(o => o.id);
+    if (!ids.length) return;
+    const { data: its } = await supabase.from('order_items').select('id,order_id,item_type,title,unit_amount,quantity').in('order_id', ids);
+    const grouped: Record<string, OrderItem[]> = {};
+    (its || []).forEach((it) => { (grouped[it.order_id] ||= []).push(it as any); });
+    setItems(grouped);
+  };
+
+  const handleDeleteOrder = async (orderId: string) => {
+    setDeletingOrder(orderId);
+    try {
+      // Delete the order (this will cascade delete the order items due to foreign key relationship)
+      const { error } = await supabase
+        .from('orders')
+        .delete()
+        .eq('id', orderId);
+
+      if (error) {
+        toast({
+          title: 'Error',
+          description: 'Failed to delete the order. Please try again.',
+          variant: 'destructive'
+        });
+        return;
+      }
+
+      // Refresh the orders list
+      await fetchOrders();
+      
+      toast({
+        title: 'Order deleted',
+        description: 'Your purchase has been successfully removed from your history.'
+      });
+    } catch (error: any) {
+      console.error('Delete order error:', error);
+      toast({
+        title: 'Error',
+        description: 'An unexpected error occurred. Please try again.',
+        variant: 'destructive'
+      });
+    } finally {
+      setDeletingOrder(null);
+    }
+  };
 
   const manageMembership = async () => {
     try {
@@ -175,6 +216,39 @@ const PurchasesPage = () => {
                           {o.mode}
                         </div>
                       </div>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                            disabled={deletingOrder === o.id}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Delete Purchase Record?</AlertDialogTitle>
+                            <AlertDialogDescription className="space-y-2">
+                              <p>Are you sure you want to delete this purchase from your history?</p>
+                              <p className="font-semibold text-amber-600">
+                                ⚠️ Warning: If you delete your purchase record, you may be required to purchase these items again to regain access.
+                              </p>
+                              <p>This action cannot be undone.</p>
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction 
+                              onClick={() => handleDeleteOrder(o.id)}
+                              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                            >
+                              Yes, Delete Purchase
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </div>
                   </div>
                 </CardHeader>
