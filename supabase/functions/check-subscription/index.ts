@@ -145,8 +145,9 @@ serve(async (req) => {
       }, { onConflict: 'user_id' });
     }
 
-    // Only send welcome email for NEW subscribers (not already subscribed)
-    if (hasActive && tier && !wasAlreadySubscribed) {
+    // Welcome email sending is gated by SEND_WELCOME_EMAILS env var to prevent duplicates and spam
+    const shouldSendWelcome = Deno.env.get('SEND_WELCOME_EMAILS') === 'true';
+    if (shouldSendWelcome && hasActive && tier && !wasAlreadySubscribed) {
       try {
         const welcomeResponse = await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/send-subscription-welcome`, {
           method: 'POST',
@@ -173,6 +174,8 @@ serve(async (req) => {
       }
     } else if (hasActive && wasAlreadySubscribed) {
       console.log('Skipping welcome email - user already subscribed');
+    } else if (hasActive && !shouldSendWelcome) {
+      console.log('Welcome emails disabled via SEND_WELCOME_EMAILS');
     }
 
     return new Response(JSON.stringify({ subscribed: hasActive, subscription_tier: tier, subscription_end: subEnd }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 });
