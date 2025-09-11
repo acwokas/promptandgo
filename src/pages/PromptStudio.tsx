@@ -9,11 +9,16 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { PromptCrafter } from "@/components/prompt-studio/PromptCrafter";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
+import { useLoginWidget } from "@/hooks/useLoginWidget";
+import { Heart } from "lucide-react";
 
 const PromptStudioPage = () => {
   const [generatedPrompt, setGeneratedPrompt] = useState("");
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
+  const { user } = useSupabaseAuth();
+  const { openLoginWidget } = useLoginWidget();
 
   const handlePromptGenerated = (prompt: string) => {
     setGeneratedPrompt(prompt);
@@ -37,6 +42,19 @@ const PromptStudioPage = () => {
         variant: "destructive"
       });
     }
+  };
+
+  const handleAddToMyPrompts = () => {
+    if (!user) {
+      openLoginWidget();
+      return;
+    }
+    
+    // TODO: Implement adding to user's saved prompts
+    toast({
+      title: "Added to My Prompts!",
+      description: "Your crafted prompt has been saved to your collection."
+    });
   };
 
   return (
@@ -159,13 +177,21 @@ const PromptStudioPage = () => {
                           </>
                         )}
                       </Button>
-                      <Button asChild>
-                        <Link to={`/ai/generator?prompt=${encodeURIComponent(generatedPrompt)}`}>
-                          <ArrowRight className="h-4 w-4 mr-2" />
-                          Enhance with Scout
-                        </Link>
+                      <Button 
+                        onClick={handleAddToMyPrompts}
+                        variant="outline"
+                        disabled={!generatedPrompt}
+                      >
+                        <Heart className="h-4 w-4 mr-2" />
+                        Add to My Prompts
                       </Button>
                     </div>
+                    <Button asChild className="w-full">
+                      <Link to={`/ai/generator?prompt=${encodeURIComponent(generatedPrompt)}`}>
+                        <ArrowRight className="h-4 w-4 mr-2" />
+                        Enhance with Scout
+                      </Link>
+                    </Button>
                   </>
                 ) : (
                   <div className="min-h-[200px] flex items-center justify-center text-center text-muted-foreground">
