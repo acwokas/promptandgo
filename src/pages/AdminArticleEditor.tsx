@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -13,6 +13,8 @@ import { Switch } from "@/components/ui/switch";
 import { Save, ArrowLeft, Plus, Trash2, Upload, ExternalLink } from "lucide-react";
 import { format } from "date-fns";
 import SEO from "@/components/SEO";
+import { ImageUpload } from "@/components/ui/image-upload";
+import { ContentImageInserter } from "@/components/ui/content-image-inserter";
 
 interface Article {
   id?: string;
@@ -62,6 +64,7 @@ const AdminArticleEditor = () => {
 
   const [assets, setAssets] = useState<ArticleAsset[]>([]);
   const [newKeyphrase, setNewKeyphrase] = useState('');
+  const contentTextareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     if (id && id !== 'new') {
@@ -136,6 +139,29 @@ const AdminArticleEditor = () => {
       ...prev,
       keyphrases: prev.keyphrases.filter(kp => kp !== keyphrase)
     }));
+  };
+
+  const insertImageIntoContent = (imageMarkdown: string) => {
+    const textarea = contentTextareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const currentContent = article.content;
+    
+    // Insert the markdown at cursor position
+    const newContent = currentContent.substring(0, start) + 
+                      '\n\n' + imageMarkdown + '\n\n' + 
+                      currentContent.substring(end);
+    
+    setArticle(prev => ({ ...prev, content: newContent }));
+    
+    // Focus back to textarea and position cursor after inserted content
+    setTimeout(() => {
+      textarea.focus();
+      const newCursorPos = start + imageMarkdown.length + 4; // +4 for the \n\n characters
+      textarea.setSelectionRange(newCursorPos, newCursorPos);
+    }, 0);
   };
 
   const addAsset = () => {
@@ -357,8 +383,15 @@ const AdminArticleEditor = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="content">Content *</Label>
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="content">Content *</Label>
+                      <ContentImageInserter 
+                        onInsert={insertImageIntoContent}
+                        disabled={saving}
+                      />
+                    </div>
                     <Textarea
+                      ref={contentTextareaRef}
                       id="content"
                       value={article.content}
                       onChange={(e) => setArticle(prev => ({ ...prev, content: e.target.value }))}
@@ -367,18 +400,27 @@ const AdminArticleEditor = () => {
                       className="min-h-96"
                     />
                     <p className="text-sm text-muted-foreground">
-                      Supports Markdown formatting
+                      Supports Markdown formatting. Use the "Insert Image" button to add images directly.
                     </p>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="thumbnail">Thumbnail URL</Label>
-                    <Input
-                      id="thumbnail"
-                      value={article.thumbnail_url}
-                      onChange={(e) => setArticle(prev => ({ ...prev, thumbnail_url: e.target.value }))}
-                      placeholder="https://example.com/image.jpg"
+                    <Label htmlFor="thumbnail">Thumbnail Image</Label>
+                    <ImageUpload
+                      currentImage={article.thumbnail_url}
+                      onUpload={(url) => setArticle(prev => ({ ...prev, thumbnail_url: url }))}
+                      onRemove={() => setArticle(prev => ({ ...prev, thumbnail_url: '' }))}
+                      className="max-w-md"
                     />
+                    <div className="mt-2">
+                      <Label htmlFor="thumbnail_url">Or enter URL manually</Label>
+                      <Input
+                        id="thumbnail_url"
+                        value={article.thumbnail_url}
+                        onChange={(e) => setArticle(prev => ({ ...prev, thumbnail_url: e.target.value }))}
+                        placeholder="https://example.com/image.jpg"
+                      />
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -502,18 +544,39 @@ const AdminArticleEditor = () => {
                             </select>
                           </div>
 
-                          <div className="space-y-2">
-                            <Label>Asset URL</Label>
-                            <Input
-                              value={asset.asset_url}
-                              onChange={(e) => updateAsset(index, 'asset_url', e.target.value)}
-                              placeholder={
-                                asset.asset_type === 'youtube' 
-                                  ? 'https://youtube.com/watch?v=...'
-                                  : 'https://example.com/file.jpg'
-                              }
-                            />
-                          </div>
+                          {asset.asset_type === 'image' ? (
+                            <div className="space-y-2 md:col-span-2">
+                              <Label>Upload Image</Label>
+                              <ImageUpload
+                                currentImage={asset.asset_url}
+                                onUpload={(url) => updateAsset(index, 'asset_url', url)}
+                                onRemove={() => updateAsset(index, 'asset_url', '')}
+                              />
+                              <div className="mt-2">
+                                <Label>Or enter URL manually</Label>
+                                <Input
+                                  value={asset.asset_url}
+                                  onChange={(e) => updateAsset(index, 'asset_url', e.target.value)}
+                                  placeholder="https://example.com/image.jpg"
+                                />
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="space-y-2">
+                              <Label>Asset URL</Label>
+                              <Input
+                                value={asset.asset_url}
+                                onChange={(e) => updateAsset(index, 'asset_url', e.target.value)}
+                                placeholder={
+                                  asset.asset_type === 'youtube' 
+                                    ? 'https://youtube.com/watch?v=...'
+                                    : asset.asset_type === 'video'
+                                    ? 'https://example.com/video.mp4'
+                                    : 'https://example.com/link'
+                                }
+                              />
+                            </div>
+                          )}
 
                           <div className="space-y-2">
                             <Label>Title</Label>
