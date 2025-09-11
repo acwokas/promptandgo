@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
-import { Wand2, Brain, Bot, ArrowRight, Sparkles } from "lucide-react";
+import { Wand2, Brain, Bot, ArrowRight, Sparkles, Palette } from "lucide-react";
 import { PollCarousel } from "@/components/poll/PollCarousel";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
@@ -16,6 +16,14 @@ const ToolkitPage = () => {
       path: "/ai/generator",
       features: ["Scout-powered creation", "Custom prompts", "Copy & save", "Professional quality"],
       color: "from-purple-500 to-pink-500"
+    },
+    {
+      title: "Scout's Prompt Studio",
+      description: "Craft perfect prompts with guided dropdowns and curated options - no guesswork required",
+      icon: Palette,
+      path: "/ai/studio",
+      features: ["Guided creation", "Image prompts", "Dropdown selections", "Expert quality"],
+      color: "from-orange-500 to-red-500"
     },
     {
       title: "Scout AI Assistant",
