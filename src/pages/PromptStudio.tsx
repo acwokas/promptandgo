@@ -7,13 +7,15 @@ import { Link } from "react-router-dom";
 import { Wand2, Image, Copy, CheckCheck, ArrowRight, Palette, Camera, Sparkles } from "lucide-react";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { PromptCrafter } from "@/components/prompt-studio/PromptCrafter";
+import { EventPromptCrafter } from "@/components/prompt-studio/EventPromptCrafter";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useLoginWidget } from "@/hooks/useLoginWidget";
-import { Heart } from "lucide-react";
+import { Heart, Calendar } from "lucide-react";
 
 const PromptStudioPage = () => {
+  const [activeTab, setActiveTab] = useState<"image" | "event">("image");
   const [generatedPrompt, setGeneratedPrompt] = useState("");
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
@@ -114,24 +116,59 @@ const PromptStudioPage = () => {
             </div>
           </div>
 
+          {/* Tab Selection */}
+          <div className="flex justify-center mb-8">
+            <div className="inline-flex rounded-lg bg-muted p-1">
+              <Button
+                variant={activeTab === "image" ? "default" : "ghost"}
+                onClick={() => setActiveTab("image")}
+                className="flex items-center gap-2"
+              >
+                <Image className="h-4 w-4" />
+                Image Prompts
+              </Button>
+              <Button
+                variant={activeTab === "event" ? "default" : "ghost"}
+                onClick={() => setActiveTab("event")}
+                className="flex items-center gap-2"
+              >
+                <Calendar className="h-4 w-4" />
+                Event Prompts
+              </Button>
+            </div>
+          </div>
+
           <div className="grid gap-8 lg:grid-cols-2">
             {/* Left Column - Prompt Crafter */}
             <Card className="border-0 bg-card/50 backdrop-blur-sm">
               <CardHeader>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-purple-500/20 to-pink-500/20 flex items-center justify-center">
-                    <Image className="h-5 w-5 text-purple-500" />
+                    {activeTab === "image" ? (
+                      <Image className="h-5 w-5 text-purple-500" />
+                    ) : (
+                      <Calendar className="h-5 w-5 text-purple-500" />
+                    )}
                   </div>
                   <div>
-                    <CardTitle className="text-xl">Image Prompt Crafter</CardTitle>
+                    <CardTitle className="text-xl">
+                      {activeTab === "image" ? "Image Prompt Crafter" : "Event Prompt Crafter"}
+                    </CardTitle>
                     <CardDescription>
-                      Build the perfect image prompt with guided selections
+                      {activeTab === "image" 
+                        ? "Build the perfect image prompt with guided selections"
+                        : "Craft detailed event prompts with comprehensive options"
+                      }
                     </CardDescription>
                   </div>
                 </div>
               </CardHeader>
               <CardContent>
-                <PromptCrafter onPromptGenerated={handlePromptGenerated} />
+                {activeTab === "image" ? (
+                  <PromptCrafter onPromptGenerated={handlePromptGenerated} />
+                ) : (
+                  <EventPromptCrafter onPromptGenerated={handlePromptGenerated} />
+                )}
               </CardContent>
             </Card>
 
