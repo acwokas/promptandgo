@@ -4,6 +4,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import { X } from "lucide-react";
 import { ctaPromptOptions } from "@/data/promptStudioOptions";
 import { toast } from "sonner";
 
@@ -24,7 +26,7 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated }
   const [ctaStyle, setCtaStyle] = useState("");
   const [hashtagStrategy, setHashtagStrategy] = useState("");
   const [postingTimeframe, setPostingTimeframe] = useState("");
-  const [powerWords, setPowerWords] = useState("");
+  const [powerWords, setPowerWords] = useState<string[]>([]);
   const [customDescription, setCustomDescription] = useState("");
 
   const generatePrompt = () => {
@@ -45,12 +47,13 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated }
       ctaStyle && `CTA Style: ${ctaPromptOptions.ctaStyles.find(c => c.value === ctaStyle)?.label}`,
       hashtagStrategy && `Hashtag Strategy: ${ctaPromptOptions.hashtagStrategies.find(h => h.value === hashtagStrategy)?.label}`,
       postingTimeframe && `Posting Time: ${ctaPromptOptions.postingTimeframes.find(p => p.value === postingTimeframe)?.label}`,
-      powerWords && `Power Words: ${ctaPromptOptions.powerWords.find(pw => pw.value === powerWords)?.label}`,
+      powerWords.length > 0 && `Power Words: ${powerWords.map(pw => ctaPromptOptions.powerWords.find(p => p.value === pw)?.label).join(", ")}`,
     ].filter(Boolean);
 
     let prompt = "Create a compelling social media call-to-action post with the following specifications:\n\n";
     
     prompt += `Subject/Message: ${subjectMessage}\n\n`;
+    
     if (selectedOptions.length > 0) {
       prompt += selectedOptions.join("\n") + "\n\n";
     }
@@ -84,8 +87,18 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated }
     setCtaStyle("");
     setHashtagStrategy("");
     setPostingTimeframe("");
-    setPowerWords("");
+    setPowerWords([]);
     setCustomDescription("");
+  };
+
+  const addPowerWord = (word: string) => {
+    if (!powerWords.includes(word)) {
+      setPowerWords([...powerWords, word]);
+    }
+  };
+
+  const removePowerWord = (word: string) => {
+    setPowerWords(powerWords.filter(w => w !== word));
   };
 
   return (
@@ -279,22 +292,47 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated }
             </SelectContent>
           </Select>
         </div>
+      </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="powerWords">Power Words</Label>
-          <Select value={powerWords} onValueChange={setPowerWords}>
-            <SelectTrigger>
-              <SelectValue placeholder="Choose power words" />
-            </SelectTrigger>
-            <SelectContent>
-              {ctaPromptOptions.powerWords.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+      {/* Power Words - Multi-select */}
+      <div className="space-y-3">
+        <Label className="text-sm font-medium">Power Words</Label>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+          {ctaPromptOptions.powerWords
+            .filter(word => !powerWords.includes(word.value))
+            .map((word) => (
+              <Button
+                key={word.value}
+                variant="outline"
+                size="sm"
+                onClick={() => addPowerWord(word.value)}
+                className="justify-start text-xs"
+              >
+                + {word.label}
+              </Button>
+            ))}
         </div>
+        
+        {/* Selected Power Words */}
+        {powerWords.length > 0 && (
+          <div className="space-y-2">
+            <div className="flex flex-wrap gap-2">
+              {powerWords.map((word) => (
+                <Badge key={word} variant="secondary" className="text-xs">
+                  {ctaPromptOptions.powerWords.find(pw => pw.value === word)?.label}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => removePowerWord(word)}
+                    className="h-auto p-0 ml-1 hover:bg-transparent"
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                </Badge>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="space-y-2">
