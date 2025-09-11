@@ -117,33 +117,56 @@ const PromptStudioPage = () => {
             </div>
           </div>
 
-          {/* Tab Selection */}
+          {/* Enhanced Tab Selection */}
           <div className="flex justify-center mb-8">
-            <div className="inline-flex rounded-lg bg-muted p-1">
-              <Button
-                variant={activeTab === "image" ? "default" : "ghost"}
-                onClick={() => setActiveTab("image")}
-                className="flex items-center gap-2"
-              >
-                <Image className="h-4 w-4" />
-                Image Prompts
-              </Button>
-              <Button
-                variant={activeTab === "event" ? "default" : "ghost"}
-                onClick={() => setActiveTab("event")}
-                className="flex items-center gap-2"
-              >
-                <Calendar className="h-4 w-4" />
-                Event Prompts
-              </Button>
-              <Button
-                variant={activeTab === "cta" ? "default" : "ghost"}
-                onClick={() => setActiveTab("cta")}
-                className="flex items-center gap-2"
-              >
-                <Megaphone className="h-4 w-4" />
-                CTA Prompts
-              </Button>
+            <div className="bg-card/80 backdrop-blur-sm rounded-2xl p-2 border shadow-lg">
+              <div className="flex gap-1">
+                <Button
+                  variant={activeTab === "image" ? "default" : "ghost"}
+                  onClick={() => setActiveTab("image")}
+                  className={`
+                    flex items-center gap-3 px-6 py-3 rounded-xl transition-all duration-200
+                    ${activeTab === "image" 
+                      ? "bg-primary text-primary-foreground shadow-md scale-105" 
+                      : "hover:bg-muted/80 text-muted-foreground hover:text-foreground"
+                    }
+                  `}
+                  size="lg"
+                >
+                  <Image className="h-5 w-5" />
+                  <span className="font-medium">Image Prompts</span>
+                </Button>
+                <Button
+                  variant={activeTab === "event" ? "default" : "ghost"}
+                  onClick={() => setActiveTab("event")}
+                  className={`
+                    flex items-center gap-3 px-6 py-3 rounded-xl transition-all duration-200
+                    ${activeTab === "event" 
+                      ? "bg-primary text-primary-foreground shadow-md scale-105" 
+                      : "hover:bg-muted/80 text-muted-foreground hover:text-foreground"
+                    }
+                  `}
+                  size="lg"
+                >
+                  <Calendar className="h-5 w-5" />
+                  <span className="font-medium">Event Prompts</span>
+                </Button>
+                <Button
+                  variant={activeTab === "cta" ? "default" : "ghost"}
+                  onClick={() => setActiveTab("cta")}
+                  className={`
+                    flex items-center gap-3 px-6 py-3 rounded-xl transition-all duration-200
+                    ${activeTab === "cta" 
+                      ? "bg-primary text-primary-foreground shadow-md scale-105" 
+                      : "hover:bg-muted/80 text-muted-foreground hover:text-foreground"
+                    }
+                  `}
+                  size="lg"
+                >
+                  <Megaphone className="h-5 w-5" />
+                  <span className="font-medium">CTA Prompts</span>
+                </Button>
+              </div>
             </div>
           </div>
 
