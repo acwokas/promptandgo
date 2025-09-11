@@ -10,7 +10,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
-import { Save, ArrowLeft, Plus, Trash2, Upload, ExternalLink } from "lucide-react";
+import { Save, ArrowLeft, Plus, Trash2, Upload, ExternalLink, Eye, Edit } from "lucide-react";
+import ReactMarkdown from 'react-markdown';
 import { format } from "date-fns";
 import SEO from "@/components/SEO";
 import { ImageUpload } from "@/components/ui/image-upload";
@@ -65,6 +66,7 @@ const AdminArticleEditor = () => {
 
   const [assets, setAssets] = useState<ArticleAsset[]>([]);
   const [newKeyphrase, setNewKeyphrase] = useState('');
+  const [activeTab, setActiveTab] = useState('content');
   const contentTextareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -334,9 +336,10 @@ const AdminArticleEditor = () => {
             )}
           </div>
 
-          <Tabs defaultValue="content" className="w-full">
-            <TabsList className="grid w-full grid-cols-4">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="grid w-full grid-cols-5">
               <TabsTrigger value="content">Content</TabsTrigger>
+              <TabsTrigger value="preview">Preview</TabsTrigger>
               <TabsTrigger value="seo">SEO</TabsTrigger>
               <TabsTrigger value="assets">Assets</TabsTrigger>
               <TabsTrigger value="settings">Settings</TabsTrigger>
@@ -402,11 +405,22 @@ const AdminArticleEditor = () => {
                       onChange={(e) => setArticle(prev => ({ ...prev, content: e.target.value }))}
                       placeholder="Write your article content here..."
                       rows={15}
-                      className="min-h-96"
+                      className="min-h-96 font-mono text-sm"
                     />
-                    <p className="text-sm text-muted-foreground">
-                      Supports Markdown formatting. Use the "Insert Image" button to add images directly.
-                    </p>
+                    <div className="flex justify-between items-center">
+                      <p className="text-sm text-muted-foreground">
+                        Supports Markdown formatting. Use the "Insert Image" button to add images directly.
+                      </p>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setActiveTab('preview')}
+                      >
+                        <Eye className="w-4 h-4 mr-2" />
+                        Preview
+                      </Button>
+                    </div>
                   </div>
 
                   <div className="space-y-2">
@@ -426,6 +440,81 @@ const AdminArticleEditor = () => {
                         placeholder="https://example.com/image.jpg"
                       />
                     </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="preview" className="space-y-6">
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <div>
+                    <CardTitle>Article Preview</CardTitle>
+                    <CardDescription>Preview how your article will appear to readers</CardDescription>
+                  </div>
+                  <Button
+                    variant="outline"
+                    onClick={() => setActiveTab('content')}
+                  >
+                    <Edit className="w-4 h-4 mr-2" />
+                    Back to Edit
+                  </Button>
+                </CardHeader>
+                <CardContent>
+                  <div className="prose prose-slate dark:prose-invert max-w-none">
+                    {article.title && (
+                      <h1 className="text-3xl font-bold mb-4">{article.title}</h1>
+                    )}
+                    {article.synopsis && (
+                      <p className="text-lg text-muted-foreground mb-6 italic">{article.synopsis}</p>
+                    )}
+                    {article.thumbnail_url && (
+                      <div className="mb-6">
+                        <img 
+                          src={article.thumbnail_url} 
+                          alt={article.title || "Article thumbnail"}
+                          className="w-full max-w-2xl rounded-lg shadow-lg"
+                        />
+                      </div>
+                    )}
+                    {article.content ? (
+                      <div className="space-y-4">
+                        <ReactMarkdown 
+                          components={{
+                            h1: ({children}) => <h1 className="text-2xl font-bold mt-8 mb-4">{children}</h1>,
+                            h2: ({children}) => <h2 className="text-xl font-semibold mt-6 mb-3">{children}</h2>,
+                            h3: ({children}) => <h3 className="text-lg font-medium mt-4 mb-2">{children}</h3>,
+                            p: ({children}) => <p className="mb-4 leading-relaxed">{children}</p>,
+                            img: ({src, alt}) => (
+                              <div className="my-6">
+                                <img src={src} alt={alt} className="w-full rounded-lg shadow-md" />
+                              </div>
+                            ),
+                            ul: ({children}) => <ul className="list-disc pl-6 mb-4 space-y-2">{children}</ul>,
+                            ol: ({children}) => <ol className="list-decimal pl-6 mb-4 space-y-2">{children}</ol>,
+                            blockquote: ({children}) => (
+                              <blockquote className="border-l-4 border-primary pl-4 my-6 italic text-muted-foreground">
+                                {children}
+                              </blockquote>
+                            ),
+                            code: ({children, className}) => {
+                              const isInline = !className;
+                              return isInline ? (
+                                <code className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono">{children}</code>
+                              ) : (
+                                <pre className="bg-muted p-4 rounded-lg overflow-x-auto my-4">
+                                  <code className="text-sm font-mono">{children}</code>
+                                </pre>
+                              );
+                            }
+                          }}
+                        >
+                          {article.content}
+                        </ReactMarkdown>
+                      </div>
+                    ) : (
+                      <p className="text-muted-foreground italic">No content to preview. Start writing in the Content tab.</p>
+                    )}
                   </div>
                 </CardContent>
               </Card>
