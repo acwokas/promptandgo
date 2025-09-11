@@ -15,6 +15,7 @@ import { format } from "date-fns";
 import SEO from "@/components/SEO";
 import { ImageUpload } from "@/components/ui/image-upload";
 import { ContentImageInserter } from "@/components/ui/content-image-inserter";
+import { RichTextToolbar } from "@/components/ui/rich-text-toolbar";
 
 interface Article {
   id?: string;
@@ -390,6 +391,10 @@ const AdminArticleEditor = () => {
                         disabled={saving}
                       />
                     </div>
+                    <RichTextToolbar 
+                      textareaRef={contentTextareaRef}
+                      onContentChange={(content) => setArticle(prev => ({ ...prev, content }))}
+                    />
                     <Textarea
                       ref={contentTextareaRef}
                       id="content"
