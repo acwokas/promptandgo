@@ -86,6 +86,38 @@ serve(async (req) => {
         p_subscription_tier: tier,
         p_subscription_end: subEnd,
       });
+      
+      // Try to fix any orphaned subscriptions for this user
+      try {
+        // Check if there's an orphaned subscription with null user_id but matching email hash
+        const emailHash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(user.email))
+          .then(buffer => Array.from(new Uint8Array(buffer))
+            .map(b => b.toString(16).padStart(2, '0')).join(''));
+        
+        const { data: orphaned } = await supabase
+          .from('subscribers')
+          .select('id')
+          .eq('email_hash', emailHash)
+          .is('user_id', null)
+          .eq('subscribed', true)
+          .maybeSingle();
+          
+        if (orphaned) {
+          // Update the orphaned record with the secure function
+          await supabase.rpc('secure_upsert_subscriber', {
+            p_key: encKey,
+            p_user_id: user.id,
+            p_email: user.email,
+            p_stripe_customer_id: customerId,
+            p_subscribed: true,
+            p_subscription_tier: tier || 'lifetime',
+            p_subscription_end: subEnd,
+          });
+          logStep('Fixed orphaned subscription record');
+        }
+      } catch (linkError) {
+        console.warn('Could not fix orphaned subscription:', linkError);
+      }
     } else {
       await supabase.from('subscribers').upsert({
         email: user.email,
