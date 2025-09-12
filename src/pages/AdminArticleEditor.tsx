@@ -16,6 +16,7 @@ import { format } from "date-fns";
 import SEO from "@/components/SEO";
 import { ImageUpload } from "@/components/ui/image-upload";
 import { ContentImageInserter } from "@/components/ui/content-image-inserter";
+import { ContentLinkInserter } from "@/components/ui/content-link-inserter";
 import { RichTextToolbar } from "@/components/ui/rich-text-toolbar";
 
 interface Article {
@@ -163,6 +164,29 @@ const AdminArticleEditor = () => {
     setTimeout(() => {
       textarea.focus();
       const newCursorPos = start + imageMarkdown.length + 4; // +4 for the \n\n characters
+      textarea.setSelectionRange(newCursorPos, newCursorPos);
+    }, 0);
+  };
+
+  const insertLinkIntoContent = (linkMarkdown: string) => {
+    const textarea = contentTextareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const currentContent = article.content;
+    
+    // Insert the markdown at cursor position
+    const newContent = currentContent.substring(0, start) + 
+                      linkMarkdown + 
+                      currentContent.substring(end);
+    
+    setArticle(prev => ({ ...prev, content: newContent }));
+    
+    // Focus back to textarea and position cursor after inserted content
+    setTimeout(() => {
+      textarea.focus();
+      const newCursorPos = start + linkMarkdown.length;
       textarea.setSelectionRange(newCursorPos, newCursorPos);
     }, 0);
   };
@@ -389,10 +413,16 @@ const AdminArticleEditor = () => {
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <Label htmlFor="content">Content *</Label>
-                      <ContentImageInserter 
-                        onInsert={insertImageIntoContent}
-                        disabled={saving}
-                      />
+                      <div className="flex gap-2">
+                        <ContentLinkInserter 
+                          onInsert={insertLinkIntoContent}
+                          disabled={saving}
+                        />
+                        <ContentImageInserter 
+                          onInsert={insertImageIntoContent}
+                          disabled={saving}
+                        />
+                      </div>
                     </div>
                     <RichTextToolbar 
                       textareaRef={contentTextareaRef}
