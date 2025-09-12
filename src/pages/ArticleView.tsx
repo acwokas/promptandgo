@@ -9,7 +9,9 @@ import { format } from "date-fns";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
+import rehypeRaw from "rehype-raw";
 import SEO from "@/components/SEO";
+import { CalloutBox, PromptExample, CodeBlock, TipCallout } from "@/components/ui/callout-box";
 
 interface Article {
   id: string;
@@ -208,6 +210,71 @@ const ArticleView = () => {
   const normalizeRichText = (s: string) =>
     s?.replace(/<\s*br\s*\/?>(?=\s|$)/gi, "\n").replace(/<\s*\/?\s*p\s*>/gi, "\n\n") ?? "";
 
+  const processCalloutContent = (content: string) => {
+    // Convert custom callout syntax to markdown-compatible format
+    let processed = content;
+    
+    // Handle PromptExample components
+    processed = processed.replace(
+      /<PromptExample\s+template="([^"]+)"\s+example="([^"]+)"\s*\/>/g, 
+      (match, template, example) => {
+        return `\n\n<div class="bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 rounded-lg p-4 my-6">
+<p class="font-mono text-sm mb-2 leading-relaxed">${template}</p>
+<p class="text-sm text-muted-foreground"><strong>Example:</strong> "${example}"</p>
+</div>\n\n`;
+      }
+    );
+    
+    // Handle CalloutBox components
+    processed = processed.replace(
+      /<CalloutBox\s+variant="([^"]+)"(?:\s+title="([^"]*)")?\s*>([\s\S]*?)<\/CalloutBox>/g,
+      (match, variant, title, content) => {
+        const variantClasses = {
+          info: 'bg-blue-50 border-blue-200 dark:bg-blue-950/30 dark:border-blue-800',
+          success: 'bg-green-50 border-green-200 dark:bg-green-950/30 dark:border-green-800',
+          warning: 'bg-yellow-50 border-yellow-200 dark:bg-yellow-950/30 dark:border-yellow-800',
+          danger: 'bg-red-50 border-red-200 dark:bg-red-950/30 dark:border-red-800',
+          code: 'bg-slate-50 border-slate-200 dark:bg-slate-900/50 dark:border-slate-700',
+          default: 'bg-muted border-muted-foreground/20'
+        };
+        
+        const className = variantClasses[variant as keyof typeof variantClasses] || variantClasses.default;
+        const titleHtml = title ? `<div class="font-semibold text-sm mb-2">${title}</div>` : '';
+        
+        return `\n\n<div class="${className} rounded-lg p-4 my-6 border">
+${titleHtml}
+<div>${content}</div>
+</div>\n\n`;
+      }
+    );
+    
+    // Handle CodeBlock components
+    processed = processed.replace(
+      /<CodeBlock(?:\s+title="([^"]*)")?\s*>([\s\S]*?)<\/CodeBlock>/g,
+      (match, title, content) => {
+        const titleHtml = title ? `<div class="font-semibold text-sm mb-2">${title}</div>` : '';
+        
+        return `\n\n<div class="bg-slate-50 border-slate-200 dark:bg-slate-900/50 dark:border-slate-700 rounded-lg p-4 my-6 border">
+${titleHtml}
+<div class="font-mono text-sm">${content}</div>
+</div>\n\n`;
+      }
+    );
+    
+    // Handle TipCallout components
+    processed = processed.replace(
+      /<TipCallout\s*>([\s\S]*?)<\/TipCallout>/g,
+      (match, content) => {
+        return `\n\n<div class="bg-blue-50 border-blue-200 dark:bg-blue-950/30 dark:border-blue-800 rounded-lg p-4 my-6 border">
+<div class="font-semibold text-sm mb-2">💡 Pro Tip</div>
+<div>${content}</div>
+</div>\n\n`;
+      }
+    );
+    
+    return normalizeRichText(processed);
+  };
+
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-8">
@@ -366,9 +433,15 @@ const ArticleView = () => {
                   </a>
                 ),
                 br: () => <br />,
+                // Allow HTML elements for callouts
+                div: ({ className, children, ...props }) => (
+                  <div className={className} {...props}>
+                    {children}
+                  </div>
+                ),
               }}
             >
-              {normalizeRichText(article.content)}
+              {processCalloutContent(article.content)}
             </ReactMarkdown>
           </div>
 

@@ -11,7 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
-import { Save, ArrowLeft, Plus, Trash2, Upload, ExternalLink, Eye, Edit, Columns2, FileEdit } from "lucide-react";
+import { Save, ArrowLeft, Plus, Trash2, Upload, ExternalLink, Eye, Edit, Columns2, FileEdit, MessageSquare } from "lucide-react";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
@@ -21,6 +21,7 @@ import { ImageUpload } from "@/components/ui/image-upload";
 import { ContentImageInserter } from "@/components/ui/content-image-inserter";
 import { ContentLinkInserter } from "@/components/ui/content-link-inserter";
 import { RichTextToolbar } from "@/components/ui/rich-text-toolbar";
+import { CalloutInserter } from "@/components/ui/callout-inserter";
 
 interface Article {
   id?: string;
@@ -191,6 +192,29 @@ const AdminArticleEditor = () => {
     setTimeout(() => {
       textarea.focus();
       const newCursorPos = start + linkMarkdown.length;
+      textarea.setSelectionRange(newCursorPos, newCursorPos);
+    }, 0);
+  };
+
+  const insertCalloutIntoContent = (calloutMarkdown: string) => {
+    const textarea = contentTextareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const currentContent = article.content;
+    
+    const newContent = 
+      currentContent.slice(0, start) + 
+      "\n\n" + calloutMarkdown + "\n\n" + 
+      currentContent.slice(end);
+    
+    setArticle(prev => ({ ...prev, content: newContent }));
+    
+    // Focus back to textarea and position cursor after inserted content
+    setTimeout(() => {
+      textarea.focus();
+      const newCursorPos = start + calloutMarkdown.length + 4; // +4 for the \n\n characters
       textarea.setSelectionRange(newCursorPos, newCursorPos);
     }, 0);
   };
@@ -462,6 +486,15 @@ const AdminArticleEditor = () => {
                         <ContentImageInserter 
                           onInsert={insertImageIntoContent}
                           disabled={saving}
+                        />
+                        <CalloutInserter 
+                          onInsert={insertCalloutIntoContent}
+                          trigger={
+                            <Button variant="outline" size="sm" disabled={saving}>
+                              <MessageSquare className="w-4 h-4 mr-2" />
+                              Callout
+                            </Button>
+                          }
                         />
                       </div>
                     </div>
