@@ -233,11 +233,24 @@ const ArticleView = () => {
     const parseAttrs = (attrStr: string) => {
       const attrs: Record<string, string> = {}
       const normalized = decodeEntities(attrStr)
-      const attrRegex = /(\w+)\s*=\s*(["'])([\s\S]*?)\2/g
+      
+      // More robust regex that handles multiline attributes with nested quotes
+      // Look for attribute="value" where value can contain escaped quotes and spans multiple lines
+      const attrRegex = /(\w+)\s*=\s*"((?:[^"\\]|\\.)*)"/gs
       let m
       while ((m = attrRegex.exec(normalized)) !== null) {
-        attrs[m[1]] = m[3]
+        // Unescape any escaped quotes in the attribute value
+        attrs[m[1]] = m[2].replace(/\\"/g, '"').trim()
       }
+      
+      // Fallback for single quotes if double quotes didn't work
+      if (Object.keys(attrs).length === 0) {
+        const singleQuoteRegex = /(\w+)\s*=\s*'((?:[^'\\]|\\.)*)'/gs
+        while ((m = singleQuoteRegex.exec(normalized)) !== null) {
+          attrs[m[1]] = m[2].replace(/\\'/g, "'").trim()
+        }
+      }
+      
       return attrs
     }
 
@@ -259,13 +272,14 @@ ${safeExample ? `<p class="text-sm text-muted-foreground"><strong>Example:</stro
 </div>\n\n`;
     }
 
-    // Raw HTML self-closing form
-    processed = processed.replace(/<PromptExample\b([\s\S]*?)\/>/gi, (_: string, attrsStr: string) => {
+    // Raw HTML self-closing form - improved to handle multiline attributes
+    processed = processed.replace(/<PromptExample\s+([\s\S]*?)\s*\/>/gi, (match: string, attrsStr: string) => {
       const attrs = parseAttrs(attrsStr || "")
       return renderPromptExample(attrs)
     })
-    // Raw HTML paired tag form
-    processed = processed.replace(/<PromptExample\b([\s\S]*?)>([\s\S]*?)<\/PromptExample>/gi, (_: string, attrsStr: string, inner: string) => {
+    
+    // Raw HTML paired tag form - improved to handle multiline attributes
+    processed = processed.replace(/<PromptExample\s+([\s\S]*?)>([\s\S]*?)<\/PromptExample>/gi, (match: string, attrsStr: string, inner: string) => {
       const attrs = parseAttrs(attrsStr || "")
       return renderPromptExample(attrs, inner?.trim())
     })
