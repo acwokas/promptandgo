@@ -15,6 +15,7 @@ import { Save, ArrowLeft, Plus, Trash2, Upload, ExternalLink, Eye, Edit, Columns
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
+import rehypeRaw from 'rehype-raw';
 import { format } from "date-fns";
 import SEO from "@/components/SEO";
 import { ImageUpload } from "@/components/ui/image-upload";
@@ -258,6 +259,117 @@ const AdminArticleEditor = () => {
 
   const removeAsset = (index: number) => {
     setAssets(prev => prev.filter((_, i) => i !== index));
+  };
+
+  // Utils to render callouts in preview exactly like live
+  const normalizeRichText = (s: string) =>
+    s?.replace(/<\s*br\s*\/?> (?=\s|$)/gi, "\n").replace(/<\s*\/??\s*p\s*>/gi, "\n\n") ?? "";
+
+  const processCalloutContent = (content: string) => {
+    let processed = content;
+
+    const decodeEntities = (s: string) =>
+      (s || "")
+        .replace(/&quot;|&#34;/g, '"')
+        .replace(/&apos;|&#39;/g, "'")
+        .replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/[“”]/g, '"')
+        .replace(/[‘’]/g, "'")
+
+    const escapeHTML = (s: string) => (s || "")
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+
+    const parseAttrs = (attrStr: string) => {
+      const attrs: Record<string, string> = {}
+      const normalized = decodeEntities(attrStr)
+      const attrRegex = /(\w+)\s*=\s*(["'])([\s\S]*?)\2/g
+      let m
+      while ((m = attrRegex.exec(normalized)) !== null) {
+        attrs[m[1]] = m[3]
+      }
+      return attrs
+    }
+
+    const renderPromptExample = (attrs: Record<string, string>, inner?: string) => {
+      const templateRaw = attrs.template ?? inner ?? ""
+      const exampleRaw = attrs.example ?? ""
+      const safeTemplate = escapeHTML(templateRaw)
+      const safeExample = escapeHTML(exampleRaw)
+      return `\n\n<div class="rounded-lg p-4 my-6 border bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
+<div class="flex items-center gap-2 mb-3">
+<svg class="w-4 h-4 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<polyline points="16,18 22,12 16,6"></polyline>
+<polyline points="8,6 2,12 8,18"></polyline>
+</svg>
+<span class="text-sm font-semibold text-primary">Prompt Template</span>
+</div>
+<p class="font-mono text-sm mb-2 leading-relaxed bg-background/50 rounded border p-3">${safeTemplate}</p>
+${safeExample ? `<p class="text-sm text-muted-foreground"><strong>Example:</strong> "${safeExample}"</p>` : ""}
+</div>\n\n`;
+    }
+
+    // Raw HTML self-closing form
+    processed = processed.replace(/<PromptExample\b([\s\S]*?)\/>/gi, (_: string, attrsStr: string) => {
+      const attrs = parseAttrs(attrsStr || "")
+      return renderPromptExample(attrs)
+    })
+    // Raw HTML paired tag form
+    processed = processed.replace(/<PromptExample\b([\s\S]*?)>([\s\S]*?)<\/PromptExample>/gi, (_: string, attrsStr: string, inner: string) => {
+      const attrs = parseAttrs(attrsStr || "")
+      return renderPromptExample(attrs, inner?.trim())
+    })
+
+    // Encoded HTML self-closing form: &lt;PromptExample ... /&gt;
+    processed = processed.replace(/&lt;PromptExample\b([\s\S]*?)\/>/gi, (_: string, attrsStr: string) => {
+      const attrs = parseAttrs(attrsStr || "")
+      return renderPromptExample(attrs)
+    })
+    // Encoded HTML paired tag form
+    processed = processed.replace(/&lt;PromptExample\b([\s\S]*?)&gt;([\s\S]*?)&lt;\/PromptExample&gt;/gi, (_: string, attrsStr: string, inner: string) => {
+      const attrs = parseAttrs(attrsStr || "")
+      return renderPromptExample(attrs, decodeEntities(inner?.trim() || ""))
+    })
+
+    // CalloutBox components
+    processed = processed.replace(
+      /<CalloutBox\s+variant="([^"]+)"(?:\s+title="([^"]*)")?\s*>([\s\S]*?)<\/CalloutBox>/g,
+      (match, variant, title, innerContent) => {
+        const variantClasses: Record<string, string> = {
+          info: 'bg-blue-50 border-blue-200 dark:bg-blue-950/30 dark:border-blue-800',
+          success: 'bg-green-50 border-green-200 dark:bg-green-950/30 dark:border-green-800',
+          warning: 'bg-yellow-50 border-yellow-200 dark:bg-yellow-950/30 dark:border-yellow-800',
+          danger: 'bg-red-50 border-red-200 dark:bg-red-950/30 dark:border-red-800',
+          code: 'bg-slate-50 border-slate-200 dark:bg-slate-900/50 dark:border-slate-700',
+          default: 'bg-muted border-muted-foreground/20'
+        };
+        const className = variantClasses[variant] || variantClasses.default;
+        const titleHtml = title ? `<div class="font-semibold text-sm mb-2">${title}</div>` : '';
+        return `\n\n<div class="${className} rounded-lg p-4 my-6 border">\n${titleHtml}\n<div>${innerContent}</div>\n</div>\n\n`;
+      }
+    );
+
+    // CodeBlock components
+    processed = processed.replace(
+      /<CodeBlock(?:\s+title="([^"]*)")?\s*>([\s\S]*?)<\/CodeBlock>/g,
+      (match, title, innerContent) => {
+        const titleHtml = title ? `<div class="font-semibold text-sm mb-2">${title}</div>` : '';
+        return `\n\n<div class="bg-slate-50 border-slate-200 dark:bg-slate-900/50 dark:border-slate-700 rounded-lg p-4 my-6 border">\n${titleHtml}\n<div class="font-mono text-sm">${innerContent}</div>\n</div>\n\n`;
+      }
+    );
+
+    // TipCallout components
+    processed = processed.replace(
+      /<TipCallout\s*>([\s\S]*?)<\/TipCallout>/g,
+      (match, innerContent) => {
+        return `\n\n<div class="bg-blue-50 border-blue-200 dark:bg-blue-950/30 dark:border-blue-800 rounded-lg p-4 my-6 border">\n<div class="font-semibold text-sm mb-2">💡 Pro Tip</div>\n<div>${innerContent}</div>\n</div>\n\n`;
+      }
+    );
+
+    return normalizeRichText(processed);
   };
 
   const saveArticle = async (publish = false) => {
@@ -546,6 +658,7 @@ const AdminArticleEditor = () => {
                               {article.content ? (
                                 <ReactMarkdown 
                                   remarkPlugins={[remarkGfm, remarkBreaks]}
+                                  rehypePlugins={[rehypeRaw]}
                                   components={{
                                     h1: ({children}) => <h1 className="text-xl font-bold mt-4 mb-2">{children}</h1>,
                                     h2: ({children}) => <h2 className="text-lg font-semibold mt-3 mb-2">{children}</h2>,
@@ -576,7 +689,7 @@ const AdminArticleEditor = () => {
                                     }
                                   }}
                                 >
-                                  {article.content}
+                                  {processCalloutContent(article.content)}
                                 </ReactMarkdown>
                               ) : (
                                 <p className="text-muted-foreground text-sm italic">Start typing to see preview...</p>
@@ -656,6 +769,7 @@ const AdminArticleEditor = () => {
                       <div className="space-y-4">
                         <ReactMarkdown 
                           remarkPlugins={[remarkGfm, remarkBreaks]}
+                          rehypePlugins={[rehypeRaw]}
                           components={{
                             h1: ({children}) => <h1 className="text-2xl font-bold mt-8 mb-4">{children}</h1>,
                             h2: ({children}) => <h2 className="text-xl font-semibold mt-6 mb-3">{children}</h2>,
@@ -686,7 +800,7 @@ const AdminArticleEditor = () => {
                             }
                           }}
                          >
-                           {article.content}
+                           {processCalloutContent(article.content)}
                          </ReactMarkdown>
                       </div>
                     ) : (
