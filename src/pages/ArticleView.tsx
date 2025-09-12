@@ -205,6 +205,9 @@ const ArticleView = () => {
     }
   };
 
+  const normalizeRichText = (s: string) =>
+    s?.replace(/<\s*br\s*\/?>(?=\s|$)/gi, "\n").replace(/<\s*\/?\s*p\s*>/gi, "\n\n") ?? "";
+
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-8">
@@ -294,7 +297,7 @@ const ArticleView = () => {
                     br: () => <br />,
                   }}
                 >
-                  {article.synopsis}
+                  {normalizeRichText(article.synopsis)}
                 </ReactMarkdown>
               </div>
             )}
@@ -365,7 +368,7 @@ const ArticleView = () => {
                 br: () => <br />,
               }}
             >
-              {article.content}
+              {normalizeRichText(article.content)}
             </ReactMarkdown>
           </div>
 

@@ -105,20 +105,19 @@ const BeginnersGuideMidjourneyPrompts = () => {
           </div>
 
           {/* Hero Image */}
-          <div className="mb-8">
+          <div className="mb-8 static">
             <img 
               src="/lovable-uploads/24c8f315-67e8-4022-abec-e096e61d0202.png"
               alt="Beginner's guide to MidJourney prompts - steampunk character with blueprint"
-              className="w-full rounded-lg shadow-lg"
-              loading="eager"
-              fetchPriority="high"
-              decoding="async"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
-              width="1200" height="675"
-            />
+            className="w-full rounded-lg shadow-lg"
+            loading="eager"
+            decoding="async"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+            width="1200" height="675"
+          />
           </div>
 
-          <div className="text-lg text-muted-foreground">
+          <div className="text-lg text-muted-foreground static">
             Helping beginners understand how to craft detailed, effective prompts in MidJourney so they can consistently generate high-quality, creative images.
           </div>
         </header>
