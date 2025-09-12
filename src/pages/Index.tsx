@@ -93,12 +93,27 @@ const Index = () => {
   }, []);
   useEffect(() => {
     if (!carouselApi) return;
-    const id = window.setInterval(() => {
-      try {
-        carouselApi.scrollNext();
-      } catch {}
-    }, 5000);
-    return () => window.clearInterval(id);
+    
+    let rafId: number;
+    let timeoutId: NodeJS.Timeout;
+    
+    const scheduleNext = () => {
+      timeoutId = setTimeout(() => {
+        rafId = requestAnimationFrame(() => {
+          try {
+            carouselApi.scrollNext();
+            scheduleNext();
+          } catch {}
+        });
+      }, 5000);
+    };
+    
+    scheduleNext();
+    
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   }, [carouselApi]);
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
