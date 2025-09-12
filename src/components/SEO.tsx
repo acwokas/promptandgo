@@ -58,8 +58,8 @@ const SEO = ({
       <meta name="robots" content={noindex ? "noindex,nofollow" : "index,follow,max-image-preview:large,max-snippet:-1"} />
       
       {/* Enhanced meta tags */}
-      <meta name="author" content="PromptAndGo.ai" />
-      <meta name="publisher" content="PromptAndGo.ai" />
+      <meta name="author" content="**prompt**andgo.ai" />
+      <meta name="publisher" content="**prompt**andgo.ai" />
       <meta name="application-name" content={SITE_NAME} />
       <meta name="theme-color" content="#3b82f6" />
       

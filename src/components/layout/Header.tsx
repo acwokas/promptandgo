@@ -62,10 +62,10 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-40 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
       <nav className="container flex items-center justify-between h-16 md:h-24">
-        <Link to="/" className="flex items-center gap-2" aria-label="promptandgo home">
+        <Link to="/" className="flex items-center gap-2" aria-label="**prompt**andgo home">
           <img
             src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
-            alt="promptandgo logo"
+            alt="**prompt**andgo logo"
             className="h-20 md:h-[5.25rem] w-auto align-middle object-contain"
             loading="eager"
             decoding="async"

@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 
 const Privacy = () => (
   <>
-    <PageHero title={<>Privacy Policy</>} subtitle={<>How PromptAndGo.ai collects, uses, and protects your data.</>} minHeightClass="min-h-[28svh]" />
+    <PageHero title={<>Privacy Policy</>} subtitle={<>How <strong>prompt</strong>andgo.ai collects, uses, and protects your data.</>} minHeightClass="min-h-[28svh]" />
     <main className="container py-10">
-      <SEO title="Privacy Policy" description="Privacy Policy (PDPA, Singapore): how PromptAndGo.ai collects, uses, and protects your data." />
+      <SEO title="Privacy Policy" description="Privacy Policy (PDPA, Singapore): how **prompt**andgo.ai collects, uses, and protects your data." />
 
       {/* Breadcrumb */}
       <Breadcrumb className="mb-6">
@@ -69,7 +69,7 @@ const Privacy = () => (
         <li><strong>Payment Processors</strong> – transactions are processed by Stripe and other secure payment providers who have their own privacy policies and data handling practices.</li>
         <li><strong>Service Providers</strong> – third parties who help us operate the Site, such as hosting, analytics, and infrastructure services (including Supabase).</li>
         <li><strong>Legal Authorities</strong> – if required by law, court order, or government regulation.</li>
-        <li><strong>Business Transfers</strong> – if PromptAndGo is acquired, merged, or reorganised.</li>
+        <li><strong>Business Transfers</strong> – if **prompt**andgo is acquired, merged, or reorganised.</li>
         <li><strong>Aggregated Data</strong> – we may share anonymized, aggregated usage statistics that do not identify individual users.</li>
       </ul>
 
@@ -91,7 +91,7 @@ const Privacy = () => (
       </ul>
       
       <h3>Business Discontinuation and Data Handling</h3>
-      <p>In the event that PromptAndGo discontinues operations:</p>
+      <p>In the event that **prompt**andgo discontinues operations:</p>
       <ul>
         <li>We will make reasonable efforts to provide advance notice when possible</li>
         <li>User data will be handled in accordance with this privacy policy during any transition period</li>
@@ -150,7 +150,7 @@ const Privacy = () => (
       <h2>12.&nbsp;&nbsp;Contact Us</h2>
       <p>If you have any questions about this Privacy Policy or our data practices, please contact:</p>
       <p>
-        PromptAndGo<br />
+        <strong>prompt</strong>andgo<br />
         Email: <a href="mailto:legal@promptandgo.ai">legal@promptandgo.ai</a><br />
         Jurisdiction: Singapore
       </p>

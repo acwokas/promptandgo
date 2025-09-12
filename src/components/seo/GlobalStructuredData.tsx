@@ -51,7 +51,7 @@ const GlobalStructuredData = () => {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: SITE_NAME,
-    alternateName: "PromptAndGo",
+    alternateName: "**prompt**andgo",
     url: `${origin}/`,
     logo: {
       "@type": "ImageObject",
@@ -90,7 +90,7 @@ const GlobalStructuredData = () => {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: SITE_NAME,
-    alternateName: "PromptAndGo",
+    alternateName: "**prompt**andgo",
     url: `${origin}/`,
     description: "Curated AI prompts that get results. Browse, copy, and run practical prompts for ChatGPT, Claude, and more.",
     inLanguage: "en-US",
@@ -139,8 +139,8 @@ const GlobalStructuredData = () => {
         <script type="application/ld+json">{JSON.stringify(breadcrumb)}</script>
       )}
       {/* Site-wide head links */}
-      <link rel="alternate" type="application/rss+xml" title="promptandgo RSS" href={`${origin}/rss.xml`} />
-      <link rel="search" type="application/opensearchdescription+xml" title="promptandgo Search" href={`${origin}/opensearch.xml`} />
+       <link rel="alternate" type="application/rss+xml" title="**prompt**andgo RSS" href={`${origin}/rss.xml`} />
+       <link rel="search" type="application/opensearchdescription+xml" title="**prompt**andgo Search" href={`${origin}/opensearch.xml`} />
     </Helmet>
   );
 };

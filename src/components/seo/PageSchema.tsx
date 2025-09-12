@@ -33,7 +33,7 @@ export const PageSchema = ({
     url: pageUrl,
     isPartOf: {
       "@type": "WebSite",
-      name: "PromptAndGo.ai",
+      name: "**prompt**andgo.ai",
       url: `${origin}/`
     },
     ...(additionalType && { additionalType }),

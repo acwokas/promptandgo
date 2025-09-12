@@ -207,7 +207,7 @@ const Index = () => {
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      name: "PromptAndGo.ai",
+      name: "**prompt**andgo.ai",
       applicationCategory: "ProductivityApplication",
       operatingSystem: "Web",
       offers: {
@@ -224,14 +224,14 @@ const Index = () => {
       },
       author: {
         "@type": "Organization",
-        name: "PromptAndGo.ai"
+        name: "**prompt**andgo.ai"
       },
       description: "Browse, copy, and run practical AI prompts for ChatGPT, Claude, and more. No jargon — just faster outcomes for marketers, creators, and professionals."
     },
     {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
-      name: "PromptAndGo.ai",
+      name: "**prompt**andgo.ai",
       applicationCategory: "BusinessApplication",
       operatingSystem: "Web Browser",
       offers: {
@@ -275,7 +275,7 @@ const Index = () => {
           <div className="grid gap-6 md:grid-cols-4">
             {/* What is PromptAndGo.ai? */}
             <div className="md:col-span-1 rounded-2xl border bg-card p-6 md:p-8 animate-fade-in">
-              <h2 className="text-2xl font-semibold mb-3">What is PromptAndGo?</h2>
+              <h2 className="text-2xl font-semibold mb-3">What is **prompt**andgo?</h2>
               <p className="text-muted-foreground max-w-prose mb-4">
                 Ready-to-use prompts designed for real-world work. Whether you're writing a pitch, planning a launch, creating some social media assets or creating an image, we've got a prompt for that.
               </p>
@@ -760,7 +760,7 @@ const Index = () => {
                       <Link to="/tips/welcome-to-promptandgo-ai" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                         <Card className="overflow-hidden">
                           <img src="/lovable-uploads/66b1134b-1d55-416b-b7ea-2719a1a22ec1.png" 
-                               alt="Welcome to PromptAndGo.ai: Your Shortcut to Smarter AI Prompts" 
+                               alt="Welcome to **prompt**andgo.ai: Your Shortcut to Smarter AI Prompts" 
                                loading="lazy" 
                                decoding="async"
                                width="837" 
@@ -768,7 +768,7 @@ const Index = () => {
                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
                                className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
                           <CardContent className="pt-3 pb-3">
-                            <h3 className="text-sm font-semibold leading-snug">Welcome to PromptAndGo.ai: Your Shortcut to Smarter AI Prompts</h3>
+                            <h3 className="text-sm font-semibold leading-snug">Welcome to **prompt**andgo.ai: Your Shortcut to Smarter AI Prompts</h3>
                             <p className="mt-1 text-xs text-muted-foreground">
                               We give you ready-to-use, field-tested prompts designed for real work. No vague ideas, no guesswork, just clear instructions you can drop straight into ChatGPT, Claude, or Gemini.
                             </p>
@@ -838,7 +838,7 @@ const Index = () => {
 
         <section aria-labelledby="cta-tail" className="relative bg-hero hero-grid mt-8" id="cta">
           <div className="container p-6 md:p-8 text-center text-primary-foreground">
-            <h2 id="cta-tail" className="text-2xl md:text-3xl font-semibold tracking-tight">Whatever you're working on, someone's already used PromptAndGo to do it faster.</h2>
+            <h2 id="cta-tail" className="text-2xl md:text-3xl font-semibold tracking-tight">Whatever you're working on, someone's already used <strong>prompt</strong>andgo to do it faster.</h2>
             <p className="mt-3 text-primary-foreground/85 text-base md:text-lg">✨ Ready to Start Prompting Smarter? Try your first prompt or explore a Power Pack, no sign-up required.</p>
             <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild variant="hero" className="px-6">

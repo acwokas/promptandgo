@@ -20,15 +20,15 @@ interface FAQSection {
 
 const sections: FAQSection[] = [
   {
-    title: "About promptandgo",
+    title: "About **prompt**andgo",
     items: [
       {
-        question: "Who created promptandgo?",
+        question: "Who created **prompt**andgo?",
         answer:
-          "promptandgo was created by a team of AI enthusiasts, marketers, and content specialists who test every prompt before publishing. We focus on practical, real-world results rather than theory.",
+          "**prompt**andgo was created by a team of AI enthusiasts, marketers, and content specialists who test every prompt before publishing. We focus on practical, real-world results rather than theory.",
       },
       {
-        question: "Why use promptandgo instead of free prompts online?",
+        question: "Why use **prompt**andgo instead of free prompts online?",
         answer:
           "We curate and test every prompt for clarity, accuracy, and usefulness. This means you will not waste time sifting through outdated or unproven ideas. Everything here is designed to help you get better results, faster.",
       },
@@ -50,7 +50,7 @@ const sections: FAQSection[] = [
       {
         question: "What makes a good prompt?",
         answer:
-          "A good prompt is clear, specific, and written with purpose. The best prompts guide the AI by focusing on your intent without adding unnecessary complexity. Every prompt on promptandgo is designed to help you get strong results without needing to be an expert.",
+          "A good prompt is clear, specific, and written with purpose. The best prompts guide the AI by focusing on your intent without adding unnecessary complexity. Every prompt on **prompt**andgo is designed to help you get strong results without needing to be an expert.",
       },
       {
         question: "Will these prompts work with free AI tools?",
@@ -83,7 +83,7 @@ const sections: FAQSection[] = [
     title: "Payments and Access",
     items: [
       {
-        question: "Do I need to pay to use promptandgo?",
+        question: "Do I need to pay to use **prompt**andgo?",
         answer:
           "Many prompts are free to browse and use. You only pay if you choose to unlock one of our PRO prompt packs for advanced tasks such as job applications or productivity systems.",
       },
@@ -157,8 +157,8 @@ const FAQs = () => {
   return (
     <>
       <SEO
-        title="FAQs – promptandgo"
-        description="Find quick answers about promptandgo: getting started, using prompts, payments, licensing, and support."
+        title="FAQs – **prompt**andgo"
+        description="Find quick answers about **prompt**andgo: getting started, using prompts, payments, licensing, and support."
       />
 
       <PageHero
