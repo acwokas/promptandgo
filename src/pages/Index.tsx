@@ -257,9 +257,9 @@ const Index = () => {
 
         {/* Top Widget Section */}
         <section className="container pt-6 pb-2">
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-4">
             {/* What is PromptAndGo.ai? */}
-            <div className="rounded-2xl border bg-card p-6 md:p-8 animate-fade-in">
+            <div className="md:col-span-1 rounded-2xl border bg-card p-6 md:p-8 animate-fade-in">
               <h2 className="text-2xl font-semibold mb-3">What is PromptAndGo.ai?</h2>
               <p className="text-muted-foreground max-w-prose mb-4">
                 Ready-to-use prompts designed for real-world work. Whether you're writing a pitch, planning a launch, creating some social media assets or creating an image, we've got a prompt for that.
@@ -275,7 +275,7 @@ const Index = () => {
             </div>
             
             {/* Try Scout's Prompt Studio */}
-            <div className="rounded-2xl border bg-card p-6 md:p-8 animate-fade-in">
+            <div className="md:col-span-3 rounded-2xl border bg-card p-6 md:p-8 animate-fade-in">
               <MiniPromptStudio />
             </div>
           </div>
