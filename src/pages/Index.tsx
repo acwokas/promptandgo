@@ -759,7 +759,14 @@ const Index = () => {
                       // Welcome content for new users
                       <Link to="/tips/welcome-to-promptandgo-ai" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                         <Card className="overflow-hidden">
-                          <img src="/lovable-uploads/66b1134b-1d55-416b-b7ea-2719a1a22ec1.png" alt="Welcome to PromptAndGo.ai: Your Shortcut to Smarter AI Prompts" loading="lazy" className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
+                          <img src="/lovable-uploads/66b1134b-1d55-416b-b7ea-2719a1a22ec1.png" 
+                               alt="Welcome to PromptAndGo.ai: Your Shortcut to Smarter AI Prompts" 
+                               loading="lazy" 
+                               decoding="async"
+                               width="837" 
+                               height="469"
+                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+                               className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
                           <CardContent className="pt-3 pb-3">
                             <h3 className="text-sm font-semibold leading-snug">Welcome to PromptAndGo.ai: Your Shortcut to Smarter AI Prompts</h3>
                             <p className="mt-1 text-xs text-muted-foreground">

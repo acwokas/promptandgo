@@ -69,6 +69,9 @@ const Header = () => {
             className="h-20 md:h-[5.25rem] w-auto align-middle object-contain"
             loading="eager"
             decoding="async"
+            width="149"
+            height="84"
+            sizes="(max-width: 768px) 149px, 149px"
           />
         </Link>
         <ul className="hidden md:flex items-center gap-6 text-sm">

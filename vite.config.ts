@@ -15,11 +15,32 @@ export default defineConfig(({ mode }) => ({
     ViteImageOptimizer({
       includePublic: true,
       logStats: false,
-      png: { quality: 70 },
-      jpeg: { quality: 70 },
-      webp: { quality: 70 },
-      avif: { quality: 50 },
-      svg: { multipass: true },
+      png: { 
+        quality: 60,  // More aggressive compression
+        compressionLevel: 9,
+        adaptiveFiltering: true
+      },
+      jpeg: { 
+        quality: 65,
+        progressive: true
+      },
+      webp: { 
+        quality: 65,
+        method: 6  // Better compression
+      },
+      avif: { 
+        quality: 45,
+        speed: 0  // Best compression
+      },
+      svg: { 
+        multipass: true,
+        plugins: [
+          { name: 'preset-default', params: { overrides: { removeViewBox: false } } }
+        ]
+      },
+      // Enable format conversion to WebP for better performance
+      cache: true,
+      cacheLocation: 'node_modules/.vite-imageopt'
     }),
     mode === 'development' && componentTagger(),
   ].filter(Boolean),
