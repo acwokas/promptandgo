@@ -46,7 +46,7 @@ const ToolkitPage = () => {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage>Interactive</BreadcrumbPage>
+                <BreadcrumbPage>Scout</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
