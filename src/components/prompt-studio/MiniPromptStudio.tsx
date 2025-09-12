@@ -140,7 +140,7 @@ const MiniPromptStudio = () => {
     Object.entries(selections).forEach(([key, value]) => {
       if (value) params.set(key, value);
     });
-    navigate(`/scout/studio?${params.toString()}`);
+    navigate(`/ai/studio?${params.toString()}`);
   };
 
   const hasContent = subject.trim() || Object.values(selections).some(value => value);
@@ -280,7 +280,9 @@ const MiniPromptStudio = () => {
               disabled={!hasContent}
             >
               <ArrowRight className="h-4 w-4 mr-2" />
-              {generatedPrompt ? "Continue in Scout's Prompt Studio" : "Start Building Your Prompt"}
+              <span className="truncate">
+                {generatedPrompt ? "Continue in Studio" : "Start Building"}
+              </span>
             </Button>
           </div>
         </div>
