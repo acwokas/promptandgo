@@ -21,7 +21,7 @@ const AIAssistantPage = () => {
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link to="/scout">Interactive</Link>
+                <Link to="/scout">Scout</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
