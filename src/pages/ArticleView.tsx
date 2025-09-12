@@ -362,6 +362,7 @@ ${titleHtml}
               <div className="text-xl text-muted-foreground mb-8 leading-relaxed">
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm, remarkBreaks]}
+                  rehypePlugins={[rehypeRaw]}
                   components={{
                     p: ({ children, ...props }) => (
                       <p className="mb-4 leading-relaxed" {...props}>
@@ -414,6 +415,7 @@ ${titleHtml}
           <div className="prose prose-lg max-w-none mb-12">
             <ReactMarkdown
               remarkPlugins={[remarkGfm, remarkBreaks]}
+              rehypePlugins={[rehypeRaw]}
               components={{
                 p: ({ children, ...props }) => (
                   <p className="mb-6 leading-relaxed" {...props}>
