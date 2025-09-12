@@ -52,7 +52,7 @@ const Blog = () => {
           <Card className="overflow-hidden">
             <img
               src="/lovable-uploads/66b1134b-1d55-416b-b7ea-2719a1a22ec1.png"
-              alt="Welcome to **prompt**andgo: Your Shortcut to Smarter AI Prompts"
+              alt="Welcome to promptandgo: Your Shortcut to Smarter AI Prompts"
               loading="lazy"
               decoding="async"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"

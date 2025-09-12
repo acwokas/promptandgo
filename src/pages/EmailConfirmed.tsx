@@ -15,7 +15,7 @@ const EmailConfirmed = () => {
   return (
     <>
       <SEO 
-        title="Email Confirmed - **prompt**andgo"
+        title="Email Confirmed - promptandgo"
         description="Your email has been confirmed successfully"
         canonical="https://promptandgo.ai/email-confirmed"
         noindex={true}
@@ -102,7 +102,7 @@ const EmailConfirmed = () => {
                   <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
                     <Button asChild size="lg" className="group">
                       <Link to="/">
-                        Return to **prompt**andgo
+                        Return to promptandgo
                         <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </Link>
                     </Button>

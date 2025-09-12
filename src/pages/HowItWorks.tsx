@@ -89,7 +89,7 @@ const HowItWorks = () => {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     mainEntity: [
-      { "@type": "Question", name: "What is **prompt**andgo?", acceptedAnswer: { "@type": "Answer", text: "A curated library of practical AI prompts tested for real tasks." } },
+      { "@type": "Question", name: "What is promptandgo?", acceptedAnswer: { "@type": "Answer", text: "A curated library of practical AI prompts tested for real tasks." } },
       { "@type": "Question", name: "How do I use it?", acceptedAnswer: { "@type": "Answer", text: "Browse a prompt, paste into your AI tool, then tweak or stack prompts as needed." } },
       { "@type": "Question", name: "Which AI tools are supported?", acceptedAnswer: { "@type": "Answer", text: "Works with ChatGPT, GPT-4, Claude, Gemini, and more." } },
     ],

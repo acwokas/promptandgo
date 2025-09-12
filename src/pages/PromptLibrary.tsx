@@ -552,7 +552,7 @@ const PromptLibrary = () => {
     },
     provider: {
       "@type": "Organization",
-      name: "**prompt**andgo.ai"
+      name: "promptandgo.ai"
     }
   };
 
@@ -1288,7 +1288,7 @@ const PromptLibrary = () => {
                 </div>
 
                 <p className="text-xs text-muted-foreground mt-4 italic">
-                  **prompt**andgo reserves the right to edit and revise submitted prompts. 
+                  promptandgo reserves the right to edit and revise submitted prompts. 
                   We'll reach out if your prompt is selected for the library.
                 </p>
               </div>
