@@ -103,6 +103,26 @@
         }
       }
     </style>
+    
+    <!-- Make CSS non-render-blocking -->
+    <script>
+      // Convert render-blocking CSS to non-blocking after DOM is ready
+      document.addEventListener('DOMContentLoaded', function() {
+        const cssLinks = document.querySelectorAll('link[rel="stylesheet"]:not([media])');
+        cssLinks.forEach(link => {
+          if (link.href.includes('assets/index-') && link.href.includes('.css')) {
+            const newLink = document.createElement('link');
+            newLink.rel = 'stylesheet';
+            newLink.href = link.href;
+            newLink.media = 'print';
+            newLink.onload = function() { this.media = 'all'; };
+            document.head.appendChild(newLink);
+            link.remove();
+          }
+        });
+      });
+    </script>
+    
     <link rel="icon" href="/lovable-uploads/ce838992-b473-459c-ab8a-6251ed9d69e1.png" type="image/png" />
     <link rel="apple-touch-icon" href="/lovable-uploads/ce838992-b473-459c-ab8a-6251ed9d69e1.png" />
     
