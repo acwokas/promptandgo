@@ -1,9 +1,11 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
+import { AppSidebar } from "@/components/AppSidebar";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import PromptLibrary from "./pages/PromptLibrary";
@@ -94,83 +96,106 @@ const AppContent = () => {
   const { user } = useSupabaseAuth();
 
   return (
-    <LoginWidgetProvider>
-      <GlobalStructuredData />
-      <Header />
-      <ScrollToTop />
-      <GAListener />
-      <AuthEffects />
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/library" element={<PromptLibrary />} />
-        <Route path="/packs" element={<PromptPacks />} />
-        <Route path="/submit" element={<SubmitPrompt />} />
-        <Route path="/submit-prompt" element={<SubmitPrompt />} />
-        <Route path="/faqs" element={<FAQs />} />
-        <Route path="/tips" element={<TipsIndex />} />
-        <Route path="/tips/:slug" element={<ArticleView />} />
-        {/* Legacy blog routes - keep for SEO */}
-        <Route path="/tips/welcome-to-promptandgo-ai" element={<WelcomeToPromptAndGo />} />
-        <Route path="/tips/best-ai-prompts-for-small-business-2025" element={<BestAIPromptsForSmallBusiness2025 />} />
-        <Route path="/tips/how-to-write-ai-prompts" element={<HowToWriteAIPrompts />} />
-        <Route path="/tips/ai-prompts-that-save-you-hours" element={<AIPromptsThatSaveYouHours />} />
-        <Route path="/tips/ai-prompts-for-marketing-campaigns" element={<AIPromptsForMarketingCampaigns />} />
-        <Route path="/tips/ai-prompts-for-customer-support" element={<AIPromptsForCustomerSupport />} />
-        <Route path="/tips/ai-prompts-for-social-media-content" element={<AIPromptsForSocialMediaContent />} />
-        <Route path="/tips/ai-prompts-for-content-writers" element={<AIPromptsForContentWriters />} />
-        <Route path="/tips/ai-prompts-for-business-strategy" element={<AIPromptsForBusinessStrategy />} />
-        <Route path="/tips/beginners-guide-midjourney-prompts" element={<BeginnersGuideMidjourneyPrompts />} />
-        <Route path="/terms" element={<Terms />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/how-it-works" element={<HowItWorks />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/auth" element={<Auth />} />
-        <Route path="/admin" element={<AdminTools />} />
-        <Route path="/admin/polls" element={<AdminPolls />} />
-        <Route path="/admin/upload" element={<AdminBulkUpload />} />
-        <Route path="/admin/prompts" element={<AdminPromptTool />} />
-        <Route path="/admin/export" element={<AdminExport />} />
-        <Route path="/admin/widgets" element={<AdminWidgetSettings />} />
-        <Route path="/admin/feedback" element={<AdminFeedback />} />
-        <Route path="/admin/articles" element={<AdminArticles />} />
-        <Route path="/admin/articles/new" element={<AdminArticleEditor />} />
-        <Route path="/admin/articles/edit/:id" element={<AdminArticleEditor />} />
-        <Route path="/account" element={<AccountPage />} />
-        <Route path="/account/profile" element={<ProfilePage />} />
-        <Route path="/account/notifications" element={<NotificationsPage />} />
-        <Route path="/account/security" element={<SecurityPage />} />
-        <Route path="/account/purchases" element={<PurchasesPage />} />
-        <Route path="/account/favorites" element={<FavoritesPage />} />
+    <SidebarProvider>
+      <LoginWidgetProvider>
+        <GlobalStructuredData />
         
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/checkout/success" element={<CheckoutSuccess />} />
-        <Route path="/checkout/canceled" element={<CheckoutCanceled />} />
-        <Route path="/membership/success" element={<MembershipSuccess />} />
-        <Route path="/membership/canceled" element={<MembershipCanceled />} />
-        <Route path="/email-confirmed" element={<EmailConfirmed />} />
-        <Route path="/s/:shortCode" element={<ShareRedirect />} />
-        <Route path="/scout" element={<ToolkitPage />} />
-        <Route path="/ai/generator" element={<AIPromptGeneratorPage />} />
-        <Route path="/ai/studio" element={<PromptStudioPage />} />
+        <div className="min-h-screen flex w-full">
+          <AppSidebar />
+          
+          <div className="flex-1 flex flex-col">
+            {/* Header with sidebar trigger */}
+            <div className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+              <div className="flex h-14 items-center px-4">
+                <SidebarTrigger className="-ml-1" />
+                <div className="flex-1">
+                  <Header />
+                </div>
+              </div>
+            </div>
+            
+            {/* Main content */}
+            <main className="flex-1">
+              <ScrollToTop />
+              <GAListener />
+              <AuthEffects />
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/library" element={<PromptLibrary />} />
+                <Route path="/packs" element={<PromptPacks />} />
+                <Route path="/submit" element={<SubmitPrompt />} />
+                <Route path="/submit-prompt" element={<SubmitPrompt />} />
+                <Route path="/faqs" element={<FAQs />} />
+                <Route path="/tips" element={<TipsIndex />} />
+                <Route path="/tips/:slug" element={<ArticleView />} />
+                {/* Legacy blog routes - keep for SEO */}
+                <Route path="/tips/welcome-to-promptandgo-ai" element={<WelcomeToPromptAndGo />} />
+                <Route path="/tips/best-ai-prompts-for-small-business-2025" element={<BestAIPromptsForSmallBusiness2025 />} />
+                <Route path="/tips/how-to-write-ai-prompts" element={<HowToWriteAIPrompts />} />
+                <Route path="/tips/ai-prompts-that-save-you-hours" element={<AIPromptsThatSaveYouHours />} />
+                <Route path="/tips/ai-prompts-for-marketing-campaigns" element={<AIPromptsForMarketingCampaigns />} />
+                <Route path="/tips/ai-prompts-for-customer-support" element={<AIPromptsForCustomerSupport />} />
+                <Route path="/tips/ai-prompts-for-social-media-content" element={<AIPromptsForSocialMediaContent />} />
+                <Route path="/tips/ai-prompts-for-content-writers" element={<AIPromptsForContentWriters />} />
+                <Route path="/tips/ai-prompts-for-business-strategy" element={<AIPromptsForBusinessStrategy />} />
+                <Route path="/tips/beginners-guide-midjourney-prompts" element={<BeginnersGuideMidjourneyPrompts />} />
+                <Route path="/terms" element={<Terms />} />
+                <Route path="/privacy" element={<Privacy />} />
+                <Route path="/how-it-works" element={<HowItWorks />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/admin" element={<AdminTools />} />
+                <Route path="/admin/polls" element={<AdminPolls />} />
+                <Route path="/admin/upload" element={<AdminBulkUpload />} />
+                <Route path="/admin/prompts" element={<AdminPromptTool />} />
+                <Route path="/admin/export" element={<AdminExport />} />
+                <Route path="/admin/widgets" element={<AdminWidgetSettings />} />
+                <Route path="/admin/feedback" element={<AdminFeedback />} />
+                <Route path="/admin/articles" element={<AdminArticles />} />
+                <Route path="/admin/articles/new" element={<AdminArticleEditor />} />
+                <Route path="/admin/articles/edit/:id" element={<AdminArticleEditor />} />
+                <Route path="/account" element={<AccountPage />} />
+                <Route path="/account/profile" element={<ProfilePage />} />
+                <Route path="/account/notifications" element={<NotificationsPage />} />
+                <Route path="/account/security" element={<SecurityPage />} />
+                <Route path="/account/purchases" element={<PurchasesPage />} />
+                <Route path="/account/favorites" element={<FavoritesPage />} />
+                
+                <Route path="/cart" element={<CartPage />} />
+                <Route path="/checkout/success" element={<CheckoutSuccess />} />
+                <Route path="/checkout/canceled" element={<CheckoutCanceled />} />
+                <Route path="/membership/success" element={<MembershipSuccess />} />
+                <Route path="/membership/canceled" element={<MembershipCanceled />} />
+                <Route path="/email-confirmed" element={<EmailConfirmed />} />
+                <Route path="/s/:shortCode" element={<ShareRedirect />} />
+                <Route path="/scout" element={<ToolkitPage />} />
+                <Route path="/ai/generator" element={<AIPromptGeneratorPage />} />
+                <Route path="/ai/studio" element={<PromptStudioPage />} />
+                
+                <Route path="/ai/assistant" element={<AIAssistantPage />} />
+                <Route path="/ai-credits-exhausted" element={<AICreditsExhaustedPage />} />
+                
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </main>
+            
+            {/* Footer */}
+            <Footer />
+          </div>
+        </div>
         
-        <Route path="/ai/assistant" element={<AIAssistantPage />} />
-        <Route path="/ai-credits-exhausted" element={<AICreditsExhaustedPage />} />
+        <ContextPopup
+          isOpen={shouldShowPopup}
+          onClose={() => dismissPopup(false)}
+          onDismissPermanently={() => dismissPopup(true)}
+          onComplete={markContextFieldsCompleted}
+        />
         
-        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-      <Footer />
-      
-      <ContextPopup
-        isOpen={shouldShowPopup}
-        onClose={() => dismissPopup(false)}
-        onDismissPermanently={() => dismissPopup(true)}
-        onComplete={markContextFieldsCompleted}
-      />
-      
-      {/* Show feedback widget for logged in users, login widget for guests */}
-      {user ? <FeedbackWidget /> : <LoginWidget />}
-    </LoginWidgetProvider>
+        {/* Show feedback widget for logged in users, login widget for guests */}
+        {user ? <FeedbackWidget /> : <LoginWidget />}
+      </LoginWidgetProvider>
+    </SidebarProvider>
   );
 };
 

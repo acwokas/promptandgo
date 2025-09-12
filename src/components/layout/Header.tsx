@@ -1,7 +1,6 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, User, ShoppingCart, Bot, Heart, Search } from "lucide-react";
+import { User, ShoppingCart } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useToast } from "@/components/ui/use-toast";
@@ -13,7 +12,6 @@ const Header = () => {
   const { user } = useSupabaseAuth();
   const { toast } = useToast();
   useEnsureProfile();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const [cartCount, setCartCount] = useState<number>(getCartCount(!!user));
   useEffect(() => {
@@ -25,10 +23,6 @@ const Header = () => {
       window.removeEventListener('storage', onChange);
     };
   }, [user]);
-
-  const closeMobileMenu = () => {
-    setMobileMenuOpen(false);
-  };
 
   const handleLogout = async () => {
     try {
@@ -50,7 +44,6 @@ const Header = () => {
       clearCartOnLogout();
       toast({ title: "Signed out" });
     }
-    closeMobileMenu(); // Close mobile menu after logout
   };
 
   // Clear cart when user logs out (detect auth state change)
@@ -60,103 +53,35 @@ const Header = () => {
     }
   }, [user]);
   return (
-    <header className="sticky top-0 z-40 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
-      <nav className="container flex items-center justify-between h-16 md:h-24">
+    <header className="flex-1">
+      <nav className="container flex items-center justify-between h-14 px-4">
         <Link to="/" className="flex items-center gap-2" aria-label="promptandgo home">
           <img
             src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
             alt="promptandgo logo"
-            className="h-20 md:h-[5.25rem] w-auto align-middle object-contain"
+            className="h-8 w-auto align-middle object-contain"
             loading="eager"
             decoding="async"
             width="149"
             height="84"
-            sizes="(max-width: 768px) 149px, 149px"
+            sizes="149px"
           />
         </Link>
-        <ul className="hidden md:flex items-center gap-6 text-sm">
-          <li><NavLink to="/" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Welcome</NavLink></li>
-          <li><NavLink to="/library" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}><Search className="h-4 w-4 inline mr-1" />Browse Library</NavLink></li>
-          <li><NavLink to="/packs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>⚡️ Power Packs</NavLink></li>
-          <li>
-            <NavLink to="/scout" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
-              <Bot className="h-4 w-4 inline mr-1 text-blue-500" />
-              Scout AI
-            </NavLink>
-          </li>
-          <li><NavLink to="/how-it-works" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>How it Works</NavLink></li>
-          <li><NavLink to="/tips" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Tips</NavLink></li>
-          <li><NavLink to="/faqs" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>FAQs</NavLink></li>
-          {user && (
-            <li>
-              <NavLink to="/account/favorites" className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
-                <Heart className="h-4 w-4 inline mr-1 text-red-500" />
-                My Prompts
-              </NavLink>
-            </li>
-          )}
-        </ul>
+        
         <div className="flex items-center gap-2">
-          {/* Mobile menu */}
-          <div className="md:hidden">
-            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" aria-label="Open menu">
-                  <Menu className="h-6 w-6" aria-hidden="true" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right">
-                <nav className="mt-8 grid gap-3 text-base">
-                  <NavLink to="/" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Welcome</NavLink>
-                  <NavLink to="/library" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}><Search className="h-4 w-4 inline mr-1" />Browse Library</NavLink>
-                  <NavLink to="/packs" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>⚡️ Power Packs</NavLink>
-                  <NavLink to="/scout" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
-                    <Bot className="h-4 w-4 inline mr-1 text-blue-500" />
-                    Scout AI
-                  </NavLink>
-                  <NavLink to="/how-it-works" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>How it Works</NavLink>
-                  <NavLink to="/cart" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>🛒 Cart</NavLink>
-                  <NavLink to="/tips" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>Tips</NavLink>
-                  <NavLink to="/faqs" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>FAQs</NavLink>
-                  
-                  {user && (
-                    <>
-                      <NavLink to="/account/favorites" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>
-                        <Heart className="h-4 w-4 inline mr-1 text-red-500" />
-                        My Prompts
-                      </NavLink>
-                      <NavLink to="/account" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>My Account</NavLink>
-                    </>
-                  )}
-                  {user ? (
-                    <Button variant="secondary" onClick={handleLogout} className="mt-2">Log out</Button>
-                  ) : (
-                    <NavLink to="/auth" onClick={closeMobileMenu} className={({isActive})=> isActive?"text-primary":"text-foreground/80 hover:text-foreground"}>👤 Login / Sign up</NavLink>
-                  )}
-                  {user ? (
-                    <Button asChild variant="hero" className="mt-4" onClick={closeMobileMenu}>
-                      <Link to="/library?random=1">Inspire Me!</Link>
-                    </Button>
-                  ) : (
-                    <Button asChild variant="cta" className="mt-4" onClick={closeMobileMenu}>
-                      <Link to="/auth?mode=signup">Get 1 FREE ⚡️Power Pack!</Link>
-                    </Button>
-                  )}
-                </nav>
-              </SheetContent>
-            </Sheet>
-          </div>
-          {/* Desktop CTA */}
+          {/* CTA Button */}
           {user ? (
-            <Button asChild variant="hero" className="px-5 hidden md:inline-flex">
+            <Button asChild variant="hero" size="sm">
               <Link to="/library?random=1">Inspire Me!</Link>
             </Button>
           ) : (
-            <Button asChild variant="cta" className="px-5 hidden md:inline-flex">
-              <Link to="/auth?mode=signup">Get 1 FREE ⚡️Power Pack!</Link>
+            <Button asChild variant="cta" size="sm">
+              <Link to="/auth?mode=signup">Get FREE Pack!</Link>
             </Button>
           )}
-          <Button asChild variant="ghost" size="icon" className="hidden md:inline-flex relative" title="Cart" aria-label="Cart">
+          
+          {/* Cart Button */}
+          <Button asChild variant="ghost" size="icon" className="relative" title="Cart" aria-label="Cart">
             <Link to="/cart">
               <ShoppingCart className="h-5 w-5" aria-hidden="true" />
               {cartCount > 0 && (
@@ -166,16 +91,17 @@ const Header = () => {
               )}
             </Link>
           </Button>
-          {!user && (
-            <Button asChild variant="ghost" className="hidden md:inline-flex">
-              <Link to="/auth">Login / Sign up</Link>
-            </Button>
-          )}
-          {user && (
-            <Button asChild variant="ghost" size="icon" className="hidden md:inline-flex" title="My Account" aria-label="My Account">
+          
+          {/* User Account / Login */}
+          {user ? (
+            <Button asChild variant="ghost" size="icon" title="My Account" aria-label="My Account">
               <Link to="/account">
                 <User className="h-5 w-5" aria-hidden="true" />
               </Link>
+            </Button>
+          ) : (
+            <Button asChild variant="ghost" size="sm">
+              <Link to="/auth">Login</Link>
             </Button>
           )}
         </div>
