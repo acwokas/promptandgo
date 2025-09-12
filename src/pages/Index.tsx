@@ -259,12 +259,12 @@ const Index = () => {
         <section className="container pt-6 pb-2">
           <div className="grid gap-6 md:grid-cols-2">
             {/* What is PromptAndGo.ai? */}
-            <div className="rounded-2xl border bg-card p-6 md:p-8 animate-fade-in">
+            <div className="rounded-2xl border bg-card p-6 md:p-8 animate-fade-in flex flex-col">
               <h2 className="text-2xl font-semibold mb-3">What is PromptAndGo.ai?</h2>
-              <p className="text-muted-foreground max-w-prose mb-6">
+              <p className="text-muted-foreground max-w-prose mb-4">
                 Ready-to-use prompts designed for real-world work. Whether you're writing a pitch, planning a launch, creating some social media assets or creating an image, we've got a prompt for that.
               </p>
-              <ul className="grid grid-cols-2 gap-3 text-sm text-muted-foreground">
+              <ul className="grid grid-cols-2 gap-4 text-sm text-muted-foreground flex-1">
                 <li className="flex items-center gap-2"><ShieldCheck className="h-5 w-5 text-primary" /> Human-curated</li>
                 <li className="flex items-center gap-2"><ListChecks className="h-5 w-5 text-primary" /> Practical results</li>
                 <li className="flex items-center gap-2"><Wand2 className="h-5 w-5 text-primary" /> Copy-and-go</li>
