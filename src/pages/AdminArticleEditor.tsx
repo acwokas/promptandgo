@@ -11,7 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
-import { Save, ArrowLeft, Plus, Trash2, Upload, ExternalLink, Eye, Edit } from "lucide-react";
+import { Save, ArrowLeft, Plus, Trash2, Upload, ExternalLink, Eye, Edit, Columns2, FileEdit } from "lucide-react";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
@@ -71,6 +71,7 @@ const AdminArticleEditor = () => {
   const [assets, setAssets] = useState<ArticleAsset[]>([]);
   const [newKeyphrase, setNewKeyphrase] = useState('');
   const [activeTab, setActiveTab] = useState('content');
+  const [sideBySideMode, setSideBySideMode] = useState(false);
   const contentTextareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -436,6 +437,24 @@ const AdminArticleEditor = () => {
                     <div className="flex items-center justify-between">
                       <Label htmlFor="content">Content *</Label>
                       <div className="flex gap-2">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setSideBySideMode(!sideBySideMode)}
+                        >
+                          {sideBySideMode ? (
+                            <>
+                              <FileEdit className="w-4 h-4 mr-2" />
+                              Edit Only
+                            </>
+                          ) : (
+                            <>
+                              <Columns2 className="w-4 h-4 mr-2" />
+                              Side by Side
+                            </>
+                          )}
+                        </Button>
                         <ContentLinkInserter 
                           onInsert={insertLinkIntoContent}
                           disabled={saving}
@@ -450,17 +469,80 @@ const AdminArticleEditor = () => {
                       textareaRef={contentTextareaRef}
                       onContentChange={(content) => setArticle(prev => ({ ...prev, content }))}
                     />
-                     <Textarea
-                       ref={contentTextareaRef}
-                       id="content"
-                       value={article.content}
-                       onChange={(e) => setArticle(prev => ({ ...prev, content: e.target.value }))}
-                       onKeyDown={handleContentKeyDown}
-                       placeholder="Write your article content here..."
-                       rows={15}
-                       className="min-h-96 font-mono text-sm whitespace-pre-wrap"
-                       style={{ whiteSpace: 'pre-wrap' }}
-                     />
+                    
+                    {sideBySideMode ? (
+                      <div className="grid grid-cols-2 gap-4 h-96">
+                        <div className="flex flex-col">
+                          <Label className="mb-2 text-sm font-medium">Editor</Label>
+                          <Textarea
+                            ref={contentTextareaRef}
+                            id="content"
+                            value={article.content}
+                            onChange={(e) => setArticle(prev => ({ ...prev, content: e.target.value }))}
+                            onKeyDown={handleContentKeyDown}
+                            placeholder="Write your article content here..."
+                            className="flex-1 font-mono text-sm whitespace-pre-wrap resize-none"
+                            style={{ whiteSpace: 'pre-wrap' }}
+                          />
+                        </div>
+                        <div className="flex flex-col">
+                          <Label className="mb-2 text-sm font-medium">Live Preview</Label>
+                          <div className="flex-1 overflow-y-auto border border-input rounded-md p-3 bg-background">
+                            <div className="prose prose-sm prose-slate dark:prose-invert max-w-none">
+                              {article.content ? (
+                                <ReactMarkdown 
+                                  remarkPlugins={[remarkGfm, remarkBreaks]}
+                                  components={{
+                                    h1: ({children}) => <h1 className="text-xl font-bold mt-4 mb-2">{children}</h1>,
+                                    h2: ({children}) => <h2 className="text-lg font-semibold mt-3 mb-2">{children}</h2>,
+                                    h3: ({children}) => <h3 className="text-base font-medium mt-2 mb-1">{children}</h3>,
+                                    p: ({children}) => <p className="mb-2 leading-relaxed text-sm">{children}</p>,
+                                    img: ({src, alt}) => (
+                                      <div className="my-3">
+                                        <img src={src} alt={alt} className="w-full rounded shadow-sm" />
+                                      </div>
+                                    ),
+                                    ul: ({children}) => <ul className="list-disc pl-4 mb-2 space-y-1">{children}</ul>,
+                                    ol: ({children}) => <ol className="list-decimal pl-4 mb-2 space-y-1">{children}</ol>,
+                                    blockquote: ({children}) => (
+                                      <blockquote className="border-l-2 border-primary pl-3 my-2 italic text-muted-foreground text-sm">
+                                        {children}
+                                      </blockquote>
+                                    ),
+                                    code: ({children, className}) => {
+                                      const isInline = !className;
+                                      return isInline ? (
+                                        <code className="bg-muted px-1 py-0.5 rounded text-xs font-mono">{children}</code>
+                                      ) : (
+                                        <pre className="bg-muted p-2 rounded overflow-x-auto my-2">
+                                          <code className="text-xs font-mono">{children}</code>
+                                        </pre>
+                                      );
+                                    }
+                                  }}
+                                >
+                                  {article.content}
+                                </ReactMarkdown>
+                              ) : (
+                                <p className="text-muted-foreground text-sm italic">Start typing to see preview...</p>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <Textarea
+                        ref={contentTextareaRef}
+                        id="content"
+                        value={article.content}
+                        onChange={(e) => setArticle(prev => ({ ...prev, content: e.target.value }))}
+                        onKeyDown={handleContentKeyDown}
+                        placeholder="Write your article content here..."
+                        rows={15}
+                        className="min-h-96 font-mono text-sm whitespace-pre-wrap"
+                        style={{ whiteSpace: 'pre-wrap' }}
+                      />
+                    )}
                     <div className="flex justify-between items-center">
                       <p className="text-sm text-muted-foreground">
                         Supports Markdown. Press Enter for new paragraph, Shift+Enter for a line break. Use the "Insert Image" button to add images.
