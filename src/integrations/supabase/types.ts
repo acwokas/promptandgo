@@ -1207,6 +1207,10 @@ export type Database = {
         Args: { link_code: string }
         Returns: undefined
       }
+      is_admin_user: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
       secure_upsert_subscriber: {
         Args: {
           p_email: string
