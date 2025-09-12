@@ -18,7 +18,7 @@
     <link rel="dns-prefetch" href="https://mncxspmtqvqgvtrxbxzb.supabase.co" />
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
     
-    <!-- Load fonts non-render-blocking -->
+    <!-- Load fonts non-render-blocking with font-display: swap for faster FCP -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'" />
     <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,600,700&display=swap" media="print" onload="this.media='all'" />
     <noscript>
@@ -31,14 +31,76 @@
     
     <!-- Non-critical CSS loading optimization -->
     <style>
-      /* Critical above-the-fold styles to prevent FOUC */
-      html { font-family: system-ui, -apple-system, sans-serif; }
-      body { margin: 0; background-color: #ffffff; color: #000000; }
-      #root { min-height: 100vh; }
-      .loading { display: flex; align-items: center; justify-content: center; min-height: 50vh; }
+      /* Critical above-the-fold styles for faster FCP */
+      html { 
+        font-family: system-ui, -apple-system, sans-serif; 
+        line-height: 1.6;
+      }
+      body { 
+        margin: 0; 
+        background-color: #ffffff; 
+        color: #000000;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      #root { 
+        min-height: 100vh; 
+        display: flex;
+        flex-direction: column;
+      }
+      .loading { 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        min-height: 50vh; 
+      }
+      /* Essential layout utilities */
+      .flex { display: flex; }
+      .items-center { align-items: center; }
+      .justify-between { justify-content: space-between; }
+      .justify-center { justify-content: center; }
+      .w-full { width: 100%; }
+      .h-full { height: 100%; }
+      .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+      /* Critical header styles */
+      header { 
+        position: sticky; 
+        top: 0; 
+        z-index: 50; 
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+      /* Critical hero section */
+      .hero { 
+        min-height: 60vh; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center;
+        text-align: center;
+        padding: 2rem 1rem;
+      }
+      /* Critical button styles */
+      button, .btn { 
+        cursor: pointer; 
+        border: none; 
+        border-radius: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        transition: all 0.2s;
+      }
       /* Dark mode support */
       @media (prefers-color-scheme: dark) {
-        body { background-color: #0c0c0d; color: #ffffff; }
+        body { 
+          background-color: #0c0c0d; 
+          color: #ffffff; 
+        }
+        header { 
+          background: rgba(12, 12, 13, 0.95);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
       }
     </style>
     <link rel="icon" href="/lovable-uploads/ce838992-b473-459c-ab8a-6251ed9d69e1.png" type="image/png" />
