@@ -214,11 +214,20 @@ const ArticleView = () => {
     // Convert custom callout syntax to markdown-compatible format
     let processed = content;
     
-    // Handle PromptExample components
-    processed = processed.replace(
-      /<PromptExample\s+template="([^"]+)"\s+example="([^"]+)"\s*\/>/g, 
-      (match, template, example) => {
-        return `\n\n<div class="rounded-lg p-4 my-6 border bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
+    // Handle PromptExample components (robust: any attr order, quotes, multiline, self-closing or paired)
+    const parseAttrs = (attrStr: string) => {
+      const attrs: Record<string, string> = {}
+      const attrRegex = /(\w+)\s*=\s*(["'])([\s\S]*?)\2/g
+      let m
+      while ((m = attrRegex.exec(attrStr)) !== null) {
+        attrs[m[1]] = m[3]
+      }
+      return attrs
+    }
+    const renderPromptExample = (attrs: Record<string, string>, inner?: string) => {
+      const template = attrs.template ?? inner ?? ""
+      const example = attrs.example ?? ""
+      return `\n\n<div class="rounded-lg p-4 my-6 border bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
 <div class="flex items-center gap-2 mb-3">
 <svg class="w-4 h-4 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 <polyline points="16,18 22,12 16,6"></polyline>
@@ -227,10 +236,19 @@ const ArticleView = () => {
 <span class="text-sm font-semibold text-primary">Prompt Template</span>
 </div>
 <p class="font-mono text-sm mb-2 leading-relaxed bg-background/50 rounded border p-3">${template}</p>
-<p class="text-sm text-muted-foreground"><strong>Example:</strong> "${example}"</p>
+${example ? `<p class="text-sm text-muted-foreground"><strong>Example:</strong> "${example}"</p>` : ""}
 </div>\n\n`;
-      }
-    );
+    }
+    // Self-closing form
+    processed = processed.replace(/<PromptExample\b([^>]*)\/>/gi, (_, attrsStr) => {
+      const attrs = parseAttrs(attrsStr || "")
+      return renderPromptExample(attrs)
+    })
+    // Paired tag form
+    processed = processed.replace(/<PromptExample\b([^>]*)>([\s\S]*?)<\/PromptExample>/gi, (_, attrsStr, inner) => {
+      const attrs = parseAttrs(attrsStr || "")
+      return renderPromptExample(attrs, inner?.trim())
+    })
     
     // Handle CalloutBox components
     processed = processed.replace(
