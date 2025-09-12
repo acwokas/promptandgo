@@ -370,7 +370,7 @@ const AdminArticleEditor = () => {
         description="Article editor for managing blog content"
         noindex={true}
       />
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 min-h-screen pb-24">
         <div className="flex flex-col gap-6">
           <div className="flex items-center gap-4">
             <Button variant="outline" onClick={() => navigate('/admin/articles')}>
@@ -476,8 +476,8 @@ const AdminArticleEditor = () => {
                     </div>
                   </div>
 
-                  {/* Side-by-Side Editor Mode */}
-                  <div className="space-y-4 border rounded-lg p-4 bg-muted/20">
+                  {/* Content Editor */}
+                  <div className="space-y-4 border rounded-lg p-4 bg-muted/20 pb-16">
                     <div className="flex items-center justify-between">
                       <Label className="text-base font-medium">Content Editor</Label>
                       <div className="flex gap-2">
@@ -525,7 +525,7 @@ const AdminArticleEditor = () => {
                     />
                     
                     {sideBySideMode ? (
-                      <div className="grid grid-cols-2 gap-4 h-96">
+                      <div className="grid grid-cols-2 gap-4 min-h-96 mb-8">
                         <div className="flex flex-col">
                           <Label className="mb-2 text-sm font-medium">Editor</Label>
                           <Textarea
@@ -535,13 +535,13 @@ const AdminArticleEditor = () => {
                             onChange={(e) => setArticle(prev => ({ ...prev, content: e.target.value }))}
                             onKeyDown={handleContentKeyDown}
                             placeholder="Write your article content here..."
-                            className="flex-1 font-mono text-sm whitespace-pre-wrap resize-none"
+                            className="flex-1 font-mono text-sm whitespace-pre-wrap resize-none min-h-96"
                             style={{ whiteSpace: 'pre-wrap' }}
                           />
                         </div>
                         <div className="flex flex-col">
                           <Label className="mb-2 text-sm font-medium">Live Preview</Label>
-                          <div className="flex-1 overflow-y-auto border border-input rounded-md p-3 bg-background">
+                          <div className="flex-1 overflow-y-auto border border-input rounded-md p-3 bg-background min-h-96">
                             <div className="prose prose-sm prose-slate dark:prose-invert max-w-none">
                               {article.content ? (
                                 <ReactMarkdown 
