@@ -82,13 +82,13 @@ const BeginnersGuideMidjourneyPrompts = () => {
         </Link>
 
         {/* Article Header */}
-        <header className="mb-8">
+        <section className="mb-8 static">
           <div className="flex flex-wrap gap-2 mb-4">
             <Badge variant="secondary">AI Tools</Badge>
             <Badge variant="secondary">MidJourney</Badge>
           </div>
           
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">
+          <h1 className="text-3xl md:text-4xl font-bold mb-4 static">
             Beginner's Guide: Creating Detailed Prompts for MidJourney
           </h1>
           
@@ -109,7 +109,7 @@ const BeginnersGuideMidjourneyPrompts = () => {
             <img 
               src="/lovable-uploads/24c8f315-67e8-4022-abec-e096e61d0202.png"
               alt="Beginner's guide to MidJourney prompts - steampunk character with blueprint"
-            className="w-full rounded-lg shadow-lg"
+              className="w-full rounded-lg shadow-lg static"
             loading="eager"
             decoding="async"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
@@ -120,7 +120,7 @@ const BeginnersGuideMidjourneyPrompts = () => {
           <div className="text-lg text-muted-foreground static">
             Helping beginners understand how to craft detailed, effective prompts in MidJourney so they can consistently generate high-quality, creative images.
           </div>
-        </header>
+        </section>
 
         {/* Article Content */}
         <article className="prose prose-lg max-w-none space-y-8">
