@@ -56,7 +56,7 @@ const dedupeByTitle = (arr: PromptUI[]) => {
   });
 };
 
-// Reorder results: first up to 2 locked (PRO), then all free, then remaining locked
+// Reorder results: first 1 PRO, then several free, then alternate PRO/free groups
 const reorderByLockedBuckets = (arr: PromptUI[]) => {
   const orderIndex = new Map<string, number>();
   arr.forEach((p, i) => orderIndex.set(p.id, i));
@@ -64,10 +64,34 @@ const reorderByLockedBuckets = (arr: PromptUI[]) => {
   const pro = arr.filter((p) => !!p.isPro).sort((a, b) => (orderIndex.get(a.id)! - orderIndex.get(b.id)!));
   const free = arr.filter((p) => !p.isPro).sort((a, b) => (orderIndex.get(a.id)! - orderIndex.get(b.id)!));
 
-  const topTwoPro = pro.slice(0, 2);
-  const restPro = pro.slice(2);
+  if (pro.length === 0) return free;
+  if (free.length === 0) return pro;
 
-  return [...topTwoPro, ...free, ...restPro];
+  const result: PromptUI[] = [];
+  let proIndex = 0;
+  let freeIndex = 0;
+  
+  // Start with 1 PRO prompt
+  if (proIndex < pro.length) {
+    result.push(pro[proIndex++]);
+  }
+  
+  // Then add free prompts in groups, interspersing with PRO
+  const freeGroupSize = 4; // Show 4 free prompts before next PRO
+  
+  while (freeIndex < free.length || proIndex < pro.length) {
+    // Add a group of free prompts
+    for (let i = 0; i < freeGroupSize && freeIndex < free.length; i++) {
+      result.push(free[freeIndex++]);
+    }
+    
+    // Add 1 PRO prompt if available
+    if (proIndex < pro.length) {
+      result.push(pro[proIndex++]);
+    }
+  }
+
+  return result;
 };
 
 const PromptLibrary = () => {
