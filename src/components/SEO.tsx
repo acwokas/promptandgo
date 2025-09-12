@@ -10,6 +10,7 @@ interface SEOProps {
   ogType?: 'website' | 'article' | 'product';
   publishedTime?: string;
   modifiedTime?: string;
+  keywords?: string;
 }
 
 const SITE_NAME = "promptandgo";
@@ -40,6 +41,7 @@ const SEO = ({
   ogType = "website",
   publishedTime,
   modifiedTime,
+  keywords,
 }: SEOProps) => {
   const canonicalUrl = normalizeCanonical(canonical);
   const ogImage = image || DEFAULT_OG_IMAGE;
@@ -54,6 +56,7 @@ const SEO = ({
     <Helmet>
       <title>{fullTitle}</title>
       <meta name="description" content={optimizedDescription} />
+      {keywords && <meta name="keywords" content={keywords} />}
       <link rel="canonical" href={canonicalUrl} />
       <meta name="robots" content={noindex ? "noindex,nofollow" : "index,follow,max-image-preview:large,max-snippet:-1"} />
       

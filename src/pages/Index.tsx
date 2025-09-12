@@ -249,8 +249,9 @@ const Index = () => {
 
   return <>
       <SEO 
-        title="Ready-to-use prompts for real-world work" 
-        description="Browse, copy, and run practical AI prompts for ChatGPT, Claude, and more. No jargon — just faster outcomes for marketers, creators, and professionals."
+        title="AI Prompts - Ready-to-use prompts for real-world work" 
+        description="Ready-to-use prompts designed for real-world work. Whether you're writing a pitch, planning a launch, creating some social media assets or creating an image, we've got a prompt for that."
+        keywords="AI prompts, prompt library, AI writing prompts, prompt generator, prompt and go, prompt tips, curated AI prompts, AI content tools, AI prompt marketplace, social media AI prompts, marketing AI prompts, image generation prompts, productivity AI prompts, AI prompt examples, AI tools for creators, prompt library, prompt generator, curated AI prompts"
         structuredData={homeStructuredData}
       />
 
