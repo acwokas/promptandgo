@@ -54,6 +54,9 @@ const Blog = () => {
               src="/lovable-uploads/66b1134b-1d55-416b-b7ea-2719a1a22ec1.png"
               alt="Welcome to promptandgo: Your Shortcut to Smarter AI Prompts"
               loading="lazy"
+              decoding="async"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+              width="400" height="225"
               className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
             />
             <CardContent className="pt-4">
@@ -73,6 +76,9 @@ const Blog = () => {
               src="/lovable-uploads/f23788ee-b45e-4f84-808a-691c7e3c5e52.png"
               alt="Best AI Prompts for Small Business Owners in 2025"
               loading="lazy"
+              decoding="async"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+              width="400" height="225"
               className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
             />
             <CardContent className="pt-4">
@@ -92,6 +98,9 @@ const Blog = () => {
               src="/lovable-uploads/cc4584af-ecc2-4ea7-9eb7-f6ec463c8ac6.png"
               alt="Good prompt vs bad prompt illustration"
               loading="lazy"
+              decoding="async"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+              width="400" height="225"
               className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
             />
             <CardContent className="pt-4">
@@ -111,6 +120,9 @@ const Blog = () => {
               src="/lovable-uploads/94ca5534-1070-4bf0-a579-0445f417c302.png"
               alt="AI Prompts That Save You Hours Every Week"
               loading="lazy"
+              decoding="async"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+              width="400" height="225"
               className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
             />
             <CardContent className="pt-4">
@@ -130,6 +142,9 @@ const Blog = () => {
               src="/ai-prompts-email-social-icons.png"
               alt="AI Prompts for Marketing Campaigns That Convert"
               loading="lazy"
+              decoding="async"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+              width="400" height="225"
               className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
             />
             <CardContent className="pt-4">
@@ -149,6 +164,9 @@ const Blog = () => {
               src="/lovable-uploads/b9bbcee0-042a-4751-9c30-dfc61fe9a846.png"
               alt="AI Prompts for Customer Support Teams"
               loading="lazy"
+              decoding="async"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+              width="400" height="225"
               className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
             />
             <CardContent className="pt-4">
@@ -168,6 +186,9 @@ const Blog = () => {
               src="/lovable-uploads/a619c09b-001e-470b-beff-59e90dcd0a60.png"
               alt="AI Prompts for Social Media Content That Stands Out"
               loading="lazy"
+              decoding="async"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+              width="400" height="225"
               className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
             />
             <CardContent className="pt-4">
@@ -187,6 +208,9 @@ const Blog = () => {
               src="/lovable-uploads/d350e5ca-08b4-4c34-adae-de4287b5aedb.png"
               alt="AI Prompts for Content Writers and Copywriters"
               loading="lazy"
+              decoding="async"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+              width="400" height="225"
               className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
             />
             <CardContent className="pt-4">
@@ -206,6 +230,9 @@ const Blog = () => {
               src="/lovable-uploads/f0a62b1b-6fae-4b41-8211-30a3c0ed8ee7.png"
               alt="AI Prompts for Business Strategy and Planning"
               loading="lazy"
+              decoding="async"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+              width="400" height="225"
               className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
             />
             <CardContent className="pt-4">
@@ -225,6 +252,9 @@ const Blog = () => {
               src="/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png"
               alt="Beginner's Guide: Creating Detailed Prompts for MidJourney"
               loading="lazy"
+              decoding="async"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+              width="400" height="225"
               className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
             />
             <CardContent className="pt-4">

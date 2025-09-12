@@ -105,8 +105,8 @@ const BestAIPromptsForSmallBusiness2025 = () => {
             loading="eager"
             fetchPriority="high"
             decoding="async"
-            sizes="100vw"
-            width="1280" height="720"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+            width="1200" height="675"
           />
           <p className="mt-3 text-muted-foreground">
             Running a small business in 2025 means wearing multiple hats at once. From marketing to operations, there are never enough hours in the day. AI has become an essential tool for business owners who want to work smarter, not harder. The right prompts can help you generate marketing content, create business strategies, and automate routine tasks in minutes.
@@ -136,7 +136,8 @@ const BestAIPromptsForSmallBusiness2025 = () => {
               className="mt-3 w-full rounded-lg border aspect-[16/9] object-cover"
               loading="lazy"
               decoding="async"
-              width="1280" height="720"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
+              width="800" height="450"
             />
             <p className="mt-4">Your marketing strategy is the lifeline of your business. These prompts are designed to help you create engaging, high-quality content quickly.</p>
             
@@ -172,7 +173,8 @@ const BestAIPromptsForSmallBusiness2025 = () => {
               className="mt-3 w-full rounded-lg border aspect-[16/9] object-cover"
               loading="lazy"
               decoding="async"
-              width="1280" height="720"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
+              width="800" height="450"
             />
             <p className="mt-4">Closing sales requires the right words at the right time. These prompts can help you craft persuasive messaging.</p>
             

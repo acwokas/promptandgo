@@ -15,9 +15,9 @@ const AIPromptsForMarketingCampaigns = () => {
   const title = "AI Prompts for Marketing Campaigns That Convert";
   const description =
     "Discover the best AI prompts for marketing campaigns that convert. From ad copy to social captions, use these examples to boost engagement and sales.";
-  const heroImage = "/lovable-uploads/42aa72df-62d8-45c3-83b2-c77657547ca7.png";
-  const midImage1 = "/lovable-uploads/02a7a5fd-f6f6-49c6-9f45-e70c7d3ba6be.png";
-  const midImage2 = "/lovable-uploads/0240be2e-4b38-4a77-a2f7-46db36807679.png";
+  const heroImage = "/ai-prompts-marketing-campaigns-hero.png";
+  const midImage1 = "/ai-prompts-marketing-adcopy-tablet.png";
+  const midImage2 = "/ai-prompts-email-social-icons.png";
   const origin = typeof window !== "undefined" ? window.location.origin : "";
   const canonical = origin ? `${origin}/tips/ai-prompts-for-marketing-campaigns` : undefined;
   const category = "Marketing";
@@ -75,8 +75,8 @@ const AIPromptsForMarketingCampaigns = () => {
             loading="eager"
             fetchPriority="high"
             decoding="async"
-            sizes="100vw"
-            width="1280" height="720"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+            width="1200" height="675"
           />
           <p className="mt-3 text-muted-foreground">
             A marketing campaign lives or dies by its messaging. AI can be your secret weapon in creating consistent, high-converting copy across ads, emails, and social posts. The right prompts will help you target the right audience, craft persuasive messaging, and keep your brand voice intact.
@@ -104,6 +104,9 @@ const AIPromptsForMarketingCampaigns = () => {
             alt="AI marketing prompts examples for ad copy on a tablet with social reactions"
             className="mt-6 w-full rounded-lg border aspect-[16/9] object-cover"
             loading="lazy"
+            decoding="async"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
+            width="800" height="450"
           />
 
           <h2 className="text-2xl font-semibold">2. Email Marketing Prompts</h2>
@@ -118,6 +121,9 @@ const AIPromptsForMarketingCampaigns = () => {
             alt="AI prompts for email and social marketing showing robot with social platform icons"
             className="mt-6 w-full rounded-lg border aspect-[16/9] object-cover"
             loading="lazy"
+            decoding="async"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
+            width="800" height="450"
           />
 
           <h2 className="text-2xl font-semibold">3. Social Media Prompts</h2>

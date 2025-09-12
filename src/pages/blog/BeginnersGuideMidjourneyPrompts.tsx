@@ -111,6 +111,10 @@ const BeginnersGuideMidjourneyPrompts = () => {
               alt="Beginner's guide to MidJourney prompts - steampunk character with blueprint"
               className="w-full rounded-lg shadow-lg"
               loading="eager"
+              fetchPriority="high"
+              decoding="async"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+              width="1200" height="675"
             />
           </div>
 
@@ -159,6 +163,9 @@ const BeginnersGuideMidjourneyPrompts = () => {
                 alt="Golden retriever puppy in flower field demonstrating detailed prompt results"
                 className="w-full rounded-lg shadow-lg"
                 loading="lazy"
+                decoding="async"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
+                width="800" height="450"
               />
               <p className="text-sm text-muted-foreground mt-2 text-center">
                 Example of detailed prompting: "Golden retriever puppy in flower field, ultra-realistic, soft focus, warm sunlight"
@@ -230,6 +237,9 @@ const BeginnersGuideMidjourneyPrompts = () => {
               alt="Medieval knight with glowing lightsaber demonstrating creative prompt combinations"
               className="w-full rounded-lg shadow-lg"
               loading="lazy"
+              decoding="async"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
+              width="800" height="450"
             />
             <p className="text-sm text-muted-foreground mt-2 text-center">
               Creative combinations like "Medieval knight with neon weapon" showcase MidJourney's ability to blend contrasting elements
