@@ -28,4 +28,21 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    // Optimize CSS and JS loading
+    cssCodeSplit: true,
+    rollupOptions: {
+      output: {
+        // Generate preload directives for CSS chunks
+        manualChunks: {
+          // Keep critical UI components together for better caching
+          'ui-core': ['@radix-ui/react-slot', '@radix-ui/react-toast'],
+        }
+      }
+    }
+  },
+  // Optimize CSS processing
+  css: {
+    devSourcemap: mode === 'development'
+  }
 }));

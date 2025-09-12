@@ -28,6 +28,19 @@
     
     <!-- Critical resource preloads -->
     <link rel="preload" as="image" href="/lovable-uploads/0a94080e-fece-41b4-adbe-f01337551bdb.png" fetchpriority="high" />
+    
+    <!-- Non-critical CSS loading optimization -->
+    <style>
+      /* Critical above-the-fold styles to prevent FOUC */
+      html { font-family: system-ui, -apple-system, sans-serif; }
+      body { margin: 0; background-color: #ffffff; color: #000000; }
+      #root { min-height: 100vh; }
+      .loading { display: flex; align-items: center; justify-content: center; min-height: 50vh; }
+      /* Dark mode support */
+      @media (prefers-color-scheme: dark) {
+        body { background-color: #0c0c0d; color: #ffffff; }
+      }
+    </style>
     <link rel="icon" href="/lovable-uploads/ce838992-b473-459c-ab8a-6251ed9d69e1.png" type="image/png" />
     <link rel="apple-touch-icon" href="/lovable-uploads/ce838992-b473-459c-ab8a-6251ed9d69e1.png" />
     
