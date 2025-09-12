@@ -18,13 +18,16 @@
     <link rel="dns-prefetch" href="https://mncxspmtqvqgvtrxbxzb.supabase.co" />
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
     
-    <!-- Load fonts non-render-blocking with font-display: swap for faster FCP -->
+    <!-- Load fonts non-render-blocking with font-display: swap for faster LCP -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'" />
     <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,600,700&display=swap" media="print" onload="this.media='all'" />
     <noscript>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" />
       <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,600,700&display=swap" />
     </noscript>
+    
+    <!-- Preload critical font for LCP element -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/manrope/v15/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk59FO_F87jxeN7B.woff2" as="font" type="font/woff2" crossorigin />
     
     <!-- Critical resource preloads -->
     <link rel="preload" as="image" href="/lovable-uploads/0a94080e-fece-41b4-adbe-f01337551bdb.webp" type="image/webp" fetchpriority="high" />
@@ -84,6 +87,21 @@
         justify-content: center;
         text-align: center;
         padding: 2rem 1rem;
+      }
+      /* Critical hero heading for LCP optimization */
+      .hero h1, h1.text-4xl {
+        font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+        font-size: 2.25rem;
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: -0.025em;
+        max-width: 80rem;
+        margin: 0;
+      }
+      @media (min-width: 768px) {
+        .hero h1, h1.text-4xl {
+          font-size: 3rem;
+        }
       }
       /* Critical button styles */
       button, .btn { 
