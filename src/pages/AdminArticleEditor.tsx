@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import type { KeyboardEvent } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -12,6 +13,8 @@ import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Save, ArrowLeft, Plus, Trash2, Upload, ExternalLink, Eye, Edit } from "lucide-react";
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import remarkBreaks from 'remark-breaks';
 import { format } from "date-fns";
 import SEO from "@/components/SEO";
 import { ImageUpload } from "@/components/ui/image-upload";
@@ -189,6 +192,25 @@ const AdminArticleEditor = () => {
       const newCursorPos = start + linkMarkdown.length;
       textarea.setSelectionRange(newCursorPos, newCursorPos);
     }, 0);
+  };
+
+  // When pressing Enter, insert a paragraph break (blank line). Use Shift+Enter for single line break.
+  const handleContentKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      const textarea = contentTextareaRef.current;
+      if (!textarea) return;
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const value = article.content;
+      const newValue = value.slice(0, start) + '\n\n' + value.slice(end);
+      setArticle(prev => ({ ...prev, content: newValue }));
+      setTimeout(() => {
+        textarea.focus();
+        const pos = start + 2;
+        textarea.setSelectionRange(pos, pos);
+      }, 0);
+    }
   };
 
   const addAsset = () => {
@@ -433,6 +455,7 @@ const AdminArticleEditor = () => {
                        id="content"
                        value={article.content}
                        onChange={(e) => setArticle(prev => ({ ...prev, content: e.target.value }))}
+                       onKeyDown={handleContentKeyDown}
                        placeholder="Write your article content here..."
                        rows={15}
                        className="min-h-96 font-mono text-sm whitespace-pre-wrap"
@@ -440,7 +463,7 @@ const AdminArticleEditor = () => {
                      />
                     <div className="flex justify-between items-center">
                       <p className="text-sm text-muted-foreground">
-                        Supports Markdown formatting. Use the "Insert Image" button to add images directly.
+                        Supports Markdown. Press Enter for new paragraph, Shift+Enter for a line break. Use the "Insert Image" button to add images.
                       </p>
                       <Button
                         type="button"
@@ -511,6 +534,7 @@ const AdminArticleEditor = () => {
                     {article.content ? (
                       <div className="space-y-4">
                         <ReactMarkdown 
+                          remarkPlugins={[remarkGfm, remarkBreaks]}
                           components={{
                             h1: ({children}) => <h1 className="text-2xl font-bold mt-8 mb-4">{children}</h1>,
                             h2: ({children}) => <h2 className="text-xl font-semibold mt-6 mb-3">{children}</h2>,
