@@ -23,6 +23,7 @@ import { ContentImageInserter } from "@/components/ui/content-image-inserter";
 import { ContentLinkInserter } from "@/components/ui/content-link-inserter";
 import { RichTextToolbar } from "@/components/ui/rich-text-toolbar";
 import { CalloutInserter } from "@/components/ui/callout-inserter";
+import { CalloutEditor } from "@/components/ui/callout-editor";
 
 interface Article {
   id?: string;
@@ -74,6 +75,7 @@ const AdminArticleEditor = () => {
   const [newKeyphrase, setNewKeyphrase] = useState('');
   const [activeTab, setActiveTab] = useState('content');
   const [sideBySideMode, setSideBySideMode] = useState(false);
+  const [selectedText, setSelectedText] = useState('');
   const contentTextareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -218,6 +220,43 @@ const AdminArticleEditor = () => {
       const newCursorPos = start + calloutMarkdown.length + 4; // +4 for the \n\n characters
       textarea.setSelectionRange(newCursorPos, newCursorPos);
     }, 0);
+  };
+
+  const getSelectedText = () => {
+    const textarea = contentTextareaRef.current;
+    if (!textarea) return '';
+    
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    return article.content.substring(start, end);
+  };
+
+  const updateSelectedCallout = (newMarkup: string) => {
+    const textarea = contentTextareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const currentContent = article.content;
+    
+    const newContent = 
+      currentContent.slice(0, start) + 
+      newMarkup + 
+      currentContent.slice(end);
+    
+    setArticle(prev => ({ ...prev, content: newContent }));
+    
+    // Focus back to textarea and position cursor after updated content
+    setTimeout(() => {
+      textarea.focus();
+      const newCursorPos = start + newMarkup.length;
+      textarea.setSelectionRange(newCursorPos, newCursorPos);
+    }, 0);
+  };
+
+  const handleTextareaSelection = () => {
+    const selected = getSelectedText();
+    setSelectedText(selected);
   };
 
   // When pressing Enter, insert a paragraph break (blank line). Use Shift+Enter for single line break.
@@ -628,6 +667,10 @@ ${safeExample ? `<p class="text-sm text-muted-foreground"><strong>Example:</stro
                             </Button>
                           }
                         />
+                        <CalloutEditor
+                          selectedText={selectedText}
+                          onUpdate={updateSelectedCallout}
+                        />
                       </div>
                     </div>
 
@@ -646,6 +689,7 @@ ${safeExample ? `<p class="text-sm text-muted-foreground"><strong>Example:</stro
                             value={article.content}
                             onChange={(e) => setArticle(prev => ({ ...prev, content: e.target.value }))}
                             onKeyDown={handleContentKeyDown}
+                            onSelect={handleTextareaSelection}
                             placeholder="Write your article content here..."
                             className="flex-1 font-mono text-sm whitespace-pre-wrap resize-none min-h-96"
                             style={{ whiteSpace: 'pre-wrap' }}
@@ -707,6 +751,7 @@ ${safeExample ? `<p class="text-sm text-muted-foreground"><strong>Example:</stro
                           value={article.content}
                           onChange={(e) => setArticle(prev => ({ ...prev, content: e.target.value }))}
                           onKeyDown={handleContentKeyDown}
+                          onSelect={handleTextareaSelection}
                           placeholder="Write your article content here..."
                           rows={15}
                           className="min-h-96 font-mono text-sm whitespace-pre-wrap"
