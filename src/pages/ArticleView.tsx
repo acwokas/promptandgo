@@ -214,19 +214,38 @@ const ArticleView = () => {
     // Convert custom callout syntax to markdown-compatible format
     let processed = content;
     
-    // Handle PromptExample components (robust: any attr order, quotes, multiline, self-closing or paired)
+    // Handle PromptExample components (robust: any attr order, quotes including smart quotes via decoding, multiline, self-closing or paired)
+    const decodeEntities = (s: string) =>
+      (s || "")
+        .replace(/&quot;|&#34;/g, '"')
+        .replace(/&apos;|&#39;/g, "'")
+        .replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/[“”]/g, '"')
+        .replace(/[‘’]/g, "'")
+
+    const escapeHTML = (s: string) => (s || "")
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+
     const parseAttrs = (attrStr: string) => {
       const attrs: Record<string, string> = {}
+      const normalized = decodeEntities(attrStr)
       const attrRegex = /(\w+)\s*=\s*(["'])([\s\S]*?)\2/g
       let m
-      while ((m = attrRegex.exec(attrStr)) !== null) {
+      while ((m = attrRegex.exec(normalized)) !== null) {
         attrs[m[1]] = m[3]
       }
       return attrs
     }
+
     const renderPromptExample = (attrs: Record<string, string>, inner?: string) => {
-      const template = attrs.template ?? inner ?? ""
-      const example = attrs.example ?? ""
+      const templateRaw = attrs.template ?? inner ?? ""
+      const exampleRaw = attrs.example ?? ""
+      const safeTemplate = escapeHTML(templateRaw)
+      const safeExample = escapeHTML(exampleRaw)
       return `\n\n<div class="rounded-lg p-4 my-6 border bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
 <div class="flex items-center gap-2 mb-3">
 <svg class="w-4 h-4 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -235,19 +254,31 @@ const ArticleView = () => {
 </svg>
 <span class="text-sm font-semibold text-primary">Prompt Template</span>
 </div>
-<p class="font-mono text-sm mb-2 leading-relaxed bg-background/50 rounded border p-3">${template}</p>
-${example ? `<p class="text-sm text-muted-foreground"><strong>Example:</strong> "${example}"</p>` : ""}
+<p class="font-mono text-sm mb-2 leading-relaxed bg-background/50 rounded border p-3">${safeTemplate}</p>
+${safeExample ? `<p class="text-sm text-muted-foreground"><strong>Example:</strong> "${safeExample}"</p>` : ""}
 </div>\n\n`;
     }
-    // Self-closing form
-    processed = processed.replace(/<PromptExample\b([^>]*)\/>/gi, (_, attrsStr) => {
+
+    // Raw HTML self-closing form
+    processed = processed.replace(/<PromptExample\b([\s\S]*?)\/>/gi, (_: string, attrsStr: string) => {
       const attrs = parseAttrs(attrsStr || "")
       return renderPromptExample(attrs)
     })
-    // Paired tag form
-    processed = processed.replace(/<PromptExample\b([^>]*)>([\s\S]*?)<\/PromptExample>/gi, (_, attrsStr, inner) => {
+    // Raw HTML paired tag form
+    processed = processed.replace(/<PromptExample\b([\s\S]*?)>([\s\S]*?)<\/PromptExample>/gi, (_: string, attrsStr: string, inner: string) => {
       const attrs = parseAttrs(attrsStr || "")
       return renderPromptExample(attrs, inner?.trim())
+    })
+
+    // Encoded HTML self-closing form: &lt;PromptExample ... /&gt;
+    processed = processed.replace(/&lt;PromptExample\b([\s\S]*?)\/&gt;/gi, (_: string, attrsStr: string) => {
+      const attrs = parseAttrs(attrsStr || "")
+      return renderPromptExample(attrs)
+    })
+    // Encoded HTML paired tag form
+    processed = processed.replace(/&lt;PromptExample\b([\s\S]*?)&gt;([\s\S]*?)&lt;\/PromptExample&gt;/gi, (_: string, attrsStr: string, inner: string) => {
+      const attrs = parseAttrs(attrsStr || "")
+      return renderPromptExample(attrs, decodeEntities(inner?.trim() || ""))
     })
     
     // Handle CalloutBox components
