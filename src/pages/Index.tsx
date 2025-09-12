@@ -268,6 +268,8 @@ const Index = () => {
                 <li className="flex items-center gap-2"><ListChecks className="h-5 w-5 text-primary" /> Practical results</li>
                 <li className="flex items-center gap-2"><Wand2 className="h-5 w-5 text-primary" /> Copy-and-go</li>
                 <li className="flex items-center gap-2"><Zap className="h-5 w-5 text-primary" /> Works everywhere</li>
+                <li className="flex items-center gap-2"><Bot className="h-5 w-5 text-primary" /> Prompts crafted in real time</li>
+                <li className="flex items-center gap-2"><Sparkles className="h-5 w-5 text-primary" /> Tailored to your choices</li>
               </ul>
             </div>
             
