@@ -61,8 +61,9 @@ const reorderByLockedBuckets = (arr: PromptUI[]) => {
   const orderIndex = new Map<string, number>();
   arr.forEach((p, i) => orderIndex.set(p.id, i));
 
-  const pro = arr.filter((p) => !!p.isPro).sort((a, b) => (orderIndex.get(a.id)! - orderIndex.get(b.id)!));
-  const free = arr.filter((p) => !p.isPro).sort((a, b) => (orderIndex.get(a.id)! - orderIndex.get(b.id)!));
+  // Sort by prompt length (longest first) within each group
+  const pro = arr.filter((p) => !!p.isPro).sort((a, b) => b.prompt.length - a.prompt.length);
+  const free = arr.filter((p) => !p.isPro).sort((a, b) => b.prompt.length - a.prompt.length);
 
   if (pro.length === 0) return free;
   if (free.length === 0) return pro;
