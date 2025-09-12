@@ -457,6 +457,25 @@ const AdminArticleEditor = () => {
                     />
                   </div>
 
+                  <div className="space-y-2">
+                    <Label htmlFor="thumbnail">Thumbnail Image</Label>
+                    <ImageUpload
+                      currentImage={article.thumbnail_url}
+                      onUpload={(url) => setArticle(prev => ({ ...prev, thumbnail_url: url }))}
+                      onRemove={() => setArticle(prev => ({ ...prev, thumbnail_url: '' }))}
+                      className="max-w-md"
+                    />
+                    <div className="mt-2">
+                      <Label htmlFor="thumbnail_url">Or enter URL manually</Label>
+                      <Input
+                        id="thumbnail_url"
+                        value={article.thumbnail_url}
+                        onChange={(e) => setArticle(prev => ({ ...prev, thumbnail_url: e.target.value }))}
+                        placeholder="https://example.com/image.jpg"
+                      />
+                    </div>
+                  </div>
+
                   {/* Side-by-Side Editor Mode */}
                   <div className="space-y-4 border rounded-lg p-4 bg-muted/20">
                     <div className="flex items-center justify-between">
@@ -596,25 +615,6 @@ const AdminArticleEditor = () => {
                         </div>
                       </div>
                     )}
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="thumbnail">Thumbnail Image</Label>
-                    <ImageUpload
-                      currentImage={article.thumbnail_url}
-                      onUpload={(url) => setArticle(prev => ({ ...prev, thumbnail_url: url }))}
-                      onRemove={() => setArticle(prev => ({ ...prev, thumbnail_url: '' }))}
-                      className="max-w-md"
-                    />
-                    <div className="mt-2">
-                      <Label htmlFor="thumbnail_url">Or enter URL manually</Label>
-                      <Input
-                        id="thumbnail_url"
-                        value={article.thumbnail_url}
-                        onChange={(e) => setArticle(prev => ({ ...prev, thumbnail_url: e.target.value }))}
-                        placeholder="https://example.com/image.jpg"
-                      />
-                    </div>
                   </div>
                 </CardContent>
               </Card>
