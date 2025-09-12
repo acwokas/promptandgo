@@ -7,6 +7,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Clock, Share2, ExternalLink } from "lucide-react";
 import { format } from "date-fns";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
 import SEO from "@/components/SEO";
 
 interface Article {
@@ -322,6 +324,7 @@ const ArticleView = () => {
           {/* Article Content */}
           <div className="prose prose-lg max-w-none mb-12">
             <ReactMarkdown
+              remarkPlugins={[remarkGfm, remarkBreaks]}
               components={{
                 img: ({ src, alt, ...props }) => (
                   <img

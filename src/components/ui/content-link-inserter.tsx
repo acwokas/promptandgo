@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
@@ -23,12 +24,18 @@ export function ContentLinkInserter({ onInsert, disabled }: ContentLinkInserterP
   const [linkText, setLinkText] = useState("");
   const [linkUrl, setLinkUrl] = useState("");
   const [isExternal, setIsExternal] = useState(false);
+  const [openInNewTab, setOpenInNewTab] = useState(false);
 
   const handleInsert = () => {
     if (!linkText.trim() || !linkUrl.trim()) return;
 
     const finalUrl = isExternal && !linkUrl.startsWith('http') ? `https://${linkUrl}` : linkUrl;
-    const linkMarkdown = `[${linkText}](${finalUrl})`;
+    let linkMarkdown = `[${linkText}](${finalUrl})`;
+    
+    // Add HTML target="_blank" for new tab option
+    if (openInNewTab) {
+      linkMarkdown = `<a href="${finalUrl}" target="_blank" rel="noopener noreferrer">${linkText}</a>`;
+    }
     
     onInsert(linkMarkdown);
     
@@ -36,6 +43,7 @@ export function ContentLinkInserter({ onInsert, disabled }: ContentLinkInserterP
     setLinkText("");
     setLinkUrl("");
     setIsExternal(false);
+    setOpenInNewTab(false);
     setIsOpen(false);
   };
 
@@ -80,9 +88,19 @@ export function ContentLinkInserter({ onInsert, disabled }: ContentLinkInserterP
             {isExternal && (
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <ExternalLink className="w-3 h-3" />
-                External link (will open in new tab)
+                External link detected
               </div>
             )}
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox 
+              id="open-new-tab" 
+              checked={openInNewTab}
+              onCheckedChange={(checked) => setOpenInNewTab(checked === true)}
+            />
+            <Label htmlFor="open-new-tab" className="text-sm">
+              Open in new tab
+            </Label>
           </div>
           <div className="text-sm text-muted-foreground">
             <p><strong>Internal links:</strong> /tips/article-slug, /library, /packs</p>
