@@ -146,7 +146,7 @@ const MiniPromptStudio = () => {
   const hasContent = subject.trim() || Object.values(selections).some(value => value);
 
   return (
-    <Card className="w-full bg-gradient-to-br from-secondary/10 to-transparent border-secondary/20">
+    <Card className="w-full bg-gradient-to-br from-primary/20 via-primary/10 to-primary/5 border-primary/30 shadow-lg">
       <CardHeader className="pb-4">
         <div className="flex items-center gap-3 mb-2">
           <div className="w-8 h-8 rounded-lg bg-secondary/20 flex items-center justify-center">
