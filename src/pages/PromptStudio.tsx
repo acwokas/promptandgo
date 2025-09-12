@@ -9,19 +9,29 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { PromptCrafter } from "@/components/prompt-studio/PromptCrafter";
 import { EventPromptCrafter } from "@/components/prompt-studio/EventPromptCrafter";
 import CTAPromptCrafter from "@/components/prompt-studio/CTAPromptCrafter";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useLoginWidget } from "@/hooks/useLoginWidget";
 import { Heart, Calendar, Megaphone } from "lucide-react";
 
 const PromptStudioPage = () => {
+  const [searchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState<"image" | "event" | "cta">("image");
   const [generatedPrompt, setGeneratedPrompt] = useState("");
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
   const { user } = useSupabaseAuth();
   const { openLoginWidget } = useLoginWidget();
+
+  // Initialize from URL parameters
+  useEffect(() => {
+    const tabFromUrl = searchParams.get('tab') as "image" | "event" | "cta";
+    if (tabFromUrl && ['image', 'event', 'cta'].includes(tabFromUrl)) {
+      setActiveTab(tabFromUrl);
+    }
+  }, [searchParams]);
 
   const handlePromptGenerated = (prompt: string) => {
     setGeneratedPrompt(prompt);
@@ -202,11 +212,29 @@ const PromptStudioPage = () => {
               </CardHeader>
               <CardContent>
                 {activeTab === "image" ? (
-                  <PromptCrafter onPromptGenerated={handlePromptGenerated} />
+                  <PromptCrafter 
+                    onPromptGenerated={handlePromptGenerated}
+                    initialSelections={{
+                      style: searchParams.get('style') || undefined,
+                      format: searchParams.get('format') || undefined
+                    }}
+                  />
                 ) : activeTab === "event" ? (
-                  <EventPromptCrafter onPromptGenerated={handlePromptGenerated} />
+                  <EventPromptCrafter 
+                    onPromptGenerated={handlePromptGenerated}
+                    initialSelections={{
+                      eventType: searchParams.get('eventType') || undefined,
+                      tone: searchParams.get('tone') || undefined
+                    }}
+                  />
                 ) : (
-                  <CTAPromptCrafter onPromptGenerated={handlePromptGenerated} />
+                  <CTAPromptCrafter 
+                    onPromptGenerated={handlePromptGenerated}
+                    initialSelections={{
+                      platform: searchParams.get('platform') || undefined,
+                      contentType: searchParams.get('contentType') || undefined
+                    }}
+                  />
                 )}
               </CardContent>
             </Card>

@@ -15,6 +15,7 @@ import { useToast } from "@/hooks/use-toast";
 import { PromptCard } from "@/components/prompt/PromptCard";
 import { usePersonalizedPrompts } from "@/hooks/usePersonalizedPrompts";
 import AIPromptWidget from "@/components/ai/AIPromptWidget";
+import MiniPromptStudio from "@/components/prompt-studio/MiniPromptStudio";
 import PromptsOfTheDay from "@/components/prompt/PromptsOfTheDay";
 import { PollCarousel } from "@/components/poll/PollCarousel";
 import type { Category as CategoryType } from "@/data/prompts";
@@ -273,9 +274,9 @@ const Index = () => {
               </ul>
             </div>
             
-            {/* Scout Prompt Generator Widget */}
+            {/* Mini Prompt Studio */}
             <div className="w-full">
-              <AIPromptWidget />
+              <MiniPromptStudio />
             </div>
           </div>
         </section>
@@ -579,6 +580,11 @@ const Index = () => {
                 </div>
               </div>
             </div>
+          </div>
+          
+          {/* Scout Prompt Generator Widget */}
+          <div className="mt-6 max-w-2xl mx-auto">
+            <AIPromptWidget />
           </div>
         </section>
 

@@ -11,13 +11,17 @@ import { toast } from "sonner";
 
 interface CTAPromptCrafterProps {
   onPromptGenerated: (prompt: string) => void;
+  initialSelections?: {
+    platform?: string;
+    contentType?: string;
+  };
 }
 
-const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated }) => {
+const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated, initialSelections }) => {
   const [subjectMessage, setSubjectMessage] = useState("");
-  const [platform, setPlatform] = useState("");
+  const [platform, setPlatform] = useState(initialSelections?.platform || "");
   const [postFormat, setPostFormat] = useState("");
-  const [contentType, setContentType] = useState("");
+  const [contentType, setContentType] = useState(initialSelections?.contentType || "");
   const [toneOfVoice, setToneOfVoice] = useState("");
   const [audienceSegmentation, setAudienceSegmentation] = useState("");
   const [geoLocation, setGeoLocation] = useState("");
@@ -28,6 +32,17 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated }
   const [postingTimeframe, setPostingTimeframe] = useState("");
   const [powerWords, setPowerWords] = useState<string[]>([]);
   const [customDescription, setCustomDescription] = useState("");
+
+  // Auto-generate prompt when initial selections are provided
+  useEffect(() => {
+    if (initialSelections?.platform || initialSelections?.contentType) {
+      // Small delay to allow component to render first
+      setTimeout(() => {
+        const prompt = buildPrompt();
+        if (prompt) onPromptGenerated(prompt);
+      }, 100);
+    }
+  }, []);
 
   const buildPrompt = () => {
     if (!subjectMessage.trim()) return "";

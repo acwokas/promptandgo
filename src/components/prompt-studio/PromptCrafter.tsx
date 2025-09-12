@@ -10,16 +10,31 @@ import { imagePromptOptions } from "@/data/promptStudioOptions";
 
 interface PromptCrafterProps {
   onPromptGenerated: (prompt: string) => void;
+  initialSelections?: {
+    style?: string;
+    format?: string;
+  };
 }
 
-export const PromptCrafter = ({ onPromptGenerated }: PromptCrafterProps) => {
+export const PromptCrafter = ({ onPromptGenerated, initialSelections }: PromptCrafterProps) => {
   const [subject, setSubject] = useState("");
-  const [style, setStyle] = useState("");
-  const [format, setFormat] = useState("");
+  const [style, setStyle] = useState(initialSelections?.style || "");
+  const [format, setFormat] = useState(initialSelections?.format || "");
   const [colors, setColors] = useState("");
   const [effects, setEffects] = useState("");
   const [lens, setLens] = useState("");
   const [additionalEffects, setAdditionalEffects] = useState<string[]>([]);
+
+  // Auto-generate prompt when initial selections are provided
+  useEffect(() => {
+    if (initialSelections?.style || initialSelections?.format) {
+      // Small delay to allow component to render first
+      setTimeout(() => {
+        const prompt = buildPrompt();
+        if (prompt) onPromptGenerated(prompt);
+      }, 100);
+    }
+  }, []);
 
   const buildPrompt = () => {
     if (!subject.trim()) return "";

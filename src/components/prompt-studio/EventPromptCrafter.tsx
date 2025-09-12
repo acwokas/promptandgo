@@ -9,15 +9,19 @@ import { eventPromptOptions } from "@/data/promptStudioOptions";
 
 interface EventPromptCrafterProps {
   onPromptGenerated: (prompt: string) => void;
+  initialSelections?: {
+    eventType?: string;
+    tone?: string;
+  };
 }
 
-export const EventPromptCrafter = ({ onPromptGenerated }: EventPromptCrafterProps) => {
+export const EventPromptCrafter = ({ onPromptGenerated, initialSelections }: EventPromptCrafterProps) => {
   const [eventName, setEventName] = useState("");
-  const [eventType, setEventType] = useState("");
+  const [eventType, setEventType] = useState(initialSelections?.eventType || "");
   const [eventFormat, setEventFormat] = useState("");
   const [audienceType, setAudienceType] = useState("");
   const [audienceSize, setAudienceSize] = useState("");
-  const [tone, setTone] = useState("");
+  const [tone, setTone] = useState(initialSelections?.tone || "");
   const [theme, setTheme] = useState("");
   const [venueType, setVenueType] = useState("");
   const [geoLocation, setGeoLocation] = useState("");
@@ -25,6 +29,17 @@ export const EventPromptCrafter = ({ onPromptGenerated }: EventPromptCrafterProp
   const [ctaStyle, setCtaStyle] = useState("");
   const [followUpOutcome, setFollowUpOutcome] = useState("");
   const [additionalFeatures, setAdditionalFeatures] = useState<string[]>([]);
+
+  // Auto-generate prompt when initial selections are provided
+  useEffect(() => {
+    if (initialSelections?.eventType || initialSelections?.tone) {
+      // Small delay to allow component to render first
+      setTimeout(() => {
+        const prompt = buildPrompt();
+        if (prompt) onPromptGenerated(prompt);
+      }, 100);
+    }
+  }, []);
 
   const buildPrompt = () => {
     const parts = [];
