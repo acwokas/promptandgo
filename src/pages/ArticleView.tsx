@@ -277,14 +277,26 @@ const ArticleView = () => {
 
           {/* Article Header */}
           <header className="mb-8">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
               {article.title}
             </h1>
             
             {article.synopsis && (
-              <p className="text-xl text-muted-foreground mb-6 leading-relaxed">
-                {article.synopsis}
-              </p>
+              <div className="text-xl text-muted-foreground mb-8 leading-relaxed">
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm, remarkBreaks]}
+                  components={{
+                    p: ({ children, ...props }) => (
+                      <p className="mb-4 leading-relaxed" {...props}>
+                        {children}
+                      </p>
+                    ),
+                    br: () => <br />,
+                  }}
+                >
+                  {article.synopsis}
+                </ReactMarkdown>
+              </div>
             )}
 
             <div className="flex flex-wrap items-center gap-4 mb-6">
@@ -327,7 +339,7 @@ const ArticleView = () => {
               remarkPlugins={[remarkGfm, remarkBreaks]}
               components={{
                 p: ({ children, ...props }) => (
-                  <p className="mb-4 leading-relaxed" {...props}>
+                  <p className="mb-6 leading-relaxed" {...props}>
                     {children}
                   </p>
                 ),
@@ -335,7 +347,7 @@ const ArticleView = () => {
                   <img
                     src={src}
                     alt={alt}
-                    className="rounded-lg shadow-md w-full"
+                    className="rounded-lg shadow-md w-full my-6"
                     {...props}
                   />
                 ),
@@ -350,7 +362,7 @@ const ArticleView = () => {
                     {children}
                   </a>
                 ),
-                br: () => <br className="my-2" />,
+                br: () => <br />,
               }}
             >
               {article.content}
