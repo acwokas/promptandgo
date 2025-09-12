@@ -14,10 +14,11 @@ interface PromptCrafterProps {
     style?: string;
     format?: string;
   };
+  initialSubject?: string;
 }
 
-export const PromptCrafter = ({ onPromptGenerated, initialSelections }: PromptCrafterProps) => {
-  const [subject, setSubject] = useState("");
+export const PromptCrafter = ({ onPromptGenerated, initialSelections, initialSubject }: PromptCrafterProps) => {
+  const [subject, setSubject] = useState(initialSubject || "");
   const [style, setStyle] = useState(initialSelections?.style || "");
   const [format, setFormat] = useState(initialSelections?.format || "");
   const [colors, setColors] = useState("");
@@ -27,7 +28,7 @@ export const PromptCrafter = ({ onPromptGenerated, initialSelections }: PromptCr
 
   // Auto-generate prompt when initial selections are provided
   useEffect(() => {
-    if (initialSelections?.style || initialSelections?.format) {
+    if (initialSelections?.style || initialSelections?.format || initialSubject) {
       // Small delay to allow component to render first
       setTimeout(() => {
         const prompt = buildPrompt();

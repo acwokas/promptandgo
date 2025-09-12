@@ -13,10 +13,11 @@ interface EventPromptCrafterProps {
     eventType?: string;
     tone?: string;
   };
+  initialSubject?: string;
 }
 
-export const EventPromptCrafter = ({ onPromptGenerated, initialSelections }: EventPromptCrafterProps) => {
-  const [eventName, setEventName] = useState("");
+export const EventPromptCrafter = ({ onPromptGenerated, initialSelections, initialSubject }: EventPromptCrafterProps) => {
+  const [eventName, setEventName] = useState(initialSubject || "");
   const [eventType, setEventType] = useState(initialSelections?.eventType || "");
   const [eventFormat, setEventFormat] = useState("");
   const [audienceType, setAudienceType] = useState("");
@@ -32,7 +33,7 @@ export const EventPromptCrafter = ({ onPromptGenerated, initialSelections }: Eve
 
   // Auto-generate prompt when initial selections are provided
   useEffect(() => {
-    if (initialSelections?.eventType || initialSelections?.tone) {
+    if (initialSelections?.eventType || initialSelections?.tone || initialSubject) {
       // Small delay to allow component to render first
       setTimeout(() => {
         const prompt = buildPrompt();

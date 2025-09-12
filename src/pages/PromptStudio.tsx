@@ -218,6 +218,7 @@ const PromptStudioPage = () => {
                       style: searchParams.get('style') || undefined,
                       format: searchParams.get('format') || undefined
                     }}
+                    initialSubject={searchParams.get('subject') || undefined}
                   />
                 ) : activeTab === "event" ? (
                   <EventPromptCrafter 
@@ -226,6 +227,7 @@ const PromptStudioPage = () => {
                       eventType: searchParams.get('eventType') || undefined,
                       tone: searchParams.get('tone') || undefined
                     }}
+                    initialSubject={searchParams.get('subject') || undefined}
                   />
                 ) : (
                   <CTAPromptCrafter 
@@ -234,6 +236,7 @@ const PromptStudioPage = () => {
                       platform: searchParams.get('platform') || undefined,
                       contentType: searchParams.get('contentType') || undefined
                     }}
+                    initialSubject={searchParams.get('subject') || undefined}
                   />
                 )}
               </CardContent>

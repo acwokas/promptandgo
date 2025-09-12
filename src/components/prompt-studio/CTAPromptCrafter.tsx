@@ -15,10 +15,11 @@ interface CTAPromptCrafterProps {
     platform?: string;
     contentType?: string;
   };
+  initialSubject?: string;
 }
 
-const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated, initialSelections }) => {
-  const [subjectMessage, setSubjectMessage] = useState("");
+const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated, initialSelections, initialSubject }) => {
+  const [subjectMessage, setSubjectMessage] = useState(initialSubject || "");
   const [platform, setPlatform] = useState(initialSelections?.platform || "");
   const [postFormat, setPostFormat] = useState("");
   const [contentType, setContentType] = useState(initialSelections?.contentType || "");
@@ -35,7 +36,7 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated, 
 
   // Auto-generate prompt when initial selections are provided
   useEffect(() => {
-    if (initialSelections?.platform || initialSelections?.contentType) {
+    if (initialSelections?.platform || initialSelections?.contentType || initialSubject) {
       // Small delay to allow component to render first
       setTimeout(() => {
         const prompt = buildPrompt();
