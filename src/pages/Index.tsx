@@ -255,6 +255,11 @@ const Index = () => {
           </Button>
         </PageHero>
 
+        {/* Mini Prompt Studio - Full Width */}
+        <section className="container py-6">
+          <MiniPromptStudio />
+        </section>
+
         {/* Top Widget Section */}
         <section className="container pt-6 pb-2">
           <div className="grid gap-6 md:grid-cols-2">
@@ -274,9 +279,26 @@ const Index = () => {
               </ul>
             </div>
             
-            {/* Mini Prompt Studio */}
-            <div className="w-full">
-              <MiniPromptStudio />
+            {/* Placeholder for right column since Mini Prompt Studio moved */}
+            <div className="rounded-2xl border bg-card p-6 md:p-8 animate-fade-in bg-gradient-to-br from-primary/5 to-transparent">
+              <h2 className="text-2xl font-semibold mb-3">🚀 Ready to Get Started?</h2>
+              <p className="text-muted-foreground max-w-prose mb-6">
+                Jump right into our library or try Scout's AI-powered assistance to find exactly what you need.
+              </p>
+              <div className="space-y-3">
+                <Button asChild className="w-full" size="sm">
+                  <Link to="/library">
+                    <Search className="h-4 w-4 mr-2" />
+                    Browse Prompt Library
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" className="w-full" size="sm">
+                  <Link to="/scout">
+                    <Bot className="h-4 w-4 mr-2" />
+                    Ask Scout
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
         </section>
