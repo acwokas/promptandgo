@@ -457,9 +457,10 @@ const AdminArticleEditor = () => {
                     />
                   </div>
 
-                  <div className="space-y-2">
+                  {/* Side-by-Side Editor Mode */}
+                  <div className="space-y-4 border rounded-lg p-4 bg-muted/20">
                     <div className="flex items-center justify-between">
-                      <Label htmlFor="content">Content *</Label>
+                      <Label className="text-base font-medium">Content Editor</Label>
                       <div className="flex gap-2">
                         <Button
                           type="button"
@@ -498,6 +499,7 @@ const AdminArticleEditor = () => {
                         />
                       </div>
                     </div>
+
                     <RichTextToolbar 
                       textareaRef={contentTextareaRef}
                       onContentChange={(content) => setArticle(prev => ({ ...prev, content }))}
@@ -565,32 +567,35 @@ const AdminArticleEditor = () => {
                         </div>
                       </div>
                     ) : (
-                      <Textarea
-                        ref={contentTextareaRef}
-                        id="content"
-                        value={article.content}
-                        onChange={(e) => setArticle(prev => ({ ...prev, content: e.target.value }))}
-                        onKeyDown={handleContentKeyDown}
-                        placeholder="Write your article content here..."
-                        rows={15}
-                        className="min-h-96 font-mono text-sm whitespace-pre-wrap"
-                        style={{ whiteSpace: 'pre-wrap' }}
-                      />
+                      <div className="space-y-2">
+                        <Label htmlFor="content-simple">Content *</Label>
+                        <Textarea
+                          ref={contentTextareaRef}
+                          id="content-simple"
+                          value={article.content}
+                          onChange={(e) => setArticle(prev => ({ ...prev, content: e.target.value }))}
+                          onKeyDown={handleContentKeyDown}
+                          placeholder="Write your article content here..."
+                          rows={15}
+                          className="min-h-96 font-mono text-sm whitespace-pre-wrap"
+                          style={{ whiteSpace: 'pre-wrap' }}
+                        />
+                        <div className="flex justify-between items-center">
+                          <p className="text-sm text-muted-foreground">
+                            Supports Markdown. Press Enter for new paragraph, Shift+Enter for a line break. Use the "Insert Image" button to add images.
+                          </p>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setActiveTab('preview')}
+                          >
+                            <Eye className="w-4 h-4 mr-2" />
+                            Preview
+                          </Button>
+                        </div>
+                      </div>
                     )}
-                    <div className="flex justify-between items-center">
-                      <p className="text-sm text-muted-foreground">
-                        Supports Markdown. Press Enter for new paragraph, Shift+Enter for a line break. Use the "Insert Image" button to add images.
-                      </p>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setActiveTab('preview')}
-                      >
-                        <Eye className="w-4 h-4 mr-2" />
-                        Preview
-                      </Button>
-                    </div>
                   </div>
 
                   <div className="space-y-2">
