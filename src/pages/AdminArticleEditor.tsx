@@ -428,15 +428,16 @@ const AdminArticleEditor = () => {
                       textareaRef={contentTextareaRef}
                       onContentChange={(content) => setArticle(prev => ({ ...prev, content }))}
                     />
-                    <Textarea
-                      ref={contentTextareaRef}
-                      id="content"
-                      value={article.content}
-                      onChange={(e) => setArticle(prev => ({ ...prev, content: e.target.value }))}
-                      placeholder="Write your article content here..."
-                      rows={15}
-                      className="min-h-96 font-mono text-sm"
-                    />
+                     <Textarea
+                       ref={contentTextareaRef}
+                       id="content"
+                       value={article.content}
+                       onChange={(e) => setArticle(prev => ({ ...prev, content: e.target.value }))}
+                       placeholder="Write your article content here..."
+                       rows={15}
+                       className="min-h-96 font-mono text-sm whitespace-pre-wrap"
+                       style={{ whiteSpace: 'pre-wrap' }}
+                     />
                     <div className="flex justify-between items-center">
                       <p className="text-sm text-muted-foreground">
                         Supports Markdown formatting. Use the "Insert Image" button to add images directly.
@@ -538,9 +539,9 @@ const AdminArticleEditor = () => {
                               );
                             }
                           }}
-                        >
-                          {article.content}
-                        </ReactMarkdown>
+                         >
+                           {article.content.replace(/\n\n+/g, '\n\n&nbsp;\n\n')}
+                         </ReactMarkdown>
                       </div>
                     ) : (
                       <p className="text-muted-foreground italic">No content to preview. Start writing in the Content tab.</p>
