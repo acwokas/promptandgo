@@ -326,6 +326,11 @@ const ArticleView = () => {
             <ReactMarkdown
               remarkPlugins={[remarkGfm, remarkBreaks]}
               components={{
+                p: ({ children, ...props }) => (
+                  <p className="mb-4 leading-relaxed" {...props}>
+                    {children}
+                  </p>
+                ),
                 img: ({ src, alt, ...props }) => (
                   <img
                     src={src}
@@ -345,6 +350,7 @@ const ArticleView = () => {
                     {children}
                   </a>
                 ),
+                br: () => <br className="my-2" />,
               }}
             >
               {article.content}

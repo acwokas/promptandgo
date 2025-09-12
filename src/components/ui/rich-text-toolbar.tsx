@@ -11,7 +11,9 @@ import {
   Heading3,
   Minus,
   Type,
-  MousePointer
+  MousePointer,
+  CornerDownLeft,
+  ArrowDown
 } from "lucide-react";
 import { RefObject } from "react";
 
@@ -46,7 +48,7 @@ export const RichTextToolbar = ({ textareaRef, onContentChange }: RichTextToolba
     }, 0);
   };
 
-  const insertAtNewLine = (text: string) => {
+  const insertAtNewLine = (text: string, addParagraphBreak: boolean = true) => {
     const textarea = textareaRef.current;
     if (!textarea) return;
     
@@ -54,9 +56,17 @@ export const RichTextToolbar = ({ textareaRef, onContentChange }: RichTextToolba
     const before = textarea.value.substring(0, start);
     const after = textarea.value.substring(start);
     
-    // Add line breaks if not at start or if previous char isn't a line break
-    const prefix = (before && !before.endsWith('\n')) ? '\n' : '';
-    const suffix = '\n';
+    // For proper paragraph formatting: use double newlines
+    let prefix = '';
+    if (before && !before.endsWith('\n\n')) {
+      if (addParagraphBreak) {
+        prefix = before.endsWith('\n') ? '\n' : '\n\n';
+      } else {
+        prefix = before.endsWith('\n') ? '' : '\n';
+      }
+    }
+    
+    const suffix = addParagraphBreak ? '\n\n' : '\n';
     
     const newContent = before + prefix + text + suffix + after;
     onContentChange(newContent);
@@ -77,12 +87,49 @@ export const RichTextToolbar = ({ textareaRef, onContentChange }: RichTextToolba
   const addH2 = () => insertAtNewLine('## Heading 2');
   const addH3 = () => insertAtNewLine('### Heading 3');
   
-  const addParagraph = () => insertAtNewLine('Your paragraph text here.');
+  const addParagraph = () => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+    
+    const start = textarea.selectionStart;
+    const before = textarea.value.substring(0, start);
+    const after = textarea.value.substring(start);
+    
+    // Insert double newline for proper paragraph break
+    const prefix = before && !before.endsWith('\n\n') ? (before.endsWith('\n') ? '\n' : '\n\n') : '';
+    const newContent = before + prefix + 'Your paragraph text here.\n\n' + after;
+    onContentChange(newContent);
+    
+    setTimeout(() => {
+      textarea.focus();
+      const newCursorPos = start + prefix.length + 'Your paragraph text here.'.length;
+      textarea.setSelectionRange(start + prefix.length, newCursorPos);
+    }, 0);
+  };
+
+  const addLineBreak = () => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+    
+    const start = textarea.selectionStart;
+    const before = textarea.value.substring(0, start);
+    const after = textarea.value.substring(start);
+    
+    // Insert single line break (two spaces + newline for markdown)
+    const newContent = before + '  \n' + after;
+    onContentChange(newContent);
+    
+    setTimeout(() => {
+      textarea.focus();
+      const newCursorPos = start + 3;
+      textarea.setSelectionRange(newCursorPos, newCursorPos);
+    }, 0);
+  };
   
-  const addBulletList = () => insertAtNewLine('- List item 1\n- List item 2\n- List item 3');
-  const addOrderedList = () => insertAtNewLine('1. First item\n2. Second item\n3. Third item');
+  const addBulletList = () => insertAtNewLine('- List item 1\n- List item 2\n- List item 3', true);
+  const addOrderedList = () => insertAtNewLine('1. First item\n2. Second item\n3. Third item', true);
   
-  const addHorizontalRule = () => insertAtNewLine('---');
+  const addHorizontalRule = () => insertAtNewLine('---', true);
   
   const addButton = () => insertText('<button class="btn btn-primary">', '</button>', 'Button Text');
 
@@ -158,9 +205,19 @@ export const RichTextToolbar = ({ textareaRef, onContentChange }: RichTextToolba
           variant="ghost"
           size="sm"
           onClick={addParagraph}
-          title="Add Paragraph"
+          title="Add Paragraph (Double line break)"
         >
           <Type className="h-4 w-4" />
+        </Button>
+
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          onClick={addLineBreak}
+          title="Add Line Break (Single line break)"
+        >
+          <CornerDownLeft className="h-4 w-4" />
         </Button>
         
         <Separator orientation="vertical" className="h-6 mx-1" />

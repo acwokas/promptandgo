@@ -497,6 +497,7 @@ const AdminArticleEditor = () => {
                                     h2: ({children}) => <h2 className="text-lg font-semibold mt-3 mb-2">{children}</h2>,
                                     h3: ({children}) => <h3 className="text-base font-medium mt-2 mb-1">{children}</h3>,
                                     p: ({children}) => <p className="mb-2 leading-relaxed text-sm">{children}</p>,
+                                    br: () => <br className="my-1" />,
                                     img: ({src, alt}) => (
                                       <div className="my-3">
                                         <img src={src} alt={alt} className="w-full rounded shadow-sm" />
@@ -622,6 +623,7 @@ const AdminArticleEditor = () => {
                             h2: ({children}) => <h2 className="text-xl font-semibold mt-6 mb-3">{children}</h2>,
                             h3: ({children}) => <h3 className="text-lg font-medium mt-4 mb-2">{children}</h3>,
                             p: ({children}) => <p className="mb-4 leading-relaxed">{children}</p>,
+                            br: () => <br className="my-2" />,
                             img: ({src, alt}) => (
                               <div className="my-6">
                                 <img src={src} alt={alt} className="w-full rounded-lg shadow-md" />
@@ -646,7 +648,7 @@ const AdminArticleEditor = () => {
                             }
                           }}
                          >
-                           {article.content.replace(/\n\n+/g, '\n\n&nbsp;\n\n')}
+                           {article.content}
                          </ReactMarkdown>
                       </div>
                     ) : (
