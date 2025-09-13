@@ -18,13 +18,11 @@
     <link rel="dns-prefetch" href="https://mncxspmtqvqgvtrxbxzb.supabase.co" />
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
     
-    <!-- Load fonts non-render-blocking with font-display: swap for faster LCP -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'" />
-    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,600,700&display=swap" media="print" onload="this.media='all'" />
-    <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" />
-      <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,600,700&display=swap" />
-    </noscript>
+    <!-- Load fonts non-render-blocking -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,600,700&display=swap" rel="stylesheet">
     
     <!-- Preload critical font for LCP element -->
     <link rel="preload" href="https://fonts.gstatic.com/s/manrope/v15/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk59FO_F87jxeN7B.woff2" as="font" type="font/woff2" crossorigin />
@@ -90,13 +88,14 @@
       }
       /* Critical hero heading for LCP optimization */
       .hero h1, h1.text-4xl {
-        font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+        font-family: 'Satoshi', system-ui, -apple-system, 'Segoe UI', sans-serif;
         font-size: 2.25rem;
         font-weight: 700;
         line-height: 1.1;
         letter-spacing: -0.025em;
         max-width: 80rem;
         margin: 0;
+        font-display: swap;
       }
       @media (min-width: 768px) {
         .hero h1, h1.text-4xl {
@@ -110,7 +109,6 @@
         border-radius: 0.5rem;
         padding: 0.75rem 1.5rem;
         font-weight: 500;
-        transition: all 0.2s;
       }
       /* Dark mode support */
       @media (prefers-color-scheme: dark) {
