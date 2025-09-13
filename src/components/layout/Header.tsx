@@ -53,63 +53,101 @@ const Header = () => {
     }
   }, [user]);
   return (
-    <header className="w-full bg-background border-b border-border">
-      <div className="w-full max-w-7xl mx-auto px-4 py-3">
-        <div className="flex items-center justify-between w-full">
-          <Link to="/" className="flex items-center flex-shrink-0" aria-label="promptandgo home">
+    <header className="w-full bg-white border-b" style={{ borderBottomColor: '#e5e7eb', position: 'sticky', top: '0', zIndex: '50' }}>
+      <div style={{ 
+        width: '100%', 
+        maxWidth: '1200px', 
+        margin: '0 auto', 
+        padding: '12px 16px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        minHeight: '60px',
+        boxSizing: 'border-box'
+      }}>
+        {/* Left side - Logo and Sidebar trigger */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <Button asChild variant="ghost" size="icon" className="lg:hidden">
+            <button 
+              onClick={() => {
+                const trigger = document.querySelector('[data-sidebar-trigger]') as HTMLButtonElement;
+                trigger?.click();
+              }}
+              aria-label="Toggle sidebar"
+            >
+              <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+                <path d="M1.5 3C1.22386 3 1 3.22386 1 3.5S1.22386 4 1.5 4H13.5C13.7761 4 14 3.77614 14 3.5S13.7761 3 13.5 3H1.5ZM1 7.5C1 7.22386 1.22386 7 1.5 7H13.5C13.7761 7 14 7.22386 14 7.5S13.7761 8 13.5 8H1.5C1.22386 8 1 7.77614 1 7.5ZM1 11.5C1 11.2239 1.22386 11 1.5 11H13.5C13.7761 11 14 11.2239 14 11.5S13.7761 12 13.5 12H1.5C1.22386 12 1 11.7761 1 11.5Z" fill="currentColor"/>
+              </svg>
+            </button>
+          </Button>
+          
+          <Link to="/" style={{ display: 'flex', alignItems: 'center' }} aria-label="promptandgo home">
             <img
               src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
               alt="promptandgo logo"
-              width="100"
-              height="57"
               style={{ 
                 width: 'auto', 
-                height: '32px', 
-                maxWidth: '120px',
-                objectFit: 'contain' 
+                height: '28px', 
+                maxWidth: '100px',
+                objectFit: 'contain'
               }}
               loading="eager"
               decoding="async"
             />
           </Link>
+        </div>
+        
+        {/* Right side - Actions */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: '0' }}>
+          {/* CTA Button */}
+          {user ? (
+            <Button asChild variant="hero" size="sm" style={{ whiteSpace: 'nowrap' }}>
+              <Link to="/library?random=1">Inspire Me!</Link>
+            </Button>
+          ) : (
+            <Button asChild variant="cta" size="sm" style={{ whiteSpace: 'nowrap' }}>
+              <Link to="/auth?mode=signup">Get FREE Pack!</Link>
+            </Button>
+          )}
           
-          <div className="flex items-center gap-2 flex-shrink-0">
-            {/* CTA Button */}
-            {user ? (
-              <Button asChild variant="hero" size="sm" className="whitespace-nowrap">
-                <Link to="/library?random=1">Inspire Me!</Link>
-              </Button>
-            ) : (
-              <Button asChild variant="cta" size="sm" className="whitespace-nowrap">
-                <Link to="/auth?mode=signup">Get FREE Pack!</Link>
-              </Button>
-            )}
-            
-            {/* Cart Button */}
-            <Button asChild variant="ghost" size="icon" className="relative flex-shrink-0" title="Cart" aria-label="Cart">
-              <Link to="/cart" className="relative">
-                <ShoppingCart className="h-5 w-5" aria-hidden="true" />
-                {cartCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs rounded-full min-w-[20px] h-5 flex items-center justify-center px-1">
-                    {cartCount}
-                  </span>
-                )}
+          {/* Cart Button */}
+          <Button asChild variant="ghost" size="icon" className="relative" title="Cart" aria-label="Cart">
+            <Link to="/cart" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <ShoppingCart style={{ width: '20px', height: '20px' }} aria-hidden="true" />
+              {cartCount > 0 && (
+                <span style={{
+                  position: 'absolute',
+                  top: '-8px',
+                  right: '-8px',
+                  backgroundColor: '#3b82f6',
+                  color: 'white',
+                  fontSize: '10px',
+                  borderRadius: '50%',
+                  minWidth: '18px',
+                  height: '18px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '2px'
+                }}>
+                  {cartCount}
+                </span>
+              )}
+            </Link>
+          </Button>
+          
+          {/* User Account / Login */}
+          {user ? (
+            <Button asChild variant="ghost" size="icon" title="My Account" aria-label="My Account">
+              <Link to="/account" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <User style={{ width: '20px', height: '20px' }} aria-hidden="true" />
               </Link>
             </Button>
-            
-            {/* User Account / Login */}
-            {user ? (
-              <Button asChild variant="ghost" size="icon" className="flex-shrink-0" title="My Account" aria-label="My Account">
-                <Link to="/account">
-                  <User className="h-5 w-5" aria-hidden="true" />
-                </Link>
-              </Button>
-            ) : (
-              <Button asChild variant="ghost" size="sm" className="whitespace-nowrap">
-                <Link to="/auth">Login</Link>
-              </Button>
-            )}
-          </div>
+          ) : (
+            <Button asChild variant="ghost" size="sm" style={{ whiteSpace: 'nowrap' }}>
+              <Link to="/auth">Login</Link>
+            </Button>
+          )}
         </div>
       </div>
     </header>
