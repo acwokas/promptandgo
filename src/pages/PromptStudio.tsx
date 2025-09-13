@@ -77,8 +77,8 @@ const PromptStudioPage = () => {
         description="Use Scout's Prompt Studio to craft perfect AI prompts with guided dropdowns. Create image prompts, text prompts, and more with expert guidance."
       />
       
-      <main className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30 mobile-safe">
-        <div className="w-full max-w-6xl mx-auto px-2 sm:px-4 py-6 sm:py-12 mobile-safe">
+      <main className="mobile-safe min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
+        <div className="mobile-safe w-full max-w-6xl mx-auto px-2 sm:px-4 py-6 sm:py-12">
           
           {/* Breadcrumb */}
           <Breadcrumb className="mb-6 sm:mb-8">
