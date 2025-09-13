@@ -146,7 +146,7 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated, 
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full min-w-0">
       {/* Subject/Message - Mandatory Field */}
       <div className="space-y-2">
         <Label htmlFor="subjectMessage">Subject/Message *</Label>
@@ -160,11 +160,11 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated, 
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor="platform">Platform</Label>
           <Select value={platform} onValueChange={setPlatform}>
-            <SelectTrigger>
+            <SelectTrigger className="w-full min-w-0">
               <SelectValue placeholder="Choose platform" />
             </SelectTrigger>
             <SelectContent>
@@ -180,7 +180,7 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated, 
         <div className="space-y-2">
           <Label htmlFor="postFormat">Post Format</Label>
           <Select value={postFormat} onValueChange={setPostFormat}>
-            <SelectTrigger>
+            <SelectTrigger className="w-full min-w-0">
               <SelectValue placeholder="Choose format" />
             </SelectTrigger>
             <SelectContent>
@@ -196,7 +196,7 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated, 
         <div className="space-y-2">
           <Label htmlFor="contentType">Content Type</Label>
           <Select value={contentType} onValueChange={setContentType}>
-            <SelectTrigger>
+            <SelectTrigger className="w-full min-w-0">
               <SelectValue placeholder="Choose content type" />
             </SelectTrigger>
             <SelectContent>
@@ -212,7 +212,7 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated, 
         <div className="space-y-2">
           <Label htmlFor="toneOfVoice">Tone of Voice</Label>
           <Select value={toneOfVoice} onValueChange={setToneOfVoice}>
-            <SelectTrigger>
+            <SelectTrigger className="w-full min-w-0">
               <SelectValue placeholder="Choose tone" />
             </SelectTrigger>
             <SelectContent>
@@ -228,7 +228,7 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated, 
         <div className="space-y-2">
           <Label htmlFor="audienceSegmentation">Audience Segmentation</Label>
           <Select value={audienceSegmentation} onValueChange={setAudienceSegmentation}>
-            <SelectTrigger>
+            <SelectTrigger className="w-full min-w-0">
               <SelectValue placeholder="Choose audience" />
             </SelectTrigger>
             <SelectContent>
@@ -244,7 +244,7 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated, 
         <div className="space-y-2">
           <Label htmlFor="geoLocation">Geo Location</Label>
           <Select value={geoLocation} onValueChange={setGeoLocation}>
-            <SelectTrigger>
+            <SelectTrigger className="w-full min-w-0">
               <SelectValue placeholder="Choose location" />
             </SelectTrigger>
             <SelectContent>
@@ -260,7 +260,7 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated, 
         <div className="space-y-2">
           <Label htmlFor="engagementGoal">Engagement Goal</Label>
           <Select value={engagementGoal} onValueChange={setEngagementGoal}>
-            <SelectTrigger>
+            <SelectTrigger className="w-full min-w-0">
               <SelectValue placeholder="Choose goal" />
             </SelectTrigger>
             <SelectContent>
@@ -276,7 +276,7 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated, 
         <div className="space-y-2">
           <Label htmlFor="visualStyle">Visual Style</Label>
           <Select value={visualStyle} onValueChange={setVisualStyle}>
-            <SelectTrigger>
+            <SelectTrigger className="w-full min-w-0">
               <SelectValue placeholder="Choose style" />
             </SelectTrigger>
             <SelectContent>
@@ -292,7 +292,7 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated, 
         <div className="space-y-2">
           <Label htmlFor="ctaStyle">CTA Style</Label>
           <Select value={ctaStyle} onValueChange={setCtaStyle}>
-            <SelectTrigger>
+            <SelectTrigger className="w-full min-w-0">
               <SelectValue placeholder="Choose CTA style" />
             </SelectTrigger>
             <SelectContent>
@@ -308,7 +308,7 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated, 
         <div className="space-y-2">
           <Label htmlFor="hashtagStrategy">Hashtag Strategy</Label>
           <Select value={hashtagStrategy} onValueChange={setHashtagStrategy}>
-            <SelectTrigger>
+            <SelectTrigger className="w-full min-w-0">
               <SelectValue placeholder="Choose hashtag strategy" />
             </SelectTrigger>
             <SelectContent>
@@ -324,7 +324,7 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated, 
         <div className="space-y-2">
           <Label htmlFor="postingTimeframe">Posting Timeframe</Label>
           <Select value={postingTimeframe} onValueChange={setPostingTimeframe}>
-            <SelectTrigger>
+            <SelectTrigger className="w-full min-w-0">
               <SelectValue placeholder="Choose timeframe" />
             </SelectTrigger>
             <SelectContent>
@@ -341,7 +341,7 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated, 
       {/* Power Words - Multi-select */}
       <div className="space-y-3">
         <Label className="text-sm font-medium">Power Words</Label>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+        <div className="grid grid-cols-1 xs:grid-cols-2 gap-2">
           {ctaPromptOptions.powerWords
             .filter(word => !powerWords.includes(word.value))
             .map((word) => (

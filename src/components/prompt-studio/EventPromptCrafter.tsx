@@ -137,7 +137,7 @@ export const EventPromptCrafter = ({ onPromptGenerated, initialSelections, initi
   ].filter(feature => !additionalFeatures.includes(feature));
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full min-w-0">
       <div className="space-y-4">
         <div>
           <Label htmlFor="event-name">Event Name</Label>
@@ -332,7 +332,7 @@ export const EventPromptCrafter = ({ onPromptGenerated, initialSelections, initi
         <Label>Additional Features</Label>
         <div className="mt-2 space-y-3">
           {availableFeatures.length > 0 && (
-            <div className="flex flex-wrap gap-2">
+            <div className="grid grid-cols-1 xs:grid-cols-2 gap-2">
               {availableFeatures.map((feature) => (
                 <Button
                   key={feature}
