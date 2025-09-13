@@ -30,7 +30,7 @@ type SidebarContext = {
   setOpen: (open: boolean) => void
   openMobile: boolean
   setOpenMobile: (open: boolean) => void
-  isMobile: boolean
+  isMobile: boolean | null
   toggleSidebar: () => void
 }
 
@@ -119,13 +119,18 @@ const SidebarProvider = React.forwardRef<
         state,
         open,
         setOpen,
-        isMobile,
+        isMobile: isMobile === true,
         openMobile,
         setOpenMobile,
         toggleSidebar,
       }),
       [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar]
     )
+
+    // Don't render until we have a stable mobile detection
+    if (isMobile === null) {
+      return <div className="min-h-svh w-full" />
+    }
 
     return (
       <SidebarContext.Provider value={contextValue}>
@@ -190,7 +195,7 @@ const Sidebar = React.forwardRef<
       )
     }
 
-    if (isMobile) {
+    if (isMobile === true) {
       return (
         <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
           <SheetContent

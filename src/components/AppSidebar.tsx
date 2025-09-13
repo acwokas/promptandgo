@@ -64,10 +64,23 @@ const supportItems = [
 ]
 
 export function AppSidebar() {
-  const { state } = useSidebar()
+  const { state, isMobile } = useSidebar()
   const location = useLocation()
   const currentPath = location.pathname
   const isCollapsed = state === "collapsed"
+
+  // Don't render sidebar content until mobile detection is stable
+  if (isMobile === null) {
+    return (
+      <Sidebar collapsible="icon">
+        <SidebarContent>
+          <div className="flex items-center justify-center h-32">
+            <div className="animate-pulse bg-muted rounded w-8 h-8" />
+          </div>
+        </SidebarContent>
+      </Sidebar>
+    )
+  }
 
   const isActive = (path: string) => {
     if (path === "/") {
