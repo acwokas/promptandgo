@@ -3,35 +3,26 @@ import * as React from "react"
 const MOBILE_BREAKPOINT = 768
 
 export function useIsMobile() {
-  // Start with a stable default to prevent hydration mismatches
-  const [isMobile, setIsMobile] = React.useState<boolean>(false)
-  const [isClient, setIsClient] = React.useState(false)
+  const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
 
   React.useEffect(() => {
-    // Mark that we're on the client side
-    setIsClient(true)
-    
     const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
     
-    // Debounce the onChange handler to reduce flicker
-    let timeoutId: NodeJS.Timeout
-    const onChange = () => {
-      clearTimeout(timeoutId)
-      timeoutId = setTimeout(() => {
-        setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
-      }, 50)
+    const updateIsMobile = () => {
+      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
     }
     
-    // Set initial state
-    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    // Set initial state immediately
+    updateIsMobile()
     
-    mql.addEventListener("change", onChange)
+    // Add listener for changes
+    mql.addEventListener("change", updateIsMobile)
+    
     return () => {
-      clearTimeout(timeoutId)
-      mql.removeEventListener("change", onChange)
+      mql.removeEventListener("change", updateIsMobile)
     }
   }, [])
 
-  // Return false during SSR and initial client render to prevent flickering
-  return isClient ? isMobile : false
+  // Return false during SSR to prevent hydration mismatch
+  return isMobile ?? false
 }

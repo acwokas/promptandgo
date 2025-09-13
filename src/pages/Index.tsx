@@ -273,9 +273,9 @@ const Index = () => {
 
         {/* Top Widget Section */}
         <section className="container pt-6 pb-2">
-          <div className="grid gap-6 md:grid-cols-4">
+          <div className="flex flex-col lg:grid lg:gap-6 lg:grid-cols-4 space-y-6 lg:space-y-0">
             {/* What is PromptAndGo.ai? */}
-            <div className="md:col-span-1 rounded-2xl border bg-card p-6 md:p-8 animate-fade-in">
+            <div className="lg:col-span-1 rounded-2xl border bg-card p-6 md:p-8 animate-fade-in">
               <h2 className="text-2xl font-semibold mb-3">What is promptandgo?</h2>
               <p className="text-muted-foreground max-w-prose mb-4">
                 Ready-to-use prompts designed for real-world work. Whether you're writing a pitch, planning a launch, creating some social media assets or creating an image, we've got a prompt for that.
@@ -291,7 +291,7 @@ const Index = () => {
             </div>
             
             {/* Try Scout's Prompt Studio */}
-            <div className="md:col-span-3 rounded-2xl border bg-card p-6 md:p-8 animate-fade-in">
+            <div className="lg:col-span-3 rounded-2xl border bg-card p-6 md:p-8 animate-fade-in">
               <MiniPromptStudio />
             </div>
           </div>
@@ -655,9 +655,9 @@ const Index = () => {
 
         {/* Bottom Section - FAQ, Pricing, and CTA combined */}
         <section className="container py-8">
-          <div className="grid gap-8 lg:grid-cols-3">
+          <div className="flex flex-col xl:grid xl:gap-8 xl:grid-cols-3 space-y-8 xl:space-y-0">
             {/* FAQ Column */}
-            <div className="lg:col-span-2 space-y-8">
+            <div className="xl:col-span-2 space-y-8">
               <div>
                 <h2 className="text-2xl font-semibold mb-6">Quick Questions</h2>
                 <div className="grid gap-6 md:grid-cols-2">
@@ -790,7 +790,7 @@ const Index = () => {
             </div>
 
             {/* Right Column - Poll and Pricing/CTA */}
-            <div className="lg:col-span-1 space-y-6">
+            <div className="xl:col-span-1 space-y-6">
               {/* Poll Section */}
               <div>
                 <PollCarousel currentPage="home" />
