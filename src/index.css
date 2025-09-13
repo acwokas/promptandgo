@@ -235,6 +235,23 @@ All colors MUST be HSL. */
   .btn-subtle-stroke:hover {
     border-color: hsl(var(--foreground) / 0.28) !important;
   }
+
+  /* Prevent layout shifts on mobile */
+  @media (max-width: 767px) {
+    .group\/sidebar-wrapper {
+      --sidebar-width: 0px !important;
+      --sidebar-width-icon: 0px !important;
+    }
+    
+    .peer {
+      width: 0 !important;
+    }
+    
+    /* Ensure stable mobile layout */
+    .sidebar-inset, [data-sidebar="inset"] {
+      margin-left: 0 !important;
+    }
+  }
 }
 
 

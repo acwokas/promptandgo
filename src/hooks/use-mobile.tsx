@@ -3,17 +3,18 @@ import * as React from "react"
 const MOBILE_BREAKPOINT = 768
 
 export function useIsMobile() {
-  const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
+  const [isMobile, setIsMobile] = React.useState<boolean>(false)
 
   React.useEffect(() => {
+    // Set initial state immediately to prevent layout shift
+    const initialCheck = window.innerWidth < MOBILE_BREAKPOINT
+    setIsMobile(initialCheck)
+    
     const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
     
-    const updateIsMobile = () => {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    const updateIsMobile = (e: MediaQueryListEvent) => {
+      setIsMobile(e.matches)
     }
-    
-    // Set initial state immediately
-    updateIsMobile()
     
     // Add listener for changes
     mql.addEventListener("change", updateIsMobile)
@@ -23,6 +24,5 @@ export function useIsMobile() {
     }
   }, [])
 
-  // Return false during SSR to prevent hydration mismatch
-  return isMobile ?? false
+  return isMobile
 }

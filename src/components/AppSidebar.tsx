@@ -81,7 +81,6 @@ export function AppSidebar() {
 
   return (
     <Sidebar
-      className={isCollapsed ? "w-14" : "w-64"}
       collapsible="icon"
     >
       <SidebarContent>
