@@ -163,10 +163,10 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated, 
       <div className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor="platform">Platform</Label>
-          <Select value={platform} onValueChange={setPlatform}>
-            <SelectTrigger className="w-full min-w-0">
-              <SelectValue placeholder="Choose platform" />
-            </SelectTrigger>
+        <Select value={platform} onValueChange={setPlatform}>
+          <SelectTrigger className="mobile-select">
+            <SelectValue placeholder="Choose platform" />
+          </SelectTrigger>
             <SelectContent>
               {ctaPromptOptions.platforms.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
@@ -179,10 +179,10 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated, 
 
         <div className="space-y-2">
           <Label htmlFor="postFormat">Post Format</Label>
-          <Select value={postFormat} onValueChange={setPostFormat}>
-            <SelectTrigger className="w-full min-w-0">
-              <SelectValue placeholder="Choose format" />
-            </SelectTrigger>
+        <Select value={postFormat} onValueChange={setPostFormat}>
+          <SelectTrigger className="mobile-select">
+            <SelectValue placeholder="Choose format" />
+          </SelectTrigger>
             <SelectContent>
               {ctaPromptOptions.postFormats.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
@@ -195,10 +195,10 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated, 
 
         <div className="space-y-2">
           <Label htmlFor="contentType">Content Type</Label>
-          <Select value={contentType} onValueChange={setContentType}>
-            <SelectTrigger className="w-full min-w-0">
-              <SelectValue placeholder="Choose content type" />
-            </SelectTrigger>
+        <Select value={contentType} onValueChange={setContentType}>
+          <SelectTrigger className="mobile-select">
+            <SelectValue placeholder="Choose content type" />
+          </SelectTrigger>
             <SelectContent>
               {ctaPromptOptions.contentTypes.map((option) => (
                 <SelectItem key={option.value} value={option.value}>

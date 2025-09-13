@@ -77,8 +77,8 @@ const PromptStudioPage = () => {
         description="Use Scout's Prompt Studio to craft perfect AI prompts with guided dropdowns. Create image prompts, text prompts, and more with expert guidance."
       />
       
-      <main className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
-        <div className="container mx-auto px-2 sm:px-4 py-6 sm:py-12 max-w-6xl overflow-x-hidden">
+      <main className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30 mobile-safe">
+        <div className="w-full max-w-6xl mx-auto px-2 sm:px-4 py-6 sm:py-12 mobile-safe">
           
           {/* Breadcrumb */}
           <Breadcrumb className="mb-6 sm:mb-8">
@@ -128,8 +128,8 @@ const PromptStudioPage = () => {
           </div>
 
           {/* Enhanced Tab Selection */}
-          <div className="flex justify-center mb-6 sm:mb-8 px-2 sm:px-4">
-            <div className="bg-card/80 rounded-xl sm:rounded-2xl p-1 sm:p-2 border shadow-lg w-full max-w-2xl min-w-0">
+          <div className="w-full mobile-safe">
+            <div className="w-full max-w-2xl mx-auto bg-card/80 rounded-xl sm:rounded-2xl p-1 sm:p-2 border shadow-lg mobile-safe">
               <div className="flex gap-1">
                 <Button
                   variant={activeTab === "image" ? "default" : "ghost"}

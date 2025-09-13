@@ -113,8 +113,10 @@ export const PromptCrafter = ({ onPromptGenerated, initialSelections, initialSub
     setAdditionalEffects([]);
   };
 
-  return (
-    <div className="space-y-6 w-full min-w-0">
+console.log("Mobile width debug - window width:", window.innerWidth);
+    return (
+    <div className="space-y-6 w-full mobile-safe"
+         style={{ maxWidth: '100vw', overflowX: 'hidden' }}>
       {/* Subject - Free text */}
       <div className="space-y-2">
         <Label htmlFor="subject" className="text-sm font-medium">
@@ -133,7 +135,7 @@ export const PromptCrafter = ({ onPromptGenerated, initialSelections, initialSub
       <div className="space-y-2">
         <Label className="text-sm font-medium">Art Style</Label>
         <Select value={style} onValueChange={setStyle}>
-          <SelectTrigger className="bg-background">
+          <SelectTrigger className="mobile-select">
             <SelectValue placeholder="Choose an art style" />
           </SelectTrigger>
           <SelectContent>
@@ -150,7 +152,7 @@ export const PromptCrafter = ({ onPromptGenerated, initialSelections, initialSub
       <div className="space-y-2">
         <Label className="text-sm font-medium">Format/Platform</Label>
         <Select value={format} onValueChange={setFormat}>
-          <SelectTrigger className="bg-background">
+          <SelectTrigger className="mobile-select">
             <SelectValue placeholder="Choose format or platform" />
           </SelectTrigger>
           <SelectContent>
@@ -170,7 +172,7 @@ export const PromptCrafter = ({ onPromptGenerated, initialSelections, initialSub
       <div className="space-y-2">
         <Label className="text-sm font-medium">Color Palette</Label>
         <Select value={colors} onValueChange={setColors}>
-          <SelectTrigger className="bg-background">
+          <SelectTrigger className="mobile-select">
             <SelectValue placeholder="Choose color palette" />
           </SelectTrigger>
           <SelectContent>
