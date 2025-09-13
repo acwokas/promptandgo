@@ -78,7 +78,7 @@ const PromptStudioPage = () => {
       />
       
       <main className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
-        <div className="container mx-auto px-4 py-6 sm:py-12 max-w-6xl">
+        <div className="container mx-auto px-2 sm:px-4 py-6 sm:py-12 max-w-6xl overflow-x-hidden">
           
           {/* Breadcrumb */}
           <Breadcrumb className="mb-6 sm:mb-8">
@@ -128,8 +128,8 @@ const PromptStudioPage = () => {
           </div>
 
           {/* Enhanced Tab Selection */}
-          <div className="flex justify-center mb-6 sm:mb-8 px-4">
-            <div className="bg-card/80 rounded-xl sm:rounded-2xl p-1 sm:p-2 border shadow-lg w-full max-w-2xl">
+          <div className="flex justify-center mb-6 sm:mb-8 px-2 sm:px-4">
+            <div className="bg-card/80 rounded-xl sm:rounded-2xl p-1 sm:p-2 border shadow-lg w-full max-w-2xl min-w-0">
               <div className="flex gap-1">
                 <Button
                   variant={activeTab === "image" ? "default" : "ghost"}
@@ -181,7 +181,7 @@ const PromptStudioPage = () => {
             </div>
           </div>
 
-          <div className="grid gap-6 sm:gap-8 lg:grid-cols-2">
+          <div className="grid gap-6 sm:gap-8 lg:grid-cols-2 w-full min-w-0">
             {/* Left Column - Prompt Crafter */}
             <Card className="border-0 bg-card/50">
               <CardHeader className="pb-4 sm:pb-6">

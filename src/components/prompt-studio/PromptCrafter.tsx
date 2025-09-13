@@ -114,7 +114,7 @@ export const PromptCrafter = ({ onPromptGenerated, initialSelections, initialSub
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full min-w-0">
       {/* Subject - Free text */}
       <div className="space-y-2">
         <Label htmlFor="subject" className="text-sm font-medium">
@@ -203,7 +203,7 @@ export const PromptCrafter = ({ onPromptGenerated, initialSelections, initialSub
       {/* Additional Effects */}
       <div className="space-y-3">
         <Label className="text-sm font-medium">Additional Effects</Label>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 xs:grid-cols-2 gap-2">
           {imagePromptOptions.effects
             .filter(effect => effect.value !== effects && !additionalEffects.includes(effect.value))
             .slice(0, 6)
