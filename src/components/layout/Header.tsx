@@ -49,93 +49,34 @@ const Header = () => {
   }, [user]);
 
   return (
-    <div 
-      style={{
-        width: '100%',
-        backgroundColor: '#ffffff',
-        borderBottom: '1px solid #e5e7eb',
-        position: 'sticky',
-        top: '0',
-        zIndex: '999',
-        padding: '0',
-        margin: '0'
-      }}
-    >
-      <div 
-        style={{
-          width: '100%',
-          maxWidth: '1200px',
-          margin: '0 auto',
-          padding: '8px 16px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          minHeight: '56px',
-          boxSizing: 'border-box'
-        }}
-      >
+    <header className="w-full bg-background border-b border-border sticky top-0 z-50">
+      <div className="w-full max-w-7xl mx-auto px-4 flex items-center justify-between min-h-14 box-border">
         {/* Logo */}
         <Link 
           to="/" 
-          style={{ 
-            display: 'flex', 
-            alignItems: 'center',
-            textDecoration: 'none',
-            flexShrink: '0'
-          }}
+          className="flex items-center flex-shrink-0"
         >
           <img
             src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
             alt="promptandgo"
-            style={{ 
-              height: '24px', 
-              width: 'auto',
-              maxWidth: '80px',
-              objectFit: 'contain',
-              display: 'block'
-            }}
+            className="h-6 w-auto max-w-20 object-contain"
           />
         </Link>
         
         {/* Right Actions */}
-        <div 
-          style={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: '8px',
-            flexShrink: '0'
-          }}
-        >
+        <div className="flex items-center gap-2 flex-shrink-0">
           {/* CTA */}
           {user ? (
             <Link 
               to="/library?random=1"
-              style={{
-                backgroundColor: '#3b82f6',
-                color: '#ffffff',
-                padding: '6px 12px',
-                borderRadius: '6px',
-                textDecoration: 'none',
-                fontSize: '14px',
-                whiteSpace: 'nowrap',
-                display: 'inline-block'
-              }}
+              className="bg-primary text-primary-foreground px-3 py-1.5 rounded-md text-sm whitespace-nowrap inline-block hover:bg-primary/90 transition-colors"
             >
               Inspire Me!
             </Link>
           ) : (
             <Link 
               to="/auth?mode=signup"
-              style={{
-                backgroundColor: '#3b82f6',
-                color: '#ffffff',
-                padding: '6px 12px',
-                borderRadius: '6px',
-                textDecoration: 'none',
-                fontSize: '14px',
-                whiteSpace: 'nowrap',
-                display: 'inline-block'
-              }}
+              className="bg-primary text-primary-foreground px-3 py-1.5 rounded-md text-sm whitespace-nowrap inline-block hover:bg-primary/90 transition-colors"
             >
               Get FREE Pack!
             </Link>
@@ -144,34 +85,11 @@ const Header = () => {
           {/* Cart */}
           <Link 
             to="/cart"
-            style={{
-              position: 'relative',
-              padding: '8px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              textDecoration: 'none',
-              color: '#374151'
-            }}
+            className="relative p-2 flex items-center justify-center text-foreground hover:text-primary transition-colors"
           >
             <ShoppingCart size={20} />
             {cartCount > 0 && (
-              <span 
-                style={{
-                  position: 'absolute',
-                  top: '0',
-                  right: '0',
-                  backgroundColor: '#ef4444',
-                  color: '#ffffff',
-                  fontSize: '10px',
-                  borderRadius: '50%',
-                  width: '16px',
-                  height: '16px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}
-              >
+              <span className="absolute -top-0 -right-0 bg-destructive text-destructive-foreground text-xs rounded-full w-4 h-4 flex items-center justify-center">
                 {cartCount}
               </span>
             )}
@@ -181,34 +99,21 @@ const Header = () => {
           {user ? (
             <Link 
               to="/account"
-              style={{
-                padding: '8px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                textDecoration: 'none',
-                color: '#374151'
-              }}
+              className="p-2 flex items-center justify-center text-foreground hover:text-primary transition-colors"
             >
               <User size={20} />
             </Link>
           ) : (
             <Link 
               to="/auth"
-              style={{
-                padding: '6px 12px',
-                textDecoration: 'none',
-                fontSize: '14px',
-                color: '#374151',
-                whiteSpace: 'nowrap'
-              }}
+              className="px-3 py-1.5 text-sm text-foreground whitespace-nowrap hover:text-primary transition-colors"
             >
               Login
             </Link>
           )}
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 
