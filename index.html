@@ -75,9 +75,15 @@
         z-index: 50; 
         background: rgba(255, 255, 255, 0.98);
         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        /* Fallback for older browsers without backdrop-filter */
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        width: 100%;
       }
+      /* Essential layout utilities for older browsers */
+      .flex { display: -webkit-box; display: -ms-flexbox; display: flex; }
+      .items-center { -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
+      .justify-between { -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; }
+      .justify-center { -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; }
+      .flex-shrink-0 { -ms-flex-negative: 0; flex-shrink: 0; }
       /* Add backdrop-filter only for modern browsers */
       @supports (backdrop-filter: blur(10px)) {
         header {

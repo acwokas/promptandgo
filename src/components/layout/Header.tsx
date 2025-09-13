@@ -53,22 +53,22 @@ const Header = () => {
     }
   }, [user]);
   return (
-    <header className="flex-1">
-      <nav className="container flex items-center justify-between h-14 px-4">
-        <Link to="/" className="flex items-center gap-2" aria-label="promptandgo home">
+    <header className="w-full">
+      <nav className="container mx-auto flex items-center justify-between min-h-[3.5rem] px-4 py-2">
+        <Link to="/" className="flex items-center gap-2 flex-shrink-0" aria-label="promptandgo home">
           <img
             src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
             alt="promptandgo logo"
-            className="h-8 w-auto align-middle object-contain"
+            className="h-8 w-auto"
+            style={{ objectFit: 'contain' }}
             loading="eager"
             decoding="async"
             width="149"
             height="84"
-            sizes="149px"
           />
         </Link>
         
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-shrink-0">
           {/* CTA Button */}
           {user ? (
             <Button asChild variant="hero" size="sm">
@@ -85,7 +85,10 @@ const Header = () => {
             <Link to="/cart">
               <ShoppingCart className="h-5 w-5" aria-hidden="true" />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] px-1">
+                <span 
+                  className="absolute bg-primary text-primary-foreground text-xs rounded-full min-w-[1.25rem] h-5 flex items-center justify-center px-1"
+                  style={{ top: '-4px', right: '-4px', fontSize: '10px' }}
+                >
                   {cartCount}
                 </span>
               )}
