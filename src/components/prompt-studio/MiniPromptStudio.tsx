@@ -223,10 +223,10 @@ const MiniPromptStudio = () => {
                   value={selections[optionGroup.key] || ""}
                   onValueChange={(value) => handleSelectionChange(optionGroup.key, value)}
                 >
-                  <SelectTrigger className="text-sm">
+                  <SelectTrigger className="text-sm w-full">
                     <SelectValue placeholder={`Choose ${optionGroup.label.toLowerCase()}...`} />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="w-full max-w-none">
                     {optionGroup.options.map((option) => (
                       <SelectItem key={option.value} value={option.value}>
                         {option.label}
@@ -253,19 +253,19 @@ const MiniPromptStudio = () => {
             <Label className="text-sm font-medium text-muted-foreground mb-2 block">
               Your Prompt (Live Preview)
             </Label>
-            <div className="min-h-[120px] p-3 bg-muted/30 border rounded-lg text-sm">
+            <div className="min-h-[100px] sm:min-h-[120px] p-3 bg-muted/30 border rounded-lg text-sm">
               {generatedPrompt ? (
                 <div className="space-y-2">
                   <Textarea
                     value={generatedPrompt}
                     readOnly
-                    className="min-h-[80px] resize-none bg-transparent border-none p-0 text-sm"
+                    className="min-h-[60px] sm:min-h-[80px] resize-none bg-transparent border-none p-0 text-sm"
                   />
                 </div>
               ) : (
                 <div className="flex items-center justify-center h-full text-muted-foreground">
                   <div className="text-center space-y-2">
-                    <IconComponent className="h-8 w-8 mx-auto opacity-40" />
+                    <IconComponent className="h-6 w-6 sm:h-8 sm:w-8 mx-auto opacity-40" />
                     <p className="text-xs">Your prompt will appear here as you type</p>
                   </div>
                 </div>
