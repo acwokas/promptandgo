@@ -53,62 +53,65 @@ const Header = () => {
     }
   }, [user]);
   return (
-    <header className="w-full">
-      <nav className="container mx-auto flex items-center justify-between min-h-[3.5rem] px-4 py-2">
-        <Link to="/" className="flex items-center gap-2 flex-shrink-0" aria-label="promptandgo home">
-          <img
-            src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
-            alt="promptandgo logo"
-            className="h-8 w-auto"
-            style={{ objectFit: 'contain' }}
-            loading="eager"
-            decoding="async"
-            width="149"
-            height="84"
-          />
-        </Link>
-        
-        <div className="flex items-center gap-2 flex-shrink-0">
-          {/* CTA Button */}
-          {user ? (
-            <Button asChild variant="hero" size="sm">
-              <Link to="/library?random=1">Inspire Me!</Link>
-            </Button>
-          ) : (
-            <Button asChild variant="cta" size="sm">
-              <Link to="/auth?mode=signup">Get FREE Pack!</Link>
-            </Button>
-          )}
+    <header className="w-full bg-background border-b border-border">
+      <div className="w-full max-w-7xl mx-auto px-4 py-3">
+        <div className="flex items-center justify-between w-full">
+          <Link to="/" className="flex items-center flex-shrink-0" aria-label="promptandgo home">
+            <img
+              src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
+              alt="promptandgo logo"
+              width="100"
+              height="57"
+              style={{ 
+                width: 'auto', 
+                height: '32px', 
+                maxWidth: '120px',
+                objectFit: 'contain' 
+              }}
+              loading="eager"
+              decoding="async"
+            />
+          </Link>
           
-          {/* Cart Button */}
-          <Button asChild variant="ghost" size="icon" className="relative" title="Cart" aria-label="Cart">
-            <Link to="/cart">
-              <ShoppingCart className="h-5 w-5" aria-hidden="true" />
-              {cartCount > 0 && (
-                <span 
-                  className="absolute bg-primary text-primary-foreground text-xs rounded-full min-w-[1.25rem] h-5 flex items-center justify-center px-1"
-                  style={{ top: '-4px', right: '-4px', fontSize: '10px' }}
-                >
-                  {cartCount}
-                </span>
-              )}
-            </Link>
-          </Button>
-          
-          {/* User Account / Login */}
-          {user ? (
-            <Button asChild variant="ghost" size="icon" title="My Account" aria-label="My Account">
-              <Link to="/account">
-                <User className="h-5 w-5" aria-hidden="true" />
+          <div className="flex items-center gap-2 flex-shrink-0">
+            {/* CTA Button */}
+            {user ? (
+              <Button asChild variant="hero" size="sm" className="whitespace-nowrap">
+                <Link to="/library?random=1">Inspire Me!</Link>
+              </Button>
+            ) : (
+              <Button asChild variant="cta" size="sm" className="whitespace-nowrap">
+                <Link to="/auth?mode=signup">Get FREE Pack!</Link>
+              </Button>
+            )}
+            
+            {/* Cart Button */}
+            <Button asChild variant="ghost" size="icon" className="relative flex-shrink-0" title="Cart" aria-label="Cart">
+              <Link to="/cart" className="relative">
+                <ShoppingCart className="h-5 w-5" aria-hidden="true" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs rounded-full min-w-[20px] h-5 flex items-center justify-center px-1">
+                    {cartCount}
+                  </span>
+                )}
               </Link>
             </Button>
-          ) : (
-            <Button asChild variant="ghost" size="sm">
-              <Link to="/auth">Login</Link>
-            </Button>
-          )}
+            
+            {/* User Account / Login */}
+            {user ? (
+              <Button asChild variant="ghost" size="icon" className="flex-shrink-0" title="My Account" aria-label="My Account">
+                <Link to="/account">
+                  <User className="h-5 w-5" aria-hidden="true" />
+                </Link>
+              </Button>
+            ) : (
+              <Button asChild variant="ghost" size="sm" className="whitespace-nowrap">
+                <Link to="/auth">Login</Link>
+              </Button>
+            )}
+          </div>
         </div>
-      </nav>
+      </div>
     </header>
   );
 };
