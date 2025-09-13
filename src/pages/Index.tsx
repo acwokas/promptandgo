@@ -273,7 +273,7 @@ const Index = () => {
 
         {/* Top Widget Section */}
         <section className="container pt-6 pb-2">
-          <div className="flex flex-col lg:grid lg:gap-6 lg:grid-cols-4 space-y-6 lg:space-y-0">
+          <div className="grid gap-6 lg:grid-cols-4">
             {/* What is PromptAndGo.ai? */}
             <div className="lg:col-span-1 rounded-2xl border bg-card p-6 md:p-8">
               <h2 className="text-2xl font-semibold mb-3">What is promptandgo?</h2>
@@ -301,7 +301,7 @@ const Index = () => {
         <section className="container pt-6 pb-2">
           <div className="text-center mb-8">
             <p className="text-muted-foreground mb-2">Trusted by 50,000+ professionals</p>
-            <div className="flex items-center justify-center gap-8 text-sm text-muted-foreground">
+            <div className="flex flex-wrap items-center justify-center gap-4 lg:gap-8 text-xs text-muted-foreground max-w-4xl mx-auto">
               <div className="flex items-center gap-1">
                 <div className="flex items-center gap-0.5">
                   {Array.from({ length: 5 }, (_, i) => (
@@ -310,9 +310,9 @@ const Index = () => {
                 </div>
                 <span className="ml-1">4.9/5</span>
               </div>
-              <span>•</span>
+              <span className="hidden sm:inline">•</span>
               <span>1M+ prompts copied</span>
-              <span>•</span>
+              <span className="hidden sm:inline">•</span>
               <span>500+ hours saved daily</span>
             </div>
           </div>
@@ -399,38 +399,38 @@ const Index = () => {
         <section className="container pt-2 pb-6">
           <div className="text-center">
             <p className="text-sm text-muted-foreground mb-4">Works seamlessly with your favourite AI tools, including:</p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:items-center lg:justify-center gap-4 lg:gap-8 text-xs text-muted-foreground max-w-4xl mx-auto">
-              <span className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center justify-center gap-4 lg:gap-6 text-xs text-muted-foreground max-w-4xl mx-auto">
+              <span className="flex items-center gap-2 whitespace-nowrap">
                 <div className="w-6 h-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
                   <span className="text-white font-bold text-xs">✓</span>
                 </div>
                 ChatGPT
               </span>
-              <span className="flex items-center gap-2">
+              <span className="flex items-center gap-2 whitespace-nowrap">
                 <div className="w-6 h-6 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center">
                   <span className="text-white font-bold text-xs">✓</span>
                 </div>
                 Claude
               </span>
-              <span className="flex items-center gap-2">
+              <span className="flex items-center gap-2 whitespace-nowrap">
                 <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
                   <span className="text-white font-bold text-xs">✓</span>
                 </div>
                 Gemini
               </span>
-              <span className="flex items-center gap-2">
+              <span className="flex items-center gap-2 whitespace-nowrap">
                 <div className="w-6 h-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
                   <span className="text-white font-bold text-xs">✓</span>
                 </div>
                 Perplexity
               </span>
-              <span className="flex items-center gap-2">
+              <span className="flex items-center gap-2 whitespace-nowrap">
                 <div className="w-6 h-6 bg-gradient-to-r from-indigo-500 to-blue-600 rounded-full flex items-center justify-center">
                   <span className="text-white font-bold text-xs">✓</span>
                 </div>
                 Midjourney
               </span>
-              <span className="flex items-center gap-2">
+              <span className="flex items-center gap-2 whitespace-nowrap">
                 <div className="w-6 h-6 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full flex items-center justify-center">
                   <span className="text-white font-bold text-xs">✓</span>
                 </div>
@@ -655,9 +655,9 @@ const Index = () => {
 
         {/* Bottom Section - FAQ, Pricing, and CTA combined */}
         <section className="container py-8">
-          <div className="flex flex-col xl:grid xl:gap-8 xl:grid-cols-3 space-y-8 xl:space-y-0">
+          <div className="grid gap-8 lg:grid-cols-3">
             {/* FAQ Column */}
-            <div className="xl:col-span-2 space-y-8">
+            <div className="lg:col-span-2 space-y-8">
               <div>
                 <h2 className="text-2xl font-semibold mb-6">Quick Questions</h2>
                 <div className="grid gap-6 md:grid-cols-2">
@@ -790,7 +790,7 @@ const Index = () => {
             </div>
 
             {/* Right Column - Poll and Pricing/CTA */}
-            <div className="xl:col-span-1 space-y-6">
+            <div className="lg:col-span-1 space-y-6">
               {/* Poll Section */}
               <div>
                 <PollCarousel currentPage="home" />
