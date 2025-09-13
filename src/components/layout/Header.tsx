@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { User, ShoppingCart } from "lucide-react";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useToast } from "@/components/ui/use-toast";
@@ -51,6 +52,9 @@ const Header = () => {
   return (
     <header className="w-full bg-background border-b border-border sticky top-0 z-50">
       <div className="w-full max-w-7xl mx-auto px-4 flex items-center justify-between min-h-14 box-border">
+        {/* Hamburger Menu */}
+        <SidebarTrigger className="lg:hidden" />
+        
         {/* Logo */}
         <Link 
           to="/" 
@@ -59,7 +63,7 @@ const Header = () => {
           <img
             src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
             alt="promptandgo"
-            className="h-6 w-auto max-w-20 object-contain"
+            className="h-8 w-auto max-w-32 object-contain"
           />
         </Link>
         
