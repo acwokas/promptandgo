@@ -15,12 +15,12 @@ import { AdCopyPromptCrafter } from "@/components/prompt-studio/AdCopyPromptCraf
 import { ResearchPromptCrafter } from "@/components/prompt-studio/ResearchPromptCrafter";
 import { SalesEmailPromptCrafter } from "@/components/prompt-studio/SalesEmailPromptCrafter";
 import { VideoScriptPromptCrafter } from "@/components/prompt-studio/VideoScriptPromptCrafter";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useLoginWidget } from "@/hooks/useLoginWidget";
-import { Heart, Calendar, Megaphone, FileText, Zap, Mail, Video, Search } from "lucide-react";
+import { Heart, Calendar, Megaphone, FileText, Zap, Mail, Video, Search, ArrowDown } from "lucide-react";
 
 const PromptStudioPage = () => {
   const [searchParams] = useSearchParams();
@@ -30,6 +30,7 @@ const PromptStudioPage = () => {
   const { toast } = useToast();
   const { user } = useSupabaseAuth();
   const { openLoginWidget } = useLoginWidget();
+  const promptOutputRef = useRef<HTMLDivElement>(null);
 
   // Initialize from URL parameters
   useEffect(() => {
@@ -73,6 +74,13 @@ const PromptStudioPage = () => {
     toast({
       title: "Added to My Prompts!",
       description: "Your crafted prompt has been saved to your collection."
+    });
+  };
+
+  const scrollToPrompt = () => {
+    promptOutputRef.current?.scrollIntoView({ 
+      behavior: 'smooth', 
+      block: 'start' 
     });
   };
 
@@ -267,7 +275,7 @@ const PromptStudioPage = () => {
             </Card>
 
             {/* Right Column - Generated Prompt */}
-            <Card className="ring-1 ring-primary/20 bg-gradient-to-br from-primary/20 via-primary/10 to-transparent shadow-lg">
+            <Card data-prompt-output className="ring-1 ring-primary/20 bg-gradient-to-br from-primary/20 via-primary/10 to-transparent shadow-lg">
               <CardHeader className="pb-4 sm:pb-6">
                 <div className="flex items-center gap-2 sm:gap-3">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-r from-green-500/20 to-emerald-500/20 flex items-center justify-center">
@@ -276,7 +284,7 @@ const PromptStudioPage = () => {
                   <div className="min-w-0 flex-1">
                     <CardTitle className="text-lg sm:text-xl">Your Crafted Prompt</CardTitle>
                     <CardDescription className="text-sm">
-                      Ready to use with any AI image generator
+                      Ready to use with any AI generator
                     </CardDescription>
                   </div>
                 </div>

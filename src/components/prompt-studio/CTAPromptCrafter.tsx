@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { X } from "lucide-react";
+import { X, ArrowDown } from "lucide-react";
 import { ctaPromptOptions } from "@/data/promptStudioOptions";
 import { toast } from "sonner";
 
@@ -33,6 +33,7 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated, 
   const [postingTimeframe, setPostingTimeframe] = useState("");
   const [powerWords, setPowerWords] = useState<string[]>([]);
   const [customDescription, setCustomDescription] = useState("");
+  const [generatedPrompt, setGeneratedPrompt] = useState("");
 
   // Auto-generate prompt when initial selections are provided
   useEffect(() => {
@@ -88,6 +89,7 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated, 
 
   useEffect(() => {
     const prompt = buildPrompt();
+    setGeneratedPrompt(prompt);
     onPromptGenerated(prompt);
   }, [
     subjectMessage, 
@@ -133,6 +135,16 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated, 
     setPostingTimeframe("");
     setPowerWords([]);
     setCustomDescription("");
+  };
+
+  const scrollToPrompt = () => {
+    const promptOutput = document.querySelector('[data-prompt-output]');
+    if (promptOutput) {
+      promptOutput.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    }
   };
 
   const addPowerWord = (word: string) => {
@@ -391,11 +403,16 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated, 
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3">
-        <Button onClick={generatePrompt} className="flex-1">
-          Generate CTA Prompt
-        </Button>
-        <Button onClick={resetForm} variant="outline">
+        <Button onClick={resetForm} variant="outline" className="flex-1">
           Reset
+        </Button>
+        <Button
+          onClick={scrollToPrompt}
+          className="flex-1"
+          disabled={!generatedPrompt}
+        >
+          <ArrowDown className="h-4 w-4 mr-2" />
+          View Your Custom Prompt
         </Button>
       </div>
     </div>

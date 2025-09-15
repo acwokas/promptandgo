@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { X } from "lucide-react";
+import { X, ArrowDown } from "lucide-react";
 import { eventPromptOptions } from "@/data/promptStudioOptions";
 
 interface EventPromptCrafterProps {
@@ -30,6 +30,7 @@ export const EventPromptCrafter = ({ onPromptGenerated, initialSelections, initi
   const [ctaStyle, setCtaStyle] = useState("");
   const [followUpOutcome, setFollowUpOutcome] = useState("");
   const [additionalFeatures, setAdditionalFeatures] = useState<string[]>([]);
+  const [generatedPrompt, setGeneratedPrompt] = useState("");
 
   // Auto-generate prompt when initial selections are provided
   useEffect(() => {
@@ -100,6 +101,7 @@ export const EventPromptCrafter = ({ onPromptGenerated, initialSelections, initi
 
   useEffect(() => {
     const prompt = buildPrompt();
+    setGeneratedPrompt(prompt);
     onPromptGenerated(prompt);
   }, [eventName, eventType, eventFormat, audienceType, audienceSize, tone, theme, venueType, geoLocation, engagementFormat, ctaStyle, followUpOutcome, additionalFeatures, onPromptGenerated]);
 
@@ -127,6 +129,16 @@ export const EventPromptCrafter = ({ onPromptGenerated, initialSelections, initi
     setCtaStyle("");
     setFollowUpOutcome("");
     setAdditionalFeatures([]);
+  };
+
+  const scrollToPrompt = () => {
+    const promptOutput = document.querySelector('[data-prompt-output]');
+    if (promptOutput) {
+      promptOutput.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    }
   };
 
   const availableFeatures = [
@@ -368,9 +380,19 @@ export const EventPromptCrafter = ({ onPromptGenerated, initialSelections, initi
       </div>
 
       <div className="pt-4 border-t">
-        <Button variant="outline" onClick={clearAll} className="w-full">
-          Clear All
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={clearAll} className="flex-1">
+            Clear All
+          </Button>
+          <Button
+            onClick={scrollToPrompt}
+            className="flex-1"
+            disabled={!generatedPrompt}
+          >
+            <ArrowDown className="h-4 w-4 mr-2" />
+            View Your Custom Prompt
+          </Button>
+        </div>
       </div>
 
       <div className="text-center text-sm text-muted-foreground">

@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Wand2, X } from "lucide-react";
+import { Wand2, X, ArrowDown } from "lucide-react";
 import { adCopyPromptOptions } from "@/data/promptStudioOptions";
 
 interface AdCopyPromptCrafterProps {
@@ -26,6 +26,7 @@ export const AdCopyPromptCrafter = ({ onPromptGenerated, initialSelections, init
   const [toneOfVoice, setToneOfVoice] = useState("");
   const [wordLength, setWordLength] = useState("");
   const [powerWords, setPowerWords] = useState<string[]>([]);
+  const [generatedPrompt, setGeneratedPrompt] = useState("");
 
   // Auto-generate prompt when initial selections are provided
   useEffect(() => {
@@ -92,6 +93,7 @@ export const AdCopyPromptCrafter = ({ onPromptGenerated, initialSelections, init
 
   useEffect(() => {
     const prompt = buildPrompt();
+    setGeneratedPrompt(prompt);
     onPromptGenerated(prompt);
   }, [productOffer, platform, adFormat, audienceType, ctaFocus, toneOfVoice, wordLength, powerWords, onPromptGenerated]);
 
@@ -118,6 +120,16 @@ export const AdCopyPromptCrafter = ({ onPromptGenerated, initialSelections, init
     setToneOfVoice("");
     setWordLength("");
     setPowerWords([]);
+  };
+
+  const scrollToPrompt = () => {
+    const promptOutput = document.querySelector('[data-prompt-output]');
+    if (promptOutput) {
+      promptOutput.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    }
   };
 
   return (
@@ -289,16 +301,14 @@ export const AdCopyPromptCrafter = ({ onPromptGenerated, initialSelections, init
         >
           Clear All
         </Button>
-        <Card className="flex-1">
-          <CardContent className="p-3">
-            <div className="text-center">
-              <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                <Wand2 className="h-4 w-4" />
-                Scout is crafting your prompt...
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <Button
+          onClick={scrollToPrompt}
+          className="flex-1"
+          disabled={!generatedPrompt}
+        >
+          <ArrowDown className="h-4 w-4 mr-2" />
+          View Your Custom Prompt
+        </Button>
       </div>
     </div>
   );

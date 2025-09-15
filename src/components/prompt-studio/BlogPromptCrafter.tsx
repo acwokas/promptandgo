@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Wand2, X } from "lucide-react";
+import { Wand2, X, ArrowDown } from "lucide-react";
 import { blogPromptOptions } from "@/data/promptStudioOptions";
 
 interface BlogPromptCrafterProps {
@@ -27,6 +27,7 @@ export const BlogPromptCrafter = ({ onPromptGenerated, initialSelections, initia
   const [keywords, setKeywords] = useState("");
   const [lengthFormat, setLengthFormat] = useState("");
   const [structureElements, setStructureElements] = useState<string[]>([]);
+  const [generatedPrompt, setGeneratedPrompt] = useState("");
 
   // Auto-generate prompt when initial selections are provided
   useEffect(() => {
@@ -91,6 +92,7 @@ export const BlogPromptCrafter = ({ onPromptGenerated, initialSelections, initia
 
   useEffect(() => {
     const prompt = buildPrompt();
+    setGeneratedPrompt(prompt);
     onPromptGenerated(prompt);
   }, [workingTitle, targetAudience, contentGoal, articleType, toneOfVoice, keywords, lengthFormat, structureElements, onPromptGenerated]);
 
@@ -122,6 +124,16 @@ export const BlogPromptCrafter = ({ onPromptGenerated, initialSelections, initia
     setKeywords("");
     setLengthFormat("");
     setStructureElements([]);
+  };
+
+  const scrollToPrompt = () => {
+    const promptOutput = document.querySelector('[data-prompt-output]');
+    if (promptOutput) {
+      promptOutput.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    }
   };
 
   return (
@@ -287,16 +299,14 @@ export const BlogPromptCrafter = ({ onPromptGenerated, initialSelections, initia
         >
           Clear All
         </Button>
-        <Card className="flex-1">
-          <CardContent className="p-3">
-            <div className="text-center">
-              <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                <Wand2 className="h-4 w-4" />
-                Scout is crafting your prompt...
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <Button
+          onClick={scrollToPrompt}
+          className="flex-1"
+          disabled={!generatedPrompt}
+        >
+          <ArrowDown className="h-4 w-4 mr-2" />
+          View Your Custom Prompt
+        </Button>
       </div>
     </div>
   );
