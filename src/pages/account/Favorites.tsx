@@ -600,9 +600,9 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
 
             {/* My Scout-Generated Prompts section */}
             <section id="my-generated-prompts" className="mb-16">
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
                 <h2 className="text-2xl font-bold">Custom prompts you've generated with Scout AI</h2>
-                <Button asChild>
+                <Button asChild className="w-fit sm:w-auto">
                   <Link to="/ai/generator">
                     <Plus className="h-4 w-4 mr-2" />
                     Generate New Prompt
