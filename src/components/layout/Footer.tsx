@@ -13,7 +13,7 @@ const Footer = () => {
             <img
               src="/lovable-uploads/9e8de25b-d91c-445a-b211-d156a28e4b33.png"
               alt="promptandgo logo"
-              className="mobile-safe h-auto object-contain -mt-1 max-w-[200px]"
+              className="h-8 w-auto object-contain -mt-1 max-w-[200px]"
               loading="lazy"
               decoding="async"
             />
