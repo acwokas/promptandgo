@@ -419,6 +419,175 @@ export const blogPromptOptions = {
 };
 
 // Ad Copy Prompt Options  
+// Job Application Prompt Options
+export const jobApplicationPromptOptions = {
+  applicationTypes: [
+    { value: "cv-tailoring", label: "CV Tailoring" },
+    { value: "cover-letter", label: "Cover Letter" },
+    { value: "linkedin-outreach", label: "LinkedIn Outreach" },
+    { value: "interview-qa", label: "Interview Q&A" },
+    { value: "portfolio-description", label: "Portfolio Description" }
+  ] as PromptOption[],
+
+  toneOfVoice: [
+    { value: "professional", label: "Professional" },
+    { value: "personalised", label: "Personalised" },
+    { value: "bold", label: "Bold" },
+    { value: "humble", label: "Humble" },
+    { value: "confident", label: "Confident" }
+  ] as PromptOption[]
+};
+
+// Learning & Study Prompt Options
+export const learningStudyPromptOptions = {
+  targetLevels: [
+    { value: "beginner", label: "Beginner" },
+    { value: "intermediate", label: "Intermediate" },
+    { value: "advanced", label: "Advanced" },
+    { value: "expert", label: "Expert" }
+  ] as PromptOption[],
+
+  learningFormats: [
+    { value: "summary", label: "Summary" },
+    { value: "flashcards", label: "Flashcards" },
+    { value: "step-by-step", label: "Step-by-step Explanation" },
+    { value: "qa-practice", label: "Q&A Practice" },
+    { value: "case-studies", label: "Case Studies" }
+  ] as PromptOption[],
+
+  toneOfVoice: [
+    { value: "teacherly", label: "Teacherly" },
+    { value: "friendly", label: "Friendly" },
+    { value: "academic", label: "Academic" },
+    { value: "playful", label: "Playful" },
+    { value: "storytelling", label: "Storytelling" }
+  ] as PromptOption[]
+};
+
+// Business Strategy Prompt Options
+export const businessStrategyPromptOptions = {
+  businessTypes: [
+    { value: "startup", label: "Startup" },
+    { value: "sme", label: "SME" },
+    { value: "enterprise", label: "Enterprise" },
+    { value: "non-profit", label: "Non-profit" },
+    { value: "government-agency", label: "Government Agency" }
+  ] as PromptOption[],
+
+  focusAreas: [
+    { value: "growth", label: "Growth" },
+    { value: "operations", label: "Operations" },
+    { value: "marketing", label: "Marketing" },
+    { value: "finance", label: "Finance" },
+    { value: "product", label: "Product" },
+    { value: "partnerships", label: "Partnerships" }
+  ] as PromptOption[],
+
+  frameworks: [
+    { value: "swot", label: "SWOT" },
+    { value: "porter-five-forces", label: "Porter's Five Forces" },
+    { value: "pestle", label: "PESTLE" },
+    { value: "business-model-canvas", label: "Business Model Canvas" },
+    { value: "custom", label: "Custom" }
+  ] as PromptOption[],
+
+  strategyHorizons: [
+    { value: "short-term", label: "Short-term (0–6 months)" },
+    { value: "mid-term", label: "Mid-term (1–3 years)" },
+    { value: "long-term", label: "Long-term (3–5+ years)" }
+  ] as PromptOption[],
+
+  outputFormats: [
+    { value: "report", label: "Report" },
+    { value: "executive-summary", label: "Executive Summary" },
+    { value: "comparison-matrix", label: "Comparison Matrix" },
+    { value: "roadmap", label: "Roadmap" },
+    { value: "pitch-slide-outline", label: "Pitch Slide Outline" }
+  ] as PromptOption[]
+};
+
+// Storytelling Prompt Options
+export const storytellingPromptOptions = {
+  storyGenres: [
+    { value: "sci-fi", label: "Sci-fi" },
+    { value: "fantasy", label: "Fantasy" },
+    { value: "mystery", label: "Mystery" },
+    { value: "romance", label: "Romance" },
+    { value: "drama", label: "Drama" },
+    { value: "comedy", label: "Comedy" },
+    { value: "non-fiction", label: "Non-fiction" }
+  ] as PromptOption[],
+
+  settings: [
+    { value: "historical", label: "Historical" },
+    { value: "futuristic", label: "Futuristic" },
+    { value: "urban", label: "Urban" },
+    { value: "mythical", label: "Mythical" },
+    { value: "dystopian", label: "Dystopian" },
+    { value: "realistic", label: "Realistic" }
+  ] as PromptOption[],
+
+  storyLengths: [
+    { value: "short-story", label: "Short Story" },
+    { value: "chapter", label: "Chapter" },
+    { value: "novel-outline", label: "Novel Outline" },
+    { value: "script", label: "Script" },
+    { value: "pitch-logline", label: "Pitch/Logline" }
+  ] as PromptOption[],
+
+  narrativeStyles: [
+    { value: "first-person", label: "First-person" },
+    { value: "third-person", label: "Third-person" },
+    { value: "dialogue-driven", label: "Dialogue-driven" },
+    { value: "epistolary", label: "Epistolary" },
+    { value: "scripted", label: "Scripted" }
+  ] as PromptOption[]
+};
+
+// Productivity & Workflow Prompt Options
+export const productivityWorkflowPromptOptions = {
+  taskTypes: [
+    { value: "planning", label: "Planning" },
+    { value: "prioritisation", label: "Prioritisation" },
+    { value: "brainstorming", label: "Brainstorming" },
+    { value: "decision-making", label: "Decision-making" },
+    { value: "tracking", label: "Tracking" }
+  ] as PromptOption[],
+
+  productivityFrameworks: [
+    { value: "eisenhower-matrix", label: "Eisenhower Matrix" },
+    { value: "okrs", label: "OKRs" },
+    { value: "agile-sprint", label: "Agile Sprint Plan" },
+    { value: "gtd", label: "GTD (Getting Things Done)" },
+    { value: "kanban", label: "Kanban" },
+    { value: "custom", label: "Custom" }
+  ] as PromptOption[],
+
+  outputFormats: [
+    { value: "checklist", label: "Checklist" },
+    { value: "calendar-plan", label: "Calendar Plan" },
+    { value: "table", label: "Table" },
+    { value: "mindmap-outline", label: "Mindmap Outline" },
+    { value: "flowchart", label: "Flowchart" },
+    { value: "daily-schedule", label: "Daily Schedule" }
+  ] as PromptOption[],
+
+  toneOfOutput: [
+    { value: "structured", label: "Structured" },
+    { value: "motivational", label: "Motivational" },
+    { value: "minimalist", label: "Minimalist" },
+    { value: "detailed", label: "Detailed" },
+    { value: "creative", label: "Creative" }
+  ] as PromptOption[],
+
+  timeHorizons: [
+    { value: "today", label: "Today" },
+    { value: "this-week", label: "This Week" },
+    { value: "this-month", label: "This Month" },
+    { value: "this-quarter", label: "This Quarter" }
+  ] as PromptOption[]
+};
+
 export const adCopyPromptOptions = {
   platforms: [
     { value: "google-ads", label: "Google Ads" },
