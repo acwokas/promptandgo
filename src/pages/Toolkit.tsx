@@ -64,8 +64,8 @@ const ToolkitPage = () => {
         subtitle={
           <div className="space-y-6">
             <p className="text-xl leading-relaxed">
-              Your friendly AI prompt explorer. Scout helps you create perfect prompts, discover new ideas, 
-              and get expert guidance for any AI task. Let's explore what Scout can do for you!
+              Your friendly AI prompt explorer. Scout offers perfect prompts, expert guidance, and smart tools 
+              for any AI task. Let's explore what Scout can do for you!
             </p>
             
             <div className="flex flex-wrap items-center justify-center gap-3">
