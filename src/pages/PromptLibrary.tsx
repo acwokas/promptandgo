@@ -10,12 +10,14 @@ import { Link, useSearchParams } from "react-router-dom";
 import { Search, Heart, Bot, TrendingUp, Clock, Star, Users, Copy, Sparkles, ChevronDown, ChevronUp } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { useCallback, useEffect, useState, useRef } from "react";
+import { useCallback, useEffect, useState, useRef, Fragment } from "react";
 import type { Category as CategoryType } from "@/data/prompts";
 import { toast } from "@/hooks/use-toast";
 import { usePersonalizedPrompts } from "@/hooks/usePersonalizedPrompts";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { PromptStudioCTA } from "@/components/ui/prompt-studio-cta";
+import React from "react";
 
 const PAGE_SIZE = 6;
 
@@ -1033,11 +1035,11 @@ const PromptLibrary = () => {
               ))
             ) : (
               // Show regular database prompts for all other cases
-              items.map((p) => (
-                <PromptCard
-                  key={p.id}
-                  prompt={p as any}
-                  categories={categories}
+              items.map((p, index) => (
+                <React.Fragment key={p.id}>
+                  <PromptCard
+                    prompt={p as any}
+                    categories={categories}
                   onTagClick={(t) => { clearRandom();
                     setSelectedTag(t);
                     setQuery(t); // reflect in input
@@ -1066,7 +1068,15 @@ const PromptLibrary = () => {
                     setQuery("");
                     setProOnly(true);
                   }}
-                />
+                  />
+                  
+                  {/* Add Prompt Studio CTA every 6 prompts */}
+                  {(index + 1) % 6 === 0 && index < items.length - 1 && (
+                    <div className="sm:col-span-2 lg:col-span-3">
+                      <PromptStudioCTA variant="inline" />
+                    </div>
+                  )}
+                </React.Fragment>
               ))
             )}
           </div>

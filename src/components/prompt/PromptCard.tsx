@@ -6,7 +6,7 @@ import type { Prompt, Category } from "@/data/prompts";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useLoginWidget } from "@/hooks/useLoginWidget";
-import { Heart, Lock, Copy, MessageSquare, Megaphone, ShoppingBag, BarChart2, Briefcase, User, HeartPulse, Clock, Sparkles, Tag, CheckCircle, Star } from "lucide-react";
+import { Heart, Lock, Copy, MessageSquare, Megaphone, ShoppingBag, BarChart2, Briefcase, User, HeartPulse, Clock, Sparkles, Tag, CheckCircle, Star, Wand2 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -567,6 +567,17 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
             >
               <Copy className="h-4 w-4" />
               <span>Copy Prompt</span>
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              className="w-full"
+              asChild
+            >
+              <Link to="/ai/studio">
+                <Wand2 className="h-4 w-4" />
+                <span>Create Similar</span>
+              </Link>
             </Button>
             {user ? (
               <TooltipProvider>

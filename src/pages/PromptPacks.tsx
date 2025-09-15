@@ -15,6 +15,7 @@ import ShareButton from "@/components/ShareButton";
 import { PackFilters } from "@/components/prompt/PackFilters";
 import { PollCarousel } from "@/components/poll/PollCarousel";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { PromptStudioCTA } from "@/components/ui/prompt-studio-cta";
 
 const PACK_ORIGINAL_CENTS = 999;
 const PACK_DISCOUNT_CENTS = 499;
@@ -586,6 +587,11 @@ const PromptPacks = () => {
               <PollCarousel currentPage="packs" />
             </div>
           </div>
+        </section>
+
+        {/* Prompt Studio CTA */}
+        <section className="mt-8">
+          <PromptStudioCTA variant="default" />
         </section>
       </main>
     </>

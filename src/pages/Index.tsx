@@ -19,6 +19,7 @@ import MiniPromptStudio from "@/components/prompt-studio/MiniPromptStudio";
 import PromptsOfTheDay from "@/components/prompt/PromptsOfTheDay";
 import { PollCarousel } from "@/components/poll/PollCarousel";
 import type { Category as CategoryType } from "@/data/prompts";
+import { PromptStudioCTA } from "@/components/ui/prompt-studio-cta";
 const Index = () => {
   const { user } = useSupabaseAuth();
   const { isSubscribed } = useSubscriptionStatus();
@@ -695,7 +696,14 @@ const Index = () => {
 
               {/* Newsletter Signup - Only show if user is not logged in or not subscribed to newsletter */}
               {/* If logged in and newsletter subscribed, show matched power packs instead */}
-              {user && isNewsletterSubscribed ? <MatchedPowerPacks /> : <Card className="bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
+              {user && isNewsletterSubscribed ? (
+                <>
+                  <MatchedPowerPacks />
+                  <div className="mt-6">
+                    <PromptStudioCTA variant="compact" />
+                  </div>
+                </>
+              ) : <Card className="bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
                   <CardContent className="p-6">
                     <h3 className="text-lg font-semibold mb-2">🚀 Get Weekly Prompt Tips</h3>
                     <p className="text-muted-foreground text-sm mb-4">Join 25,000+ professionals getting our best prompts, tips, and AI updates every Tuesday.</p>
