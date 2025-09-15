@@ -183,7 +183,7 @@ const PromptStudioPage = () => {
 
           <div className="grid gap-6 sm:gap-8 lg:grid-cols-2 w-full min-w-0 mt-8">
             {/* Left Column - Prompt Crafter */}
-            <Card className="ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent">
+            <Card className="ring-1 ring-primary/20 bg-gradient-to-br from-primary/20 via-primary/10 to-transparent shadow-lg">
               <CardHeader className="pb-4 sm:pb-6">
                 <div className="flex items-center gap-2 sm:gap-3">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-r from-purple-500/20 to-pink-500/20 flex items-center justify-center">
@@ -244,7 +244,7 @@ const PromptStudioPage = () => {
             </Card>
 
             {/* Right Column - Generated Prompt */}
-            <Card className="ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent">
+            <Card className="ring-1 ring-primary/20 bg-gradient-to-br from-primary/20 via-primary/10 to-transparent shadow-lg">
               <CardHeader className="pb-4 sm:pb-6">
                 <div className="flex items-center gap-2 sm:gap-3">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-r from-green-500/20 to-emerald-500/20 flex items-center justify-center">
