@@ -63,7 +63,7 @@ const Header = () => {
           <img
             src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
             alt="promptandgo"
-            className="h-10 w-auto max-w-40 object-contain"
+            className="h-12 w-auto max-w-48 object-contain"
           />
         </Link>
         
