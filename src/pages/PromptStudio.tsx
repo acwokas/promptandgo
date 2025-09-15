@@ -78,7 +78,7 @@ const PromptStudioPage = () => {
       />
       
       <main className="mobile-safe min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
-        <div className="mobile-safe w-full max-w-6xl mx-auto px-2 sm:px-4 py-6 sm:py-12">
+        <div className="mobile-safe w-full max-w-7xl mx-auto px-2 sm:px-4 py-6 sm:py-12">
           
           {/* Breadcrumb */}
           <Breadcrumb className="mb-6 sm:mb-8">
@@ -181,9 +181,9 @@ const PromptStudioPage = () => {
             </div>
           </div>
 
-          <div className="grid gap-6 sm:gap-8 lg:grid-cols-2 w-full min-w-0">
+          <div className="grid gap-6 sm:gap-8 lg:grid-cols-2 w-full min-w-0 mt-8">
             {/* Left Column - Prompt Crafter */}
-            <Card className="border-0 bg-card/50">
+            <Card className="ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent">
               <CardHeader className="pb-4 sm:pb-6">
                 <div className="flex items-center gap-2 sm:gap-3">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-r from-purple-500/20 to-pink-500/20 flex items-center justify-center">
@@ -244,7 +244,7 @@ const PromptStudioPage = () => {
             </Card>
 
             {/* Right Column - Generated Prompt */}
-            <Card className="border-0 bg-card/50">
+            <Card className="ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent">
               <CardHeader className="pb-4 sm:pb-6">
                 <div className="flex items-center gap-2 sm:gap-3">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-r from-green-500/20 to-emerald-500/20 flex items-center justify-center">
@@ -322,7 +322,7 @@ const PromptStudioPage = () => {
           <div className="mt-12 sm:mt-16 text-center px-4">
             <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">More Studio Tools Coming Soon</h2>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto">
-              <Card className="border-dashed border-2 border-muted-foreground/20 bg-muted/10">
+              <Card className="border-dashed border-2 border-muted-foreground/20 bg-gradient-to-br from-primary/5 to-transparent">
                 <CardContent className="p-4 sm:p-6 text-center">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-muted/50 flex items-center justify-center mx-auto mb-3">
                     <Wand2 className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
@@ -331,7 +331,7 @@ const PromptStudioPage = () => {
                   <p className="text-xs sm:text-sm text-muted-foreground">Coming Soon</p>
                 </CardContent>
               </Card>
-              <Card className="border-dashed border-2 border-muted-foreground/20 bg-muted/10">
+              <Card className="border-dashed border-2 border-muted-foreground/20 bg-gradient-to-br from-primary/5 to-transparent">
                 <CardContent className="p-4 sm:p-6 text-center">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-muted/50 flex items-center justify-center mx-auto mb-3">
                     <Wand2 className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
@@ -340,7 +340,7 @@ const PromptStudioPage = () => {
                   <p className="text-xs sm:text-sm text-muted-foreground">Coming Soon</p>
                 </CardContent>
               </Card>
-              <Card className="border-dashed border-2 border-muted-foreground/20 bg-muted/10 sm:col-span-2 lg:col-span-1">
+              <Card className="border-dashed border-2 border-muted-foreground/20 bg-gradient-to-br from-primary/5 to-transparent sm:col-span-2 lg:col-span-1">
                 <CardContent className="p-4 sm:p-6 text-center">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-muted/50 flex items-center justify-center mx-auto mb-3">
                     <Wand2 className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
