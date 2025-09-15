@@ -134,13 +134,15 @@ console.log("Mobile width debug - window width:", window.innerWidth);
         <Label htmlFor="subject" className="text-sm font-medium">
           Subject *
         </Label>
-        <Input
-          id="subject"
-          placeholder="What do you want to create? (e.g., 'a futuristic cityscape at sunset')"
-          value={subject}
-          onChange={(e) => setSubject(e.target.value)}
-          className="w-full bg-background"
-        />
+        <div className="w-full">
+          <Input
+            id="subject"
+            placeholder="What do you want to create? (e.g., 'a futuristic cityscape at sunset')"
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
+            className="bg-background"
+          />
+        </div>
       </div>
 
       {/* Style */}

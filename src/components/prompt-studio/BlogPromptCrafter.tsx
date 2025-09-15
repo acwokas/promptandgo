@@ -143,13 +143,15 @@ export const BlogPromptCrafter = ({ onPromptGenerated, initialSelections, initia
         <Label htmlFor="working-title" className="text-sm font-medium">
           Topic/Working Title *
         </Label>
-        <Input
-          id="working-title"
-          placeholder="Enter your main idea or topic (e.g., 'AI trends in Southeast Asia')"
-          value={workingTitle}
-          onChange={(e) => setWorkingTitle(e.target.value)}
-          className="w-full bg-background"
-        />
+        <div className="w-full">
+          <Input
+            id="working-title"
+            placeholder="Enter your main idea or topic (e.g., 'AI trends in Southeast Asia')"
+            value={workingTitle}
+            onChange={(e) => setWorkingTitle(e.target.value)}
+            className="bg-background"
+          />
+        </div>
       </div>
 
       {/* Target Audience */}
@@ -264,12 +266,14 @@ export const BlogPromptCrafter = ({ onPromptGenerated, initialSelections, initia
       {/* SEO/Keywords */}
       <div className="space-y-2">
         <Label className="text-sm font-medium">SEO/Keywords</Label>
-        <Textarea
-          placeholder="Add focus keywords (e.g., AI trends, machine learning, automation)"
-          value={keywords}
-          onChange={(e) => setKeywords(e.target.value)}
-          className="w-full min-h-[80px] bg-background"
-        />
+        <div className="w-full">
+          <Textarea
+            placeholder="Add focus keywords (e.g., AI trends, machine learning, automation)"
+            value={keywords}
+            onChange={(e) => setKeywords(e.target.value)}
+            className="min-h-[80px] bg-background"
+          />
+        </div>
       </div>
 
       {/* Length/Format */}

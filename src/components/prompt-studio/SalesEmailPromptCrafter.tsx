@@ -159,13 +159,15 @@ export const SalesEmailPromptCrafter = ({ onPromptGenerated, initialSelections, 
         <Label htmlFor="value-proposition" className="text-sm font-medium">
           Value Proposition *
         </Label>
-        <Textarea
-          id="value-proposition"
-          placeholder="What are you offering/solving?"
-          value={valueProposition}
-          onChange={(e) => setValueProposition(e.target.value)}
-          className="w-full min-h-[100px] bg-background"
-        />
+        <div className="w-full">
+          <Textarea
+            id="value-proposition"
+            placeholder="What are you offering/solving?"
+            value={valueProposition}
+            onChange={(e) => setValueProposition(e.target.value)}
+            className="min-h-[100px] bg-background"
+          />
+        </div>
       </div>
 
       {/* Tone of Voice */}

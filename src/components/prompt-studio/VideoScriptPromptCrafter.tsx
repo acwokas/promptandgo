@@ -125,13 +125,15 @@ export const VideoScriptPromptCrafter = ({ onPromptGenerated, initialSelections,
         <Label htmlFor="video-topic" className="text-sm font-medium">
           Video Topic *
         </Label>
-        <Input
-          id="video-topic"
-          placeholder="Enter your video topic or subject"
-          value={videoTopic}
-          onChange={(e) => setVideoTopic(e.target.value)}
-          className="w-full bg-background"
-        />
+        <div className="w-full">
+          <Input
+            id="video-topic"
+            placeholder="Enter your video topic or subject"
+            value={videoTopic}
+            onChange={(e) => setVideoTopic(e.target.value)}
+            className="bg-background"
+          />
+        </div>
       </div>
 
       {/* Video Purpose */}

@@ -139,13 +139,15 @@ export const AdCopyPromptCrafter = ({ onPromptGenerated, initialSelections, init
         <Label htmlFor="product-offer" className="text-sm font-medium">
           Product/Offer *
         </Label>
-        <Input
-          id="product-offer"
-          placeholder="Describe the product, service, or promotion"
-          value={productOffer}
-          onChange={(e) => setProductOffer(e.target.value)}
-          className="w-full bg-background"
-        />
+        <div className="w-full">
+          <Input
+            id="product-offer"
+            placeholder="Describe the product, service, or promotion"
+            value={productOffer}
+            onChange={(e) => setProductOffer(e.target.value)}
+            className="bg-background"
+          />
+        </div>
       </div>
 
       {/* Platform */}

@@ -126,13 +126,15 @@ export const ResearchPromptCrafter = ({ onPromptGenerated, initialSelections, in
         <Label htmlFor="research-topic" className="text-sm font-medium">
           Research Topic *
         </Label>
-        <Input
-          id="research-topic"
-          placeholder="What are you analysing? (e.g., 'EV adoption trends in Southeast Asia')"
-          value={researchTopic}
-          onChange={(e) => setResearchTopic(e.target.value)}
-          className="w-full bg-background"
-        />
+        <div className="w-full">
+          <Input
+            id="research-topic"
+            placeholder="What are you analysing? (e.g., 'EV adoption trends in Southeast Asia')"
+            value={researchTopic}
+            onChange={(e) => setResearchTopic(e.target.value)}
+            className="bg-background"
+          />
+        </div>
       </div>
 
       {/* Research Goal */}
