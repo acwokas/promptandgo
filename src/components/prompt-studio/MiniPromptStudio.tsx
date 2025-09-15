@@ -165,30 +165,36 @@ const MiniPromptStudio = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Crafter Type Selector */}
-        <div className="flex gap-1 p-1 bg-muted/50 rounded-lg">
-          {(Object.keys(crafterConfigs) as CrafterType[]).map((type) => {
-            const typeConfig = crafterConfigs[type];
-            const TypeIcon = typeConfig.icon;
-            return (
-              <Button
-                key={type}
-                variant={activeCrafter === type ? "default" : "ghost"}
-                size="sm"
-                onClick={() => {
-                  setActiveCrafter(type);
-                  setSelections({});
-                  setSubject("");
-                }}
-                className={`
-                  flex-1 flex items-center gap-2 text-xs
-                  ${activeCrafter === type ? "shadow-sm" : ""}
-                `}
-              >
-                <TypeIcon className="h-3 w-3" />
-                <span className="hidden sm:inline">{typeConfig.title.split(' ')[0]}</span>
-              </Button>
-            );
-          })}
+        <div className="space-y-2">
+          <Label className="text-sm font-medium text-muted-foreground">
+            Choose Prompt Type
+          </Label>
+          <Select
+            value={activeCrafter}
+            onValueChange={(value: CrafterType) => {
+              setActiveCrafter(value);
+              setSelections({});
+              setSubject("");
+            }}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {(Object.keys(crafterConfigs) as CrafterType[]).map((type) => {
+                const typeConfig = crafterConfigs[type];
+                const TypeIcon = typeConfig.icon;
+                return (
+                  <SelectItem key={type} value={type}>
+                    <div className="flex items-center gap-2">
+                      <TypeIcon className="h-4 w-4" />
+                      <span>{typeConfig.title}</span>
+                    </div>
+                  </SelectItem>
+                );
+              })}
+            </SelectContent>
+          </Select>
         </div>
 
         <div className="grid gap-4 lg:grid-cols-2">
