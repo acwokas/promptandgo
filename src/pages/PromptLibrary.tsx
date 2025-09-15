@@ -114,6 +114,11 @@ const PromptLibrary = () => {
   const [showFilters, setShowFilters] = useState(false);
   const isMobile = useIsMobile();
 
+  // Sort prompts by complexity (length) - longest first
+  const sortByComplexity = (prompts: PromptUI[]) => {
+    return [...prompts].sort((a, b) => b.prompt.length - a.prompt.length);
+  };
+
 
   const [page, setPage] = useState(1);
   const [items, setItems] = useState<PromptUI[]>([]);
@@ -918,7 +923,7 @@ const PromptLibrary = () => {
             </div>
             
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {personalizedPrompts.map((p) => (
+              {sortByComplexity(personalizedPrompts).map((p) => (
                 <div key={p.id} className="relative">
                   <PromptCard
                     prompt={p as any}
@@ -988,8 +993,8 @@ const PromptLibrary = () => {
           </h2>
           <div id="library-results" ref={listRef} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 scroll-mt-40 md:scroll-mt-48">
             {ribbon === "RECOMMENDED" && hasPersonalization && personalizedPrompts.length > 0 ? (
-              // Show personalized prompts when "Recommended" is selected
-              personalizedPrompts.map((p) => (
+              // Show personalized prompts when "Recommended" is selected - sorted by complexity
+              sortByComplexity(personalizedPrompts).map((p) => (
                 <div key={p.id} className="relative">
                   <PromptCard
                     prompt={p as any}
