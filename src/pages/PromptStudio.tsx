@@ -3,8 +3,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Link } from "react-router-dom";
-import { Wand2, Image, Copy, CheckCheck, ArrowRight, Palette, Camera, Sparkles } from "lucide-react";
+import { Wand2, Image, Copy, CheckCheck, ArrowRight, Palette, Camera, Sparkles, ChevronDown } from "lucide-react";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { PromptCrafter } from "@/components/prompt-studio/PromptCrafter";
 import { EventPromptCrafter } from "@/components/prompt-studio/EventPromptCrafter";
@@ -127,57 +128,46 @@ const PromptStudioPage = () => {
             </div>
           </div>
 
-          {/* Enhanced Tab Selection */}
+          {/* Topic Selection Dropdown */}
           <div className="w-full mobile-safe">
-            <div className="w-full max-w-2xl mx-auto bg-card/80 rounded-xl sm:rounded-2xl p-1 sm:p-2 border shadow-lg mobile-safe">
-              <div className="flex gap-1">
-                <Button
-                  variant={activeTab === "image" ? "default" : "ghost"}
-                  onClick={() => setActiveTab("image")}
-                  className={`
-                    flex-1 flex items-center justify-center gap-1 sm:gap-3 px-2 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl transition-all duration-200 text-xs sm:text-base
-                    ${activeTab === "image" 
-                      ? "bg-primary text-primary-foreground shadow-md" 
-                      : "hover:bg-muted/80 text-muted-foreground hover:text-foreground"
-                    }
-                  `}
-                  size="sm"
-                >
-                  <Image className="h-4 w-4 sm:h-5 sm:w-5" />
-                  <span className="font-medium hidden xs:inline">Image</span>
-                  <span className="font-medium xs:hidden">Img</span>
-                </Button>
-                <Button
-                  variant={activeTab === "event" ? "default" : "ghost"}
-                  onClick={() => setActiveTab("event")}
-                  className={`
-                    flex-1 flex items-center justify-center gap-1 sm:gap-3 px-2 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl transition-all duration-200 text-xs sm:text-base
-                    ${activeTab === "event" 
-                      ? "bg-primary text-primary-foreground shadow-md" 
-                      : "hover:bg-muted/80 text-muted-foreground hover:text-foreground"
-                    }
-                  `}
-                  size="sm"
-                >
-                  <Calendar className="h-4 w-4 sm:h-5 sm:w-5" />
-                  <span className="font-medium">Event</span>
-                </Button>
-                <Button
-                  variant={activeTab === "cta" ? "default" : "ghost"}
-                  onClick={() => setActiveTab("cta")}
-                  className={`
-                    flex-1 flex items-center justify-center gap-1 sm:gap-3 px-2 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl transition-all duration-200 text-xs sm:text-base
-                    ${activeTab === "cta" 
-                      ? "bg-primary text-primary-foreground shadow-md" 
-                      : "hover:bg-muted/80 text-muted-foreground hover:text-foreground"
-                    }
-                  `}
-                  size="sm"
-                >
-                  <Megaphone className="h-4 w-4 sm:h-5 sm:w-5" />
-                  <span className="font-medium">CTA</span>
-                </Button>
-              </div>
+            <div className="w-full max-w-2xl mx-auto text-center mb-6">
+              <h2 className="text-lg sm:text-xl font-semibold mb-4 text-foreground">
+                Choose your topic and start crafting
+              </h2>
+              <Select value={activeTab} onValueChange={(value) => setActiveTab(value as "image" | "event" | "cta")}>
+                <SelectTrigger className="w-full max-w-xs mx-auto bg-card/90 border-2 border-primary/20 hover:border-primary/30 transition-colors shadow-lg">
+                  <div className="flex items-center gap-3">
+                    {activeTab === "image" ? (
+                      <Image className="h-5 w-5 text-primary" />
+                    ) : activeTab === "event" ? (
+                      <Calendar className="h-5 w-5 text-primary" />
+                    ) : (
+                      <Megaphone className="h-5 w-5 text-primary" />
+                    )}
+                    <SelectValue placeholder="Select a prompt type" />
+                  </div>
+                </SelectTrigger>
+                <SelectContent className="bg-popover border-2 border-primary/20 shadow-xl z-50">
+                  <SelectItem value="image" className="cursor-pointer hover:bg-muted/80">
+                    <div className="flex items-center gap-3">
+                      <Image className="h-4 w-4 text-primary" />
+                      <span>Image Generation</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="event" className="cursor-pointer hover:bg-muted/80">
+                    <div className="flex items-center gap-3">
+                      <Calendar className="h-4 w-4 text-primary" />
+                      <span>Event Planning</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="cta" className="cursor-pointer hover:bg-muted/80">
+                    <div className="flex items-center gap-3">
+                      <Megaphone className="h-4 w-4 text-primary" />
+                      <span>Call-to-Action</span>
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
