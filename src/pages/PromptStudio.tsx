@@ -203,12 +203,22 @@ const PromptStudioPage = () => {
               <CardHeader className="pb-4 sm:pb-6">
                 <div className="flex items-center gap-2 sm:gap-3">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-r from-purple-500/20 to-pink-500/20 flex items-center justify-center">
-                    {activeTab === "image" ? (
-                      <Image className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                    {activeTab === "adcopy" ? (
+                      <Zap className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                    ) : activeTab === "blog" ? (
+                      <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                    ) : activeTab === "cta" ? (
+                      <Megaphone className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
                     ) : activeTab === "event" ? (
                       <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                    ) : activeTab === "image" ? (
+                      <Image className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                    ) : activeTab === "research" ? (
+                      <Search className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                    ) : activeTab === "salesemail" ? (
+                      <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
                     ) : (
-                      <Megaphone className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                      <Video className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
                     )}
                   </div>
                   <div className="min-w-0 flex-1">

@@ -378,3 +378,193 @@ export const ctaPromptOptions = {
     { value: "vision", label: "Vision" }
   ] as PromptOption[]
 };
+
+// Blog Article Prompt Options
+export const blogPromptOptions = {
+  targetAudiences: [
+    { value: "marketers", label: "Marketers" },
+    { value: "developers", label: "Developers" },
+    { value: "students", label: "Students" },
+    { value: "executives", label: "Executives" },
+    { value: "entrepreneurs", label: "Entrepreneurs" },
+    { value: "general", label: "General Public" }
+  ] as PromptOption[],
+  contentGoals: [
+    { value: "awareness", label: "Awareness" },
+    { value: "education", label: "Education" },
+    { value: "thought-leadership", label: "Thought Leadership" },
+    { value: "lead-generation", label: "Lead Generation" },
+    { value: "seo-ranking", label: "SEO Ranking" }
+  ] as PromptOption[],
+  articleTypes: [
+    { value: "how-to", label: "How-to Guide" },
+    { value: "listicle", label: "Listicle" },
+    { value: "case-study", label: "Case Study" },
+    { value: "opinion", label: "Opinion" },
+    { value: "news-analysis", label: "News Analysis" },
+    { value: "explainer", label: "Explainer" }
+  ] as PromptOption[],
+  toneOfVoice: [
+    { value: "conversational", label: "Conversational" },
+    { value: "professional", label: "Professional" },
+    { value: "educational", label: "Educational" },
+    { value: "persuasive", label: "Persuasive" },
+    { value: "humorous", label: "Humorous" }
+  ] as PromptOption[],
+  lengthFormats: [
+    { value: "short", label: "Short-form (500 words)" },
+    { value: "medium", label: "Medium (1,000 words)" },
+    { value: "long", label: "Long-form (2,000+ words)" }
+  ] as PromptOption[]
+};
+
+// Ad Copy Prompt Options  
+export const adCopyPromptOptions = {
+  platforms: [
+    { value: "google-ads", label: "Google Ads" },
+    { value: "meta-ads", label: "Meta Ads" },
+    { value: "linkedin-ads", label: "LinkedIn Ads" },
+    { value: "tiktok-ads", label: "TikTok Ads" },
+    { value: "display-banner", label: "Display Banner" }
+  ] as PromptOption[],
+  adFormats: [
+    { value: "headline", label: "Headline" },
+    { value: "text-ad", label: "Text Ad" },
+    { value: "carousel", label: "Carousel" },
+    { value: "video-script", label: "Video Script" },
+    { value: "display-copy", label: "Display Copy" }
+  ] as PromptOption[],
+  audienceTypes: [
+    { value: "b2b-professionals", label: "B2B Professionals" },
+    { value: "gen-z", label: "Gen Z" },
+    { value: "parents", label: "Parents" },
+    { value: "tech-enthusiasts", label: "Tech Enthusiasts" },
+    { value: "luxury-buyers", label: "Luxury Buyers" }
+  ] as PromptOption[],
+  ctaFocus: [
+    { value: "buy-now", label: "Buy Now" },
+    { value: "sign-up", label: "Sign Up" },
+    { value: "learn-more", label: "Learn More" },
+    { value: "book-demo", label: "Book Demo" },
+    { value: "download", label: "Download" }
+  ] as PromptOption[],
+  toneOfVoice: [
+    { value: "urgent", label: "Urgent" },
+    { value: "inspirational", label: "Inspirational" },
+    { value: "educational", label: "Educational" },
+    { value: "casual", label: "Casual" },
+    { value: "bold", label: "Bold" }
+  ] as PromptOption[],
+  wordLengths: [
+    { value: "short", label: "Short (under 30 words)" },
+    { value: "medium", label: "Medium" },
+    { value: "long", label: "Long-form persuasive" }
+  ] as PromptOption[]
+};
+
+// Sales Email Prompt Options
+export const salesEmailPromptOptions = {
+  emailPurposes: [
+    { value: "cold-outreach", label: "Cold Outreach" },
+    { value: "follow-up", label: "Follow-up" },
+    { value: "demo-invite", label: "Demo Invite" },
+    { value: "post-meeting-recap", label: "Post-Meeting Recap" },
+    { value: "proposal-send", label: "Proposal Send" }
+  ] as PromptOption[],
+  recipientRoles: [
+    { value: "ceo", label: "CEO" },
+    { value: "marketing-director", label: "Marketing Director" },
+    { value: "procurement", label: "Procurement" },
+    { value: "investor", label: "Investor" },
+    { value: "partner", label: "Partner" }
+  ] as PromptOption[],
+  toneOfVoice: [
+    { value: "warm-personal", label: "Warm/Personal" },
+    { value: "direct-concise", label: "Direct/Concise" },
+    { value: "persuasive", label: "Persuasive" },
+    { value: "formal", label: "Formal" }
+  ] as PromptOption[],
+  ctaStyles: [
+    { value: "book-call", label: "Book a call" },
+    { value: "reply-email", label: "Reply to email" },
+    { value: "download-resource", label: "Download resource" },
+    { value: "register", label: "Register" }
+  ] as PromptOption[],
+  followUpPlans: [
+    { value: "2-day", label: "2-day reminder" },
+    { value: "1-week", label: "1-week later" },
+    { value: "sequence-3", label: "Sequence of 3 emails" }
+  ] as PromptOption[]
+};
+
+// Video Script Prompt Options
+export const videoScriptPromptOptions = {
+  videoPurposes: [
+    { value: "product-explainer", label: "Product Explainer" },
+    { value: "brand-story", label: "Brand Story" },
+    { value: "testimonial", label: "Testimonial" },
+    { value: "tutorial", label: "Tutorial" },
+    { value: "event-promo", label: "Event Promo" }
+  ] as PromptOption[],
+  videoLengths: [
+    { value: "15s", label: "15s" },
+    { value: "30s", label: "30s" },
+    { value: "60s", label: "60s" },
+    { value: "2-3min", label: "2–3 min" },
+    { value: "long-form", label: "Long-form YouTube" }
+  ] as PromptOption[],
+  audiences: [
+    { value: "gen-z", label: "Gen Z" },
+    { value: "professionals", label: "Professionals" },
+    { value: "parents", label: "Parents" },
+    { value: "global", label: "Global" },
+    { value: "local-market", label: "Local Market" }
+  ] as PromptOption[],
+  scriptStyles: [
+    { value: "storytelling", label: "Storytelling" },
+    { value: "direct-pitch", label: "Direct Pitch" },
+    { value: "conversational", label: "Conversational" },
+    { value: "humorous", label: "Humorous" },
+    { value: "inspirational", label: "Inspirational" }
+  ] as PromptOption[],
+  ctaOptions: [
+    { value: "subscribe", label: "Subscribe" },
+    { value: "visit-website", label: "Visit Website" },
+    { value: "sign-up", label: "Sign Up" },
+    { value: "buy-now", label: "Buy Now" },
+    { value: "share", label: "Share" }
+  ] as PromptOption[]
+};
+
+// Research Prompt Options
+export const researchPromptOptions = {
+  researchGoals: [
+    { value: "market-insights", label: "Market Insights" },
+    { value: "competitive-analysis", label: "Competitive Analysis" },
+    { value: "trend-forecast", label: "Trend Forecast" },
+    { value: "consumer-behaviour", label: "Consumer Behaviour" },
+    { value: "policy-implications", label: "Policy Implications" }
+  ] as PromptOption[],
+  dataScopes: [
+    { value: "global", label: "Global" },
+    { value: "regional", label: "Regional" },
+    { value: "country-specific", label: "Country-specific" }
+  ] as PromptOption[],
+  outputFormats: [
+    { value: "report", label: "Report" },
+    { value: "executive-summary", label: "Executive Summary" },
+    { value: "comparison-matrix", label: "Comparison Matrix" },
+    { value: "swot", label: "SWOT" },
+    { value: "infographic-outline", label: "Infographic Outline" }
+  ] as PromptOption[],
+  timeHorizons: [
+    { value: "current", label: "Current (0–1 year)" },
+    { value: "short-term", label: "Short-term (1–3 years)" },
+    { value: "long-term", label: "Long-term (3–10 years)" }
+  ] as PromptOption[],
+  depthLevels: [
+    { value: "quick-overview", label: "Quick overview" },
+    { value: "moderate-detail", label: "Moderate detail" },
+    { value: "deep-dive", label: "In-depth deep dive" }
+  ] as PromptOption[]
+};
