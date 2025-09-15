@@ -130,7 +130,7 @@ export const VideoScriptPromptCrafter = ({ onPromptGenerated, initialSelections,
           placeholder="Enter your video topic or subject"
           value={videoTopic}
           onChange={(e) => setVideoTopic(e.target.value)}
-          className="bg-background"
+          className="w-full bg-background"
         />
       </div>
 

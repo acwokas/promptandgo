@@ -131,7 +131,7 @@ export const ResearchPromptCrafter = ({ onPromptGenerated, initialSelections, in
           placeholder="What are you analysing? (e.g., 'EV adoption trends in Southeast Asia')"
           value={researchTopic}
           onChange={(e) => setResearchTopic(e.target.value)}
-          className="bg-background"
+          className="w-full bg-background"
         />
       </div>
 
