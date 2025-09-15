@@ -122,7 +122,7 @@ export function AppSidebar() {
 
         {/* AI Tools */}
         <SidebarGroup>
-          <SidebarGroupLabel>AI Tools</SidebarGroupLabel>
+          <SidebarGroupLabel>Scout AI Tools</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {aiItems.map((item) => (
