@@ -165,7 +165,7 @@ export const SalesEmailPromptCrafter = ({ onPromptGenerated, initialSelections, 
             placeholder="What are you offering/solving?"
             value={valueProposition}
             onChange={(e) => setValueProposition(e.target.value)}
-            className="min-h-[100px] bg-background"
+            className="min-h-[100px] bg-background w-full max-w-full"
           />
         </div>
       </div>

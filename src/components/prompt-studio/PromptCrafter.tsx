@@ -140,7 +140,7 @@ console.log("Mobile width debug - window width:", window.innerWidth);
             placeholder="What do you want to create? (e.g., 'a futuristic cityscape at sunset')"
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
-            className="bg-background"
+            className="bg-background w-full max-w-full"
           />
         </div>
       </div>

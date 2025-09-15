@@ -149,7 +149,7 @@ export const BlogPromptCrafter = ({ onPromptGenerated, initialSelections, initia
             placeholder="Enter your main idea or topic (e.g., 'AI trends in Southeast Asia')"
             value={workingTitle}
             onChange={(e) => setWorkingTitle(e.target.value)}
-            className="bg-background"
+            className="bg-background w-full max-w-full"
           />
         </div>
       </div>
@@ -271,7 +271,7 @@ export const BlogPromptCrafter = ({ onPromptGenerated, initialSelections, initia
             placeholder="Add focus keywords (e.g., AI trends, machine learning, automation)"
             value={keywords}
             onChange={(e) => setKeywords(e.target.value)}
-            className="min-h-[80px] bg-background"
+            className="min-h-[80px] bg-background w-full max-w-full"
           />
         </div>
       </div>
