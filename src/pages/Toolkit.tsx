@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { Wand2, Brain, ArrowRight, Sparkles, Palette } from "lucide-react";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import PageHero from "@/components/layout/PageHero";
 
 const ToolkitPage = () => {
   const tools = [
@@ -33,6 +34,53 @@ const ToolkitPage = () => {
         description="Meet Scout, your AI prompt explorer. Discover powerful tools for creating perfect prompts, getting expert guidance, and enhancing your AI interactions."
       />
       
+      
+      <PageHero 
+        title={
+          <div className="flex flex-col items-center gap-6">
+            {/* Scout's Avatar */}
+            <div className="relative">
+              <video 
+                src="/scout-animation-v2.mp4" 
+                autoPlay 
+                loop 
+                muted 
+                playsInline
+                className="w-32 h-32 rounded-full object-cover border-4 border-primary-foreground/20 shadow-xl hover-scale"
+              />
+              <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-primary-foreground rounded-full border-4 border-primary/20 flex items-center justify-center">
+                <div className="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-3">
+              <div className="p-3 bg-primary-foreground/20 rounded-2xl">
+                <Sparkles className="h-8 w-8 text-primary-foreground" />
+              </div>
+              <span>Meet Scout</span>
+            </div>
+          </div>
+        }
+        subtitle={
+          <div className="space-y-6">
+            <p className="text-xl leading-relaxed">
+              Your friendly AI prompt explorer. Scout helps you create perfect prompts, discover new ideas, 
+              and get expert guidance for any AI task. Let's explore what Scout can do for you!
+            </p>
+            
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <Badge variant="secondary" className="text-sm bg-primary-foreground/20 text-primary-foreground border-primary-foreground/30">
+                <Sparkles className="h-3 w-3 mr-1" />
+                Scout-Powered
+              </Badge>
+              <Badge variant="outline" className="text-sm border-primary-foreground/30 text-primary-foreground">Free to Use</Badge>
+              <Badge variant="outline" className="text-sm border-primary-foreground/30 text-primary-foreground">Expert Quality</Badge>
+            </div>
+          </div>
+        }
+        minHeightClass="min-h-[45svh]"
+      />
+
       <main className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
         <div className="container mx-auto px-4 py-12 max-w-7xl">
           
@@ -50,48 +98,6 @@ const ToolkitPage = () => {
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
-          {/* Hero Section */}
-          <div className="text-center mb-16 space-y-6">
-            {/* Scout's Avatar */}
-            <div className="flex justify-center mb-6">
-              <div className="relative">
-                <video 
-                  src="/scout-animation-v2.mp4" 
-                  autoPlay 
-                  loop 
-                  muted 
-                  playsInline
-                  className="w-32 h-32 rounded-full object-cover border-4 border-primary/20 shadow-xl hover-scale"
-                />
-                <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-primary rounded-full border-4 border-background flex items-center justify-center">
-                  <div className="w-3 h-3 bg-white rounded-full animate-pulse"></div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <div className="p-3 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-2xl">
-                <Sparkles className="h-8 w-8 text-primary" />
-              </div>
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-                Meet Scout
-              </h1>
-            </div>
-            
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Your friendly AI prompt explorer. Scout helps you create perfect prompts, discover new ideas, 
-              and get expert guidance for any AI task. Let's explore what Scout can do for you!
-            </p>
-            
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              <Badge variant="secondary" className="text-sm">
-                <Sparkles className="h-3 w-3 mr-1" />
-                Scout-Powered
-              </Badge>
-              <Badge variant="outline" className="text-sm">Free to Use</Badge>
-              <Badge variant="outline" className="text-sm">Expert Quality</Badge>
-            </div>
-          </div>
 
           {/* Tools Grid */}
           <div className="grid gap-8 md:grid-cols-2 mb-16">
