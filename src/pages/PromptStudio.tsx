@@ -136,16 +136,7 @@ const PromptStudioPage = () => {
               </h2>
               <Select value={activeTab} onValueChange={(value) => setActiveTab(value as "image" | "event" | "cta")}>
                 <SelectTrigger className="w-full max-w-xs mx-auto bg-card/90 border-2 border-primary/20 hover:border-primary/30 transition-colors shadow-lg">
-                  <div className="flex items-center gap-3">
-                    {activeTab === "image" ? (
-                      <Image className="h-5 w-5 text-primary" />
-                    ) : activeTab === "event" ? (
-                      <Calendar className="h-5 w-5 text-primary" />
-                    ) : (
-                      <Megaphone className="h-5 w-5 text-primary" />
-                    )}
-                    <SelectValue placeholder="Select a prompt type" />
-                  </div>
+                  <SelectValue placeholder="Select a prompt type" />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border-2 border-primary/20 shadow-xl z-50">
                   <SelectItem value="image" className="cursor-pointer hover:bg-muted/80">
