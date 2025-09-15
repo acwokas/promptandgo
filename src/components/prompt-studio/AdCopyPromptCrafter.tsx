@@ -145,7 +145,7 @@ export const AdCopyPromptCrafter = ({ onPromptGenerated, initialSelections, init
             placeholder="Describe the product, service, or promotion"
             value={productOffer}
             onChange={(e) => setProductOffer(e.target.value)}
-            className="bg-background w-full max-w-full"
+            className="w-full"
           />
         </div>
       </div>
