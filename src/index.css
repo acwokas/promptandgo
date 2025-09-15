@@ -222,6 +222,7 @@ All colors MUST be HSL. */
     min-width: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
+    overflow: hidden;
   }
   
   .prompt-editorial {
