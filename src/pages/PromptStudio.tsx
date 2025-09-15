@@ -423,7 +423,7 @@ const PromptStudioPage = () => {
                   <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-muted/50 flex items-center justify-center mx-auto mb-3">
                     <Wand2 className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
                   </div>
-                  <h3 className="font-semibold mb-2 text-sm sm:text-base">Text Prompt Crafter</h3>
+                  <h3 className="font-semibold mb-2 text-sm sm:text-base">Presentation Prompt Crafter</h3>
                   <p className="text-xs sm:text-sm text-muted-foreground">Coming Soon</p>
                 </CardContent>
               </Card>
@@ -441,7 +441,7 @@ const PromptStudioPage = () => {
                   <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-muted/50 flex items-center justify-center mx-auto mb-3">
                     <Wand2 className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
                   </div>
-                  <h3 className="font-semibold mb-2 text-sm sm:text-base">Marketing Prompt Crafter</h3>
+                  <h3 className="font-semibold mb-2 text-sm sm:text-base">Negotiation Prompt Crafter</h3>
                   <p className="text-xs sm:text-sm text-muted-foreground">Coming Soon</p>
                 </CardContent>
               </Card>
