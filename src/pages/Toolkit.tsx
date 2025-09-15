@@ -144,20 +144,9 @@ const ToolkitPage = () => {
             ))}
         </div>
 
-        {/* Meet Scout Section */}
-        <div className="mt-12 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg p-6 border border-primary/20">
-          <div className="flex items-center gap-3 mb-4">
-            <Sparkles className="h-6 w-6 text-primary" />
-            <h3 className="text-xl font-semibold">Meet Scout - Your AI Prompt Explorer</h3>
-          </div>
-          <p className="text-muted-foreground mb-4">
-            Scout is your friendly AI companion designed to help you create perfect prompts and explore new possibilities. Whether you're crafting marketing copy, generating creative content, or solving complex problems, Scout provides expert guidance every step of the way.
-          </p>
-        </div>
-
           {/* Why Choose Scout Section */}
           <div className="mt-12">
-            <div className="text-center space-y-8 bg-muted/30 rounded-3xl p-8 md:p-12">
+            <div className="text-center space-y-8 bg-gradient-to-br from-primary/5 to-secondary/5 border border-primary/10 rounded-3xl p-8 md:p-12">
               <h2 className="text-3xl font-bold mb-6">Why Choose Scout?</h2>
               
               <div className="grid gap-6 md:grid-cols-3">
