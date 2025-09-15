@@ -67,6 +67,40 @@ const Header = () => {
           />
         </Link>
         
+        {/* Desktop Navigation - Hidden on mobile */}
+        <nav className="hidden lg:flex items-center gap-6 flex-1 justify-center">
+          <Link 
+            to="/library" 
+            className="text-sm text-foreground hover:text-primary transition-colors"
+          >
+            Browse Library
+          </Link>
+          <Link 
+            to="/packs" 
+            className="text-sm text-foreground hover:text-primary transition-colors"
+          >
+            Power Packs
+          </Link>
+          <Link 
+            to="/scout" 
+            className="text-sm text-foreground hover:text-primary transition-colors"
+          >
+            Scout AI
+          </Link>
+          <Link 
+            to="/how-it-works" 
+            className="text-sm text-foreground hover:text-primary transition-colors"
+          >
+            How it Works
+          </Link>
+          <Link 
+            to="/tips" 
+            className="text-sm text-foreground hover:text-primary transition-colors"
+          >
+            Tips
+          </Link>
+        </nav>
+        
         {/* Right Actions */}
         <div className="flex items-center gap-2 flex-shrink-0">
           {/* CTA */}
