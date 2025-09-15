@@ -6,11 +6,25 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Palette, Calendar, Megaphone, Sparkles, Wand2 } from "lucide-react";
+import { ArrowRight, Palette, Calendar, Megaphone, Sparkles, Wand2, FileText, Briefcase, GraduationCap, TrendingUp, BookOpen, Zap, Target, Mail, Video, Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { imagePromptOptions, eventPromptOptions, ctaPromptOptions } from "@/data/promptStudioOptions";
+import { 
+  imagePromptOptions, 
+  eventPromptOptions, 
+  ctaPromptOptions,
+  blogPromptOptions,
+  jobApplicationPromptOptions,
+  learningStudyPromptOptions,
+  businessStrategyPromptOptions,
+  storytellingPromptOptions,
+  productivityWorkflowPromptOptions,
+  adCopyPromptOptions,
+  salesEmailPromptOptions,
+  videoScriptPromptOptions,
+  researchPromptOptions
+} from "@/data/promptStudioOptions";
 
-type CrafterType = "image" | "event" | "cta";
+type CrafterType = "image" | "event" | "cta" | "blog" | "job-application" | "learning" | "business-strategy" | "storytelling" | "productivity" | "ad-copy" | "sales-email" | "video-script" | "research";
 
 const crafterConfigs = {
   image: {
@@ -39,6 +53,96 @@ const crafterConfigs = {
       { key: "platform", label: "Platform", options: ctaPromptOptions.platforms.slice(0, 8) },
       { key: "contentType", label: "Content Type", options: ctaPromptOptions.contentTypes.slice(0, 8) }
     ]
+  },
+  blog: {
+    icon: FileText,
+    title: "Blog Prompts",
+    description: "Generate engaging blog article prompts",
+    primaryOptions: [
+      { key: "targetAudience", label: "Target Audience", options: blogPromptOptions.targetAudiences },
+      { key: "articleType", label: "Article Type", options: blogPromptOptions.articleTypes }
+    ]
+  },
+  "job-application": {
+    icon: Briefcase,
+    title: "Job Application Prompts",
+    description: "Create professional job application materials",
+    primaryOptions: [
+      { key: "applicationType", label: "Application Type", options: jobApplicationPromptOptions.applicationTypes },
+      { key: "tone", label: "Tone", options: jobApplicationPromptOptions.toneOfVoice }
+    ]
+  },
+  learning: {
+    icon: GraduationCap,
+    title: "Learning Prompts",
+    description: "Design effective learning and study materials",
+    primaryOptions: [
+      { key: "targetLevel", label: "Target Level", options: learningStudyPromptOptions.targetLevels },
+      { key: "learningFormat", label: "Learning Format", options: learningStudyPromptOptions.learningFormats }
+    ]
+  },
+  "business-strategy": {
+    icon: TrendingUp,
+    title: "Business Strategy Prompts",
+    description: "Develop comprehensive business strategies",
+    primaryOptions: [
+      { key: "businessType", label: "Business Type", options: businessStrategyPromptOptions.businessTypes },
+      { key: "focusArea", label: "Focus Area", options: businessStrategyPromptOptions.focusAreas }
+    ]
+  },
+  storytelling: {
+    icon: BookOpen,
+    title: "Storytelling Prompts",
+    description: "Craft compelling narrative and story prompts",
+    primaryOptions: [
+      { key: "storyGenre", label: "Story Genre", options: storytellingPromptOptions.storyGenres },
+      { key: "setting", label: "Setting", options: storytellingPromptOptions.settings }
+    ]
+  },
+  productivity: {
+    icon: Zap,
+    title: "Productivity Prompts",
+    description: "Optimize workflow and productivity systems",
+    primaryOptions: [
+      { key: "taskType", label: "Task Type", options: productivityWorkflowPromptOptions.taskTypes },
+      { key: "framework", label: "Framework", options: productivityWorkflowPromptOptions.productivityFrameworks }
+    ]
+  },
+  "ad-copy": {
+    icon: Target,
+    title: "Ad Copy Prompts",
+    description: "Create high-converting advertising copy",
+    primaryOptions: [
+      { key: "platform", label: "Platform", options: adCopyPromptOptions.platforms },
+      { key: "adFormat", label: "Ad Format", options: adCopyPromptOptions.adFormats }
+    ]
+  },
+  "sales-email": {
+    icon: Mail,
+    title: "Sales Email Prompts",
+    description: "Write effective sales and outreach emails",
+    primaryOptions: [
+      { key: "emailPurpose", label: "Email Purpose", options: salesEmailPromptOptions.emailPurposes },
+      { key: "recipientRole", label: "Recipient Role", options: salesEmailPromptOptions.recipientRoles }
+    ]
+  },
+  "video-script": {
+    icon: Video,
+    title: "Video Script Prompts",
+    description: "Develop engaging video script content",
+    primaryOptions: [
+      { key: "videoPurpose", label: "Video Purpose", options: videoScriptPromptOptions.videoPurposes },
+      { key: "videoLength", label: "Video Length", options: videoScriptPromptOptions.videoLengths }
+    ]
+  },
+  research: {
+    icon: Search,
+    title: "Research Prompts",
+    description: "Conduct thorough research and analysis",
+    primaryOptions: [
+      { key: "researchGoal", label: "Research Goal", options: researchPromptOptions.researchGoals },
+      { key: "dataScope", label: "Data Scope", options: researchPromptOptions.dataScopes }
+    ]
   }
 };
 
@@ -51,7 +155,7 @@ const MiniPromptStudio = () => {
 
   // Rotate the active crafter on page load
   useEffect(() => {
-    const crafters: CrafterType[] = ["image", "event", "cta"];
+    const crafters: CrafterType[] = ["image", "event", "cta", "blog", "job-application", "learning", "business-strategy", "storytelling", "productivity", "ad-copy", "sales-email", "video-script", "research"];
     const randomCrafter = crafters[Math.floor(Math.random() * crafters.length)];
     setActiveCrafter(randomCrafter);
   }, []);
@@ -120,6 +224,44 @@ const MiniPromptStudio = () => {
       
       prompt = parts.join("\n");
       if (prompt) prompt = `Create a compelling social media post:\n\n${prompt}`;
+
+    } else {
+      // Generic handler for all other prompt types
+      const parts = [];
+      if (subject.trim()) parts.push(`Topic: ${subject.trim()}`);
+      
+      // Handle first primary option
+      const firstOptionKey = config.primaryOptions[0]?.key;
+      if (firstOptionKey && selections[firstOptionKey]) {
+        const option = config.primaryOptions[0].options.find(o => o.value === selections[firstOptionKey]);
+        if (option) parts.push(`${config.primaryOptions[0].label}: ${option.label}`);
+      }
+      
+      // Handle second primary option
+      const secondOptionKey = config.primaryOptions[1]?.key;
+      if (secondOptionKey && selections[secondOptionKey]) {
+        const option = config.primaryOptions[1].options.find(o => o.value === selections[secondOptionKey]);
+        if (option) parts.push(`${config.primaryOptions[1].label}: ${option.label}`);
+      }
+      
+      prompt = parts.join("\n");
+      if (prompt) {
+        const actionMap = {
+          blog: "Write a comprehensive blog article",
+          "job-application": "Create professional job application materials",
+          learning: "Design effective learning materials",
+          "business-strategy": "Develop a business strategy",
+          storytelling: "Create a compelling story",
+          productivity: "Design a productivity system",
+          "ad-copy": "Write high-converting ad copy",
+          "sales-email": "Craft an effective sales email",
+          "video-script": "Write an engaging video script",
+          research: "Conduct thorough research"
+        };
+        
+        const action = actionMap[activeCrafter] || "Generate content";
+        prompt = `${action} with these specifications:\n\n${prompt}`;
+      }
     }
 
     setGeneratedPrompt(prompt);
