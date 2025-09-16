@@ -50,15 +50,17 @@ const PromptStudioPage = () => {
     const tagsFromUrl = searchParams.get('tags');
     
     if (promptFromUrl) {
-      let adaptedPrompt = promptFromUrl;
+      let adaptedPrompt = decodeURIComponent(promptFromUrl);
       
       // Add context about creating similar content
       if (titleFromUrl) {
-        adaptedPrompt = `Create content similar to "${titleFromUrl}". ${adaptedPrompt}`;
+        const decodedTitle = decodeURIComponent(titleFromUrl);
+        adaptedPrompt = `Create content similar to "${decodedTitle}". ${adaptedPrompt}`;
       }
       
       if (tagsFromUrl) {
-        const tags = tagsFromUrl.split(',').filter(tag => tag.trim());
+        const decodedTags = decodeURIComponent(tagsFromUrl);
+        const tags = decodedTags.split(',').filter(tag => tag.trim());
         if (tags.length > 0) {
           adaptedPrompt += ` Include elements related to: ${tags.join(', ')}.`;
         }
@@ -66,6 +68,11 @@ const PromptStudioPage = () => {
       
       adaptedPrompt += " Adapt this to create similar but unique content.";
       setGeneratedPrompt(adaptedPrompt);
+      
+      // Scroll to the prompt output after a short delay
+      setTimeout(() => {
+        scrollToPrompt();
+      }, 100);
     }
   }, [searchParams]);
 
