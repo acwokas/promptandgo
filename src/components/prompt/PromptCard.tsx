@@ -574,7 +574,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               className="w-full"
               asChild
             >
-              <Link to="/ai/studio">
+              <Link to={`/ai/studio?tab=${prompt.imagePrompt ? 'image' : 'adcopy'}&title=${encodeURIComponent(prompt.title || '')}&prompt=${encodeURIComponent(prompt.prompt || '')}&tags=${encodeURIComponent(prompt.tags?.join(',') || '')}`}>
                 <Wand2 className="h-4 w-4" />
                 <span>Create Similar</span>
               </Link>

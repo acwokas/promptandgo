@@ -43,6 +43,30 @@ const PromptStudioPage = () => {
     if (tabFromUrl && ['adcopy', 'blog', 'business', 'cta', 'event', 'image', 'job', 'learning', 'productivity', 'research', 'salesemail', 'storytelling', 'video'].includes(tabFromUrl)) {
       setActiveTab(tabFromUrl);
     }
+    
+    // If there's prompt information in the URL, pre-populate the generated prompt
+    const promptFromUrl = searchParams.get('prompt');
+    const titleFromUrl = searchParams.get('title');
+    const tagsFromUrl = searchParams.get('tags');
+    
+    if (promptFromUrl) {
+      let adaptedPrompt = promptFromUrl;
+      
+      // Add context about creating similar content
+      if (titleFromUrl) {
+        adaptedPrompt = `Create content similar to "${titleFromUrl}". ${adaptedPrompt}`;
+      }
+      
+      if (tagsFromUrl) {
+        const tags = tagsFromUrl.split(',').filter(tag => tag.trim());
+        if (tags.length > 0) {
+          adaptedPrompt += ` Include elements related to: ${tags.join(', ')}.`;
+        }
+      }
+      
+      adaptedPrompt += " Adapt this to create similar but unique content.";
+      setGeneratedPrompt(adaptedPrompt);
+    }
   }, [searchParams]);
 
   const handlePromptGenerated = (prompt: string) => {
