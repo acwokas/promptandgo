@@ -323,7 +323,9 @@ const MiniPromptStudio = () => {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {(Object.keys(crafterConfigs) as CrafterType[]).map((type) => {
+              {(Object.keys(crafterConfigs) as CrafterType[])
+                .sort((a, b) => crafterConfigs[a].title.localeCompare(crafterConfigs[b].title))
+                .map((type) => {
                 const typeConfig = crafterConfigs[type];
                 const TypeIcon = typeConfig.icon;
                 return (
