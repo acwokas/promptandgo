@@ -572,12 +572,19 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               size="sm"
               variant="outline"
               className="w-full"
-              asChild
+              onClick={() => {
+                const tab = prompt.imagePrompt ? 'image' : 'adcopy';
+                const title = encodeURIComponent(prompt.title || '');
+                const promptText = encodeURIComponent(prompt.prompt || '');
+                const tags = encodeURIComponent(prompt.tags?.join(',') || '');
+                const url = `/ai/studio?tab=${tab}&title=${title}&prompt=${promptText}&tags=${tags}`;
+                console.log('Create Similar button clicked, navigating to:', url);
+                console.log('Original prompt data:', { title: prompt.title, prompt: prompt.prompt, tags: prompt.tags });
+                navigate(url);
+              }}
             >
-              <Link to={`/ai/studio?tab=${prompt.imagePrompt ? 'image' : 'adcopy'}&title=${encodeURIComponent(prompt.title || '')}&prompt=${encodeURIComponent(prompt.prompt || '')}&tags=${encodeURIComponent(prompt.tags?.join(',') || '')}`}>
-                <Wand2 className="h-4 w-4" />
-                <span>Create Similar</span>
-              </Link>
+              <Wand2 className="h-4 w-4" />
+              <span>Create Similar</span>
             </Button>
             {user ? (
               <TooltipProvider>

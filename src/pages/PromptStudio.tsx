@@ -39,8 +39,11 @@ const PromptStudioPage = () => {
 
   // Initialize from URL parameters
   useEffect(() => {
+    console.log('PromptStudio useEffect triggered, searchParams:', Object.fromEntries(searchParams.entries()));
+    
     const tabFromUrl = searchParams.get('tab') as "adcopy" | "blog" | "business" | "cta" | "event" | "image" | "job" | "learning" | "productivity" | "research" | "salesemail" | "storytelling" | "video";
     if (tabFromUrl && ['adcopy', 'blog', 'business', 'cta', 'event', 'image', 'job', 'learning', 'productivity', 'research', 'salesemail', 'storytelling', 'video'].includes(tabFromUrl)) {
+      console.log('Setting activeTab to:', tabFromUrl);
       setActiveTab(tabFromUrl);
     }
     
@@ -49,13 +52,17 @@ const PromptStudioPage = () => {
     const titleFromUrl = searchParams.get('title');
     const tagsFromUrl = searchParams.get('tags');
     
+    console.log('URL parameters:', { promptFromUrl, titleFromUrl, tagsFromUrl });
+    
     if (promptFromUrl) {
       let adaptedPrompt = decodeURIComponent(promptFromUrl);
+      console.log('Decoded prompt:', adaptedPrompt);
       
       // Add context about creating similar content
       if (titleFromUrl) {
         const decodedTitle = decodeURIComponent(titleFromUrl);
         adaptedPrompt = `Create content similar to "${decodedTitle}". ${adaptedPrompt}`;
+        console.log('Added title context:', decodedTitle);
       }
       
       if (tagsFromUrl) {
@@ -63,16 +70,21 @@ const PromptStudioPage = () => {
         const tags = decodedTags.split(',').filter(tag => tag.trim());
         if (tags.length > 0) {
           adaptedPrompt += ` Include elements related to: ${tags.join(', ')}.`;
+          console.log('Added tags:', tags);
         }
       }
       
       adaptedPrompt += " Adapt this to create similar but unique content.";
+      console.log('Final adapted prompt:', adaptedPrompt);
       setGeneratedPrompt(adaptedPrompt);
       
       // Scroll to the prompt output after a short delay
       setTimeout(() => {
+        console.log('Scrolling to prompt');
         scrollToPrompt();
       }, 100);
+    } else {
+      console.log('No prompt found in URL parameters');
     }
   }, [searchParams]);
 
