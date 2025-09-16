@@ -50,17 +50,15 @@ const PromptStudioPage = () => {
     const tagsFromUrl = searchParams.get('tags');
     
     if (promptFromUrl) {
-      let adaptedPrompt = decodeURIComponent(promptFromUrl);
+      let adaptedPrompt = promptFromUrl;
       
       // Add context about creating similar content
       if (titleFromUrl) {
-        const decodedTitle = decodeURIComponent(titleFromUrl);
-        adaptedPrompt = `Create content similar to "${decodedTitle}". ${adaptedPrompt}`;
+        adaptedPrompt = `Create content similar to "${titleFromUrl}". ${adaptedPrompt}`;
       }
       
       if (tagsFromUrl) {
-        const decodedTags = decodeURIComponent(tagsFromUrl);
-        const tags = decodedTags.split(',').filter(tag => tag.trim());
+        const tags = tagsFromUrl.split(',').filter(tag => tag.trim());
         if (tags.length > 0) {
           adaptedPrompt += ` Include elements related to: ${tags.join(', ')}.`;
         }
