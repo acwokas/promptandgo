@@ -578,8 +578,6 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                 const promptText = encodeURIComponent(prompt.prompt || '');
                 const tags = encodeURIComponent(prompt.tags?.join(',') || '');
                 const url = `/ai/studio?tab=${tab}&title=${title}&prompt=${promptText}&tags=${tags}`;
-                console.log('Create Similar button clicked, navigating to:', url);
-                console.log('Original prompt data:', { title: prompt.title, prompt: prompt.prompt, tags: prompt.tags });
                 navigate(url);
               }}
             >
