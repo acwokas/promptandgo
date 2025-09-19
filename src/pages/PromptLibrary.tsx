@@ -58,11 +58,10 @@ const dedupeByTitle = (arr: PromptUI[]) => {
   });
 };
 
-// Reorder results: first 1 PRO, then several free, then alternate PRO/free groups
+// Reorder results: max 2 PRO prompts per page in fixed positions (2nd and 6th)
 const reorderByLockedBuckets = (arr: PromptUI[]) => {
-  const orderIndex = new Map<string, number>();
-  arr.forEach((p, i) => orderIndex.set(p.id, i));
-
+  const PAGE_SIZE = 20;
+  
   // Sort by prompt length (longest first) within each group
   const pro = arr.filter((p) => !!p.isPro).sort((a, b) => b.prompt.length - a.prompt.length);
   const free = arr.filter((p) => !p.isPro).sort((a, b) => b.prompt.length - a.prompt.length);
@@ -74,24 +73,49 @@ const reorderByLockedBuckets = (arr: PromptUI[]) => {
   let proIndex = 0;
   let freeIndex = 0;
   
-  // Start with 1 PRO prompt
-  if (proIndex < pro.length) {
-    result.push(pro[proIndex++]);
-  }
+  // Process in chunks of PAGE_SIZE
+  const totalItems = arr.length;
+  const pages = Math.ceil(totalItems / PAGE_SIZE);
   
-  // Then add free prompts in groups, interspersing with PRO
-  const freeGroupSize = 4; // Show 4 free prompts before next PRO
-  
-  while (freeIndex < free.length || proIndex < pro.length) {
-    // Add a group of free prompts
-    for (let i = 0; i < freeGroupSize && freeIndex < free.length; i++) {
-      result.push(free[freeIndex++]);
+  for (let page = 0; page < pages; page++) {
+    const pageStart = page * PAGE_SIZE;
+    const pageEnd = Math.min(pageStart + PAGE_SIZE, totalItems);
+    const pageSize = pageEnd - pageStart;
+    
+    // Create page array with placeholders
+    const pageItems: (PromptUI | null)[] = new Array(pageSize).fill(null);
+    
+    // Place up to 2 PRO prompts in positions 1 (index 1) and 5 (index 5) if page has enough slots
+    const proPositions = [];
+    if (pageSize > 1) proPositions.push(1); // 2nd position
+    if (pageSize > 5) proPositions.push(5); // 6th position
+    
+    // Place PRO prompts in fixed positions
+    for (const pos of proPositions) {
+      if (proIndex < pro.length && pos < pageSize) {
+        pageItems[pos] = pro[proIndex++];
+      }
     }
     
-    // Add 1 PRO prompt if available
-    if (proIndex < pro.length) {
-      result.push(pro[proIndex++]);
+    // Fill remaining positions with free prompts
+    for (let i = 0; i < pageSize; i++) {
+      if (pageItems[i] === null && freeIndex < free.length) {
+        pageItems[i] = free[freeIndex++];
+      }
     }
+    
+    // Add non-null items to result
+    pageItems.forEach(item => {
+      if (item) result.push(item);
+    });
+  }
+  
+  // If we still have unused prompts, add them at the end
+  while (proIndex < pro.length) {
+    result.push(pro[proIndex++]);
+  }
+  while (freeIndex < free.length) {
+    result.push(free[freeIndex++]);
   }
 
   return result;
