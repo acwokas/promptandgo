@@ -439,44 +439,6 @@ const Index = () => {
                 <MiniPromptStudio />
               </div>
             </div>
-
-            {/* Custom Creation Process */}
-            <div className="text-center mb-8">
-              <div className="inline-flex items-center gap-2 bg-secondary/10 text-secondary px-4 py-2 rounded-full text-sm font-medium mb-4">
-                <Wand2 className="h-4 w-4" />
-                For Custom Needs
-              </div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">How Scout Builds Custom Prompts</h3>
-              <p className="text-muted-foreground max-w-xl mx-auto">Need something specific? Use Scout's guided wizards to build from scratch</p>
-            </div>
-            <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
-              <div className="text-center">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Wand2 className="h-6 w-6 text-primary" />
-                </div>
-                <h4 className="font-semibold mb-2">1. Guided Creation</h4>
-                <p className="text-sm text-muted-foreground">Use wizards and dropdowns</p>
-              </div>
-              <div className="text-center">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Settings className="h-6 w-6 text-primary" />
-                </div>
-                <h4 className="font-semibold mb-2">2. Scout Optimizes</h4>
-                <p className="text-sm text-muted-foreground">Platform-specific output</p>
-              </div>
-              <div className="text-center">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Zap className="h-6 w-6 text-primary" />
-                </div>
-                <h4 className="font-semibold mb-2">3. Deploy</h4>
-                <p className="text-sm text-muted-foreground">One-click to AI platform</p>
-              </div>
-            </div>
-            <div className="text-center mt-6">
-              <Button asChild size="default" variant="secondary">
-                <Link to="/scout">Try Scout Studio <Wand2 className="h-4 w-4 ml-2" /></Link>
-              </Button>
-            </div>
           </div>
         </section>
 
