@@ -42,13 +42,6 @@ const AI_PROVIDERS: AiProvider[] = [
     description: 'Google Gemini models'
   },
   {
-    id: 'meta',
-    name: 'Llama-3',
-    icon: <Zap className="h-4 w-4" />,
-    category: 'text',
-    description: 'Meta Llama models'
-  },
-  {
     id: 'groq',
     name: 'Groq',
     icon: <Zap className="h-4 w-4" />,
