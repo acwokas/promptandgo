@@ -558,7 +558,7 @@ const Index = () => {
         {/* Path 2: Generate from Scratch */}
         <section className="container py-8">
           <div className="text-center mb-8">
-            <div className="inline-flex items-center gap-2 bg-secondary/10 text-secondary px-4 py-2 rounded-full text-sm font-medium mb-4">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
               <Wand2 className="h-4 w-4" />
               Alternative Path
             </div>
