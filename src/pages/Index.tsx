@@ -309,32 +309,28 @@ const Index = () => {
 
         {/* Social Proof + Today's Featured */}
         <section className="container py-8">
-          <div className="grid gap-6 lg:grid-cols-4">
-            <div className="lg:col-span-3">
-              <TodaysFeatured />
-              
-              <div className="text-center mb-8">
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 lg:gap-8 text-sm text-muted-foreground max-w-4xl mx-auto mb-6">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                    <span className="font-medium whitespace-nowrap">5,000+ professionals</span>
-                  </div>
-                  <div className="hidden sm:block w-1 h-1 bg-muted-foreground/30 rounded-full"></div>
-                  <span className="font-medium whitespace-nowrap">100K+ prompts optimized</span>
-                  <div className="hidden sm:block w-1 h-1 bg-muted-foreground/30 rounded-full"></div>
-                  <div className="flex items-center gap-2">
-                    <UrgencyBadge variant="trending" />
-                    <span className="font-medium whitespace-nowrap">50+ hours saved daily</span>
-                  </div>
+          <div className="text-center mb-8">
+            <TodaysFeatured />
+            
+            <div className="text-center mb-8">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 lg:gap-8 text-sm text-muted-foreground max-w-4xl mx-auto mb-6">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                  <span className="font-medium whitespace-nowrap">5,000+ professionals</span>
+                </div>
+                <div className="hidden sm:block w-1 h-1 bg-muted-foreground/30 rounded-full"></div>
+                <span className="font-medium whitespace-nowrap">100K+ prompts optimized</span>
+                <div className="hidden sm:block w-1 h-1 bg-muted-foreground/30 rounded-full"></div>
+                <div className="flex items-center gap-2">
+                  <UrgencyBadge variant="trending" />
+                  <span className="font-medium whitespace-nowrap">50+ hours saved daily</span>
                 </div>
               </div>
             </div>
-            
-            <div className="lg:col-span-1">
-              <SocialProofStream />
-            </div>
           </div>
-          
+        </section>
+
+        <section className="container py-8">
           <div className="grid gap-6 md:grid-cols-3">
             <Card className="bg-gradient-to-br from-primary/5 to-transparent">
               <CardContent className="p-6">
@@ -405,12 +401,12 @@ const Index = () => {
               </CardContent>
             </Card>
           </div>
+        </section>
           
           {/* Trust indicators */}
           <div className="mt-8">
             <AsSeenIn />
           </div>
-        </section>
 
 
         {/* Scout Demo - Interactive Prompt Card */}

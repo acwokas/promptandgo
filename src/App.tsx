@@ -8,6 +8,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { AppSidebar } from "@/components/AppSidebar";
 import ConversionBar from "@/components/layout/ConversionBar";
 import ExitIntentPopup from "@/components/conversion/ExitIntentPopup";
+import LiveActivityTicker from "@/components/conversion/LiveActivityTicker";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import PromptLibrary from "./pages/PromptLibrary";
@@ -195,6 +196,9 @@ const AppContent = () => {
         
         {/* Exit intent popup for conversion */}
         <ExitIntentPopup />
+        
+        {/* Live activity ticker */}
+        <LiveActivityTicker />
       </LoginWidgetProvider>
     </SidebarProvider>
   );
