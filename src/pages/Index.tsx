@@ -473,39 +473,60 @@ const Index = () => {
                               SELECTED
                             </div>
                           </div>
-                          
-                          {/* Claude */}
-                          <div className="hover:bg-gray-50 rounded-2xl p-3 md:p-4 flex items-center gap-3 md:gap-4 cursor-pointer transition-all border-2 border-transparent hover:border-gray-200">
-                            <div className="w-10 h-10 md:w-12 md:h-12 bg-pink-100 rounded-full flex items-center justify-center">
-                              <span className="text-xl md:text-2xl">🧠</span>
-                            </div>
-                            <div>
-                              <div className="font-bold text-base md:text-lg text-gray-900">Claude</div>
-                              <div className="text-sm text-gray-500">Anthropic - Great for Analysis</div>
-                            </div>
-                          </div>
-                          
-                          {/* MidJourney */}
-                          <div className="hover:bg-gray-50 rounded-2xl p-3 md:p-4 flex items-center gap-3 md:gap-4 cursor-pointer transition-all border-2 border-transparent hover:border-gray-200">
-                            <div className="w-10 h-10 md:w-12 md:h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                              <span className="text-xl md:text-2xl">🎨</span>
-                            </div>
-                            <div>
-                              <div className="font-bold text-base md:text-lg text-gray-900">MidJourney</div>
-                              <div className="text-sm text-gray-500">Image Generation</div>
-                            </div>
-                          </div>
-                          
-                          {/* Gemini */}
-                          <div className="hover:bg-gray-50 rounded-2xl p-3 md:p-4 flex items-center gap-3 md:gap-4 cursor-pointer transition-all border-2 border-transparent hover:border-gray-200">
-                            <div className="w-10 h-10 md:w-12 md:h-12 bg-green-100 rounded-full flex items-center justify-center">
-                              <span className="text-xl md:text-2xl">💎</span>
-                            </div>
-                            <div>
-                              <div className="font-bold text-base md:text-lg text-gray-900">Gemini</div>
-                              <div className="text-sm text-gray-500">Google - Multimodal</div>
-                            </div>
-                          </div>
+                           
+                           {/* Claude */}
+                           <Tooltip>
+                             <TooltipTrigger asChild>
+                               <div className="hover:bg-gray-50 rounded-2xl p-3 md:p-4 flex items-center gap-3 md:gap-4 cursor-pointer transition-all border-2 border-transparent hover:border-gray-200">
+                                 <div className="w-10 h-10 md:w-12 md:h-12 bg-pink-100 rounded-full flex items-center justify-center">
+                                   <span className="text-xl md:text-2xl">🧠</span>
+                                 </div>
+                                 <div>
+                                   <div className="font-bold text-base md:text-lg text-gray-900">Claude</div>
+                                   <div className="text-sm text-gray-500">Anthropic - Great for Analysis</div>
+                                 </div>
+                               </div>
+                             </TooltipTrigger>
+                             <TooltipContent>
+                               <p>This is an image only - look for this dropdown on actual prompt cards</p>
+                             </TooltipContent>
+                           </Tooltip>
+                           
+                           {/* MidJourney */}
+                           <Tooltip>
+                             <TooltipTrigger asChild>
+                               <div className="hover:bg-gray-50 rounded-2xl p-3 md:p-4 flex items-center gap-3 md:gap-4 cursor-pointer transition-all border-2 border-transparent hover:border-gray-200">
+                                 <div className="w-10 h-10 md:w-12 md:h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                                   <span className="text-xl md:text-2xl">🎨</span>
+                                 </div>
+                                 <div>
+                                   <div className="font-bold text-base md:text-lg text-gray-900">MidJourney</div>
+                                   <div className="text-sm text-gray-500">Image Generation</div>
+                                 </div>
+                               </div>
+                             </TooltipTrigger>
+                             <TooltipContent>
+                               <p>This is an image only - look for this dropdown on actual prompt cards</p>
+                             </TooltipContent>
+                           </Tooltip>
+                           
+                           {/* Gemini */}
+                           <Tooltip>
+                             <TooltipTrigger asChild>
+                               <div className="hover:bg-gray-50 rounded-2xl p-3 md:p-4 flex items-center gap-3 md:gap-4 cursor-pointer transition-all border-2 border-transparent hover:border-gray-200">
+                                 <div className="w-10 h-10 md:w-12 md:h-12 bg-green-100 rounded-full flex items-center justify-center">
+                                   <span className="text-xl md:text-2xl">💎</span>
+                                 </div>
+                                 <div>
+                                   <div className="font-bold text-base md:text-lg text-gray-900">Gemini</div>
+                                   <div className="text-sm text-gray-500">Google - Multimodal</div>
+                                 </div>
+                               </div>
+                             </TooltipTrigger>
+                             <TooltipContent>
+                               <p>This is an image only - look for this dropdown on actual prompt cards</p>
+                             </TooltipContent>
+                           </Tooltip>
                          </div>
                        </div>
                      </div>
