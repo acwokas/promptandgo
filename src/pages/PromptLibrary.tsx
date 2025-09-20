@@ -473,7 +473,7 @@ const PromptLibrary = () => {
     setPage(1);
     const res = await fetchPromptsPage(1);
     const data = res.data || [];
-    const transform = (arr: PromptUI[]) => (ribbon === "PRO_ONLY" ? arr : reorderByLockedBuckets(dedupeByTitle(arr)));
+    const transform = (arr: PromptUI[]) => (ribbon === "PRO_ONLY" || proOnly ? arr : reorderByLockedBuckets(dedupeByTitle(arr)));
     setItems(transform(data));
     setHasMore(!!res.hasMore);
   }, [fetchPromptsPage, ribbon]);
@@ -483,7 +483,7 @@ const PromptLibrary = () => {
     const next = page + 1;
     const res = await fetchPromptsPage(next);
     const data = res.data || [];
-    const transform = (arr: PromptUI[]) => (ribbon === "PRO_ONLY" ? arr : reorderByLockedBuckets(dedupeByTitle(arr)));
+    const transform = (arr: PromptUI[]) => (ribbon === "PRO_ONLY" || proOnly ? arr : reorderByLockedBuckets(dedupeByTitle(arr)));
     setItems((prev) => transform([...(prev || []), ...data]));
     setHasMore(!!res.hasMore);
     setPage(next);
