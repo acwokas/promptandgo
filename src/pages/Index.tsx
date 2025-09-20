@@ -365,8 +365,8 @@ const Index = () => {
                 <BookOpen className="h-4 w-4" />
                 Most Popular Path
               </div>
-              <h3 className="text-2xl font-semibold text-foreground mb-2">Start with Battle-Tested Prompts</h3>
-              <p className="text-muted-foreground max-w-xl mx-auto">Browse thousands of proven prompts, then let Scout customize them instantly for any AI platform</p>
+              <h2 className="text-3xl font-bold mb-4">Start with Battle-Tested Prompts</h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Browse thousands of proven prompts, then let Scout customize them instantly for any AI platform</p>
             </div>
             <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
               <div className="text-center">
