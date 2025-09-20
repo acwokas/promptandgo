@@ -293,12 +293,9 @@ const Index = () => {
           </>} subtitle={<>
             Start with battle-tested prompts from our curated library. Then Scout customizes them for ChatGPT, Claude, MidJourney, or any AI platform in seconds. No more starting from scratch or endless tweaking. All for free.
           </>}>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex justify-center">
             <Button asChild size="lg" variant="hero" className="px-8">
               <Link to="/library"><Search className="h-4 w-4 mr-2" />Browse Proven Prompts</Link>
-            </Button>
-            <Button asChild size="lg" variant="secondary">
-              <Link to="/scout"><Bot className="h-4 w-4 mr-2" />Try Scout Studio</Link>
             </Button>
           </div>
         </PageHero>
@@ -443,62 +440,46 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Path 2: AI-Powered Creation */}
+        {/* Path 2: Prompt Packs */}
         <section className="container py-8 border-t">
           <div className="mb-16">
             <div className="text-center mb-8">
               <div className="inline-flex items-center gap-2 bg-accent/10 text-accent-foreground px-4 py-2 rounded-full text-sm font-medium mb-4">
-                <Wand2 className="h-4 w-4" />
-                Need Something Custom?
+                <ShoppingCart className="h-4 w-4" />
+                Need Premium Content?
               </div>
-              <h2 className="text-3xl font-bold mb-4">Let Scout Build It For You</h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Can't find what you need? Scout creates tailored prompts using AI-guided wizards</p>
+              <h2 className="text-3xl font-bold mb-4">Explore Specialized Prompt Packs</h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Get professionally-crafted prompt collections for specialized use cases and industries</p>
             </div>
             <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
               <div className="text-center">
                 <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Briefcase className="h-8 w-8 text-accent-foreground" />
                 </div>
-                <h4 className="font-semibold mb-2">1. Choose Category</h4>
-                <p className="text-sm text-muted-foreground">Pick your use case from business-focused options</p>
+                <h4 className="font-semibold mb-2">1. Browse Collections</h4>
+                <p className="text-sm text-muted-foreground">Choose from curated packs by industry experts</p>
               </div>
               <div className="text-center">
                 <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Bot className="h-8 w-8 text-accent-foreground" />
+                  <ShoppingCart className="h-8 w-8 text-accent-foreground" />
                 </div>
-                <h4 className="font-semibold mb-2">2. Guided Interview</h4>
-                <p className="text-sm text-muted-foreground">Answer smart questions that understand context</p>
+                <h4 className="font-semibold mb-2">2. One-Time Purchase</h4>
+                <p className="text-sm text-muted-foreground">Own them forever, no subscriptions</p>
               </div>
               <div className="text-center">
                 <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Sparkles className="h-8 w-8 text-accent-foreground" />
                 </div>
-                <h4 className="font-semibold mb-2">3. AI Crafting</h4>
-                <p className="text-sm text-muted-foreground">Scout builds prompts tailored to your needs</p>
+                <h4 className="font-semibold mb-2">3. Expert-Crafted</h4>
+                <p className="text-sm text-muted-foreground">Professionally tested prompts that deliver results</p>
               </div>
               <div className="text-center">
                 <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Settings className="h-8 w-8 text-accent-foreground" />
                 </div>
-                <h4 className="font-semibold mb-2">4. Platform Optimization</h4>
-                <p className="text-sm text-muted-foreground">Automatically adapted for your AI platform</p>
+                <h4 className="font-semibold mb-2">4. Platform Ready</h4>
+                <p className="text-sm text-muted-foreground">Compatible with all major AI platforms</p>
               </div>
-            </div>
-            <div className="text-center mt-8">
-              <Button asChild size="lg" variant="secondary">
-                <Link to="/scout"><Wand2 className="h-4 w-4 mr-2" />Try Scout Studio</Link>
-              </Button>
-            </div>
-          </div>
-          
-          {/* Mini Scout Studio Preview */}
-          <div className="bg-gradient-to-br from-accent/5 to-transparent rounded-2xl p-8">
-            <div className="text-center mb-6">
-              <h3 className="text-xl font-semibold mb-2">Try Scout Right Here</h3>
-              <p className="text-muted-foreground">Experience our AI-powered prompt crafting</p>
-            </div>
-            <div className="max-w-3xl mx-auto">
-              <MiniPromptStudio />
             </div>
           </div>
         </section>
@@ -847,12 +828,9 @@ const Index = () => {
             <p className="mt-3 text-primary-foreground/85 text-base md:text-lg">
               ✨ Browse thousands of proven prompts or let Scout build custom ones for your specific needs.
             </p>
-            <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+            <div className="mt-6 flex justify-center">
               <Button asChild variant="hero" className="px-6">
                 <Link to="/library"><Search className="h-4 w-4 mr-2" />Browse Battle-Tested Prompts</Link>
-              </Button>
-              <Button asChild variant="inverted">
-                <Link to="/scout"><Wand2 className="h-4 w-4 mr-2" />Try Scout Studio</Link>
               </Button>
             </div>
           </div>
