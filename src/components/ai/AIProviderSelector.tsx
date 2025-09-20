@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Copy, Send, Eye, EyeOff } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { AI_PROVIDERS, rewritePromptForProvider } from '@/lib/promptRewriter';
+import { useAIPreferences } from '@/hooks/useAIPreferences';
 import { cn } from '@/lib/utils';
 import { Textarea } from '@/components/ui/textarea';
 
@@ -19,6 +20,7 @@ export const AIProviderSelector: React.FC<AIProviderSelectorProps> = ({
   className,
   onPromptRewritten
 }) => {
+  const { getFilteredProviders } = useAIPreferences();
   const [selectedProvider, setSelectedProvider] = useState<string>('chatgpt');
   const [rewrittenPrompt, setRewrittenPrompt] = useState<string>('');
   const [isEditing, setIsEditing] = useState(false);
@@ -141,9 +143,10 @@ export const AIProviderSelector: React.FC<AIProviderSelectorProps> = ({
     });
   };
 
-  const textProviders = AI_PROVIDERS.filter(p => p.category === 'text');
-  const imageProviders = AI_PROVIDERS.filter(p => p.category === 'image');
-  const selectedProviderData = AI_PROVIDERS.find(p => p.id === selectedProvider);
+  const filteredProviders = getFilteredProviders();
+  const textProviders = filteredProviders.filter(p => p.category === 'text');
+  const imageProviders = filteredProviders.filter(p => p.category === 'image');
+  const selectedProviderData = filteredProviders.find(p => p.id === selectedProvider);
 
   if (!originalPrompt?.trim()) {
     return (

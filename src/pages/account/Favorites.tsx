@@ -7,6 +7,7 @@ import { PromptCard } from "@/components/prompt/PromptCard";
 import { PromptFilters } from "@/components/prompt/PromptFilters";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
+import { useAIPreferences } from "@/hooks/useAIPreferences";
 import { useEffect, useState, useCallback } from "react";
 import type { Category as CategoryType } from "@/data/prompts";
 import { Link } from "react-router-dom";
@@ -80,6 +81,7 @@ const dedupeByTitle = (arr: PromptUI[]) => {
 
 const FavoritesPage = () => {
   const { user, loading } = useSupabaseAuth();
+  const { getFilteredProviders } = useAIPreferences();
 
   // Favorites scope
   const [favIds, setFavIds] = useState<string[]>([]);
@@ -825,7 +827,7 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
                                   <SelectValue placeholder="AI Provider" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                  {AI_PROVIDERS.map((provider) => (
+                                  {getFilteredProviders().map((provider) => (
                                     <SelectItem key={provider.id} value={provider.id}>
                                       <div className="flex items-center gap-2">
                                         {provider.icon}

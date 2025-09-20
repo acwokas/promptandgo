@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { addToCart, getCart } from "@/lib/cart";
 import { AI_PROVIDERS, rewritePromptForProvider } from "@/lib/promptRewriter";
+import { useAIPreferences } from "@/hooks/useAIPreferences";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { AiProviderDropdown } from "@/components/ai/AiProviderDropdown";
 import { AiResponseModal } from "@/components/ai/AiResponseModal";
@@ -105,6 +106,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
 
   // Auth and user state
   const { user } = useSupabaseAuth();
+  const { getFilteredProviders } = useAIPreferences();
   const { openLoginWidget } = useLoginWidget();
 
   // Rating state management
@@ -945,7 +947,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                         )}
                       </div>
                     </SelectItem>
-                    {AI_PROVIDERS.filter(p => p.category === 'text').map((provider) => (
+                    {getFilteredProviders().filter(p => p.category === 'text').map((provider) => (
                       <SelectItem key={provider.id} value={provider.id} className={`rounded-xl p-3 sm:p-4 my-1 ${selectedAIPlatform === provider.id ? 'bg-blue-50 border-2 border-blue-200' : 'hover:bg-gray-50 border-2 border-transparent hover:border-gray-200'}`}>
                         <div className="flex items-center gap-3 w-full">
                           <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center ${
@@ -972,7 +974,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                         </div>
                       </SelectItem>
                     ))}
-                    {AI_PROVIDERS.filter(p => p.category === 'image').map((provider) => (
+                    {getFilteredProviders().filter(p => p.category === 'image').map((provider) => (
                       <SelectItem key={provider.id} value={provider.id} className={`rounded-xl p-3 sm:p-4 my-1 ${selectedAIPlatform === provider.id ? 'bg-blue-50 border-2 border-blue-200' : 'hover:bg-gray-50 border-2 border-transparent hover:border-gray-200'}`}>
                         <div className="flex items-center gap-3 w-full">
                           <div className="w-8 h-8 sm:w-10 sm:h-10 bg-purple-100 rounded-full flex items-center justify-center">

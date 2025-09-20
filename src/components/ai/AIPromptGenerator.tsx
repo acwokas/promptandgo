@@ -17,6 +17,7 @@ import { AiProviderDropdown } from "@/components/ai/AiProviderDropdown";
 import { AiResponseModal } from "@/components/ai/AiResponseModal";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AI_PROVIDERS, rewritePromptForProvider } from "@/lib/promptRewriter";
+import { useAIPreferences } from "@/hooks/useAIPreferences";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface RecentPrompt {
@@ -55,6 +56,7 @@ const AIPromptGenerator = () => {
   
   const { toast } = useToast();
   const { user } = useSupabaseAuth();
+  const { getFilteredProviders } = useAIPreferences();
   const { openLoginWidget } = useLoginWidget();
   const { refreshUsage } = useAIUsage();
 
@@ -610,18 +612,18 @@ const AIPromptGenerator = () => {
                           : `${AI_PROVIDERS.find(p => p.id === selectedAIPlatform)?.icon} ${AI_PROVIDERS.find(p => p.id === selectedAIPlatform)?.name}`}
                       </SelectValue>
                     </SelectTrigger>
-                    <SelectContent className="bg-background border shadow-lg z-50">
-                      <SelectItem value="original">Core Prompt</SelectItem>
-                      {AI_PROVIDERS.filter(p => p.category === 'text').map((provider) => (
-                        <SelectItem key={provider.id} value={provider.id}>
-                          {provider.icon} {provider.name}
-                        </SelectItem>
-                      ))}
-                      {AI_PROVIDERS.filter(p => p.category === 'image').map((provider) => (
-                        <SelectItem key={provider.id} value={provider.id}>
-                          {provider.icon} {provider.name}
-                        </SelectItem>
-                      ))}
+                     <SelectContent className="bg-background border shadow-lg z-50">
+                       <SelectItem value="original">Core Prompt</SelectItem>
+                       {getFilteredProviders().filter(p => p.category === 'text').map((provider) => (
+                         <SelectItem key={provider.id} value={provider.id}>
+                           {provider.icon} {provider.name}
+                         </SelectItem>
+                       ))}
+                       {getFilteredProviders().filter(p => p.category === 'image').map((provider) => (
+                         <SelectItem key={provider.id} value={provider.id}>
+                           {provider.icon} {provider.name}
+                         </SelectItem>
+                       ))}
                     </SelectContent>
                   </Select>
                 </div>

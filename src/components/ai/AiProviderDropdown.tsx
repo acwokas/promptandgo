@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useAIPreferences } from '@/hooks/useAIPreferences';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -100,6 +101,7 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
   className,
   disabled
 }) => {
+  const { getFilteredProviders } = useAIPreferences();
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProvider, setSelectedProvider] = useState<AiProvider | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -232,8 +234,9 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
     setShowDialog(false);
   };
 
-  const textProviders = AI_PROVIDERS.filter(p => p.category === 'text');
-  const imageProviders = AI_PROVIDERS.filter(p => p.category === 'image');
+  const filteredProviders = getFilteredProviders();
+  const textProviders = filteredProviders.filter(p => p.category === 'text');
+  const imageProviders = filteredProviders.filter(p => p.category === 'image');
 
   return (
     <TooltipProvider>
