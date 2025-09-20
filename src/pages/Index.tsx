@@ -384,138 +384,141 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Path 1: Library-based - MAIN PATH */}
-        <section className="container pt-6 pb-8">
-          <div className="mb-16">
-            <div className="text-center mb-8">
-              <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
-                <BookOpen className="h-4 w-4" />
-                Most Popular Path
-              </div>
-              <h2 className="text-3xl font-bold mb-4">Start with Battle-Tested Prompts</h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Browse thousands of proven prompts, then let Scout customize them instantly for any AI platform</p>
-            </div>
-            <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <BookOpen className="h-8 w-8 text-primary" />
+        {/* Extended Blue Section - Including Most Popular Path and Scout Features */}
+        <section className="bg-gradient-to-br from-accent/20 via-primary/15 to-accent/10 py-8">
+          <div className="container">
+            <div className="bg-white/80 backdrop-blur-sm rounded-3xl border-2 border-accent/30 shadow-2xl p-8">
+              {/* Path 1: Library-based - MAIN PATH */}
+              <div className="mb-16">
+                <div className="text-center mb-8">
+                  <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
+                    <BookOpen className="h-4 w-4" />
+                    Most Popular Path
+                  </div>
+                  <h2 className="text-3xl font-bold mb-4">Start with Battle-Tested Prompts</h2>
+                  <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Browse thousands of proven prompts, then let Scout customize them instantly for any AI platform</p>
                 </div>
-                <h4 className="font-semibold mb-2">1. Browse Library</h4>
-                <p className="text-sm text-muted-foreground">Choose from thousands of human-curated prompts</p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Settings className="h-8 w-8 text-primary" />
+                <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+                  <div className="text-center">
+                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <BookOpen className="h-8 w-8 text-primary" />
+                    </div>
+                    <h4 className="font-semibold mb-2">1. Browse Library</h4>
+                    <p className="text-sm text-muted-foreground">Choose from thousands of human-curated prompts</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Settings className="h-8 w-8 text-primary" />
+                    </div>
+                    <h4 className="font-semibold mb-2">2. Scout Optimizes</h4>
+                    <p className="text-sm text-muted-foreground">Select your AI platform from dropdown</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Edit3 className="h-8 w-8 text-primary" />
+                    </div>
+                    <h4 className="font-semibold mb-2">3. Customize (Optional)</h4>
+                    <p className="text-sm text-muted-foreground">Fine-tune with Scout Assistant</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Zap className="h-8 w-8 text-primary" />
+                    </div>
+                    <h4 className="font-semibold mb-2">4. One-Click Deploy</h4>
+                    <p className="text-sm text-muted-foreground">Copy to your favorite AI tool</p>
+                  </div>
                 </div>
-                <h4 className="font-semibold mb-2">2. Scout Optimizes</h4>
-                <p className="text-sm text-muted-foreground">Select your AI platform from dropdown</p>
               </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Edit3 className="h-8 w-8 text-primary" />
+
+              {/* Scout Tailoring Section */}
+              <div className="text-center mb-4">
+                <h2 className="text-2xl font-bold mb-4">Let Scout tailor a core prompt for your favourite AI and run it in one click:</h2>
+                
+                {/* Scout Tailoring Highlight - Clean Design */}
+                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200/60 rounded-3xl p-8 max-w-4xl mx-auto shadow-lg">
+                  {/* Clean Dropdown Design */}
+                  <div className="flex justify-center mb-6">
+                    <div className="space-y-3 w-full max-w-[500px]">
+                      {/* Main Dropdown Trigger */}
+                      <div className="bg-white/90 backdrop-blur-sm border-2 border-blue-200/80 rounded-2xl px-8 py-6 shadow-sm">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xl font-semibold text-blue-600">Choose Your AI Platform</span>
+                          <div className="flex items-center gap-4">
+                            <div className="bg-blue-500 text-white px-6 py-2 rounded-full font-semibold shadow-sm flex items-center gap-2">
+                              <span className="text-lg">🤖</span>
+                              <span>ChatGPT</span>
+                            </div>
+                            <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Clean Dropdown Menu - Static */}
+                      <div className="bg-white/95 backdrop-blur-sm border-2 border-blue-200/80 rounded-2xl shadow-xl overflow-hidden">
+                        <div className="p-4 space-y-3">
+                          {/* ChatGPT - Selected */}
+                          <div className="bg-blue-50 border-2 border-blue-200 rounded-2xl p-4 flex items-center justify-between">
+                            <div className="flex items-center gap-4">
+                              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                <span className="text-2xl">🤖</span>
+                              </div>
+                              <div>
+                                <div className="font-bold text-lg text-gray-900">ChatGPT</div>
+                                <div className="text-gray-500">OpenAI - Most Popular</div>
+                              </div>
+                            </div>
+                            <div className="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                              SELECTED
+                            </div>
+                          </div>
+                          
+                          {/* Claude */}
+                          <div className="hover:bg-gray-50 rounded-2xl p-4 flex items-center gap-4 cursor-pointer transition-all border-2 border-transparent hover:border-gray-200">
+                            <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center">
+                              <span className="text-2xl">🧠</span>
+                            </div>
+                            <div>
+                              <div className="font-bold text-lg text-gray-900">Claude</div>
+                              <div className="text-gray-500">Anthropic - Great for Analysis</div>
+                            </div>
+                          </div>
+                          
+                          {/* MidJourney */}
+                          <div className="hover:bg-gray-50 rounded-2xl p-4 flex items-center gap-4 cursor-pointer transition-all border-2 border-transparent hover:border-gray-200">
+                            <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                              <span className="text-2xl">🎨</span>
+                            </div>
+                            <div>
+                              <div className="font-bold text-lg text-gray-900">MidJourney</div>
+                              <div className="text-gray-500">Image Generation</div>
+                            </div>
+                          </div>
+                          
+                          {/* Gemini */}
+                          <div className="hover:bg-gray-50 rounded-2xl p-4 flex items-center gap-4 cursor-pointer transition-all border-2 border-transparent hover:border-gray-200">
+                            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                              <span className="text-2xl">💎</span>
+                            </div>
+                            <div>
+                              <div className="font-bold text-lg text-gray-900">Gemini</div>
+                              <div className="text-gray-500">Google - Multimodal</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <h4 className="font-semibold mb-2">3. Customize (Optional)</h4>
-                <p className="text-sm text-muted-foreground">Fine-tune with Scout Assistant</p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Zap className="h-8 w-8 text-primary" />
-                </div>
-                <h4 className="font-semibold mb-2">4. One-Click Deploy</h4>
-                <p className="text-sm text-muted-foreground">Copy to your favorite AI tool</p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Premium Collections - Moved Above */}
-        <section className="container py-4 bg-gradient-to-br from-accent/20 via-primary/15 to-accent/10 rounded-3xl border-2 border-accent/30 shadow-2xl">
-          <div className="text-center mb-4">
-            <h2 className="text-2xl font-bold mb-4">Let Scout tailor a core prompt for your favourite AI and run it in one click:</h2>
-            
-            {/* Scout Tailoring Highlight - Clean Design */}
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200/60 rounded-3xl p-8 max-w-4xl mx-auto shadow-lg">
-              {/* Clean Dropdown Design */}
-              <div className="flex justify-center mb-6">
-                <div className="space-y-3 w-full max-w-[500px]">
-                  {/* Main Dropdown Trigger */}
-                  <div className="bg-white/90 backdrop-blur-sm border-2 border-blue-200/80 rounded-2xl px-8 py-6 shadow-sm">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xl font-semibold text-blue-600">Choose Your AI Platform</span>
-                      <div className="flex items-center gap-4">
-                        <div className="bg-blue-500 text-white px-6 py-2 rounded-full font-semibold shadow-sm flex items-center gap-2">
-                          <span className="text-lg">🤖</span>
-                          <span>ChatGPT</span>
-                        </div>
-                        <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Clean Dropdown Menu - Static */}
-                  <div className="bg-white/95 backdrop-blur-sm border-2 border-blue-200/80 rounded-2xl shadow-xl overflow-hidden">
-                    <div className="p-4 space-y-3">
-                      {/* ChatGPT - Selected */}
-                      <div className="bg-blue-50 border-2 border-blue-200 rounded-2xl p-4 flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                            <span className="text-2xl">🤖</span>
-                          </div>
-                          <div>
-                            <div className="font-bold text-lg text-gray-900">ChatGPT</div>
-                            <div className="text-gray-500">OpenAI - Most Popular</div>
-                          </div>
-                        </div>
-                        <div className="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
-                          SELECTED
-                        </div>
-                      </div>
-                      
-                      {/* Claude */}
-                      <div className="hover:bg-gray-50 rounded-2xl p-4 flex items-center gap-4 cursor-pointer transition-all border-2 border-transparent hover:border-gray-200">
-                        <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center">
-                          <span className="text-2xl">🧠</span>
-                        </div>
-                        <div>
-                          <div className="font-bold text-lg text-gray-900">Claude</div>
-                          <div className="text-gray-500">Anthropic - Great for Analysis</div>
-                        </div>
-                      </div>
-                      
-                      {/* MidJourney */}
-                      <div className="hover:bg-gray-50 rounded-2xl p-4 flex items-center gap-4 cursor-pointer transition-all border-2 border-transparent hover:border-gray-200">
-                        <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                          <span className="text-2xl">🎨</span>
-                        </div>
-                        <div>
-                          <div className="font-bold text-lg text-gray-900">MidJourney</div>
-                          <div className="text-gray-500">Image Generation</div>
-                        </div>
-                      </div>
-                      
-                      {/* Gemini */}
-                      <div className="hover:bg-gray-50 rounded-2xl p-4 flex items-center gap-4 cursor-pointer transition-all border-2 border-transparent hover:border-gray-200">
-                        <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                          <span className="text-2xl">💎</span>
-                        </div>
-                        <div>
-                          <div className="font-bold text-lg text-gray-900">Gemini</div>
-                          <div className="text-gray-500">Google - Multimodal</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="container mt-4 mb-8">
+        <section className="container py-12">
           <div className="text-center">
-            <p className="text-muted-foreground max-w-2xl mx-auto">See how Scout optimizes real prompts. Pick one below customize it, push it to your favorite AI platform, and experience the magic instantly.</p>
+            <p className="text-muted-foreground max-w-2xl mx-auto text-lg">See how Scout optimizes real prompts. Pick one below customize it, push it to your favorite AI platform, and experience the magic instantly.</p>
           </div>
         </section>
 
