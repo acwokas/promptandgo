@@ -2,12 +2,27 @@ import SEO from "@/components/SEO";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Wand2, Brain, ArrowRight, Sparkles, Palette } from "lucide-react";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import PageHero from "@/components/layout/PageHero";
+import { useEffect } from "react";
 
 const ToolkitPage = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Check if we have an initialPrompt from navigation state (from "Refine with Scout")
+  useEffect(() => {
+    const state = location.state as { initialPrompt?: string } | null;
+    if (state?.initialPrompt) {
+      // Redirect to AI generator with the prompt
+      navigate('/ai/generator', { 
+        state: { initialPrompt: state.initialPrompt },
+        replace: true 
+      });
+    }
+  }, [location.state, navigate]);
   const tools = [
     {
       title: "Scout's Prompt Studio",

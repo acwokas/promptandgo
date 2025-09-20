@@ -11,7 +11,7 @@ import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useLoginWidget } from "@/hooks/useLoginWidget";
 import { useAIUsage } from "@/hooks/useAIUsage";
 import UsageDisplay from "@/components/ai/UsageDisplay";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useLocation } from "react-router-dom";
 import { AI_PERSONA } from "@/lib/aiPersona";
 import { AiProviderDropdown } from "@/components/ai/AiProviderDropdown";
 import { AiResponseModal } from "@/components/ai/AiResponseModal";
@@ -26,6 +26,7 @@ interface RecentPrompt {
 
 const AIPromptGenerator = () => {
   const [searchParams] = useSearchParams();
+  const location = useLocation();
   const [description, setDescription] = useState("");
   const [context, setContext] = useState("");
   const [generatedPrompt, setGeneratedPrompt] = useState("");
@@ -44,17 +45,31 @@ const AIPromptGenerator = () => {
   const { refreshUsage } = useAIUsage();
 
   
-  // Load prompt and result from URL parameters if provided
+  // Load prompt and result from URL parameters or navigation state if provided
   useEffect(() => {
     const promptFromUrl = searchParams.get('prompt');
     const resultFromUrl = searchParams.get('result');
-    if (promptFromUrl) {
+    const state = location.state as { initialPrompt?: string } | null;
+    const initialPromptFromState = state?.initialPrompt;
+
+    if (initialPromptFromState) {
+      // If we have an initial prompt from navigation state (from "Refine with Scout"), 
+      // set it as the generated prompt to show what we're refining
+      setGeneratedPrompt(initialPromptFromState);
+      setDescription("Refine this prompt");
+      
+      // Clear the state to prevent it from being applied again on re-renders
+      if (location.state) {
+        window.history.replaceState({}, document.title);
+      }
+    } else if (promptFromUrl) {
       setDescription(promptFromUrl);
     }
+    
     if (resultFromUrl) {
       setGeneratedPrompt(resultFromUrl);
     }
-  }, [searchParams]);
+  }, [searchParams, location.state]);
 
   // Load recent prompts when user is available
   useEffect(() => {
