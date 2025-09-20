@@ -37,7 +37,7 @@ import { usePersonalizedPrompts } from "@/hooks/usePersonalizedPrompts";
 import AIPromptWidget from "@/components/ai/AIPromptWidget";
 import MiniPromptStudio from "@/components/prompt-studio/MiniPromptStudio";
 import PromptsOfTheDay from "@/components/prompt/PromptsOfTheDay";
-import { PollCarousel } from "@/components/poll/PollCarousel";
+import { useLatestArticle } from "@/hooks/useLatestArticle";
 import type { Category as CategoryType } from "@/data/prompts";
 import { PromptStudioCTA } from "@/components/ui/prompt-studio-cta";
 
@@ -46,7 +46,7 @@ const Index = () => {
   const { isSubscribed } = useSubscriptionStatus();
   const { isNewsletterSubscribed } = useNewsletterStatus();
   const navigate = useNavigate();
-  const { personalizedPrompts, hasPersonalization } = usePersonalizedPrompts();
+  const { latestArticle, loading: articleLoading } = useLatestArticle();
   const { toast } = useToast();
   
   // Check if user is new or returning
@@ -874,26 +874,73 @@ const Index = () => {
             <div className="max-w-4xl mx-auto">
               <article>
                 {isReturningUser ? (
-                  // Latest Article for returning users
-                  <Link to="/tips/beginners-guide-midjourney-prompts" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                  // Latest Article for returning users - Dynamic from database
+                  latestArticle && !articleLoading ? (
+                    <Link to={`/tips/${latestArticle.slug}`} className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                      <Card className="overflow-hidden">
+                        <img 
+                          src={latestArticle.thumbnail_url || "/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png"} 
+                          alt={latestArticle.title} 
+                          loading="lazy" 
+                          className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" 
+                        />
+                        <CardContent className="p-6">
+                          <div className="flex items-center gap-2 mb-3">
+                            <div className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium">
+                              Latest Article
+                            </div>
+                            <time className="text-sm text-muted-foreground">
+                              {new Date(latestArticle.published_date).toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                              })}
+                            </time>
+                          </div>
+                          <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
+                            {latestArticle.title}
+                          </h3>
+                          <p className="text-muted-foreground mb-4 leading-relaxed">
+                            {latestArticle.synopsis || latestArticle.meta_description}
+                          </p>
+                          <span className="inline-flex items-center text-primary font-medium">
+                            Read more <Sparkles className="h-4 w-4 ml-1" />
+                          </span>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  ) : articleLoading ? (
                     <Card className="overflow-hidden">
-                      <img 
-                        src="/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png" 
-                        alt="Beginner's Guide to MidJourney Prompts" 
-                        loading="lazy" 
-                        className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" 
-                      />
+                      <div className="aspect-[16/9] w-full bg-muted animate-pulse" />
                       <CardContent className="p-6">
-                        <h3 className="text-xl font-semibold leading-snug mb-3">Beginner's Guide to MidJourney Prompts That Actually Work</h3>
-                        <p className="text-muted-foreground mb-4">
-                          Learn how to build detailed prompts that give you more control, unlock stylistic variety, and save hours of trial and error in MidJourney.
-                        </p>
-                        <span className="inline-flex items-center text-primary font-medium">
-                          Read more <Sparkles className="h-4 w-4 ml-1" />
-                        </span>
+                        <div className="bg-muted animate-pulse h-4 w-32 mb-3 rounded" />
+                        <div className="bg-muted animate-pulse h-6 w-3/4 mb-3 rounded" />
+                        <div className="bg-muted animate-pulse h-4 w-full mb-2 rounded" />
+                        <div className="bg-muted animate-pulse h-4 w-2/3 rounded" />
                       </CardContent>
                     </Card>
-                  </Link>
+                  ) : (
+                    // Fallback to hardcoded article if no latest article found
+                    <Link to="/tips/beginners-guide-midjourney-prompts" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                      <Card className="overflow-hidden">
+                        <img 
+                          src="/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png" 
+                          alt="Beginner's Guide to MidJourney Prompts" 
+                          loading="lazy" 
+                          className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" 
+                        />
+                        <CardContent className="p-6">
+                          <h3 className="text-xl font-semibold leading-snug mb-3">Beginner's Guide to MidJourney Prompts That Actually Work</h3>
+                          <p className="text-muted-foreground mb-4">
+                            Learn how to build detailed prompts that give you more control, unlock stylistic variety, and save hours of trial and error in MidJourney.
+                          </p>
+                          <span className="inline-flex items-center text-primary font-medium">
+                            Read more <Sparkles className="h-4 w-4 ml-1" />
+                          </span>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  )
                 ) : (
                   // Welcome content for new users
                   <Link to="/tips/welcome-to-promptandgo-ai" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
