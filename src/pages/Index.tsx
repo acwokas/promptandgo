@@ -426,22 +426,21 @@ const Index = () => {
               </div>
             </div>
             <div className="text-center mt-8">
-              <Button asChild size="lg" variant="hero">
-                <Link to="/library"><BookOpen className="h-4 w-4 mr-2" />Browse Prompt Library</Link>
-              </Button>
+              <p className="text-lg font-semibold mb-4">👇 Try a Prompt of the Day right now</p>
+              <p className="text-muted-foreground max-w-md mx-auto">See how Scout optimizes real prompts below. Pick one, customize it, and experience the magic instantly.</p>
             </div>
           </div>
         </section>
 
         {/* Prompts of the Day / Personalized Prompts */}
-        <section className="container py-8">
-          <div className="mb-12">
+        <section className="container py-4">
+          <div className="mb-8">
             <PromptsOfTheDay />
           </div>
         </section>
 
         {/* Path 2: Prompt Packs */}
-        <section className="container py-8 border-t">
+        <section className="container py-4 border-t">
           <div className="mb-16">
             <div className="text-center mb-8">
               <div className="inline-flex items-center gap-2 bg-accent/10 text-accent-foreground px-4 py-2 rounded-full text-sm font-medium mb-4">
