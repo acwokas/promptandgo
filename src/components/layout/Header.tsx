@@ -44,25 +44,25 @@ const Header = () => {
   return (
     <header className="w-full bg-background border-b border-border sticky top-0 z-50 overflow-hidden">
       <div className="w-full max-w-7xl mx-auto px-4 flex items-center justify-between min-h-14 box-border overflow-hidden max-w-full">
-        {/* Hamburger Menu */}
-        <div className="flex-shrink-0">
+        {/* Hamburger Menu - Desktop Only */}
+        <div className="hidden md:flex flex-shrink-0">
           <SidebarTrigger />
         </div>
         
         {/* Logo */}
         <Link 
           to="/" 
-          className="flex items-center flex-shrink-0 max-w-48 md:max-w-64"
+          className="flex items-center flex-shrink-0 max-w-48 md:max-w-64 md:ml-0 ml-0"
         >
-          <img
-            src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
-            alt="promptandgo"
-            className="h-20 w-auto max-w-64 object-contain"
-          />
+        <img
+          src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
+          alt="promptandgo"
+          className="h-16 md:h-20 w-auto max-w-40 md:max-w-64 object-contain"
+        />
         </Link>
         
         {/* Desktop Navigation - Simplified for maximum conversion */}
-        <nav className="hidden lg:flex items-center gap-8 flex-1 justify-center">
+        <nav className="hidden lg:flex items-center gap-8 flex-1 justify-center md:ml-8">
           <Link 
             to="/library" 
             className="text-sm font-medium text-foreground hover:text-primary transition-colors"
