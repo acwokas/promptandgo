@@ -70,55 +70,9 @@ export function AppSidebar() {
   const currentPath = location.pathname
   const isCollapsed = state === "collapsed"
 
-  // Don't render sidebar content until mobile detection is stable - but show proper skeleton
+  // Don't render sidebar content until mobile detection is stable
   if (isMobile === null) {
-    return (
-      <Sidebar collapsible="icon">
-        <SidebarContent>
-          {/* Loading skeleton that matches the actual sidebar structure */}
-          <div className="p-4 space-y-6">
-            {/* Main section skeleton */}
-            <div className="space-y-2">
-              <div className="h-4 bg-muted rounded w-16 animate-pulse" />
-              <div className="space-y-1">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <div key={i} className="flex items-center gap-3 p-2">
-                    <div className="h-4 w-4 bg-muted rounded animate-pulse" />
-                    <div className="h-4 bg-muted rounded flex-1 animate-pulse" />
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            {/* AI Tools section skeleton */}
-            <div className="space-y-2">
-              <div className="h-4 bg-muted rounded w-24 animate-pulse" />
-              <div className="space-y-1">
-                {Array.from({ length: 4 }).map((_, i) => (
-                  <div key={i} className="flex items-center gap-3 p-2">
-                    <div className="h-4 w-4 bg-muted rounded animate-pulse" />
-                    <div className="h-4 bg-muted rounded flex-1 animate-pulse" />
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            {/* Account section skeleton */}
-            <div className="space-y-2">
-              <div className="h-4 bg-muted rounded w-16 animate-pulse" />
-              <div className="space-y-1">
-                {Array.from({ length: 7 }).map((_, i) => (
-                  <div key={i} className="flex items-center gap-3 p-2">
-                    <div className="h-4 w-4 bg-muted rounded animate-pulse" />
-                    <div className="h-4 bg-muted rounded flex-1 animate-pulse" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </SidebarContent>
-      </Sidebar>
-    )
+    return null;
   }
 
   const isActive = (path: string) => {

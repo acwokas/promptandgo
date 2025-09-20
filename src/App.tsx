@@ -101,7 +101,7 @@ const AppContent = () => {
   const { user } = useSupabaseAuth();
 
   return (
-    <SidebarProvider>
+    <SidebarProvider defaultOpen={false}>
       <LoginWidgetProvider>
         <GlobalStructuredData />
         <ConversionBar />
