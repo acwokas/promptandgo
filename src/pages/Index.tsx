@@ -250,55 +250,155 @@ const Index = () => {
 
   return <>
       <SEO 
-        title="AI Prompts - Ready-to-use prompts for real-world work" 
-        description="Ready-to-use prompts designed for real-world work. Whether you're writing a pitch, planning a launch, creating some social media assets or creating an image, we've got a prompt for that."
-        keywords="AI prompts, prompt library, AI writing prompts, prompt generator, prompt and go, prompt tips, curated AI prompts, AI content tools, AI prompt marketplace, social media AI prompts, marketing AI prompts, image generation prompts, productivity AI prompts, AI prompt examples, AI tools for creators, prompt library, prompt generator, curated AI prompts"
+        title="Scout AI - Your Personal Prompt Crafting Assistant | PromptAndGo" 
+        description="Meet Scout, your AI prompt crafting partner. Start with curated prompts, customize in real-time with guided wizards, and get platform-specific versions for ChatGPT, Claude, MidJourney & more."
+        keywords="Scout AI, AI prompt crafting, prompt customization, AI prompt assistant, ChatGPT prompts, Claude prompts, MidJourney prompts, prompt optimization, AI prompt generator, guided prompt wizards, platform-specific prompts"
         structuredData={homeStructuredData}
       />
 
       <main>
         {/* Hero */}
         <PageHero title={<>
-            Smarter prompts. <span className="text-gradient-brand">Better AI results.</span>
+            Meet <span className="text-gradient-brand">Scout</span> — Your AI prompt crafting partner
           </>} subtitle={<>
-            Stop guessing what to type. Craft the right prompt in real time and get consistent recommended results for any AI platform. ✨ Free to sign up. Paid extras if you ever need them.
+            Start with human-curated prompts, then let Scout customize them in real-time for any AI platform. From ChatGPT to MidJourney, get the right prompt every time. ✨ Free to start, powerful extras available.
           </>}>
           <Button asChild size="default" variant="hero" className="px-6">
-            <Link to="/library"><Search className="h-4 w-4 mr-2" />Browse Library</Link>
+            <Link to="/scout"><Bot className="h-4 w-4 mr-2" />Try Scout Studio</Link>
           </Button>
           <Button asChild size="default" variant="inverted">
-            <Link to="/packs">Power Packs</Link>
+            <Link to="/library"><Search className="h-4 w-4 mr-2" />Browse Library</Link>
           </Button>
           <Button asChild size="default" variant="secondary">
-            <Link to="/scout">Ask Scout</Link>
+            <Link to="/packs">Power Packs</Link>
           </Button>
         </PageHero>
 
-        {/* Top Widget Section */}
-        <section className="container pt-6 pb-2">
-          <div className="grid gap-6 lg:grid-cols-4">
-            {/* What is PromptAndGo.ai? */}
-            <div className="lg:col-span-1 rounded-2xl border bg-card p-6 md:p-8">
-              <h2 className="text-2xl font-semibold mb-3">What is PromptAndGo?</h2>
-              <p className="text-lg font-medium mb-3">
+        {/* How It Works - 3 Step Process */}
+        <section className="container pt-6 pb-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">How Scout Works</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              From human-curated foundations to AI-powered customization — the smartest way to craft prompts
+            </p>
+          </div>
+          
+          <div className="grid gap-8 md:grid-cols-3 mb-8">
+            {/* Step 1 */}
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <ShieldCheck className="h-8 w-8 text-primary" />
+              </div>
+              <div className="bg-primary/5 rounded-full px-3 py-1 text-sm font-medium text-primary mb-4 inline-block">Step 1</div>
+              <h3 className="text-xl font-semibold mb-3">Start with proven foundations</h3>
+              <p className="text-muted-foreground">
+                Choose from thousands of human-curated prompts across every industry and use case. Battle-tested starting points that actually work.
+              </p>
+            </div>
+
+            {/* Step 2 */}
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Bot className="h-8 w-8 text-primary" />
+              </div>
+              <div className="bg-primary/5 rounded-full px-3 py-1 text-sm font-medium text-primary mb-4 inline-block">Step 2</div>
+              <h3 className="text-xl font-semibold mb-3">Scout customizes in real-time</h3>
+              <p className="text-muted-foreground">
+                Our AI guides you through interactive wizards, adapting the prompt to your specific goals, tone, and requirements. No guesswork.
+              </p>
+            </div>
+
+            {/* Step 3 */}
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Sparkles className="h-8 w-8 text-primary" />
+              </div>
+              <div className="bg-primary/5 rounded-full px-3 py-1 text-sm font-medium text-primary mb-4 inline-block">Step 3</div>
+              <h3 className="text-xl font-semibold mb-3">Optimized for any AI platform</h3>
+              <p className="text-muted-foreground">
+                Get platform-specific versions tailored for ChatGPT, Claude, Gemini, MidJourney, and more. Copy, paste, and get better results.
+              </p>
+            </div>
+          </div>
+
+          {/* Connecting arrows for desktop */}
+          <div className="hidden md:block relative -mt-16 mb-8">
+            <div className="absolute top-8 left-1/3 transform -translate-x-1/2">
+              <div className="w-16 h-0.5 bg-gradient-to-r from-primary/50 to-primary/30"></div>
+            </div>
+            <div className="absolute top-8 right-1/3 transform translate-x-1/2">
+              <div className="w-16 h-0.5 bg-gradient-to-r from-primary/30 to-primary/50"></div>
+            </div>
+          </div>
+        </section>
+
+        {/* Scout Studio Demo */}
+        <section className="container pb-8">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold mb-4">Try Scout's Prompt Crafting Studio</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Experience Scout's guided wizards right here. Select a prompt type and watch Scout build the perfect prompt for your needs.
+            </p>
+          </div>
+          
+          <div className="rounded-2xl border bg-card p-6 md:p-8">
+            <MiniPromptStudio />
+          </div>
+        </section>
+
+        {/* What is PromptAndGo */}
+        <section className="container pb-8">
+          <div className="grid gap-6 lg:grid-cols-3">
+            <div className="lg:col-span-2 rounded-2xl border bg-card p-6 md:p-8">
+              <h2 className="text-3xl font-bold mb-4">What is PromptAndGo?</h2>
+              <p className="text-xl text-muted-foreground mb-6">
                 A smarter way to craft prompts for work and life.
               </p>
-              <p className="text-muted-foreground max-w-prose mb-4">
-                We help you create and refine prompts in real time, tailored to GPT, Gemini Claude, MidJourney, and more. Sign up once for free and our AI will suggest prompts based on your goals so you can start strong.
+              <p className="text-muted-foreground max-w-prose mb-6">
+                We help you create and refine prompts in real time, tailored to GPT, Gemini, Claude, MidJourney, and more. Sign up once for free and our AI will suggest prompts based on your goals so you can start strong.
               </p>
-              <ul className="grid grid-cols-2 gap-3 text-sm text-muted-foreground">
-                <li className="flex items-center gap-2"><ShieldCheck className="h-5 w-5 text-primary" /> Human-curated starting points</li>
-                <li className="flex items-center gap-2"><Bot className="h-5 w-5 text-primary" /> Built and refined in real time</li>
-                <li className="flex items-center gap-2"><Sparkles className="h-5 w-5 text-primary" /> Adapted to each AI platform</li>
-                <li className="flex items-center gap-2"><Wand2 className="h-5 w-5 text-primary" /> Copy-and-go simplicity</li>
-                <li className="flex items-center gap-2"><Zap className="h-5 w-5 text-primary" /> Works everywhere</li>
-                <li className="flex items-center gap-2"><ListChecks className="h-5 w-5 text-primary" /> Tailored to your choices</li>
-              </ul>
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="flex items-center gap-3">
+                  <ShieldCheck className="h-5 w-5 text-primary flex-shrink-0" />
+                  <span>Human-curated starting points</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Bot className="h-5 w-5 text-primary flex-shrink-0" />
+                  <span>Built and refined in real time</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Sparkles className="h-5 w-5 text-primary flex-shrink-0" />
+                  <span>Adapted to each AI platform</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Wand2 className="h-5 w-5 text-primary flex-shrink-0" />
+                  <span>Copy-and-go simplicity</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Zap className="h-5 w-5 text-primary flex-shrink-0" />
+                  <span>Works everywhere</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <ListChecks className="h-5 w-5 text-primary flex-shrink-0" />
+                  <span>Tailored to your choices</span>
+                </div>
+              </div>
             </div>
-            
-            {/* Try Scout's Prompt Studio */}
-            <div className="lg:col-span-3 rounded-2xl border bg-card p-6 md:p-8">
-              <MiniPromptStudio />
+
+            {/* Quick Stats */}
+            <div className="space-y-6">
+              <div className="rounded-xl border bg-card p-6 text-center">
+                <div className="text-3xl font-bold text-primary mb-2">50K+</div>
+                <div className="text-sm text-muted-foreground">Active users</div>
+              </div>
+              <div className="rounded-xl border bg-card p-6 text-center">
+                <div className="text-3xl font-bold text-primary mb-2">1M+</div>
+                <div className="text-sm text-muted-foreground">Prompts crafted</div>
+              </div>
+              <div className="rounded-xl border bg-card p-6 text-center">
+                <div className="text-3xl font-bold text-primary mb-2">500+</div>
+                <div className="text-sm text-muted-foreground">Hours saved daily</div>
+              </div>
             </div>
           </div>
         </section>
@@ -328,7 +428,7 @@ const Index = () => {
               <CardContent className="p-6">
                 <div className="flex items-start gap-4 mb-4">
                   <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Star className="h-5 w-5 text-primary" />
+                    <Bot className="h-5 w-5 text-primary" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-0.5 mb-2">
@@ -336,7 +436,7 @@ const Index = () => {
                       length: 5
                     }, (_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
                     </div>
-                    <p className="text-sm text-muted-foreground">"These prompts saved me 5 hours per week on content creation. The marketing category alone paid for itself in one campaign."</p>
+                    <p className="text-sm text-muted-foreground">"Scout's wizards are incredible! I used to spend 30 minutes tweaking prompts. Now Scout builds exactly what I need in under 2 minutes."</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 pl-14">
@@ -353,7 +453,7 @@ const Index = () => {
               <CardContent className="p-6">
                 <div className="flex items-start gap-4 mb-4">
                   <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Briefcase className="h-5 w-5 text-primary" />
+                    <Sparkles className="h-5 w-5 text-primary" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-0.5 mb-2">
@@ -361,7 +461,7 @@ const Index = () => {
                       length: 5
                     }, (_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
                     </div>
-                    <p className="text-sm text-muted-foreground">"As a freelancer, these prompts help me deliver better work faster. The career section helped me land three new clients this month."</p>
+                    <p className="text-sm text-muted-foreground">"The platform adaptation is genius. Same prompt idea, but Scout optimizes it for ChatGPT vs Claude vs MidJourney. Works perfectly every time."</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 pl-14">
@@ -386,7 +486,7 @@ const Index = () => {
                       length: 5
                     }, (_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
                     </div>
-                    <p className="text-sm text-muted-foreground">"Game changer for our startup. We use the business prompts daily for everything from investor pitches to customer emails."</p>
+                    <p className="text-sm text-muted-foreground">"Starting with curated prompts then letting Scout customize them saves hours. We've streamlined our entire content workflow with this approach."</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 pl-14">
@@ -401,48 +501,75 @@ const Index = () => {
           </div>
         </section>
 
-        {/* AI Tools Compatibility */}
-        <section className="container pt-2 pb-6">
-          <div className="text-center">
-            <p className="text-sm text-muted-foreground mb-4">Works seamlessly with your favourite AI tools, including:</p>
-            <div className="flex flex-wrap items-center justify-center gap-4 lg:gap-6 text-xs text-muted-foreground max-w-4xl mx-auto">
-              <span className="flex items-center gap-2 whitespace-nowrap">
-                <div className="w-6 h-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-xs">✓</span>
-                </div>
-                ChatGPT
-              </span>
-              <span className="flex items-center gap-2 whitespace-nowrap">
-                <div className="w-6 h-6 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-xs">✓</span>
-                </div>
-                Claude
-              </span>
-              <span className="flex items-center gap-2 whitespace-nowrap">
-                <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-xs">✓</span>
-                </div>
-                Gemini
-              </span>
-              <span className="flex items-center gap-2 whitespace-nowrap">
-                <div className="w-6 h-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-xs">✓</span>
-                </div>
-                Perplexity
-              </span>
-              <span className="flex items-center gap-2 whitespace-nowrap">
-                <div className="w-6 h-6 bg-gradient-to-r from-indigo-500 to-blue-600 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-xs">✓</span>
-                </div>
-                Midjourney
-              </span>
-              <span className="flex items-center gap-2 whitespace-nowrap">
-                <div className="w-6 h-6 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-xs">✓</span>
-                </div>
-                Ideogram
-              </span>
+        {/* Platform Adaptation - Key Differentiator */}
+        <section className="container pt-2 pb-8">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold mb-4">One Prompt, Every Platform</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
+              Scout automatically adapts your prompts for optimal performance on any AI platform. No more rewriting — just copy, paste, and get better results.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-8">
+            {/* ChatGPT */}
+            <div className="rounded-xl border bg-card p-6 text-center">
+              <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-white font-bold">GPT</span>
+              </div>
+              <h3 className="font-semibold mb-2">ChatGPT</h3>
+              <p className="text-sm text-muted-foreground">Optimized for conversational flow and step-by-step reasoning</p>
             </div>
+
+            {/* Claude */}
+            <div className="rounded-xl border bg-card p-6 text-center">
+              <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-white font-bold">C</span>
+              </div>
+              <h3 className="font-semibold mb-2">Claude</h3>
+              <p className="text-sm text-muted-foreground">Structured for detailed analysis and thoughtful responses</p>
+            </div>
+
+            {/* Gemini */}
+            <div className="rounded-xl border bg-card p-6 text-center">
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-white font-bold">G</span>
+              </div>
+              <h3 className="font-semibold mb-2">Gemini</h3>
+              <p className="text-sm text-muted-foreground">Tailored for multimodal tasks and creative applications</p>
+            </div>
+
+            {/* Perplexity */}
+            <div className="rounded-xl border bg-card p-6 text-center">
+              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-white font-bold">P</span>
+              </div>
+              <h3 className="font-semibold mb-2">Perplexity</h3>
+              <p className="text-sm text-muted-foreground">Formatted for research and source-based responses</p>
+            </div>
+
+            {/* MidJourney */}
+            <div className="rounded-xl border bg-card p-6 text-center">
+              <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-white font-bold">MJ</span>
+              </div>
+              <h3 className="font-semibold mb-2">MidJourney</h3>
+              <p className="text-sm text-muted-foreground">Crafted with precise parameters and style modifiers</p>
+            </div>
+
+            {/* Plus More */}
+            <div className="rounded-xl border bg-card p-6 text-center">
+              <div className="w-12 h-12 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-white font-bold">+</span>
+              </div>
+              <h3 className="font-semibold mb-2">And More</h3>
+              <p className="text-sm text-muted-foreground">Ideogram, DALL-E, Leonardo AI, and emerging platforms</p>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <Button asChild size="lg" variant="hero">
+              <Link to="/scout">Try Platform Adaptation <Sparkles className="h-4 w-4 ml-2" /></Link>
+            </Button>
           </div>
         </section>
         <section className="container py-4">
