@@ -808,57 +808,6 @@ const Index = () => {
                 </div>
               </div>
 
-              {/* Latest Articles Section */}
-              <div className="mt-8">
-                <h2 className="text-2xl font-semibold mb-4">
-                  {isReturningUser ? 'Latest Article' : 'Welcome'}
-                </h2>
-                <div className="space-y-4">
-                  <article>
-                    {isReturningUser ? (
-                      // Latest Article for returning users
-                      <Link to="/tips/beginners-guide-midjourney-prompts" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                        <Card className="overflow-hidden">
-                          <img src="/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png" alt="Beginner's Guide to MidJourney Prompts" loading="lazy" className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
-                          <CardContent className="pt-3 pb-3">
-                            <h3 className="text-sm font-semibold leading-snug">Beginner's Guide to MidJourney Prompts That Actually Work</h3>
-                            <p className="mt-1 text-xs text-muted-foreground">
-                              Learn how to build detailed prompts that give you more control, unlock stylistic variety, and save hours of trial and error in MidJourney.
-                            </p>
-                            <span className="mt-2 inline-block text-xs font-medium text-primary">Read more →</span>
-                          </CardContent>
-                        </Card>
-                      </Link>
-                    ) : (
-                      // Welcome content for new users
-                      <Link to="/tips/welcome-to-promptandgo-ai" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                        <Card className="overflow-hidden">
-                          <img src="/lovable-uploads/66b1134b-1d55-416b-b7ea-2719a1a22ec1.png" 
-                               alt="Welcome to promptandgo.ai: Your Shortcut to Smarter AI Prompts" 
-                               loading="lazy" 
-                               decoding="async"
-                               width="837" 
-                               height="469"
-                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
-                               className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
-                          <CardContent className="pt-3 pb-3">
-                            <h3 className="text-sm font-semibold leading-snug">Welcome to promptandgo.ai: Your Shortcut to Smarter AI Prompts</h3>
-                            <p className="mt-1 text-xs text-muted-foreground">
-                              We give you ready-to-use, field-tested prompts designed for real work. No vague ideas, no guesswork, just clear instructions you can drop straight into ChatGPT, Claude, or Gemini.
-                            </p>
-                            <span className="mt-2 inline-block text-xs font-medium text-primary">Read more →</span>
-                          </CardContent>
-                        </Card>
-                      </Link>
-                    )}
-                  </article>
-                </div>
-                
-                <div className="mt-4">
-                  <Button asChild variant="ghost" size="sm">
-                    <Link to="/tips">Read All Articles →</Link>
-                  </Button>
-                </div>
               </div>
             </div>
 
@@ -905,21 +854,89 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Latest Articles Section - Full Width */}
+        <section className="py-8 bg-gradient-to-br from-muted/30 to-background">
+          <div className="container mx-auto">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold mb-4">
+                {isReturningUser ? 'Latest Article' : 'Welcome to promptandgo.ai'}
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                {isReturningUser ? 'Stay updated with our latest prompt strategies and AI tips' : 'Learn how to get the most out of AI with battle-tested prompts'}
+              </p>
+            </div>
+            
+            <div className="max-w-4xl mx-auto">
+              <article>
+                {isReturningUser ? (
+                  // Latest Article for returning users
+                  <Link to="/tips/beginners-guide-midjourney-prompts" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                    <Card className="overflow-hidden">
+                      <img src="/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png" alt="Beginner's Guide to MidJourney Prompts" loading="lazy" className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
+                      <CardContent className="p-6">
+                        <h3 className="text-xl font-semibold leading-snug mb-3">Beginner's Guide to MidJourney Prompts That Actually Work</h3>
+                        <p className="text-muted-foreground mb-4">
+                          Learn how to build detailed prompts that give you more control, unlock stylistic variety, and save hours of trial and error in MidJourney.
+                        </p>
+                        <span className="inline-flex items-center text-primary font-medium">
+                          Read more <Sparkles className="h-4 w-4 ml-1" />
+                        </span>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ) : (
+                  // Welcome content for new users
+                  <Link to="/tips/welcome-to-promptandgo-ai" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                    <Card className="overflow-hidden">
+                      <img src="/lovable-uploads/66b1134b-1d55-416b-b7ea-2719a1a22ec1.png" 
+                           alt="Welcome to promptandgo.ai: Your Shortcut to Smarter AI Prompts" 
+                           loading="lazy" 
+                           decoding="async"
+                           width="837" 
+                           height="469"
+                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
+                           className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
+                      <CardContent className="p-6">
+                        <h3 className="text-xl font-semibold leading-snug mb-3">Welcome to promptandgo.ai: Your Shortcut to Smarter AI Prompts</h3>
+                        <p className="text-muted-foreground mb-4">
+                          We give you ready-to-use, field-tested prompts designed for real work. No vague ideas, no guesswork, just clear instructions you can drop straight into ChatGPT, Claude, or Gemini.
+                        </p>
+                        <span className="inline-flex items-center text-primary font-medium">
+                          Read more <Sparkles className="h-4 w-4 ml-1" />
+                        </span>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                )}
+              </article>
+            </div>
+            
+            <div className="text-center mt-8">
+              <Button asChild variant="outline">
+                <Link to="/tips">Read All Articles →</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+
         <section aria-labelledby="cta-tail" className="relative bg-hero hero-grid mt-8" id="cta">
           <div className="container p-6 md:p-8 text-center text-primary-foreground">
-            <h2 id="cta-tail" className="text-2xl md:text-3xl font-semibold tracking-tight">Whatever you're working on, someone's already used <strong>prompt</strong>andgo to do it faster.</h2>
-            <p className="mt-3 text-primary-foreground/85 text-base md:text-lg">✨ Ready to Start Prompting Smarter? Try your first prompt or explore a Power Pack, no sign-up required.</p>
+            <h2 id="cta-tail" className="text-2xl md:text-3xl font-semibold tracking-tight">Stop guessing what to prompt. Start with <strong>battle-tested</strong> foundations that actually work.</h2>
+            <p className="mt-3 text-primary-foreground/85 text-base md:text-lg">✨ Browse thousands of proven prompts or let Scout build custom ones for your specific needs.</p>
             <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild variant="hero" className="px-6">
-                <Link to="/library"><Search className="h-4 w-4 mr-2" />Browse Library</Link>
+                <Link to="/library"><Search className="h-4 w-4 mr-2" />Browse Battle-Tested Prompts</Link>
               </Button>
               <Button asChild variant="inverted">
-                <Link to="/packs">⚡️Power Packs</Link>
+                <Link to="/scout"><Wand2 className="h-4 w-4 mr-2" />Try Scout Studio</Link>
               </Button>
             </div>
           </div>
         </section>
       </main>
-    </>;
+    </>
+  );
+  // Component structure is correct
 };
+
 export default Index;
