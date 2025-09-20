@@ -1,5 +1,8 @@
 import { Badge } from "@/components/ui/badge";
 import { Clock, TrendingUp, Users, Zap } from "lucide-react";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from "react-router-dom";
 
 interface UrgencyBadgeProps {
   variant: "trending" | "popular" | "new" | "hot" | "limited";
@@ -46,23 +49,51 @@ export const UrgencyBadge = ({ variant, className = "" }: UrgencyBadgeProps) => 
   );
 };
 
+interface Category {
+  id: string;
+  name: string;
+  slug: string;
+}
+
 export const TodaysFeatured = () => {
-  const today = new Date();
-  const dayOfWeek = today.getDay();
+  const [categories, setCategories] = useState<Category[]>([]);
+  const navigate = useNavigate();
   
-  // Rotate featured content by day of week
-  const featuredTopics = [
-    "Marketing Automation",
-    "Content Creation", 
-    "Business Strategy",
-    "Social Media",
-    "Email Campaigns",
-    "Sales Outreach",
-    "Creative Writing"
-  ];
+  useEffect(() => {
+    const loadCategories = async () => {
+      const { data } = await supabase
+        .from("categories")
+        .select("id, name, slug")
+        .order("name");
+      
+      if (data) {
+        setCategories(data);
+      }
+    };
+    
+    loadCategories();
+  }, []);
+
+  // Get today's featured category based on day of year for more variety
+  const today = new Date();
+  const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
+  const featuredCategory = categories.length > 0 ? categories[dayOfYear % categories.length] : null;
+
+  const handleClick = () => {
+    if (featuredCategory) {
+      navigate(`/library?categoryId=${featuredCategory.id}`);
+    }
+  };
+
+  if (!featuredCategory) {
+    return null;
+  }
 
   return (
-    <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-lg p-4 mb-6 max-w-4xl mx-auto">
+    <div 
+      className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-lg p-4 mb-6 max-w-4xl mx-auto cursor-pointer hover:border-primary/30 hover:shadow-md transition-all duration-200"
+      onClick={handleClick}
+    >
       <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-2">
         <div className="flex items-center gap-2">
           <Zap className="h-4 w-4 text-primary" />
@@ -71,8 +102,10 @@ export const TodaysFeatured = () => {
         <UrgencyBadge variant="hot" />
       </div>
       <p className="text-sm text-muted-foreground text-center sm:text-left">
-        <span className="font-medium text-foreground">{featuredTopics[dayOfWeek]}</span> prompts are getting 3x more usage today. 
-        <span className="font-medium text-foreground"> Don't miss out!</span>
+        <span className="font-medium text-foreground hover:text-primary transition-colors">
+          {featuredCategory.name}
+        </span> prompts are getting 3x more usage today. 
+        <span className="font-medium text-foreground"> Click to explore!</span>
       </p>
     </div>
   );
