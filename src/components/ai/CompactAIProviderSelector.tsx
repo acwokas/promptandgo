@@ -81,23 +81,53 @@ export const CompactAIProviderSelector: React.FC<CompactAIProviderSelectorProps>
 
     const url = urls[selectedProvider];
     if (url) {
-      // Show manual instructions instead of trying to open potentially blocked sites
-      toast({
-        title: "Prompt ready to use!",
-        description: (
-          <div className="space-y-3">
-            <p className="text-sm font-medium">✅ Your optimized prompt is copied to clipboard</p>
-            <div className="space-y-1">
-              <p className="text-sm font-medium">Manual steps:</p>
-              <p className="text-xs">1. Open a new browser tab</p>
-              <p className="text-xs">2. Go to: <span className="font-mono bg-muted px-1 rounded">{url}</span></p>
-              <p className="text-xs">3. Paste your prompt and hit enter</p>
+      try {
+        // Try to open automatically first
+        const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+        
+        if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+          // Popup was blocked, show manual instructions
+          toast({
+            title: "Popup blocked - Manual steps",
+            description: (
+              <div className="space-y-3">
+                <p className="text-sm font-medium">✅ Your optimized prompt is copied to clipboard</p>
+                <div className="space-y-1">
+                  <p className="text-sm font-medium">Manual steps:</p>
+                  <p className="text-xs">1. Open a new browser tab</p>
+                  <p className="text-xs">2. Go to: <span className="font-mono bg-muted px-1 rounded">{url}</span></p>
+                  <p className="text-xs">3. Paste your prompt and hit enter</p>
+                </div>
+              </div>
+            ),
+            duration: 8000,
+          });
+        } else {
+          // Window opened successfully
+          toast({
+            title: `Opened ${provider.name}`,
+            description: `${provider.name} opened in new tab. Your optimized prompt has been copied to clipboard.`,
+            duration: 4000,
+          });
+        }
+      } catch (error) {
+        // Failed to open, show manual instructions
+        toast({
+          title: "Unable to open automatically",
+          description: (
+            <div className="space-y-3">
+              <p className="text-sm font-medium">✅ Your optimized prompt is copied to clipboard</p>
+              <div className="space-y-1">
+                <p className="text-sm font-medium">Manual steps:</p>
+                <p className="text-xs">1. Open a new browser tab</p>
+                <p className="text-xs">2. Go to: <span className="font-mono bg-muted px-1 rounded">{url}</span></p>
+                <p className="text-xs">3. Paste your prompt and hit enter</p>
+              </div>
             </div>
-            <p className="text-xs text-muted-foreground">💡 If the site is blocked on your network, try using a different device or network</p>
-          </div>
-        ),
-        duration: 8000,
-      });
+          ),
+          duration: 8000,
+        });
+      }
     }
   };
 

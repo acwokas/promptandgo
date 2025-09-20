@@ -170,23 +170,75 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
 
     const url = urls[selectedProvider!];
     if (url) {
-      // Show manual instructions without trying to open potentially blocked sites
-      toast({
-        title: "Prompt ready to use!",
-        description: (
-          <div className="space-y-3">
-            <p className="text-sm font-medium">✅ Your optimized prompt is copied to clipboard</p>
-            <div className="space-y-1">
-              <p className="text-sm font-medium">Manual steps:</p>
-              <p className="text-xs">1. Open a new browser tab</p>
-              <p className="text-xs">2. Go to: <span className="font-mono bg-muted px-1 rounded">{url}</span></p>
-              <p className="text-xs">3. Paste your prompt and hit enter</p>
+      try {
+        // Try to open automatically first
+        const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+        
+        if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+          // Popup was blocked, show manual instructions
+          toast({
+            title: "Popup blocked - Manual steps",
+            description: (
+              <div className="space-y-3">
+                <p className="text-sm font-medium">✅ Your optimized prompt is copied to clipboard</p>
+                <div className="space-y-1">
+                  <p className="text-sm font-medium">Manual steps:</p>
+                  <p className="text-xs">1. Open a new browser tab</p>
+                  <p className="text-xs">2. Go to: <span className="font-mono bg-muted px-1 rounded">{url}</span></p>
+                  <p className="text-xs">3. Paste your prompt and hit enter</p>
+                </div>
+              </div>
+            ),
+            duration: 8000,
+          });
+        } else {
+          // Window opened successfully
+          toast({
+            title: `Opened ${selectedProviderData.name}`,
+            description: `${selectedProviderData.name} opened in new tab. Your optimized prompt has been copied to clipboard.`,
+            duration: 4000,
+          });
+          
+          // Check after delay if window is still open (might be blocked at network level)
+          setTimeout(() => {
+            try {
+              if (newWindow.closed) {
+                toast({
+                  title: "Site may be blocked",
+                  description: (
+                    <div className="space-y-2">
+                      <p className="text-sm">If {selectedProviderData.name} didn't load, it may be blocked by your network.</p>
+                      <p className="text-xs">Manually visit: <span className="font-mono bg-muted px-1 rounded">{url}</span></p>
+                      <p className="text-xs">Your prompt is copied to clipboard!</p>
+                    </div>
+                  ),
+                  duration: 6000,
+                });
+              }
+            } catch (e) {
+              // Cross-origin access blocked is actually a good sign - means the page loaded
+              console.log(`${selectedProviderData.name} loaded successfully (cross-origin detected)`);
+            }
+          }, 1000);
+        }
+      } catch (error) {
+        // Failed to open, show manual instructions
+        toast({
+          title: "Unable to open automatically",
+          description: (
+            <div className="space-y-3">
+              <p className="text-sm font-medium">✅ Your optimized prompt is copied to clipboard</p>
+              <div className="space-y-1">
+                <p className="text-sm font-medium">Manual steps:</p>
+                <p className="text-xs">1. Open a new browser tab</p>
+                <p className="text-xs">2. Go to: <span className="font-mono bg-muted px-1 rounded">{url}</span></p>
+                <p className="text-xs">3. Paste your prompt and hit enter</p>
+              </div>
             </div>
-            <p className="text-xs text-muted-foreground">💡 If the site is blocked on your network, try using a different device or network</p>
-          </div>
-        ),
-        duration: 8000,
-      });
+          ),
+          duration: 8000,
+        });
+      }
     }
 
     setShowSendDialog(false);
