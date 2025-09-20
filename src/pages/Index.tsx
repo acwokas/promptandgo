@@ -440,20 +440,17 @@ const Index = () => {
                   <div className="flex justify-center mb-4 md:mb-6">
                     <div className="space-y-3 w-full max-w-full md:max-w-[500px]">
                       {/* Main Dropdown Trigger */}
-                      <div className="bg-white/90 backdrop-blur-sm border-2 border-blue-200/80 rounded-2xl px-4 py-4 md:px-8 md:py-6 shadow-sm">
-                        <div className="flex items-center justify-between flex-col md:flex-row gap-3 md:gap-0">
-                          <span className="text-lg md:text-xl font-semibold text-blue-600 text-center md:text-left">Choose Your AI Platform</span>
-                          <div className="flex items-center gap-2 md:gap-4">
-                            <div className="bg-blue-500 text-white px-4 py-2 md:px-6 rounded-full font-semibold shadow-sm flex items-center gap-2">
-                              <span className="text-base md:text-lg">🤖</span>
-                              <span className="text-sm md:text-base">ChatGPT</span>
-                            </div>
-                            <svg className="w-5 h-5 md:w-6 md:h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                            </svg>
-                          </div>
-                        </div>
-                      </div>
+                       <div className="bg-white/90 backdrop-blur-sm border-2 border-blue-200/80 rounded-2xl px-4 py-4 md:px-8 md:py-6 shadow-sm">
+                         <div className="flex items-center justify-center gap-2 md:gap-4">
+                           <div className="bg-blue-500 text-white px-4 py-2 md:px-6 rounded-full font-semibold shadow-sm flex items-center gap-2">
+                             <span className="text-base md:text-lg">🤖</span>
+                             <span className="text-sm md:text-base">ChatGPT</span>
+                           </div>
+                           <svg className="w-5 h-5 md:w-6 md:h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                           </svg>
+                         </div>
+                       </div>
                       
                       {/* Clean Dropdown Menu - Static */}
                       <div className="bg-white/95 backdrop-blur-sm border-2 border-blue-200/80 rounded-2xl shadow-xl overflow-hidden">

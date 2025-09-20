@@ -919,16 +919,13 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200/80 rounded-2xl p-3 sm:p-4">
                 <Select value={selectedAIPlatform} onValueChange={handleAIPlatformChange}>
                   <SelectTrigger className="w-full bg-white/90 border-2 border-blue-200/60 rounded-xl px-4 py-3 sm:px-6 sm:py-4 text-left shadow-sm hover:shadow-md transition-all">
-                    <div className="flex items-center justify-between w-full">
-                      <span className="text-blue-600 font-medium text-sm sm:text-base">Choose Your AI Platform</span>
+                    <SelectValue>
                       <div className="flex items-center gap-2 sm:gap-3">
-                        <div className="bg-blue-500 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full font-semibold text-xs sm:text-sm flex items-center gap-1 sm:gap-2">
-                          {selectedAIPlatform === 'original' 
-                            ? '📄 Core Prompt'
-                            : `${AI_PROVIDERS.find(p => p.id === selectedAIPlatform)?.icon} ${AI_PROVIDERS.find(p => p.id === selectedAIPlatform)?.name}`}
-                        </div>
+                        {selectedAIPlatform === 'original' 
+                          ? '📄 Core Prompt'
+                          : `${AI_PROVIDERS.find(p => p.id === selectedAIPlatform)?.icon} ${AI_PROVIDERS.find(p => p.id === selectedAIPlatform)?.name}`}
                       </div>
-                    </div>
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent className="bg-white/95 backdrop-blur-sm border-2 border-blue-200/80 rounded-2xl shadow-xl p-2 z-50">
                     <SelectItem value="original" className={`rounded-xl p-3 sm:p-4 my-1 ${selectedAIPlatform === 'original' ? 'bg-blue-50 border-2 border-blue-200' : 'hover:bg-gray-50 border-2 border-transparent hover:border-gray-200'}`}>
