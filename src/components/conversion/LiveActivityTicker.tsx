@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -10,6 +11,7 @@ interface Activity {
   user: string;
   title: string;
   timeAgo: string;
+  url: string;
 }
 
 const activityTypes = ['copy', 'save', 'download'] as const;
@@ -19,33 +21,34 @@ const userNames = [
   'Lisa S.', 'Mark D.', 'Jennifer P.', 'Daniel F.', 'Ashley N.'
 ];
 
-const promptTitles = [
-  'Email Marketing Campaign Strategy',
-  'Social Media Content Calendar',
-  'Product Launch Announcement',
-  'Customer Support Response Templates',
-  'SEO Blog Post Outline',
-  'Meeting Summary Generator',
-  'Real Estate Property Description',
-  'Job Interview Preparation',
-  'Business Proposal Framework',
-  'Sales Pitch Generator',
-  'Content Creation Workflow',
-  'Brand Voice Guidelines',
-  'Market Research Analysis'
+const promptData = [
+  { title: 'Email Marketing Campaign Strategy', url: '/library?search=email+marketing' },
+  { title: 'Social Media Content Calendar', url: '/library?search=social+media' },
+  { title: 'Product Launch Announcement', url: '/library?search=product+launch' },
+  { title: 'Customer Support Response Templates', url: '/library?search=customer+support' },
+  { title: 'SEO Blog Post Outline', url: '/library?search=seo+blog' },
+  { title: 'Meeting Summary Generator', url: '/library?search=meeting+summary' },
+  { title: 'Real Estate Property Description', url: '/library?search=real+estate' },
+  { title: 'Job Interview Preparation', url: '/library?search=job+interview' },
+  { title: 'Business Proposal Framework', url: '/library?search=business+proposal' },
+  { title: 'Sales Pitch Generator', url: '/library?search=sales+pitch' },
+  { title: 'Content Creation Workflow', url: '/library?search=content+creation' },
+  { title: 'Brand Voice Guidelines', url: '/library?search=brand+voice' },
+  { title: 'Market Research Analysis', url: '/library?search=market+research' }
 ];
 
 const generateActivity = (): Activity => {
   const type = activityTypes[Math.floor(Math.random() * activityTypes.length)];
   const user = userNames[Math.floor(Math.random() * userNames.length)];
-  const title = promptTitles[Math.floor(Math.random() * promptTitles.length)];
+  const promptInfo = promptData[Math.floor(Math.random() * promptData.length)];
   const timeAgo = ['just now', '1m ago', '2m ago', '3m ago', '5m ago'][Math.floor(Math.random() * 5)];
   
   return {
     id: `${Date.now()}-${Math.random()}`,
     type,
     user,
-    title,
+    title: promptInfo.title,
+    url: promptInfo.url,
     timeAgo
   };
 };
@@ -119,8 +122,8 @@ const LiveActivityTicker = () => {
 
   if (isDismissed) return null;
 
-  return (
-    <div className={`fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 border-t border-primary/10 shadow-lg transition-all duration-300 ${
+    return (
+    <div className={`fixed bottom-0 left-0 right-0 z-5 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 border-t border-primary/10 shadow-lg transition-all duration-300 ${
       isMinimized ? 'h-12' : 'h-16'
     }`}>
       {/* Header with controls */}
@@ -165,9 +168,10 @@ const LiveActivityTicker = () => {
           <div className="flex animate-[slide-right_60s_linear_infinite] hover:pause-animation">
             {/* Duplicate activities for seamless loop */}
             {[...activities, ...activities, ...activities].map((activity, index) => (
-              <div
+              <Link
                 key={`${activity.id}-${index}`}
-                className="flex items-center gap-3 px-6 py-2 whitespace-nowrap flex-shrink-0"
+                to={activity.url}
+                className="flex items-center gap-3 px-6 py-2 whitespace-nowrap flex-shrink-0 hover:bg-primary/5 transition-colors cursor-pointer"
               >
                 <Avatar className="h-6 w-6">
                   <AvatarFallback className="text-xs bg-primary/10 text-primary">
@@ -194,7 +198,7 @@ const LiveActivityTicker = () => {
                 
                 {/* Separator */}
                 <div className="w-1 h-1 bg-primary/20 rounded-full mx-4" />
-              </div>
+              </Link>
             ))}
           </div>
         </div>
