@@ -567,22 +567,22 @@ const Index = () => {
           </div>
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Wand2 className="h-8 w-8 text-secondary" />
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Wand2 className="h-8 w-8 text-primary" />
               </div>
               <h4 className="font-semibold mb-2">Guided Creation</h4>
               <p className="text-sm text-muted-foreground">Choose from curated dropdowns and options</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Bot className="h-8 w-8 text-secondary" />
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Bot className="h-8 w-8 text-primary" />
               </div>
               <h4 className="font-semibold mb-2">Expert Quality</h4>
               <p className="text-sm text-muted-foreground">Professional-quality prompts built in real-time</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Rocket className="h-8 w-8 text-secondary" />
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Rocket className="h-8 w-8 text-primary" />
               </div>
               <h4 className="font-semibold mb-2">No Guesswork</h4>
               <p className="text-sm text-muted-foreground">Scout handles the complexity for you</p>
