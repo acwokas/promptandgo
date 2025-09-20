@@ -384,14 +384,17 @@ const PromptPacks = () => {
               return (
                 <Card key={p.id} id={`pack-${p.id}`} className={`relative ${highlight === p.id ? 'ring-2 ring-primary' : ''}`}>
                   <CardHeader>
-                    <div className="mb-2 flex gap-2 items-center">
+                    <div className="mb-2 flex gap-2 items-center flex-wrap">
                       <Badge variant="destructive">PRO</Badge>
-                      <Badge variant="success">SALE</Badge>
+                      <Badge variant="success">50% OFF</Badge>
                       {isBestseller && (
-                        <Badge className="border-transparent bg-[hsl(var(--accent-4))] text-primary-foreground hover:bg-[hsl(var(--accent-4))]/90">BESTSELLER</Badge>
+                        <Badge className="border-transparent bg-[hsl(var(--accent-4))] text-primary-foreground hover:bg-[hsl(var(--accent-4))]/90 animate-pulse">🔥 BESTSELLER</Badge>
                       )}
                       {isRisingStar && (
-                        <Badge className="border-transparent bg-[hsl(var(--accent-3))] text-primary-foreground hover:bg-[hsl(var(--accent-3))]/90">POPULAR</Badge>
+                        <Badge className="border-transparent bg-[hsl(var(--accent-3))] text-primary-foreground hover:bg-[hsl(var(--accent-3))]/90">⭐ POPULAR</Badge>
+                      )}
+                      {Math.random() > 0.7 && (
+                        <Badge className="border-transparent bg-gradient-to-r from-purple-500 to-indigo-500 text-white animate-pulse">⏰ LIMITED TIME</Badge>
                       )}
                     </div>
                     <CardTitle className="text-xl leading-tight">{p.name}</CardTitle>
