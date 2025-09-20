@@ -259,16 +259,32 @@ const Index = () => {
       <main>
         {/* Hero */}
         <PageHero title={<>
-            Find your perfect <span className="text-gradient-brand">AI</span> <span className="text-gradient-brand">prompt</span>, fast.
-          </>} subtitle={<>Browse thousands of human-curated prompts to help you write better, work smarter, and think bigger.</>}>
+            Smarter prompts. Better outcomes.
+          </>} subtitle={<>
+            Craft, refine, and discover optimised prompts for every AI tool you use. Free, simple, and built for everyone.
+            <div className="grid gap-2 mt-6 text-sm text-primary-foreground/90 max-w-2xl mx-auto">
+              <div className="flex items-center gap-2 justify-center">
+                <Check className="h-4 w-4 text-primary-foreground" />
+                <span>Optimise prompts across platforms instantly</span>
+              </div>
+              <div className="flex items-center gap-2 justify-center">
+                <Check className="h-4 w-4 text-primary-foreground" />
+                <span>Save, reuse, and share with ease</span>
+              </div>
+              <div className="flex items-center gap-2 justify-center">
+                <Check className="h-4 w-4 text-primary-foreground" />
+                <span>Smarter prompts for work and play</span>
+              </div>
+            </div>
+          </>}>
           <Button asChild size="default" variant="hero" className="px-6">
             <Link to="/library"><Search className="h-4 w-4 mr-2" />Browse Library</Link>
           </Button>
           <Button asChild size="default" variant="inverted">
-            <Link to="/packs">⚡️Power Packs</Link>
+            <Link to="/packs">Power Packs</Link>
           </Button>
           <Button asChild size="default" variant="secondary">
-            <Link to="/scout">💬 Ask Scout</Link>
+            <Link to="/scout">Ask Scout</Link>
           </Button>
         </PageHero>
 
