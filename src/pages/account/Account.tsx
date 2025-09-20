@@ -106,6 +106,10 @@ const AccountPage = () => {
             <h2 className="font-semibold">My Saved Prompts</h2>
             <p className="text-muted-foreground text-sm mt-1">View and manage your saved and AI-generated prompts.</p>
           </Link>
+          <Link to="/account/ai-preferences" className="rounded-xl border bg-card p-5 block group hover:shadow-md transition-all">
+            <h2 className="font-semibold">AI Preferences</h2>
+            <p className="text-muted-foreground text-sm mt-1">Choose which AI providers appear in your prompt rewriter.</p>
+          </Link>
         </section>
       </main>
     </>

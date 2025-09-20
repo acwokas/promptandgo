@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Copy, Send, ChevronDown } from 'lucide-react';
+import { Copy, Send, ChevronDown, Settings } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { AI_PROVIDERS, rewritePromptForProvider } from '@/lib/promptRewriter';
 import { cn } from '@/lib/utils';
+import { useAIPreferences } from '@/hooks/useAIPreferences';
+import { useLoginWidget } from '@/hooks/useLoginWidget';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,6 +26,8 @@ export const CompactAIProviderSelector: React.FC<CompactAIProviderSelectorProps>
   className,
   onPromptRewritten
 }) => {
+  const { getFilteredProviders, isLoggedIn } = useAIPreferences();
+  const { openLoginWidget } = useLoginWidget();
   const [selectedProvider, setSelectedProvider] = useState<string>('chatgpt');
   const [rewrittenPrompt, setRewrittenPrompt] = useState<string>('');
 
@@ -85,9 +89,17 @@ export const CompactAIProviderSelector: React.FC<CompactAIProviderSelectorProps>
     }
   };
 
-  const selectedProviderData = AI_PROVIDERS.find(p => p.id === selectedProvider);
-  const textProviders = AI_PROVIDERS.filter(p => p.category === 'text');
-  const imageProviders = AI_PROVIDERS.filter(p => p.category === 'image');
+  const filteredProviders = getFilteredProviders();
+  const selectedProviderData = filteredProviders.find(p => p.id === selectedProvider);
+  const textProviders = filteredProviders.filter(p => p.category === 'text');
+  const imageProviders = filteredProviders.filter(p => p.category === 'image');
+
+  // If selected provider is not in filtered list, reset to first available
+  useEffect(() => {
+    if (filteredProviders.length > 0 && !filteredProviders.find(p => p.id === selectedProvider)) {
+      setSelectedProvider(filteredProviders[0].id);
+    }
+  }, [filteredProviders, selectedProvider]);
 
   if (!originalPrompt?.trim()) {
     return null;
@@ -105,35 +117,71 @@ export const CompactAIProviderSelector: React.FC<CompactAIProviderSelectorProps>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start" className="w-48">
-          <div className="px-2 py-1 text-xs font-medium text-muted-foreground">
-            Text Generation
-          </div>
-          {textProviders.map((provider) => (
-            <DropdownMenuItem
-              key={provider.id}
-              onClick={() => handleProviderSelect(provider.id)}
-              className="cursor-pointer"
-            >
-              <span className="mr-2">{provider.icon}</span>
-              <span className="text-xs">{provider.name}</span>
-            </DropdownMenuItem>
-          ))}
+          {!isLoggedIn && (
+            <>
+              <div className="px-3 py-2 text-xs">
+                <div className="font-medium text-foreground">🔓 Sign in to customize</div>
+                <div className="text-muted-foreground mt-1">
+                  Choose your preferred AI providers
+                </div>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="mt-2 w-full h-7 text-xs"
+                  onClick={openLoginWidget}
+                >
+                  Sign In
+                </Button>
+              </div>
+              <DropdownMenuSeparator />
+            </>
+          )}
           
-          <DropdownMenuSeparator />
+          {textProviders.length > 0 && (
+            <>
+              <div className="px-2 py-1 text-xs font-medium text-muted-foreground">
+                Text Generation
+              </div>
+              {textProviders.map((provider) => (
+                <DropdownMenuItem
+                  key={provider.id}
+                  onClick={() => handleProviderSelect(provider.id)}
+                  className="cursor-pointer"
+                >
+                  <span className="mr-2">{provider.icon}</span>
+                  <span className="text-xs">{provider.name}</span>
+                </DropdownMenuItem>
+              ))}
+            </>
+          )}
           
-          <div className="px-2 py-1 text-xs font-medium text-muted-foreground">
-            Image Generation
-          </div>
-          {imageProviders.map((provider) => (
-            <DropdownMenuItem
-              key={provider.id}
-              onClick={() => handleProviderSelect(provider.id)}
-              className="cursor-pointer"
-            >
-              <span className="mr-2">{provider.icon}</span>
-              <span className="text-xs">{provider.name}</span>
-            </DropdownMenuItem>
-          ))}
+          {textProviders.length > 0 && imageProviders.length > 0 && (
+            <DropdownMenuSeparator />
+          )}
+          
+          {imageProviders.length > 0 && (
+            <>
+              <div className="px-2 py-1 text-xs font-medium text-muted-foreground">
+                Image Generation
+              </div>
+              {imageProviders.map((provider) => (
+                <DropdownMenuItem
+                  key={provider.id}
+                  onClick={() => handleProviderSelect(provider.id)}
+                  className="cursor-pointer"
+                >
+                  <span className="mr-2">{provider.icon}</span>
+                  <span className="text-xs">{provider.name}</span>
+                </DropdownMenuItem>
+              ))}
+            </>
+          )}
+          
+          {filteredProviders.length === 0 && isLoggedIn && (
+            <div className="px-3 py-2 text-xs text-muted-foreground">
+              No AI providers selected. Visit your account settings to choose providers.
+            </div>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
 
