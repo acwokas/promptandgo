@@ -419,13 +419,6 @@ const Index = () => {
               <div className="rounded-2xl border bg-card p-6 md:p-8 mb-8">
                 <MiniPromptStudio />
               </div>
-              
-              <div className="text-center">
-                <p className="text-muted-foreground mb-4">See how easy that was? That's the power of Scout.</p>
-                <Button asChild size="lg" variant="hero">
-                  <Link to="/scout">Create Your Full Prompt <Wand2 className="h-4 w-4 ml-2" /></Link>
-                </Button>
-              </div>
             </div>
 
             {/* Custom Creation Process */}
