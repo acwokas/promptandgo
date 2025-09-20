@@ -761,22 +761,6 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                 <span>Send to {selectedProviderData?.name}</span>
               </Button>
             )}
-            <Button
-              size="sm"
-              variant="outline"
-              className="w-full"
-              onClick={() => {
-                const tab = prompt.imagePrompt ? 'image' : 'adcopy';
-                const title = encodeURIComponent(prompt.title || '');
-                const promptText = encodeURIComponent(displayPrompt || '');
-                const tags = encodeURIComponent(prompt.tags?.join(',') || '');
-                const url = `/ai/studio?tab=${tab}&title=${title}&prompt=${promptText}&tags=${tags}`;
-                navigate(url);
-              }}
-            >
-              <Wand2 className="h-4 w-4" />
-              <span>Create Similar</span>
-            </Button>
             {user ? (
               <TooltipProvider>
                 <Tooltip>
