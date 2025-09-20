@@ -106,17 +106,18 @@ const AppContent = () => {
         <GlobalStructuredData />
         <ConversionBar />
         
-        <AppSidebar />
-        <main className="flex-1 flex flex-col min-w-0 w-full">
-          {/* Simplified Header */}
-          <Header />
-          
-          {/* Main content */}
-          <div className="flex-1">
-            <ScrollToTop />
-            <GAListener />
-            <AuthEffects />
-            <Routes>
+        <div className="flex min-h-screen w-full">
+          <AppSidebar />
+          <main className="flex-1 flex flex-col min-w-0">
+            {/* Simplified Header */}
+            <Header />
+            
+            {/* Main content */}
+            <div className="flex-1">
+              <ScrollToTop />
+              <GAListener />
+              <AuthEffects />
+              <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/library" element={<PromptLibrary />} />
               <Route path="/packs" element={<PromptPacks />} />
@@ -176,11 +177,12 @@ const AppContent = () => {
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
-          </div>
-          
-          {/* Footer */}
-          <Footer />
-        </main>
+            </div>
+            
+            {/* Footer */}
+            <Footer />
+          </main>
+        </div>
         
         <ContextPopup
           isOpen={shouldShowPopup}
