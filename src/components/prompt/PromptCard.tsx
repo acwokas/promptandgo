@@ -541,9 +541,11 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
     setSelectedAIPlatform(platform);
     if (platform === 'original') {
       setRewrittenPrompt('');
+      setSelectedProvider(null); // Clear selected provider for original
     } else {
       const rewritten = rewritePromptForProvider(prompt.prompt, platform);
       setRewrittenPrompt(rewritten);
+      setSelectedProvider(platform); // Set selected provider for Send button
     }
   };
 
