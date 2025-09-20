@@ -703,6 +703,66 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Newsletter Section - Full Width */}
+        <section className="py-8 bg-gradient-to-br from-primary/5 to-accent/5">
+          <div className="container mx-auto">
+            {/* Newsletter Signup - Only show if user is not logged in or not subscribed to newsletter */}
+            {/* If logged in and newsletter subscribed, show matched power packs instead */}
+            {user && isNewsletterSubscribed ? (
+              <div className="max-w-4xl mx-auto">
+                <MatchedPowerPacks />
+                <div className="mt-6">
+                  <PromptStudioCTA variant="compact" />
+                </div>
+              </div>
+            ) : (
+              <div className="max-w-2xl mx-auto">
+                <Card className="bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
+                  <CardContent className="p-8 text-center">
+                    <h3 className="text-2xl font-semibold mb-3">🚀 Get Weekly Prompt Tips</h3>
+                    <p className="text-muted-foreground mb-6">Join 25,000+ professionals getting our best prompts, tips, and AI updates every Tuesday.</p>
+                    
+                    {showLoginPrompt ? <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <div className="flex items-center justify-center text-blue-600 mb-2">
+                          <Bot className="h-4 w-4 mr-2" />
+                          <span className="font-medium text-sm">Welcome back!</span>
+                        </div>
+                        <p className="text-blue-600 text-xs mb-3">
+                          You already have an account with us! Please log in to access your prompts.
+                        </p>
+                        <div className="space-y-2 max-w-sm mx-auto">
+                          <Button onClick={handleLogin} variant="hero" size="sm" className="w-full">
+                            Log In to Access My Prompts
+                          </Button>
+                          <Button onClick={() => setShowLoginPrompt(false)} variant="ghost" size="sm" className="w-full">
+                            Back to Newsletter
+                          </Button>
+                        </div>
+                      </div> : !newsletterSuccess ? <div className="max-w-md mx-auto">
+                        <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
+                          <input type="email" value={newsletterEmail} onChange={e => setNewsletterEmail(e.target.value)} placeholder="Enter your email" className="flex-1 px-4 py-2 rounded-md border bg-background" disabled={newsletterSubmitting} />
+                          <Button type="submit" variant="hero" disabled={newsletterSubmitting}>
+                            {newsletterSubmitting ? "..." : "Subscribe"}
+                          </Button>
+                        </form>
+                      </div> : <div className="bg-green-50 border border-green-200 rounded-lg p-4 max-w-md mx-auto">
+                        <div className="flex items-center justify-center text-green-600 mb-1">
+                          <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                          </svg>
+                          <span className="font-medium text-sm">Successfully subscribed!</span>
+                        </div>
+                        <p className="text-green-600 text-xs">Welcome to our weekly prompt tips. Check your email for confirmation.</p>
+                      </div>}
+                    
+                    {!showLoginPrompt && <p className="text-xs text-muted-foreground mt-4">No spam. Unsubscribe anytime. Free forever.</p>}
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+          </div>
+        </section>
+
         {/* Bottom Section - FAQ, Pricing, and CTA combined */}
         <section className="container py-8">
           <div className="grid gap-8 lg:grid-cols-3">
@@ -742,55 +802,6 @@ const Index = () => {
                   </Button>
                 </div>
               </div>
-
-              {/* Newsletter Signup - Only show if user is not logged in or not subscribed to newsletter */}
-              {/* If logged in and newsletter subscribed, show matched power packs instead */}
-              {user && isNewsletterSubscribed ? (
-                <>
-                  <MatchedPowerPacks />
-                  <div className="mt-6">
-                    <PromptStudioCTA variant="compact" />
-                  </div>
-                </>
-              ) : <Card className="bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
-                  <CardContent className="p-6">
-                    <h3 className="text-lg font-semibold mb-2">🚀 Get Weekly Prompt Tips</h3>
-                    <p className="text-muted-foreground text-sm mb-4">Join 25,000+ professionals getting our best prompts, tips, and AI updates every Tuesday.</p>
-                    
-                    {showLoginPrompt ? <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                        <div className="flex items-center text-blue-600 mb-2">
-                          <Bot className="h-4 w-4 mr-2" />
-                          <span className="font-medium text-sm">Welcome back!</span>
-                        </div>
-                        <p className="text-blue-600 text-xs mb-3">
-                          You already have an account with us! Please log in to access your prompts.
-                        </p>
-                        <div className="space-y-2">
-                          <Button onClick={handleLogin} variant="hero" size="sm" className="w-full">
-                            Log In to Access My Prompts
-                          </Button>
-                          <Button onClick={() => setShowLoginPrompt(false)} variant="ghost" size="sm" className="w-full">
-                            Back to Newsletter
-                          </Button>
-                        </div>
-                      </div> : !newsletterSuccess ? <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
-                        <input type="email" value={newsletterEmail} onChange={e => setNewsletterEmail(e.target.value)} placeholder="Enter your email" className="flex-1 px-3 py-2 text-sm rounded-md border bg-background" disabled={newsletterSubmitting} />
-                        <Button type="submit" variant="hero" size="sm" disabled={newsletterSubmitting}>
-                          {newsletterSubmitting ? "..." : "Subscribe"}
-                        </Button>
-                      </form> : <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-                        <div className="flex items-center text-green-600 mb-1">
-                          <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                          </svg>
-                          <span className="font-medium text-sm">Successfully subscribed!</span>
-                        </div>
-                        <p className="text-green-600 text-xs">Welcome to our weekly prompt tips. Check your email for confirmation.</p>
-                      </div>}
-                    
-                    {!showLoginPrompt && <p className="text-xs text-muted-foreground mt-2">No spam. Unsubscribe anytime. Free forever.</p>}
-                  </CardContent>
-                </Card>}
 
               {/* Latest Articles Section */}
               <div className="mt-8">
