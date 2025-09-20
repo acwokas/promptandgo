@@ -509,15 +509,6 @@ const Index = () => {
                   </div>
                 </div>
               </div>
-              
-              {/* One-Click Action */}
-              <div className="text-center pt-4 border-t-2 border-blue-200/60">
-                <Button size="lg" className="bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-bold text-lg px-12 py-4 rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-200">
-                  <Zap className="h-5 w-5 mr-3" />
-                  One-Click Deploy to ChatGPT
-                </Button>
-                <p className="text-sm text-gray-600 mt-3 font-medium">Instantly optimized for your chosen platform!</p>
-              </div>
             </div>
           </div>
         </section>
