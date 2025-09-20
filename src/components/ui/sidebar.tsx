@@ -129,7 +129,7 @@ const SidebarProvider = React.forwardRef<
 
     // Don't render until we have a stable mobile detection
     if (isMobile === null) {
-      return <div className="min-h-svh w-full" />
+      return null
     }
 
     return (
