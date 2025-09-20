@@ -7,6 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAIUsage } from "@/hooks/useAIUsage";
 import { Wand2, Copy, Loader2, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { AIProviderSelector } from "@/components/ai/AIProviderSelector";
 
 const AIPromptWidget = () => {
   const [description, setDescription] = useState("");
@@ -155,6 +156,16 @@ const AIPromptWidget = () => {
                   View Full Generator →
                 </Link>
               </Button>
+            </div>
+
+            {/* AI Provider Selector */}
+            <div className="mt-4">
+              <AIProviderSelector
+                originalPrompt={generatedPrompt}
+                onPromptRewritten={(rewritten, provider) => {
+                  console.log(`Prompt rewritten for ${provider}:`, rewritten);
+                }}
+              />
             </div>
           </div>
         )}

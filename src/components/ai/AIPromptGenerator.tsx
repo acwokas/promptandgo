@@ -15,6 +15,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { AI_PERSONA } from "@/lib/aiPersona";
 import { AiProviderDropdown } from "@/components/ai/AiProviderDropdown";
 import { AiResponseModal } from "@/components/ai/AiResponseModal";
+import { AIProviderSelector } from "@/components/ai/AIProviderSelector";
 
 interface RecentPrompt {
   id: string;
@@ -323,10 +324,14 @@ const AIPromptGenerator = () => {
                   </Button>
                 </div>
                 
-                <AiProviderDropdown
-                  prompt={generatedPrompt}
-                  onResponse={handleAiResponse}
+                {/* AI Provider Selector with Real-time Rewriting */}
+                <AIProviderSelector 
+                  originalPrompt={generatedPrompt}
                   className="w-full"
+                  onPromptRewritten={(rewritten, provider) => {
+                    // Optional: Update local state or trigger analytics
+                    console.log(`Prompt rewritten for ${provider}:`, rewritten);
+                  }}
                 />
 
                 <div className="flex items-center gap-2">

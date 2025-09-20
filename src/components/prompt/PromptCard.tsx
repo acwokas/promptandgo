@@ -15,6 +15,7 @@ import { addToCart, getCart } from "@/lib/cart";
 import ShareButton from "@/components/ShareButton";
 import { AiProviderDropdown } from "@/components/ai/AiProviderDropdown";
 import { AiResponseModal } from "@/components/ai/AiResponseModal";
+import { AIProviderSelector } from "@/components/ai/AIProviderSelector";
 
 // Clean display title by removing common variant markers
 const cleanTitle = (t?: string | null) => {
@@ -653,11 +654,13 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               showText={true}
             />
             
-            <AiProviderDropdown
-              prompt={showLock && !hasAccess ? '' : prompt.prompt}
-              onResponse={handleAiResponse}
-              disabled={showLock && !hasAccess}
+            {/* AI Provider Selector with Real-time Rewriting */}
+            <AIProviderSelector
+              originalPrompt={showLock && !hasAccess ? '' : prompt.prompt}
               className="w-full"
+              onPromptRewritten={(rewritten, provider) => {
+                console.log(`Prompt rewritten for ${provider}:`, rewritten);
+              }}
             />
           </div>
         </div>

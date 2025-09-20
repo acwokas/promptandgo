@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Wand2, X, ArrowDown } from "lucide-react";
 import { imagePromptOptions } from "@/data/promptStudioOptions";
+import { AIProviderSelector } from "@/components/ai/AIProviderSelector";
 
 interface PromptCrafterProps {
   onPromptGenerated: (prompt: string) => void;
@@ -294,6 +295,18 @@ console.log("Mobile width debug - window width:", window.innerWidth);
           View Your Custom Prompt
         </Button>
       </div>
+
+      {/* AI Provider Selector - Show when prompt is generated */}
+      {generatedPrompt && (
+        <div className="mt-6">
+          <AIProviderSelector
+            originalPrompt={generatedPrompt}
+            onPromptRewritten={(rewritten, provider) => {
+              console.log(`Prompt rewritten for ${provider}:`, rewritten);
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 };
