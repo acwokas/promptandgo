@@ -13,6 +13,8 @@ import { useAIUsage } from "@/hooks/useAIUsage";
 import UsageDisplay from "@/components/ai/UsageDisplay";
 import { Link, useSearchParams } from "react-router-dom";
 import { AI_PERSONA } from "@/lib/aiPersona";
+import { AiProviderDropdown } from "@/components/ai/AiProviderDropdown";
+import { AiResponseModal } from "@/components/ai/AiResponseModal";
 
 interface RecentPrompt {
   id: string;
@@ -29,6 +31,12 @@ const AIPromptGenerator = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [recentPrompts, setRecentPrompts] = useState<RecentPrompt[]>([]);
   const [loadingRecent, setLoadingRecent] = useState(false);
+  
+  // AI response modal state
+  const [aiResponse, setAiResponse] = useState<string>('');
+  const [aiProvider, setAiProvider] = useState<string>('');
+  const [isAiModalOpen, setIsAiModalOpen] = useState(false);
+  
   const { toast } = useToast();
   const { user } = useSupabaseAuth();
   const { openLoginWidget } = useLoginWidget();
@@ -207,6 +215,13 @@ const AIPromptGenerator = () => {
     }
   };
 
+  // Handle AI response
+  const handleAiResponse = (response: string, provider: string) => {
+    setAiResponse(response);
+    setAiProvider(provider);
+    setIsAiModalOpen(true);
+  };
+
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6">
       <div className="text-center space-y-2">
@@ -307,6 +322,12 @@ const AIPromptGenerator = () => {
                     Add to My Prompts
                   </Button>
                 </div>
+                
+                <AiProviderDropdown
+                  prompt={generatedPrompt}
+                  onResponse={handleAiResponse}
+                  className="w-full"
+                />
 
                 <div className="flex items-center gap-2">
                   <Badge variant="secondary" className="flex items-center gap-1">
@@ -458,6 +479,18 @@ const AIPromptGenerator = () => {
           </Link>
         </Button>
       </div>
+      
+      <AiResponseModal
+        isOpen={isAiModalOpen}
+        onClose={() => setIsAiModalOpen(false)}
+        response={aiResponse}
+        provider={aiProvider}
+        originalPrompt={generatedPrompt}
+        onRetry={() => {
+          setIsAiModalOpen(false);
+          // The retry functionality will be handled by the dropdown
+        }}
+      />
     </div>
   );
 };
