@@ -387,8 +387,8 @@ const AIPromptGenerator = () => {
         return;
       }
 
-      if (data?.response) {
-        const cleanResponse = data.response.replace(/^```[\s\S]*?\n|```$/g, '').trim();
+      if (data?.result) {
+        const cleanResponse = data.result.replace(/^```[\s\S]*?\n|```$/g, '').trim();
         setGeneratedPrompt(cleanResponse);
         refreshUsage();
       } else {
