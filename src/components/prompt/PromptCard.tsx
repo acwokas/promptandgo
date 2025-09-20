@@ -7,7 +7,7 @@ import type { Prompt, Category } from "@/data/prompts";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useLoginWidget } from "@/hooks/useLoginWidget";
-import { Heart, Lock, Copy, MessageSquare, Megaphone, ShoppingBag, BarChart2, Briefcase, User, HeartPulse, Clock, Sparkles, Tag, CheckCircle, Star, Wand2, Send, ExternalLink } from "lucide-react";
+import { Heart, Lock, Copy, MessageSquare, Megaphone, ShoppingBag, BarChart2, Briefcase, User, HeartPulse, Clock, Sparkles, Tag, CheckCircle, Star, Wand2, Send, ExternalLink, Bot } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Link, useNavigate } from "react-router-dom";
@@ -151,8 +151,17 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
     }
   };
 
-  const confirmSendToAI = () => {
+  const confirmSendToAI = async () => {
     if (!selectedProviderData) return;
+
+    // Add to My Prompts when sending to AI platform
+    if (user) {
+      try {
+        await addToFavorites();
+      } catch (error) {
+        console.error('Error adding to favorites:', error);
+      }
+    }
 
     // URLs for different AI providers
     const urls: Record<string, string> = {
@@ -181,6 +190,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
             description: (
               <div className="space-y-3">
                 <p className="text-sm font-medium">✅ Your optimized prompt is copied to clipboard</p>
+                {user && <p className="text-sm font-medium">✅ Added to My Prompts</p>}
                 <div className="space-y-1">
                   <p className="text-sm font-medium">Manual steps:</p>
                   <p className="text-xs">1. Open a new browser tab</p>
@@ -193,9 +203,13 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
           });
         } else {
           // Window opened successfully
+          const successMessage = user 
+            ? `${selectedProviderData.name} opened in new tab. Your optimized prompt has been copied to clipboard and added to My Prompts.`
+            : `${selectedProviderData.name} opened in new tab. Your optimized prompt has been copied to clipboard.`;
+            
           toast({
             title: `Opened ${selectedProviderData.name}`,
-            description: `${selectedProviderData.name} opened in new tab. Your optimized prompt has been copied to clipboard.`,
+            description: successMessage,
             duration: 4000,
           });
           
@@ -210,6 +224,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                       <p className="text-sm">If {selectedProviderData.name} didn't load, it may be blocked by your network.</p>
                       <p className="text-xs">Manually visit: <span className="font-mono bg-muted px-1 rounded">{url}</span></p>
                       <p className="text-xs">Your prompt is copied to clipboard!</p>
+                      {user && <p className="text-xs">Added to My Prompts!</p>}
                     </div>
                   ),
                   duration: 6000,
@@ -228,6 +243,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
           description: (
             <div className="space-y-3">
               <p className="text-sm font-medium">✅ Your optimized prompt is copied to clipboard</p>
+              {user && <p className="text-sm font-medium">✅ Added to My Prompts</p>}
               <div className="space-y-1">
                 <p className="text-sm font-medium">Manual steps:</p>
                 <p className="text-xs">1. Open a new browser tab</p>
@@ -242,6 +258,42 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
     }
 
     setShowSendDialog(false);
+  };
+
+  // Add to favorites helper function
+  const addToFavorites = async () => {
+    if (!user || isFav) return;
+    
+    try {
+      setFavLoading(true);
+      const { error } = await supabase.from("favorites").insert({
+        user_id: user.id,
+        prompt_id: prompt.id,
+      });
+      if (error && !error.message?.includes("duplicate")) throw error;
+      setIsFav(true);
+    } finally {
+      setFavLoading(false);
+    }
+  };
+
+  // Handle refining prompt with Scout
+  const handleRefineWithScout = async () => {
+    try {
+      await navigator.clipboard.writeText(displayPrompt);
+      navigate('/scout', { state: { initialPrompt: displayPrompt } });
+      toast({
+        title: "Redirected to Scout Assistant",
+        description: "Your prompt has been copied and sent to Scout for refinement.",
+        duration: 3000,
+      });
+    } catch (error) {
+      toast({
+        title: "Copy failed",
+        description: "Failed to copy prompt to clipboard.",
+        variant: "destructive"
+      });
+    }
   };
 
   // Load ratings data
@@ -725,7 +777,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
             )}
           </div>
           <div className="mt-4 flex flex-col gap-2">
-            {/* AI Platform Selector */}
+            {/* AI Platform Selector - First */}
             <div className="space-y-2">
               <Select value={selectedAIPlatform} onValueChange={handleAIPlatformChange}>
                 <SelectTrigger className="w-full">
@@ -751,10 +803,26 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               </Select>
             </div>
             
+            {/* Send to AI Platform - Second */}
+            {selectedProvider && (
+              <Button 
+                size="sm"
+                variant="hero"
+                onClick={handleSendToAI}
+                className="w-full"
+                disabled={showLock && !onCopyClick && !hasAccess}
+                title={showLock && !onCopyClick && !hasAccess ? "Unlock to send" : undefined}
+              >
+                <Send className="h-4 w-4" />
+                <span>Send to {selectedProviderData?.name}</span>
+              </Button>
+            )}
+            
+            {/* Copy Prompt - Third */}
             <Button
               size="sm"
-              variant="hero"
-              className="w-full"
+              variant="outline"
+              className="w-full btn-subtle-stroke"
               disabled={showLock && !onCopyClick && !hasAccess}
               title={showLock && !onCopyClick && !hasAccess ? "Unlock to copy" : undefined}
               onClick={() => { 
@@ -766,16 +834,19 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               <span>Copy Prompt</span>
             </Button>
             
-            {selectedProvider && (
-              <Button 
-                size="sm"
-                onClick={handleSendToAI}
-                className="w-full"
-              >
-                <Send className="h-4 w-4" />
-                <span>Send to {selectedProviderData?.name}</span>
-              </Button>
-            )}
+            {/* Refine with Scout - Fourth */}
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={handleRefineWithScout}
+              className="w-full btn-subtle-stroke"
+              disabled={showLock && !onCopyClick && !hasAccess}
+              title={showLock && !onCopyClick && !hasAccess ? "Unlock to refine" : "Refine this prompt with Scout Assistant"}
+            >
+              <Bot className="h-4 w-4" />
+              <span>Refine prompt with Scout</span>
+            </Button>
+
             {user ? (
               <TooltipProvider>
                 <Tooltip>
