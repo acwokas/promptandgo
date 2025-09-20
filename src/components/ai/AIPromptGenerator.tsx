@@ -54,9 +54,8 @@ const AIPromptGenerator = () => {
 
     if (initialPromptFromState) {
       // If we have an initial prompt from navigation state (from "Refine with Scout"), 
-      // set it as the generated prompt to show what we're refining
-      setGeneratedPrompt(initialPromptFromState);
-      setDescription("Refine this prompt");
+      // set it as the description input to refine
+      setDescription(initialPromptFromState);
       
       // Clear the state to prevent it from being applied again on re-renders
       if (location.state) {
@@ -262,7 +261,7 @@ const AIPromptGenerator = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Wand2 className="h-5 w-5" />
-              Generate Your Prompt
+              Generate or Refine Your Prompt
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
