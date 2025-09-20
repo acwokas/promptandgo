@@ -35,24 +35,25 @@ import {
 
 const mainItems = [
   { title: "Home", url: "/", icon: Home },
-  { title: "Browse Prompts", url: "/library", icon: Library },
-  { title: "Premium Packs", url: "/packs", icon: Package },
-  { title: "Tips & Articles", url: "/tips", icon: BookOpen },
+  { title: "Prompt Library", url: "/library", icon: Library },
+  { title: "Prompt Packs", url: "/packs", icon: Package },
+  { title: "Submit Prompt", url: "/submit-prompt", icon: PlusCircle },
+  { title: "Blog & Tips", url: "/tips", icon: BookOpen },
 ]
 
 const aiItems = [
-  { title: "AI Generator", url: "/ai/generator", icon: Wand2 },
+  { title: "AI Prompt Generator", url: "/ai/generator", icon: Wand2 },
   { title: "AI Assistant", url: "/ai/assistant", icon: Bot },
   { title: "Prompt Studio", url: "/ai/studio", icon: Palette },
-  { title: "Toolkit", url: "/scout", icon: Zap },
+  { title: "Scout Toolkit", url: "/scout", icon: Zap },
 ]
 
 const accountItems = [
-  { title: "Account", url: "/account", icon: User },
-  { title: "Profile", url: "/account/profile", icon: User },
+  { title: "Account Overview", url: "/account", icon: User },
   { title: "AI Preferences", url: "/account/ai-preferences", icon: Settings },
   { title: "Favorites", url: "/account/favorites", icon: Heart },
   { title: "Purchases", url: "/account/purchases", icon: CreditCard },
+  { title: "Profile Settings", url: "/account/profile", icon: User },
   { title: "Notifications", url: "/account/notifications", icon: Bell },
   { title: "Security", url: "/account/security", icon: Shield },
 ]
@@ -160,7 +161,7 @@ export function AppSidebar() {
 
         {/* AI Tools */}
         <SidebarGroup>
-          <SidebarGroupLabel>Scout AI Tools</SidebarGroupLabel>
+          <SidebarGroupLabel>AI Tools</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {aiItems.map((item) => (
