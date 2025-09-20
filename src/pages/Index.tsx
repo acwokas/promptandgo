@@ -588,14 +588,6 @@ const Index = () => {
               <p className="text-sm text-muted-foreground">Scout handles the complexity for you</p>
             </div>
           </div>
-          <div className="flex justify-center mb-8">
-            <Button asChild size="lg" variant="outline" className="px-8">
-              <Link to="/ai/generator">
-                <Wand2 className="h-4 w-4 mr-2" />
-                Choose your topic and start crafting
-              </Link>
-            </Button>
-          </div>
           
           {/* Mini Studio Widget */}
           <div className="max-w-4xl mx-auto">
