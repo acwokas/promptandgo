@@ -431,7 +431,7 @@ const Index = () => {
         {/* Premium Collections - Moved Above */}
         <section className="container py-4 bg-gradient-to-br from-accent/20 via-primary/15 to-accent/10 rounded-3xl border-2 border-accent/30 shadow-2xl">
           <div className="text-center mb-4">
-            <h2 className="text-2xl font-bold mb-4">Let Scout tailor our core prompt for your favourite AI and run it in one click:</h2>
+            <h2 className="text-2xl font-bold mb-4">Let Scout tailor a core prompt for your favourite AI and run it in one click:</h2>
             
             {/* Scout Tailoring Highlight - Clean Design */}
             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200/60 rounded-3xl p-8 max-w-4xl mx-auto shadow-lg">

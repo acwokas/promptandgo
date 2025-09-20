@@ -601,7 +601,7 @@ const AIPromptGenerator = () => {
 
                 {/* AI Platform Selector */}
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Let Scout tailor our core prompt for your favourite AI and run it in one click:</label>
+                  <label className="text-sm font-medium">Let Scout tailor a core prompt for your favourite AI and run it in one click:</label>
                   <Select value={selectedAIPlatform} onValueChange={handleAIPlatformChange}>
                     <SelectTrigger className="w-full bg-background border shadow-sm">
                       <SelectValue>
