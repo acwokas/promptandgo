@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { AppSidebar } from "@/components/AppSidebar";
+import ConversionBar from "@/components/layout/ConversionBar";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import PromptLibrary from "./pages/PromptLibrary";
@@ -100,6 +101,7 @@ const AppContent = () => {
     <SidebarProvider>
       <LoginWidgetProvider>
         <GlobalStructuredData />
+        <ConversionBar />
         
         <div className="min-h-screen flex w-full">
           <AppSidebar />

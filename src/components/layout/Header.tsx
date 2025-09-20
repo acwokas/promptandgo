@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { User, ShoppingCart } from "lucide-react";
+import { User, ShoppingCart, Sparkles } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
@@ -67,37 +67,26 @@ const Header = () => {
           />
         </Link>
         
-        {/* Desktop Navigation - Hidden on mobile */}
-        <nav className="hidden lg:flex items-center gap-6 flex-1 justify-center">
+        {/* Desktop Navigation - Simplified for maximum conversion */}
+        <nav className="hidden lg:flex items-center gap-8 flex-1 justify-center">
           <Link 
             to="/library" 
-            className="text-sm text-foreground hover:text-primary transition-colors"
+            className="text-sm font-medium text-foreground hover:text-primary transition-colors"
           >
-            Browse Library
+            Browse Prompts
           </Link>
           <Link 
-            to="/packs" 
-            className="text-sm text-foreground hover:text-primary transition-colors"
+            to="/ai/studio" 
+            className="text-sm font-medium text-foreground hover:text-primary transition-colors flex items-center gap-1"
           >
-            Power Packs
-          </Link>
-          <Link 
-            to="/scout" 
-            className="text-sm text-foreground hover:text-primary transition-colors"
-          >
+            <Sparkles className="h-3 w-3" />
             Scout AI
           </Link>
           <Link 
-            to="/how-it-works" 
-            className="text-sm text-foreground hover:text-primary transition-colors"
+            to="/packs" 
+            className="text-sm font-medium text-foreground hover:text-primary transition-colors"
           >
-            How it Works
-          </Link>
-          <Link 
-            to="/tips" 
-            className="text-sm text-foreground hover:text-primary transition-colors"
-          >
-            Tips
+            Premium Packs
           </Link>
         </nav>
         

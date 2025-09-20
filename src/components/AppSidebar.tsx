@@ -35,9 +35,8 @@ import {
 
 const mainItems = [
   { title: "Home", url: "/", icon: Home },
-  { title: "Prompt Library", url: "/library", icon: Library },
-  { title: "Prompt Packs", url: "/packs", icon: Package },
-  { title: "Submit Prompt", url: "/submit", icon: PlusCircle },
+  { title: "Browse Prompts", url: "/library", icon: Library },
+  { title: "Premium Packs", url: "/packs", icon: Package },
   { title: "Tips & Articles", url: "/tips", icon: BookOpen },
 ]
 
