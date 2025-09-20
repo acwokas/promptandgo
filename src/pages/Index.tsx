@@ -539,89 +539,117 @@ const Index = () => {
         </section>
 
         {/* Path 2: Prompt Packs - CORE OFFERING */}
-        <section className="container py-8 bg-gradient-to-br from-accent/5 to-primary/5 rounded-2xl border mt-8">
+        <section className="container py-16 bg-gradient-to-br from-accent/20 via-primary/15 to-accent/10 rounded-3xl border-2 border-accent/30 shadow-2xl mt-8">
           <div className="mb-16">
-            <div className="text-center mb-8">
-              <div className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-medium mb-4">
-                <ShoppingCart className="h-4 w-4" />
-                Core Website Offering
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-6 py-3 rounded-full text-lg font-bold mb-6 shadow-lg">
+                <ShoppingCart className="h-6 w-6" />
+                💎 PREMIUM COLLECTIONS
               </div>
-              <h2 className="text-4xl font-bold mb-4">Specialized Prompt Packs</h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-6">Get professionally-crafted prompt collections for specialized use cases and industries</p>
+              <h2 className="text-5xl font-black mb-6 bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
+                Specialized Prompt Packs
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8 font-medium">Get professionally-crafted prompt collections for specialized use cases and industries</p>
               
-              {/* Scout Tailoring Highlight */}
-              <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-lg p-6 max-w-3xl mx-auto mb-8">
-                <p className="text-lg font-semibold mb-3 text-primary">🤖 Let Scout tailor our core prompt for your favourite AI and run it in one click:</p>
-                <div className="flex justify-center">
+              {/* Scout Tailoring Highlight - Enhanced */}
+              <div className="bg-white/90 backdrop-blur-sm border-4 border-accent/40 rounded-2xl p-8 max-w-3xl mx-auto mb-8 shadow-2xl">
+                <p className="text-2xl font-black mb-6 text-accent">🤖 Let Scout tailor our core prompt for your favourite AI and run it in one click:</p>
+                <div className="flex justify-center mb-6">
                   <div className="relative">
-                    <div className="bg-background border-2 border-primary/30 rounded-lg px-6 py-3 shadow-lg min-w-[280px]">
+                    <div className="bg-gradient-to-r from-accent/10 to-primary/10 border-2 border-accent/30 rounded-xl px-8 py-4 shadow-lg min-w-[350px]">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium">Choose Your AI Platform</span>
-                        <div className="flex items-center gap-2">
-                          <span className="text-xs bg-primary/20 text-primary px-2 py-1 rounded">🤖 ChatGPT</span>
-                          <svg className="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        <span className="text-lg font-bold text-accent">Choose Your AI Platform</span>
+                        <div className="flex items-center gap-3">
+                          <span className="text-lg bg-accent text-accent-foreground px-4 py-2 rounded-lg font-semibold shadow-md">🤖 ChatGPT</span>
+                          <svg className="w-5 h-5 text-accent animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
                           </svg>
                         </div>
                       </div>
                     </div>
-                    {/* Dropdown preview */}
-                    <div className="absolute top-full left-0 mt-1 bg-background border border-border rounded-lg shadow-xl z-50 min-w-[280px] opacity-80">
-                      <div className="p-2 space-y-1">
-                        <div className="px-3 py-2 hover:bg-accent rounded flex items-center gap-2 cursor-pointer">
-                          <span>🤖</span> <span>ChatGPT</span>
+                    {/* Dropdown preview - Enhanced */}
+                    <div className="absolute top-full left-0 mt-2 bg-white border-2 border-accent/30 rounded-xl shadow-2xl z-50 min-w-[350px] overflow-hidden">
+                      <div className="p-3 space-y-2">
+                        <div className="px-4 py-3 bg-accent/10 rounded-lg flex items-center gap-3 cursor-pointer border-2 border-accent/20">
+                          <span className="text-xl">🤖</span> 
+                          <div className="flex-1">
+                            <span className="font-bold">ChatGPT</span>
+                            <p className="text-xs text-muted-foreground">OpenAI - Most Popular</p>
+                          </div>
+                          <span className="bg-accent text-accent-foreground px-2 py-1 rounded text-xs font-bold">SELECTED</span>
                         </div>
-                        <div className="px-3 py-2 hover:bg-accent rounded flex items-center gap-2 cursor-pointer">
-                          <span>🧠</span> <span>Claude</span>
+                        <div className="px-4 py-3 hover:bg-primary/20 rounded-lg flex items-center gap-3 cursor-pointer border border-border/30 hover:border-primary/40 transition-all">
+                          <span className="text-xl">🧠</span> 
+                          <div className="flex-1">
+                            <span className="font-bold">Claude</span>
+                            <p className="text-xs text-muted-foreground">Anthropic</p>
+                          </div>
                         </div>
-                        <div className="px-3 py-2 hover:bg-accent rounded flex items-center gap-2 cursor-pointer">
-                          <span>🎨</span> <span>MidJourney</span>
+                        <div className="px-4 py-3 hover:bg-primary/20 rounded-lg flex items-center gap-3 cursor-pointer border border-border/30 hover:border-primary/40 transition-all">
+                          <span className="text-xl">🎨</span> 
+                          <div className="flex-1">
+                            <span className="font-bold">MidJourney</span>
+                            <p className="text-xs text-muted-foreground">Image Gen</p>
+                          </div>
                         </div>
-                        <div className="px-3 py-2 hover:bg-accent rounded flex items-center gap-2 cursor-pointer">
-                          <span>💎</span> <span>Gemini</span>
+                        <div className="px-4 py-3 hover:bg-primary/20 rounded-lg flex items-center gap-3 cursor-pointer border border-border/30 hover:border-primary/40 transition-all">
+                          <span className="text-xl">💎</span> 
+                          <div className="flex-1">
+                            <span className="font-bold">Gemini</span>
+                            <p className="text-xs text-muted-foreground">Google</p>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <p className="text-sm text-muted-foreground mt-4">Instantly optimized for your preferred AI platform - no manual tweaking required!</p>
+                
+                {/* One-Click Action */}
+                <div className="pt-4 border-t-2 border-accent/20">
+                  <Button size="lg" className="bg-gradient-to-r from-accent to-primary hover:from-accent/80 hover:to-primary/80 text-white font-bold text-lg px-10 py-3 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200">
+                    <Zap className="h-5 w-5 mr-3" />
+                    One-Click Deploy to ChatGPT
+                  </Button>
+                  <p className="text-sm text-muted-foreground mt-3 font-medium">Instantly optimized for your chosen platform!</p>
+                </div>
               </div>
             </div>
             
-            <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Briefcase className="h-8 w-8 text-primary" />
+            {/* Enhanced Process Grid */}
+            <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto mb-12">
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-accent/20 shadow-lg text-center">
+                <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Briefcase className="h-8 w-8 text-accent" />
                 </div>
-                <h4 className="font-semibold mb-2">1. Browse Collections</h4>
+                <h4 className="font-bold mb-2 text-lg">1. Browse Collections</h4>
                 <p className="text-sm text-muted-foreground">Choose from curated packs by industry experts</p>
               </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <ShoppingCart className="h-8 w-8 text-primary" />
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-accent/20 shadow-lg text-center">
+                <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <ShoppingCart className="h-8 w-8 text-accent" />
                 </div>
-                <h4 className="font-semibold mb-2">2. One-Time Purchase</h4>
+                <h4 className="font-bold mb-2 text-lg">2. One-Time Purchase</h4>
                 <p className="text-sm text-muted-foreground">Own them forever, no subscriptions</p>
               </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Settings className="h-8 w-8 text-primary" />
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-accent/20 shadow-lg text-center">
+                <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Settings className="h-8 w-8 text-accent" />
                 </div>
-                <h4 className="font-semibold mb-2">3. Scout Optimizes</h4>
+                <h4 className="font-bold mb-2 text-lg">3. Scout Optimizes</h4>
                 <p className="text-sm text-muted-foreground">Platform-specific optimization in one click</p>
               </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Zap className="h-8 w-8 text-primary" />
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-accent/20 shadow-lg text-center">
+                <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Zap className="h-8 w-8 text-accent" />
                 </div>
-                <h4 className="font-semibold mb-2">4. Deploy & Run</h4>
+                <h4 className="font-bold mb-2 text-lg">4. Deploy & Run</h4>
                 <p className="text-sm text-muted-foreground">Copy to your AI tool and get results</p>
               </div>
             </div>
             
-            <div className="text-center mt-8">
-              <Button asChild size="lg" variant="default" className="px-8">
-                <Link to="/packs"><ShoppingCart className="h-4 w-4 mr-2" />Explore Prompt Packs</Link>
+            <div className="text-center">
+              <Button asChild size="lg" className="bg-gradient-to-r from-accent to-primary hover:from-accent/80 hover:to-primary/80 text-white font-bold text-xl px-12 py-4 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200">
+                <Link to="/packs"><ShoppingCart className="h-6 w-6 mr-3" />Explore Prompt Packs</Link>
               </Button>
             </div>
           </div>
