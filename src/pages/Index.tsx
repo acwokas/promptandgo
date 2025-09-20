@@ -261,35 +261,27 @@ const Index = () => {
         <PageHero title={<>
             Browse <span className="text-gradient-brand">proven prompts</span>, then let Scout optimize them instantly
           </>} subtitle={<>
-            Start with battle-tested prompts from our curated library. Then Scout customizes them for ChatGPT, Claude, MidJourney, or any AI platform in seconds. No more starting from scratch or endless tweaking.
+            Start with battle-tested prompts from our curated library. Then Scout customizes them for ChatGPT, Claude, MidJourney, or any AI platform in seconds. No more starting from scratch or endless tweaking. All for free.
           </>}>
-          <Button asChild size="lg" variant="hero" className="px-8">
-            <Link to="/library"><Search className="h-4 w-4 mr-2" />Browse Proven Prompts</Link>
-          </Button>
-          <Button asChild size="lg" variant="secondary">
-            <Link to="/scout"><Bot className="h-4 w-4 mr-2" />Try Scout Studio</Link>
-          </Button>
-          <p className="text-sm text-muted-foreground mt-4">Join 50,000+ professionals • 1M+ prompts optimized • Start free ⚡</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button asChild size="lg" variant="hero" className="px-8">
+              <Link to="/library"><Search className="h-4 w-4 mr-2" />Browse Proven Prompts</Link>
+            </Button>
+            <Button asChild size="lg" variant="secondary">
+              <Link to="/scout"><Bot className="h-4 w-4 mr-2" />Try Scout Studio</Link>
+            </Button>
+          </div>
         </PageHero>
 
         {/* Immediate Social Proof */}
         <section className="container py-8">
           <div className="text-center mb-8">
             <div className="flex flex-wrap items-center justify-center gap-4 lg:gap-8 text-sm text-muted-foreground max-w-4xl mx-auto mb-6">
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-0.5">
-                  {Array.from({ length: 5 }, (_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-                <span className="font-medium">4.9/5</span>
-              </div>
+              <span className="font-medium">5,000+ professionals</span>
               <span className="hidden sm:inline">•</span>
-              <span className="font-medium">50,000+ professionals</span>
+              <span className="font-medium">100K+ prompts optimized</span>
               <span className="hidden sm:inline">•</span>
-              <span className="font-medium">1M+ prompts optimized</span>
-              <span className="hidden sm:inline">•</span>
-              <span className="font-medium">500+ hours saved daily</span>
+              <span className="font-medium">50+ hours saved daily</span>
             </div>
           </div>
           
