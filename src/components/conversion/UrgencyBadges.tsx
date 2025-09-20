@@ -62,14 +62,16 @@ export const TodaysFeatured = () => {
   ];
 
   return (
-    <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-lg p-4 mb-6">
-      <div className="flex items-center gap-2 mb-2">
-        <Zap className="h-4 w-4 text-primary" />
-        <span className="font-semibold text-sm">Today's Featured Category</span>
+    <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-lg p-4 mb-6 max-w-4xl mx-auto">
+      <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-2">
+        <div className="flex items-center gap-2">
+          <Zap className="h-4 w-4 text-primary" />
+          <span className="font-semibold text-sm">Today's Featured Category</span>
+        </div>
         <UrgencyBadge variant="hot" />
       </div>
-      <p className="text-sm text-muted-foreground">
-        {featuredTopics[dayOfWeek]} prompts are getting 3x more usage today. 
+      <p className="text-sm text-muted-foreground text-center sm:text-left">
+        <span className="font-medium text-foreground">{featuredTopics[dayOfWeek]}</span> prompts are getting 3x more usage today. 
         <span className="font-medium text-foreground"> Don't miss out!</span>
       </p>
     </div>
