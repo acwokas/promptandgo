@@ -929,7 +929,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                     </div>
                   </SelectTrigger>
                   <SelectContent className="bg-white/95 backdrop-blur-sm border-2 border-blue-200/80 rounded-2xl shadow-xl p-2 z-50">
-                    <SelectItem value="original" className="rounded-xl p-3 sm:p-4 my-1 bg-blue-50 border-2 border-blue-200">
+                    <SelectItem value="original" className={`rounded-xl p-3 sm:p-4 my-1 ${selectedAIPlatform === 'original' ? 'bg-blue-50 border-2 border-blue-200' : 'hover:bg-gray-50 border-2 border-transparent hover:border-gray-200'}`}>
                       <div className="flex items-center gap-3 w-full">
                         <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-100 rounded-full flex items-center justify-center">
                           <span className="text-base sm:text-lg">📄</span>
@@ -938,13 +938,15 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                           <div className="font-bold text-gray-900 text-sm sm:text-base">Core Prompt</div>
                           <div className="text-gray-500 text-xs sm:text-sm">Original Version</div>
                         </div>
-                        <div className="bg-blue-500 text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs font-semibold">
-                          SELECTED
-                        </div>
+                        {selectedAIPlatform === 'original' && (
+                          <div className="bg-blue-500 text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs font-semibold">
+                            SELECTED
+                          </div>
+                        )}
                       </div>
                     </SelectItem>
                     {AI_PROVIDERS.filter(p => p.category === 'text').map((provider) => (
-                      <SelectItem key={provider.id} value={provider.id} className="rounded-xl p-3 sm:p-4 my-1 hover:bg-gray-50 border-2 border-transparent hover:border-gray-200">
+                      <SelectItem key={provider.id} value={provider.id} className={`rounded-xl p-3 sm:p-4 my-1 ${selectedAIPlatform === provider.id ? 'bg-blue-50 border-2 border-blue-200' : 'hover:bg-gray-50 border-2 border-transparent hover:border-gray-200'}`}>
                         <div className="flex items-center gap-3 w-full">
                           <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center ${
                             provider.id === 'chatgpt' ? 'bg-green-100' :
@@ -962,11 +964,16 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                                provider.description || 'AI Assistant'}
                             </div>
                           </div>
+                          {selectedAIPlatform === provider.id && (
+                            <div className="bg-blue-500 text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs font-semibold">
+                              SELECTED
+                            </div>
+                          )}
                         </div>
                       </SelectItem>
                     ))}
                     {AI_PROVIDERS.filter(p => p.category === 'image').map((provider) => (
-                      <SelectItem key={provider.id} value={provider.id} className="rounded-xl p-3 sm:p-4 my-1 hover:bg-gray-50 border-2 border-transparent hover:border-gray-200">
+                      <SelectItem key={provider.id} value={provider.id} className={`rounded-xl p-3 sm:p-4 my-1 ${selectedAIPlatform === provider.id ? 'bg-blue-50 border-2 border-blue-200' : 'hover:bg-gray-50 border-2 border-transparent hover:border-gray-200'}`}>
                         <div className="flex items-center gap-3 w-full">
                           <div className="w-8 h-8 sm:w-10 sm:h-10 bg-purple-100 rounded-full flex items-center justify-center">
                             <span className="text-base sm:text-lg">{provider.icon}</span>
@@ -979,6 +986,11 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                                provider.description || 'Image Generation'}
                             </div>
                           </div>
+                          {selectedAIPlatform === provider.id && (
+                            <div className="bg-blue-500 text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs font-semibold">
+                              SELECTED
+                            </div>
+                          )}
                         </div>
                       </SelectItem>
                     ))}
