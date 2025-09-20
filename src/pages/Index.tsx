@@ -314,17 +314,17 @@ const Index = () => {
               <TodaysFeatured />
               
               <div className="text-center mb-8">
-                <div className="flex flex-wrap items-center justify-center gap-4 lg:gap-8 text-sm text-muted-foreground max-w-4xl mx-auto mb-6">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 lg:gap-8 text-sm text-muted-foreground max-w-4xl mx-auto mb-6">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                    <span className="font-medium">5,000+ professionals</span>
+                    <span className="font-medium whitespace-nowrap">5,000+ professionals</span>
                   </div>
-                  <span className="hidden sm:inline">•</span>
-                  <span className="font-medium">100K+ prompts optimized</span>
-                  <span className="hidden sm:inline">•</span>
-                  <div className="flex items-center gap-1">
+                  <div className="hidden sm:block w-1 h-1 bg-muted-foreground/30 rounded-full"></div>
+                  <span className="font-medium whitespace-nowrap">100K+ prompts optimized</span>
+                  <div className="hidden sm:block w-1 h-1 bg-muted-foreground/30 rounded-full"></div>
+                  <div className="flex items-center gap-2">
                     <UrgencyBadge variant="trending" />
-                    <span className="font-medium">50+ hours saved daily</span>
+                    <span className="font-medium whitespace-nowrap">50+ hours saved daily</span>
                   </div>
                 </div>
               </div>
