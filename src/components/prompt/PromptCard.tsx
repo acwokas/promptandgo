@@ -909,31 +909,73 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
             )}
           </div>
           <div className="mt-4 flex flex-col gap-2">
-            {/* AI Platform Selector - First */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Let Scout tailor our core prompt for your favourite AI and run it in one click:</label>
-              <Select value={selectedAIPlatform} onValueChange={handleAIPlatformChange}>
-                <SelectTrigger className="w-full">
-                  <SelectValue>
-                    {selectedAIPlatform === 'original' 
-                      ? 'Core Prompt'
-                      : `${AI_PROVIDERS.find(p => p.id === selectedAIPlatform)?.icon} ${AI_PROVIDERS.find(p => p.id === selectedAIPlatform)?.name}`}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="original">Core Prompt</SelectItem>
-                  {AI_PROVIDERS.filter(p => p.category === 'text').map((provider) => (
-                    <SelectItem key={provider.id} value={provider.id}>
-                      {provider.icon} {provider.name}
+            {/* AI Platform Selector - Clean Design */}
+            <div className="space-y-3">
+              <label className="text-lg font-semibold text-blue-700">Let Scout tailor our core prompt for your favourite AI and run it in one click:</label>
+              
+              {/* Clean Dropdown Trigger */}
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200/80 rounded-2xl p-4">
+                <Select value={selectedAIPlatform} onValueChange={handleAIPlatformChange}>
+                  <SelectTrigger className="w-full bg-white/90 border-2 border-blue-200/60 rounded-xl px-6 py-4 text-left shadow-sm hover:shadow-md transition-all">
+                    <div className="flex items-center justify-between w-full">
+                      <span className="text-blue-600 font-medium text-lg">Choose Your AI Platform</span>
+                      <div className="flex items-center gap-3">
+                        <div className="bg-blue-500 text-white px-4 py-2 rounded-full font-semibold text-sm flex items-center gap-2">
+                          {selectedAIPlatform === 'original' 
+                            ? '📄 Core Prompt'
+                            : `${AI_PROVIDERS.find(p => p.id === selectedAIPlatform)?.icon} ${AI_PROVIDERS.find(p => p.id === selectedAIPlatform)?.name}`}
+                        </div>
+                      </div>
+                    </div>
+                  </SelectTrigger>
+                  <SelectContent className="bg-white/95 backdrop-blur-sm border-2 border-blue-200/80 rounded-2xl shadow-xl p-2 z-50">
+                    <SelectItem value="original" className="rounded-xl p-4 my-1 bg-blue-50 border-2 border-blue-200">
+                      <div className="flex items-center gap-3 w-full">
+                        <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                          <span className="text-lg">📄</span>
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-bold text-gray-900">Core Prompt</div>
+                          <div className="text-gray-500 text-sm">Original Version</div>
+                        </div>
+                        <div className="bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                          SELECTED
+                        </div>
+                      </div>
                     </SelectItem>
-                  ))}
-                  {AI_PROVIDERS.filter(p => p.category === 'image').map((provider) => (
-                    <SelectItem key={provider.id} value={provider.id}>
-                      {provider.icon} {provider.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                    {AI_PROVIDERS.filter(p => p.category === 'text').map((provider) => (
+                      <SelectItem key={provider.id} value={provider.id} className="rounded-xl p-4 my-1 hover:bg-gray-50 border-2 border-transparent hover:border-gray-200">
+                        <div className="flex items-center gap-3 w-full">
+                          <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                            provider.id === 'chatgpt' ? 'bg-green-100' :
+                            provider.id === 'claude' ? 'bg-pink-100' :
+                            provider.id === 'gemini' ? 'bg-blue-100' : 'bg-gray-100'
+                          }`}>
+                            <span className="text-lg">{provider.icon}</span>
+                          </div>
+                          <div className="flex-1">
+                            <div className="font-bold text-gray-900">{provider.name}</div>
+                            <div className="text-gray-500 text-sm">{provider.description || 'AI Assistant'}</div>
+                          </div>
+                        </div>
+                      </SelectItem>
+                    ))}
+                    {AI_PROVIDERS.filter(p => p.category === 'image').map((provider) => (
+                      <SelectItem key={provider.id} value={provider.id} className="rounded-xl p-4 my-1 hover:bg-gray-50 border-2 border-transparent hover:border-gray-200">
+                        <div className="flex items-center gap-3 w-full">
+                          <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                            <span className="text-lg">{provider.icon}</span>
+                          </div>
+                          <div className="flex-1">
+                            <div className="font-bold text-gray-900">{provider.name}</div>
+                            <div className="text-gray-500 text-sm">{provider.description || 'Image Generation'}</div>
+                          </div>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
             
             {/* Send to AI Platform - Second */}
