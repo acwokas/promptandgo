@@ -431,48 +431,6 @@ const Index = () => {
                  </div>
                </div>
 
-               {/* Path 2: Generate from Scratch */}
-               <div className="mb-16">
-                 <div className="text-center mb-8">
-                   <div className="inline-flex items-center gap-2 bg-secondary/10 text-secondary px-4 py-2 rounded-full text-sm font-medium mb-4">
-                     <Wand2 className="h-4 w-4" />
-                     Alternative Path
-                   </div>
-                   <h2 className="text-3xl font-bold mb-4">Generate Custom Prompts</h2>
-                   <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Have Scout create entirely new prompts tailored to your specific needs and goals</p>
-                 </div>
-                 <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-                   <div className="text-center">
-                     <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                       <Wand2 className="h-8 w-8 text-secondary" />
-                     </div>
-                     <h4 className="font-semibold mb-2">1. Describe Your Need</h4>
-                     <p className="text-sm text-muted-foreground">Tell Scout what you want to achieve</p>
-                   </div>
-                   <div className="text-center">
-                     <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                       <Bot className="h-8 w-8 text-secondary" />
-                     </div>
-                     <h4 className="font-semibold mb-2">2. Scout Creates</h4>
-                     <p className="text-sm text-muted-foreground">AI generates optimized prompts instantly</p>
-                   </div>
-                   <div className="text-center">
-                     <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                       <Rocket className="h-8 w-8 text-secondary" />
-                     </div>
-                     <h4 className="font-semibold mb-2">3. Deploy Anywhere</h4>
-                     <p className="text-sm text-muted-foreground">Use with any AI platform</p>
-                   </div>
-                 </div>
-                 <div className="flex justify-center mt-8">
-                   <Button asChild size="lg" variant="outline" className="px-8">
-                     <Link to="/ai/generator">
-                       <Wand2 className="h-4 w-4 mr-2" />
-                       Try Scout Generator
-                     </Link>
-                   </Button>
-                 </div>
-               </div>
 
                {/* Scout Tailoring Section */}
                <TooltipProvider>
@@ -595,6 +553,54 @@ const Index = () => {
         {/* Prompts of the Day / Personalized Prompts */}
         <section className="container">
           <PromptsOfTheDay />
+        </section>
+
+        {/* Path 2: Generate from Scratch */}
+        <section className="container py-8">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center gap-2 bg-secondary/10 text-secondary px-4 py-2 rounded-full text-sm font-medium mb-4">
+              <Wand2 className="h-4 w-4" />
+              Alternative Path
+            </div>
+            <h2 className="text-3xl font-bold mb-4">Generate Custom Prompts</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Have Scout create entirely new prompts tailored to your specific needs and goals</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-8">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Wand2 className="h-8 w-8 text-secondary" />
+              </div>
+              <h4 className="font-semibold mb-2">1. Describe Your Need</h4>
+              <p className="text-sm text-muted-foreground">Tell Scout what you want to achieve</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Bot className="h-8 w-8 text-secondary" />
+              </div>
+              <h4 className="font-semibold mb-2">2. Scout Creates</h4>
+              <p className="text-sm text-muted-foreground">AI generates optimized prompts instantly</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Rocket className="h-8 w-8 text-secondary" />
+              </div>
+              <h4 className="font-semibold mb-2">3. Deploy Anywhere</h4>
+              <p className="text-sm text-muted-foreground">Use with any AI platform</p>
+            </div>
+          </div>
+          <div className="flex justify-center mb-8">
+            <Button asChild size="lg" variant="outline" className="px-8">
+              <Link to="/ai/generator">
+                <Wand2 className="h-4 w-4 mr-2" />
+                Try Scout Generator
+              </Link>
+            </Button>
+          </div>
+          
+          {/* Mini Studio Widget */}
+          <div className="max-w-4xl mx-auto">
+            <MiniPromptStudio />
+          </div>
         </section>
 
         {/* Key Differentiators */}
