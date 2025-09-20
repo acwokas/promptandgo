@@ -39,6 +39,7 @@ import PromptsOfTheDay from "@/components/prompt/PromptsOfTheDay";
 import { PollCarousel } from "@/components/poll/PollCarousel";
 import type { Category as CategoryType } from "@/data/prompts";
 import { PromptStudioCTA } from "@/components/ui/prompt-studio-cta";
+
 const Index = () => {
   const { user } = useSupabaseAuth();
   const { isSubscribed } = useSubscriptionStatus();
@@ -60,6 +61,7 @@ const Index = () => {
       localStorage.setItem('promptandgo-visited', 'true');
     }
   }, [user]);
+
   type HP = {
     id: string;
     categoryId?: string | null;
@@ -71,6 +73,7 @@ const Index = () => {
     tags: string[];
     isPro?: boolean;
   };
+
   const [slides, setSlides] = useState<HP[]>([]);
   const [homeCategories, setHomeCategories] = useState<CategoryType[]>([]);
   const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null);
@@ -79,6 +82,7 @@ const Index = () => {
   const [newsletterSuccess, setNewsletterSuccess] = useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const [existingUserEmail, setExistingUserEmail] = useState("");
+
   useEffect(() => {
     const load = async () => {
       try {
@@ -111,6 +115,7 @@ const Index = () => {
     };
     load();
   }, []);
+
   useEffect(() => {
     if (!carouselApi) return;
     
@@ -135,6 +140,7 @@ const Index = () => {
       if (timeoutId) clearTimeout(timeoutId);
     };
   }, [carouselApi]);
+
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newsletterEmail.trim()) {
@@ -156,6 +162,7 @@ const Index = () => {
       });
       return;
     }
+
     setNewsletterSubmitting(true);
     try {
       console.log('Newsletter signup starting for:', newsletterEmail);
@@ -203,6 +210,7 @@ const Index = () => {
       setNewsletterSubmitting(false);
     }
   };
+
   const generateEmailHash = async (email: string) => {
     const encoder = new TextEncoder();
     const data = encoder.encode(email);
@@ -210,6 +218,7 @@ const Index = () => {
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
   };
+
   const handleLogin = () => {
     // Redirect to auth page - we'll pass the email in the URL state
     navigate('/auth', {
@@ -222,6 +231,7 @@ const Index = () => {
       description: "You already have an account! Please enter your password to log in."
     });
   };
+
   // Enhanced structured data for homepage
   const homeStructuredData = [
     {
@@ -267,7 +277,8 @@ const Index = () => {
     }
   ];
 
-  return <>
+  return (
+    <>
       <SEO 
         title="Scout AI - Your Personal Prompt Crafting Assistant | PromptAndGo" 
         description="Meet Scout, your AI prompt crafting partner. Start with curated prompts, customize in real-time with guided wizards, and get platform-specific versions for ChatGPT, Claude, MidJourney & more."
@@ -414,191 +425,80 @@ const Index = () => {
                   <Zap className="h-8 w-8 text-primary" />
                 </div>
                 <h4 className="font-semibold mb-2">4. One-Click Deploy</h4>
-                <p className="text-sm text-muted-foreground">Copy & paste to your AI platform</p>
+                <p className="text-sm text-muted-foreground">Copy to your favorite AI tool</p>
               </div>
             </div>
-
-            {/* Conditional Content Based on Login Status */}
-            {user ?
-          // Check if user has personalization set up
-          hasPersonalization ?
-          // User has personalization - show recommendations (even if empty)
-          <section className="container py-6">
-                  <h2 className="text-2xl font-semibold mb-2">🎯 Recommended for You</h2>
-                  {personalizedPrompts.length > 0 ? <>
-                      <p className="text-muted-foreground max-w-3xl mb-8">Based on your preferences, here are some prompts we think you'll love.</p>
-                      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                        {personalizedPrompts.slice(0, 3).map(p => <div key={p.id} className="relative group">
-                            <PromptCard prompt={p as any} categories={homeCategories} onCategoryClick={cid => navigate(`/library?categoryId=${cid}`)} onSubcategoryClick={(sid, cid) => navigate(`/library?categoryId=${cid}&subcategoryId=${sid}`)} onCopyClick={() => navigate(`/library?categoryId=${p.categoryId || ""}${p.subcategoryId ? `&subcategoryId=${p.subcategoryId}` : ""}`)} />
-                            <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full border-2 border-background shadow-sm">
-                              {Math.round(p.relevanceScore)}% match
-                            </div>
-                          </div>)}
-                      </div>
-                      <div className="mt-6 text-center space-x-3">
-                        <Button asChild variant="outline">
-                          <Link to="/library">See All Your Recommendations →</Link>
-                        </Button>
-                        <Button onClick={() => window.location.reload()} variant="ghost" size="sm" className="text-xs">
-                          🔄 Refresh
-                        </Button>
-                      </div>
-                    </> : <>
-                      <p className="text-muted-foreground max-w-3xl mb-8">We're still analyzing prompts based on your preferences. Check back soon or browse our library!</p>
-                      <div className="text-center space-y-4">
-                        <Button asChild variant="outline">
-                          <Link to="/library">Browse All Prompts</Link>
-                        </Button>
-                        <Button asChild variant="ghost">
-                          <Link to="/account/profile">Update Preferences</Link>
-                        </Button>
-                      </div>
-                    </>}
-                </section> :
-          // User doesn't have personalization set up
-          <section className="container py-6">
-                  <h2 className="text-2xl font-semibold mb-2">🎯 Recommended for You</h2>
-                  <p className="text-muted-foreground max-w-3xl mb-8">Get started by exploring some of our most popular prompts, or set up your preferences for personalized recommendations.</p>
-                  <div className="text-center space-y-4">
-                    <Button asChild variant="hero">
-                      <Link to="/account/profile">Set Up Personalized Suggestions</Link>
-                    </Button>
-                    <Button asChild variant="outline">
-                      <Link to="/library">Browse All Prompts</Link>
-                    </Button>
-                  </div>
-                </section> :
-          // Non-logged-in users: Show Prompts of the Day
-          <PromptsOfTheDay />}
-
-            {/* Popular Categories */}
-            <section className="container py-4 mt-8">
-              <h2 className="text-xl font-semibold mb-1">Popular Categories</h2>
-              <p className="text-muted-foreground text-sm mb-4">Jump directly to our most popular prompt collections with thousands of ready-to-use examples.</p>
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-                  <h3 className="text-lg font-semibold">💼 Business & Marketing</h3>
-                  <p className="text-muted-foreground text-sm mt-1 mb-3">Email campaigns, ad copy, social media content, and sales outreach that converts.</p>
-                  <div className="flex gap-2">
-                    <Button asChild variant="hero" size="sm">
-                      <Link to="/library?q=marketing#library-results">Browse Marketing</Link>
-                    </Button>
-                  </div>
-                </article>
-                
-                <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-                  <h3 className="text-lg font-semibold">🎯 Career Development</h3>
-                  <p className="text-muted-foreground text-sm mt-1 mb-3">Resume writing, interview prep, LinkedIn optimization, and job search strategies.</p>
-                  <div className="flex gap-2">
-                    <Button asChild variant="hero" size="sm">
-                      <Link to="/library?q=career#library-results">Browse Career</Link>
-                    </Button>
-                  </div>
-                </article>
-                
-                <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-                  <h3 className="text-lg font-semibold">💬 Communication</h3>
-                  <p className="text-muted-foreground text-sm mt-1 mb-3">Professional emails, presentations, and customer support responses.</p>
-                  <div className="flex gap-2">
-                    <Button asChild variant="hero" size="sm">
-                      <Link to="/library?q=email#library-results">Browse Communication</Link>
-                    </Button>
-                  </div>
-                </article>
-                
-                <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-                  <h3 className="text-lg font-semibold">✍️ Content Creation</h3>
-                  <p className="text-muted-foreground text-sm mt-1 mb-3">Blog posts, articles, creative writing, and storytelling prompts for any audience.</p>
-                  <div className="flex gap-2">
-                    <Button asChild variant="hero" size="sm">
-                      <Link to="/library?q=content#library-results">Browse Content</Link>
-                    </Button>
-                  </div>
-                </article>
-                
-                <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-                  <h3 className="text-lg font-semibold">📊 Data & Analysis</h3>
-                  <p className="text-muted-foreground text-sm mt-1 mb-3">Research, data analysis, reporting, and insights generation for better decisions.</p>
-                  <div className="flex gap-2">
-                    <Button asChild variant="hero" size="sm">
-                      <Link to="/library?q=analysis#library-results">Browse Analysis</Link>
-                    </Button>
-                  </div>
-                </article>
-                
-                <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-                  <div className="relative">
-                    <div className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs px-2 py-1 rounded-full font-medium shadow-sm">
-                      Just Added
-                    </div>
-                    <h3 className="text-lg font-semibold flex items-center gap-2">
-                      <ShoppingCart className="h-5 w-5" /> Ecommerce
-                    </h3>
-                    <p className="text-muted-foreground text-sm mt-1 mb-3">Product descriptions, customer reviews, sales pages, and online store optimization.</p>
-                    <div className="flex gap-2">
-                      <Button asChild variant="hero" size="sm">
-                        <Link to="/library?categoryId=dcd2e0d5-df88-456c-9cb5-adc17bd53dce">Browse Ecommerce</Link>
-                      </Button>
-                    </div>
-                  </div>
-                </article>
-                
-                <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-                  <h3 className="text-lg font-semibold">🎓 Education & Learning</h3>
-                  <p className="text-muted-foreground text-sm mt-1 mb-3">Lesson plans, explanations, tutorials, and educational content creation.</p>
-                  <div className="flex gap-2">
-                    <Button asChild variant="hero" size="sm">
-                      <Link to="/library?q=education#library-results">Browse Education</Link>
-                    </Button>
-                  </div>
-                </article>
-                
-                <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-                  <div className="relative">
-                    <div className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs px-2 py-1 rounded-full font-medium shadow-sm">
-                      Just Added
-                    </div>
-                    <h3 className="text-lg font-semibold flex items-center gap-2">
-                      <Image className="h-5 w-5" /> Image Creation
-                    </h3>
-                    <p className="text-muted-foreground text-sm mt-1 mb-3">Midjourney and Ideogram prompts for stunning visuals, logos, and creative artwork.</p>
-                    <div className="flex gap-2">
-                      <Button asChild variant="hero" size="sm">
-                        <Link to="/library?q=images">Browse Images</Link>
-                      </Button>
-                    </div>
-                  </div>
-                </article>
-                
-                <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-                  <h3 className="text-lg font-semibold flex items-center gap-2">
-                    <BarChart3 className="h-5 w-5" /> Infographics
-                  </h3>
-                  <p className="text-muted-foreground text-sm mt-1 mb-3">Data visualization, charts, diagrams, and visual storytelling for impactful presentations.</p>
-                  <div className="flex gap-2">
-                    <Button asChild variant="hero" size="sm">
-                      <Link to="/library?q=infographic">Browse Infographics</Link>
-                    </Button>
-                  </div>
-                </article>
-              </div>
-            </section>
+            <div className="text-center mt-8">
+              <Button asChild size="lg" variant="hero">
+                <Link to="/library"><BookOpen className="h-4 w-4 mr-2" />Browse Prompt Library</Link>
+              </Button>
+            </div>
           </div>
+        </section>
 
-          {/* Or Create Something Completely Custom */}
-          <div className="border-t pt-12">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">Or Create Something Completely Custom</h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Need something unique? Experience Scout's guided wizards right here. Select a prompt type and watch Scout build the perfect prompt for your needs in real-time.
-              </p>
-            </div>
+        {/* Prompts of the Day / Personalized Prompts */}
+        <section className="container py-8">
+          <div className="mb-12">
+            <PromptsOfTheDay />
+          </div>
+        </section>
 
-            {/* Interactive Demo */}
-            <div className="mb-12">
-              <div className="rounded-2xl border bg-card p-6 md:p-8 mb-8">
-                <MiniPromptStudio />
+        {/* Path 2: AI-Powered Creation */}
+        <section className="container py-8 border-t">
+          <div className="mb-16">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center gap-2 bg-accent/10 text-accent-foreground px-4 py-2 rounded-full text-sm font-medium mb-4">
+                <Wand2 className="h-4 w-4" />
+                Need Something Custom?
               </div>
+              <h2 className="text-3xl font-bold mb-4">Let Scout Build It For You</h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Can't find what you need? Scout creates tailored prompts using AI-guided wizards</p>
+            </div>
+            <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Briefcase className="h-8 w-8 text-accent-foreground" />
+                </div>
+                <h4 className="font-semibold mb-2">1. Choose Category</h4>
+                <p className="text-sm text-muted-foreground">Pick your use case from business-focused options</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Bot className="h-8 w-8 text-accent-foreground" />
+                </div>
+                <h4 className="font-semibold mb-2">2. Guided Interview</h4>
+                <p className="text-sm text-muted-foreground">Answer smart questions that understand context</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Sparkles className="h-8 w-8 text-accent-foreground" />
+                </div>
+                <h4 className="font-semibold mb-2">3. AI Crafting</h4>
+                <p className="text-sm text-muted-foreground">Scout builds prompts tailored to your needs</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Settings className="h-8 w-8 text-accent-foreground" />
+                </div>
+                <h4 className="font-semibold mb-2">4. Platform Optimization</h4>
+                <p className="text-sm text-muted-foreground">Automatically adapted for your AI platform</p>
+              </div>
+            </div>
+            <div className="text-center mt-8">
+              <Button asChild size="lg" variant="secondary">
+                <Link to="/scout"><Wand2 className="h-4 w-4 mr-2" />Try Scout Studio</Link>
+              </Button>
+            </div>
+          </div>
+          
+          {/* Mini Scout Studio Preview */}
+          <div className="bg-gradient-to-br from-accent/5 to-transparent rounded-2xl p-8">
+            <div className="text-center mb-6">
+              <h3 className="text-xl font-semibold mb-2">Try Scout Right Here</h3>
+              <p className="text-muted-foreground">Experience our AI-powered prompt crafting</p>
+            </div>
+            <div className="max-w-3xl mx-auto">
+              <MiniPromptStudio />
             </div>
           </div>
         </section>
@@ -717,7 +617,8 @@ const Index = () => {
                     <h3 className="text-2xl font-semibold mb-3">🚀 Get Weekly Prompt Tips</h3>
                     <p className="text-muted-foreground mb-6">Join 25,000+ professionals getting our best prompts, tips, and AI updates every Tuesday.</p>
                     
-                    {showLoginPrompt ? <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    {showLoginPrompt ? (
+                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                         <div className="flex items-center justify-center text-blue-600 mb-2">
                           <Bot className="h-4 w-4 mr-2" />
                           <span className="font-medium text-sm">Welcome back!</span>
@@ -733,14 +634,25 @@ const Index = () => {
                             Back to Newsletter
                           </Button>
                         </div>
-                      </div> : !newsletterSuccess ? <div className="max-w-md mx-auto">
+                      </div>
+                    ) : !newsletterSuccess ? (
+                      <div className="max-w-md mx-auto">
                         <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
-                          <input type="email" value={newsletterEmail} onChange={e => setNewsletterEmail(e.target.value)} placeholder="Enter your email" className="flex-1 px-4 py-2 rounded-md border bg-background" disabled={newsletterSubmitting} />
+                          <input 
+                            type="email" 
+                            value={newsletterEmail} 
+                            onChange={e => setNewsletterEmail(e.target.value)} 
+                            placeholder="Enter your email" 
+                            className="flex-1 px-4 py-2 rounded-md border bg-background" 
+                            disabled={newsletterSubmitting} 
+                          />
                           <Button type="submit" variant="hero" disabled={newsletterSubmitting}>
                             {newsletterSubmitting ? "..." : "Subscribe"}
                           </Button>
                         </form>
-                      </div> : <div className="bg-green-50 border border-green-200 rounded-lg p-4 max-w-md mx-auto">
+                      </div>
+                    ) : (
+                      <div className="bg-green-50 border border-green-200 rounded-lg p-4 max-w-md mx-auto">
                         <div className="flex items-center justify-center text-green-600 mb-1">
                           <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -748,9 +660,12 @@ const Index = () => {
                           <span className="font-medium text-sm">Successfully subscribed!</span>
                         </div>
                         <p className="text-green-600 text-xs">Welcome to our weekly prompt tips. Check your email for confirmation.</p>
-                      </div>}
+                      </div>
+                    )}
                     
-                    {!showLoginPrompt && <p className="text-xs text-muted-foreground mt-4">No spam. Unsubscribe anytime. Free forever.</p>}
+                    {!showLoginPrompt && (
+                      <p className="text-xs text-muted-foreground mt-4">No spam. Unsubscribe anytime. Free forever.</p>
+                    )}
                   </CardContent>
                 </Card>
               </div>
@@ -806,8 +721,6 @@ const Index = () => {
                     <Link to="/faqs#top">See All FAQs →</Link>
                   </Button>
                 </div>
-              </div>
-
               </div>
             </div>
 
@@ -872,7 +785,12 @@ const Index = () => {
                   // Latest Article for returning users
                   <Link to="/tips/beginners-guide-midjourney-prompts" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                     <Card className="overflow-hidden">
-                      <img src="/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png" alt="Beginner's Guide to MidJourney Prompts" loading="lazy" className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
+                      <img 
+                        src="/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png" 
+                        alt="Beginner's Guide to MidJourney Prompts" 
+                        loading="lazy" 
+                        className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" 
+                      />
                       <CardContent className="p-6">
                         <h3 className="text-xl font-semibold leading-snug mb-3">Beginner's Guide to MidJourney Prompts That Actually Work</h3>
                         <p className="text-muted-foreground mb-4">
@@ -888,14 +806,16 @@ const Index = () => {
                   // Welcome content for new users
                   <Link to="/tips/welcome-to-promptandgo-ai" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                     <Card className="overflow-hidden">
-                      <img src="/lovable-uploads/66b1134b-1d55-416b-b7ea-2719a1a22ec1.png" 
-                           alt="Welcome to promptandgo.ai: Your Shortcut to Smarter AI Prompts" 
-                           loading="lazy" 
-                           decoding="async"
-                           width="837" 
-                           height="469"
-                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
-                           className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
+                      <img 
+                        src="/lovable-uploads/66b1134b-1d55-416b-b7ea-2719a1a22ec1.png" 
+                        alt="Welcome to promptandgo.ai: Your Shortcut to Smarter AI Prompts" 
+                        loading="lazy" 
+                        decoding="async"
+                        width="837" 
+                        height="469"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
+                        className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" 
+                      />
                       <CardContent className="p-6">
                         <h3 className="text-xl font-semibold leading-snug mb-3">Welcome to promptandgo.ai: Your Shortcut to Smarter AI Prompts</h3>
                         <p className="text-muted-foreground mb-4">
@@ -921,8 +841,12 @@ const Index = () => {
 
         <section aria-labelledby="cta-tail" className="relative bg-hero hero-grid mt-8" id="cta">
           <div className="container p-6 md:p-8 text-center text-primary-foreground">
-            <h2 id="cta-tail" className="text-2xl md:text-3xl font-semibold tracking-tight">Stop guessing what to prompt. Start with <strong>battle-tested</strong> foundations that actually work.</h2>
-            <p className="mt-3 text-primary-foreground/85 text-base md:text-lg">✨ Browse thousands of proven prompts or let Scout build custom ones for your specific needs.</p>
+            <h2 id="cta-tail" className="text-2xl md:text-3xl font-semibold tracking-tight">
+              Stop guessing what to prompt. Start with <strong>battle-tested</strong> foundations that actually work.
+            </h2>
+            <p className="mt-3 text-primary-foreground/85 text-base md:text-lg">
+              ✨ Browse thousands of proven prompts or let Scout build custom ones for your specific needs.
+            </p>
             <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild variant="hero" className="px-6">
                 <Link to="/library"><Search className="h-4 w-4 mr-2" />Browse Battle-Tested Prompts</Link>
@@ -936,7 +860,6 @@ const Index = () => {
       </main>
     </>
   );
-  // Component structure is correct
 };
 
 export default Index;
