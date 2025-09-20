@@ -6,16 +6,18 @@ import type { Prompt, Category } from "@/data/prompts";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useLoginWidget } from "@/hooks/useLoginWidget";
-import { Heart, Lock, Copy, MessageSquare, Megaphone, ShoppingBag, BarChart2, Briefcase, User, HeartPulse, Clock, Sparkles, Tag, CheckCircle, Star, Wand2 } from "lucide-react";
+import { Heart, Lock, Copy, MessageSquare, Megaphone, ShoppingBag, BarChart2, Briefcase, User, HeartPulse, Clock, Sparkles, Tag, CheckCircle, Star, Wand2, Send, ExternalLink } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { addToCart, getCart } from "@/lib/cart";
 import ShareButton from "@/components/ShareButton";
+import { AI_PROVIDERS, rewritePromptForProvider } from "@/lib/promptRewriter";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { AiProviderDropdown } from "@/components/ai/AiProviderDropdown";
 import { AiResponseModal } from "@/components/ai/AiResponseModal";
-import { AI_PROVIDERS, rewritePromptForProvider } from "@/lib/promptRewriter";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 // Clean display title by removing common variant markers
@@ -70,7 +72,7 @@ const generateFallbackRating = (promptId: string) => {
   
   // Round to one decimal place
   return Math.round(rating * 10) / 10;
-};
+  };
 
 // Generate fallback rating count
 const generateFallbackRatingCount = (promptId: string) => {
@@ -78,9 +80,8 @@ const generateFallbackRatingCount = (promptId: string) => {
   for (let i = 0; i < promptId.length; i++) {
     hash = (hash * 17 + promptId.charCodeAt(i)) >>> 0;
   }
-  
-  // Generate between 12 and 847 ratings
-  return 12 + (hash % 836);
+  // Generate count between 80 and 1000
+  return Math.floor(80 + (hash % 920));
 };
 
 interface PromptCardProps {
@@ -111,6 +112,72 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   const [totalRatings, setTotalRatings] = useState<number>(0);
   const [userRating, setUserRating] = useState<number>(0);
   const [isRatingLoading, setIsRatingLoading] = useState(false);
+
+  // AI Provider state
+  const [selectedProvider, setSelectedProvider] = useState<string | null>(null);
+  const [showSendDialog, setShowSendDialog] = useState(false);
+
+  // Get the displayed prompt (rewritten or original)
+  const displayedPrompt = selectedProvider 
+    ? rewritePromptForProvider(prompt.prompt, selectedProvider)
+    : prompt.prompt;
+
+  // Get selected provider data
+  const selectedProviderData = selectedProvider 
+    ? AI_PROVIDERS.find(p => p.id === selectedProvider)
+    : null;
+
+  // Handle sending to AI
+  const handleSendToAI = async () => {
+    if (!selectedProvider) {
+      toast({
+        title: "No AI provider selected",
+        description: "Please select an AI provider first.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(displayedPrompt);
+      setShowSendDialog(true);
+    } catch (error) {
+      toast({
+        title: "Copy failed",
+        description: "Failed to copy prompt to clipboard.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const confirmSendToAI = () => {
+    if (!selectedProviderData) return;
+
+    // URLs for different AI providers
+    const urls: Record<string, string> = {
+      chatgpt: 'https://chatgpt.com/',
+      claude: 'https://claude.ai/',
+      gemini: 'https://gemini.google.com/',
+      deepseek: 'https://chat.deepseek.com/',
+      groq: 'https://console.groq.com/playground',
+      mistral: 'https://chat.mistral.ai/',
+      llama: 'https://www.llama2.ai/',
+      zenochat: 'https://zenochat.ai/',
+      midjourney: 'https://discord.com/channels/@me',
+      ideogram: 'https://ideogram.ai/'
+    };
+
+    const url = urls[selectedProvider!];
+    if (url) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+      toast({
+        title: `Opened ${selectedProviderData.name}`,
+        description: `${selectedProviderData.name} opened in new tab. Your optimized prompt has been copied to clipboard.`
+      });
+    }
+
+    setShowSendDialog(false);
+  };
 
   // Load ratings data
   useEffect(() => {
@@ -500,6 +567,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   };
 
   return (
+    <>
     <Card className={cn("relative overflow-hidden h-full with-category-accent glass-card transition animate-float-in hover:shadow-glow-strong", accentClass)} style={{ ['--category-accent' as any]: `var(--accent-${accentIndex})` }}>
       <CardHeader>
         <div className="mb-2 flex gap-2 flex-wrap">
@@ -630,6 +698,17 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               <Copy className="h-4 w-4" />
               <span>Copy Prompt</span>
             </Button>
+            
+            {selectedProvider && (
+              <Button 
+                size="sm"
+                onClick={handleSendToAI}
+                className="w-full"
+              >
+                <Send className="h-4 w-4" />
+                <span>Send to {selectedProviderData?.name}</span>
+              </Button>
+            )}
             <Button
               size="sm"
               variant="outline"
@@ -760,5 +839,30 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
         }}
       />
     </Card>
+
+    {/* Send to AI Confirmation Dialog */}
+    <Dialog open={showSendDialog} onOpenChange={setShowSendDialog}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            {selectedProviderData?.icon}
+            Open {selectedProviderData?.name}?
+          </DialogTitle>
+          <DialogDescription>
+            We'll open {selectedProviderData?.name} in a new tab and your optimized prompt has been copied to your clipboard. You can paste it directly into the chat.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <Button variant="outline" onClick={() => setShowSendDialog(false)}>
+            Cancel
+          </Button>
+          <Button onClick={confirmSendToAI}>
+            <ExternalLink className="h-4 w-4 mr-2" />
+            Open {selectedProviderData?.name}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+    </>
   );
 };
