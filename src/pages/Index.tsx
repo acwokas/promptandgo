@@ -257,37 +257,144 @@ const Index = () => {
       />
 
       <main>
-        {/* Hero */}
+        {/* Hero - Problem → Solution → CTA */}
         <PageHero title={<>
-            Meet <span className="text-gradient-brand">Scout</span> — Your AI prompt crafting partner
+            Stop wasting 30 minutes tweaking prompts that <span className="text-gradient-brand">still don't work</span>
           </>} subtitle={<>
-            Start with human-curated prompts, then let Scout customize them in real-time for any AI platform. From ChatGPT to MidJourney, get the right prompt every time. ✨ Free to start, powerful extras available.
+            <span className="text-lg font-medium">Meet Scout</span> — Your AI that turns proven, human-curated prompts into platform-perfect commands in seconds. From ChatGPT to MidJourney, get better results instantly.
           </>}>
-          <Button asChild size="default" variant="hero" className="px-6">
-            <Link to="/scout"><Bot className="h-4 w-4 mr-2" />Try Scout Studio</Link>
+          <Button asChild size="lg" variant="hero" className="px-8">
+            <Link to="/scout"><Bot className="h-4 w-4 mr-2" />Try Scout Free</Link>
           </Button>
-          <Button asChild size="default" variant="inverted">
-            <Link to="/library"><Search className="h-4 w-4 mr-2" />Browse Library</Link>
-          </Button>
-          <Button asChild size="default" variant="secondary">
-            <Link to="/packs">Power Packs</Link>
-          </Button>
+          <p className="text-sm text-muted-foreground mt-4">Join 50,000+ professionals saving hours daily ⚡</p>
         </PageHero>
 
-        {/* How Scout Works - Two Distinct Paths */}
+        {/* Immediate Social Proof */}
+        <section className="container py-8">
+          <div className="text-center mb-8">
+            <div className="flex flex-wrap items-center justify-center gap-4 lg:gap-8 text-sm text-muted-foreground max-w-4xl mx-auto mb-6">
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-0.5">
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+                <span className="font-medium">4.9/5</span>
+              </div>
+              <span className="hidden sm:inline">•</span>
+              <span className="font-medium">50,000+ professionals</span>
+              <span className="hidden sm:inline">•</span>
+              <span className="font-medium">1M+ prompts optimized</span>
+              <span className="hidden sm:inline">•</span>
+              <span className="font-medium">500+ hours saved daily</span>
+            </div>
+          </div>
+          
+          <div className="grid gap-6 md:grid-cols-3">
+            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Bot className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-0.5 mb-2">
+                      {Array.from({ length: 5 }, (_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
+                    </div>
+                    <p className="text-sm text-muted-foreground">"Scout's wizards are incredible! I used to spend 30 minutes tweaking prompts. Now Scout builds exactly what I need in under 2 minutes."</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 pl-14">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">SJ</div>
+                  <div>
+                    <p className="text-sm font-medium">Sarah Johnson</p>
+                    <p className="text-xs text-muted-foreground">Marketing Director</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Sparkles className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-0.5 mb-2">
+                      {Array.from({ length: 5 }, (_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
+                    </div>
+                    <p className="text-sm text-muted-foreground">"The platform adaptation is genius. Same prompt idea, but Scout optimizes it for ChatGPT vs Claude vs MidJourney. Works perfectly every time."</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 pl-14">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">MR</div>
+                  <div>
+                    <p className="text-sm font-medium">Michael Rodriguez</p>
+                    <p className="text-xs text-muted-foreground">Freelance Writer</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Rocket className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-0.5 mb-2">
+                      {Array.from({ length: 5 }, (_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
+                    </div>
+                    <p className="text-sm text-muted-foreground">"Starting with curated prompts then letting Scout customize them saves hours. We've streamlined our entire content workflow with this approach."</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 pl-14">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">AL</div>
+                  <div>
+                    <p className="text-sm font-medium">Alex Liu</p>
+                    <p className="text-xs text-muted-foreground">Startup Founder</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        {/* Interactive Demo - Experience Scout First */}
+        <section className="container py-8">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold mb-4">See Scout in Action</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Experience Scout's guided wizards right here. Select a prompt type and watch Scout build the perfect prompt for your needs in real-time.
+            </p>
+          </div>
+          
+          <div className="rounded-2xl border bg-card p-6 md:p-8 mb-8">
+            <MiniPromptStudio />
+          </div>
+          
+          <div className="text-center">
+            <p className="text-muted-foreground mb-4">See how easy that was? That's the power of Scout.</p>
+            <Button asChild size="lg" variant="hero">
+              <Link to="/scout">Create Your Full Prompt <Wand2 className="h-4 w-4 ml-2" /></Link>
+            </Button>
+          </div>
+        </section>
         <section className="container pt-6 pb-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">How Scout Works</h2>
+            <h2 className="text-3xl font-bold mb-4">Here's How Scout Saves You Time</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Two powerful ways to create perfectly optimized prompts for any AI platform
+              Two powerful ways to create perfectly optimized prompts for any AI platform — no more trial and error
             </p>
           </div>
           
           {/* Path 1: Library-based */}
           <div className="mb-12">
             <div className="text-center mb-8">
-              <h3 className="text-2xl font-semibold text-foreground mb-2">Path 1: Start with Our Library</h3>
-              <p className="text-muted-foreground">Perfect for when you want to build on proven prompts</p>
+              <h3 className="text-2xl font-semibold text-foreground mb-2">Path 1: Start with Battle-Tested Prompts</h3>
+              <p className="text-muted-foreground">Perfect for when you want to build on proven foundations</p>
             </div>
             <div className="grid md:grid-cols-4 gap-6">
               <div className="text-center">
@@ -353,17 +460,55 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Scout Studio Demo */}
-        <section className="container pb-8">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold mb-4">Try Scout's Prompt Crafting Studio</h2>
+        {/* Key Differentiators */}
+        <section className="container py-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Why Scout Beats DIY Prompting</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Experience Scout's guided wizards right here. Select a prompt type and watch Scout build the perfect prompt for your needs.
+              Stop guessing and start with proven foundations that actually work
             </p>
           </div>
           
-          <div className="rounded-2xl border bg-card p-6 md:p-8">
-            <MiniPromptStudio />
+          <div className="grid gap-6 lg:grid-cols-4">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <ShieldCheck className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Human-Curated Foundation</h3>
+              <p className="text-muted-foreground">
+                Battle-tested starting points across every industry. No more starting from scratch.
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Bot className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Real-time Customization</h3>
+              <p className="text-muted-foreground">
+                Guided wizards adapt prompts to your goals. No guesswork, just results.
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Sparkles className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Platform Optimization</h3>
+              <p className="text-muted-foreground">
+                One prompt, optimized for ChatGPT, Claude, MidJourney, and more. Works everywhere.
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <ListChecks className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Volume & Variety</h3>
+              <p className="text-muted-foreground">
+                Thousands of prompts for every use case. From marketing to education to creative work.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -373,36 +518,15 @@ const Index = () => {
             <div className="lg:col-span-2 rounded-2xl border bg-card p-6 md:p-8">
               <h2 className="text-3xl font-bold mb-4">What is PromptAndGo?</h2>
               <p className="text-xl text-muted-foreground mb-6">
-                A smarter way to craft prompts for work and life.
+                The smartest way to craft prompts for work and life.
               </p>
               <p className="text-muted-foreground max-w-prose mb-6">
-                We help you create and refine prompts in real time, tailored to GPT, Gemini, Claude, MidJourney, and more. Sign up once for free and our AI will suggest prompts based on your goals so you can start strong.
+                We help you create and refine prompts in real time, tailored to ChatGPT, Claude, Gemini, MidJourney, and more. Start with human-curated foundations, then let Scout customize them perfectly for your needs.
               </p>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div className="flex items-center gap-3">
-                  <ShieldCheck className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span>Human-curated starting points</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Bot className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span>Built and refined in real time</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Sparkles className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span>Adapted to each AI platform</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Wand2 className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span>Copy-and-go simplicity</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Zap className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span>Works everywhere</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <ListChecks className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span>Tailored to your choices</span>
-                </div>
+              <div className="text-center">
+                <Button asChild size="lg" variant="hero">
+                  <Link to="/library">Explore Our Library <Search className="h-4 w-4 ml-2" /></Link>
+                </Button>
               </div>
             </div>
 
@@ -421,104 +545,6 @@ const Index = () => {
                 <div className="text-sm text-muted-foreground">Hours saved daily</div>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* Social Proof Section */}
-        <section className="container pt-6 pb-2">
-          <div className="text-center mb-8">
-            <p className="text-muted-foreground mb-2">Trusted by 50,000+ professionals</p>
-            <div className="flex flex-wrap items-center justify-center gap-4 lg:gap-8 text-xs text-muted-foreground max-w-4xl mx-auto">
-              <div className="flex items-center gap-1">
-                <div className="flex items-center gap-0.5">
-                  {Array.from({ length: 5 }, (_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-                <span className="ml-1">4.9/5</span>
-              </div>
-              <span className="hidden sm:inline">•</span>
-              <span>1M+ prompts copied</span>
-              <span className="hidden sm:inline">•</span>
-              <span>500+ hours saved daily</span>
-            </div>
-          </div>
-          
-          <div className="grid gap-6 md:grid-cols-3 mb-4">
-            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Bot className="h-5 w-5 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-0.5 mb-2">
-                      {Array.from({
-                      length: 5
-                    }, (_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
-                    </div>
-                    <p className="text-sm text-muted-foreground">"Scout's wizards are incredible! I used to spend 30 minutes tweaking prompts. Now Scout builds exactly what I need in under 2 minutes."</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 pl-14">
-                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">SJ</div>
-                  <div>
-                    <p className="text-sm font-medium">Sarah Johnson</p>
-                    <p className="text-xs text-muted-foreground">Marketing Director</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Sparkles className="h-5 w-5 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-0.5 mb-2">
-                      {Array.from({
-                      length: 5
-                    }, (_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
-                    </div>
-                    <p className="text-sm text-muted-foreground">"The platform adaptation is genius. Same prompt idea, but Scout optimizes it for ChatGPT vs Claude vs MidJourney. Works perfectly every time."</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 pl-14">
-                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">MR</div>
-                  <div>
-                    <p className="text-sm font-medium">Michael Rodriguez</p>
-                    <p className="text-xs text-muted-foreground">Freelance Writer</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Rocket className="h-5 w-5 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-0.5 mb-2">
-                      {Array.from({
-                      length: 5
-                    }, (_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
-                    </div>
-                    <p className="text-sm text-muted-foreground">"Starting with curated prompts then letting Scout customize them saves hours. We've streamlined our entire content workflow with this approach."</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 pl-14">
-                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">AL</div>
-                  <div>
-                    <p className="text-sm font-medium">Alex Liu</p>
-                    <p className="text-xs text-muted-foreground">Startup Founder</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </section>
 
