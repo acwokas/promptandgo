@@ -519,6 +519,38 @@ const Index = () => {
                 <p className="text-sm text-gray-600 mt-3 font-medium">Instantly optimized for your chosen platform!</p>
               </div>
             </div>
+            
+            {/* Enhanced Process Grid - Below Dropdown */}
+            <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto mt-8">
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-accent/20 shadow-lg text-center">
+                <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Briefcase className="h-8 w-8 text-accent" />
+                </div>
+                <h4 className="font-bold mb-2 text-lg">1. Browse Collections</h4>
+                <p className="text-sm text-muted-foreground">Choose from curated packs by industry experts</p>
+              </div>
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-accent/20 shadow-lg text-center">
+                <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <ShoppingCart className="h-8 w-8 text-accent" />
+                </div>
+                <h4 className="font-bold mb-2 text-lg">2. One-Time Purchase</h4>
+                <p className="text-sm text-muted-foreground">Own them forever, no subscriptions</p>
+              </div>
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-accent/20 shadow-lg text-center">
+                <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Settings className="h-8 w-8 text-accent" />
+                </div>
+                <h4 className="font-bold mb-2 text-lg">3. Scout Optimizes</h4>
+                <p className="text-sm text-muted-foreground">Platform-specific optimization in one click</p>
+              </div>
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-accent/20 shadow-lg text-center">
+                <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Zap className="h-8 w-8 text-accent" />
+                </div>
+                <h4 className="font-bold mb-2 text-lg">4. Deploy & Run</h4>
+                <p className="text-sm text-muted-foreground">Copy to your AI tool and get results</p>
+              </div>
+            </div>
           </div>
         </section>
 
