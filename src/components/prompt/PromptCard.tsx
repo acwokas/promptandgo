@@ -959,7 +959,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                   {loadingAILimits ? (
                     "Loading limits..."
                   ) : (
-                    `${dailyAISends.remaining}/${dailyAISends.daily_limit} sends remaining today`
+                    `${dailyAISends.remaining || 0}/${dailyAISends.daily_limit} sends remaining today`
                   )}
                 </div>
               </div>
