@@ -422,6 +422,172 @@ const Index = () => {
                 <Link to="/library">Start Browsing Prompts <Search className="h-4 w-4 ml-2" /></Link>
               </Button>
             </div>
+
+            {/* Popular Categories */}
+            <section className="container py-4 mt-8">
+              <h2 className="text-xl font-semibold mb-1">Popular Categories</h2>
+              <p className="text-muted-foreground text-sm mb-4">Jump directly to our most popular prompt collections with thousands of ready-to-use examples.</p>
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+                  <h3 className="text-lg font-semibold">💼 Business & Marketing</h3>
+                  <p className="text-muted-foreground text-sm mt-1 mb-3">Email campaigns, ad copy, social media content, and sales outreach that converts.</p>
+                  <div className="flex gap-2">
+                    <Button asChild variant="hero" size="sm">
+                      <Link to="/library?q=marketing#library-results">Browse Marketing</Link>
+                    </Button>
+                  </div>
+                </article>
+                
+                <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+                  <h3 className="text-lg font-semibold">🎯 Career Development</h3>
+                  <p className="text-muted-foreground text-sm mt-1 mb-3">Resume writing, interview prep, LinkedIn optimization, and job search strategies.</p>
+                  <div className="flex gap-2">
+                    <Button asChild variant="hero" size="sm">
+                      <Link to="/library?q=career#library-results">Browse Career</Link>
+                    </Button>
+                  </div>
+                </article>
+                
+                <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+                  <h3 className="text-lg font-semibold">💬 Communication</h3>
+                  <p className="text-muted-foreground text-sm mt-1 mb-3">Professional emails, presentations, and customer support responses.</p>
+                  <div className="flex gap-2">
+                    <Button asChild variant="hero" size="sm">
+                      <Link to="/library?q=email#library-results">Browse Communication</Link>
+                    </Button>
+                  </div>
+                </article>
+                
+                <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+                  <h3 className="text-lg font-semibold">✍️ Content Creation</h3>
+                  <p className="text-muted-foreground text-sm mt-1 mb-3">Blog posts, articles, creative writing, and storytelling prompts for any audience.</p>
+                  <div className="flex gap-2">
+                    <Button asChild variant="hero" size="sm">
+                      <Link to="/library?q=content#library-results">Browse Content</Link>
+                    </Button>
+                  </div>
+                </article>
+                
+                <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+                  <h3 className="text-lg font-semibold">📊 Data & Analysis</h3>
+                  <p className="text-muted-foreground text-sm mt-1 mb-3">Research, data analysis, reporting, and insights generation for better decisions.</p>
+                  <div className="flex gap-2">
+                    <Button asChild variant="hero" size="sm">
+                      <Link to="/library?q=analysis#library-results">Browse Analysis</Link>
+                    </Button>
+                  </div>
+                </article>
+                
+                <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+                  <div className="relative">
+                    <div className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs px-2 py-1 rounded-full font-medium shadow-sm">
+                      Just Added
+                    </div>
+                    <h3 className="text-lg font-semibold flex items-center gap-2">
+                      <ShoppingCart className="h-5 w-5" /> Ecommerce
+                    </h3>
+                    <p className="text-muted-foreground text-sm mt-1 mb-3">Product descriptions, customer reviews, sales pages, and online store optimization.</p>
+                    <div className="flex gap-2">
+                      <Button asChild variant="hero" size="sm">
+                        <Link to="/library?categoryId=dcd2e0d5-df88-456c-9cb5-adc17bd53dce">Browse Ecommerce</Link>
+                      </Button>
+                    </div>
+                  </div>
+                </article>
+                
+                <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+                  <h3 className="text-lg font-semibold">🎓 Education & Learning</h3>
+                  <p className="text-muted-foreground text-sm mt-1 mb-3">Lesson plans, explanations, tutorials, and educational content creation.</p>
+                  <div className="flex gap-2">
+                    <Button asChild variant="hero" size="sm">
+                      <Link to="/library?q=education#library-results">Browse Education</Link>
+                    </Button>
+                  </div>
+                </article>
+                
+                <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+                  <div className="relative">
+                    <div className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs px-2 py-1 rounded-full font-medium shadow-sm">
+                      Just Added
+                    </div>
+                    <h3 className="text-lg font-semibold flex items-center gap-2">
+                      <Image className="h-5 w-5" /> Image Creation
+                    </h3>
+                    <p className="text-muted-foreground text-sm mt-1 mb-3">Midjourney and Ideogram prompts for stunning visuals, logos, and creative artwork.</p>
+                    <div className="flex gap-2">
+                      <Button asChild variant="hero" size="sm">
+                        <Link to="/library?q=images">Browse Images</Link>
+                      </Button>
+                    </div>
+                  </div>
+                </article>
+                
+                <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+                  <h3 className="text-lg font-semibold flex items-center gap-2">
+                    <BarChart3 className="h-5 w-5" /> Infographics
+                  </h3>
+                  <p className="text-muted-foreground text-sm mt-1 mb-3">Data visualization, charts, diagrams, and visual storytelling for impactful presentations.</p>
+                  <div className="flex gap-2">
+                    <Button asChild variant="hero" size="sm">
+                      <Link to="/library?q=infographic">Browse Infographics</Link>
+                    </Button>
+                  </div>
+                </article>
+              </div>
+            </section>
+
+            {/* Conditional Content Based on Login Status */}
+            {user ?
+          // Check if user has personalization set up
+          hasPersonalization ?
+          // User has personalization - show recommendations (even if empty)
+          <section className="container py-6">
+                  <h2 className="text-2xl font-semibold mb-2">🎯 Recommended for You</h2>
+                  {personalizedPrompts.length > 0 ? <>
+                      <p className="text-muted-foreground max-w-3xl mb-8">Based on your preferences, here are some prompts we think you'll love.</p>
+                      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                        {personalizedPrompts.slice(0, 3).map(p => <div key={p.id} className="relative group">
+                            <PromptCard prompt={p as any} categories={homeCategories} onCategoryClick={cid => navigate(`/library?categoryId=${cid}`)} onSubcategoryClick={(sid, cid) => navigate(`/library?categoryId=${cid}&subcategoryId=${sid}`)} onCopyClick={() => navigate(`/library?categoryId=${p.categoryId || ""}${p.subcategoryId ? `&subcategoryId=${p.subcategoryId}` : ""}`)} />
+                            <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full border-2 border-background shadow-sm">
+                              {Math.round(p.relevanceScore)}% match
+                            </div>
+                          </div>)}
+                      </div>
+                      <div className="mt-6 text-center space-x-3">
+                        <Button asChild variant="outline">
+                          <Link to="/library">See All Your Recommendations →</Link>
+                        </Button>
+                        <Button onClick={() => window.location.reload()} variant="ghost" size="sm" className="text-xs">
+                          🔄 Refresh
+                        </Button>
+                      </div>
+                    </> : <>
+                      <p className="text-muted-foreground max-w-3xl mb-8">We're still analyzing prompts based on your preferences. Check back soon or browse our library!</p>
+                      <div className="text-center space-y-4">
+                        <Button asChild variant="outline">
+                          <Link to="/library">Browse All Prompts</Link>
+                        </Button>
+                        <Button asChild variant="ghost">
+                          <Link to="/account/profile">Update Preferences</Link>
+                        </Button>
+                      </div>
+                    </>}
+                </section> :
+          // User doesn't have personalization set up
+          <section className="container py-6">
+                  <h2 className="text-2xl font-semibold mb-2">🎯 Recommended for You</h2>
+                  <p className="text-muted-foreground max-w-3xl mb-8">Get started by exploring some of our most popular prompts, or set up your preferences for personalized recommendations.</p>
+                  <div className="text-center space-y-4">
+                    <Button asChild variant="hero">
+                      <Link to="/account/profile">Set Up Personalized Suggestions</Link>
+                    </Button>
+                    <Button asChild variant="outline">
+                      <Link to="/library">Browse All Prompts</Link>
+                    </Button>
+                  </div>
+                </section> :
+          // Non-logged-in users: Show Prompts of the Day
+          <PromptsOfTheDay />}
           </div>
 
           {/* Or Create Something Completely Custom */}
@@ -536,171 +702,6 @@ const Index = () => {
             </div>
           </div>
         </section>
-
-        <section className="container py-4">
-          <h2 className="text-xl font-semibold mb-1">Popular Categories</h2>
-          <p className="text-muted-foreground text-sm mb-4">Jump directly to our most popular prompt collections with thousands of ready-to-use examples.</p>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-lg font-semibold">💼 Business & Marketing</h3>
-              <p className="text-muted-foreground text-sm mt-1 mb-3">Email campaigns, ad copy, social media content, and sales outreach that converts.</p>
-              <div className="flex gap-2">
-                <Button asChild variant="hero" size="sm">
-                  <Link to="/library?q=marketing#library-results">Browse Marketing</Link>
-                </Button>
-              </div>
-            </article>
-            
-            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-lg font-semibold">🎯 Career Development</h3>
-              <p className="text-muted-foreground text-sm mt-1 mb-3">Resume writing, interview prep, LinkedIn optimization, and job search strategies.</p>
-              <div className="flex gap-2">
-                <Button asChild variant="hero" size="sm">
-                  <Link to="/library?q=career#library-results">Browse Career</Link>
-                </Button>
-              </div>
-            </article>
-            
-            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-lg font-semibold">💬 Communication</h3>
-              <p className="text-muted-foreground text-sm mt-1 mb-3">Professional emails, presentations, and customer support responses.</p>
-              <div className="flex gap-2">
-                <Button asChild variant="hero" size="sm">
-                  <Link to="/library?q=email#library-results">Browse Communication</Link>
-                </Button>
-              </div>
-            </article>
-            
-            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-lg font-semibold">✍️ Content Creation</h3>
-              <p className="text-muted-foreground text-sm mt-1 mb-3">Blog posts, articles, creative writing, and storytelling prompts for any audience.</p>
-              <div className="flex gap-2">
-                <Button asChild variant="hero" size="sm">
-                  <Link to="/library?q=content#library-results">Browse Content</Link>
-                </Button>
-              </div>
-            </article>
-            
-            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-lg font-semibold">📊 Data & Analysis</h3>
-              <p className="text-muted-foreground text-sm mt-1 mb-3">Research, data analysis, reporting, and insights generation for better decisions.</p>
-              <div className="flex gap-2">
-                <Button asChild variant="hero" size="sm">
-                  <Link to="/library?q=analysis#library-results">Browse Analysis</Link>
-                </Button>
-              </div>
-            </article>
-            
-            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <div className="relative">
-                <div className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs px-2 py-1 rounded-full font-medium shadow-sm">
-                  Just Added
-                </div>
-                <h3 className="text-lg font-semibold flex items-center gap-2">
-                  <ShoppingCart className="h-5 w-5" /> Ecommerce
-                </h3>
-                <p className="text-muted-foreground text-sm mt-1 mb-3">Product descriptions, customer reviews, sales pages, and online store optimization.</p>
-                <div className="flex gap-2">
-                  <Button asChild variant="hero" size="sm">
-                    <Link to="/library?categoryId=dcd2e0d5-df88-456c-9cb5-adc17bd53dce">Browse Ecommerce</Link>
-                  </Button>
-                </div>
-              </div>
-            </article>
-            
-            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-lg font-semibold">🎓 Education & Learning</h3>
-              <p className="text-muted-foreground text-sm mt-1 mb-3">Lesson plans, explanations, tutorials, and educational content creation.</p>
-              <div className="flex gap-2">
-                <Button asChild variant="hero" size="sm">
-                  <Link to="/library?q=education#library-results">Browse Education</Link>
-                </Button>
-              </div>
-            </article>
-            
-            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <div className="relative">
-                <div className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs px-2 py-1 rounded-full font-medium shadow-sm">
-                  Just Added
-                </div>
-                <h3 className="text-lg font-semibold flex items-center gap-2">
-                  <Image className="h-5 w-5" /> Image Creation
-                </h3>
-                <p className="text-muted-foreground text-sm mt-1 mb-3">Midjourney and Ideogram prompts for stunning visuals, logos, and creative artwork.</p>
-                <div className="flex gap-2">
-                  <Button asChild variant="hero" size="sm">
-                    <Link to="/library?q=images">Browse Images</Link>
-                  </Button>
-                </div>
-              </div>
-            </article>
-            
-            <article className="group rounded-lg border bg-card p-4 ring-1 ring-primary/10 bg-gradient-to-br from-primary/10 to-transparent hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <h3 className="text-lg font-semibold flex items-center gap-2">
-                <BarChart3 className="h-5 w-5" /> Infographics
-              </h3>
-              <p className="text-muted-foreground text-sm mt-1 mb-3">Data visualization, charts, diagrams, and visual storytelling for impactful presentations.</p>
-              <div className="flex gap-2">
-                <Button asChild variant="hero" size="sm">
-                  <Link to="/library?q=infographic">Browse Infographics</Link>
-                </Button>
-              </div>
-            </article>
-          </div>
-        </section>
-
-        {/* Conditional Content Based on Login Status */}
-        {user ?
-      // Check if user has personalization set up
-      hasPersonalization ?
-      // User has personalization - show recommendations (even if empty)
-      <section className="container py-6">
-              <h2 className="text-2xl font-semibold mb-2">🎯 Recommended for You</h2>
-              {personalizedPrompts.length > 0 ? <>
-                  <p className="text-muted-foreground max-w-3xl mb-8">Based on your preferences, here are some prompts we think you'll love.</p>
-                  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                    {personalizedPrompts.slice(0, 3).map(p => <div key={p.id} className="relative group">
-                        <PromptCard prompt={p as any} categories={homeCategories} onCategoryClick={cid => navigate(`/library?categoryId=${cid}`)} onSubcategoryClick={(sid, cid) => navigate(`/library?categoryId=${cid}&subcategoryId=${sid}`)} onCopyClick={() => navigate(`/library?categoryId=${p.categoryId || ""}${p.subcategoryId ? `&subcategoryId=${p.subcategoryId}` : ""}`)} />
-                        <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full border-2 border-background shadow-sm">
-                          {Math.round(p.relevanceScore)}% match
-                        </div>
-                      </div>)}
-                  </div>
-                  <div className="mt-6 text-center space-x-3">
-                    <Button asChild variant="outline">
-                      <Link to="/library">See All Your Recommendations →</Link>
-                    </Button>
-                    <Button onClick={() => window.location.reload()} variant="ghost" size="sm" className="text-xs">
-                      🔄 Refresh
-                    </Button>
-                  </div>
-                </> : <>
-                  <p className="text-muted-foreground max-w-3xl mb-8">We're still analyzing prompts based on your preferences. Check back soon or browse our library!</p>
-                  <div className="text-center space-y-4">
-                    <Button asChild variant="outline">
-                      <Link to="/library">Browse All Prompts</Link>
-                    </Button>
-                    <Button asChild variant="ghost">
-                      <Link to="/account/profile">Update Preferences</Link>
-                    </Button>
-                  </div>
-                </>}
-            </section> :
-      // User doesn't have personalization set up
-      <section className="container py-6">
-              <h2 className="text-2xl font-semibold mb-2">🎯 Recommended for You</h2>
-              <p className="text-muted-foreground max-w-3xl mb-8">Get started by exploring some of our most popular prompts, or set up your preferences for personalized recommendations.</p>
-              <div className="text-center space-y-4">
-                <Button asChild variant="hero">
-                  <Link to="/account/profile">Set Up Personalized Suggestions</Link>
-                </Button>
-                <Button asChild variant="outline">
-                  <Link to="/library">Browse All Prompts</Link>
-                </Button>
-              </div>
-            </section> :
-      // Non-logged-in users: Show Prompts of the Day
-      <PromptsOfTheDay />}
 
         {/* Bottom Section - FAQ, Pricing, and CTA combined */}
         <section className="container py-8">
