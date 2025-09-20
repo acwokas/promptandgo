@@ -410,19 +410,12 @@ const Index = () => {
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold mb-4">Or Create Something Completely Custom</h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Need something unique? Experience Scout's guided wizards and custom prompt creation
+                Need something unique? Experience Scout's guided wizards right here. Select a prompt type and watch Scout build the perfect prompt for your needs in real-time.
               </p>
             </div>
 
             {/* Interactive Demo */}
             <div className="mb-12">
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-semibold text-foreground mb-2">See Scout in Action</h3>
-                <p className="text-muted-foreground max-w-xl mx-auto">
-                  Experience Scout's guided wizards right here. Select a prompt type and watch Scout build the perfect prompt for your needs in real-time.
-                </p>
-              </div>
-              
               <div className="rounded-2xl border bg-card p-6 md:p-8 mb-8">
                 <MiniPromptStudio />
               </div>
