@@ -14,7 +14,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { addToCart, getCart } from "@/lib/cart";
-import ShareButton from "@/components/ShareButton";
 import { AI_PROVIDERS, rewritePromptForProvider } from "@/lib/promptRewriter";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { AiProviderDropdown } from "@/components/ai/AiProviderDropdown";
@@ -1098,22 +1097,10 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                 >
                   {t}
                 </Badge>
-              ))}
-              <div className="absolute bottom-0 right-0">
-                <ShareButton
-                  url={`${window.location.origin}/library?search=${encodeURIComponent(prompt.title)}`}
-                  contentType="prompt"
-                  contentId={prompt.id}
-                  title={`Check out this AI prompt: ${prompt.title}`}
-                  variant="ghost"
-                  size="sm"
-                  showText={false}
-                  className="h-6 w-6 p-1 text-muted-foreground hover:text-foreground"
-                />
-              </div>
-            </div>
-          </div>
-        )}
+               ))}
+             </div>
+           </div>
+         )}
 
       </CardContent>
       
