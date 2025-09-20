@@ -319,6 +319,7 @@ const PromptLibrary = () => {
         }
         
         // Handle standard pro/free filtering
+        console.log('Filtering state:', { proOnly, includePro, ribbon, proSearch });
         if (proOnly || proSearch) q = q.eq("is_pro", true);
         else if (!includePro && !ribbon?.includes("PRO")) q = q.eq("is_pro", false);
 
