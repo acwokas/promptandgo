@@ -432,7 +432,7 @@ const Index = () => {
 
               {/* Scout Tailoring Section */}
               <div className="text-center mb-8">
-                <p className="text-muted-foreground max-w-2xl mx-auto text-lg mb-6">In any prompt card, pick your preferred AI platform from the dropdown and we'll instantly refine the prompt for you.</p>
+                <p className="text-muted-foreground max-w-2xl mx-auto text-lg mb-6">In any prompt card, pick your preferred AI platform from the dropdown and we'll instantly refine the prompt for you in line with that platform's best practices.</p>
                 {/* Scout Tailoring Highlight - Clean Design */}
                 <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200/60 rounded-3xl p-4 md:p-8 max-w-4xl mx-auto shadow-lg">
                   {/* Clean Dropdown Design */}
