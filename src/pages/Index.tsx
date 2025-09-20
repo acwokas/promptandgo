@@ -2,7 +2,26 @@ import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
-import { Sparkles, Zap, ShieldCheck, ListChecks, Wand2, Rocket, Check, Search, Heart, Bot, Star, Briefcase, Image, ShoppingCart, BarChart3, BookOpen, Edit3, Settings } from "lucide-react";
+import { 
+  Sparkles, 
+  Zap, 
+  ShieldCheck, 
+  ListChecks, 
+  Wand2, 
+  Rocket, 
+  Check, 
+  Search, 
+  Heart, 
+  Bot, 
+  Star, 
+  Briefcase, 
+  Image, 
+  ShoppingCart, 
+  BarChart3, 
+  BookOpen, 
+  Edit3, 
+  Settings 
+} from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useSubscriptionStatus } from "@/hooks/useSubscriptionStatus";
@@ -432,22 +451,22 @@ const Index = () => {
             </div>
             <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
               <div className="text-center">
-                <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Wand2 className="h-6 w-6 text-secondary" />
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Wand2 className="h-6 w-6 text-primary" />
                 </div>
                 <h4 className="font-semibold mb-2">1. Guided Creation</h4>
                 <p className="text-sm text-muted-foreground">Use wizards and dropdowns</p>
               </div>
               <div className="text-center">
-                <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Settings className="h-6 w-6 text-secondary" />
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Settings className="h-6 w-6 text-primary" />
                 </div>
                 <h4 className="font-semibold mb-2">2. Scout Optimizes</h4>
                 <p className="text-sm text-muted-foreground">Platform-specific output</p>
               </div>
               <div className="text-center">
-                <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Zap className="h-6 w-6 text-secondary" />
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Zap className="h-6 w-6 text-primary" />
                 </div>
                 <h4 className="font-semibold mb-2">3. Deploy</h4>
                 <p className="text-sm text-muted-foreground">One-click to AI platform</p>
