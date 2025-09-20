@@ -689,16 +689,6 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                 </Tooltip>
               </TooltipProvider>
             )}
-            
-            <ShareButton
-              url={`${window.location.origin}/library?search=${encodeURIComponent(prompt.title)}`}
-              contentType="prompt"
-              contentId={prompt.id}
-              title={`Check out this AI prompt: ${prompt.title}`}
-              variant="outline"
-              size="sm"
-              showText={true}
-            />
           </div>
         </div>
 
@@ -725,7 +715,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
         {prompt.tags.length > 0 && (
           <div className="space-y-2 mt-6">
             <div className="text-xs font-medium">Related Prompts:</div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 relative">
               {prompt.tags.map((t) => (
                 <Badge
                   key={t}
@@ -740,6 +730,18 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                   {t}
                 </Badge>
               ))}
+              <div className="absolute bottom-0 right-0">
+                <ShareButton
+                  url={`${window.location.origin}/library?search=${encodeURIComponent(prompt.title)}`}
+                  contentType="prompt"
+                  contentId={prompt.id}
+                  title={`Check out this AI prompt: ${prompt.title}`}
+                  variant="ghost"
+                  size="sm"
+                  showText={false}
+                  className="h-6 w-6 p-1 text-muted-foreground hover:text-foreground"
+                />
+              </div>
             </div>
           </div>
         )}

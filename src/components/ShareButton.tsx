@@ -47,6 +47,7 @@ interface ShareButtonProps {
   variant?: "default" | "outline" | "ghost" | "secondary";
   size?: "default" | "sm" | "lg" | "icon";
   showText?: boolean;
+  className?: string;
 }
 
 const ShareButton = ({ 
@@ -56,7 +57,8 @@ const ShareButton = ({
   title, 
   variant = "outline", 
   size = "sm",
-  showText = false 
+  showText = false,
+  className
 }: ShareButtonProps) => {
   const { isSharing, shareToClipboard, shareToSocial, nativeShare } = useSharing();
   const [open, setOpen] = useState(false);
@@ -89,7 +91,7 @@ const ShareButton = ({
           variant={variant} 
           size={size} 
           disabled={isSharing}
-          className="gap-2"
+          className={`gap-2 ${className || ''}`}
         >
           <Share2 className="h-4 w-4" />
           {showText && (isSharing ? "Sharing..." : "Share")}
