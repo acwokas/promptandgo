@@ -114,12 +114,23 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
       return;
     }
 
-    // Open AI provider websites directly with prompts
-    const openAIProvider = (url: string) => {
-      window.open(url, '_blank', 'noopener,noreferrer');
+    // Show manual instructions instead of trying to open potentially blocked sites
+    const showManualInstructions = (url: string) => {
       toast({
-        title: `Opened ${provider.name}`,
-        description: `${provider.name} has been opened in a new tab. You may need to paste your prompt manually.`,
+        title: "Prompt ready to use!",
+        description: (
+          <div className="space-y-3">
+            <p className="text-sm font-medium">✅ Your optimized prompt is copied to clipboard</p>
+            <div className="space-y-1">
+              <p className="text-sm font-medium">Manual steps:</p>
+              <p className="text-xs">1. Open a new browser tab</p>
+              <p className="text-xs">2. Go to: <span className="font-mono bg-muted px-1 rounded">{url}</span></p>
+              <p className="text-xs">3. Paste your prompt and hit enter</p>
+            </div>
+            <p className="text-xs text-muted-foreground">💡 If the site is blocked on your network, try using a different device or network</p>
+          </div>
+        ),
+        duration: 8000,
       });
     };
 
@@ -128,51 +139,31 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
         // ChatGPT doesn't support URL parameters for prompts natively
         // Copy to clipboard and open ChatGPT
         await navigator.clipboard.writeText(prompt.trim());
-        openAIProvider('https://chatgpt.com/');
-        toast({
-          title: "Prompt copied for ChatGPT",
-          description: "ChatGPT opened in new tab. Your prompt has been copied to clipboard - paste it in ChatGPT.",
-        });
+        showManualInstructions('https://chatgpt.com/');
         break;
       
       case 'anthropic':
         // Claude doesn't support URL parameters for prompts natively
         await navigator.clipboard.writeText(prompt.trim());
-        openAIProvider('https://claude.ai/');
-        toast({
-          title: "Prompt copied for Claude",
-          description: "Claude opened in new tab. Your prompt has been copied to clipboard - paste it in Claude.",
-        });
+        showManualInstructions('https://claude.ai/');
         break;
       
       case 'google':
         // Gemini doesn't support URL parameters for prompts natively
         await navigator.clipboard.writeText(prompt.trim());
-        openAIProvider('https://gemini.google.com/');
-        toast({
-          title: "Prompt copied for Gemini",
-          description: "Gemini opened in new tab. Your prompt has been copied to clipboard - paste it in Gemini.",
-        });
+        showManualInstructions('https://gemini.google.com/');
         break;
       
       case 'groq':
         // Groq doesn't have a web interface like the others
         await navigator.clipboard.writeText(prompt.trim());
-        openAIProvider('https://console.groq.com/playground');
-        toast({
-          title: "Prompt copied for Groq",
-          description: "Groq playground opened in new tab. Your prompt has been copied to clipboard - paste it in the playground.",
-        });
+        showManualInstructions('https://console.groq.com/playground');
         break;
       
       case 'deepseek':
         // DeepSeek web interface
         await navigator.clipboard.writeText(prompt.trim());
-        openAIProvider('https://chat.deepseek.com/');
-        toast({
-          title: "Prompt copied for DeepSeek",
-          description: "DeepSeek opened in new tab. Your prompt has been copied to clipboard - paste it in DeepSeek.",
-        });
+        showManualInstructions('https://chat.deepseek.com/');
         break;
       
       default:

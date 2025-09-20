@@ -291,31 +291,23 @@ const FavoritesPage = () => {
     // Copy to clipboard first
     navigator.clipboard.writeText(rewrittenPrompt);
 
-    // Try to open the URL
-    try {
-      const newWindow = window.open(url, '_blank');
-      
-      if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-        // Popup was blocked
-        toast({
-          title: "Popup blocked",
-          description: `Your browser blocked the popup. Please navigate to ${url} manually. The prompt has been copied to your clipboard.`,
-          variant: "destructive"
-        });
-      } else {
-        toast({
-          title: "Opened in new tab",
-          description: `${provider.name} opened in a new tab. Your prompt has been copied to the clipboard - paste it into the chat.`
-        });
-      }
-    } catch (error) {
-      // Network or other blocking
-      toast({
-        title: "Unable to open AI platform",
-        description: `Please navigate to ${url} manually. The prompt has been copied to your clipboard.`,
-        variant: "destructive"
-      });
-    }
+    // Show manual instructions instead of trying to open potentially blocked sites
+    toast({
+      title: "Prompt ready to use!",
+      description: (
+        <div className="space-y-3">
+          <p className="text-sm font-medium">✅ Your optimized prompt is copied to clipboard</p>
+          <div className="space-y-1">
+            <p className="text-sm font-medium">Manual steps:</p>
+            <p className="text-xs">1. Open a new browser tab</p>
+            <p className="text-xs">2. Go to: <span className="font-mono bg-muted px-1 rounded">{url}</span></p>
+            <p className="text-xs">3. Paste your prompt and hit enter</p>
+          </div>
+          <p className="text-xs text-muted-foreground">💡 If the site is blocked on your network, try using a different device or network</p>
+        </div>
+      ),
+      duration: 8000,
+    });
 
     setShowSendDialog(false);
     setCurrentPromptForAI("");

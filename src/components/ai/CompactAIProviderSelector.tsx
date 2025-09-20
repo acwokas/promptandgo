@@ -81,10 +81,22 @@ export const CompactAIProviderSelector: React.FC<CompactAIProviderSelectorProps>
 
     const url = urls[selectedProvider];
     if (url) {
-      window.open(url, '_blank', 'noopener,noreferrer');
+      // Show manual instructions instead of trying to open potentially blocked sites
       toast({
-        title: `Opened ${provider.name}`,
-        description: `${provider.name} opened in new tab. Your optimized prompt has been copied to clipboard.`
+        title: "Prompt ready to use!",
+        description: (
+          <div className="space-y-3">
+            <p className="text-sm font-medium">✅ Your optimized prompt is copied to clipboard</p>
+            <div className="space-y-1">
+              <p className="text-sm font-medium">Manual steps:</p>
+              <p className="text-xs">1. Open a new browser tab</p>
+              <p className="text-xs">2. Go to: <span className="font-mono bg-muted px-1 rounded">{url}</span></p>
+              <p className="text-xs">3. Paste your prompt and hit enter</p>
+            </div>
+            <p className="text-xs text-muted-foreground">💡 If the site is blocked on your network, try using a different device or network</p>
+          </div>
+        ),
+        duration: 8000,
       });
     }
   };
