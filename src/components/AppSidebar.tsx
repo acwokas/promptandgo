@@ -70,11 +70,6 @@ export function AppSidebar() {
   const currentPath = location.pathname
   const isCollapsed = state === "collapsed"
 
-  // Don't render sidebar content until mobile detection is stable
-  if (isMobile === null) {
-    return null;
-  }
-
   const isActive = (path: string) => {
     if (path === "/") {
       return currentPath === "/"
@@ -84,6 +79,11 @@ export function AppSidebar() {
 
   const getNavCls = ({ isActive }: { isActive: boolean }) =>
     isActive ? "bg-primary/10 text-primary font-medium border-r-2 border-primary" : "hover:bg-muted/50"
+
+  // Handle loading state gracefully
+  if (isMobile === null) {
+    return null
+  }
 
   return (
     <Sidebar
