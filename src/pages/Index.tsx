@@ -429,9 +429,9 @@ const Index = () => {
         </section>
 
         {/* Premium Collections - Moved Above */}
-        <section className="container py-8 bg-gradient-to-br from-accent/20 via-primary/15 to-accent/10 rounded-3xl border-2 border-accent/30 shadow-2xl">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold mb-4">Let Scout tailor our core prompt for your favourite AI and run it in one click:</h2>
+        <section className="container py-4 bg-gradient-to-br from-accent/20 via-primary/15 to-accent/10 rounded-3xl border-2 border-accent/30 shadow-2xl">
+          <div className="text-center mb-4">
+            <h2 className="text-2xl font-bold mb-4">Let Scout tailor our core prompt for your favourite AI and run it in one click:</h2>
             
             {/* Scout Tailoring Highlight - Clean Design */}
             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200/60 rounded-3xl p-8 max-w-4xl mx-auto shadow-lg">
@@ -519,50 +519,17 @@ const Index = () => {
                 <p className="text-sm text-gray-600 mt-3 font-medium">Instantly optimized for your chosen platform!</p>
               </div>
             </div>
-            
-            {/* Enhanced Process Grid - Below Dropdown */}
-            <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto mt-8">
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-accent/20 shadow-lg text-center">
-                <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Briefcase className="h-8 w-8 text-accent" />
-                </div>
-                <h4 className="font-bold mb-2 text-lg">1. Browse Collections</h4>
-                <p className="text-sm text-muted-foreground">Choose from curated packs by industry experts</p>
-              </div>
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-accent/20 shadow-lg text-center">
-                <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <ShoppingCart className="h-8 w-8 text-accent" />
-                </div>
-                <h4 className="font-bold mb-2 text-lg">2. One-Time Purchase</h4>
-                <p className="text-sm text-muted-foreground">Own them forever, no subscriptions</p>
-              </div>
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-accent/20 shadow-lg text-center">
-                <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Settings className="h-8 w-8 text-accent" />
-                </div>
-                <h4 className="font-bold mb-2 text-lg">3. Scout Optimizes</h4>
-                <p className="text-sm text-muted-foreground">Platform-specific optimization in one click</p>
-              </div>
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-accent/20 shadow-lg text-center">
-                <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Zap className="h-8 w-8 text-accent" />
-                </div>
-                <h4 className="font-bold mb-2 text-lg">4. Deploy & Run</h4>
-                <p className="text-sm text-muted-foreground">Copy to your AI tool and get results</p>
-              </div>
-            </div>
           </div>
         </section>
 
-        <section className="container">
-          <div className="text-center mb-8">
-            <p className="text-lg font-semibold mb-4">👇 Try a Prompt of the Day right now</p>
-            <p className="text-muted-foreground max-w-md mx-auto">See how Scout optimizes real prompts below. Pick one, customize it, and experience the magic instantly.</p>
+        <section className="container -mt-8">
+          <div className="text-center mb-4">
+            <p className="text-muted-foreground max-w-md mx-auto">See how Scout optimizes real prompts. Pick one below customize it, push it to your favorite AI platform, and experience the magic instantly.</p>
           </div>
         </section>
 
         {/* Prompts of the Day / Personalized Prompts */}
-        <section className="container -mt-12">
+        <section className="container -mt-8">
           <PromptsOfTheDay />
         </section>
 
