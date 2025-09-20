@@ -89,8 +89,8 @@ export function useAIPreferences() {
   const initializeDefaultPreferences = async () => {
     if (!user || preferences.length > 0) return;
 
-    // Set default preferences for new users (enable ChatGPT and Claude by default)
-    const defaultProviders = ['chatgpt', 'claude'];
+    // Set default preferences for new users (enable ChatGPT, Claude, and Perplexity by default)
+    const defaultProviders = ['chatgpt', 'claude', 'perplexity'];
     
     try {
       const { error } = await supabase
