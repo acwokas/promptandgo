@@ -1,13 +1,24 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { User, ShoppingCart, Sparkles } from "lucide-react";
-import { SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useToast } from "@/components/ui/use-toast";
 import { useEnsureProfile } from "@/hooks/useEnsureProfile";
 import { useEffect, useState } from "react";
 import { getCartCount, clearCartOnLogout } from "@/lib/cart";
+
+// Component to safely render SidebarTrigger only when context is available
+const SafeSidebarTrigger = () => {
+  try {
+    const sidebar = useSidebar();
+    return <SidebarTrigger />;
+  } catch {
+    // If no SidebarProvider context, don't render anything
+    return null;
+  }
+};
 
 const Header = () => {
   const { user, logout } = useSupabaseAuth();
@@ -46,7 +57,7 @@ const Header = () => {
       <div className="w-full max-w-7xl mx-auto px-4 flex items-center justify-between min-h-14 box-border overflow-hidden">
         {/* Hamburger Menu - Desktop Only */}
         <div className="hidden md:flex flex-shrink-0">
-          <SidebarTrigger />
+          <SafeSidebarTrigger />
         </div>
         
         {/* Logo */}
