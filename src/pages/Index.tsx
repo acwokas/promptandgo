@@ -359,13 +359,6 @@ const Index = () => {
 
         {/* Path 1: Library-based - MAIN PATH */}
         <section className="container pt-6 pb-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Here's How Scout Saves You Time</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Start with proven foundations, then let Scout perfect them for any AI platform
-            </p>
-          </div>
-          
           <div className="mb-16">
             <div className="text-center mb-8">
               <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
@@ -373,7 +366,7 @@ const Index = () => {
                 Most Popular Path
               </div>
               <h3 className="text-2xl font-semibold text-foreground mb-2">Start with Battle-Tested Prompts</h3>
-              <p className="text-muted-foreground max-w-xl mx-auto">Browse thousands of proven prompts, then let Scout customize them instantly</p>
+              <p className="text-muted-foreground max-w-xl mx-auto">Browse thousands of proven prompts, then let Scout customize them instantly for any AI platform</p>
             </div>
             <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
               <div className="text-center">
