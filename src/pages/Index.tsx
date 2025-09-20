@@ -482,14 +482,14 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid gap-6 lg:grid-cols-4">
+          <div className="grid gap-8 lg:grid-cols-2 mb-12">
             <div className="text-center">
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                 <ShieldCheck className="h-8 w-8 text-primary" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Human-Curated Foundation</h3>
               <p className="text-muted-foreground">
-                Battle-tested starting points across every industry. No more starting from scratch.
+                Battle-tested starting points across every industry. No more starting from scratch or wondering if your prompt will work.
               </p>
             </div>
 
@@ -499,7 +499,7 @@ const Index = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3">Real-time Customization</h3>
               <p className="text-muted-foreground">
-                Guided wizards adapt prompts to your goals. No guesswork, just results.
+                Guided wizards adapt prompts to your goals. No guesswork, just results that match your specific needs.
               </p>
             </div>
 
@@ -507,9 +507,9 @@ const Index = () => {
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Sparkles className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Platform Optimization</h3>
+              <h3 className="text-xl font-semibold mb-3">Universal Platform Optimization</h3>
               <p className="text-muted-foreground">
-                One prompt, optimized for ChatGPT, Claude, MidJourney, and more. Works everywhere.
+                One prompt, automatically optimized for ChatGPT, Claude, MidJourney, Gemini, and more. Works perfectly everywhere.
               </p>
             </div>
 
@@ -517,121 +517,57 @@ const Index = () => {
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                 <ListChecks className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Volume & Variety</h3>
+              <h3 className="text-xl font-semibold mb-3">Massive Library</h3>
               <p className="text-muted-foreground">
-                Thousands of prompts for every use case. From marketing to education to creative work.
+                Thousands of prompts for every use case. Marketing, education, creative work, business strategy, and more.
               </p>
             </div>
           </div>
-        </section>
 
-        {/* What is PromptAndGo */}
-        <section className="container pb-8">
-          <div className="grid gap-6 lg:grid-cols-3">
-            <div className="lg:col-span-2 rounded-2xl border bg-card p-6 md:p-8">
-              <h2 className="text-3xl font-bold mb-4">What is PromptAndGo?</h2>
-              <p className="text-xl text-muted-foreground mb-6">
-                The smartest way to craft prompts for work and life.
-              </p>
-              <p className="text-muted-foreground max-w-prose mb-6">
-                We help you create and refine prompts in real time, tailored to ChatGPT, Claude, Gemini, MidJourney, and more. Start with human-curated foundations, then let Scout customize them perfectly for your needs.
-              </p>
+          {/* Platform Examples */}
+          <div className="bg-gradient-to-br from-primary/5 to-transparent rounded-2xl p-8">
+            <h3 className="text-xl font-semibold text-center mb-6">Optimized for Every Major AI Platform</h3>
+            <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-6">
               <div className="text-center">
-                <Button asChild size="lg" variant="hero">
-                  <Link to="/library">Explore Our Library <Search className="h-4 w-4 ml-2" /></Link>
-                </Button>
+                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-white font-bold text-sm">GPT</span>
+                </div>
+                <p className="text-xs text-muted-foreground">ChatGPT</p>
               </div>
-            </div>
-
-            {/* Quick Stats */}
-            <div className="space-y-6">
-              <div className="rounded-xl border bg-card p-6 text-center">
-                <div className="text-3xl font-bold text-primary mb-2">50K+</div>
-                <div className="text-sm text-muted-foreground">Active users</div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-white font-bold text-sm">C</span>
+                </div>
+                <p className="text-xs text-muted-foreground">Claude</p>
               </div>
-              <div className="rounded-xl border bg-card p-6 text-center">
-                <div className="text-3xl font-bold text-primary mb-2">1M+</div>
-                <div className="text-sm text-muted-foreground">Prompts crafted</div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-white font-bold text-sm">G</span>
+                </div>
+                <p className="text-xs text-muted-foreground">Gemini</p>
               </div>
-              <div className="rounded-xl border bg-card p-6 text-center">
-                <div className="text-3xl font-bold text-primary mb-2">500+</div>
-                <div className="text-sm text-muted-foreground">Hours saved daily</div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-white font-bold text-sm">MJ</span>
+                </div>
+                <p className="text-xs text-muted-foreground">MidJourney</p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-white font-bold text-sm">P</span>
+                </div>
+                <p className="text-xs text-muted-foreground">Perplexity</p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-white font-bold text-sm">+</span>
+                </div>
+                <p className="text-xs text-muted-foreground">& More</p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Platform Adaptation - Key Differentiator */}
-        <section className="container pt-2 pb-8">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold mb-4">One Prompt, Every Platform</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-              Scout automatically adapts your prompts for optimal performance on any AI platform. No more rewriting — just copy, paste, and get better results.
-            </p>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-8">
-            {/* ChatGPT */}
-            <div className="rounded-xl border bg-card p-6 text-center">
-              <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white font-bold">GPT</span>
-              </div>
-              <h3 className="font-semibold mb-2">ChatGPT</h3>
-              <p className="text-sm text-muted-foreground">Optimized for conversational flow and step-by-step reasoning</p>
-            </div>
-
-            {/* Claude */}
-            <div className="rounded-xl border bg-card p-6 text-center">
-              <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white font-bold">C</span>
-              </div>
-              <h3 className="font-semibold mb-2">Claude</h3>
-              <p className="text-sm text-muted-foreground">Structured for detailed analysis and thoughtful responses</p>
-            </div>
-
-            {/* Gemini */}
-            <div className="rounded-xl border bg-card p-6 text-center">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white font-bold">G</span>
-              </div>
-              <h3 className="font-semibold mb-2">Gemini</h3>
-              <p className="text-sm text-muted-foreground">Tailored for multimodal tasks and creative applications</p>
-            </div>
-
-            {/* Perplexity */}
-            <div className="rounded-xl border bg-card p-6 text-center">
-              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white font-bold">P</span>
-              </div>
-              <h3 className="font-semibold mb-2">Perplexity</h3>
-              <p className="text-sm text-muted-foreground">Formatted for research and source-based responses</p>
-            </div>
-
-            {/* MidJourney */}
-            <div className="rounded-xl border bg-card p-6 text-center">
-              <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white font-bold">MJ</span>
-              </div>
-              <h3 className="font-semibold mb-2">MidJourney</h3>
-              <p className="text-sm text-muted-foreground">Crafted with precise parameters and style modifiers</p>
-            </div>
-
-            {/* Plus More */}
-            <div className="rounded-xl border bg-card p-6 text-center">
-              <div className="w-12 h-12 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white font-bold">+</span>
-              </div>
-              <h3 className="font-semibold mb-2">And More</h3>
-              <p className="text-sm text-muted-foreground">Ideogram, DALL-E, Leonardo AI, and emerging platforms</p>
-            </div>
-          </div>
-
-          <div className="text-center">
-            <Button asChild size="lg" variant="hero">
-              <Link to="/scout">Try Platform Adaptation <Sparkles className="h-4 w-4 ml-2" /></Link>
-            </Button>
-          </div>
-        </section>
         <section className="container py-4">
           <h2 className="text-xl font-semibold mb-1">Popular Categories</h2>
           <p className="text-muted-foreground text-sm mb-4">Jump directly to our most popular prompt collections with thousands of ready-to-use examples.</p>
@@ -743,55 +679,6 @@ const Index = () => {
             </article>
           </div>
         </section>
-
-        {/* Meet Scout Section */}
-        <section className="container py-3 sm:py-6">
-          <div className="text-center mb-4 sm:mb-8">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <div className="relative">
-                <video src="/scout-animation-v2.mp4" autoPlay loop muted playsInline className="w-12 h-12 rounded-full object-cover border-2 border-primary/20 shadow-lg" />
-                <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-primary rounded-full border-2 border-background flex items-center justify-center">
-                  <div className="w-1 h-1 bg-white rounded-full animate-pulse"></div>
-                </div>
-              </div>
-              <h2 className="text-2xl font-semibold">✨ Meet Scout - Your AI Prompt Explorer</h2>
-            </div>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Scout helps you discover perfect prompts and create custom ones tailored to your needs.
-            </p>
-          </div>
-          
-          <div className="grid gap-4 md:grid-cols-2 max-w-4xl mx-auto">
-            <div className="group rounded-xl border bg-gradient-to-br from-accent/5 to-transparent p-4 sm:p-6 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <div className="flex flex-col sm:flex-row sm:items-start">
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold mb-2">🎯 Scout Recommendations</h3>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Let Scout analyze your needs and find the perfect prompts from our curated library.
-                  </p>
-                  <Button asChild variant="outline" size="sm" className="group-hover:bg-accent/10">
-                    <Link to="/scout">Explore with Scout →</Link>
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            <div className="group rounded-xl border bg-gradient-to-br from-secondary/5 to-transparent p-4 sm:p-6 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
-              <div className="flex flex-col sm:flex-row sm:items-start">
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold mb-2">🤖 Scout Assistant</h3>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Chat with Scout to create custom prompts and get expert guidance for any task.
-                  </p>
-                  <Button asChild variant="outline" size="sm" className="group-hover:bg-secondary/10">
-                    <Link to="/scout">Chat with Scout →</Link>
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
 
         {/* Conditional Content Based on Login Status */}
         {user ?
@@ -989,13 +876,8 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Right Column - Poll and Pricing/CTA */}
+            {/* Right Column - Pricing/CTA */}
             <div className="lg:col-span-1 space-y-6">
-              {/* Poll Section */}
-              <div>
-                <PollCarousel currentPage="home" />
-              </div>
-              
               {/* Pricing/CTA Section */}
               <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl p-6 h-fit sticky top-6">
                 <h3 className="font-semibold mb-3 text-center">💡 Start Free, Upgrade When Ready</h3>
