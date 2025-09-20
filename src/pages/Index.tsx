@@ -728,9 +728,9 @@ const Index = () => {
             <div className="lg:col-span-1 space-y-6">
               {/* Pricing/CTA Section */}
               <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl p-6 h-fit sticky top-6">
-                <h3 className="font-semibold mb-3 text-center">💡 Start Free, Upgrade When Ready</h3>
+                <h3 className="font-semibold mb-3 text-center">🤖 Everything You Need, Free Forever</h3>
                 <p className="text-sm text-muted-foreground mb-6 text-center">
-                  Browse thousands of prompts for free. Get premium collections when you need specialized prompts.
+                  Browse battle-tested prompts, use Scout AI optimization, and get platform-specific versions. Upgrade only for specialized collections.
                 </p>
                 
                 <div className="space-y-3 mb-6">
@@ -738,19 +738,19 @@ const Index = () => {
                     <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
                       <Check className="w-3 h-3 text-white" />
                     </div>
-                    <span>Free browsing forever</span>
+                    <span>Scout AI optimization for all platforms</span>
                   </div>
                   <div className="flex items-center gap-3 text-sm">
                     <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
                       <Check className="w-3 h-3 text-white" />
                     </div>
-                    <span>No trial limits or time restrictions</span>
+                    <span>Unlimited battle-tested prompt access</span>
                   </div>
                   <div className="flex items-center gap-3 text-sm">
                     <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
                       <Check className="w-3 h-3 text-white" />
                     </div>
-                    <span>No credit card needed</span>
+                    <span>No signup required to browse & copy</span>
                   </div>
                 </div>
                 
