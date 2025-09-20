@@ -603,7 +603,7 @@ const AIPromptGenerator = () => {
 
                 {/* AI Platform Selector */}
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Look for this dropdown in the prompt cards 'Choose your AI platform'</label>
+                  <label className="text-sm font-medium">Choose your AI platform:</label>
                   <Select value={selectedAIPlatform} onValueChange={handleAIPlatformChange}>
                     <SelectTrigger className="w-full bg-background border shadow-sm">
                       <SelectValue>
