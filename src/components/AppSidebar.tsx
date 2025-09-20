@@ -87,7 +87,7 @@ export function AppSidebar() {
 
   return (
     <Sidebar
-      collapsible="icon"
+      collapsible="offcanvas"
     >
       <SidebarContent>
         {/* Main Navigation */}

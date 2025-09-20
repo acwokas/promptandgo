@@ -109,12 +109,12 @@ const AppContent = () => {
         <div className="min-h-screen flex w-full">
           <AppSidebar />
           
-          <div className="flex-1 flex flex-col min-w-0">
+          <main className="flex-1 flex flex-col min-w-0">
             {/* Simplified Header */}
             <Header />
             
             {/* Main content */}
-            <main className="flex-1">
+            <div className="flex-1">
               <ScrollToTop />
               <GAListener />
               <AuthEffects />
@@ -178,11 +178,11 @@ const AppContent = () => {
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
-            </main>
+            </div>
             
             {/* Footer */}
             <Footer />
-          </div>
+          </main>
         </div>
         
         <ContextPopup
