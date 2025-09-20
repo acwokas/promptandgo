@@ -893,28 +893,30 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
     </Card>
 
     {/* Send to AI Confirmation Dialog */}
-    <Dialog open={showSendDialog} onOpenChange={setShowSendDialog}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            {selectedProviderData?.icon}
-            Open {selectedProviderData?.name}?
-          </DialogTitle>
-          <DialogDescription>
-            We'll open {selectedProviderData?.name} in a new tab and your optimized prompt has been copied to your clipboard. You can paste it directly into the chat.
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <Button variant="outline" onClick={() => setShowSendDialog(false)}>
-            Cancel
-          </Button>
-          <Button onClick={confirmSendToAI}>
-            <ExternalLink className="h-4 w-4 mr-2" />
-            Open {selectedProviderData?.name}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    {showSendDialog && (
+      <Dialog open={showSendDialog} onOpenChange={setShowSendDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              {selectedProviderData?.icon}
+              Open {selectedProviderData?.name}?
+            </DialogTitle>
+            <DialogDescription>
+              We'll open {selectedProviderData?.name} in a new tab and your optimized prompt has been copied to your clipboard. You can paste it directly into the chat.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowSendDialog(false)}>
+              Cancel
+            </Button>
+            <Button onClick={confirmSendToAI}>
+              <ExternalLink className="h-4 w-4 mr-2" />
+              Open {selectedProviderData?.name}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    )}
     </>
   );
 };
