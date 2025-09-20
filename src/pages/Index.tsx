@@ -551,52 +551,78 @@ const Index = () => {
               </h2>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8 font-medium">Get professionally-crafted prompt collections for specialized use cases and industries</p>
               
-              {/* Scout Tailoring Highlight - Enhanced */}
-              <div className="bg-white/90 backdrop-blur-sm border-4 border-accent/40 rounded-2xl p-8 max-w-3xl mx-auto mb-8 shadow-2xl">
-                <p className="text-2xl font-black mb-6 text-accent">🤖 Let Scout tailor our core prompt for your favourite AI and run it in one click:</p>
-                <div className="flex justify-center mb-6">
+              {/* Scout Tailoring Highlight - Clean Design */}
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200/60 rounded-3xl p-8 max-w-4xl mx-auto mb-8 shadow-lg">
+                <p className="text-2xl font-black mb-8 text-blue-700 text-center">🤖 Let Scout tailor our core prompt for your favourite AI and run it in one click:</p>
+                
+                {/* Clean Dropdown Design */}
+                <div className="flex justify-center mb-8">
                   <div className="relative">
-                    <div className="bg-gradient-to-r from-accent/10 to-primary/10 border-2 border-accent/30 rounded-xl px-8 py-4 shadow-lg min-w-[350px]">
+                    {/* Main Dropdown Trigger */}
+                    <div className="bg-white/90 backdrop-blur-sm border-2 border-blue-200/80 rounded-2xl px-8 py-6 shadow-sm min-w-[500px]">
                       <div className="flex items-center justify-between">
-                        <span className="text-lg font-bold text-accent">Choose Your AI Platform</span>
-                        <div className="flex items-center gap-3">
-                          <span className="text-lg bg-accent text-accent-foreground px-4 py-2 rounded-lg font-semibold shadow-md">🤖 ChatGPT</span>
-                          <svg className="w-5 h-5 text-accent animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
+                        <span className="text-xl font-semibold text-blue-600">Choose Your AI Platform</span>
+                        <div className="flex items-center gap-4">
+                          <div className="bg-blue-500 text-white px-6 py-2 rounded-full font-semibold shadow-sm flex items-center gap-2">
+                            <span className="text-lg">🤖</span>
+                            <span>ChatGPT</span>
+                          </div>
+                          <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                           </svg>
                         </div>
                       </div>
                     </div>
-                    {/* Dropdown preview - Enhanced */}
-                    <div className="absolute top-full left-0 mt-2 bg-white border-2 border-accent/30 rounded-xl shadow-2xl z-50 min-w-[350px] overflow-hidden">
-                      <div className="p-3 space-y-2">
-                        <div className="px-4 py-3 bg-accent/10 rounded-lg flex items-center gap-3 cursor-pointer border-2 border-accent/20">
-                          <span className="text-xl">🤖</span> 
-                          <div className="flex-1">
-                            <span className="font-bold">ChatGPT</span>
-                            <p className="text-xs text-muted-foreground">OpenAI - Most Popular</p>
+                    
+                    {/* Clean Dropdown Menu */}
+                    <div className="absolute top-full left-0 mt-3 bg-white/95 backdrop-blur-sm border-2 border-blue-200/80 rounded-2xl shadow-xl z-50 min-w-[500px] overflow-hidden">
+                      <div className="p-4 space-y-3">
+                        {/* ChatGPT - Selected */}
+                        <div className="bg-blue-50 border-2 border-blue-200 rounded-2xl p-4 flex items-center justify-between">
+                          <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                              <span className="text-2xl">🤖</span>
+                            </div>
+                            <div>
+                              <div className="font-bold text-lg text-gray-900">ChatGPT</div>
+                              <div className="text-gray-500">OpenAI - Most Popular</div>
+                            </div>
                           </div>
-                          <span className="bg-accent text-accent-foreground px-2 py-1 rounded text-xs font-bold">SELECTED</span>
-                        </div>
-                        <div className="px-4 py-3 hover:bg-primary/20 rounded-lg flex items-center gap-3 cursor-pointer border border-border/30 hover:border-primary/40 transition-all">
-                          <span className="text-xl">🧠</span> 
-                          <div className="flex-1">
-                            <span className="font-bold">Claude</span>
-                            <p className="text-xs text-muted-foreground">Anthropic</p>
-                          </div>
-                        </div>
-                        <div className="px-4 py-3 hover:bg-primary/20 rounded-lg flex items-center gap-3 cursor-pointer border border-border/30 hover:border-primary/40 transition-all">
-                          <span className="text-xl">🎨</span> 
-                          <div className="flex-1">
-                            <span className="font-bold">MidJourney</span>
-                            <p className="text-xs text-muted-foreground">Image Gen</p>
+                          <div className="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                            SELECTED
                           </div>
                         </div>
-                        <div className="px-4 py-3 hover:bg-primary/20 rounded-lg flex items-center gap-3 cursor-pointer border border-border/30 hover:border-primary/40 transition-all">
-                          <span className="text-xl">💎</span> 
-                          <div className="flex-1">
-                            <span className="font-bold">Gemini</span>
-                            <p className="text-xs text-muted-foreground">Google</p>
+                        
+                        {/* Claude */}
+                        <div className="hover:bg-gray-50 rounded-2xl p-4 flex items-center gap-4 cursor-pointer transition-all border-2 border-transparent hover:border-gray-200">
+                          <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center">
+                            <span className="text-2xl">🧠</span>
+                          </div>
+                          <div>
+                            <div className="font-bold text-lg text-gray-900">Claude</div>
+                            <div className="text-gray-500">Anthropic - Great for Analysis</div>
+                          </div>
+                        </div>
+                        
+                        {/* MidJourney */}
+                        <div className="hover:bg-gray-50 rounded-2xl p-4 flex items-center gap-4 cursor-pointer transition-all border-2 border-transparent hover:border-gray-200">
+                          <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                            <span className="text-2xl">🎨</span>
+                          </div>
+                          <div>
+                            <div className="font-bold text-lg text-gray-900">MidJourney</div>
+                            <div className="text-gray-500">Image Generation</div>
+                          </div>
+                        </div>
+                        
+                        {/* Gemini */}
+                        <div className="hover:bg-gray-50 rounded-2xl p-4 flex items-center gap-4 cursor-pointer transition-all border-2 border-transparent hover:border-gray-200">
+                          <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                            <span className="text-2xl">💎</span>
+                          </div>
+                          <div>
+                            <div className="font-bold text-lg text-gray-900">Gemini</div>
+                            <div className="text-gray-500">Google - Multimodal</div>
                           </div>
                         </div>
                       </div>
@@ -605,12 +631,12 @@ const Index = () => {
                 </div>
                 
                 {/* One-Click Action */}
-                <div className="pt-4 border-t-2 border-accent/20">
-                  <Button size="lg" className="bg-gradient-to-r from-accent to-primary hover:from-accent/80 hover:to-primary/80 text-white font-bold text-lg px-10 py-3 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200">
+                <div className="text-center pt-4 border-t-2 border-blue-200/60">
+                  <Button size="lg" className="bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-bold text-lg px-12 py-4 rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-200">
                     <Zap className="h-5 w-5 mr-3" />
                     One-Click Deploy to ChatGPT
                   </Button>
-                  <p className="text-sm text-muted-foreground mt-3 font-medium">Instantly optimized for your chosen platform!</p>
+                  <p className="text-sm text-gray-600 mt-3 font-medium">Instantly optimized for your chosen platform!</p>
                 </div>
               </div>
             </div>
