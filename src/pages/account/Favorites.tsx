@@ -11,7 +11,10 @@ import { useEffect, useState, useCallback } from "react";
 import type { Category as CategoryType } from "@/data/prompts";
 import { Link } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
-import { Heart, Bot, Trash2, Search, Zap, Copy, Plus, Sparkles, AlertTriangle } from "lucide-react";
+import { Heart, Bot, Trash2, Search, Zap, Copy, Plus, Sparkles, AlertTriangle, Send, ExternalLink, ChevronDown } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { AI_PROVIDERS, rewritePromptForProvider } from "@/lib/promptRewriter";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -102,6 +105,11 @@ const FavoritesPage = () => {
   const [items, setItems] = useState<PromptUI[]>([]);
   const [hasMore, setHasMore] = useState(false);
   const [busy, setBusy] = useState(false);
+  
+  // Send to AI functionality state
+  const [selectedProvider, setSelectedProvider] = useState<string>("");
+  const [showSendDialog, setShowSendDialog] = useState(false);
+  const [currentPromptForAI, setCurrentPromptForAI] = useState<string>("");
 
   // Load favorite IDs for current user
   const loadFavoriteIds = useCallback(async () => {
@@ -233,6 +241,89 @@ const FavoritesPage = () => {
       toast({ title: "Copy failed", description: "Failed to copy prompt to clipboard.", variant: "destructive" });
     }
   };
+
+  // Handle sending to AI
+  const handleSendToAI = async (promptText: string) => {
+    if (!selectedProvider) {
+      toast({
+        title: "No AI provider selected",
+        description: "Please select an AI provider first.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const provider = AI_PROVIDERS.find(p => p.id === selectedProvider);
+    if (!provider) {
+      toast({
+        title: "Provider not found",
+        description: "The selected AI provider could not be found.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setCurrentPromptForAI(promptText);
+    setShowSendDialog(true);
+  };
+
+  const confirmSendToAI = () => {
+    const provider = AI_PROVIDERS.find(p => p.id === selectedProvider);
+    if (!provider || !currentPromptForAI) return;
+
+    // URLs for different AI providers
+    const urls: Record<string, string> = {
+      chatgpt: 'https://chatgpt.com/',
+      claude: 'https://claude.ai/',
+      gemini: 'https://gemini.google.com/',
+      perplexity: 'https://www.perplexity.ai/',
+      copilot: 'https://copilot.microsoft.com/',
+      meta: 'https://www.meta.ai/',
+      xai: 'https://x.ai/'
+    };
+
+    const url = urls[selectedProvider];
+    if (!url) return;
+
+    // Rewrite prompt for the selected provider
+    const rewrittenPrompt = rewritePromptForProvider(currentPromptForAI, selectedProvider);
+    
+    // Copy to clipboard first
+    navigator.clipboard.writeText(rewrittenPrompt);
+
+    // Try to open the URL
+    try {
+      const newWindow = window.open(url, '_blank');
+      
+      if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+        // Popup was blocked
+        toast({
+          title: "Popup blocked",
+          description: `Your browser blocked the popup. Please navigate to ${url} manually. The prompt has been copied to your clipboard.`,
+          variant: "destructive"
+        });
+      } else {
+        toast({
+          title: "Opened in new tab",
+          description: `${provider.name} opened in a new tab. Your prompt has been copied to the clipboard - paste it into the chat.`
+        });
+      }
+    } catch (error) {
+      // Network or other blocking
+      toast({
+        title: "Unable to open AI platform",
+        description: `Please navigate to ${url} manually. The prompt has been copied to your clipboard.`,
+        variant: "destructive"
+      });
+    }
+
+    setShowSendDialog(false);
+    setCurrentPromptForAI("");
+  };
+
+  const selectedProviderData = selectedProvider 
+    ? AI_PROVIDERS.find(p => p.id === selectedProvider)
+    : null;
 
   const handleDeleteGeneratedPrompt = async (promptId: string) => {
     if (!promptToDelete) return;
@@ -734,6 +825,37 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
                               <Copy className="h-3 w-3 mr-1" />
                               Copy
                             </Button>
+                            
+                            {/* AI Provider Selector and Send Button */}
+                            <div className="flex items-center gap-2">
+                              <Select value={selectedProvider} onValueChange={setSelectedProvider}>
+                                <SelectTrigger className="w-[120px] h-8">
+                                  <SelectValue placeholder="AI Provider" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  {AI_PROVIDERS.map((provider) => (
+                                    <SelectItem key={provider.id} value={provider.id}>
+                                      <div className="flex items-center gap-2">
+                                        {provider.icon}
+                                        <span>{provider.name}</span>
+                                      </div>
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                              
+                              {selectedProvider && (
+                                <Button 
+                                  size="sm"
+                                  onClick={() => handleSendToAI(prompt.prompt)}
+                                  className="h-8"
+                                >
+                                  <Send className="h-3 w-3 mr-1" />
+                                  Send
+                                </Button>
+                              )}
+                            </div>
+                            
                             <Button
                               variant="outline"
                               size="sm"
@@ -910,6 +1032,32 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
+
+        {/* Send to AI Confirmation Dialog */}
+        {showSendDialog && (
+          <Dialog open={showSendDialog} onOpenChange={setShowSendDialog}>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle className="flex items-center gap-2">
+                  {selectedProviderData?.icon}
+                  Open {selectedProviderData?.name}?
+                </DialogTitle>
+                <DialogDescription>
+                  We'll open {selectedProviderData?.name} in a new tab and your optimized prompt has been copied to your clipboard. You can paste it directly into the chat.
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setShowSendDialog(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={confirmSendToAI}>
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                  Open {selectedProviderData?.name}
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        )}
       </main>
     </>
   );
