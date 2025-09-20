@@ -805,17 +805,62 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
             
             {/* Send to AI Platform - Second */}
             {selectedProvider && (
-              <Button 
-                size="sm"
-                variant="hero"
-                onClick={handleSendToAI}
-                className="w-full"
-                disabled={showLock && !onCopyClick && !hasAccess}
-                title={showLock && !onCopyClick && !hasAccess ? "Unlock to send" : undefined}
-              >
-                <Send className="h-4 w-4" />
-                <span>Send to {selectedProviderData?.name}</span>
-              </Button>
+              <>
+                {user ? (
+                  <Button 
+                    size="sm"
+                    variant="hero"
+                    onClick={handleSendToAI}
+                    className="w-full"
+                    disabled={showLock && !onCopyClick && !hasAccess}
+                    title={showLock && !onCopyClick && !hasAccess ? "Unlock to send" : undefined}
+                  >
+                    <Send className="h-4 w-4" />
+                    <span>Send to {selectedProviderData?.name}</span>
+                  </Button>
+                ) : (
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="w-full">
+                          <Button 
+                            size="sm"
+                            variant="outline"
+                            disabled
+                            className="w-full opacity-50"
+                          >
+                            <Send className="h-4 w-4" />
+                            <span>Login to send to {selectedProviderData?.name}</span>
+                          </Button>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent className="bg-popover border shadow-lg p-3 max-w-xs">
+                        <div className="space-y-3">
+                          <p className="text-sm font-medium">Sign up for free to unlock this feature</p>
+                          <div className="flex gap-2">
+                            <Button 
+                              size="sm" 
+                              variant="default"
+                              onClick={openLoginWidget}
+                              className="flex-1"
+                            >
+                              Sign Up
+                            </Button>
+                            <Button 
+                              size="sm" 
+                              variant="outline"
+                              onClick={openLoginWidget}
+                              className="flex-1"
+                            >
+                              Login
+                            </Button>
+                          </div>
+                        </div>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                )}
+              </>
             )}
             
             {/* Copy Prompt - Third */}
@@ -835,17 +880,60 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
             </Button>
             
             {/* Refine with Scout - Fourth */}
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={handleRefineWithScout}
-              className="w-full btn-subtle-stroke"
-              disabled={showLock && !onCopyClick && !hasAccess}
-              title={showLock && !onCopyClick && !hasAccess ? "Unlock to refine" : "Refine this prompt with Scout Assistant"}
-            >
-              <Bot className="h-4 w-4" />
-              <span>Refine prompt with Scout</span>
-            </Button>
+            {user ? (
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={handleRefineWithScout}
+                className="w-full btn-subtle-stroke"
+                disabled={showLock && !onCopyClick && !hasAccess}
+                title={showLock && !onCopyClick && !hasAccess ? "Unlock to refine" : "Refine this prompt with Scout Assistant"}
+              >
+                <Bot className="h-4 w-4" />
+                <span>Refine prompt with Scout</span>
+              </Button>
+            ) : (
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="w-full">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        disabled
+                        className="w-full btn-subtle-stroke opacity-50"
+                      >
+                        <Bot className="h-4 w-4" />
+                        <span>Refine prompt with Scout</span>
+                      </Button>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent className="bg-popover border shadow-lg p-3 max-w-xs">
+                    <div className="space-y-3">
+                      <p className="text-sm font-medium">Sign up for free to unlock this feature</p>
+                      <div className="flex gap-2">
+                        <Button 
+                          size="sm" 
+                          variant="default"
+                          onClick={openLoginWidget}
+                          className="flex-1"
+                        >
+                          Sign Up
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          onClick={openLoginWidget}
+                          className="flex-1"
+                        >
+                          Login
+                        </Button>
+                      </div>
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            )}
 
             {user ? (
               <TooltipProvider>
