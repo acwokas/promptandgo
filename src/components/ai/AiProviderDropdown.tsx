@@ -114,50 +114,74 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
       return;
     }
 
-    setIsLoading(true);
-    setSelectedProvider(provider.id);
-
-    try {
-      const { data, error } = await supabase.functions.invoke('send-to-ai-provider', {
-        body: {
-          provider: provider.id,
-          prompt: prompt.trim(),
-          temperature: 0.7,
-          maxTokens: 1000
-        }
-      });
-
-      if (error) {
-        console.error('AI Provider error:', error);
-        toast({
-          title: "Error",
-          description: error.message || `Failed to send prompt to ${provider.name}`,
-          variant: "destructive"
-        });
-        return;
-      }
-
-      if (data?.response) {
-        // Copy prompt to clipboard and show instructions
-        await navigator.clipboard.writeText(prompt.trim());
-        
-        toast({
-          title: `Prompt copied for ${provider.name}`,
-          description: `The prompt has been copied to your clipboard. Please paste it into ${provider.name} manually.`,
-        });
-      } else {
-        throw new Error('No response received');
-      }
-    } catch (error) {
-      console.error('Send to AI error:', error);
+    // Open AI provider websites directly with prompts
+    const openAIProvider = (url: string) => {
+      window.open(url, '_blank', 'noopener,noreferrer');
       toast({
-        title: "Error",
-        description: `Failed to send prompt to ${provider.name}. Please try again.`,
-        variant: "destructive"
+        title: `Opened ${provider.name}`,
+        description: `${provider.name} has been opened in a new tab. You may need to paste your prompt manually.`,
       });
-    } finally {
-      setIsLoading(false);
-      setSelectedProvider(null);
+    };
+
+    switch (provider.id) {
+      case 'openai':
+        // ChatGPT doesn't support URL parameters for prompts natively
+        // Copy to clipboard and open ChatGPT
+        await navigator.clipboard.writeText(prompt.trim());
+        openAIProvider('https://chatgpt.com/');
+        toast({
+          title: "Prompt copied for ChatGPT",
+          description: "ChatGPT opened in new tab. Your prompt has been copied to clipboard - paste it in ChatGPT.",
+        });
+        break;
+      
+      case 'anthropic':
+        // Claude doesn't support URL parameters for prompts natively
+        await navigator.clipboard.writeText(prompt.trim());
+        openAIProvider('https://claude.ai/');
+        toast({
+          title: "Prompt copied for Claude",
+          description: "Claude opened in new tab. Your prompt has been copied to clipboard - paste it in Claude.",
+        });
+        break;
+      
+      case 'google':
+        // Gemini doesn't support URL parameters for prompts natively
+        await navigator.clipboard.writeText(prompt.trim());
+        openAIProvider('https://gemini.google.com/');
+        toast({
+          title: "Prompt copied for Gemini",
+          description: "Gemini opened in new tab. Your prompt has been copied to clipboard - paste it in Gemini.",
+        });
+        break;
+      
+      case 'groq':
+        // Groq doesn't have a web interface like the others
+        await navigator.clipboard.writeText(prompt.trim());
+        openAIProvider('https://console.groq.com/playground');
+        toast({
+          title: "Prompt copied for Groq",
+          description: "Groq playground opened in new tab. Your prompt has been copied to clipboard - paste it in the playground.",
+        });
+        break;
+      
+      case 'deepseek':
+        // DeepSeek web interface
+        await navigator.clipboard.writeText(prompt.trim());
+        openAIProvider('https://chat.deepseek.com/');
+        toast({
+          title: "Prompt copied for DeepSeek",
+          description: "DeepSeek opened in new tab. Your prompt has been copied to clipboard - paste it in DeepSeek.",
+        });
+        break;
+      
+      default:
+        await navigator.clipboard.writeText(prompt.trim());
+        toast({
+          title: "Prompt copied",
+          description: "Your prompt has been copied to clipboard.",
+        });
+        break;
     }
   };
 
