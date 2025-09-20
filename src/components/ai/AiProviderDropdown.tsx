@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -6,6 +6,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import {
   Tooltip,
   TooltipContent,
@@ -91,8 +101,24 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
   disabled
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedProvider, setSelectedProvider] = useState<string | null>(null);
+  const [selectedProvider, setSelectedProvider] = useState<AiProvider | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
   const { toast } = useToast();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setIsLoggedIn(!!session);
+    };
+    checkAuth();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setIsLoggedIn(!!session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const handleProviderSelect = async (provider: AiProvider) => {
     if (!prompt?.trim()) {
@@ -114,66 +140,96 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
       return;
     }
 
-    // Show manual instructions instead of trying to open potentially blocked sites
-    const showManualInstructions = (url: string) => {
-      toast({
-        title: "Prompt ready to use!",
-        description: (
-          <div className="space-y-3">
-            <p className="text-sm font-medium">✅ Your optimized prompt is copied to clipboard</p>
-            <div className="space-y-1">
-              <p className="text-sm font-medium">Manual steps:</p>
-              <p className="text-xs">1. Open a new browser tab</p>
-              <p className="text-xs">2. Go to: <span className="font-mono bg-muted px-1 rounded">{url}</span></p>
-              <p className="text-xs">3. Paste your prompt and hit enter</p>
-            </div>
-            <p className="text-xs text-muted-foreground">💡 If the site is blocked on your network, try using a different device or network</p>
-          </div>
-        ),
-        duration: 8000,
-      });
-    };
-
-    switch (provider.id) {
-      case 'openai':
-        // ChatGPT doesn't support URL parameters for prompts natively
-        // Copy to clipboard and open ChatGPT
-        await navigator.clipboard.writeText(prompt.trim());
-        showManualInstructions('https://chatgpt.com/');
-        break;
-      
-      case 'anthropic':
-        // Claude doesn't support URL parameters for prompts natively
-        await navigator.clipboard.writeText(prompt.trim());
-        showManualInstructions('https://claude.ai/');
-        break;
-      
-      case 'google':
-        // Gemini doesn't support URL parameters for prompts natively
-        await navigator.clipboard.writeText(prompt.trim());
-        showManualInstructions('https://gemini.google.com/');
-        break;
-      
-      case 'groq':
-        // Groq doesn't have a web interface like the others
-        await navigator.clipboard.writeText(prompt.trim());
-        showManualInstructions('https://console.groq.com/playground');
-        break;
-      
-      case 'deepseek':
-        // DeepSeek web interface
-        await navigator.clipboard.writeText(prompt.trim());
-        showManualInstructions('https://chat.deepseek.com/');
-        break;
-      
-      default:
-        await navigator.clipboard.writeText(prompt.trim());
-        toast({
-          title: "Prompt copied",
-          description: "Your prompt has been copied to clipboard.",
-        });
-        break;
+    // Copy to clipboard
+    await navigator.clipboard.writeText(prompt.trim());
+    
+    // Save to favorites if logged in
+    if (isLoggedIn) {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          await supabase
+            .from('favorites')
+            .insert({
+              user_id: session.user.id,
+              prompt_id: null, // This would need to be the actual prompt ID if available
+              prompt_text: prompt.trim(),
+              created_at: new Date().toISOString()
+            });
+        }
+      } catch (error) {
+        console.error('Error saving to favorites:', error);
+      }
     }
+
+    setSelectedProvider(provider);
+    
+    if (isLoggedIn) {
+      setShowDialog(true);
+    } else {
+      // Show manual instructions for non-logged-in users
+      const showManualInstructions = (url: string) => {
+        toast({
+          title: "Prompt ready to use!",
+          description: (
+            <div className="space-y-3">
+              <p className="text-sm font-medium">✅ Your optimized prompt is copied to clipboard</p>
+              <div className="space-y-1">
+                <p className="text-sm font-medium">Manual steps:</p>
+                <p className="text-xs">1. Open a new browser tab</p>
+                <p className="text-xs">2. Go to: <span className="font-mono bg-muted px-1 rounded">{url}</span></p>
+                <p className="text-xs">3. Paste your prompt and hit enter</p>
+              </div>
+              <p className="text-xs text-muted-foreground">💡 If the site is blocked on your network, try using a different device or network</p>
+            </div>
+          ),
+          duration: 8000,
+        });
+      };
+
+      switch (provider.id) {
+        case 'openai':
+          showManualInstructions('https://chatgpt.com/');
+          break;
+        case 'anthropic':
+          showManualInstructions('https://claude.ai/');
+          break;
+        case 'google':
+          showManualInstructions('https://gemini.google.com/');
+          break;
+        case 'groq':
+          showManualInstructions('https://console.groq.com/playground');
+          break;
+        case 'deepseek':
+          showManualInstructions('https://chat.deepseek.com/');
+          break;
+        default:
+          toast({
+            title: "Prompt copied",
+            description: "Your prompt has been copied to clipboard.",
+          });
+          break;
+      }
+    }
+  };
+
+  const handleOpenAI = () => {
+    if (!selectedProvider) return;
+    
+    const urls = {
+      openai: 'https://chatgpt.com/',
+      anthropic: 'https://claude.ai/',
+      google: 'https://gemini.google.com/',
+      groq: 'https://console.groq.com/playground',
+      deepseek: 'https://chat.deepseek.com/'
+    };
+    
+    const url = urls[selectedProvider.id as keyof typeof urls];
+    if (url) {
+      window.open(url, '_blank');
+    }
+    
+    setShowDialog(false);
   };
 
   const textProviders = AI_PROVIDERS.filter(p => p.category === 'text');
@@ -191,7 +247,7 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
             {isLoading ? (
               <>
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
-                Sending to {selectedProvider && AI_PROVIDERS.find(p => p.id === selectedProvider)?.name}...
+                Sending to {selectedProvider?.name}...
               </>
             ) : (
               <>
@@ -264,6 +320,26 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
           ))}
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              {selectedProvider?.icon}
+              {selectedProvider?.name}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              You're all set! It's saved to My Prompts and copied to your clipboard. Now we'll open {selectedProvider?.name} in a new tab and you can paste it directly into the chat.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleOpenAI}>
+              Open {selectedProvider?.name}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </TooltipProvider>
   );
 };
