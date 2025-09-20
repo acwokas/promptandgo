@@ -46,6 +46,20 @@ const Privacy = () => (
         <li><strong>Profile Context</strong> – industry, project type, preferred tone, desired outcomes, and other context you provide to enhance AI recommendations.</li>
         <li><strong>Transactional Data</strong> – payment details are processed securely via Stripe and other third-party payment providers; we do not store full credit card details. This includes purchases of Monthly Memberships ($12.99 USD/month), Lifetime Access ($99.50 USD), and individual Prompt Packs ($9.99 USD each).</li>
         <li><strong>Analytics Data</strong> – aggregated usage statistics, feature adoption metrics, and performance data for our AI services.</li>
+        <li><strong>Behavioral Tracking Data</strong> – detailed user interaction patterns including:</li>
+        <ul>
+          <li>Page navigation history and time spent on each page</li>
+          <li>Click tracking on buttons, links, and interactive elements</li>
+          <li>Scroll depth and reading behavior patterns</li>
+          <li>Form interaction data (fields focused, completion rates)</li>
+          <li>Mouse movement patterns and exit intent signals</li>
+          <li>Session duration, visit frequency, and return visitor identification</li>
+          <li>Engagement scores and user intent level assessments</li>
+          <li>Conversion funnel progression and drop-off points</li>
+        </ul>
+        <li><strong>Email Marketing Data</strong> – newsletter subscription status, email preferences, engagement metrics (opens, clicks), unsubscribe history, and lead magnet interactions.</li>
+        <li><strong>Personalization Data</strong> – preferences, recommendation history, content interaction patterns, and algorithmic profiling for customized user experiences.</li>
+        <li><strong>Social Proof Data</strong> – aggregated and anonymized user activity data used to display social proof elements (e.g., "X users copied this prompt today").</li>
       </ul>
 
       <h2>2.&nbsp;&nbsp;How We Use Your Information</h2>
@@ -60,6 +74,18 @@ const Privacy = () => (
         <li>Send you updates, newsletters, and marketing (only with your consent).</li>
         <li>Analyze usage patterns to improve our AI algorithms and service quality.</li>
         <li>Comply with legal obligations and enforce our terms of use.</li>
+        <li><strong>Behavioral Analysis and Optimization</strong> – analyze user interactions, navigation patterns, and engagement levels to:</li>
+        <ul>
+          <li>Optimize website layout, content placement, and user interface design</li>
+          <li>Personalize call-to-action messages and content recommendations</li>
+          <li>Identify high-intent users for targeted messaging and offers</li>
+          <li>Improve conversion rates and user experience optimization</li>
+          <li>Generate engagement scores and user behavior insights</li>
+        </ul>
+        <li><strong>Email Marketing and Communication</strong> – deliver personalized newsletters, promotional content, lead magnets, and transactional messages based on user preferences and behavior patterns.</li>
+        <li><strong>Social Proof Generation</strong> – create anonymized activity feeds and testimonials to demonstrate platform usage and build trust with new users.</li>
+        <li><strong>A/B Testing and Experimentation</strong> – test different features, content, and user experience variations to optimize our services.</li>
+        <li><strong>Fraud Prevention and Security</strong> – monitor for suspicious activity, prevent abuse, and protect user accounts and data.</li>
       </ul>
 
       <h2>3.&nbsp;&nbsp;How We Share Your Information</h2>
@@ -68,9 +94,12 @@ const Privacy = () => (
         <li><strong>AI Service Providers</strong> – third-party AI providers (including OpenAI) to process your prompts and generate AI responses. These providers have their own privacy policies and data handling practices.</li>
         <li><strong>Payment Processors</strong> – transactions are processed by Stripe and other secure payment providers who have their own privacy policies and data handling practices.</li>
         <li><strong>Service Providers</strong> – third parties who help us operate the Site, such as hosting, analytics, and infrastructure services (including Supabase).</li>
+        <li><strong>Email Service Providers</strong> – third-party services for newsletter delivery, email marketing campaigns, and transactional email communications.</li>
+        <li><strong>Analytics and Tracking Services</strong> – services that help us understand user behavior, track conversions, and optimize our platform performance.</li>
         <li><strong>Legal Authorities</strong> – if required by law, court order, or government regulation.</li>
         <li><strong>Business Transfers</strong> – if promptandgo is acquired, merged, or reorganised.</li>
         <li><strong>Aggregated Data</strong> – we may share anonymized, aggregated usage statistics that do not identify individual users.</li>
+        <li><strong>Social Proof Data</strong> – anonymized activity data may be shared in aggregate form to display social proof elements and testimonials.</li>
       </ul>
 
       <h2>4.&nbsp;&nbsp;International Data Transfers</h2>
@@ -88,6 +117,9 @@ const Privacy = () => (
         <li><strong>User-Generated Content</strong> – prompts and favorites are retained until you delete them or close your account.</li>
         <li><strong>Payment Records</strong> – transaction history retained for legal and accounting purposes as required by Singapore law.</li>
         <li><strong>Membership Data</strong> – subscription status and access rights maintained for active memberships and lifetime purchases.</li>
+        <li><strong>Behavioral Tracking Data</strong> – session data and interaction patterns retained for up to 12 months for analytics and personalization purposes.</li>
+        <li><strong>Email Marketing Data</strong> – subscription status and preferences retained until unsubscribe; engagement metrics retained for up to 24 months for campaign optimization.</li>
+        <li><strong>Personalization Data</strong> – user preferences and recommendation history retained while account is active and for up to 6 months after account closure.</li>
       </ul>
       
       <h3>Business Discontinuation and Data Handling</h3>
@@ -119,11 +151,25 @@ const Privacy = () => (
       <h2>8.&nbsp;&nbsp;Use of Cookies and Tracking</h2>
       <p>We use cookies and similar technologies to:</p>
       <ul>
-        <li>Improve your user experience.</li>
-        <li>Analyse Site performance.</li>
-        <li>Deliver relevant content and ads.</li>
+        <li>Improve your user experience and remember your preferences.</li>
+        <li>Analyse Site performance and user behavior patterns.</li>
+        <li>Deliver relevant content and personalized recommendations.</li>
+        <li>Track user interactions for conversion optimization.</li>
+        <li>Provide social proof and engagement metrics.</li>
+        <li>Enable personalization features and smart recommendations.</li>
+        <li>Monitor security and prevent fraudulent activity.</li>
       </ul>
-      <p>You may disable cookies in your browser settings, but some Site features may not function properly.</p>
+      <p><strong>Specific Tracking Technologies:</strong></p>
+      <ul>
+        <li><strong>Essential Cookies</strong> – necessary for site functionality, authentication, and security</li>
+        <li><strong>Analytics Cookies</strong> – track page views, user journeys, and site performance</li>
+        <li><strong>Personalization Cookies</strong> – remember preferences and enable customized experiences</li>
+        <li><strong>Marketing Cookies</strong> – track conversions, email signups, and campaign effectiveness</li>
+        <li><strong>Behavioral Tracking Scripts</strong> – monitor user interactions, scroll behavior, and engagement patterns</li>
+        <li><strong>Session Storage</strong> – temporary data storage for current session management</li>
+        <li><strong>Local Storage</strong> – persistent storage for user preferences and behavior tracking</li>
+      </ul>
+      <p>You may disable cookies in your browser settings, but some Site features may not function properly. Disabling behavioral tracking may limit personalization features.</p>
 
       <h2>9.&nbsp;&nbsp;AI Services and Beta Features</h2>
       <p>
@@ -135,19 +181,40 @@ const Privacy = () => (
         <li>AI-generated content may be used to improve our algorithms (in anonymized form).</li>
         <li>Beta services may be modified, suspended, or discontinued at any time.</li>
         <li>AI outputs are generated by third-party providers and we cannot guarantee their accuracy or appropriateness.</li>
+        <li>Personalization algorithms may evolve and change based on user behavior patterns and service improvements.</li>
+        <li>Behavioral tracking data may be used to enhance AI recommendations and user experience optimization.</li>
       </ul>
 
-      <h2>10.&nbsp;&nbsp;Third-Party Links</h2>
+      <h2>10.&nbsp;&nbsp;Email Marketing and Communication Preferences</h2>
+      <p>We offer various email communication services:</p>
+      <ul>
+        <li><strong>Newsletter Subscriptions</strong> – periodic updates about new features, prompts, and AI industry insights</li>
+        <li><strong>Lead Magnets</strong> – free resources offered in exchange for email subscription</li>
+        <li><strong>Promotional Campaigns</strong> – information about discounts, new products, and special offers</li>
+        <li><strong>Behavioral Triggered Emails</strong> – automated messages based on user actions and engagement patterns</li>
+        <li><strong>Transactional Emails</strong> – account notifications, purchase confirmations, and service updates</li>
+      </ul>
+      <p>Email communication practices:</p>
+      <ul>
+        <li>All marketing emails include clear unsubscribe options</li>
+        <li>We track email engagement (opens, clicks) to improve content and deliverability</li>
+        <li>Email preferences can be managed through your account settings</li>
+        <li>We may personalize email content based on your usage patterns and interests</li>
+        <li>Transactional emails cannot be opted out while maintaining an active account</li>
+        <li>Email data is processed by third-party email service providers with appropriate data protection measures</li>
+      </ul>
+
+      <h2>11.&nbsp;&nbsp;Third-Party Links</h2>
       <p>
         Our Site may contain links to external websites. We are not responsible for the privacy practices or content of those third-party sites.
       </p>
 
-      <h2>11.&nbsp;&nbsp;Updates to This Policy</h2>
+      <h2>12.&nbsp;&nbsp;Updates to This Policy</h2>
       <p>
         We may update this Privacy Policy from time to time. The updated version will be posted on this page with a new “Effective Date.”
       </p>
 
-      <h2>12.&nbsp;&nbsp;Contact Us</h2>
+      <h2>13.&nbsp;&nbsp;Contact Us</h2>
       <p>If you have any questions about this Privacy Policy or our data practices, please contact:</p>
       <p>
         <strong>prompt</strong>andgo<br />

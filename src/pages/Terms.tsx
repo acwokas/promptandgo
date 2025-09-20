@@ -50,6 +50,11 @@ const Terms = () => (
         <li><strong>Scout Prompt Generator</strong> – generates customized prompts based on your inputs</li>
         <li><strong>Smart Suggestions</strong> – provides AI-powered recommendations</li>
         <li><strong>Scout Assistant</strong> – interactive AI chat assistance</li>
+        <li><strong>Personalized Recommendations</strong> – content and feature suggestions based on user behavior</li>
+        <li><strong>Behavior Analytics</strong> – tracking user engagement and interaction patterns for service improvement</li>
+        <li><strong>Smart FAQ System</strong> – context-aware help and support features</li>
+        <li><strong>ROI Calculator</strong> – tools to estimate time and cost savings</li>
+        <li><strong>Lead Generation Tools</strong> – email capture and newsletter signup features</li>
       </ul>
       <p><strong>IMPORTANT BETA DISCLAIMER:</strong> All AI tools are currently in beta testing. We reserve the right to:</p>
       <ul>
@@ -57,10 +62,33 @@ const Terms = () => (
         <li>Change usage limits, quotas, or access restrictions as needed</li>
         <li>Update AI models, features, or functionality</li>
         <li>Impose temporary or permanent limitations on service availability</li>
+        <li>Modify personalization algorithms and recommendation systems</li>
+        <li>Change data collection and analytics practices as services evolve</li>
       </ul>
       <p>AI services are provided "as is" without guarantees of availability, accuracy, or fitness for any particular purpose. Usage limits may change based on operational needs and cost considerations.</p>
 
-      <h2>3.&nbsp;&nbsp;Acceptable Use of AI Tools</h2>
+      <h2>3.&nbsp;&nbsp;User Behavior Tracking and Analytics</h2>
+      <p>To improve our services and provide personalized experiences, we track various user behaviors including:</p>
+      <ul>
+        <li><strong>Page Navigation</strong> – pages visited, time spent, navigation patterns</li>
+        <li><strong>Interaction Tracking</strong> – clicks, form interactions, button presses, and feature usage</li>
+        <li><strong>Scroll Behavior</strong> – scroll depth, reading patterns, and content engagement</li>
+        <li><strong>Session Analytics</strong> – visit frequency, session duration, and user journey mapping</li>
+        <li><strong>Engagement Scoring</strong> – automated assessment of user interest and intent levels</li>
+        <li><strong>Exit Intent Detection</strong> – monitoring cursor movement to detect potential page exits</li>
+        <li><strong>Conversion Tracking</strong> – monitoring signup completions, downloads, and other goal achievements</li>
+      </ul>
+      <p>This data is used to:</p>
+      <ul>
+        <li>Personalize content recommendations and call-to-action messages</li>
+        <li>Optimize user interface and experience design</li>
+        <li>Provide relevant prompts and suggestions based on usage patterns</li>
+        <li>Improve service performance and identify technical issues</li>
+        <li>Generate anonymized analytics reports for business optimization</li>
+      </ul>
+      <p>You may opt out of behavioral tracking by contacting us, though this may limit personalization features.</p>
+
+      <h2>4.&nbsp;&nbsp;Acceptable Use of AI Tools</h2>
       <p>When using our AI services, you must not:</p>
       <ul>
         <li>Generate content that is illegal, harmful, defamatory, or violates others' rights</li>
@@ -72,7 +100,7 @@ const Terms = () => (
       </ul>
       <p>We reserve the right to monitor AI usage and suspend access for violations.</p>
 
-      <h2>4.&nbsp;&nbsp;Account Registration</h2>
+      <h2>5.&nbsp;&nbsp;Account Registration</h2>
       <p>Some features may require creating an account. You agree to:</p>
       <ul>
         <li>Provide accurate and complete information</li>
@@ -81,7 +109,7 @@ const Terms = () => (
         <li>Maintain the security of your AI usage and not share access with unauthorized parties</li>
       </ul>
 
-      <h2>5.&nbsp;&nbsp;Content and Intellectual Property</h2>
+      <h2>6.&nbsp;&nbsp;Content and Intellectual Property</h2>
       <p>All content on the Site, including text, graphics, code, prompts, and designs, is owned by or licensed to promptandgo, unless otherwise stated.</p>
       <ul>
         <li>You may use content for personal or internal business purposes only</li>
@@ -92,7 +120,7 @@ const Terms = () => (
         <li>We may use anonymized, aggregated data from AI interactions to enhance our algorithms</li>
       </ul>
 
-      <h2>6.&nbsp;&nbsp;Payment and Memberships</h2>
+      <h2>7.&nbsp;&nbsp;Payment and Memberships</h2>
       <p>We offer the following paid services:</p>
       <ul>
         <li><strong>Monthly Membership</strong> - $12.99 USD per month with enhanced AI usage limits (30 generator + 40 assistant queries daily)</li>
@@ -112,10 +140,29 @@ const Terms = () => (
         <li>Beta services may affect pricing or access levels without prior notice</li>
       </ul>
 
-      <h2>7.&nbsp;&nbsp;Privacy</h2>
+      <h2>8.&nbsp;&nbsp;Email Marketing and Newsletter Services</h2>
+      <p>We offer email marketing services including:</p>
+      <ul>
+        <li><strong>Newsletter Subscriptions</strong> – regular updates about new prompts, features, and AI tips</li>
+        <li><strong>Lead Magnets</strong> – free prompt packs and resources in exchange for email addresses</li>
+        <li><strong>Personalized Email Content</strong> – recommendations based on your interests and usage patterns</li>
+        <li><strong>Promotional Campaigns</strong> – information about new products, discounts, and special offers</li>
+        <li><strong>Transactional Emails</strong> – account notifications, purchase confirmations, and service updates</li>
+      </ul>
+      <p>Email marketing terms:</p>
+      <ul>
+        <li>You can subscribe to our newsletter and promotional emails through various signup forms on our site</li>
+        <li>We use email service providers to deliver messages and track engagement metrics</li>
+        <li>You can unsubscribe from marketing emails at any time using the unsubscribe link in each email</li>
+        <li>Transactional emails (receipts, account notifications) cannot be opted out of while you maintain an account</li>
+        <li>We may personalize email content based on your preferences, usage patterns, and behavioral data</li>
+        <li>Email engagement data (opens, clicks, etc.) may be used to improve our services and personalization</li>
+      </ul>
+
+      <h2>9.&nbsp;&nbsp;Privacy</h2>
       <p>Your use of the Site is also governed by our Privacy Policy, which explains how we collect, use, and protect your personal data in compliance with Singapore's Personal Data Protection Act (PDPA).</p>
 
-      <h2>8.&nbsp;&nbsp;AI Output Disclaimers</h2>
+      <h2>10.&nbsp;&nbsp;AI Output Disclaimers</h2>
       <p>Regarding AI-generated content and services:</p>
       <ul>
         <li>AI outputs are generated by third-party providers and we do not guarantee their accuracy, completeness, or appropriateness</li>
@@ -125,7 +172,7 @@ const Terms = () => (
         <li>Beta AI features may produce unexpected results and should be used with caution</li>
       </ul>
 
-      <h2>9.&nbsp;&nbsp;Service Availability and Modifications</h2>
+      <h2>11.&nbsp;&nbsp;Service Availability and Modifications</h2>
       <p>We reserve the right to:</p>
       <ul>
         <li>Modify, suspend, or discontinue any part of our services, including AI tools, at any time</li>
@@ -135,7 +182,7 @@ const Terms = () => (
         <li>Implement new features or remove existing ones as part of service evolution</li>
       </ul>
 
-      <h2>10.&nbsp;&nbsp;General Disclaimers</h2>
+      <h2>12.&nbsp;&nbsp;General Disclaimers</h2>
       <ul>
         <li>The Site and its content are provided "as is" without warranties of any kind</li>
         <li>We do not guarantee uninterrupted access or that content will be error-free</li>
@@ -143,26 +190,26 @@ const Terms = () => (
         <li>Beta services are provided without warranties and may change or be discontinued</li>
       </ul>
 
-      <h2>11.&nbsp;&nbsp;Limitation of Liability</h2>
+      <h2>13.&nbsp;&nbsp;Limitation of Liability</h2>
       <ul>
         <li>We are not liable for indirect, incidental, special, or consequential damages, to the fullest extent permitted by law</li>
         <li>Our total liability to you for any claims shall not exceed the total amount paid by you to us in the 6 months preceding the claim</li>
         <li>We are not liable for AI-generated content, service interruptions, or beta feature limitations</li>
       </ul>
 
-      <h2>12.&nbsp;&nbsp;Indemnity</h2>
+      <h2>14.&nbsp;&nbsp;Indemnity</h2>
       <p>You agree to indemnify and hold harmless promptandgo, its officers, employees, and partners from any claims, damages, or expenses arising from your use of the Site, AI tools, or breach of these Terms.</p>
 
-      <h2>13.&nbsp;&nbsp;Third-Party Links and Services</h2>
+      <h2>15.&nbsp;&nbsp;Third-Party Links and Services</h2>
       <p>The Site may contain links to third-party websites and relies on third-party AI providers. We are not responsible for their content, policies, practices, or service availability.</p>
 
-      <h2>14.&nbsp;&nbsp;Governing Law</h2>
+      <h2>16.&nbsp;&nbsp;Governing Law</h2>
       <p>These Terms are governed by and construed in accordance with the laws of Singapore. You agree to submit to the exclusive jurisdiction of the Singapore courts.</p>
 
-      <h2>15.&nbsp;&nbsp;Changes to the Terms</h2>
+      <h2>17.&nbsp;&nbsp;Changes to the Terms</h2>
       <p>We may update these Terms at any time by posting a new version on this page, particularly as our AI services evolve. Your continued use of the Site constitutes acceptance of the updated Terms.</p>
 
-      <h2>16.&nbsp;&nbsp;Contact Us</h2>
+      <h2>18.&nbsp;&nbsp;Contact Us</h2>
       <p>If you have any questions about these Terms, please contact:</p>
       <p>
         <strong>prompt</strong>andgo<br />
@@ -170,7 +217,7 @@ const Terms = () => (
         Jurisdiction: Singapore
       </p>
 
-      <h2>17.&nbsp;&nbsp;Refunds, Cancellations &amp; Business Discontinuation</h2>
+      <h2>19.&nbsp;&nbsp;Refunds, Cancellations &amp; Business Discontinuation</h2>
       
       <h3>Standard Refund Policy</h3>
       <p>All sales of digital products, including prompt packs, downloads, and memberships, are final. We do not offer refunds, exchanges, or cancellations once a purchase is completed, except as required under Singapore law or as specified below.</p>
