@@ -1,5 +1,6 @@
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 import { Link, useNavigate } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
 import { 
@@ -430,11 +431,14 @@ const Index = () => {
                 </div>
               </div>
 
-              {/* Scout Tailoring Section */}
-              <div className="text-center mb-8">
-                <p className="text-muted-foreground max-w-2xl mx-auto text-lg mb-6">In any prompt card, pick your preferred AI platform from the dropdown and we'll instantly refine the prompt for you in line with that platform's best practices.</p>
-                {/* Scout Tailoring Highlight - Clean Design */}
-                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200/60 rounded-3xl p-4 md:p-8 max-w-4xl mx-auto shadow-lg">
+               {/* Scout Tailoring Section */}
+               <TooltipProvider>
+                 <div className="text-center mb-8">
+                   <p className="text-muted-foreground max-w-2xl mx-auto text-lg mb-6">In any prompt card, pick your preferred AI platform from the dropdown and we'll instantly refine the prompt for you in line with that platform's best practices.</p>
+                   {/* Scout Tailoring Highlight - Clean Design */}
+                   <Tooltip>
+                     <TooltipTrigger asChild>
+                       <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200/60 rounded-3xl p-4 md:p-8 max-w-4xl mx-auto shadow-lg cursor-help">
                   {/* Clean Dropdown Design */}
                   <div className="flex justify-center mb-4 md:mb-6">
                     <div className="space-y-3 w-full max-w-full md:max-w-[500px]">
@@ -502,12 +506,18 @@ const Index = () => {
                               <div className="text-sm text-gray-500">Google - Multimodal</div>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+                   </TooltipTrigger>
+                   <TooltipContent>
+                     <p>This is an image only - look for this dropdown on actual prompt cards</p>
+                   </TooltipContent>
+                     </Tooltip>
+                   </div>
+                 </TooltipProvider>
             </div>
           </div>
         </section>
