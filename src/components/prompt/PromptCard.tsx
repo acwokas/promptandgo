@@ -913,7 +913,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
           <div className="mt-4 flex flex-col gap-2">
             {/* AI Platform Selector - Clean Design */}
             <div className="space-y-3">
-              <label className="text-sm font-medium text-gray-900 sm:text-base">Choose your AI platform.</label>
+              <label className="text-sm font-medium text-gray-900 sm:text-base">Choose your AI platform:</label>
               
               {/* Clean Dropdown Trigger */}
               <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200/80 rounded-2xl p-3 sm:p-4">
