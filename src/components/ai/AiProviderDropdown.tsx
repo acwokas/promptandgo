@@ -63,13 +63,6 @@ const AI_PROVIDERS: AiProvider[] = [
     description: 'DeepSeek models'
   },
   {
-    id: 'cohere',
-    name: 'Cohere',
-    icon: <Sparkles className="h-4 w-4" />,
-    category: 'text',
-    description: 'Cohere Command models'
-  },
-  {
     id: 'midjourney',
     name: 'MidJourney',
     icon: <Image className="h-4 w-4" />,
