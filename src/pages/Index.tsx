@@ -2,7 +2,7 @@ import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
-import { Sparkles, Zap, ShieldCheck, ListChecks, Wand2, Rocket, Check, Search, Heart, Bot, Star, Briefcase, Image, ShoppingCart, BarChart3 } from "lucide-react";
+import { Sparkles, Zap, ShieldCheck, ListChecks, Wand2, Rocket, Check, Search, Heart, Bot, Star, Briefcase, Image, ShoppingCart, BarChart3, BookOpen, Edit3, Settings } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useSubscriptionStatus } from "@/hooks/useSubscriptionStatus";
@@ -274,60 +274,81 @@ const Index = () => {
           </Button>
         </PageHero>
 
-        {/* How It Works - 3 Step Process */}
+        {/* How Scout Works - Two Distinct Paths */}
         <section className="container pt-6 pb-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">How Scout Works</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              From human-curated foundations to AI-powered customization — the smartest way to craft prompts
+              Two powerful ways to create perfectly optimized prompts for any AI platform
             </p>
           </div>
           
-          <div className="grid gap-8 md:grid-cols-3 mb-8">
-            {/* Step 1 */}
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <ShieldCheck className="h-8 w-8 text-primary" />
-              </div>
-              <div className="bg-primary/5 rounded-full px-3 py-1 text-sm font-medium text-primary mb-4 inline-block">Step 1</div>
-              <h3 className="text-xl font-semibold mb-3">Start with proven foundations</h3>
-              <p className="text-muted-foreground">
-                Choose from thousands of human-curated prompts across every industry and use case. Battle-tested starting points that actually work.
-              </p>
+          {/* Path 1: Library-based */}
+          <div className="mb-12">
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-semibold text-foreground mb-2">Path 1: Start with Our Library</h3>
+              <p className="text-muted-foreground">Perfect for when you want to build on proven prompts</p>
             </div>
-
-            {/* Step 2 */}
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Bot className="h-8 w-8 text-primary" />
+            <div className="grid md:grid-cols-4 gap-6">
+              <div className="text-center">
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <BookOpen className="h-6 w-6 text-primary" />
+                </div>
+                <h4 className="font-semibold mb-2">1. Select Core Prompt</h4>
+                <p className="text-sm text-muted-foreground">Choose from our curated library</p>
               </div>
-              <div className="bg-primary/5 rounded-full px-3 py-1 text-sm font-medium text-primary mb-4 inline-block">Step 2</div>
-              <h3 className="text-xl font-semibold mb-3">Scout customizes in real-time</h3>
-              <p className="text-muted-foreground">
-                Our AI guides you through interactive wizards, adapting the prompt to your specific goals, tone, and requirements. No guesswork.
-              </p>
-            </div>
-
-            {/* Step 3 */}
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Sparkles className="h-8 w-8 text-primary" />
+              <div className="text-center">
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Settings className="h-6 w-6 text-primary" />
+                </div>
+                <h4 className="font-semibold mb-2">2. Scout Optimizes</h4>
+                <p className="text-sm text-muted-foreground">AI platform optimization via dropdown</p>
               </div>
-              <div className="bg-primary/5 rounded-full px-3 py-1 text-sm font-medium text-primary mb-4 inline-block">Step 3</div>
-              <h3 className="text-xl font-semibold mb-3">Optimized for any AI platform</h3>
-              <p className="text-muted-foreground">
-                Get platform-specific versions tailored for ChatGPT, Claude, Gemini, MidJourney, and more. Copy, paste, and get better results.
-              </p>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Edit3 className="h-6 w-6 text-primary" />
+                </div>
+                <h4 className="font-semibold mb-2">3. Customize (Optional)</h4>
+                <p className="text-sm text-muted-foreground">Fine-tune with Scout Assistant</p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Zap className="h-6 w-6 text-primary" />
+                </div>
+                <h4 className="font-semibold mb-2">4. One-Click Deploy</h4>
+                <p className="text-sm text-muted-foreground">Push to your AI platform</p>
+              </div>
             </div>
           </div>
 
-          {/* Connecting arrows for desktop */}
-          <div className="hidden md:block relative -mt-16 mb-8">
-            <div className="absolute top-8 left-1/3 transform -translate-x-1/2">
-              <div className="w-16 h-0.5 bg-gradient-to-r from-primary/50 to-primary/30"></div>
+          {/* Path 2: Studio-based */}
+          <div>
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-semibold text-foreground mb-2">Path 2: Create with Scout's Studio</h3>
+              <p className="text-muted-foreground">Need something specific? Let Scout craft it from scratch</p>
             </div>
-            <div className="absolute top-8 right-1/3 transform translate-x-1/2">
-              <div className="w-16 h-0.5 bg-gradient-to-r from-primary/30 to-primary/50"></div>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="text-center">
+                <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Wand2 className="h-6 w-6 text-secondary" />
+                </div>
+                <h4 className="font-semibold mb-2">1. Guided Creation</h4>
+                <p className="text-sm text-muted-foreground">Use guided wizards and dropdowns to craft prompts in real-time</p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Settings className="h-6 w-6 text-secondary" />
+                </div>
+                <h4 className="font-semibold mb-2">2. Scout Optimizes</h4>
+                <p className="text-sm text-muted-foreground">Convert to platform-specific prompt via dropdown</p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Zap className="h-6 w-6 text-secondary" />
+                </div>
+                <h4 className="font-semibold mb-2">3. One-Click Deploy</h4>
+                <p className="text-sm text-muted-foreground">Push to your preferred AI platform</p>
+              </div>
             </div>
           </div>
         </section>
