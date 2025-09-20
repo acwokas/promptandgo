@@ -45,12 +45,6 @@ import SocialProofStream from "@/components/conversion/SocialProofStream";
 import { PromptStudioCTA } from "@/components/ui/prompt-studio-cta";
 import ProgressivePricing from "@/components/conversion/ProgressivePricing";
 import { TestimonialHighlights, UserStats, SecurityBadges, AsSeenIn } from "@/components/conversion/TrustIndicators";
-import ROICalculator from "@/components/conversion/ROICalculator";
-import CountdownTimer from "@/components/conversion/CountdownTimer";
-import RotatingTestimonials from "@/components/conversion/RotatingTestimonials";
-import ContentPreview from "@/components/conversion/ContentPreview";
-import MobileCTABar from "@/components/conversion/MobileCTABar";
-import PerformanceMetrics from "@/components/conversion/PerformanceMetrics";
 
 const Index = () => {
   const { user } = useSupabaseAuth();
@@ -299,9 +293,6 @@ const Index = () => {
       />
 
       <main>
-        {/* Countdown Timer */}
-        <CountdownTimer variant="banner" offer="🔥 Limited Time: 50% OFF All Premium Packs" />
-        
         {/* Hero - Value-Driven Headlines */}
         <PageHero title={<>
             Save <span className="text-gradient-brand">10+ hours weekly</span> with battle-tested AI prompts
@@ -418,24 +409,8 @@ const Index = () => {
           <div className="mt-8">
             <AsSeenIn />
           </div>
-          
-          {/* ROI Calculator */}
-          <div className="mt-12">
-            <ROICalculator />
-          </div>
         </section>
 
-        {/* Content Preview Section */}
-        <section className="py-12 bg-gradient-to-br from-muted/30 to-background">
-          <div className="container">
-            <ContentPreview />
-          </div>
-        </section>
-
-        {/* Rotating Testimonials */}
-        <section className="container py-12">
-          <RotatingTestimonials variant="fade" />
-        </section>
 
         {/* Extended Blue Section - Including Most Popular Path and Scout Features */}
         <section className="bg-gradient-to-br from-accent/20 via-primary/15 to-accent/10 py-8">
@@ -1046,10 +1021,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Performance Metrics */}
-        <section className="container py-12">
-          <PerformanceMetrics />
-        </section>
 
         {/* Final CTA Section */}
         <section className="py-16 bg-gradient-to-r from-primary/10 to-accent/10">
@@ -1077,8 +1048,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Mobile CTA Bar */}
-        <MobileCTABar />
       </main>
     </>
   );
