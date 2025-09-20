@@ -313,13 +313,12 @@ const PromptLibrary = () => {
           const thirtyDaysAgo = new Date();
           thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
           q = q.gte("created_at", thirtyDaysAgo.toISOString());
-        } else if (ribbon && !["RECOMMENDED", "MOST_POPULAR", "HIGHEST_RATED", "TRENDING", "MOST_COPIED", "QUICK_WIN", "RECENTLY_VIEWED"].includes(ribbon)) {
+        } else if (ribbon && ribbon !== "undefined" && !["RECOMMENDED", "MOST_POPULAR", "HIGHEST_RATED", "TRENDING", "MOST_COPIED", "QUICK_WIN", "RECENTLY_VIEWED"].includes(ribbon)) {
           // Only filter by database ribbon if it's not one of our special filters
           q = q.eq("ribbon", ribbon);
         }
         
         // Handle standard pro/free filtering
-        console.log('Filtering state:', { proOnly, includePro, ribbon, proSearch });
         if (proOnly || proSearch) q = q.eq("is_pro", true);
         else if (!includePro && !ribbon?.includes("PRO")) q = q.eq("is_pro", false);
 
