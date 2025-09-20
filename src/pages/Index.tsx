@@ -257,16 +257,19 @@ const Index = () => {
       />
 
       <main>
-        {/* Hero - Problem → Solution → CTA */}
+        {/* Hero - Library-First Approach */}
         <PageHero title={<>
-            Stop wasting 30 minutes tweaking prompts that <span className="text-gradient-brand">still don't work</span>
+            Browse <span className="text-gradient-brand">proven prompts</span>, then let Scout optimize them instantly
           </>} subtitle={<>
-            <span className="text-lg font-medium">Meet Scout</span> — Your AI that turns proven, human-curated prompts into platform-perfect commands in seconds. From ChatGPT to MidJourney, get better results instantly.
+            Start with battle-tested prompts from our curated library. Then Scout customizes them for ChatGPT, Claude, MidJourney, or any AI platform in seconds. No more starting from scratch or endless tweaking.
           </>}>
           <Button asChild size="lg" variant="hero" className="px-8">
-            <Link to="/scout"><Bot className="h-4 w-4 mr-2" />Try Scout Free</Link>
+            <Link to="/library"><Search className="h-4 w-4 mr-2" />Browse Proven Prompts</Link>
           </Button>
-          <p className="text-sm text-muted-foreground mt-4">Join 50,000+ professionals saving hours daily ⚡</p>
+          <Button asChild size="lg" variant="secondary">
+            <Link to="/scout"><Bot className="h-4 w-4 mr-2" />Try Scout Studio</Link>
+          </Button>
+          <p className="text-sm text-muted-foreground mt-4">Join 50,000+ professionals • 1M+ prompts optimized • Start free ⚡</p>
         </PageHero>
 
         {/* Immediate Social Proof */}
@@ -301,7 +304,7 @@ const Index = () => {
                     <div className="flex items-center gap-0.5 mb-2">
                       {Array.from({ length: 5 }, (_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
                     </div>
-                    <p className="text-sm text-muted-foreground">"Scout's wizards are incredible! I used to spend 30 minutes tweaking prompts. Now Scout builds exactly what I need in under 2 minutes."</p>
+                    <p className="text-sm text-muted-foreground">"I love starting with proven prompts from the library. Then Scout adapts them perfectly for my specific needs and AI platform. It's like having a prompt expert on my team."</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 pl-14">
@@ -386,76 +389,94 @@ const Index = () => {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Here's How Scout Saves You Time</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Two powerful ways to create perfectly optimized prompts for any AI platform — no more trial and error
+              Start with proven foundations, then let Scout perfect them for any AI platform
             </p>
           </div>
           
-          {/* Path 1: Library-based */}
-          <div className="mb-12">
+          {/* Path 1: Library-based - MAIN PATH */}
+          <div className="mb-16">
             <div className="text-center mb-8">
-              <h3 className="text-2xl font-semibold text-foreground mb-2">Path 1: Start with Battle-Tested Prompts</h3>
-              <p className="text-muted-foreground">Perfect for when you want to build on proven foundations</p>
+              <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
+                <BookOpen className="h-4 w-4" />
+                Most Popular Path
+              </div>
+              <h3 className="text-2xl font-semibold text-foreground mb-2">Start with Battle-Tested Prompts</h3>
+              <p className="text-muted-foreground max-w-xl mx-auto">Browse thousands of proven prompts, then let Scout customize them instantly</p>
             </div>
-            <div className="grid md:grid-cols-4 gap-6">
+            <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
               <div className="text-center">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <BookOpen className="h-6 w-6 text-primary" />
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <BookOpen className="h-8 w-8 text-primary" />
                 </div>
-                <h4 className="font-semibold mb-2">1. Select Core Prompt</h4>
-                <p className="text-sm text-muted-foreground">Choose from our curated library</p>
+                <h4 className="font-semibold mb-2">1. Browse Library</h4>
+                <p className="text-sm text-muted-foreground">Choose from thousands of human-curated prompts</p>
               </div>
               <div className="text-center">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Settings className="h-6 w-6 text-primary" />
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Settings className="h-8 w-8 text-primary" />
                 </div>
                 <h4 className="font-semibold mb-2">2. Scout Optimizes</h4>
-                <p className="text-sm text-muted-foreground">AI platform optimization via dropdown</p>
+                <p className="text-sm text-muted-foreground">Select your AI platform from dropdown</p>
               </div>
               <div className="text-center">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Edit3 className="h-6 w-6 text-primary" />
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Edit3 className="h-8 w-8 text-primary" />
                 </div>
                 <h4 className="font-semibold mb-2">3. Customize (Optional)</h4>
                 <p className="text-sm text-muted-foreground">Fine-tune with Scout Assistant</p>
               </div>
               <div className="text-center">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Zap className="h-6 w-6 text-primary" />
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Zap className="h-8 w-8 text-primary" />
                 </div>
                 <h4 className="font-semibold mb-2">4. One-Click Deploy</h4>
-                <p className="text-sm text-muted-foreground">Push to your AI platform</p>
+                <p className="text-sm text-muted-foreground">Copy & paste to your AI platform</p>
               </div>
+            </div>
+            <div className="text-center mt-8">
+              <Button asChild size="lg" variant="hero">
+                <Link to="/library">Start Browsing Prompts <Search className="h-4 w-4 ml-2" /></Link>
+              </Button>
             </div>
           </div>
 
-          {/* Path 2: Studio-based */}
-          <div>
+          {/* Path 2: Studio-based - ADVANCED PATH */}
+          <div className="border-t pt-12">
             <div className="text-center mb-8">
-              <h3 className="text-2xl font-semibold text-foreground mb-2">Path 2: Create with Scout's Studio</h3>
-              <p className="text-muted-foreground">Need something specific? Let Scout craft it from scratch</p>
+              <div className="inline-flex items-center gap-2 bg-secondary/10 text-secondary px-4 py-2 rounded-full text-sm font-medium mb-4">
+                <Wand2 className="h-4 w-4" />
+                For Custom Needs
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-2">Or Create Something Completely Custom</h3>
+              <p className="text-muted-foreground max-w-xl mx-auto">Need something specific? Use Scout's guided wizards to build from scratch</p>
             </div>
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
               <div className="text-center">
                 <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Wand2 className="h-6 w-6 text-secondary" />
                 </div>
                 <h4 className="font-semibold mb-2">1. Guided Creation</h4>
-                <p className="text-sm text-muted-foreground">Use guided wizards and dropdowns to craft prompts in real-time</p>
+                <p className="text-sm text-muted-foreground">Use wizards and dropdowns</p>
               </div>
               <div className="text-center">
                 <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Settings className="h-6 w-6 text-secondary" />
                 </div>
                 <h4 className="font-semibold mb-2">2. Scout Optimizes</h4>
-                <p className="text-sm text-muted-foreground">Convert to platform-specific prompt via dropdown</p>
+                <p className="text-sm text-muted-foreground">Platform-specific output</p>
               </div>
               <div className="text-center">
                 <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Zap className="h-6 w-6 text-secondary" />
                 </div>
-                <h4 className="font-semibold mb-2">3. One-Click Deploy</h4>
-                <p className="text-sm text-muted-foreground">Push to your preferred AI platform</p>
+                <h4 className="font-semibold mb-2">3. Deploy</h4>
+                <p className="text-sm text-muted-foreground">One-click to AI platform</p>
               </div>
+            </div>
+            <div className="text-center mt-6">
+              <Button asChild size="default" variant="secondary">
+                <Link to="/scout">Try Scout Studio <Wand2 className="h-4 w-4 ml-2" /></Link>
+              </Button>
             </div>
           </div>
         </section>
