@@ -912,6 +912,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
           <div className="mt-4 flex flex-col gap-2">
             {/* AI Platform Selector - First */}
             <div className="space-y-2">
+              <label className="text-sm font-medium">Tailor your prompt for your favourite AI and run it in one click</label>
               <Select value={selectedAIPlatform} onValueChange={handleAIPlatformChange}>
                 <SelectTrigger className="w-full">
                   <SelectValue>
