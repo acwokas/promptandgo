@@ -417,11 +417,6 @@ const Index = () => {
                 <p className="text-sm text-muted-foreground">Copy & paste to your AI platform</p>
               </div>
             </div>
-            <div className="text-center mt-8">
-              <Button asChild size="lg" variant="hero">
-                <Link to="/library">Start Browsing Prompts <Search className="h-4 w-4 ml-2" /></Link>
-              </Button>
-            </div>
 
             {/* Conditional Content Based on Login Status */}
             {user ?
@@ -773,17 +768,27 @@ const Index = () => {
                 <div className="grid gap-6 md:grid-cols-2">
                   <div className="space-y-4">
                     <div className="border-l-4 border-primary pl-4 py-2">
-                      <h3 className="font-semibold mb-1">Do I need to sign up?</h3>
-                      <p className="text-sm text-muted-foreground">Nope! Browse and copy prompts for free. Sign up only to save favorites and access power packs.</p>
+                      <h3 className="font-semibold mb-1">What are battle-tested prompts?</h3>
+                      <p className="text-sm text-muted-foreground">Our prompts are proven in real-world scenarios by professionals. No guesswork - just results that actually work.</p>
                     </div>
                     
                     <div className="border-l-4 border-primary pl-4 py-2">
-                      <h3 className="font-semibold mb-1">How much does it cost?</h3>
-                      <p className="text-sm text-muted-foreground">Browsing is free forever. Premium packs start at $9.99 for specialized collections.</p>
+                      <h3 className="font-semibold mb-1">What is Scout Studio?</h3>
+                      <p className="text-sm text-muted-foreground">Our AI-powered prompt builder that creates custom prompts tailored to your specific needs using guided wizards.</p>
+                    </div>
+                    
+                    <div className="border-l-4 border-primary pl-4 py-2">
+                      <h3 className="font-semibold mb-1">Do I need to sign up?</h3>
+                      <p className="text-sm text-muted-foreground">Nope! Browse and copy prompts for free. Sign up only to save favorites and access power packs.</p>
                     </div>
                   </div>
                   
                   <div className="space-y-4">
+                    <div className="border-l-4 border-primary pl-4 py-2">
+                      <h3 className="font-semibold mb-1">How does AI optimization work?</h3>
+                      <p className="text-sm text-muted-foreground">Scout automatically tailors each prompt for ChatGPT, Claude, Gemini, and other AI platforms for best results.</p>
+                    </div>
+                    
                     <div className="border-l-4 border-primary pl-4 py-2">
                       <h3 className="font-semibold mb-1">Works with free AI tools?</h3>
                       <p className="text-sm text-muted-foreground">Yes! Most prompts work perfectly with free versions of ChatGPT, Claude, and other AI tools.</p>
