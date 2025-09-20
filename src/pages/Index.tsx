@@ -295,12 +295,8 @@ const Index = () => {
       />
 
       <main>
-        {/* 50% Off Countdown Banner */}
-        <CountdownTimer 
-          variant="banner" 
-          offer="🚀 50% OFF All Premium Packs - Limited Time Only!"
-          expiryHours={24}
-        />
+        {/* 50% Off Countdown Banner - Only show if enabled in database */}
+        <CountdownTimer variant="banner" />
 
         {/* Hero - Value-Driven Headlines */}
         <PageHero title={<>

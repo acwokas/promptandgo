@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Clock, Zap, AlertCircle } from "lucide-react";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 interface CountdownTimerProps {
   variant?: "inline" | "banner" | "popup";
@@ -10,16 +11,51 @@ interface CountdownTimerProps {
   expiryHours?: number;
 }
 
+interface CountdownSettings {
+  enabled: boolean;
+  offer_text: string;
+  expiry_hours: number;
+}
+
 const CountdownTimer = ({ 
   variant = "banner", 
-  offer = "50% OFF All Premium Packs",
-  expiryHours = 24 
+  offer: propOffer,
+  expiryHours: propExpiryHours
 }: CountdownTimerProps) => {
   const [timeLeft, setTimeLeft] = useState({
     hours: 0,
     minutes: 0,
     seconds: 0
   });
+  const [settings, setSettings] = useState<CountdownSettings | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Load settings from database
+  useEffect(() => {
+    const loadSettings = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('countdown_settings')
+          .select('enabled, offer_text, expiry_hours')
+          .single();
+
+        if (!error && data) {
+          setSettings(data);
+          setIsVisible(data.enabled);
+        }
+      } catch (err) {
+        console.error('Error loading countdown settings:', err);
+        // Fallback to showing countdown if can't load settings
+        setIsVisible(true);
+      }
+    };
+
+    loadSettings();
+  }, []);
+
+  // Use database settings or props as fallback
+  const offer = settings?.offer_text || propOffer || "50% OFF All Premium Packs";
+  const expiryHours = settings?.expiry_hours || propExpiryHours || 24;
 
   useEffect(() => {
     // Set expiry time to 24 hours from now (or specified hours)
@@ -43,6 +79,11 @@ const CountdownTimer = ({
 
     return () => clearInterval(timer);
   }, [expiryHours]);
+
+  // Don't render if disabled in settings
+  if (!isVisible) {
+    return null;
+  }
 
   if (variant === "inline") {
     return (

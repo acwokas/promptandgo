@@ -163,6 +163,33 @@ export type Database = {
         }
         Relationships: []
       }
+      countdown_settings: {
+        Row: {
+          created_at: string
+          enabled: boolean
+          expiry_hours: number
+          id: string
+          offer_text: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          enabled?: boolean
+          expiry_hours?: number
+          id?: string
+          offer_text?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          enabled?: boolean
+          expiry_hours?: number
+          id?: string
+          offer_text?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       daily_ai_sends: {
         Row: {
           created_at: string

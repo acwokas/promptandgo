@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { Navigate, Link } from "react-router-dom";
-import { Upload, Plus, Download, Settings, MessageCircle, BarChart3 } from "lucide-react";
+import { Upload, Plus, Download, Settings, MessageCircle, BarChart3, Clock } from "lucide-react";
 
 const AdminTools = () => {
   const { user, loading: authLoading } = useSupabaseAuth();
@@ -38,6 +38,13 @@ const AdminTools = () => {
   }
 
   const tools = [
+    {
+      title: "Countdown Timer",
+      description: "Control promotional countdown timer display and settings",
+      icon: Clock,
+      href: "/admin/countdown",
+      color: "text-red-500"
+    },
     {
       title: "Poll Management",
       description: "Create and manage polls, view voting results, and control poll display settings",
