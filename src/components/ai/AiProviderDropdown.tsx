@@ -138,11 +138,14 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
       }
 
       if (data?.response) {
+        // Open AI assistant in new window with the original prompt
+        const assistantUrl = `/ai/assistant?prompt=${encodeURIComponent(prompt.trim())}`;
+        window.open(assistantUrl, '_blank');
+        
         toast({
-          title: "Response received",
-          description: `Got response from ${provider.name}`,
+          title: "Opened in AI Assistant",
+          description: `Your prompt has been sent to the AI Assistant`,
         });
-        onResponse?.(data.response, provider.name);
       } else {
         throw new Error('No response received');
       }
