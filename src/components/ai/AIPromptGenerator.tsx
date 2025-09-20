@@ -601,17 +601,17 @@ const AIPromptGenerator = () => {
 
                 {/* AI Platform Selector */}
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Tailor your prompt for your favourite AI and run it in one click</label>
+                  <label className="text-sm font-medium">Tailor this basic prompt for your favourite AI and run it in one click:</label>
                   <Select value={selectedAIPlatform} onValueChange={handleAIPlatformChange}>
                     <SelectTrigger className="w-full bg-background border shadow-sm">
                       <SelectValue>
                         {selectedAIPlatform === 'original' 
-                          ? 'Original Prompt' 
+                          ? 'Core Prompt' 
                           : `${AI_PROVIDERS.find(p => p.id === selectedAIPlatform)?.icon} ${AI_PROVIDERS.find(p => p.id === selectedAIPlatform)?.name}`}
                       </SelectValue>
                     </SelectTrigger>
                     <SelectContent className="bg-background border shadow-lg z-50">
-                      <SelectItem value="original">Original Prompt</SelectItem>
+                      <SelectItem value="original">Core Prompt</SelectItem>
                       {AI_PROVIDERS.filter(p => p.category === 'text').map((provider) => (
                         <SelectItem key={provider.id} value={provider.id}>
                           {provider.icon} {provider.name}

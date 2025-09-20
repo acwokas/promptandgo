@@ -881,7 +881,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
       </CardHeader>
       <CardContent>
         <div>
-          <div className="text-xs font-medium mb-1">{prompt.excerpt?.replace(/\.$/, '')}:</div>
+          <div className="text-xs font-medium mb-1">Core prompt: {prompt.excerpt?.replace(/\.$/, '').toLowerCase()}:</div>
           <div className="relative min-h-[320px] sm:min-h-[300px]">
             <pre className={cn("whitespace-pre-wrap prompt-editorial p-4 sm:p-5 rounded-md text-[0.975rem] sm:text-[1.05rem] leading-7 transition shadow-elegant min-h-[320px] sm:min-h-[300px]", showLock && "blur-sm select-none pointer-events-none")}>
               {displayPrompt}
@@ -912,17 +912,17 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
           <div className="mt-4 flex flex-col gap-2">
             {/* AI Platform Selector - First */}
             <div className="space-y-2">
-              <label className="text-sm font-medium">Tailor your prompt for your favourite AI and run it in one click</label>
+              <label className="text-sm font-medium">Tailor this basic prompt for your favourite AI and run it in one click:</label>
               <Select value={selectedAIPlatform} onValueChange={handleAIPlatformChange}>
                 <SelectTrigger className="w-full">
                   <SelectValue>
                     {selectedAIPlatform === 'original' 
-                      ? 'Original Prompt' 
+                      ? 'Core Prompt'
                       : `${AI_PROVIDERS.find(p => p.id === selectedAIPlatform)?.icon} ${AI_PROVIDERS.find(p => p.id === selectedAIPlatform)?.name}`}
                   </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="original">Original Prompt</SelectItem>
+                  <SelectItem value="original">Core Prompt</SelectItem>
                   {AI_PROVIDERS.filter(p => p.category === 'text').map((provider) => (
                     <SelectItem key={provider.id} value={provider.id}>
                       {provider.icon} {provider.name}
