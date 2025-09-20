@@ -5,6 +5,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
+import { useState, useEffect } from "react";
 import { AppSidebar } from "@/components/AppSidebar";
 import ConversionBar from "@/components/layout/ConversionBar";
 import ExitIntentPopup from "@/components/conversion/ExitIntentPopup";
@@ -99,17 +100,38 @@ const App = () => {
 const AppContent = () => {
   const { shouldShowPopup, dismissPopup, markContextFieldsCompleted } = usePageVisitTracker();
   const { user } = useSupabaseAuth();
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
 
-  return (
-    <SidebarProvider defaultOpen={false}>
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkIsMobile();
+    
+    const handleResize = () => {
+      checkIsMobile();
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Show loading state while determining layout
+  if (isMobile === null) {
+    return null;
+  }
+
+  // Mobile Layout - No SidebarProvider
+  if (isMobile) {
+    return (
       <LoginWidgetProvider>
         <GlobalStructuredData />
         <ConversionBar />
         
-        {/* Mobile Layout - No Sidebar */}
-        <div className="md:hidden w-full min-h-screen flex flex-col">
+        <div className="w-full min-h-screen flex flex-col overflow-x-hidden">
           <Header />
-          <div className="flex-1 w-full">
+          <div className="flex-1 w-full overflow-x-hidden">
             <ScrollToTop />
             <GAListener />
             <AuthEffects />
@@ -122,7 +144,6 @@ const AppContent = () => {
               <Route path="/faqs" element={<FAQs />} />
               <Route path="/tips" element={<TipsIndex />} />
               <Route path="/tips/:slug" element={<ArticleView />} />
-              {/* Legacy blog routes - keep for SEO */}
               <Route path="/tips/welcome-to-promptandgo-ai" element={<WelcomeToPromptAndGo />} />
               <Route path="/tips/best-ai-prompts-for-small-business-2025" element={<BestAIPromptsForSmallBusiness2025 />} />
               <Route path="/tips/how-to-write-ai-prompts" element={<HowToWriteAIPrompts />} />
@@ -155,7 +176,6 @@ const AppContent = () => {
               <Route path="/account/purchases" element={<PurchasesPage />} />
               <Route path="/account/favorites" element={<FavoritesPage />} />
               <Route path="/account/ai-preferences" element={<AIPreferencesPage />} />
-              
               <Route path="/cart" element={<CartPage />} />
               <Route path="/checkout/success" element={<CheckoutSuccess />} />
               <Route path="/checkout/canceled" element={<CheckoutCanceled />} />
@@ -166,19 +186,36 @@ const AppContent = () => {
               <Route path="/scout" element={<ToolkitPage />} />
               <Route path="/ai/generator" element={<AIPromptGeneratorPage />} />
               <Route path="/ai/studio" element={<PromptStudioPage />} />
-              
               <Route path="/ai/assistant" element={<AIAssistantPage />} />
               <Route path="/ai-credits-exhausted" element={<AICreditsExhaustedPage />} />
-              
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
           <Footer />
         </div>
+        
+        <ContextPopup
+          isOpen={shouldShowPopup}
+          onClose={() => dismissPopup(false)}
+          onDismissPermanently={() => dismissPopup(true)}
+          onComplete={markContextFieldsCompleted}
+        />
+        
+        {user ? <FeedbackWidget /> : <LoginWidget />}
+        <ExitIntentPopup />
+        <LiveActivityTicker />
+      </LoginWidgetProvider>
+    );
+  }
 
-        {/* Desktop Layout - With Sidebar */}
-        <div className="hidden md:flex min-h-screen w-full overflow-hidden">
+  // Desktop Layout - With SidebarProvider
+  return (
+    <SidebarProvider defaultOpen={false}>
+      <LoginWidgetProvider>
+        <GlobalStructuredData />
+        <ConversionBar />
+        
+        <div className="flex min-h-screen w-full overflow-hidden">
           <AppSidebar />
           <main className="flex-1 flex flex-col min-w-0 w-full overflow-x-hidden">
             <Header />
