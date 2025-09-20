@@ -21,7 +21,8 @@ import {
   BarChart3, 
   BookOpen, 
   Edit3, 
-  Settings 
+  Settings,
+  ArrowRight
 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
@@ -44,6 +45,12 @@ import SocialProofStream from "@/components/conversion/SocialProofStream";
 import { PromptStudioCTA } from "@/components/ui/prompt-studio-cta";
 import ProgressivePricing from "@/components/conversion/ProgressivePricing";
 import { TestimonialHighlights, UserStats, SecurityBadges, AsSeenIn } from "@/components/conversion/TrustIndicators";
+import ROICalculator from "@/components/conversion/ROICalculator";
+import CountdownTimer from "@/components/conversion/CountdownTimer";
+import RotatingTestimonials from "@/components/conversion/RotatingTestimonials";
+import ContentPreview from "@/components/conversion/ContentPreview";
+import MobileCTABar from "@/components/conversion/MobileCTABar";
+import PerformanceMetrics from "@/components/conversion/PerformanceMetrics";
 
 const Index = () => {
   const { user } = useSupabaseAuth();
@@ -292,6 +299,9 @@ const Index = () => {
       />
 
       <main>
+        {/* Countdown Timer */}
+        <CountdownTimer variant="banner" offer="🔥 Limited Time: 50% OFF All Premium Packs" />
+        
         {/* Hero - Value-Driven Headlines */}
         <PageHero title={<>
             Save <span className="text-gradient-brand">10+ hours weekly</span> with battle-tested AI prompts
@@ -408,6 +418,23 @@ const Index = () => {
           <div className="mt-8">
             <AsSeenIn />
           </div>
+          
+          {/* ROI Calculator */}
+          <div className="mt-12">
+            <ROICalculator />
+          </div>
+        </section>
+
+        {/* Content Preview Section */}
+        <section className="py-12 bg-gradient-to-br from-muted/30 to-background">
+          <div className="container">
+            <ContentPreview />
+          </div>
+        </section>
+
+        {/* Rotating Testimonials */}
+        <section className="container py-12">
+          <RotatingTestimonials variant="fade" />
         </section>
 
         {/* Extended Blue Section - Including Most Popular Path and Scout Features */}
@@ -1018,6 +1045,40 @@ const Index = () => {
             </div>
           </div>
         </section>
+
+        {/* Performance Metrics */}
+        <section className="container py-12">
+          <PerformanceMetrics />
+        </section>
+
+        {/* Final CTA Section */}
+        <section className="py-16 bg-gradient-to-r from-primary/10 to-accent/10">
+          <div className="container text-center">
+            <h2 className="text-3xl font-bold mb-4">
+              Ready to Save 10+ Hours This Week?
+            </h2>
+            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+              Join 5,000+ professionals who've already transformed their productivity. 
+              Start with our free prompts, no credit card required.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
+              <Button asChild size="lg" className="px-8">
+                <Link to="/library">
+                  Get Started FREE <ArrowRight className="h-4 w-4 ml-2" />
+                </Link>
+              </Button>
+              <Button asChild size="lg" variant="outline">
+                <Link to="/packs">View Premium Packs</Link>
+              </Button>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              No signup required • 30-day money-back guarantee on premium plans
+            </p>
+          </div>
+        </section>
+
+        {/* Mobile CTA Bar */}
+        <MobileCTABar />
       </main>
     </>
   );
