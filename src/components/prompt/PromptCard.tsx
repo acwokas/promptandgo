@@ -170,59 +170,41 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
 
     const url = urls[selectedProvider!];
     if (url) {
+      // Always show the manual instructions since many networks block AI platforms
+      toast({
+        title: "Prompt copied to clipboard!",
+        description: (
+          <div className="space-y-2">
+            <p className="text-sm font-medium">Your optimized prompt is ready to use.</p>
+            <p className="text-sm">If {selectedProviderData.name} doesn't open automatically, manually visit:</p>
+            <p className="text-xs font-mono break-all bg-muted p-2 rounded">{url}</p>
+            <p className="text-xs text-muted-foreground">Then paste your prompt there!</p>
+          </div>
+        ),
+        duration: 6000,
+      });
+
       try {
-        // Try to open in new tab
+        // Try to open in new tab, but don't rely on it working
         const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
         
-        if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-          // Popup was blocked or failed, show manual instructions
-          toast({
-            title: "Unable to open AI platform",
-            description: (
-              <div className="space-y-2">
-                <p>Please manually visit: <strong>{selectedProviderData.name}</strong></p>
-                <p className="text-xs font-mono break-all">{url}</p>
-                <p className="text-sm">Your prompt has been copied to clipboard - just paste it there!</p>
-              </div>
-            ),
-            variant: "destructive"
-          });
-        } else {
-          // Check after a brief delay if the window is still open
+        // If the window opened successfully, show a brief success message after a delay
+        if (newWindow && !newWindow.closed && typeof newWindow.closed !== 'undefined') {
           setTimeout(() => {
-            if (newWindow.closed) {
-              toast({
-                title: "AI platform may be blocked",
-                description: (
-                  <div className="space-y-2">
-                    <p>If {selectedProviderData.name} didn't open, your network may be blocking it.</p>
-                    <p className="text-xs font-mono break-all">{url}</p>
-                    <p className="text-sm">Your prompt is copied to clipboard!</p>
-                  </div>
-                ),
-                variant: "destructive"
-              });
-            } else {
-              toast({
-                title: `Opened ${selectedProviderData.name}`,
-                description: `${selectedProviderData.name} opened in new tab. Your optimized prompt has been copied to clipboard.`
-              });
+            try {
+              if (!newWindow.closed) {
+                // Window is still open, likely successful
+                console.log(`Successfully opened ${selectedProviderData.name}`);
+              }
+            } catch (e) {
+              // Cross-origin error is expected and indicates the page loaded
+              console.log(`${selectedProviderData.name} opened (cross-origin detected)`);
             }
-          }, 1000);
+          }, 1500);
         }
       } catch (error) {
-        // Fallback for any errors
-        toast({
-          title: "Manual navigation required",
-          description: (
-            <div className="space-y-2">
-              <p>Please manually visit: <strong>{selectedProviderData.name}</strong></p>
-              <p className="text-xs font-mono break-all">{url}</p>
-              <p className="text-sm">Your prompt has been copied to clipboard!</p>
-            </div>
-          ),
-          variant: "destructive"
-        });
+        // Silently handle errors - the manual instructions are already shown
+        console.warn(`Failed to open ${selectedProviderData.name}:`, error);
       }
     }
 
