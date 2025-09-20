@@ -433,10 +433,8 @@ const Index = () => {
         </section>
 
         {/* Prompts of the Day / Personalized Prompts */}
-        <section className="container py-1">
-          <div className="mb-4">
-            <PromptsOfTheDay />
-          </div>
+        <section className="container -mt-4">
+          <PromptsOfTheDay />
         </section>
 
         {/* Scout AI Core Feature - HERO SECTION */}
