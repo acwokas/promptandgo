@@ -163,6 +163,33 @@ export type Database = {
         }
         Relationships: []
       }
+      daily_ai_sends: {
+        Row: {
+          created_at: string
+          id: string
+          send_count: number
+          send_date: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          send_count?: number
+          send_date?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          send_count?: number
+          send_date?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       favorites: {
         Row: {
           created_at: string
@@ -1133,6 +1160,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      check_and_increment_daily_ai_sends: {
+        Args: { p_user_id: string }
+        Returns: Json
+      }
       check_and_increment_usage: {
         Args: { usage_type_param: string; user_id_param: string }
         Returns: {
@@ -1145,6 +1176,10 @@ export type Database = {
       cleanup_newsletter_rate_limits: {
         Args: Record<PropertyKey, never>
         Returns: undefined
+      }
+      get_daily_ai_sends_count: {
+        Args: { p_user_id: string }
+        Returns: Json
       }
       get_decrypted_subscriber_email: {
         Args: { p_key: string; p_user_id: string }
