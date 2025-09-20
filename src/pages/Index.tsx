@@ -425,159 +425,113 @@ const Index = () => {
                 <p className="text-sm text-muted-foreground">Copy to your favorite AI tool</p>
               </div>
             </div>
-            <div className="text-center mt-8">
-              <p className="text-lg font-semibold mb-4">👇 Try a Prompt of the Day right now</p>
-              <p className="text-muted-foreground max-w-md mx-auto">See how Scout optimizes real prompts below. Pick one, customize it, and experience the magic instantly.</p>
+          </div>
+        </section>
+
+        {/* Premium Collections - Moved Above */}
+        <section className="container py-8 bg-gradient-to-br from-accent/20 via-primary/15 to-accent/10 rounded-3xl border-2 border-accent/30 shadow-2xl">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold mb-4">Let Scout tailor our core prompt for your favourite AI and run it in one click:</h2>
+            
+            {/* Scout Tailoring Highlight - Clean Design */}
+            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200/60 rounded-3xl p-8 max-w-4xl mx-auto shadow-lg">
+              {/* Clean Dropdown Design */}
+              <div className="flex justify-center">
+                <div className="relative">
+                  {/* Main Dropdown Trigger */}
+                  <div className="bg-white/90 backdrop-blur-sm border-2 border-blue-200/80 rounded-2xl px-8 py-6 shadow-sm min-w-[500px]">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xl font-semibold text-blue-600">Choose Your AI Platform</span>
+                      <div className="flex items-center gap-4">
+                        <div className="bg-blue-500 text-white px-6 py-2 rounded-full font-semibold shadow-sm flex items-center gap-2">
+                          <span className="text-lg">🤖</span>
+                          <span>ChatGPT</span>
+                        </div>
+                        <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Clean Dropdown Menu */}
+                  <div className="absolute top-full left-0 mt-3 bg-white/95 backdrop-blur-sm border-2 border-blue-200/80 rounded-2xl shadow-xl z-50 min-w-[500px] overflow-hidden">
+                    <div className="p-4 space-y-3">
+                      {/* ChatGPT - Selected */}
+                      <div className="bg-blue-50 border-2 border-blue-200 rounded-2xl p-4 flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                            <span className="text-2xl">🤖</span>
+                          </div>
+                          <div>
+                            <div className="font-bold text-lg text-gray-900">ChatGPT</div>
+                            <div className="text-gray-500">OpenAI - Most Popular</div>
+                          </div>
+                        </div>
+                        <div className="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                          SELECTED
+                        </div>
+                      </div>
+                      
+                      {/* Claude */}
+                      <div className="hover:bg-gray-50 rounded-2xl p-4 flex items-center gap-4 cursor-pointer transition-all border-2 border-transparent hover:border-gray-200">
+                        <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center">
+                          <span className="text-2xl">🧠</span>
+                        </div>
+                        <div>
+                          <div className="font-bold text-lg text-gray-900">Claude</div>
+                          <div className="text-gray-500">Anthropic - Great for Analysis</div>
+                        </div>
+                      </div>
+                      
+                      {/* MidJourney */}
+                      <div className="hover:bg-gray-50 rounded-2xl p-4 flex items-center gap-4 cursor-pointer transition-all border-2 border-transparent hover:border-gray-200">
+                        <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                          <span className="text-2xl">🎨</span>
+                        </div>
+                        <div>
+                          <div className="font-bold text-lg text-gray-900">MidJourney</div>
+                          <div className="text-gray-500">Image Generation</div>
+                        </div>
+                      </div>
+                      
+                      {/* Gemini */}
+                      <div className="hover:bg-gray-50 rounded-2xl p-4 flex items-center gap-4 cursor-pointer transition-all border-2 border-transparent hover:border-gray-200">
+                        <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                          <span className="text-2xl">💎</span>
+                        </div>
+                        <div>
+                          <div className="font-bold text-lg text-gray-900">Gemini</div>
+                          <div className="text-gray-500">Google - Multimodal</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* One-Click Action */}
+              <div className="text-center pt-4 mt-6 border-t-2 border-blue-200/60">
+                <Button size="lg" className="bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-bold text-lg px-12 py-4 rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-200">
+                  <Zap className="h-5 w-5 mr-3" />
+                  One-Click Deploy to ChatGPT
+                </Button>
+                <p className="text-sm text-gray-600 mt-3 font-medium">Instantly optimized for your chosen platform!</p>
+              </div>
             </div>
+          </div>
+        </section>
+
+        <section className="container">
+          <div className="text-center mb-8">
+            <p className="text-lg font-semibold mb-4">👇 Try a Prompt of the Day right now</p>
+            <p className="text-muted-foreground max-w-md mx-auto">See how Scout optimizes real prompts below. Pick one, customize it, and experience the magic instantly.</p>
           </div>
         </section>
 
         {/* Prompts of the Day / Personalized Prompts */}
         <section className="container -mt-12">
           <PromptsOfTheDay />
-        </section>
-
-        {/* Path 2: Prompt Packs - CORE OFFERING */}
-        <section className="container py-16 bg-gradient-to-br from-accent/20 via-primary/15 to-accent/10 rounded-3xl border-2 border-accent/30 shadow-2xl mt-8">
-          <div className="mb-16">
-            <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-6 py-3 rounded-full text-lg font-bold mb-6 shadow-lg">
-                <ShoppingCart className="h-6 w-6" />
-                💎 PREMIUM COLLECTIONS
-              </div>
-              <h2 className="text-5xl font-black mb-6 bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
-                Specialized Prompt Packs
-              </h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8 font-medium">Get professionally-crafted prompt collections for specialized use cases and industries</p>
-              
-              {/* Scout Tailoring Highlight - Clean Design */}
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200/60 rounded-3xl p-8 max-w-4xl mx-auto mb-8 shadow-lg">
-                <p className="text-2xl font-black mb-8 text-blue-700 text-center">🤖 Let Scout tailor our core prompt for your favourite AI and run it in one click:</p>
-                
-                {/* Clean Dropdown Design */}
-                <div className="flex justify-center mb-8">
-                  <div className="relative">
-                    {/* Main Dropdown Trigger */}
-                    <div className="bg-white/90 backdrop-blur-sm border-2 border-blue-200/80 rounded-2xl px-8 py-6 shadow-sm min-w-[500px]">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xl font-semibold text-blue-600">Choose Your AI Platform</span>
-                        <div className="flex items-center gap-4">
-                          <div className="bg-blue-500 text-white px-6 py-2 rounded-full font-semibold shadow-sm flex items-center gap-2">
-                            <span className="text-lg">🤖</span>
-                            <span>ChatGPT</span>
-                          </div>
-                          <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Clean Dropdown Menu */}
-                    <div className="absolute top-full left-0 mt-3 bg-white/95 backdrop-blur-sm border-2 border-blue-200/80 rounded-2xl shadow-xl z-50 min-w-[500px] overflow-hidden">
-                      <div className="p-4 space-y-3">
-                        {/* ChatGPT - Selected */}
-                        <div className="bg-blue-50 border-2 border-blue-200 rounded-2xl p-4 flex items-center justify-between">
-                          <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                              <span className="text-2xl">🤖</span>
-                            </div>
-                            <div>
-                              <div className="font-bold text-lg text-gray-900">ChatGPT</div>
-                              <div className="text-gray-500">OpenAI - Most Popular</div>
-                            </div>
-                          </div>
-                          <div className="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
-                            SELECTED
-                          </div>
-                        </div>
-                        
-                        {/* Claude */}
-                        <div className="hover:bg-gray-50 rounded-2xl p-4 flex items-center gap-4 cursor-pointer transition-all border-2 border-transparent hover:border-gray-200">
-                          <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center">
-                            <span className="text-2xl">🧠</span>
-                          </div>
-                          <div>
-                            <div className="font-bold text-lg text-gray-900">Claude</div>
-                            <div className="text-gray-500">Anthropic - Great for Analysis</div>
-                          </div>
-                        </div>
-                        
-                        {/* MidJourney */}
-                        <div className="hover:bg-gray-50 rounded-2xl p-4 flex items-center gap-4 cursor-pointer transition-all border-2 border-transparent hover:border-gray-200">
-                          <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                            <span className="text-2xl">🎨</span>
-                          </div>
-                          <div>
-                            <div className="font-bold text-lg text-gray-900">MidJourney</div>
-                            <div className="text-gray-500">Image Generation</div>
-                          </div>
-                        </div>
-                        
-                        {/* Gemini */}
-                        <div className="hover:bg-gray-50 rounded-2xl p-4 flex items-center gap-4 cursor-pointer transition-all border-2 border-transparent hover:border-gray-200">
-                          <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                            <span className="text-2xl">💎</span>
-                          </div>
-                          <div>
-                            <div className="font-bold text-lg text-gray-900">Gemini</div>
-                            <div className="text-gray-500">Google - Multimodal</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* One-Click Action */}
-                <div className="text-center pt-4 border-t-2 border-blue-200/60">
-                  <Button size="lg" className="bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-bold text-lg px-12 py-4 rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-200">
-                    <Zap className="h-5 w-5 mr-3" />
-                    One-Click Deploy to ChatGPT
-                  </Button>
-                  <p className="text-sm text-gray-600 mt-3 font-medium">Instantly optimized for your chosen platform!</p>
-                </div>
-              </div>
-            </div>
-            
-            {/* Enhanced Process Grid */}
-            <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto mb-12">
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-accent/20 shadow-lg text-center">
-                <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Briefcase className="h-8 w-8 text-accent" />
-                </div>
-                <h4 className="font-bold mb-2 text-lg">1. Browse Collections</h4>
-                <p className="text-sm text-muted-foreground">Choose from curated packs by industry experts</p>
-              </div>
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-accent/20 shadow-lg text-center">
-                <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <ShoppingCart className="h-8 w-8 text-accent" />
-                </div>
-                <h4 className="font-bold mb-2 text-lg">2. One-Time Purchase</h4>
-                <p className="text-sm text-muted-foreground">Own them forever, no subscriptions</p>
-              </div>
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-accent/20 shadow-lg text-center">
-                <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Settings className="h-8 w-8 text-accent" />
-                </div>
-                <h4 className="font-bold mb-2 text-lg">3. Scout Optimizes</h4>
-                <p className="text-sm text-muted-foreground">Platform-specific optimization in one click</p>
-              </div>
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-accent/20 shadow-lg text-center">
-                <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Zap className="h-8 w-8 text-accent" />
-                </div>
-                <h4 className="font-bold mb-2 text-lg">4. Deploy & Run</h4>
-                <p className="text-sm text-muted-foreground">Copy to your AI tool and get results</p>
-              </div>
-            </div>
-            
-            <div className="text-center">
-              <Button asChild size="lg" className="bg-gradient-to-r from-accent to-primary hover:from-accent/80 hover:to-primary/80 text-white font-bold text-xl px-12 py-4 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200">
-                <Link to="/packs"><ShoppingCart className="h-6 w-6 mr-3" />Explore Prompt Packs</Link>
-              </Button>
-            </div>
-          </div>
         </section>
 
         {/* Key Differentiators */}
