@@ -592,9 +592,16 @@ const AIPromptGenerator = () => {
           <CardContent>
             {generatedPrompt ? (
               <div className="space-y-4">
+                {/* Prompt Display */}
+                <div className="p-4 bg-muted rounded-lg border min-h-[200px]">
+                  <pre className="whitespace-pre-wrap text-sm">
+                    {displayPrompt}
+                  </pre>
+                </div>
+
                 {/* AI Platform Selector */}
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Send to AI Platform</label>
+                  <label className="text-sm font-medium">Update prompt for any AI platform</label>
                   <Select value={selectedAIPlatform} onValueChange={handleAIPlatformChange}>
                     <SelectTrigger className="w-full bg-background border shadow-sm">
                       <SelectValue>
@@ -617,13 +624,6 @@ const AIPromptGenerator = () => {
                       ))}
                     </SelectContent>
                   </Select>
-                </div>
-
-                {/* Prompt Display */}
-                <div className="p-4 bg-muted rounded-lg border min-h-[200px]">
-                  <pre className="whitespace-pre-wrap text-sm">
-                    {displayPrompt}
-                  </pre>
                 </div>
                 
                 {/* Action Buttons */}
