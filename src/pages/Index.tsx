@@ -259,23 +259,9 @@ const Index = () => {
       <main>
         {/* Hero */}
         <PageHero title={<>
-            Smarter prompts. Better outcomes.
+            Smarter prompts. <span className="text-gradient-brand">Better AI results.</span>
           </>} subtitle={<>
-            Craft, refine, and discover optimised prompts for every AI tool you use. Free, simple, and built for everyone.
-            <div className="grid gap-2 mt-6 text-sm text-primary-foreground/90 max-w-2xl mx-auto">
-              <div className="flex items-center gap-2 justify-center">
-                <Check className="h-4 w-4 text-primary-foreground" />
-                <span>Optimise prompts across platforms instantly</span>
-              </div>
-              <div className="flex items-center gap-2 justify-center">
-                <Check className="h-4 w-4 text-primary-foreground" />
-                <span>Save, reuse, and share with ease</span>
-              </div>
-              <div className="flex items-center gap-2 justify-center">
-                <Check className="h-4 w-4 text-primary-foreground" />
-                <span>Smarter prompts for work and play</span>
-              </div>
-            </div>
+            Stop guessing what to type. Craft the right prompt in real time and get consistent recommended results for any AI platform. ✨ Free to sign up. Paid extras if you ever need them.
           </>}>
           <Button asChild size="default" variant="hero" className="px-6">
             <Link to="/library"><Search className="h-4 w-4 mr-2" />Browse Library</Link>
@@ -293,17 +279,20 @@ const Index = () => {
           <div className="grid gap-6 lg:grid-cols-4">
             {/* What is PromptAndGo.ai? */}
             <div className="lg:col-span-1 rounded-2xl border bg-card p-6 md:p-8">
-              <h2 className="text-2xl font-semibold mb-3">What is promptandgo?</h2>
+              <h2 className="text-2xl font-semibold mb-3">What is PromptAndGo?</h2>
+              <p className="text-lg font-medium mb-3">
+                A smarter way to craft prompts for work and life.
+              </p>
               <p className="text-muted-foreground max-w-prose mb-4">
-                Ready-to-use prompts designed for real-world work. Whether you're writing a pitch, planning a launch, creating some social media assets or creating an image, we've got a prompt for that.
+                We help you create and refine prompts in real time, tailored to GPT, Gemini Claude, MidJourney, and more. Sign up once for free and our AI will suggest prompts based on your goals so you can start strong.
               </p>
               <ul className="grid grid-cols-2 gap-3 text-sm text-muted-foreground">
-                <li className="flex items-center gap-2"><ShieldCheck className="h-5 w-5 text-primary" /> Human-curated</li>
-                <li className="flex items-center gap-2"><ListChecks className="h-5 w-5 text-primary" /> Practical results</li>
-                <li className="flex items-center gap-2"><Wand2 className="h-5 w-5 text-primary" /> Copy-and-go</li>
+                <li className="flex items-center gap-2"><ShieldCheck className="h-5 w-5 text-primary" /> Human-curated starting points</li>
+                <li className="flex items-center gap-2"><Bot className="h-5 w-5 text-primary" /> Built and refined in real time</li>
+                <li className="flex items-center gap-2"><Sparkles className="h-5 w-5 text-primary" /> Adapted to each AI platform</li>
+                <li className="flex items-center gap-2"><Wand2 className="h-5 w-5 text-primary" /> Copy-and-go simplicity</li>
                 <li className="flex items-center gap-2"><Zap className="h-5 w-5 text-primary" /> Works everywhere</li>
-                <li className="flex items-center gap-2"><Bot className="h-5 w-5 text-primary" /> Prompts crafted in real time</li>
-                <li className="flex items-center gap-2"><Sparkles className="h-5 w-5 text-primary" /> Tailored to your choices</li>
+                <li className="flex items-center gap-2"><ListChecks className="h-5 w-5 text-primary" /> Tailored to your choices</li>
               </ul>
             </div>
             
