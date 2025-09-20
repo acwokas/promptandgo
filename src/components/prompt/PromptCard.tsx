@@ -170,42 +170,23 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
 
     const url = urls[selectedProvider!];
     if (url) {
-      // Always show the manual instructions since many networks block AI platforms
+      // Show manual instructions without trying to open potentially blocked sites
       toast({
-        title: "Prompt copied to clipboard!",
+        title: "Prompt ready to use!",
         description: (
-          <div className="space-y-2">
-            <p className="text-sm font-medium">Your optimized prompt is ready to use.</p>
-            <p className="text-sm">If {selectedProviderData.name} doesn't open automatically, manually visit:</p>
-            <p className="text-xs font-mono break-all bg-muted p-2 rounded">{url}</p>
-            <p className="text-xs text-muted-foreground">Then paste your prompt there!</p>
+          <div className="space-y-3">
+            <p className="text-sm font-medium">✅ Your optimized prompt is copied to clipboard</p>
+            <div className="space-y-1">
+              <p className="text-sm font-medium">Manual steps:</p>
+              <p className="text-xs">1. Open a new browser tab</p>
+              <p className="text-xs">2. Go to: <span className="font-mono bg-muted px-1 rounded">{url}</span></p>
+              <p className="text-xs">3. Paste your prompt and hit enter</p>
+            </div>
+            <p className="text-xs text-muted-foreground">💡 If the site is blocked on your network, try using a different device or network</p>
           </div>
         ),
-        duration: 6000,
+        duration: 8000,
       });
-
-      try {
-        // Try to open in new tab, but don't rely on it working
-        const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
-        
-        // If the window opened successfully, show a brief success message after a delay
-        if (newWindow && !newWindow.closed && typeof newWindow.closed !== 'undefined') {
-          setTimeout(() => {
-            try {
-              if (!newWindow.closed) {
-                // Window is still open, likely successful
-                console.log(`Successfully opened ${selectedProviderData.name}`);
-              }
-            } catch (e) {
-              // Cross-origin error is expected and indicates the page loaded
-              console.log(`${selectedProviderData.name} opened (cross-origin detected)`);
-            }
-          }, 1500);
-        }
-      } catch (error) {
-        // Silently handle errors - the manual instructions are already shown
-        console.warn(`Failed to open ${selectedProviderData.name}:`, error);
-      }
     }
 
     setShowSendDialog(false);
