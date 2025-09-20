@@ -87,20 +87,25 @@ export function useAIPreferences() {
   };
 
   const initializeDefaultPreferences = async () => {
-    if (!user || preferences.length > 0) return;
+    if (!user) return;
 
     // Set default preferences for new users (enable ChatGPT, Claude, and Perplexity by default)
     const defaultProviders = ['chatgpt', 'claude', 'perplexity'];
     
     try {
+      // Use upsert to avoid duplicate key errors - only insert if not exists
       const { error } = await supabase
         .from('user_ai_preferences')
-        .insert(
+        .upsert(
           defaultProviders.map(providerId => ({
             user_id: user.id,
             provider_id: providerId,
             is_enabled: true
-          }))
+          })),
+          { 
+            onConflict: 'user_id,provider_id',
+            ignoreDuplicates: true // Don't update existing records, just ignore duplicates
+          }
         );
 
       if (error) throw error;
