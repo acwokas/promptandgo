@@ -357,26 +357,7 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Interactive Demo - Experience Scout First */}
-        <section className="container py-8">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold mb-4">See Scout in Action</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Experience Scout's guided wizards right here. Select a prompt type and watch Scout build the perfect prompt for your needs in real-time.
-            </p>
-          </div>
-          
-          <div className="rounded-2xl border bg-card p-6 md:p-8 mb-8">
-            <MiniPromptStudio />
-          </div>
-          
-          <div className="text-center">
-            <p className="text-muted-foreground mb-4">See how easy that was? That's the power of Scout.</p>
-            <Button asChild size="lg" variant="hero">
-              <Link to="/scout">Create Your Full Prompt <Wand2 className="h-4 w-4 ml-2" /></Link>
-            </Button>
-          </div>
-        </section>
+        {/* Path 1: Library-based - MAIN PATH */}
         <section className="container pt-6 pb-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Here's How Scout Saves You Time</h2>
@@ -385,7 +366,6 @@ const Index = () => {
             </p>
           </div>
           
-          {/* Path 1: Library-based - MAIN PATH */}
           <div className="mb-16">
             <div className="text-center mb-8">
               <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
@@ -432,14 +412,43 @@ const Index = () => {
             </div>
           </div>
 
-          {/* Path 2: Studio-based - ADVANCED PATH */}
+          {/* Or Create Something Completely Custom */}
           <div className="border-t pt-12">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold mb-4">Or Create Something Completely Custom</h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Need something unique? Experience Scout's guided wizards and custom prompt creation
+              </p>
+            </div>
+
+            {/* Interactive Demo */}
+            <div className="mb-12">
+              <div className="text-center mb-8">
+                <h3 className="text-2xl font-semibold text-foreground mb-2">See Scout in Action</h3>
+                <p className="text-muted-foreground max-w-xl mx-auto">
+                  Experience Scout's guided wizards right here. Select a prompt type and watch Scout build the perfect prompt for your needs in real-time.
+                </p>
+              </div>
+              
+              <div className="rounded-2xl border bg-card p-6 md:p-8 mb-8">
+                <MiniPromptStudio />
+              </div>
+              
+              <div className="text-center">
+                <p className="text-muted-foreground mb-4">See how easy that was? That's the power of Scout.</p>
+                <Button asChild size="lg" variant="hero">
+                  <Link to="/scout">Create Your Full Prompt <Wand2 className="h-4 w-4 ml-2" /></Link>
+                </Button>
+              </div>
+            </div>
+
+            {/* Custom Creation Process */}
             <div className="text-center mb-8">
               <div className="inline-flex items-center gap-2 bg-secondary/10 text-secondary px-4 py-2 rounded-full text-sm font-medium mb-4">
                 <Wand2 className="h-4 w-4" />
                 For Custom Needs
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">Or Create Something Completely Custom</h3>
+              <h3 className="text-xl font-semibold text-foreground mb-2">How Scout Builds Custom Prompts</h3>
               <p className="text-muted-foreground max-w-xl mx-auto">Need something specific? Use Scout's guided wizards to build from scratch</p>
             </div>
             <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
