@@ -122,6 +122,39 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   const [dailyAISends, setDailyAISends] = useState({ count: 0, remaining: 5, daily_limit: 5, limit_reached: false });
   const [loadingAILimits, setLoadingAILimits] = useState(false);
 
+  // Anonymous user daily limits (stored in localStorage)
+  const getAnonymousLimits = () => {
+    const today = new Date().toDateString();
+    const stored = localStorage.getItem('anonymous_ai_sends');
+    
+    if (stored) {
+      const data = JSON.parse(stored);
+      if (data.date === today) {
+        return data;
+      }
+    }
+    
+    // Reset for new day or first time
+    const newData = { date: today, count: 0, remaining: 5, daily_limit: 5, limit_reached: false };
+    localStorage.setItem('anonymous_ai_sends', JSON.stringify(newData));
+    return newData;
+  };
+
+  const updateAnonymousLimits = () => {
+    const current = getAnonymousLimits();
+    if (current.count < current.daily_limit) {
+      const updated = {
+        ...current,
+        count: current.count + 1,
+        remaining: current.remaining - 1,
+        limit_reached: current.count + 1 >= current.daily_limit
+      };
+      localStorage.setItem('anonymous_ai_sends', JSON.stringify(updated));
+      return updated;
+    }
+    return current;
+  };
+
   // Get the displayed prompt (rewritten or original)
   const displayedPrompt = selectedProvider 
     ? rewritePromptForProvider(prompt.prompt, selectedProvider)
@@ -134,11 +167,6 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
 
   // Handle sending to AI
   const handleSendToAI = async () => {
-    if (!user) {
-      openLoginWidget();
-      return;
-    }
-
     if (!selectedProvider) {
       toast({
         title: "No AI provider selected",
@@ -148,7 +176,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
       return;
     }
 
-    // Check daily limits
+    // Check daily limits (for both authenticated and anonymous users)
     if (dailyAISends.limit_reached) {
       toast({
         title: "Daily limit reached",
@@ -171,48 +199,65 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   };
 
   const confirmSendToAI = async () => {
-    if (!selectedProviderData || !user) return;
+    if (!selectedProviderData) return;
 
-    // Increment daily AI send count
-    try {
-      const { data, error } = await supabase.rpc('check_and_increment_daily_ai_sends', { p_user_id: user.id });
-      if (error) throw error;
-      
-      const result = data as { success: boolean; remaining: number; limit_reached: boolean; daily_limit: number };
-      
-      if (!result.success) {
+    // Handle daily limits for both authenticated and anonymous users
+    if (user) {
+      // Authenticated user - use database tracking
+      try {
+        const { data, error } = await supabase.rpc('check_and_increment_daily_ai_sends', { p_user_id: user.id });
+        if (error) throw error;
+        
+        const result = data as { success: boolean; remaining: number; limit_reached: boolean; daily_limit: number };
+        
+        if (!result.success) {
+          toast({
+            title: "Daily limit reached",
+            description: `You've used all ${result.daily_limit} AI sends for today. Reset at midnight.`,
+            variant: "destructive"
+          });
+          setShowSendDialog(false);
+          return;
+        }
+        
+        // Update local state
+        setDailyAISends({
+          count: result.daily_limit - result.remaining,
+          remaining: result.remaining,
+          daily_limit: result.daily_limit,
+          limit_reached: result.limit_reached
+        });
+
+        // Add to My Prompts when sending to AI platform
+        try {
+          await addToFavorites();
+        } catch (error) {
+          console.error('Error adding to favorites:', error);
+        }
+      } catch (error) {
+        console.error('Error checking AI send limits:', error);
         toast({
-          title: "Daily limit reached",
-          description: `You've used all ${result.daily_limit} AI sends for today. Reset at midnight.`,
+          title: "Error",
+          description: "Failed to check daily limits. Please try again.",
           variant: "destructive"
         });
         setShowSendDialog(false);
         return;
       }
+    } else {
+      // Anonymous user - use localStorage tracking
+      const updated = updateAnonymousLimits();
+      setDailyAISends(updated);
       
-      // Update local state
-      setDailyAISends({
-        count: result.daily_limit - result.remaining,
-        remaining: result.remaining,
-        daily_limit: result.daily_limit,
-        limit_reached: result.limit_reached
-      });
-    } catch (error) {
-      console.error('Error checking AI send limits:', error);
-      toast({
-        title: "Error",
-        description: "Failed to check daily limits. Please try again.",
-        variant: "destructive"
-      });
-      setShowSendDialog(false);
-      return;
-    }
-
-    // Add to My Prompts when sending to AI platform
-    try {
-      await addToFavorites();
-    } catch (error) {
-      console.error('Error adding to favorites:', error);
+      if (updated.limit_reached) {
+        toast({
+          title: "Daily limit reached",
+          description: `You've used all ${updated.daily_limit} AI sends for today. Reset at midnight.`,
+          variant: "destructive"
+        });
+        setShowSendDialog(false);
+        return;
+      }
     }
 
     // URLs for different AI providers
@@ -348,32 +393,35 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
     }
   };
 
-  // Load daily AI send limits for authenticated users
+  // Load daily AI send limits for all users (authenticated and anonymous)
   useEffect(() => {
     const loadDailyLimits = async () => {
-      if (!user) {
-        setDailyAISends({ count: 0, remaining: 5, daily_limit: 5, limit_reached: false });
-        return;
-      }
-
-      try {
-        setLoadingAILimits(true);
-        const { data, error } = await supabase.rpc('get_daily_ai_sends_count', { p_user_id: user.id });
-        if (error) throw error;
-        
-        const result = data as { count: number; remaining: number; daily_limit: number; limit_reached: boolean };
-        
-        setDailyAISends({
-          count: result.count,
-          remaining: result.remaining,
-          daily_limit: result.daily_limit,
-          limit_reached: result.limit_reached
-        });
-      } catch (error) {
-        console.error('Error loading daily AI limits:', error);
-        // Fallback to default limits on error
-        setDailyAISends({ count: 0, remaining: 5, daily_limit: 5, limit_reached: false });
-      } finally {
+      if (user) {
+        // Authenticated user - load from database
+        try {
+          setLoadingAILimits(true);
+          const { data, error } = await supabase.rpc('get_daily_ai_sends_count', { p_user_id: user.id });
+          if (error) throw error;
+          
+          const result = data as { count: number; remaining: number; daily_limit: number; limit_reached: boolean };
+          
+          setDailyAISends({
+            count: result.count,
+            remaining: result.remaining,
+            daily_limit: result.daily_limit,
+            limit_reached: result.limit_reached
+          });
+        } catch (error) {
+          console.error('Error loading daily AI limits:', error);
+          // Fallback to default limits on error
+          setDailyAISends({ count: 0, remaining: 5, daily_limit: 5, limit_reached: false });
+        } finally {
+          setLoadingAILimits(false);
+        }
+      } else {
+        // Anonymous user - load from localStorage
+        const limits = getAnonymousLimits();
+        setDailyAISends(limits);
         setLoadingAILimits(false);
       }
     };
@@ -890,76 +938,30 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
             
             {/* Send to AI Platform - Second */}
             {selectedProvider && (
-              <>
-                {user ? (
-                  <div className="space-y-2">
-                    <Button 
-                      size="sm"
-                      variant="hero"
-                      onClick={handleSendToAI}
-                      className="w-full"
-                      disabled={(showLock && !onCopyClick && !hasAccess) || dailyAISends.limit_reached || loadingAILimits}
-                      title={
-                        dailyAISends.limit_reached 
-                          ? "Daily limit reached (resets at midnight)" 
-                          : (showLock && !onCopyClick && !hasAccess ? "Unlock to send" : undefined)
-                      }
-                    >
-                      <Send className="h-4 w-4" />
-                      <span>Send to {selectedProviderData?.name}</span>
-                    </Button>
-                    <div className="text-xs text-center text-muted-foreground">
-                      {loadingAILimits ? (
-                        "Loading limits..."
-                      ) : (
-                        `${dailyAISends.remaining}/${dailyAISends.daily_limit} sends remaining today`
-                      )}
-                    </div>
-                  </div>
-                ) : (
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <div className="w-full">
-                          <Button 
-                            size="sm"
-                            variant="outline"
-                            disabled
-                            className="w-full opacity-50"
-                          >
-                            <Send className="h-4 w-4" />
-                            <span>Login to send to {selectedProviderData?.name}</span>
-                          </Button>
-                        </div>
-                      </TooltipTrigger>
-                      <TooltipContent className="bg-popover border shadow-lg p-3 max-w-xs">
-                        <div className="space-y-3">
-                          <p className="text-sm font-medium">Sign up for free to unlock this feature</p>
-                          <p className="text-xs text-muted-foreground">Get 5 AI sends per day + access to My Prompts</p>
-                          <div className="flex gap-2">
-                            <Button 
-                              size="sm" 
-                              variant="default"
-                              onClick={openLoginWidget}
-                              className="flex-1"
-                            >
-                              Sign Up
-                            </Button>
-                            <Button 
-                              size="sm" 
-                              variant="outline"
-                              onClick={openLoginWidget}
-                              className="flex-1"
-                            >
-                              Login
-                            </Button>
-                          </div>
-                        </div>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                )}
-              </>
+              <div className="space-y-2">
+                <Button 
+                  size="sm"
+                  variant="hero"
+                  onClick={handleSendToAI}
+                  className="w-full"
+                  disabled={(showLock && !onCopyClick && !hasAccess) || dailyAISends.limit_reached || loadingAILimits}
+                  title={
+                    dailyAISends.limit_reached 
+                      ? "Daily limit reached (resets at midnight)" 
+                      : (showLock && !onCopyClick && !hasAccess ? "Unlock to send" : undefined)
+                  }
+                >
+                  <Send className="h-4 w-4" />
+                  <span>Send to {selectedProviderData?.name}</span>
+                </Button>
+                <div className="text-xs text-center text-muted-foreground">
+                  {loadingAILimits ? (
+                    "Loading limits..."
+                  ) : (
+                    `${dailyAISends.remaining}/${dailyAISends.daily_limit} sends remaining today`
+                  )}
+                </div>
+              </div>
             )}
             
             {/* Copy Prompt - Third */}
