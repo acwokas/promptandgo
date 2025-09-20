@@ -170,20 +170,58 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
 
     const url = urls[selectedProvider!];
     if (url) {
-      // Try to open in new tab, with fallback handling
-      const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
-      
-      if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-        // Popup was blocked, show alternative instructions
+      try {
+        // Try to open in new tab
+        const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+        
+        if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+          // Popup was blocked or failed, show manual instructions
+          toast({
+            title: "Unable to open AI platform",
+            description: (
+              <div className="space-y-2">
+                <p>Please manually visit: <strong>{selectedProviderData.name}</strong></p>
+                <p className="text-xs font-mono break-all">{url}</p>
+                <p className="text-sm">Your prompt has been copied to clipboard - just paste it there!</p>
+              </div>
+            ),
+            variant: "destructive"
+          });
+        } else {
+          // Check after a brief delay if the window is still open
+          setTimeout(() => {
+            if (newWindow.closed) {
+              toast({
+                title: "AI platform may be blocked",
+                description: (
+                  <div className="space-y-2">
+                    <p>If {selectedProviderData.name} didn't open, your network may be blocking it.</p>
+                    <p className="text-xs font-mono break-all">{url}</p>
+                    <p className="text-sm">Your prompt is copied to clipboard!</p>
+                  </div>
+                ),
+                variant: "destructive"
+              });
+            } else {
+              toast({
+                title: `Opened ${selectedProviderData.name}`,
+                description: `${selectedProviderData.name} opened in new tab. Your optimized prompt has been copied to clipboard.`
+              });
+            }
+          }, 1000);
+        }
+      } catch (error) {
+        // Fallback for any errors
         toast({
-          title: "Popup blocked",
-          description: `Please allow popups or manually visit: ${selectedProviderData.name}. The prompt is copied to your clipboard.`,
+          title: "Manual navigation required",
+          description: (
+            <div className="space-y-2">
+              <p>Please manually visit: <strong>{selectedProviderData.name}</strong></p>
+              <p className="text-xs font-mono break-all">{url}</p>
+              <p className="text-sm">Your prompt has been copied to clipboard!</p>
+            </div>
+          ),
           variant: "destructive"
-        });
-      } else {
-        toast({
-          title: `Opened ${selectedProviderData.name}`,
-          description: `${selectedProviderData.name} opened in new tab. Your optimized prompt has been copied to clipboard.`
         });
       }
     }
