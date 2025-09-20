@@ -592,8 +592,9 @@ const AIPromptGenerator = () => {
           <CardContent>
             {generatedPrompt ? (
               <div className="space-y-4">
-                {/* AI Platform Selector - First */}
+                {/* AI Platform Selector */}
                 <div className="space-y-2">
+                  <label className="text-sm font-medium">Send to AI Platform</label>
                   <Select value={selectedAIPlatform} onValueChange={handleAIPlatformChange}>
                     <SelectTrigger className="w-full bg-background border shadow-sm">
                       <SelectValue>
@@ -627,7 +628,7 @@ const AIPromptGenerator = () => {
                 
                 {/* Action Buttons */}
                 <div className="space-y-2">
-                  {/* Send to AI Platform - Second */}
+                  {/* Send to AI Platform */}
                   {selectedProvider && (
                     <div className="space-y-2">
                       <Button 
@@ -651,7 +652,7 @@ const AIPromptGenerator = () => {
                     </div>
                   )}
                   
-                  {/* Copy Prompt - Third */}
+                  {/* Copy Prompt */}
                   <Button
                     size="sm"
                     variant="outline"
