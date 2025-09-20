@@ -433,8 +433,8 @@ const Index = () => {
         </section>
 
         {/* Prompts of the Day / Personalized Prompts */}
-        <section className="container py-4">
-          <div className="mb-8">
+        <section className="container py-1">
+          <div className="mb-4">
             <PromptsOfTheDay />
           </div>
         </section>
