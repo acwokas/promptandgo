@@ -439,8 +439,107 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Scout AI Core Feature - HERO SECTION */}
+        <section className="container py-16 bg-gradient-to-br from-primary/20 via-accent/15 to-primary/10 rounded-3xl border-2 border-primary/30 shadow-2xl">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-full text-lg font-bold mb-6 shadow-lg">
+              <Bot className="h-6 w-6" />
+              🚀 CORE FEATURE
+            </div>
+            <h2 className="text-5xl font-black mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              Let Scout tailor our core prompt for your favourite AI and run it in one click:
+            </h2>
+            
+            {/* Giant Interactive Dropdown Demo */}
+            <div className="bg-white/90 backdrop-blur-sm border-4 border-primary/40 rounded-2xl p-8 max-w-2xl mx-auto mb-8 shadow-2xl">
+              <div className="relative">
+                <div className="bg-gradient-to-r from-primary/10 to-accent/10 border-2 border-primary/30 rounded-xl px-8 py-6 shadow-lg min-w-[400px]">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xl font-bold text-primary">Choose Your AI Platform</span>
+                    <div className="flex items-center gap-3">
+                      <span className="text-lg bg-primary text-primary-foreground px-4 py-2 rounded-lg font-semibold shadow-md">🤖 ChatGPT</span>
+                      <svg className="w-6 h-6 text-primary animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Enhanced Dropdown Preview */}
+                <div className="absolute top-full left-0 mt-2 bg-white border-2 border-primary/30 rounded-xl shadow-2xl z-50 min-w-[400px] overflow-hidden">
+                  <div className="p-3 space-y-2">
+                    <div className="px-4 py-3 bg-primary/10 rounded-lg flex items-center gap-3 cursor-pointer border-2 border-primary/20">
+                      <span className="text-2xl">🤖</span> 
+                      <div className="flex-1">
+                        <span className="font-bold text-lg">ChatGPT</span>
+                        <p className="text-sm text-muted-foreground">OpenAI - Most Popular</p>
+                      </div>
+                      <span className="bg-primary text-primary-foreground px-2 py-1 rounded text-xs font-bold">SELECTED</span>
+                    </div>
+                    <div className="px-4 py-3 hover:bg-accent/20 rounded-lg flex items-center gap-3 cursor-pointer border border-border/30 hover:border-accent/40 transition-all">
+                      <span className="text-2xl">🧠</span> 
+                      <div className="flex-1">
+                        <span className="font-bold text-lg">Claude</span>
+                        <p className="text-sm text-muted-foreground">Anthropic - Great for Analysis</p>
+                      </div>
+                    </div>
+                    <div className="px-4 py-3 hover:bg-accent/20 rounded-lg flex items-center gap-3 cursor-pointer border border-border/30 hover:border-accent/40 transition-all">
+                      <span className="text-2xl">🎨</span> 
+                      <div className="flex-1">
+                        <span className="font-bold text-lg">MidJourney</span>
+                        <p className="text-sm text-muted-foreground">Image Generation</p>
+                      </div>
+                    </div>
+                    <div className="px-4 py-3 hover:bg-accent/20 rounded-lg flex items-center gap-3 cursor-pointer border border-border/30 hover:border-accent/40 transition-all">
+                      <span className="text-2xl">💎</span> 
+                      <div className="flex-1">
+                        <span className="font-bold text-lg">Gemini</span>
+                        <p className="text-sm text-muted-foreground">Google - Multimodal</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* One-Click Action */}
+              <div className="mt-8 pt-6 border-t-2 border-primary/20">
+                <Button size="lg" className="bg-gradient-to-r from-primary to-accent hover:from-primary/80 hover:to-accent/80 text-white font-bold text-xl px-12 py-4 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200">
+                  <Zap className="h-6 w-6 mr-3" />
+                  One-Click Deploy to ChatGPT
+                </Button>
+                <p className="text-sm text-muted-foreground mt-3 font-medium">Instantly optimized and ready to paste - no manual tweaking!</p>
+              </div>
+            </div>
+            
+            {/* Benefits Grid */}
+            <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-primary/20 shadow-lg">
+                <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Sparkles className="h-6 w-6 text-primary" />
+                </div>
+                <h4 className="font-bold mb-2 text-lg">Platform Optimization</h4>
+                <p className="text-sm text-muted-foreground">Each AI has unique strengths. Scout adapts your prompt for maximum effectiveness.</p>
+              </div>
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-primary/20 shadow-lg">
+                <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Zap className="h-6 w-6 text-primary" />
+                </div>
+                <h4 className="font-bold mb-2 text-lg">One-Click Deploy</h4>
+                <p className="text-sm text-muted-foreground">Copy optimized prompt directly to your AI tool. No manual editing required.</p>
+              </div>
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-primary/20 shadow-lg">
+                <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Settings className="h-6 w-6 text-primary" />
+                </div>
+                <h4 className="font-bold mb-2 text-lg">Real-Time Adaptation</h4>
+                <p className="text-sm text-muted-foreground">Watch your prompt transform instantly as you switch between AI platforms.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Path 2: Prompt Packs - CORE OFFERING */}
-        <section className="container py-8 bg-gradient-to-br from-accent/5 to-primary/5 rounded-2xl border">
+        <section className="container py-8 bg-gradient-to-br from-accent/5 to-primary/5 rounded-2xl border mt-8">
           <div className="mb-16">
             <div className="text-center mb-8">
               <div className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-medium mb-4">
