@@ -26,12 +26,17 @@ import { useToast } from "@/hooks/use-toast";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useLoginWidget } from "@/hooks/useLoginWidget";
 import { Heart, Calendar, Megaphone, FileText, Zap, Mail, Video, Search, ArrowDown, Briefcase, GraduationCap, Target, BookOpen, CheckSquare } from "lucide-react";
+import { AiProviderDropdown } from "@/components/ai/AiProviderDropdown";
+import { AiResponseModal } from "@/components/ai/AiResponseModal";
 
 const PromptStudioPage = () => {
   const [searchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState<"adcopy" | "blog" | "business" | "cta" | "event" | "image" | "job" | "learning" | "productivity" | "research" | "salesemail" | "storytelling" | "video">("adcopy");
   const [generatedPrompt, setGeneratedPrompt] = useState("");
   const [copied, setCopied] = useState(false);
+  const [aiResponse, setAiResponse] = useState("");
+  const [aiProvider, setAiProvider] = useState("");
+  const [showAiResponse, setShowAiResponse] = useState(false);
   const { toast } = useToast();
   const { user } = useSupabaseAuth();
   const { openLoginWidget } = useLoginWidget();
@@ -112,6 +117,12 @@ const PromptStudioPage = () => {
       title: "Added to My Prompts!",
       description: "Your crafted prompt has been saved to your collection."
     });
+  };
+
+  const handleAiResponse = (response: string, provider: string) => {
+    setAiResponse(response);
+    setAiProvider(provider);
+    setShowAiResponse(true);
   };
 
   const scrollToPrompt = () => {
@@ -429,12 +440,19 @@ const PromptStudioPage = () => {
                         <span className="sm:hidden">Save</span>
                       </Button>
                     </div>
-                    <Button asChild className="w-full" size="sm">
-                      <Link to={`/ai/generator?prompt=${encodeURIComponent(generatedPrompt)}`}>
-                        <ArrowRight className="h-4 w-4 mr-2" />
-                        Enhance with Scout
-                      </Link>
-                    </Button>
+                    <div className="space-y-2">
+                      <AiProviderDropdown 
+                        prompt={generatedPrompt}
+                        onResponse={handleAiResponse}
+                        className="w-full"
+                      />
+                      <Button asChild className="w-full" size="sm" variant="outline">
+                        <Link to={`/ai/generator?prompt=${encodeURIComponent(generatedPrompt)}`}>
+                          <ArrowRight className="h-4 w-4 mr-2" />
+                          Enhance with Scout
+                        </Link>
+                      </Button>
+                    </div>
                   </>
                 ) : (
                   <div className="min-h-[150px] sm:min-h-[200px] flex items-center justify-center text-center text-muted-foreground">
@@ -481,9 +499,21 @@ const PromptStudioPage = () => {
                 </CardContent>
               </Card>
             </div>
-          </div>
+         </div>
         </div>
       </main>
+
+      <AiResponseModal
+        isOpen={showAiResponse}
+        onClose={() => setShowAiResponse(false)}
+        response={aiResponse}
+        provider={aiProvider}
+        originalPrompt={generatedPrompt}
+        onRetry={() => {
+          setShowAiResponse(false);
+          // The user can click the dropdown again to retry
+        }}
+      />
     </>
   );
 };
