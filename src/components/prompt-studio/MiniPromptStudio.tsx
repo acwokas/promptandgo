@@ -409,7 +409,7 @@ const MiniPromptStudio = () => {
                   <Textarea
                     value={generatedPrompt}
                     readOnly
-                    className="min-h-[60px] sm:min-h-[80px] resize-none bg-transparent border-none p-0 text-sm"
+                    className="min-h-[120px] sm:min-h-[150px] resize-none bg-transparent border-none p-0 text-sm"
                   />
                 </div>
               ) : (
