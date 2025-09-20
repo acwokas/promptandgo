@@ -797,8 +797,8 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
     }
   };
 
-  // Get the prompt text to display (original or rewritten)
-  const displayPrompt = selectedAIPlatform === 'original' ? prompt.prompt : rewrittenPrompt;
+  // Use displayedPrompt for consistency and to ensure optimization is applied
+  const displayPrompt = displayedPrompt;
   
   const showLock = isPro && !hasAccess;
   const hasRibbon = (isPro && !hasAccess) || (!isPro);
