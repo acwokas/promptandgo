@@ -14,7 +14,7 @@ interface SubscriptionInfo {
 }
 
 interface UsageDisplayProps {
-  usageType?: 'generator' | 'assistant' | 'all';
+  usageType?: 'generator' | 'assistant' | 'sends' | 'all';
   compact?: boolean;
 }
 
@@ -72,6 +72,7 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
     switch (type) {
       case 'generator': return 'Scout Prompt Generator';
       case 'assistant': return 'Scout Assistant';
+      case 'sends': return 'Scout AI Platform Push';
       default: return 'AI Tools';
     }
   };
@@ -111,7 +112,8 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
   const usageData = usageType === 'all' 
     ? [
         { type: 'generator', data: usage.generator, label: 'Scout Prompt Generator' },
-        { type: 'assistant', data: usage.assistant, label: 'Scout Assistant' }
+        { type: 'assistant', data: usage.assistant, label: 'Scout Assistant' },
+        { type: 'sends', data: usage.sends, label: 'Scout AI Platform Push' }
       ]
     : [{ type: usageType, data: usage[usageType], label: getUsageTypeLabel(usageType) }];
 
@@ -208,7 +210,7 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
                 <h4 className="font-medium">Need more queries?</h4>
                 <p className="text-sm text-muted-foreground mt-1">
                   {!subscriptionInfo?.subscribed ? (
-                    <>Upgrade to get <strong>30 generator + 40 assistant queries/day</strong> with monthly membership or <strong>60 queries/day each</strong> with lifetime access.</>
+                    <>Upgrade to get <strong>30 generator + 40 assistant + 20 AI sends/day</strong> with monthly membership or <strong>60 queries/day each + 40 AI sends</strong> with lifetime access.</>
                   ) : (
                     <>You've reached your enhanced daily limits. Your queries will reset at midnight UTC.</>
                   )}
@@ -217,11 +219,11 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
                   <div className="flex gap-2 mt-2">
                     <Button size="sm" variant="outline">
                       <Crown className="h-4 w-4 mr-1" />
-                      Monthly (30+40/day) - $12.99/mo
+                      Monthly (30+40+20/day) - $12.99/mo
                     </Button>
                     <Button size="sm" variant="secondary">
                       <Infinity className="h-4 w-4 mr-1" />
-                      Lifetime (60 each/day) - $99.50
+                      Lifetime (60+60+40/day) - $99.50
                     </Button>
                   </div>
                 )}

@@ -12,6 +12,7 @@ interface UsageData {
 interface AIUsageState {
   generator: UsageData | null;
   assistant: UsageData | null;
+  sends: UsageData | null;
   loading: boolean;
   error: string | null;
 }
@@ -21,14 +22,30 @@ export function useAIUsage() {
   const [usage, setUsage] = useState<AIUsageState>({
     generator: null,
     assistant: null,
+    sends: null,
     loading: false,
     error: null
   });
 
-  const fetchUsage = async (usageType: 'generator' | 'assistant') => {
+  const fetchUsage = async (usageType: 'generator' | 'assistant' | 'sends') => {
     if (!user) return null;
 
     try {
+      // Handle 'sends' usage type differently
+      if (usageType === 'sends') {
+        const { data, error } = await supabase.rpc('get_daily_ai_sends_count', { p_user_id: user.id });
+        if (error) throw error;
+        
+        const sendsData = data as { count: number; remaining: number; daily_limit: number; limit_reached: boolean };
+        
+        return {
+          allowed: sendsData.remaining > 0,
+          current_usage: sendsData.count,
+          daily_limit: sendsData.daily_limit,
+          remaining: sendsData.remaining
+        };
+      }
+
       const { data, error } = await supabase.rpc('get_user_ai_limits', {
         user_id_param: user.id
       });
@@ -82,6 +99,7 @@ export function useAIUsage() {
         ...prev, 
         generator: null, 
         assistant: null,
+        sends: null,
         loading: false 
       }));
       return;
@@ -90,15 +108,17 @@ export function useAIUsage() {
     setUsage(prev => ({ ...prev, loading: true, error: null }));
 
     try {
-      const [generatorUsage, assistantUsage] = await Promise.all([
+      const [generatorUsage, assistantUsage, sendsUsage] = await Promise.all([
         fetchUsage('generator'),
-        fetchUsage('assistant')
+        fetchUsage('assistant'),
+        fetchUsage('sends')
       ]);
 
       setUsage(prev => ({
         ...prev,
         generator: generatorUsage,
         assistant: assistantUsage,
+        sends: sendsUsage,
         loading: false
       }));
     } catch (error: any) {
