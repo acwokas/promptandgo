@@ -436,10 +436,10 @@ const Index = () => {
             {/* Scout Tailoring Highlight - Clean Design */}
             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200/60 rounded-3xl p-8 max-w-4xl mx-auto shadow-lg">
               {/* Clean Dropdown Design */}
-              <div className="flex justify-center">
-                <div className="relative">
+              <div className="flex justify-center mb-6">
+                <div className="space-y-3 w-full max-w-[500px]">
                   {/* Main Dropdown Trigger */}
-                  <div className="bg-white/90 backdrop-blur-sm border-2 border-blue-200/80 rounded-2xl px-8 py-6 shadow-sm min-w-[500px]">
+                  <div className="bg-white/90 backdrop-blur-sm border-2 border-blue-200/80 rounded-2xl px-8 py-6 shadow-sm">
                     <div className="flex items-center justify-between">
                       <span className="text-xl font-semibold text-blue-600">Choose Your AI Platform</span>
                       <div className="flex items-center gap-4">
@@ -454,8 +454,8 @@ const Index = () => {
                     </div>
                   </div>
                   
-                  {/* Clean Dropdown Menu */}
-                  <div className="absolute top-full left-0 mt-3 bg-white/95 backdrop-blur-sm border-2 border-blue-200/80 rounded-2xl shadow-xl z-50 min-w-[500px] overflow-hidden">
+                  {/* Clean Dropdown Menu - Static */}
+                  <div className="bg-white/95 backdrop-blur-sm border-2 border-blue-200/80 rounded-2xl shadow-xl overflow-hidden">
                     <div className="p-4 space-y-3">
                       {/* ChatGPT - Selected */}
                       <div className="bg-blue-50 border-2 border-blue-200 rounded-2xl p-4 flex items-center justify-between">
@@ -511,7 +511,7 @@ const Index = () => {
               </div>
               
               {/* One-Click Action */}
-              <div className="text-center pt-4 mt-6 border-t-2 border-blue-200/60">
+              <div className="text-center pt-4 border-t-2 border-blue-200/60">
                 <Button size="lg" className="bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-bold text-lg px-12 py-4 rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-200">
                   <Zap className="h-5 w-5 mr-3" />
                   One-Click Deploy to ChatGPT
