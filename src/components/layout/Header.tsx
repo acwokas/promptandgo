@@ -42,15 +42,17 @@ const Header = () => {
   }, [user]);
 
   return (
-    <header className="w-full bg-background border-b border-border sticky top-0 z-50">
-      <div className="w-full max-w-7xl mx-auto px-4 flex items-center justify-between min-h-14 box-border">
+    <header className="w-full bg-background border-b border-border sticky top-0 z-50 overflow-hidden">
+      <div className="w-full max-w-7xl mx-auto px-4 flex items-center justify-between min-h-14 box-border overflow-hidden max-w-full">
         {/* Hamburger Menu */}
-        <SidebarTrigger />
+        <div className="flex-shrink-0">
+          <SidebarTrigger />
+        </div>
         
         {/* Logo */}
         <Link 
           to="/" 
-          className="flex items-center flex-shrink-0"
+          className="flex items-center flex-shrink-0 max-w-48 md:max-w-64"
         >
           <img
             src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"

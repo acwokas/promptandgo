@@ -50,9 +50,9 @@ const MobileCTABar = () => {
   if (!isVisible || isDismissed || user) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden">
-      <div className="bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-2xl border-t">
-        <div className="flex items-center justify-between p-4">
+    <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden max-w-full">
+      <div className="bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-2xl border-t max-w-full overflow-hidden">
+        <div className="flex items-center justify-between p-4 max-w-full">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
               <Zap className="h-4 w-4 flex-shrink-0 animate-pulse" />

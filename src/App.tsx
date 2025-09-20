@@ -106,14 +106,14 @@ const AppContent = () => {
         <GlobalStructuredData />
         <ConversionBar />
         
-        <div className="flex min-h-screen w-full">
+        <div className="flex min-h-screen w-full overflow-hidden">
           <AppSidebar />
-          <main className="flex-1 flex flex-col min-w-0">
+          <main className="flex-1 flex flex-col min-w-0 w-full overflow-x-hidden md:max-w-none max-w-full">
             {/* Simplified Header */}
             <Header />
             
             {/* Main content */}
-            <div className="flex-1">
+            <div className="flex-1 w-full overflow-x-hidden max-w-full">
               <ScrollToTop />
               <GAListener />
               <AuthEffects />

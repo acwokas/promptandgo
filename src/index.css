@@ -9,6 +9,28 @@ All colors MUST be HSL. */
 /* Google Fonts loaded via index.html for better performance */
 
 @layer base {
+  /* Mobile-first responsive fixes */
+  html {
+    overflow-x: hidden;
+  }
+  
+  body {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  @media (max-width: 768px) {
+    .container, main, section, div {
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
+  }
+
   :root {
     /* Brand & palette */
     --brand: 210 90% 56%;
