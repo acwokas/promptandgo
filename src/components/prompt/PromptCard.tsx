@@ -15,7 +15,8 @@ import { addToCart, getCart } from "@/lib/cart";
 import ShareButton from "@/components/ShareButton";
 import { AiProviderDropdown } from "@/components/ai/AiProviderDropdown";
 import { AiResponseModal } from "@/components/ai/AiResponseModal";
-import { AIProviderSelector } from "@/components/ai/AIProviderSelector";
+import { AI_PROVIDERS, rewritePromptForProvider } from "@/lib/promptRewriter";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 // Clean display title by removing common variant markers
 const cleanTitle = (t?: string | null) => {
@@ -277,6 +278,8 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   const [aiResponse, setAiResponse] = useState<string>('');
   const [aiProvider, setAiProvider] = useState<string>('');
   const [isAiModalOpen, setIsAiModalOpen] = useState(false);
+  const [selectedAIPlatform, setSelectedAIPlatform] = useState<string>('original');
+  const [rewrittenPrompt, setRewrittenPrompt] = useState<string>('');
   const [hasAccess, setHasAccess] = useState(false);
   const [packs, setPacks] = useState<{ id: string; name: string }[]>([]);
   const now = new Date();
@@ -464,6 +467,20 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
     setAiProvider(provider);
     setIsAiModalOpen(true);
   };
+
+  // Handle AI platform selection
+  const handleAIPlatformChange = (platform: string) => {
+    setSelectedAIPlatform(platform);
+    if (platform === 'original') {
+      setRewrittenPrompt('');
+    } else {
+      const rewritten = rewritePromptForProvider(prompt.prompt, platform);
+      setRewrittenPrompt(rewritten);
+    }
+  };
+
+  // Get the prompt text to display (original or rewritten)
+  const displayPrompt = selectedAIPlatform === 'original' ? prompt.prompt : rewrittenPrompt;
   
   const showLock = isPro && !hasAccess;
   const hasRibbon = (isPro && !hasAccess) || (!isPro);
@@ -547,7 +564,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
           <div className="text-xs font-medium mb-1">{prompt.excerpt?.replace(/\.$/, '')}:</div>
           <div className="relative min-h-[320px] sm:min-h-[300px]">
             <pre className={cn("whitespace-pre-wrap prompt-editorial p-4 sm:p-5 rounded-md text-[0.975rem] sm:text-[1.05rem] leading-7 transition shadow-elegant min-h-[320px] sm:min-h-[300px]", showLock && "blur-sm select-none pointer-events-none")}>
-              {prompt.prompt}
+              {displayPrompt}
             </pre>
             {showLock && (
               <div className="absolute inset-0 rounded-md glass-overlay flex flex-col items-center justify-center min-h-full p-4">
@@ -573,13 +590,42 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
             )}
           </div>
           <div className="mt-4 flex flex-col gap-2">
+            {/* AI Platform Selector */}
+            <div className="space-y-2">
+              <Select value={selectedAIPlatform} onValueChange={handleAIPlatformChange}>
+                <SelectTrigger className="w-full">
+                  <SelectValue>
+                    {selectedAIPlatform === 'original' 
+                      ? 'Original Prompt' 
+                      : `${AI_PROVIDERS.find(p => p.id === selectedAIPlatform)?.icon} ${AI_PROVIDERS.find(p => p.id === selectedAIPlatform)?.name}`}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="original">Original Prompt</SelectItem>
+                  {AI_PROVIDERS.filter(p => p.category === 'text').map((provider) => (
+                    <SelectItem key={provider.id} value={provider.id}>
+                      {provider.icon} {provider.name}
+                    </SelectItem>
+                  ))}
+                  {AI_PROVIDERS.filter(p => p.category === 'image').map((provider) => (
+                    <SelectItem key={provider.id} value={provider.id}>
+                      {provider.icon} {provider.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
             <Button
               size="sm"
               variant="hero"
               className="w-full"
               disabled={showLock && !onCopyClick && !hasAccess}
               title={showLock && !onCopyClick && !hasAccess ? "Unlock to copy" : undefined}
-              onClick={() => { if (onCopyClick) onCopyClick(); else if (!showLock || hasAccess) copy(prompt.prompt, "Prompt"); }}
+              onClick={() => { 
+                if (onCopyClick) onCopyClick(); 
+                else if (!showLock || hasAccess) copy(displayPrompt, "Prompt"); 
+              }}
             >
               <Copy className="h-4 w-4" />
               <span>Copy Prompt</span>
@@ -591,7 +637,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               onClick={() => {
                 const tab = prompt.imagePrompt ? 'image' : 'adcopy';
                 const title = encodeURIComponent(prompt.title || '');
-                const promptText = encodeURIComponent(prompt.prompt || '');
+                const promptText = encodeURIComponent(displayPrompt || '');
                 const tags = encodeURIComponent(prompt.tags?.join(',') || '');
                 const url = `/ai/studio?tab=${tab}&title=${title}&prompt=${promptText}&tags=${tags}`;
                 navigate(url);
@@ -653,15 +699,6 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               size="sm"
               showText={true}
             />
-            
-            {/* AI Provider Selector with Real-time Rewriting */}
-            <AIProviderSelector
-              originalPrompt={showLock && !hasAccess ? '' : prompt.prompt}
-              className="w-full"
-              onPromptRewritten={(rewritten, provider) => {
-                console.log(`Prompt rewritten for ${provider}:`, rewritten);
-              }}
-            />
           </div>
         </div>
 
@@ -714,7 +751,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
         onClose={() => setIsAiModalOpen(false)}
         response={aiResponse}
         provider={aiProvider}
-        originalPrompt={prompt.prompt}
+        originalPrompt={displayPrompt}
         onRetry={() => {
           setIsAiModalOpen(false);
           // The retry functionality will be handled by the dropdown
