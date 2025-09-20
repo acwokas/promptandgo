@@ -23,7 +23,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { ChevronDown, Send, Bot, Sparkles, Brain, Zap, Image, Palette } from 'lucide-react';
+import { ChevronDown, Send, Bot, Sparkles, Brain, Zap, Image, Palette, Search } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
@@ -85,6 +85,13 @@ const AI_PROVIDERS: AiProvider[] = [
     icon: <Palette className="h-4 w-4" />,
     category: 'image',
     description: 'Ideogram AI image creation'
+  },
+  {
+    id: 'perplexity',
+    name: 'Perplexity',
+    icon: <Search className="h-4 w-4" />,
+    category: 'text',
+    description: 'Perplexity AI with web search'
   }
 ];
 
