@@ -170,11 +170,22 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
 
     const url = urls[selectedProvider!];
     if (url) {
-      window.open(url, '_blank', 'noopener,noreferrer');
-      toast({
-        title: `Opened ${selectedProviderData.name}`,
-        description: `${selectedProviderData.name} opened in new tab. Your optimized prompt has been copied to clipboard.`
-      });
+      // Try to open in new tab, with fallback handling
+      const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+      
+      if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+        // Popup was blocked, show alternative instructions
+        toast({
+          title: "Popup blocked",
+          description: `Please allow popups or manually visit: ${selectedProviderData.name}. The prompt is copied to your clipboard.`,
+          variant: "destructive"
+        });
+      } else {
+        toast({
+          title: `Opened ${selectedProviderData.name}`,
+          description: `${selectedProviderData.name} opened in new tab. Your optimized prompt has been copied to clipboard.`
+        });
+      }
     }
 
     setShowSendDialog(false);
