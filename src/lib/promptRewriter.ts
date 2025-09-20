@@ -126,6 +126,18 @@ export const AI_PROVIDERS: AIProvider[] = [
     }
   },
   {
+    id: 'perplexity',
+    name: 'Perplexity',
+    icon: '🔍',
+    category: 'text',
+    description: 'Perplexity AI with web search',
+    rewritePattern: (prompt: string) => {
+      // Perplexity-optimized prompt following their specific requirements
+      const objective = prompt.split('.')[0] || prompt.substring(0, 80);
+      return `**Objective**: ${objective}.\n\n**Context**: Provide the minimum necessary context to avoid ambiguity. Resolve any pronouns and vague references in the original request.\n\n**Output Format**: Specify the desired format (bullet points, table, step list, executive summary, or structured response) and approximate length.\n\n**Research Instructions**: Search the web and cite 3-5 high-quality sources with titles and links. Prefer official documentation, standards bodies, and reputable publishers. If current information is not needed, state "No web search. Rely on general knowledge."\n\n**Language Requirements**: Use British English and concise, plain language throughout.\n\n**Uncertainty Handling**: State any uncertainties clearly and list missing information you would normally request for a complete response.\n\n**Quality Guardrails**: For creative tasks, avoid speculation. For technical tasks, produce practical, actionable guidance with examples where relevant.\n\n**Deliverable Checklist**:\n• Clear, direct answer to the core objective\n• Proper source citations (if web search used)\n• Concise, professional British English\n• All uncertainties explicitly stated`;
+    }
+  },
+  {
     id: 'zenochat',
     name: 'ZenoChat',
     icon: '🚀',
