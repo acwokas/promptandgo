@@ -563,36 +563,36 @@ const Index = () => {
               Alternative Path
             </div>
             <h2 className="text-3xl font-bold mb-4">Generate Custom Prompts</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Have Scout create entirely new prompts tailored to your specific needs and goals</p>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Craft perfect AI prompts with Scout's guided approach. Choose your options from curated dropdowns and let Scout build a professional-quality prompt for you in real-time. Ask Scout to refine it even further and then push it to your favorite AI platform. All for free.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-8">
             <div className="text-center">
               <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Wand2 className="h-8 w-8 text-secondary" />
               </div>
-              <h4 className="font-semibold mb-2">1. Describe Your Need</h4>
-              <p className="text-sm text-muted-foreground">Tell Scout what you want to achieve</p>
+              <h4 className="font-semibold mb-2">Guided Creation</h4>
+              <p className="text-sm text-muted-foreground">Choose from curated dropdowns and options</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Bot className="h-8 w-8 text-secondary" />
               </div>
-              <h4 className="font-semibold mb-2">2. Scout Creates</h4>
-              <p className="text-sm text-muted-foreground">AI generates optimized prompts instantly</p>
+              <h4 className="font-semibold mb-2">Expert Quality</h4>
+              <p className="text-sm text-muted-foreground">Professional-quality prompts built in real-time</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Rocket className="h-8 w-8 text-secondary" />
               </div>
-              <h4 className="font-semibold mb-2">3. Deploy Anywhere</h4>
-              <p className="text-sm text-muted-foreground">Use with any AI platform</p>
+              <h4 className="font-semibold mb-2">No Guesswork</h4>
+              <p className="text-sm text-muted-foreground">Scout handles the complexity for you</p>
             </div>
           </div>
           <div className="flex justify-center mb-8">
             <Button asChild size="lg" variant="outline" className="px-8">
               <Link to="/ai/generator">
                 <Wand2 className="h-4 w-4 mr-2" />
-                Try Scout Generator
+                Choose your topic and start crafting
               </Link>
             </Button>
           </div>
