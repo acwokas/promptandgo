@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Wand2, Copy, Plus, Loader2, History, ExternalLink, Bot, ArrowRight } from "lucide-react";
+import { Wand2, Copy, Plus, Loader2, History, ExternalLink, Bot, ArrowRight, Send, Heart, Sparkles } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useLoginWidget } from "@/hooks/useLoginWidget";
 import { useAIUsage } from "@/hooks/useAIUsage";
@@ -15,7 +15,9 @@ import { Link, useSearchParams, useLocation } from "react-router-dom";
 import { AI_PERSONA } from "@/lib/aiPersona";
 import { AiProviderDropdown } from "@/components/ai/AiProviderDropdown";
 import { AiResponseModal } from "@/components/ai/AiResponseModal";
-import { AIProviderSelector } from "@/components/ai/AIProviderSelector";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { AI_PROVIDERS, rewritePromptForProvider } from "@/lib/promptRewriter";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface RecentPrompt {
   id: string;
@@ -34,6 +36,18 @@ const AIPromptGenerator = () => {
   const [recentPrompts, setRecentPrompts] = useState<RecentPrompt[]>([]);
   const [loadingRecent, setLoadingRecent] = useState(false);
   
+  // AI platform selection state for the results
+  const [selectedAIPlatform, setSelectedAIPlatform] = useState<string>('original');
+  const [rewrittenPrompt, setRewrittenPrompt] = useState<string>('');
+  
+  // Daily AI send limits state (matching prompt card implementation)
+  const [dailyAISends, setDailyAISends] = useState({ count: 0, remaining: 5, daily_limit: 5, limit_reached: false });
+  const [loadingAILimits, setLoadingAILimits] = useState(false);
+  
+  // Favorites state
+  const [isFav, setIsFav] = useState(false);
+  const [favLoading, setFavLoading] = useState(false);
+  
   // AI response modal state
   const [aiResponse, setAiResponse] = useState<string>('');
   const [aiProvider, setAiProvider] = useState<string>('');
@@ -44,7 +58,84 @@ const AIPromptGenerator = () => {
   const { openLoginWidget } = useLoginWidget();
   const { refreshUsage } = useAIUsage();
 
+  // Anonymous user daily limits (stored in localStorage)
+  const getAnonymousLimits = () => {
+    const today = new Date().toDateString();
+    const stored = localStorage.getItem('anonymous_ai_sends');
+    
+    if (stored) {
+      const data = JSON.parse(stored);
+      if (data.date === today) {
+        return data;
+      }
+    }
+    
+    // Reset for new day or first time
+    const newData = { date: today, count: 0, remaining: 5, daily_limit: 5, limit_reached: false };
+    localStorage.setItem('anonymous_ai_sends', JSON.stringify(newData));
+    return newData;
+  };
+
+  const updateAnonymousLimits = () => {
+    const current = getAnonymousLimits();
+    if (current.count < current.daily_limit) {
+      const updated = {
+        ...current,
+        count: current.count + 1,
+        remaining: current.remaining - 1,
+        limit_reached: current.count + 1 >= current.daily_limit
+      };
+      localStorage.setItem('anonymous_ai_sends', JSON.stringify(updated));
+      return updated;
+    }
+    return current;
+  };
+
+  // Get the displayed prompt (original or rewritten)
+  const displayPrompt = selectedAIPlatform === 'original' ? generatedPrompt : rewrittenPrompt;
   
+  // Get selected provider data
+  const selectedProvider = selectedAIPlatform !== 'original' ? selectedAIPlatform : null;
+  const selectedProviderData = selectedProvider 
+    ? AI_PROVIDERS.find(p => p.id === selectedProvider)
+    : null;
+
+  // Load daily AI send limits for all users (authenticated and anonymous)
+  useEffect(() => {
+    const loadDailyLimits = async () => {
+      if (user) {
+        // Authenticated user - load from database
+        try {
+          setLoadingAILimits(true);
+          const { data, error } = await supabase.rpc('get_daily_ai_sends_count', { p_user_id: user.id });
+          if (error) throw error;
+          
+          const result = data as { count: number; remaining: number; daily_limit: number; limit_reached: boolean };
+          
+          setDailyAISends({
+            count: result.count,
+            remaining: result.remaining,
+            daily_limit: result.daily_limit,
+            limit_reached: result.limit_reached
+          });
+        } catch (error) {
+          console.error('Error loading daily AI limits:', error);
+          // Fallback to default limits on error
+          setDailyAISends({ count: 0, remaining: 5, daily_limit: 5, limit_reached: false });
+        } finally {
+          setLoadingAILimits(false);
+        }
+      } else {
+        // Anonymous user - load from localStorage
+        const limits = getAnonymousLimits();
+        setDailyAISends(limits);
+        setLoadingAILimits(false);
+      }
+    };
+
+    loadDailyLimits();
+  }, [user?.id]);
+
   // Load prompt and result from URL parameters or navigation state if provided
   useEffect(() => {
     const promptFromUrl = searchParams.get('prompt');
@@ -76,6 +167,170 @@ const AIPromptGenerator = () => {
       loadRecentPrompts();
     }
   }, [user]);
+
+  // Handle AI platform selection
+  const handleAIPlatformChange = (platform: string) => {
+    setSelectedAIPlatform(platform);
+    if (platform === 'original') {
+      setRewrittenPrompt('');
+    } else {
+      const rewritten = rewritePromptForProvider(generatedPrompt, platform);
+      setRewrittenPrompt(rewritten);
+    }
+  };
+
+  // Handle sending to AI
+  const handleSendToAI = async () => {
+    if (!selectedProvider) {
+      toast({
+        title: "No AI provider selected",
+        description: "Please select an AI provider first.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Check daily limits (for both authenticated and anonymous users)
+    if (dailyAISends.limit_reached) {
+      toast({
+        title: "Daily limit reached",
+        description: `You've used all ${dailyAISends.daily_limit} AI sends for today. Reset at midnight.`,
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(displayPrompt);
+      await confirmSendToAI();
+    } catch (error) {
+      toast({
+        title: "Copy failed",
+        description: "Failed to copy prompt to clipboard.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const confirmSendToAI = async () => {
+    if (!selectedProviderData) return;
+
+    // Handle daily limits for both authenticated and anonymous users
+    if (user) {
+      // Authenticated user - use database tracking
+      try {
+        const { data, error } = await supabase.rpc('check_and_increment_daily_ai_sends', { p_user_id: user.id });
+        if (error) throw error;
+        
+        const result = data as { success: boolean; remaining: number; limit_reached: boolean; daily_limit: number };
+        
+        if (!result.success) {
+          toast({
+            title: "Daily limit reached",
+            description: `You've used all ${result.daily_limit} AI sends for today. Reset at midnight.`,
+            variant: "destructive"
+          });
+          return;
+        }
+        
+        // Update local state
+        setDailyAISends({
+          count: result.daily_limit - result.remaining,
+          remaining: result.remaining,
+          daily_limit: result.daily_limit,
+          limit_reached: result.limit_reached
+        });
+      } catch (error) {
+        console.error('Error checking AI send limits:', error);
+        toast({
+          title: "Error",
+          description: "Failed to check daily limits. Please try again.",
+          variant: "destructive"
+        });
+        return;
+      }
+    } else {
+      // Anonymous user - use localStorage tracking
+      const updated = updateAnonymousLimits();
+      setDailyAISends(updated);
+      
+      if (updated.limit_reached) {
+        toast({
+          title: "Daily limit reached",
+          description: `You've used all ${updated.daily_limit} AI sends for today. Reset at midnight.`,
+          variant: "destructive"
+        });
+        return;
+      }
+    }
+
+    // URLs for different AI providers
+    const urls: Record<string, string> = {
+      chatgpt: 'https://chatgpt.com/',
+      claude: 'https://claude.ai/',
+      gemini: 'https://gemini.google.com/',
+      deepseek: 'https://chat.deepseek.com/',
+      groq: 'https://console.groq.com/playground',
+      mistral: 'https://chat.mistral.ai/',
+      llama: 'https://www.llama2.ai/',
+      zenochat: 'https://zenochat.ai/',
+      midjourney: 'https://discord.com/channels/@me',
+      ideogram: 'https://ideogram.ai/'
+    };
+
+    const url = urls[selectedProvider!];
+    if (url) {
+      try {
+        // Try to open automatically first
+        const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+        
+        if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+          // Popup was blocked, show manual instructions
+          toast({
+            title: "Popup blocked - Manual steps",
+            description: (
+              <div className="space-y-3">
+                <p className="text-sm font-medium">✅ Your optimized prompt is copied to clipboard</p>
+                <div className="space-y-1">
+                  <p className="text-sm font-medium">Manual steps:</p>
+                  <p className="text-xs">1. Open a new browser tab</p>
+                  <p className="text-xs">2. Go to: <span className="font-mono bg-muted px-1 rounded">{url}</span></p>
+                  <p className="text-xs">3. Paste your prompt and hit enter</p>
+                </div>
+              </div>
+            ),
+            duration: 8000,
+          });
+        } else {
+          // Window opened successfully
+          const successMessage = `${selectedProviderData.name} opened in new tab. Your optimized prompt has been copied to clipboard.`;
+            
+          toast({
+            title: `Opened ${selectedProviderData.name}`,
+            description: successMessage,
+            duration: 4000,
+          });
+        }
+      } catch (error) {
+        // Failed to open, show manual instructions
+        toast({
+          title: "Unable to open automatically",
+          description: (
+            <div className="space-y-3">
+              <p className="text-sm font-medium">✅ Your optimized prompt is copied to clipboard</p>
+              <div className="space-y-1">
+                <p className="text-sm font-medium">Manual steps:</p>
+                <p className="text-xs">1. Open a new browser tab</p>
+                <p className="text-xs">2. Go to: <span className="font-mono bg-muted px-1 rounded">{url}</span></p>
+                <p className="text-xs">3. Paste your prompt and hit enter</p>
+              </div>
+            </div>
+          ),
+          duration: 8000,
+        });
+      }
+    }
+  };
 
   const loadRecentPrompts = async () => {
     if (!user) return;
@@ -120,31 +375,27 @@ const AIPromptGenerator = () => {
 
       if (error) {
         // Handle usage limit exceeded
-        if (error.message?.includes('Daily limit exceeded') || data?.usageExceeded) {
-          window.location.href = `/ai-credits-exhausted?type=generator&usage=${data?.currentUsage || 0}&limit=${data?.dailyLimit || 0}`;
-          return;
+        if (error.message?.includes('usage limit')) {
+          toast({
+            title: "Usage limit reached",
+            description: error.message,
+            variant: "destructive"
+          });
+        } else {
+          throw error;
         }
-        throw error;
-      }
-
-      setGeneratedPrompt(data.result);
-      
-      // Refresh usage display after successful generation
-      refreshUsage();
-      
-      toast({
-        title: AI_PERSONA.greetings.successMessage,
-        description: "Your AI prompt has been created successfully."
-      });
-    } catch (error: any) {
-      console.error('Error generating prompt:', error);
-      
-      // Check if it's a usage limit error
-      if (error.message?.includes('Daily limit exceeded')) {
-        window.location.href = '/ai-credits-exhausted?type=generator';
         return;
       }
 
+      if (data?.response) {
+        const cleanResponse = data.response.replace(/^```[\s\S]*?\n|```$/g, '').trim();
+        setGeneratedPrompt(cleanResponse);
+        refreshUsage();
+      } else {
+        throw new Error('No response received');
+      }
+    } catch (error: any) {
+      console.error('Generation error:', error);
       toast({
         title: "Generation failed",
         description: error.message || "Failed to generate prompt. Please try again.",
@@ -156,9 +407,19 @@ const AIPromptGenerator = () => {
   };
 
   const handleCopy = async () => {
+    if (!generatedPrompt) {
+      toast({
+        title: "No prompt to copy",
+        description: "Generate a prompt first.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     try {
-      // Remove surrounding quotes if present
-      const cleanPrompt = generatedPrompt.replace(/^"(.*)"$/, '$1');
+      // Use displayPrompt to get the correct prompt (original or rewritten)
+      const promptToCopy = displayPrompt || generatedPrompt;
+      const cleanPrompt = promptToCopy.replace(/^"(.*)"$/, '$1');
       await navigator.clipboard.writeText(cleanPrompt);
       toast({
         title: "Copied!",
@@ -178,37 +439,48 @@ const AIPromptGenerator = () => {
       openLoginWidget();
       return;
     }
+    
+    if (!generatedPrompt.trim()) {
+      toast({
+        title: "No prompt to save",
+        description: "Generate a prompt first before adding to My Prompts.",
+        variant: "destructive"
+      });
+      return;
+    }
 
     try {
-      // Extract first 50 chars of description as title
-      const title = description.substring(0, 50).trim() + (description.length > 50 ? '...' : '');
+      setFavLoading(true);
       
+      // Save to user_generated_prompts table
       const { error } = await supabase
         .from('user_generated_prompts')
         .insert({
           user_id: user.id,
-          title: title,
+          title: description.slice(0, 100) || 'Scout Generated Prompt',
           prompt: generatedPrompt,
-          description: description,
-          tags: ['ai-generated']
+          description: description || null,
         });
 
       if (error) throw error;
-
+      
+      setIsFav(true);
       toast({
-        title: "Added to My Prompts!",
-        description: "The generated prompt has been saved to your personal collection."
+        title: "Added to My Prompts",
+        description: "Your prompt has been saved successfully.",
       });
-
-      // Refresh recent prompts after adding
+      
+      // Refresh recent prompts
       loadRecentPrompts();
-    } catch (error: any) {
-      console.error('Error adding to my prompts:', error);
+    } catch (error) {
+      console.error('Error saving prompt:', error);
       toast({
-        title: "Save failed",
-        description: "Failed to save prompt to your collection. Please try again.",
+        title: "Failed to save",
+        description: "Could not add prompt to My Prompts. Please try again.",
         variant: "destructive"
       });
+    } finally {
+      setFavLoading(false);
     }
   };
 
@@ -238,14 +510,12 @@ const AIPromptGenerator = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6">
-      <div className="text-center space-y-2">
-        <div className="flex items-center justify-center gap-2">
-          <Wand2 className="h-6 w-6 text-primary" />
-          <h1 className="text-3xl font-bold">{AI_PERSONA.ui.generatorTitle}</h1>
-          <Badge variant="secondary" className="text-xs">{AI_PERSONA.greetings.generator}</Badge>
-        </div>
-        <p className="text-muted-foreground max-w-2xl mx-auto">
+    <div className="container mx-auto px-4 py-6 max-w-5xl space-y-6">
+      <div className="text-center space-y-4">
+        <h1 className="text-4xl font-bold tracking-tight">
+          {AI_PERSONA.ui.generatorTitle}
+        </h1>
+        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
           {AI_PERSONA.ui.generatorSubtitle}
         </p>
       </div>
@@ -271,17 +541,17 @@ const AIPromptGenerator = () => {
                 <span className="text-xs text-muted-foreground ml-2">(Tell Scout what you need)</span>
               </label>
               <Textarea
+                className="min-h-[120px]"
                 placeholder={AI_PERSONA.ui.placeholderText}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="min-h-[120px]"
               />
             </div>
-
+            
             <div>
               <label className="text-sm font-medium mb-2 block">
-                Additional Context (Optional)
-                <span className="text-xs text-muted-foreground ml-2">(Help Scout understand your needs better)</span>
+                Additional Context
+                <span className="text-xs text-muted-foreground ml-2">(Optional)</span>
               </label>
               <Input
                 placeholder={AI_PERSONA.ui.contextPlaceholder}
@@ -289,15 +559,16 @@ const AIPromptGenerator = () => {
                 onChange={(e) => setContext(e.target.value)}
               />
             </div>
-
-            <Button 
+            
+            <Button
               onClick={handleGenerate}
               disabled={isGenerating}
               className="w-full"
+              size="lg"
             >
               {isGenerating ? (
                 <>
-                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                   {AI_PERSONA.ui.generatingButton}
                 </>
               ) : (
@@ -315,43 +586,143 @@ const AIPromptGenerator = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Bot className="h-5 w-5 text-primary" />
-              Scout's Generated Prompt
+              Scout's Refined Prompt
             </CardTitle>
           </CardHeader>
           <CardContent>
             {generatedPrompt ? (
               <div className="space-y-4">
-                <div className="p-4 bg-muted rounded-lg border">
+                {/* AI Platform Selector - First */}
+                <div className="space-y-2">
+                  <Select value={selectedAIPlatform} onValueChange={handleAIPlatformChange}>
+                    <SelectTrigger className="w-full bg-background border shadow-sm">
+                      <SelectValue>
+                        {selectedAIPlatform === 'original' 
+                          ? 'Original Prompt' 
+                          : `${AI_PROVIDERS.find(p => p.id === selectedAIPlatform)?.icon} ${AI_PROVIDERS.find(p => p.id === selectedAIPlatform)?.name}`}
+                      </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border shadow-lg z-50">
+                      <SelectItem value="original">Original Prompt</SelectItem>
+                      {AI_PROVIDERS.filter(p => p.category === 'text').map((provider) => (
+                        <SelectItem key={provider.id} value={provider.id}>
+                          {provider.icon} {provider.name}
+                        </SelectItem>
+                      ))}
+                      {AI_PROVIDERS.filter(p => p.category === 'image').map((provider) => (
+                        <SelectItem key={provider.id} value={provider.id}>
+                          {provider.icon} {provider.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Prompt Display */}
+                <div className="p-4 bg-muted rounded-lg border min-h-[200px]">
                   <pre className="whitespace-pre-wrap text-sm">
-                    {generatedPrompt}
+                    {displayPrompt}
                   </pre>
                 </div>
                 
-                <div className="flex gap-2">
-                  <Button variant="outline" onClick={handleCopy}>
-                    <Copy className="h-4 w-4 mr-2" />
-                    Copy
+                {/* Action Buttons */}
+                <div className="space-y-2">
+                  {/* Send to AI Platform - Second */}
+                  {selectedProvider && (
+                    <div className="space-y-2">
+                      <Button 
+                        size="sm"
+                        variant="default"
+                        onClick={handleSendToAI}
+                        className="w-full"
+                        disabled={dailyAISends.limit_reached || loadingAILimits}
+                        title={dailyAISends.limit_reached ? "Daily limit reached (resets at midnight)" : undefined}
+                      >
+                        <Send className="h-4 w-4" />
+                        <span>Send to {selectedProviderData?.name}</span>
+                      </Button>
+                      <div className="text-xs text-center text-muted-foreground">
+                        {loadingAILimits ? (
+                          "Loading limits..."
+                        ) : (
+                          `${dailyAISends.remaining}/${dailyAISends.daily_limit} sends remaining today`
+                        )}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Copy Prompt - Third */}
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="w-full"
+                    onClick={handleCopy}
+                  >
+                    <Copy className="h-4 w-4" />
+                    <span>Copy Prompt</span>
                   </Button>
-                  <Button variant="outline" onClick={handleAddToMyPrompts}>
-                    <Plus className="h-4 w-4 mr-2" />
-                    Add to My Prompts
-                  </Button>
+                  
+                  {/* Add to My Prompts - Fourth */}
+                  {user ? (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full"
+                      onClick={handleAddToMyPrompts}
+                      disabled={favLoading}
+                      title={isFav ? "Remove from My Prompts" : "Add to My Prompts"}
+                    >
+                      <Heart className={`h-4 w-4 ${isFav ? "fill-current text-primary" : ""}`} />
+                      <span>{isFav ? "Remove from My Prompts" : "Add to My Prompts"}</span>
+                    </Button>
+                  ) : (
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <div className="w-full">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              disabled
+                              className="w-full opacity-50"
+                            >
+                              <Heart className="h-4 w-4" />
+                              <span>Add to My Prompts</span>
+                            </Button>
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-popover border shadow-lg p-3 max-w-xs z-50">
+                          <div className="space-y-3">
+                            <p className="text-sm font-medium">Sign up for free to unlock this feature</p>
+                            <div className="flex gap-2">
+                              <Button 
+                                size="sm" 
+                                variant="default"
+                                onClick={openLoginWidget}
+                                className="flex-1"
+                              >
+                                Sign Up
+                              </Button>
+                              <Button 
+                                size="sm" 
+                                variant="outline"
+                                onClick={openLoginWidget}
+                                className="flex-1"
+                              >
+                                Login
+                              </Button>
+                            </div>
+                          </div>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  )}
                 </div>
-                
-                {/* AI Provider Selector with Real-time Rewriting */}
-                <AIProviderSelector 
-                  originalPrompt={generatedPrompt}
-                  className="w-full"
-                  onPromptRewritten={(rewritten, provider) => {
-                    // Optional: Update local state or trigger analytics
-                    console.log(`Prompt rewritten for ${provider}:`, rewritten);
-                  }}
-                />
 
                 <div className="flex items-center gap-2">
                   <Badge variant="secondary" className="flex items-center gap-1">
                     <Bot className="h-3 w-3" />
-                    Created by Scout
+                    Refined by Scout
                   </Badge>
                   <Badge variant="outline">Ready to Use</Badge>
                 </div>
@@ -402,45 +773,36 @@ const AIPromptGenerator = () => {
             ) : recentPrompts.length > 0 ? (
               <div className="space-y-3">
                 {recentPrompts.map((prompt) => (
-                  <div key={prompt.id} className="p-3 border rounded-lg hover:bg-muted/50 transition-colors">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-medium text-sm mb-1 truncate">
-                          {prompt.title}
-                        </h4>
-                        <p className="text-xs text-muted-foreground line-clamp-2">
-                          {prompt.prompt.substring(0, 120)}
-                          {prompt.prompt.length > 120 ? '...' : ''}
-                        </p>
-                        <p className="text-xs text-muted-foreground mt-1">
-                          {new Date(prompt.created_at).toLocaleDateString()}
-                        </p>
+                  <div key={prompt.id} className="flex items-start gap-3 p-3 rounded-lg border bg-card/50 hover:bg-card transition-colors">
+                    <div className="flex-1 min-w-0">
+                      <div className="font-medium text-sm line-clamp-1">
+                        {prompt.title}
                       </div>
+                      <div className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                        {prompt.prompt.substring(0, 120)}
+                        {prompt.prompt.length > 120 ? '...' : ''}
+                      </div>
+                      <div className="text-xs text-muted-foreground mt-2">
+                        {new Date(prompt.created_at).toLocaleDateString()}
+                      </div>
+                    </div>
+                    <div className="flex-shrink-0">
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => handleCopyRecentPrompt(prompt.prompt)}
                       >
-                        <Copy className="h-3 w-3" />
+                        <Copy className="h-4 w-4" />
                       </Button>
                     </div>
                   </div>
                 ))}
-                {recentPrompts.length === 5 && (
-                  <div className="text-center pt-2">
-                    <Button asChild variant="link" size="sm">
-                      <Link to="/account/favorites#my-generated-prompts">
-                        View all {recentPrompts.length}+ prompts →
-                      </Link>
-                    </Button>
-                  </div>
-                )}
               </div>
             ) : (
               <div className="text-center text-muted-foreground py-8">
-                <History className="h-8 w-8 mx-auto mb-3 opacity-50" />
-                <p className="mb-2">No generated prompts yet</p>
-                <p className="text-xs">Generate your first prompt above to see it here</p>
+                <Bot className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                <p>No prompts generated yet</p>
+                <p className="text-sm">Create your first prompt above to see it here</p>
               </div>
             )}
           </CardContent>
@@ -448,50 +810,29 @@ const AIPromptGenerator = () => {
       )}
 
       {/* Tips Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">💡 Tips for Better Prompts</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid md:grid-cols-2 gap-4 text-sm">
-            <div>
-              <h4 className="font-semibold mb-2">Be Specific</h4>
-              <p className="text-muted-foreground">
-                The more details you provide, the more tailored your prompt will be.
-              </p>
+      <Card className="bg-gradient-to-br from-primary/5 to-secondary/5 border-primary/10">
+        <CardContent className="p-6">
+          <div className="text-center space-y-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium">
+              <Sparkles className="h-4 w-4" />
+              Pro Tip
             </div>
-            <div>
-              <h4 className="font-semibold mb-2">Include Context</h4>
-              <p className="text-muted-foreground">
-                Mention the audience, tone, or specific requirements.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-2">Define the Output</h4>
-              <p className="text-muted-foreground">
-                Specify the format or structure you want in the result.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-2">Use Examples</h4>
-              <p className="text-muted-foreground">
-                Provide examples of what good results should look like.
-              </p>
-            </div>
+            <h3 className="text-lg font-semibold">Get Better Results</h3>
+            <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
+              Be specific about your goals, target audience, and desired tone. The more context you provide, 
+              the more tailored and effective Scout's prompts will be.
+            </p>
           </div>
         </CardContent>
       </Card>
 
       {/* AI Assistant Upsell - Moved to bottom */}
-      <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-lg p-4 border border-green-500/20">
-        <div className="flex items-center gap-3 mb-3">
-          <Bot className="h-5 w-5 text-green-500" />
-          <h3 className="font-semibold text-green-700 dark:text-green-300">{AI_PERSONA.ui.upsellTitle}</h3>
-        </div>
-        <p className="text-sm text-muted-foreground mb-3">
+      <div className="text-center space-y-4 p-6 bg-gradient-to-br from-muted/50 to-background rounded-lg border">
+        <h3 className="text-xl font-semibold">Want More AI Power?</h3>
+        <p className="text-muted-foreground max-w-md mx-auto">
           {AI_PERSONA.ui.upsellDescription}
         </p>
-        <Button asChild size="sm" className="bg-green-500 hover:bg-green-600">
+        <Button asChild>
           <Link to="/ai/assistant">
             {AI_PERSONA.ui.upsellButton}
             <ArrowRight className="h-4 w-4 ml-2" />
