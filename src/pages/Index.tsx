@@ -562,7 +562,7 @@ const Index = () => {
               <Wand2 className="h-4 w-4" />
               Alternative Path
             </div>
-            <h2 className="text-3xl font-bold mb-4">Generate Custom Prompts</h2>
+            <h2 className="text-3xl font-bold mb-4">Generate Custom Prompts with Scout's Prompt Studio</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Craft perfect AI prompts with Scout's guided approach. Choose your options from curated dropdowns and let Scout build a professional-quality prompt for you in real-time. Ask Scout to refine it even further and then push it to your favorite AI platform. All for free.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-8">
