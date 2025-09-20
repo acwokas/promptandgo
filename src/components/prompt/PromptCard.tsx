@@ -13,6 +13,8 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { addToCart, getCart } from "@/lib/cart";
 import ShareButton from "@/components/ShareButton";
+import { AiProviderDropdown } from "@/components/ai/AiProviderDropdown";
+import { AiResponseModal } from "@/components/ai/AiResponseModal";
 
 // Clean display title by removing common variant markers
 const cleanTitle = (t?: string | null) => {
@@ -269,6 +271,11 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   const [isFav, setIsFav] = useState(false);
   const [favLoading, setFavLoading] = useState(false);
   const isPro = (prompt as any).isPro || (prompt as any).is_pro || false;
+  
+  // AI response modal state
+  const [aiResponse, setAiResponse] = useState<string>('');
+  const [aiProvider, setAiProvider] = useState<string>('');
+  const [isAiModalOpen, setIsAiModalOpen] = useState(false);
   const [hasAccess, setHasAccess] = useState(false);
   const [packs, setPacks] = useState<{ id: string; name: string }[]>([]);
   const now = new Date();
@@ -449,6 +456,14 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
     addToCart({ id: prompt.id, type: 'prompt', title: displayTitle, unitAmountCents: PROMPT_DISCOUNT_CENTS, quantity: 1 }, !!user);
     toast({ title: 'Prompt added to cart', description: `${displayTitle} — ${fmtUSD(PROMPT_DISCOUNT_CENTS)}` });
   };
+  
+  // Handle AI response
+  const handleAiResponse = (response: string, provider: string) => {
+    setAiResponse(response);
+    setAiProvider(provider);
+    setIsAiModalOpen(true);
+  };
+  
   const showLock = isPro && !hasAccess;
   const hasRibbon = (isPro && !hasAccess) || (!isPro);
 
@@ -637,6 +652,13 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               size="sm"
               showText={true}
             />
+            
+            <AiProviderDropdown
+              prompt={showLock && !hasAccess ? '' : prompt.prompt}
+              onResponse={handleAiResponse}
+              disabled={showLock && !hasAccess}
+              className="w-full"
+            />
           </div>
         </div>
 
@@ -683,6 +705,18 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
         )}
 
       </CardContent>
+      
+      <AiResponseModal
+        isOpen={isAiModalOpen}
+        onClose={() => setIsAiModalOpen(false)}
+        response={aiResponse}
+        provider={aiProvider}
+        originalPrompt={prompt.prompt}
+        onRetry={() => {
+          setIsAiModalOpen(false);
+          // The retry functionality will be handled by the dropdown
+        }}
+      />
     </Card>
   );
 };
