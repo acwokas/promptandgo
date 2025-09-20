@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { AppSidebar } from "@/components/AppSidebar";
 import ConversionBar from "@/components/layout/ConversionBar";
+import ExitIntentPopup from "@/components/conversion/ExitIntentPopup";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import PromptLibrary from "./pages/PromptLibrary";
@@ -191,6 +192,9 @@ const AppContent = () => {
         
         {/* Show feedback widget for logged in users, login widget for guests */}
         {user ? <FeedbackWidget /> : <LoginWidget />}
+        
+        {/* Exit intent popup for conversion */}
+        <ExitIntentPopup />
       </LoginWidgetProvider>
     </SidebarProvider>
   );
