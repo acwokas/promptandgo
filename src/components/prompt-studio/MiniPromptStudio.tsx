@@ -386,16 +386,6 @@ const MiniPromptStudio = () => {
                 </Select>
               </div>
             ))}
-
-            {/* Progress indicator */}
-            {hasContent && (
-              <div className="flex items-center gap-2">
-                <Badge variant="secondary" className="text-xs">
-                  <Wand2 className="h-3 w-3 mr-1" />
-                  Building prompt...
-                </Badge>
-              </div>
-            )}
           </div>
 
           {/* Right Column - Live Preview */}
