@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { getCartCount, clearCartOnLogout } from "@/lib/cart";
 
 const Header = () => {
-  const { user } = useSupabaseAuth();
+  const { user, logout } = useSupabaseAuth();
   const { toast } = useToast();
   useEnsureProfile();
 
@@ -27,19 +27,11 @@ const Header = () => {
   }, [user]);
 
   const handleLogout = async () => {
-    try {
-      const { error } = await supabase.auth.signOut();
-      if (error) {
-        console.warn("Normal signout failed, forcing local signout:", error.message);
-        await supabase.auth.signOut({ scope: 'local' });
-      }
-      clearCartOnLogout();
-      toast({ title: "Signed out successfully" });
-    } catch (err: any) {
-      console.error("All signout methods failed, clearing local state:", err);
-      await supabase.auth.signOut({ scope: 'local' });
-      clearCartOnLogout();
-      toast({ title: "Signed out" });
+    clearCartOnLogout();
+    toast({ title: "Signed out successfully" });
+    // Use the enhanced logout from the hook
+    if (logout) {
+      await logout();
     }
   };
 

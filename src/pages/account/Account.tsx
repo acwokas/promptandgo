@@ -11,7 +11,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { LogOut } from "lucide-react";
 
 const AccountPage = () => {
-  const { user } = useSupabaseAuth();
+  const { user, logout } = useSupabaseAuth();
   const { isAdmin } = useIsAdmin();
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -20,8 +20,9 @@ const AccountPage = () => {
 
   const handleLogout = async () => {
     try {
-      const { error } = await supabase.auth.signOut();
-      if (error) throw error;
+      if (logout) {
+        await logout();
+      }
       
       toast({
         title: "Logged out successfully",

@@ -3,13 +3,15 @@ import PageHero from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Link } from "react-router-dom";
+import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 
-const SecurityPage = () => {
+const Security = () => {
+  const { user, logout } = useSupabaseAuth();
   const { toast } = useToast();
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -40,20 +42,12 @@ const SecurityPage = () => {
 
   const onLogout = async () => {
     try {
-      // Try to sign out normally first
-      const { error } = await supabase.auth.signOut();
-      
-      if (error) {
-        // If normal signout fails (e.g., session expired), force local signout
-        console.warn("Normal signout failed, forcing local signout:", error.message);
-        await supabase.auth.signOut({ scope: 'local' });
+      if (logout) {
+        await logout();
       }
-      
       toast({ title: "Signed out successfully" });
     } catch (err: any) {
-      // Fallback: force local signout even if everything fails
-      console.error("All signout methods failed, clearing local state:", err);
-      await supabase.auth.signOut({ scope: 'local' });
+      console.error("Logout failed:", err);
       toast({ title: "Signed out" });
     }
   };
@@ -104,4 +98,4 @@ const SecurityPage = () => {
   );
 };
 
-export default SecurityPage;
+export default Security;

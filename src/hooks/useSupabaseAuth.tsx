@@ -15,11 +15,21 @@ export function useSupabaseAuth() {
       // Check if user is logging in (going from no session to having a session)
       const isLoggingIn = !previousSession.current && newSession && event === 'SIGNED_IN';
       
+      // Handle logout event - immediately clear state
+      if (event === 'SIGNED_OUT') {
+        setSession(null);
+        setUser(null);
+        previousSession.current = null;
+        setLoading(false);
+        return;
+      }
+      
       setSession(newSession);
       setUser(newSession?.user ?? null);
+      setLoading(false);
       
       // Show welcome message when logging in
-      if (isLoggingIn && newSession.user) {
+      if (isLoggingIn && newSession?.user) {
         const userName = newSession.user.user_metadata?.full_name || 
                         newSession.user.user_metadata?.name || 
                         newSession.user.email?.split('@')[0] || 
@@ -48,5 +58,24 @@ export function useSupabaseAuth() {
     };
   }, [toast]);
 
-  return { user, session, loading };
+  // Enhanced logout function with immediate state clearing
+  const logout = async () => {
+    // Immediately clear local state to prevent race conditions
+    setSession(null);
+    setUser(null);
+    previousSession.current = null;
+    
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.warn("Normal signout failed, forcing local signout:", error.message);
+        await supabase.auth.signOut({ scope: 'local' });
+      }
+    } catch (err: any) {
+      console.error("All signout methods failed, clearing local state:", err);
+      await supabase.auth.signOut({ scope: 'local' });
+    }
+  };
+
+  return { user, session, loading, logout };
 }
