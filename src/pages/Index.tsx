@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 import { Link, useNavigate } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
+import CountdownTimer from "@/components/conversion/CountdownTimer";
 import { 
   Sparkles, 
   Zap, 
@@ -294,6 +295,13 @@ const Index = () => {
       />
 
       <main>
+        {/* 50% Off Countdown Banner */}
+        <CountdownTimer 
+          variant="banner" 
+          offer="🚀 50% OFF All Premium Packs - Limited Time Only!"
+          expiryHours={24}
+        />
+
         {/* Hero - Value-Driven Headlines */}
         <PageHero title={<>
             Save <span className="text-gradient-brand">10+ hours weekly</span> with battle-tested AI prompts
