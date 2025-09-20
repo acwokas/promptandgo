@@ -522,14 +522,14 @@ const Index = () => {
           </div>
         </section>
 
-        <section className="container -mt-8">
-          <div className="text-center mb-4">
-            <p className="text-muted-foreground max-w-md mx-auto">See how Scout optimizes real prompts. Pick one below customize it, push it to your favorite AI platform, and experience the magic instantly.</p>
+        <section className="container mt-4 mb-8">
+          <div className="text-center">
+            <p className="text-muted-foreground max-w-2xl mx-auto">See how Scout optimizes real prompts. Pick one below customize it, push it to your favorite AI platform, and experience the magic instantly.</p>
           </div>
         </section>
 
         {/* Prompts of the Day / Personalized Prompts */}
-        <section className="container -mt-8">
+        <section className="container">
           <PromptsOfTheDay />
         </section>
 
