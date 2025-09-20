@@ -54,7 +54,7 @@ const PROVIDERS: Record<string, ProviderConfig> = {
   },
   
   google: {
-    endpoint: 'https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent',
+    endpoint: 'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent',
     headers: (apiKey: string) => ({
       'Content-Type': 'application/json',
     }),
@@ -90,7 +90,7 @@ const PROVIDERS: Record<string, ProviderConfig> = {
       'Content-Type': 'application/json',
     }),
     formatRequest: (prompt: string, temperature: number, maxTokens: number) => ({
-      model: 'llama3-8b-8192',
+      model: 'llama-3.1-8b-instant',
       messages: [{ role: 'user', content: prompt }],
       temperature,
       max_tokens: maxTokens,

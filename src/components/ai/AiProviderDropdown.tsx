@@ -138,13 +138,12 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
       }
 
       if (data?.response) {
-        // Open AI assistant in new window with the original prompt
-        const assistantUrl = `/ai/assistant?prompt=${encodeURIComponent(prompt.trim())}`;
-        window.open(assistantUrl, '_blank');
+        // Copy prompt to clipboard and show instructions
+        await navigator.clipboard.writeText(prompt.trim());
         
         toast({
-          title: "Opened in AI Assistant",
-          description: `Your prompt has been sent to the AI Assistant`,
+          title: `Prompt copied for ${provider.name}`,
+          description: `The prompt has been copied to your clipboard. Please paste it into ${provider.name} manually.`,
         });
       } else {
         throw new Error('No response received');
