@@ -7,9 +7,9 @@ const ScoutDemo = () => {
   return (
     <section className="py-16 bg-gradient-to-br from-muted/30 to-background">
       <div className="container">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-5 gap-12 items-start">
           {/* Left side - Content */}
-          <div className="space-y-6">
+          <div className="lg:col-span-2 space-y-6">
             <div className="space-y-4">
               <h2 className="text-3xl lg:text-4xl font-bold">
                 Browse proven prompts, then let{" "}
@@ -57,9 +57,9 @@ const ScoutDemo = () => {
             </div>
           </div>
           
-          {/* Right side - Demo Card */}
-          <div className="flex justify-center">
-            <PromptCardDemo />
+          {/* Right side - Demo Card (More space) */}
+          <div className="lg:col-span-3 flex justify-center">
+            <PromptCardDemo className="max-w-none w-full" />
           </div>
         </div>
       </div>

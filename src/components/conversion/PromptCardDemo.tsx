@@ -67,8 +67,24 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
 
   const selectedOption = platformOptions.find(option => option.id === selectedPlatform.id) || platformOptions[0];
 
+  // Different prompt versions for each platform
+  const getOptimizedPrompt = (platformId: string) => {
+    switch (platformId) {
+      case 'original':
+        return "Create a comprehensive neighbourhood guide that covers safety statistics, local services, schools, and amenities for potential homebuyers.";
+      case 'chatgpt':
+        return "Act as a real estate expert. Create a comprehensive neighbourhood guide for [NEIGHBOURHOOD NAME] that includes: 1) Safety statistics and crime rates 2) Local services (hospitals, banks, shopping) 3) School ratings and educational facilities 4) Amenities and recreational areas 5) Transportation options. Format as a buyer-friendly report with clear sections and actionable insights.";
+      case 'claude':
+        return "I need you to analyze and compile a neighbourhood assessment report. Please structure your response as a professional real estate guide covering: \n\n<safety_analysis>\n- Crime statistics and trends\n- Police response times\n- Community safety measures\n</safety_analysis>\n\n<services_infrastructure>\n- Healthcare facilities within 5km\n- Banking and postal services\n- Shopping centers and grocery stores\n</services_infrastructure>\n\n<education>\n- Public and private school options\n- School performance ratings\n- Distance from residential areas\n</education>\n\n<lifestyle_amenities>\n- Parks and recreational facilities\n- Public transportation access\n- Community centers and cultural venues\n</lifestyle_amenities>\n\nProvide data-driven insights for [NEIGHBOURHOOD NAME].";
+      case 'gemini':
+        return "🏘️ NEIGHBOURHOOD ANALYSIS REQUEST\n\nGenerate a detailed neighbourhood profile for real estate purposes. Include:\n\n📊 SAFETY METRICS:\n→ Crime rates vs city average\n→ Safety rankings and trends\n\n🏥 ESSENTIAL SERVICES:\n→ Medical facilities (distance + quality)\n→ Banking, postal, emergency services\n\n🎓 EDUCATION LANDSCAPE:\n→ School performance data\n→ Special programs available\n\n🎯 LIFESTYLE FACTORS:\n→ Parks, recreation, dining\n→ Transit connectivity\n→ Future development plans\n\nTarget audience: First-time homebuyers\nFormat: Easy-to-scan bullet points with key highlights\nFocus: Practical decision-making information";
+      default:
+        return "Create a comprehensive neighbourhood guide that covers safety statistics, local services, schools, and amenities for potential homebuyers.";
+    }
+  };
+
   return (
-    <div className={`max-w-md mx-auto ${className}`}>
+    <div className={className}>
       <Card className="border-2 border-primary/20 shadow-lg hover:shadow-xl transition-shadow">
         <CardHeader className="pb-4">
           <div className="flex items-start justify-between mb-3">
@@ -107,14 +123,14 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
           <div className="space-y-4">
             <div>
               <p className="font-medium text-foreground mb-3">
-                Core prompt: level up your AI in real estate with:
+                Platform-optimized prompt:
               </p>
               
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button 
                     variant="outline" 
-                    className="w-full justify-between h-auto p-4 bg-background border-2 hover:bg-muted/50"
+                    className="w-full justify-between h-auto p-4 bg-background border-2 hover:bg-muted/50 mb-4"
                   >
                     <div className="flex items-center gap-3">
                       <div className={`p-2 rounded-full ${selectedOption.color}`}>
@@ -125,11 +141,6 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
                         <div className="text-sm text-muted-foreground">{selectedOption.description}</div>
                       </div>
                     </div>
-                    {selectedPlatform.id === "original" && (
-                      <Badge variant="secondary" className="bg-blue-100 text-blue-700">
-                        SELECTED
-                      </Badge>
-                    )}
                     <ChevronDown className="h-4 w-4 ml-2" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -160,6 +171,17 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
                   ))}
                 </DropdownMenuContent>
               </DropdownMenu>
+
+              {/* Show the optimized prompt */}
+              <div className="bg-muted/30 rounded-lg p-4 border-2 border-dashed border-primary/20 min-h-[120px]">
+                <div className="flex items-center gap-2 mb-3">
+                  <Bot className="h-4 w-4 text-primary" />
+                  <span className="text-sm font-medium text-primary">Scout Optimized</span>
+                </div>
+                <p className="text-sm text-foreground leading-relaxed whitespace-pre-line">
+                  {getOptimizedPrompt(selectedPlatform.id)}
+                </p>
+              </div>
             </div>
           </div>
         </CardContent>
