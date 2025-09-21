@@ -93,7 +93,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
               <SelectTrigger
                 id="category-select-mobile"
                 aria-label="Filter by category"
-                className="bg-muted/60 border shadow-sm hover:bg-muted focus:ring-2 focus:ring-ring data-[state=open]:ring-2 h-9 text-sm"
+                className="bg-muted/60 border shadow-sm hover:bg-muted focus:border-2 focus:border-ring data-[state=open]:border-2 data-[state=open]:border-ring h-9 text-sm transition-colors"
               >
                 <SelectValue placeholder="All" />
               </SelectTrigger>
@@ -118,7 +118,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
               <SelectTrigger
                 id="subcategory-select-mobile"
                 aria-label="Filter by subcategory"
-                className="bg-muted/60 border shadow-sm hover:bg-muted focus:ring-2 focus:ring-ring data-[state=open]:ring-2 h-9 text-sm"
+                className="bg-muted/60 border shadow-sm hover:bg-muted focus:border-2 focus:border-ring data-[state=open]:border-2 data-[state=open]:border-ring h-9 text-sm transition-colors"
               >
                 <SelectValue placeholder={isCategorySelected ? "All" : "Select category first"} />
               </SelectTrigger>
@@ -148,7 +148,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
             <SelectTrigger
               id="ribbon-select-mobile"
               aria-label="Filter by special ribbons"
-              className="bg-muted/60 border shadow-sm hover:bg-muted focus:ring-2 focus:ring-ring data-[state=open]:ring-2 h-9 text-sm"
+              className="bg-muted/60 border shadow-sm hover:bg-muted focus:border-2 focus:border-ring data-[state=open]:border-2 data-[state=open]:border-ring h-9 text-sm transition-colors"
             >
               <SelectValue placeholder="All" />
             </SelectTrigger>
@@ -196,7 +196,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
             <SelectTrigger
               id="category-select"
               aria-label="Filter by category"
-              className="bg-muted/60 border shadow-sm hover:bg-muted focus:ring-2 focus:ring-ring data-[state=open]:ring-2"
+              className="bg-muted/60 border shadow-sm hover:bg-muted focus:border-2 focus:border-ring data-[state=open]:border-2 data-[state=open]:border-ring transition-colors"
             >
               <SelectValue placeholder="All" />
             </SelectTrigger>
@@ -221,7 +221,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
             <SelectTrigger
               id="subcategory-select"
               aria-label="Filter by subcategory"
-              className="bg-muted/60 border shadow-sm hover:bg-muted focus:ring-2 focus:ring-ring data-[state=open]:ring-2"
+              className="bg-muted/60 border shadow-sm hover:bg-muted focus:border-2 focus:border-ring data-[state=open]:border-2 data-[state=open]:border-ring transition-colors"
             >
               <SelectValue placeholder={isCategorySelected ? "All" : "Please select a category or search prompts"} />
             </SelectTrigger>
@@ -261,7 +261,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
             <SelectTrigger
               id="ribbon-select"
               aria-label="Filter by special ribbons"
-              className="bg-muted/60 border shadow-sm hover:bg-muted focus:ring-2 focus:ring-ring data-[state=open]:ring-2"
+              className="bg-muted/60 border shadow-sm hover:bg-muted focus:border-2 focus:border-ring data-[state=open]:border-2 data-[state=open]:border-ring transition-colors"
             >
               <SelectValue placeholder="All" />
             </SelectTrigger>

@@ -25,7 +25,7 @@ export const PackFilters = ({ query, filter, onChange, onFilterChange, onSearch,
             <SelectTrigger
               id="pack-filter-select"
               aria-label="Filter power packs"
-              className="bg-muted/60 border shadow-sm hover:bg-muted focus:ring-2 focus:ring-ring data-[state=open]:ring-2 h-8 md:h-10 text-sm"
+              className="bg-muted/60 border shadow-sm hover:bg-muted focus:border-2 focus:border-ring data-[state=open]:border-2 data-[state=open]:border-ring h-8 md:h-10 text-sm transition-colors"
             >
               <SelectValue placeholder="All" />
             </SelectTrigger>
@@ -45,7 +45,7 @@ export const PackFilters = ({ query, filter, onChange, onFilterChange, onSearch,
             onChange={(e) => onChange(e.target.value)}
             placeholder="Search packs..."
             aria-label="Search power packs"
-            className="bg-muted/60 border shadow-sm focus:ring-2 focus:ring-ring h-8 md:h-10 text-sm px-3 py-1"
+            className="bg-muted/60 border shadow-sm focus:border-2 focus:border-ring h-8 md:h-10 text-sm px-3 py-1 transition-colors"
           />
         </div>
 
