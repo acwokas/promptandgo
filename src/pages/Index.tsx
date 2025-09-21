@@ -757,6 +757,23 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Main CTA Section */}
+        <section aria-labelledby="cta-main" className="relative bg-hero hero-grid py-12" id="cta">
+          <div className="container p-6 md:p-8 text-center text-primary-foreground">
+            <h2 id="cta-main" className="text-2xl md:text-3xl font-semibold tracking-tight">
+              Stop guessing what to prompt. Start with <strong>battle-tested</strong> foundations that actually work.
+            </h2>
+            <p className="mt-3 text-primary-foreground/85 text-base md:text-lg">
+              ✨ Browse thousands of proven prompts or let Scout build custom ones for your specific needs.
+            </p>
+            <div className="mt-6 flex justify-center">
+              <Button asChild variant="hero" className="px-6">
+                <Link to="/library"><Search className="h-4 w-4 mr-2" />Browse Battle-Tested Prompts</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+
         {/* Latest Articles Section - Full Width */}
         <section className="py-12 bg-gradient-to-br from-muted/30 to-background">
           <div className="container mx-auto">
@@ -880,23 +897,6 @@ const Index = () => {
             </div>
           </div>
         </section>
-
-        <section aria-labelledby="cta-tail" className="relative bg-hero hero-grid py-12" id="cta">
-          <div className="container p-6 md:p-8 text-center text-primary-foreground">
-            <h2 id="cta-tail" className="text-2xl md:text-3xl font-semibold tracking-tight">
-              Stop guessing what to prompt. Start with <strong>battle-tested</strong> foundations that actually work.
-            </h2>
-            <p className="mt-3 text-primary-foreground/85 text-base md:text-lg">
-              ✨ Browse thousands of proven prompts or let Scout build custom ones for your specific needs.
-            </p>
-            <div className="mt-6 flex justify-center">
-              <Button asChild variant="hero" className="px-6">
-                <Link to="/library"><Search className="h-4 w-4 mr-2" />Browse Battle-Tested Prompts</Link>
-              </Button>
-            </div>
-          </div>
-        </section>
-
 
         {/* Final CTA Section */}
         <section className="py-16 bg-gradient-to-r from-primary/10 to-accent/10">
