@@ -3,17 +3,13 @@ import {
   Home, 
   Library, 
   Package, 
-  PlusCircle, 
   HelpCircle,
   BookOpen,
-  Phone,
   Settings,
   User,
   Heart,
   CreditCard,
-  Shield,
   Bell,
-  Zap,
   Wand2,
   Bot,
   Palette
@@ -38,14 +34,12 @@ const mainItems = [
   { title: "Prompt Library", url: "/library", icon: Library },
   { title: "Prompt Packs", url: "/packs", icon: Package },
   { title: "Articles & Tips", url: "/tips", icon: BookOpen },
-  { title: "Submit Prompt", url: "/submit-prompt", icon: PlusCircle },
 ]
 
 const aiItems = [
   { title: "Prompt Studio", url: "/ai/studio", icon: Palette },
   { title: "AI Prompt Generator", url: "/ai/generator", icon: Wand2 },
   { title: "AI Assistant", url: "/ai/assistant", icon: Bot },
-  { title: "Scout Toolkit", url: "/scout", icon: Zap },
 ]
 
 const accountItems = [
@@ -55,13 +49,11 @@ const accountItems = [
   { title: "Purchases", url: "/account/purchases", icon: CreditCard },
   { title: "Profile Settings", url: "/account/profile", icon: User },
   { title: "Notifications", url: "/account/notifications", icon: Bell },
-  { title: "Security", url: "/account/security", icon: Shield },
 ]
 
 const supportItems = [
   { title: "How It Works", url: "/how-it-works", icon: HelpCircle },
   { title: "FAQs", url: "/faqs", icon: HelpCircle },
-  { title: "Contact", url: "/contact", icon: Phone },
 ]
 
 export function AppSidebar() {
