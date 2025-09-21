@@ -313,7 +313,7 @@ const Index = () => {
         </PageHero>
 
         {/* Social Proof + Today's Featured */}
-        <section className="container py-4 pb-2">
+        <section className="container py-8">
           <div className="relative overflow-hidden bg-gradient-to-r from-primary/10 via-accent/5 to-primary/10 rounded-2xl border border-primary/20 max-w-5xl mx-auto">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5" />
             <div className="relative px-6 py-4">
@@ -366,7 +366,7 @@ const Index = () => {
           </div>
         </section>
 
-        <section className="container py-8">
+        <section className="container py-12">
           <div className="grid gap-6 md:grid-cols-3">
             <Card className="bg-gradient-to-br from-primary/5 to-transparent">
               <CardContent className="p-6">
@@ -442,19 +442,19 @@ const Index = () => {
         {/* Scout Demo - Interactive Prompt Card */}
         <ScoutDemo />
 
-        <section className="container py-4 pb-8">
+        <section className="container -mt-4 pb-8">
           <div className="text-center">
             <p className="text-muted-foreground max-w-2xl mx-auto text-lg">See how Scout optimizes real prompts. Pick one below customize it, push it to your favorite AI platform, and experience the magic instantly.</p>
           </div>
         </section>
 
         {/* Prompts of the Day / Personalized Prompts */}
-        <section className="container">
+        <section className="container pb-12">
           <PromptsOfTheDay />
         </section>
 
         {/* Path 2: Generate from Scratch */}
-        <section className="container py-8">
+        <section className="container py-12">
           <div className="text-center mb-8">
             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
               <Wand2 className="h-4 w-4" />
@@ -494,7 +494,7 @@ const Index = () => {
         </section>
 
         {/* Key Differentiators */}
-        <section className="container py-8">
+        <section className="container py-12">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Why Scout Beats DIY Prompting</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -589,7 +589,7 @@ const Index = () => {
         </section>
 
         {/* Newsletter Section - Full Width */}
-        <section className="py-8 bg-gradient-to-br from-primary/5 to-accent/5">
+        <section className="py-12 bg-gradient-to-br from-primary/5 to-accent/5">
           <div className="container mx-auto">
             {/* Newsletter Signup - Only show if user is not logged in or not subscribed to newsletter */}
             {/* If logged in and newsletter subscribed, show matched power packs instead */}
@@ -664,7 +664,7 @@ const Index = () => {
         </section>
 
         {/* Bottom Section - FAQ, Pricing, and CTA combined */}
-        <section className="container py-8">
+        <section className="container py-12">
           <div className="grid gap-8 lg:grid-cols-3">
             {/* FAQ Column */}
             <div className="lg:col-span-2 space-y-8">
@@ -758,7 +758,7 @@ const Index = () => {
         </section>
 
         {/* Latest Articles Section - Full Width */}
-        <section className="py-8 bg-gradient-to-br from-muted/30 to-background">
+        <section className="py-12 bg-gradient-to-br from-muted/30 to-background">
           <div className="container mx-auto">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold mb-4">
@@ -881,7 +881,7 @@ const Index = () => {
           </div>
         </section>
 
-        <section aria-labelledby="cta-tail" className="relative bg-hero hero-grid mt-8" id="cta">
+        <section aria-labelledby="cta-tail" className="relative bg-hero hero-grid py-12" id="cta">
           <div className="container p-6 md:p-8 text-center text-primary-foreground">
             <h2 id="cta-tail" className="text-2xl md:text-3xl font-semibold tracking-tight">
               Stop guessing what to prompt. Start with <strong>battle-tested</strong> foundations that actually work.
