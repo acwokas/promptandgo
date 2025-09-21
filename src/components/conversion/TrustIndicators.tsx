@@ -96,12 +96,12 @@ export const TestimonialHighlights = () => (
 export const AsSeenIn = () => (
   <div className="text-center py-8">
     <p className="text-sm text-muted-foreground mb-4">Trusted by teams at</p>
-    <div className="flex items-center justify-center gap-8 grayscale opacity-60">
-      <div className="font-bold text-lg">Microsoft</div>
-      <div className="font-bold text-lg">Google</div>
-      <div className="font-bold text-lg">Amazon</div>
-      <div className="font-bold text-lg">Spotify</div>
-      <div className="font-bold text-lg">Slack</div>
+    <div className="flex items-center justify-center gap-2 sm:gap-4 md:gap-8 grayscale opacity-60 flex-wrap">
+      <div className="font-bold text-sm sm:text-base md:text-lg">Microsoft</div>
+      <div className="font-bold text-sm sm:text-base md:text-lg">Google</div>
+      <div className="font-bold text-sm sm:text-base md:text-lg">Amazon</div>
+      <div className="font-bold text-sm sm:text-base md:text-lg">Spotify</div>
+      <div className="font-bold text-sm sm:text-base md:text-lg">Slack</div>
     </div>
     <p className="text-xs text-muted-foreground mt-2">
       *Individual employees, not official company endorsements
