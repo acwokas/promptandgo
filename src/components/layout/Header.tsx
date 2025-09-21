@@ -91,7 +91,7 @@ const Header = () => {
             to="/packs" 
             className="text-sm font-medium text-foreground hover:text-primary transition-colors"
           >
-            Premium Packs
+            Power Packs
           </Link>
         </nav>
         

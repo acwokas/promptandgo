@@ -202,7 +202,7 @@ const ContentPreview = () => {
             </Link>
           </Button>
           <Button asChild size="lg" variant="outline">
-            <Link to="/packs">View Premium Packs</Link>
+            <Link to="/packs">View Power Packs</Link>
           </Button>
         </div>
       </div>

@@ -749,7 +749,7 @@ const Index = () => {
                     <Link to="/library">Browse Prompt Library</Link>
                   </Button>
                   <Button asChild variant="outline" size="sm" className="w-full">
-                    <Link to="/packs">View Premium Packs</Link>
+                    <Link to="/packs">View Power Packs</Link>
                   </Button>
                 </div>
               </div>
@@ -915,7 +915,7 @@ const Index = () => {
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <Link to="/packs">View Premium Packs</Link>
+                <Link to="/packs">View Power Packs</Link>
               </Button>
             </div>
             <p className="text-sm text-muted-foreground">

@@ -54,7 +54,7 @@ const CountdownTimer = ({
   }, []);
 
   // Use database settings or props as fallback
-  const offer = settings?.offer_text || propOffer || "50% OFF All Premium Packs";
+  const offer = settings?.offer_text || propOffer || "50% OFF All Power Packs";
   const expiryHours = settings?.expiry_hours || propExpiryHours || 24;
 
   useEffect(() => {
