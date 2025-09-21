@@ -514,7 +514,18 @@ const PromptLibrary = () => {
 
   // Set ribbon to "RECOMMENDED" when personalized prompts are available and no explicit ribbon is set
   useEffect(() => {
+    console.log("Personalization effect running:", { 
+      hasRibbonParam: !!searchParams.get('ribbon'), 
+      hasPersonalization, 
+      personalizedCount: personalizedPrompts.length, 
+      currentRibbon: ribbon, 
+      categoryId, 
+      subcategoryId, 
+      query, 
+      userExplicitlySelectedAll 
+    });
     if (!searchParams.get('ribbon') && hasPersonalization && personalizedPrompts.length > 0 && !ribbon && !categoryId && !subcategoryId && !query && !userExplicitlySelectedAll) {
+      console.log("Setting ribbon to RECOMMENDED");
       setRibbon("RECOMMENDED");
     }
   }, [hasPersonalization, personalizedPrompts, ribbon, categoryId, subcategoryId, query, searchParams, userExplicitlySelectedAll]);
@@ -745,23 +756,25 @@ const PromptLibrary = () => {
               </div>
               
               <div className="mt-3 text-center">
-                <Button 
-                  variant="ghost" 
-                  size="sm"
-                   onClick={() => {
-                     clearRandom();
-                     setCategoryId(undefined);
-                     setSubcategoryId(undefined);
-                     setQuery("");
-                     setSelectedTag(undefined);
-                     setProOnly(false);
-                     setIncludePro(true);
-                     setPage(1);
-                     setRibbon(undefined);
-                     setUserExplicitlySelectedAll(true);
-                     const newSearchParams = new URLSearchParams();
-                     setSearchParams(newSearchParams, { replace: true });
-                   }}
+                 <Button 
+                   variant="ghost" 
+                   size="sm"
+                    onClick={() => {
+                      console.log("View All Categories clicked");
+                      clearRandom();
+                      setCategoryId(undefined);
+                      setSubcategoryId(undefined);
+                      setQuery("");
+                      setSelectedTag(undefined);
+                      setProOnly(false);
+                      setIncludePro(true);
+                      setPage(1);
+                      setRibbon(undefined);
+                      setUserExplicitlySelectedAll(true);
+                      const newSearchParams = new URLSearchParams();
+                      setSearchParams(newSearchParams, { replace: true });
+                      console.log("All filters cleared, userExplicitlySelectedAll set to true");
+                    }}
                 >
                   View All Categories →
                 </Button>
