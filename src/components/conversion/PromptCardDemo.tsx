@@ -84,8 +84,8 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
   };
 
   return (
-    <div className={className}>
-      <Card className="border-2 border-primary/20 shadow-lg hover:shadow-xl transition-shadow">
+    <div className={`${className} max-w-full`}>
+      <Card className="border-2 border-primary/20 shadow-lg hover:shadow-xl transition-shadow max-w-full overflow-hidden">
         <CardHeader className="pb-4">
           <div className="flex items-start justify-between mb-3">
             <Badge className="bg-green-100 text-green-700 hover:bg-green-100">
@@ -146,7 +146,7 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
                 </DropdownMenuTrigger>
                 
                 <DropdownMenuContent 
-                  className="w-full min-w-[320px] bg-background border-2 shadow-lg z-50"
+                  className="w-[calc(100vw-2rem)] max-w-[320px] bg-background border-2 shadow-lg z-50"
                   align="start"
                 >
                   {platformOptions.map((option) => (
