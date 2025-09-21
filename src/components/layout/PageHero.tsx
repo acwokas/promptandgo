@@ -12,7 +12,7 @@ interface PageHeroProps {
 const PageHero = ({ title, subtitle, children, minHeightClass = "min-h-[25svh]", variant = "prompt" }: PageHeroProps) => {
   const bgClass = variant === "admin" ? "bg-hero-admin" : variant === "prompt" ? "bg-hero-prompt" : "bg-hero";
   return (
-    <section className={`relative ${bgClass} hero-grid`}>
+    <section className={`relative ${bgClass} hero-grid overflow-hidden`}>
       {/* Decorative shapes for Prompt Library and Admin */}
       {(variant === "prompt" || variant === "admin") && (
         <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -56,12 +56,12 @@ const PageHero = ({ title, subtitle, children, minHeightClass = "min-h-[25svh]",
           }`} />
         </div>
       )}
-      <div className={`relative z-10 container ${minHeightClass} flex flex-col items-center justify-center text-center py-12 text-primary-foreground`}>
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight max-w-5xl leading-tight">
+      <div className={`relative z-10 container ${minHeightClass} flex flex-col items-center justify-center text-center py-12 text-primary-foreground px-4`}>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight max-w-5xl leading-tight break-words hyphens-auto">
           {title}
         </h1>
         {subtitle && (
-          <p className="text-base md:text-lg text-primary-foreground/85 mt-4 max-w-3xl">
+          <p className="text-sm sm:text-base md:text-lg text-primary-foreground/85 mt-4 max-w-3xl break-words">
             {subtitle}
           </p>
         )}
