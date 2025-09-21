@@ -394,7 +394,7 @@ const PromptPacks = () => {
                         <Badge className="border-transparent bg-[hsl(var(--accent-3))] text-primary-foreground hover:bg-[hsl(var(--accent-3))]/90">⭐ POPULAR</Badge>
                       )}
                       {Math.random() > 0.7 && (
-                        <Badge className="border-transparent bg-gradient-to-r from-primary to-accent text-primary-foreground animate-pulse">⏰ LIMITED TIME</Badge>
+                        <Badge className="border-transparent bg-primary text-primary-foreground animate-pulse">⏰ LIMITED TIME</Badge>
                       )}
                     </div>
                     <CardTitle className="text-xl leading-tight">{p.name}</CardTitle>
