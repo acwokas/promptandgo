@@ -357,8 +357,8 @@ const Index = () => {
                   
                   <Link to="/studio" className="text-center p-3 bg-background/70 rounded-lg border border-border/50 flex flex-col items-center justify-center min-h-[80px] hover:bg-background/90 hover:border-border transition-all duration-200 cursor-pointer">
                     <Rocket className="h-4 w-4 text-foreground mx-auto mb-1 transition-colors duration-200 hover:text-primary" />
-                    <div className="font-bold text-lg text-foreground">400+</div>
-                    <div className="text-xs text-muted-foreground">Customisations</div>
+                    <div className="font-bold text-lg text-foreground">600+</div>
+                    <div className="text-xs text-muted-foreground">AI-Assists</div>
                   </Link>
                 </div>
               </div>
