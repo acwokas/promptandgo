@@ -360,12 +360,9 @@ const Index = () => {
                   </div>
                   
                   <div className="text-center p-2 bg-background/70 rounded-lg border border-border/50">
-                    <div className="flex items-center justify-center gap-1 mb-1">
-                      <Rocket className="h-3 w-3 text-accent" />
-                      <div className="w-1.5 h-1.5 bg-accent rounded-full" />
-                    </div>
-                    <div className="font-bold text-sm text-accent">50+</div>
-                    <div className="text-xs text-muted-foreground">Hrs/Day</div>
+                    <Rocket className="h-4 w-4 text-foreground mx-auto mb-1" />
+                    <div className="font-bold text-lg text-foreground">50+</div>
+                    <div className="text-xs text-muted-foreground">Optimised Prompts</div>
                   </div>
                 </div>
               </div>
