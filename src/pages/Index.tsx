@@ -406,12 +406,6 @@ const Index = () => {
             </Card>
           </div>
         </section>
-          
-          {/* Trust indicators */}
-          <div className="mt-8">
-            <AsSeenIn />
-          </div>
-
 
         {/* Scout Demo - Interactive Prompt Card */}
         <ScoutDemo />
@@ -846,6 +840,11 @@ const Index = () => {
               <Button asChild variant="outline">
                 <Link to="/tips">Read All Articles →</Link>
               </Button>
+            </div>
+            
+            {/* Trust indicators */}
+            <div className="mt-8">
+              <AsSeenIn />
             </div>
           </div>
         </section>
