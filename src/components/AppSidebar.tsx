@@ -37,14 +37,14 @@ const mainItems = [
   { title: "Home", url: "/", icon: Home },
   { title: "Prompt Library", url: "/library", icon: Library },
   { title: "Prompt Packs", url: "/packs", icon: Package },
+  { title: "Articles & Tips", url: "/tips", icon: BookOpen },
   { title: "Submit Prompt", url: "/submit-prompt", icon: PlusCircle },
-  { title: "Blog & Tips", url: "/tips", icon: BookOpen },
 ]
 
 const aiItems = [
+  { title: "Prompt Studio", url: "/ai/studio", icon: Palette },
   { title: "AI Prompt Generator", url: "/ai/generator", icon: Wand2 },
   { title: "AI Assistant", url: "/ai/assistant", icon: Bot },
-  { title: "Prompt Studio", url: "/ai/studio", icon: Palette },
   { title: "Scout Toolkit", url: "/scout", icon: Zap },
 ]
 
