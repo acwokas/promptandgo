@@ -847,12 +847,12 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
           {category && (
             <button
               type="button"
-              className="hover:underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-ring rounded-sm"
+              className="text-blue-500 hover:text-blue-600 hover:underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-ring rounded-sm"
               onClick={() => onCategoryClick?.(category.id)}
               aria-label={`Filter by category ${category.name}`}
               title={`Filter by ${category.name}`}
             >
-              <span className={cn("inline-flex items-center gap-1.5", accentClass)}>
+              <span className="inline-flex items-center gap-1.5">
                 {getCategoryIcon(category.name)}
                 <span>{category.name}</span>
               </span>
@@ -862,18 +862,18 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
           {sub && (
             <button
               type="button"
-              className="hover:underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-ring rounded-sm"
+              className="text-blue-500 hover:text-blue-600 hover:underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-ring rounded-sm"
               onClick={() => onSubcategoryClick?.(sub.id, category?.id as string)}
               aria-label={`Filter by subcategory ${sub.name}`}
               title={`Filter by ${sub.name}`}
             >
-              <span className={cn("inline-flex items-center gap-1.5", accentClass)}>
+              <span className="inline-flex items-center gap-1.5">
                 <span>{sub.name}</span>
               </span>
             </button>
           )}
         </div>
-        <CardTitle className="text-xl leading-tight">{displayTitle}</CardTitle>
+        <CardTitle className="text-xl leading-tight text-foreground">{displayTitle}</CardTitle>
         
          <p className="text-sm text-muted-foreground">{prompt.whatFor}</p>
          
