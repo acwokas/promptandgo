@@ -676,7 +676,7 @@ const PromptLibrary = () => {
           <div className="grid gap-6 lg:grid-cols-3">
             {/* Browse by Category - Compact */}
             <div className="lg:col-span-2">
-              <h2 className="text-xl font-semibold mb-3">Browse by Category</h2>
+              <h2 className="text-xl font-semibold mb-3">Popular Categories</h2>
               <div className="grid gap-3 grid-cols-2 md:grid-cols-4">
                 <Card 
                   className="group hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 cursor-pointer bg-gradient-to-br from-blue-50 to-transparent border-blue-200 dark:from-blue-950 dark:border-blue-800"
@@ -753,31 +753,6 @@ const PromptLibrary = () => {
                     <p className="text-xs text-muted-foreground">290+</p>
                   </CardContent>
                 </Card>
-              </div>
-              
-              <div className="mt-3 text-center">
-                 <Button 
-                   variant="ghost" 
-                   size="sm"
-                    onClick={() => {
-                      console.log("View All Categories clicked");
-                      clearRandom();
-                      setCategoryId(undefined);
-                      setSubcategoryId(undefined);
-                      setQuery("");
-                      setSelectedTag(undefined);
-                      setProOnly(false);
-                      setIncludePro(true);
-                      setPage(1);
-                      setRibbon(undefined);
-                      setUserExplicitlySelectedAll(true);
-                      const newSearchParams = new URLSearchParams();
-                      setSearchParams(newSearchParams, { replace: true });
-                      console.log("All filters cleared, userExplicitlySelectedAll set to true");
-                    }}
-                >
-                  View All Categories →
-                </Button>
               </div>
             </div>
 
