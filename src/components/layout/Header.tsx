@@ -55,8 +55,8 @@ const Header = () => {
   return (
     <header className="w-full bg-background border-b border-border sticky top-0 z-50 overflow-hidden">
       <div className="w-full max-w-7xl mx-auto px-4 flex items-center justify-between min-h-14 box-border overflow-hidden">
-        {/* Hamburger Menu - Desktop Only */}
-        <div className="hidden md:flex flex-shrink-0">
+        {/* Hamburger Menu - All Devices */}
+        <div className="flex flex-shrink-0">
           <SafeSidebarTrigger />
         </div>
         
