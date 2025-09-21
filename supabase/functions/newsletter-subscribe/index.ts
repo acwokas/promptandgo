@@ -174,10 +174,7 @@ serve(async (req: Request) => {
       });
     }
 
-    // Simple direct insert/update to subscribers table (for newsletter signups only)
-    // This bypasses the encrypted storage complexity for simple newsletter subscriptions
-    
-    // First check if user already exists by email hash
+    // Use secure subscriber upsert function for proper encryption
     console.log('Checking for existing subscriber by email hash...');
     const { data: existingUser, error: selectError } = await supabase
       .from('subscribers')
@@ -195,11 +192,13 @@ serve(async (req: Request) => {
 
     let existed = false;
     let had_user_id = false;
+    
     if (existingUser) {
       existed = true;
       had_user_id = !!existingUser.user_id;
       console.log('Found existing subscriber, updating...');
-      // Update existing subscriber
+      
+      // Update existing subscriber if needed
       const { error: updateError } = await supabase
         .from('subscribers')
         .update({
@@ -218,20 +217,23 @@ serve(async (req: Request) => {
       }
     } else {
       console.log('No existing subscriber found, creating new one...');
-      // Insert new subscriber with email hash
-      const { error: insertError } = await supabase
-        .from('subscribers')
-        .insert({
-          user_id: authenticatedUserId || null,
-          email: null, // Use NULL to satisfy unique(email) and pass CHECK
-          subscribed: true,
-          email_hash: emailHash,
-          updated_at: new Date().toISOString()
-        });
+      
+      // Use secure upsert function with encryption key
+      const encryptionKey = Deno.env.get("ENCRYPTION_KEY") || "default_newsletter_key_2024";
+      
+      const { error: upsertError } = await supabase.rpc('secure_upsert_subscriber', {
+        p_user_id: authenticatedUserId,
+        p_email: lowerEmail,
+        p_subscribed: true,
+        p_subscription_tier: null,
+        p_subscription_end: null,
+        p_stripe_customer_id: null,
+        p_key: encryptionKey
+      });
 
-      if (insertError) {
-        console.error('Insert error:', insertError);
-        return new Response(JSON.stringify({ error: insertError.message }), {
+      if (upsertError) {
+        console.error('Upsert error:', upsertError);
+        return new Response(JSON.stringify({ error: upsertError.message }), {
           status: 500,
           headers: { "Content-Type": "application/json", ...corsHeaders },
         });
