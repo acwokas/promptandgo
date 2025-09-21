@@ -38,23 +38,6 @@ const ScoutDemo = () => {
                 </Link>
               </Button>
             </div>
-            
-            <div className="pt-4">
-              <div className="flex items-center gap-6 text-sm text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span>500+ proven prompts</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                  <span>Instant optimization</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-                  <span>All platforms</span>
-                </div>
-              </div>
-            </div>
           </div>
           
           {/* Right side - Demo Card (More space) */}
