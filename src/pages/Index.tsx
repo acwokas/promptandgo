@@ -332,8 +332,10 @@ const Index = () => {
                       <span className="inline-flex items-center gap-1.5 bg-primary/10 px-2 py-0.5 rounded-full text-xs font-medium">
                         🔥 3x usage today
                       </span>
-                      <Button variant="ghost" size="sm" className="h-6 px-2 text-xs text-primary hover:text-primary">
-                        Explore <ArrowRight className="ml-1 h-3 w-3" />
+                      <Button asChild variant="ghost" size="sm" className="h-6 px-2 text-xs text-primary hover:text-primary">
+                        <Link to="/library?category=Personal%20Growth%20%26%20Mindfulness">
+                          Explore <ArrowRight className="ml-1 h-3 w-3" />
+                        </Link>
                       </Button>
                     </p>
                   </div>
