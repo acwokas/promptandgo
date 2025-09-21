@@ -101,7 +101,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   const displayTitle = cleanTitle(prompt.title);
   const seed = category?.id || (prompt as any).categoryId || category?.name || displayTitle;
   const accentIndex = categoryAccentIndex(String(seed));
-  const accentClass = `category-accent-${accentIndex}`;
+  const accentClass = `accent-${accentIndex}`;
   const navigate = useNavigate();
 
   // Auth and user state
