@@ -341,25 +341,19 @@ const Index = () => {
 
                 {/* Right - Live Stats */}
                 <div className="grid grid-cols-3 gap-3">
-                  <div className="text-center p-2 bg-background/70 rounded-lg border border-border/50">
-                    <div className="flex items-center justify-center gap-1 mb-1">
-                      <Users className="h-3 w-3 text-green-500" />
-                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-                    </div>
-                    <div className="font-bold text-sm text-green-600">5,000+</div>
+                  <div className="text-center p-3 bg-background/70 rounded-lg border border-border/50 flex flex-col items-center justify-center min-h-[80px]">
+                    <Users className="h-4 w-4 text-foreground mx-auto mb-1" />
+                    <div className="font-bold text-lg text-foreground">5,000+</div>
                     <div className="text-xs text-muted-foreground">Active</div>
                   </div>
                   
-                  <div className="text-center p-2 bg-background/70 rounded-lg border border-border/50">
-                    <div className="flex items-center justify-center gap-1 mb-1">
-                      <Sparkles className="h-3 w-3 text-primary" />
-                      <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                    </div>
-                    <div className="font-bold text-sm text-primary">100K+</div>
+                  <div className="text-center p-3 bg-background/70 rounded-lg border border-border/50 flex flex-col items-center justify-center min-h-[80px]">
+                    <Sparkles className="h-4 w-4 text-foreground mx-auto mb-1" />
+                    <div className="font-bold text-lg text-foreground">100K+</div>
                     <div className="text-xs text-muted-foreground">Prompts</div>
                   </div>
                   
-                  <div className="text-center p-2 bg-background/70 rounded-lg border border-border/50">
+                  <div className="text-center p-3 bg-background/70 rounded-lg border border-border/50 flex flex-col items-center justify-center min-h-[80px]">
                     <Rocket className="h-4 w-4 text-foreground mx-auto mb-1" />
                     <div className="font-bold text-lg text-foreground">50+</div>
                     <div className="text-xs text-muted-foreground">Optimised Prompts</div>
