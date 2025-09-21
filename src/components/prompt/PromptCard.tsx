@@ -889,23 +889,23 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               {displayPrompt}
             </pre>
             {showLock && (
-              <div className="absolute inset-0 rounded-md glass-overlay flex flex-col items-center justify-center min-h-full p-4">
-                <div className="text-center space-y-4 w-full max-w-xs">
-                  <div className="inline-flex items-center gap-2 text-sm font-medium px-3 py-1 rounded-full bg-background/40 border border-brand/30">
+              <div className="absolute inset-0 rounded-md bg-blue-50/90 border border-blue-200/50 flex flex-col items-center justify-center min-h-full p-6">
+                <div className="text-center space-y-4 w-full max-w-sm">
+                  <div className="inline-flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-full bg-white border border-gray-200 text-foreground">
                     <Lock className="h-4 w-4" aria-hidden />
                     <span>Unlock premium prompt</span>
                   </div>
-                  <div className="text-xs text-muted-foreground space-y-2">
-                    <div>
-                      One‑time <span className="line-through">{fmtUSD(PROMPT_ORIGINAL_CENTS)}</span> <span className="text-primary font-medium">{fmtUSD(PROMPT_DISCOUNT_CENTS)}</span>
+                  <div className="text-sm space-y-1">
+                    <div className="text-muted-foreground">
+                      One‑time <span className="line-through">{fmtUSD(PROMPT_ORIGINAL_CENTS)}</span> <span className="text-blue-600 font-medium">{fmtUSD(PROMPT_DISCOUNT_CENTS)}</span>
                     </div>
-                    <div>
-                      Or subscribe <span className="line-through">{fmtUSD(SUB_ORIGINAL_CENTS)}</span> <span className="text-primary font-medium">{fmtUSD(SUB_DISCOUNT_CENTS)}</span> / month
+                    <div className="text-muted-foreground">
+                      Or subscribe <span className="line-through">{fmtUSD(SUB_ORIGINAL_CENTS)}</span> <span className="text-blue-600 font-medium">{fmtUSD(SUB_DISCOUNT_CENTS)}</span> / month
                     </div>
                   </div>
-                  <div className="flex flex-col gap-3 w-full">
-                    <Button size="sm" variant="hero" className="w-full text-xs py-2" onClick={addPromptToCart}>Buy Prompt {fmtUSD(PROMPT_DISCOUNT_CENTS)}</Button>
-                    <Button size="sm" variant="secondary" className="w-full btn-subtle-stroke text-xs py-2" onClick={handleSubscribeClick}>Subscribe for {fmtUSD(SUB_DISCOUNT_CENTS)}/mo</Button>
+                  <div className="flex flex-col gap-2 w-full">
+                    <Button size="default" className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3" onClick={addPromptToCart}>Buy Prompt {fmtUSD(PROMPT_DISCOUNT_CENTS)}</Button>
+                    <Button size="default" variant="outline" className="w-full py-3 border-gray-300 text-foreground hover:bg-gray-50" onClick={handleSubscribeClick}>Subscribe for {fmtUSD(SUB_DISCOUNT_CENTS)}/mo</Button>
                   </div>
                 </div>
               </div>
