@@ -627,7 +627,7 @@ const Index = () => {
                       </div>
                     ) : !newsletterSuccess ? (
                       <div className="max-w-md mx-auto">
-                        <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
+                        <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-2">
                           <input 
                             type="email" 
                             value={newsletterEmail} 
@@ -636,7 +636,7 @@ const Index = () => {
                             className="flex-1 px-4 py-2 rounded-md border border-input bg-background focus:outline-none focus:border-2 focus:border-ring transition-colors" 
                             disabled={newsletterSubmitting} 
                           />
-                          <Button type="submit" variant="hero" disabled={newsletterSubmitting}>
+                          <Button type="submit" variant="hero" disabled={newsletterSubmitting} className="w-full sm:w-auto">
                             {newsletterSubmitting ? "..." : "Subscribe"}
                           </Button>
                         </form>
@@ -889,11 +889,6 @@ const Index = () => {
               <Button asChild variant="outline">
                 <Link to="/tips">Read All Articles →</Link>
               </Button>
-            </div>
-            
-            {/* Trust indicators */}
-            <div className="mt-8">
-              <AsSeenIn />
             </div>
           </div>
         </section>
