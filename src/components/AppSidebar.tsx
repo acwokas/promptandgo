@@ -104,7 +104,7 @@ export function AppSidebar() {
                       className={({ isActive: linkActive }) => getNavCls({ isActive: linkActive })}
                     >
                       <item.icon className="h-4 w-4" />
-                      {!isCollapsed && <span>{item.title}</span>}
+                      {!isCollapsed && <span className="text-sm">{item.title}</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -126,7 +126,7 @@ export function AppSidebar() {
                       className={({ isActive: linkActive }) => getNavCls({ isActive: linkActive })}
                     >
                       <item.icon className="h-4 w-4" />
-                      {!isCollapsed && <span>{item.title}</span>}
+                      {!isCollapsed && <span className="text-sm">{item.title}</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -148,7 +148,7 @@ export function AppSidebar() {
                       className={({ isActive: linkActive }) => getNavCls({ isActive: linkActive })}
                     >
                       <item.icon className="h-4 w-4" />
-                      {!isCollapsed && <span>{item.title}</span>}
+                      {!isCollapsed && <span className="text-sm">{item.title}</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -170,7 +170,7 @@ export function AppSidebar() {
                       className={({ isActive: linkActive }) => getNavCls({ isActive: linkActive })}
                     >
                       <item.icon className="h-4 w-4" />
-                      {!isCollapsed && <span>{item.title}</span>}
+                      {!isCollapsed && <span className="text-sm">{item.title}</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
