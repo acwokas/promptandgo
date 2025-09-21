@@ -545,7 +545,7 @@ const Index = () => {
           </div>
 
           {/* Platform Examples */}
-          <div className="bg-gradient-to-br from-primary/5 to-transparent rounded-2xl p-8">
+          <div className="bg-gradient-to-br from-primary/5 to-transparent rounded-2xl p-8 hidden md:block">
             <h3 className="text-xl font-semibold text-center mb-6">Optimized for Every Major AI Platform</h3>
             <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-6">
               <div className="text-center">
