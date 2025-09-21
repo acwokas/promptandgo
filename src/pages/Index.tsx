@@ -313,73 +313,63 @@ const Index = () => {
         </PageHero>
 
         {/* Social Proof + Today's Featured */}
-        <section className="container py-8">
-          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {/* Left Column - Today's Featured */}
-            <Card className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-primary/5 to-accent/10 border-primary/20 hover:border-primary/30 transition-all duration-300">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent" />
-              <CardContent className="relative p-6">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
-                    <Zap className="h-4 w-4 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">Today's Featured Category</h3>
-                    <div className="flex items-center gap-2 mt-0.5">
-                      <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                      <span className="text-xs text-muted-foreground">3x more usage today</span>
+        <section className="container py-4">
+          <div className="relative overflow-hidden bg-gradient-to-r from-primary/10 via-accent/5 to-primary/10 rounded-2xl border border-primary/20 max-w-5xl mx-auto">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5" />
+            <div className="relative px-6 py-4">
+              <div className="grid md:grid-cols-2 gap-6 items-center">
+                {/* Left - Featured Category */}
+                <div className="flex items-center gap-4">
+                  <div className="relative">
+                    <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center">
+                      <Zap className="h-6 w-6 text-white" />
                     </div>
+                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full animate-pulse border-2 border-background" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-bold text-lg">Personal Growth & Mindfulness</h3>
+                    <p className="text-sm text-muted-foreground flex items-center gap-2">
+                      <span className="inline-flex items-center gap-1.5 bg-primary/10 px-2 py-0.5 rounded-full text-xs font-medium">
+                        🔥 3x usage today
+                      </span>
+                      <Button variant="ghost" size="sm" className="h-6 px-2 text-xs text-primary hover:text-primary">
+                        Explore <ArrowRight className="ml-1 h-3 w-3" />
+                      </Button>
+                    </p>
                   </div>
                 </div>
-                <p className="text-sm text-muted-foreground">
-                  <span className="font-semibold text-foreground bg-primary/10 px-2 py-1 rounded-md">
-                    Personal Growth & Mindfulness
-                  </span> prompts are trending today.
-                </p>
-                <Button variant="ghost" size="sm" className="mt-3 text-primary hover:text-primary hover:bg-primary/10">
-                  Explore Category <ArrowRight className="ml-2 h-3 w-3" />
-                </Button>
-              </CardContent>
-            </Card>
 
-            {/* Right Column - Social Proof Stats */}
-            <Card className="relative overflow-hidden bg-gradient-to-br from-accent/10 via-accent/5 to-primary/10 border-accent/20">
-              <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent" />
-              <CardContent className="relative p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-8 h-8 bg-accent/20 rounded-full flex items-center justify-center">
-                    <Users className="h-4 w-4 text-accent" />
-                  </div>
-                  <h3 className="font-semibold">Live Impact</h3>
-                </div>
-                
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-2.5 bg-background/70 rounded-lg border border-border/50">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse" />
-                      <span className="font-medium text-foreground text-sm">Active Professionals</span>
+                {/* Right - Live Stats */}
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="text-center p-2 bg-background/70 rounded-lg border border-border/50">
+                    <div className="flex items-center justify-center gap-1 mb-1">
+                      <Users className="h-3 w-3 text-green-500" />
+                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
                     </div>
-                    <span className="font-bold text-green-600">5,000+</span>
+                    <div className="font-bold text-sm text-green-600">5,000+</div>
+                    <div className="text-xs text-muted-foreground">Active</div>
                   </div>
                   
-                  <div className="flex items-center justify-between p-2.5 bg-background/70 rounded-lg border border-border/50">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2.5 h-2.5 bg-primary rounded-full" />
-                      <span className="font-medium text-foreground text-sm">Prompts Optimized</span>
+                  <div className="text-center p-2 bg-background/70 rounded-lg border border-border/50">
+                    <div className="flex items-center justify-center gap-1 mb-1">
+                      <Sparkles className="h-3 w-3 text-primary" />
+                      <div className="w-1.5 h-1.5 bg-primary rounded-full" />
                     </div>
-                    <span className="font-bold text-primary">100K+</span>
+                    <div className="font-bold text-sm text-primary">100K+</div>
+                    <div className="text-xs text-muted-foreground">Prompts</div>
                   </div>
                   
-                  <div className="flex items-center justify-between p-2.5 bg-background/90 rounded-lg border border-accent/30">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2.5 h-2.5 bg-accent rounded-full" />
-                      <span className="font-medium text-foreground text-sm">Hours Saved Daily</span>
+                  <div className="text-center p-2 bg-background/90 rounded-lg border border-accent/30">
+                    <div className="flex items-center justify-center gap-1 mb-1">
+                      <Rocket className="h-3 w-3 text-accent" />
+                      <div className="w-1.5 h-1.5 bg-accent rounded-full" />
                     </div>
-                    <span className="font-bold text-accent">50+</span>
+                    <div className="font-bold text-sm text-accent">50+</div>
+                    <div className="text-xs text-muted-foreground">Hrs/Day</div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         </section>
 
