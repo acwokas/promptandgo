@@ -341,23 +341,23 @@ const Index = () => {
 
                 {/* Right - Live Stats */}
                 <div className="grid grid-cols-3 gap-3">
-                  <div className="text-center p-3 bg-background/70 rounded-lg border border-border/50 flex flex-col items-center justify-center min-h-[80px]">
+                  <Link to="/auth" className="text-center p-3 bg-background/70 rounded-lg border border-border/50 flex flex-col items-center justify-center min-h-[80px] hover:bg-background/90 transition-colors">
                     <Users className="h-4 w-4 text-foreground mx-auto mb-1" />
                     <div className="font-bold text-lg text-foreground">5,000+</div>
                     <div className="text-xs text-muted-foreground">Active</div>
-                  </div>
+                  </Link>
                   
-                  <div className="text-center p-3 bg-background/70 rounded-lg border border-border/50 flex flex-col items-center justify-center min-h-[80px]">
+                  <Link to="/library" className="text-center p-3 bg-background/70 rounded-lg border border-border/50 flex flex-col items-center justify-center min-h-[80px] hover:bg-background/90 transition-colors">
                     <Sparkles className="h-4 w-4 text-foreground mx-auto mb-1" />
                     <div className="font-bold text-lg text-foreground">100K+</div>
                     <div className="text-xs text-muted-foreground">Prompts</div>
-                  </div>
+                  </Link>
                   
-                  <div className="text-center p-3 bg-background/70 rounded-lg border border-border/50 flex flex-col items-center justify-center min-h-[80px]">
+                  <Link to="/studio" className="text-center p-3 bg-background/70 rounded-lg border border-border/50 flex flex-col items-center justify-center min-h-[80px] hover:bg-background/90 transition-colors">
                     <Rocket className="h-4 w-4 text-foreground mx-auto mb-1" />
-                    <div className="font-bold text-lg text-foreground">50+</div>
-                    <div className="text-xs text-muted-foreground">Optimised Prompts</div>
-                  </div>
+                    <div className="font-bold text-lg text-foreground">500+</div>
+                    <div className="text-xs text-muted-foreground">Customised Prompts</div>
+                  </Link>
                 </div>
               </div>
             </div>
