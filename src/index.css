@@ -141,7 +141,7 @@ All colors MUST be HSL. */
   border: 1px solid var(--dropdown-border, hsl(var(--border)));
   color: var(--dropdown-foreground, hsl(var(--popover-foreground)));
   z-index: 50;
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  box-shadow: 0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1);
 }
 
 /* Animation for carousels and tickers */
@@ -274,14 +274,14 @@ html {
 }
 
 .shimmer {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, hsl(0 0% 94%) 25%, hsl(0 0% 88%) 50%, hsl(0 0% 94%) 75%);
   background-size: 200px 100%;
   animation: shimmer 1.5s infinite;
 }
 
 /* Dark mode specific improvements */
 .dark .shimmer {
-  background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+  background: linear-gradient(90deg, hsl(215 25% 27%) 25%, hsl(215 16% 33%) 50%, hsl(215 25% 27%) 75%);
   background-size: 200px 100%;
 }
 

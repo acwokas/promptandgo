@@ -279,7 +279,7 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
                       isSelected ? 'ring-2 ring-primary/50' : 'hover:border-primary/40 hover:bg-primary/5'
                     }`}
                     style={showResults ? {
-                      background: `linear-gradient(to right, rgb(37, 99, 235) ${option.percentage}%, rgb(75, 85, 99) ${option.percentage}%)`
+                      background: `linear-gradient(to right, hsl(220 91% 54%) ${option.percentage}%, hsl(215 16% 47%) ${option.percentage}%)`
                     } : {}}
                     onClick={() => handleVote(option.id)}
                     disabled={showResults || userVote !== null}

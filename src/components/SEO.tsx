@@ -64,7 +64,7 @@ const SEO = ({
       <meta name="author" content="promptandgo.ai" />
       <meta name="publisher" content="promptandgo.ai" />
       <meta name="application-name" content={SITE_NAME} />
-      <meta name="theme-color" content="#3b82f6" />
+      <meta name="theme-color" content="hsl(220, 90%, 55%)" />
       
       {/* Open Graph */}
       <meta property="og:site_name" content={SITE_NAME} />
