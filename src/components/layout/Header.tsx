@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { User, ShoppingCart, Sparkles, Menu } from "lucide-react";
+import { User, ShoppingCart, Sparkles } from "lucide-react";
 import { SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
@@ -8,7 +8,6 @@ import { useToast } from "@/components/ui/use-toast";
 import { useEnsureProfile } from "@/hooks/useEnsureProfile";
 import { useEffect, useState } from "react";
 import { getCartCount, clearCartOnLogout } from "@/lib/cart";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 // Component to safely render SidebarTrigger only when context is available
 const SafeSidebarTrigger = () => {
@@ -19,55 +18,6 @@ const SafeSidebarTrigger = () => {
     // If no SidebarProvider context, don't render anything
     return null;
   }
-};
-
-// Simple mobile menu as fallback
-const MobileMobileMenu = () => {
-  const [open, setOpen] = useState(false);
-  
-  return (
-    <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="md:hidden">
-          <Menu className="h-5 w-5" />
-        </Button>
-      </SheetTrigger>
-      <SheetContent side="left" className="w-80">
-        <nav className="flex flex-col gap-4 mt-4">
-          <Link to="/" className="text-lg font-medium" onClick={() => setOpen(false)}>
-            Home
-          </Link>
-          <Link to="/library" className="text-lg font-medium" onClick={() => setOpen(false)}>
-            Prompt Library
-          </Link>
-          <Link to="/packs" className="text-lg font-medium" onClick={() => setOpen(false)}>
-            Prompt Packs
-          </Link>
-          <Link to="/tips" className="text-lg font-medium" onClick={() => setOpen(false)}>
-            Articles & Tips
-          </Link>
-          <Link to="/ai/studio" className="text-lg font-medium" onClick={() => setOpen(false)}>
-            Prompt Studio
-          </Link>
-          <Link to="/ai/generator" className="text-lg font-medium" onClick={() => setOpen(false)}>
-            AI Prompt Generator
-          </Link>
-          <Link to="/ai/assistant" className="text-lg font-medium" onClick={() => setOpen(false)}>
-            AI Assistant
-          </Link>
-          <Link to="/account" className="text-lg font-medium" onClick={() => setOpen(false)}>
-            Account
-          </Link>
-          <Link to="/how-it-works" className="text-lg font-medium" onClick={() => setOpen(false)}>
-            How It Works
-          </Link>
-          <Link to="/faqs" className="text-lg font-medium" onClick={() => setOpen(false)}>
-            FAQs
-          </Link>
-        </nav>
-      </SheetContent>
-    </Sheet>
-  );
 };
 
 const Header = () => {
@@ -105,12 +55,9 @@ const Header = () => {
   return (
     <header className="w-full bg-background border-b border-border sticky top-0 z-50 overflow-hidden">
       <div className="w-full max-w-7xl mx-auto px-4 flex items-center justify-between min-h-14 box-border overflow-hidden">
-        {/* Hamburger Menu - Desktop Sidebar, Mobile Sheet */}
+        {/* Hamburger Menu - All Devices */}
         <div className="flex flex-shrink-0">
-          <div className="hidden md:block">
-            <SafeSidebarTrigger />
-          </div>
-          <MobileMobileMenu />
+          <SafeSidebarTrigger />
         </div>
         
         {/* Logo */}
