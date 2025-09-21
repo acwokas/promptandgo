@@ -13,7 +13,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { Link } from "react-router-dom";
 
 const ProfilePage = () => {
-  const { user } = useSupabaseAuth();
+  const { user, loading } = useSupabaseAuth();
   const { toast } = useToast();
   const [displayName, setDisplayName] = useState("");
   const [avatarUrl, setAvatarUrl] = useState("");
@@ -94,6 +94,40 @@ const ProfilePage = () => {
   };
 
   const initials = (user?.email || "?").slice(0, 2).toUpperCase();
+
+  // Show loading state
+  if (loading) {
+    return (
+      <>
+        <SEO title="My Account – Profile" description="Edit your display name and avatar for PromptAndGo." />
+        <PageHero title={<>Profile</>} subtitle={<>Manage your personal details.</>} minHeightClass="min-h-[25svh]" />
+        <main className="container py-8 max-w-3xl">
+          <div className="rounded-xl border bg-card p-6 text-center">
+            Loading...
+          </div>
+        </main>
+      </>
+    );
+  }
+
+  // Show login prompt for unauthenticated users
+  if (!user) {
+    return (
+      <>
+        <SEO title="My Account – Profile" description="Sign in to manage your profile on PromptAndGo." />
+        <PageHero title={<>Profile</>} subtitle={<>Manage your personal details.</>} minHeightClass="min-h-[25svh]" />
+        <main className="container py-8 max-w-3xl">
+          <div className="rounded-xl border bg-card p-6 text-center space-y-4">
+            <h2 className="text-xl font-semibold">Sign in to access your profile</h2>
+            <p className="text-muted-foreground">You need to be signed in to view and edit your profile information.</p>
+            <Button asChild variant="cta">
+              <Link to="/auth">Sign In</Link>
+            </Button>
+          </div>
+        </main>
+      </>
+    );
+  }
 
   return (
     <>
