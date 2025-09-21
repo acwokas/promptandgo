@@ -23,7 +23,8 @@ import {
   BookOpen, 
   Edit3, 
   Settings,
-  ArrowRight
+  ArrowRight,
+  Users
 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
@@ -312,35 +313,73 @@ const Index = () => {
         </PageHero>
 
         {/* Social Proof + Today's Featured */}
-        <section className="container py-8">
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <section className="container py-12">
+          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {/* Left Column - Today's Featured */}
-            <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-lg p-6">
-              <div className="flex items-center gap-2 mb-3">
-                <Zap className="h-4 w-4 text-primary" />
-                <span className="font-semibold text-sm">Today's Featured Category</span>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                <span className="font-medium text-foreground">Personal Growth & Mindfulness</span> prompts are getting 3x more usage today. 
-                <span className="font-medium text-foreground"> Click to explore!</span>
-              </p>
-            </div>
+            <Card className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-primary/5 to-accent/10 border-primary/20 hover:border-primary/30 transition-all duration-300">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent" />
+              <CardContent className="relative p-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center">
+                    <Zap className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-lg">Today's Featured Category</h3>
+                    <div className="flex items-center gap-2 mt-1">
+                      <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+                      <span className="text-xs text-muted-foreground">3x more usage today</span>
+                    </div>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  <span className="font-semibold text-foreground bg-primary/10 px-2 py-1 rounded-md">
+                    Personal Growth & Mindfulness
+                  </span> prompts are trending today with professionals focusing on productivity and well-being.
+                </p>
+                <Button variant="ghost" size="sm" className="mt-4 text-primary hover:text-primary hover:bg-primary/10">
+                  Explore Category <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </CardContent>
+            </Card>
 
             {/* Right Column - Social Proof Stats */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                <span className="font-medium text-foreground">5,000+ professionals</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-primary rounded-full" />
-                <span className="font-medium text-foreground">100K+ prompts optimized</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-accent rounded-full" />
-                <span className="font-medium text-foreground">50+ hours saved daily</span>
-              </div>
-            </div>
+            <Card className="relative overflow-hidden bg-gradient-to-br from-accent/10 via-accent/5 to-primary/10 border-accent/20">
+              <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent" />
+              <CardContent className="relative p-8">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 bg-accent/20 rounded-full flex items-center justify-center">
+                    <Users className="h-5 w-5 text-accent" />
+                  </div>
+                  <h3 className="font-semibold text-lg">Live Impact</h3>
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-3 bg-background/50 rounded-lg border border-border/50">
+                    <div className="flex items-center gap-3">
+                      <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
+                      <span className="font-medium text-foreground">Active Professionals</span>
+                    </div>
+                    <span className="font-bold text-lg text-green-600">5,000+</span>
+                  </div>
+                  
+                  <div className="flex items-center justify-between p-3 bg-background/50 rounded-lg border border-border/50">
+                    <div className="flex items-center gap-3">
+                      <div className="w-3 h-3 bg-primary rounded-full" />
+                      <span className="font-medium text-foreground">Prompts Optimized</span>
+                    </div>
+                    <span className="font-bold text-lg text-primary">100K+</span>
+                  </div>
+                  
+                  <div className="flex items-center justify-between p-3 bg-background/50 rounded-lg border border-border/50">
+                    <div className="flex items-center gap-3">
+                      <div className="w-3 h-3 bg-accent rounded-full" />
+                      <span className="font-medium text-foreground">Hours Saved Daily</span>
+                    </div>
+                    <span className="font-bold text-lg text-accent">50+</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </section>
 
