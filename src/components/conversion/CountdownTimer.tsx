@@ -101,7 +101,7 @@ const CountdownTimer = ({
 
   if (variant === "popup") {
     return (
-      <div className="bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-lg p-4 text-center">
+      <div className="bg-gradient-to-r from-destructive to-destructive/80 text-destructive-foreground rounded-lg p-4 text-center">
         <div className="flex items-center justify-center gap-2 mb-2">
           <AlertCircle className="h-5 w-5 animate-pulse" />
           <span className="font-semibold">Limited Time Offer!</span>
@@ -130,7 +130,7 @@ const CountdownTimer = ({
 
   // Default banner variant
   return (
-    <div className="bg-gradient-to-r from-red-500 to-orange-500 text-white">
+    <div className="bg-gradient-to-r from-destructive to-destructive/80 text-destructive-foreground">
       <div className="container px-4 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">

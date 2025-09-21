@@ -142,13 +142,13 @@ const ProgressivePricing = ({ showFull = false }: ProgressivePricingProps) => {
           {/* Lifetime Plan */}
           <Card className="relative">
             <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-              <Badge className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-4 py-1">
+              <Badge className="bg-gradient-to-r from-primary to-accent text-primary-foreground px-4 py-1">
                 Best Value
               </Badge>
             </div>
             <CardHeader className="text-center pb-2">
-              <div className="w-12 h-12 bg-gradient-to-r from-purple-100 to-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Zap className="h-6 w-6 text-purple-600" />
+              <div className="w-12 h-12 bg-gradient-to-r from-primary/20 to-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Zap className="h-6 w-6 text-primary" />
               </div>
               <CardTitle className="text-xl">Lifetime</CardTitle>
               <div className="text-3xl font-bold">$99.50</div>

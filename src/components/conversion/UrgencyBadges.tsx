@@ -14,27 +14,27 @@ export const UrgencyBadge = ({ variant, className = "" }: UrgencyBadgeProps) => 
     trending: {
       icon: TrendingUp,
       text: "Trending",
-      className: "bg-gradient-to-r from-orange-500 to-red-500 text-white animate-pulse"
+      className: "bg-gradient-to-r from-primary to-destructive text-primary-foreground animate-pulse"
     },
     popular: {
       icon: Users,
       text: "Most Used",
-      className: "bg-gradient-to-r from-blue-500 to-purple-500 text-white"
+      className: "bg-gradient-to-r from-primary to-accent text-primary-foreground"
     },
     new: {
       icon: Zap,
       text: "New",
-      className: "bg-gradient-to-r from-green-500 to-emerald-500 text-white"
+      className: "bg-gradient-to-r from-secondary to-accent text-secondary-foreground"
     },
     hot: {
       icon: Zap,
       text: "🔥 Hot",
-      className: "bg-gradient-to-r from-red-500 to-pink-500 text-white animate-pulse"
+      className: "bg-gradient-to-r from-destructive to-destructive/80 text-destructive-foreground animate-pulse"
     },
     limited: {
       icon: Clock,
       text: "Limited Time",
-      className: "bg-gradient-to-r from-purple-500 to-indigo-500 text-white animate-pulse"
+      className: "bg-gradient-to-r from-primary to-accent text-primary-foreground animate-pulse"
     }
   };
 

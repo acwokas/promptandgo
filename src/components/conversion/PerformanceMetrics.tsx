@@ -7,27 +7,27 @@ const metrics = [
     value: "10-15h",
     label: "Average Weekly Time Saved",
     description: "Users report saving 10-15 hours per week on content creation",
-    color: "text-green-600"
+    color: "text-muted-foreground"
   },
   {
     icon: Clock,
     value: "3 min",
-    label: "Average Setup Time",
+    label: "Average Setup Time", 
     description: "From browsing to copy-paste ready in under 3 minutes",
-    color: "text-blue-600"
+    color: "text-primary"
   },
   {
     icon: Target,
     value: "95%",
     label: "Success Rate",
     description: "95% of users get desired results on first try",
-    color: "text-purple-600"
+    color: "text-accent-foreground"
   },
   {
     icon: Users,
     value: "5,000+",
     label: "Active Professionals",
-    description: "Growing community of marketers, creators, and entrepreneurs",
+    description: "Growing community of marketers, creators, and entrepreneurs", 
     color: "text-primary"
   }
 ];
@@ -99,31 +99,31 @@ const PerformanceMetrics = () => {
 
       {/* Key Benefits */}
       <div className="grid gap-6 md:grid-cols-3">
-        <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-green-200 dark:from-green-950 dark:border-green-800">
+        <Card className="bg-gradient-to-br from-muted/30 to-muted/50 border-muted">
           <CardContent className="p-6 text-center">
-            <CheckCircle className="h-8 w-8 text-green-600 mx-auto mb-4" />
-            <h4 className="font-semibold text-green-800 dark:text-green-200 mb-2">Instant Results</h4>
-            <p className="text-sm text-green-700 dark:text-green-300">
+            <CheckCircle className="h-8 w-8 text-muted-foreground mx-auto mb-4" />
+            <h4 className="font-semibold text-foreground mb-2">Instant Results</h4>
+            <p className="text-sm text-muted-foreground">
               No learning curve. Copy, paste, and get professional results immediately.
             </p>
           </CardContent>
         </Card>
         
-        <Card className="bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-200 dark:from-blue-950 dark:border-blue-800">
+        <Card className="bg-gradient-to-br from-primary/20 to-primary/30 border-primary">
           <CardContent className="p-6 text-center">
-            <Zap className="h-8 w-8 text-blue-600 mx-auto mb-4" />
-            <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">Massive Time Savings</h4>
-            <p className="text-sm text-blue-700 dark:text-blue-300">
+            <Zap className="h-8 w-8 text-primary mx-auto mb-4" />
+            <h4 className="font-semibold text-primary mb-2">Massive Time Savings</h4>
+            <p className="text-sm text-primary/80">
               What used to take hours now takes minutes. Users save 10-15 hours weekly.
             </p>
           </CardContent>
         </Card>
         
-        <Card className="bg-gradient-to-br from-purple-50 to-pink-50 border-purple-200 dark:from-purple-950 dark:border-purple-800">
+        <Card className="bg-gradient-to-br from-accent/20 to-accent/30 border-accent">
           <CardContent className="p-6 text-center">
-            <Target className="h-8 w-8 text-purple-600 mx-auto mb-4" />
-            <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-2">Proven Success</h4>
-            <p className="text-sm text-purple-700 dark:text-purple-300">
+            <Target className="h-8 w-8 text-accent-foreground mx-auto mb-4" />
+            <h4 className="font-semibold text-accent-foreground mb-2">Proven Success</h4>
+            <p className="text-sm text-accent-foreground/80">
               95% success rate. These aren't random prompts - they're battle-tested by professionals.
             </p>
           </CardContent>

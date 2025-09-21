@@ -67,7 +67,7 @@ const plans = [
     originalPrice: "$199",
     icon: Zap,
     iconColor: "text-purple-600",
-    bgColor: "bg-gradient-to-r from-purple-100 to-indigo-100",
+    bgColor: "bg-gradient-to-r from-primary/20 to-accent/20",
     popular: false,
     badge: "Best Value",
     cta: "Get Lifetime Access",
@@ -98,7 +98,7 @@ const FeatureComparison = () => {
             )}
             {plan.badge && !plan.popular && (
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                <Badge className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-4 py-1">
+                <Badge className="bg-gradient-to-r from-primary to-accent text-primary-foreground px-4 py-1">
                   {plan.badge}
                 </Badge>
               </div>
@@ -173,7 +173,7 @@ const FeatureComparison = () => {
               )}
               {plan.badge && !plan.popular && (
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                  <Badge className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-4 py-1">
+                  <Badge className="bg-gradient-to-r from-primary to-accent text-primary-foreground px-4 py-1">
                     {plan.badge}
                   </Badge>
                 </div>
