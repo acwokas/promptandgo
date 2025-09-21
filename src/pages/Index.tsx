@@ -313,22 +313,32 @@ const Index = () => {
 
         {/* Social Proof + Today's Featured */}
         <section className="container py-8">
-          <div className="text-center mb-8">
-            <TodaysFeatured />
-            
-            <div className="text-center mb-8">
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 lg:gap-8 text-sm text-muted-foreground max-w-4xl mx-auto mb-6">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                  <span className="font-medium whitespace-nowrap">5,000+ professionals</span>
-                </div>
-                <div className="hidden sm:block w-1 h-1 bg-muted-foreground/30 rounded-full"></div>
-                <span className="font-medium whitespace-nowrap">100K+ prompts optimized</span>
-                <div className="hidden sm:block w-1 h-1 bg-muted-foreground/30 rounded-full"></div>
-                <div className="flex items-center gap-2">
-                  <UrgencyBadge variant="trending" />
-                  <span className="font-medium whitespace-nowrap">50+ hours saved daily</span>
-                </div>
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* Left Column - Today's Featured */}
+            <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-lg p-6">
+              <div className="flex items-center gap-2 mb-3">
+                <Zap className="h-4 w-4 text-primary" />
+                <span className="font-semibold text-sm">Today's Featured Category</span>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                <span className="font-medium text-foreground">Personal Growth & Mindfulness</span> prompts are getting 3x more usage today. 
+                <span className="font-medium text-foreground"> Click to explore!</span>
+              </p>
+            </div>
+
+            {/* Right Column - Social Proof Stats */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                <span className="font-medium text-foreground">5,000+ professionals</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-primary rounded-full" />
+                <span className="font-medium text-foreground">100K+ prompts optimized</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-accent rounded-full" />
+                <span className="font-medium text-foreground">50+ hours saved daily</span>
               </div>
             </div>
           </div>
