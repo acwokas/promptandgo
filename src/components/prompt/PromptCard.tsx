@@ -847,7 +847,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
           {category && (
             <button
               type="button"
-              className="text-muted-foreground hover:text-foreground hover:underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-ring rounded-sm"
+              className="hover:underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-ring rounded-sm"
               onClick={() => onCategoryClick?.(category.id)}
               aria-label={`Filter by category ${category.name}`}
               title={`Filter by ${category.name}`}
@@ -858,16 +858,16 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               </span>
             </button>
           )}
-          {category && sub && <span>›</span>}
+          {category && sub && <span className="text-muted-foreground">›</span>}
           {sub && (
             <button
               type="button"
-              className="text-muted-foreground hover:text-foreground hover:underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-ring rounded-sm"
+              className="hover:underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-ring rounded-sm"
               onClick={() => onSubcategoryClick?.(sub.id, category?.id as string)}
               aria-label={`Filter by subcategory ${sub.name}`}
               title={`Filter by ${sub.name}`}
             >
-              <span className="inline-flex items-center gap-1.5">
+              <span className={cn("inline-flex items-center gap-1.5", accentClass)}>
                 <span>{sub.name}</span>
               </span>
             </button>
