@@ -343,9 +343,9 @@ const MiniPromptStudio = () => {
 
         <div className="grid gap-4 lg:grid-cols-2">
           {/* Left Column - Inputs */}
-          <div className="space-y-3">
+          <div className="space-y-3 p-1">
             {/* Subject Input */}
-            <div>
+            <div className="-mx-1">
               <Label htmlFor="subject" className="text-sm font-medium text-muted-foreground mb-2 block">
                 {activeCrafter === "image" ? "What do you want to create?" : 
                  activeCrafter === "event" ? "Event Name" : "Post Subject"}

@@ -594,8 +594,8 @@ const Index = () => {
                         </div>
                       </div>
                     ) : !newsletterSuccess ? (
-                      <div className="max-w-md mx-auto">
-                        <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
+                      <div className="max-w-md mx-auto p-1">
+                        <form onSubmit={handleNewsletterSubmit} className="flex gap-2 -mx-1">
                           <input 
                             type="email" 
                             value={newsletterEmail} 
