@@ -843,11 +843,11 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
             </div>
           )}
         </div>
-        <div className="flex items-center gap-2 flex-wrap text-xs text-muted-foreground">
+        <div className="flex items-center gap-2 flex-wrap text-xs">
           {category && (
             <button
               type="button"
-              className="text-primary hover:underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-ring rounded-sm"
+              className="text-blue-600 hover:text-blue-700 hover:underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-ring rounded-sm"
               onClick={() => onCategoryClick?.(category.id)}
               aria-label={`Filter by category ${category.name}`}
               title={`Filter by ${category.name}`}
@@ -862,7 +862,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
           {sub && (
             <button
               type="button"
-              className="text-primary hover:underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-ring rounded-sm"
+              className="text-blue-600 hover:text-blue-700 hover:underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-ring rounded-sm"
               onClick={() => onSubcategoryClick?.(sub.id, category?.id as string)}
               aria-label={`Filter by subcategory ${sub.name}`}
               title={`Filter by ${sub.name}`}
