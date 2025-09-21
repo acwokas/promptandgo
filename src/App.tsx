@@ -9,7 +9,6 @@ import { useState, useEffect } from "react";
 import { AppSidebar } from "@/components/AppSidebar";
 
 import ExitIntentPopup from "@/components/conversion/ExitIntentPopup";
-import LiveActivityTicker from "@/components/conversion/LiveActivityTicker";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import PromptLibrary from "./pages/PromptLibrary";
@@ -202,7 +201,6 @@ const AppContent = () => {
         
         {user ? <FeedbackWidget /> : <LoginWidget />}
         <ExitIntentPopup />
-        <LiveActivityTicker />
       </LoginWidgetProvider>
     );
   }
@@ -300,9 +298,6 @@ const AppContent = () => {
         
         {/* Exit intent popup for conversion */}
         <ExitIntentPopup />
-        
-        {/* Live activity ticker */}
-        <LiveActivityTicker />
       </LoginWidgetProvider>
     </SidebarProvider>
   );
