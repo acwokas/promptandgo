@@ -594,14 +594,14 @@ const Index = () => {
                         </div>
                       </div>
                     ) : !newsletterSuccess ? (
-                      <div className="max-w-md mx-auto p-1">
-                        <form onSubmit={handleNewsletterSubmit} className="flex gap-2 -mx-1">
+                      <div className="max-w-md mx-auto">
+                        <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
                           <input 
                             type="email" 
                             value={newsletterEmail} 
                             onChange={e => setNewsletterEmail(e.target.value)} 
                             placeholder="Enter your email" 
-                            className="flex-1 px-4 py-2 rounded-md border border-input bg-background focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent" 
+                            className="flex-1 px-4 py-2 rounded-md border border-input bg-background focus:outline-none focus:border-2 focus:border-ring transition-colors" 
                             disabled={newsletterSubmitting} 
                           />
                           <Button type="submit" variant="hero" disabled={newsletterSubmitting}>
