@@ -123,7 +123,7 @@ const LiveActivityTicker = () => {
   if (isDismissed) return null;
 
     return (
-    <div className={`fixed bottom-0 left-0 right-0 z-5 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 border-t border-primary/10 shadow-lg transition-all duration-300 ${
+    <div className={`fixed bottom-0 left-0 right-0 z-50 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 border-t border-primary/10 shadow-lg transition-all duration-300 ${
       isMinimized ? 'h-12' : 'h-16'
     }`}>
       {/* Header with controls */}
@@ -165,7 +165,7 @@ const LiveActivityTicker = () => {
       {/* Ticker content */}
       {!isMinimized && (
         <div className="overflow-hidden">
-          <div className="flex animate-[slide-right_60s_linear_infinite] hover:pause-animation">
+          <div className="flex animate-[slide-right_60s_linear_infinite] pause-animation">
             {/* Duplicate activities for seamless loop */}
             {[...activities, ...activities, ...activities].map((activity, index) => (
               <Link
