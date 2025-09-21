@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { 
   Home, 
   Library, 
@@ -71,11 +70,6 @@ export function AppSidebar() {
 
   const getNavCls = ({ isActive }: { isActive: boolean }) =>
     isActive ? "bg-primary/10 text-primary font-medium border-r-2 border-primary" : "hover:bg-muted/50"
-
-  // Handle loading state gracefully
-  if (isMobile === null) {
-    return null
-  }
 
   return (
     <Sidebar
