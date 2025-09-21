@@ -882,9 +882,9 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
       </CardHeader>
       <CardContent>
         <div>
-          <div className="text-xs font-medium mb-1">Core prompt: {prompt.excerpt?.replace(/\.$/, '').toLowerCase()}:</div>
+          <div className="text-xs font-medium mb-1 text-foreground">Core prompt: {prompt.excerpt?.replace(/\.$/, '').toLowerCase()}:</div>
           <div className="relative min-h-[320px] sm:min-h-[300px]">
-            <pre className={cn("whitespace-pre-wrap prompt-editorial p-4 sm:p-5 rounded-md text-[0.975rem] sm:text-[1.05rem] leading-7 transition shadow-elegant min-h-[320px] sm:min-h-[300px]", showLock && "blur-sm select-none pointer-events-none")}>
+            <pre className={cn("whitespace-pre-wrap text-foreground bg-muted/30 p-4 sm:p-5 rounded-md text-[0.975rem] sm:text-[1.05rem] leading-7 transition shadow-elegant min-h-[320px] sm:min-h-[300px]", showLock && "blur-sm select-none pointer-events-none")}>
               {displayPrompt}
             </pre>
             {showLock && (
