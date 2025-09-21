@@ -119,9 +119,9 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
           </div>
         </CardHeader>
         
-        <CardContent>
-          <div className="space-y-4">
-            <div>
+        <CardContent className="overflow-hidden">
+          <div className="space-y-4 overflow-hidden">
+            <div className="overflow-hidden">
               <p className="font-medium text-foreground mb-3">
                 Platform-optimized prompt:
               </p>
@@ -146,8 +146,10 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
                 </DropdownMenuTrigger>
                 
                 <DropdownMenuContent 
-                  className="w-[calc(100vw-2rem)] max-w-[320px] bg-background border-2 shadow-lg z-50"
+                  className="w-[280px] bg-background border-2 shadow-lg z-50"
                   align="start"
+                  side="bottom"
+                  sideOffset={4}
                 >
                   {platformOptions.map((option) => (
                     <DropdownMenuItem
