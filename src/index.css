@@ -73,6 +73,10 @@ All colors MUST be HSL. */
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.75rem;
+    
+    /* Brand colors for hero backgrounds */
+    --brand: 220 70% 50%;
+    --brand-2: 220 60% 60%;
   }
 
   .dark {
@@ -100,6 +104,10 @@ All colors MUST be HSL. */
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    
+    /* Brand colors for hero backgrounds */
+    --brand: 220 70% 50%;
+    --brand-2: 220 60% 60%;
   }
 }
 
@@ -322,4 +330,22 @@ html {
 
 .pause-animation:hover {
   animation-play-state: paused;
+}
+
+/* Hero Background Classes */
+.bg-hero {
+  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.8) 100%);
+}
+
+.bg-hero-prompt {
+  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--brand-2)) 100%);
+}
+
+.bg-hero-admin {
+  background: linear-gradient(135deg, hsl(0 84% 60%) 0%, hsl(0 72% 51%) 100%);
+}
+
+.hero-grid {
+  position: relative;
+  overflow: hidden;
 }
