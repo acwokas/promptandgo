@@ -102,6 +102,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   const seed = category?.id || (prompt as any).categoryId || category?.name || displayTitle;
   const accentIndex = categoryAccentIndex(String(seed));
   const accentClass = `accent-${accentIndex}`;
+  const categoryBgClass = `category-bg-${accentIndex}`;
   const navigate = useNavigate();
 
   // Auth and user state
@@ -821,7 +822,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
 
   return (
     <>
-    <Card className={cn("relative overflow-hidden h-full with-category-accent glass-card transition animate-float-in hover:shadow-glow-strong", accentClass)} style={{ ['--category-accent' as any]: `var(--accent-${accentIndex})` }}>
+    <Card className={cn("relative overflow-hidden h-full transition animate-float-in hover:shadow-glow-strong border", categoryBgClass)}>
       <CardHeader>
         <div className="mb-2 flex gap-2 flex-wrap">
           {(prompt as any).ribbon === "RECOMMENDED" && (
@@ -882,9 +883,9 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
       </CardHeader>
       <CardContent>
         <div>
-          <div className="text-xs font-medium mb-1 text-foreground">Core prompt: {prompt.excerpt?.replace(/\.$/, '').toLowerCase()}:</div>
+          <div className="text-xs font-medium mb-1 text-foreground">Core prompt: {prompt.excerpt?.replace(/\.$/, "").toLowerCase()}:</div>
           <div className="relative min-h-[320px] sm:min-h-[300px]">
-            <pre className={cn("whitespace-pre-wrap text-foreground bg-muted/30 p-4 sm:p-5 rounded-md text-[0.975rem] sm:text-[1.05rem] leading-7 transition shadow-elegant min-h-[320px] sm:min-h-[300px]", showLock && "blur-sm select-none pointer-events-none")}>
+            <pre className={cn("whitespace-pre-wrap text-foreground bg-background/60 p-4 sm:p-5 rounded-md text-sm leading-6 transition shadow-sm min-h-[320px] sm:min-h-[300px] font-sans", showLock && "blur-sm select-none pointer-events-none")}>
               {displayPrompt}
             </pre>
             {showLock && (
@@ -1125,7 +1126,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
 
         {packs.length > 0 && (
           <div className="space-y-2">
-            <div className="text-xs font-medium">Included in:</div>
+            <div className="text-xs font-medium text-foreground">Included in:</div>
             <div className="flex flex-wrap gap-2 text-xs">
               {packs.map((p) => (
                 <Badge key={p.id} variant="outline">{p.name}</Badge>
@@ -1144,7 +1145,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
 
         {prompt.tags.length > 0 && (
           <div className="space-y-2 mt-6">
-            <div className="text-xs font-medium">Related Prompts:</div>
+            <div className="text-xs font-medium text-foreground">Related Prompts:</div>
             <div className="flex flex-wrap gap-2 relative">
               {prompt.tags.map((t) => (
                 <Badge

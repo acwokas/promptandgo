@@ -394,3 +394,11 @@ html {
 .accent-4 { color: hsl(25 95% 53%); }
 .accent-5 { color: hsl(346 87% 65%); }
 .accent-6 { color: hsl(60 84% 51%); }
+
+/* Category Background Colors for Cards */
+.category-bg-1 { background: hsl(210 100% 97%); } /* Light blue */
+.category-bg-2 { background: hsl(142 69% 95%); } /* Light green */
+.category-bg-3 { background: hsl(280 87% 97%); } /* Light purple */
+.category-bg-4 { background: hsl(25 95% 96%); } /* Light orange */
+.category-bg-5 { background: hsl(346 87% 97%); } /* Light pink */
+.category-bg-6 { background: hsl(60 84% 96%); } /* Light yellow */
