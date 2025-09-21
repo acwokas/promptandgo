@@ -341,20 +341,20 @@ const Index = () => {
 
                 {/* Right - Live Stats */}
                 <div className="grid grid-cols-3 gap-3">
-                  <Link to="/auth" className="text-center p-3 bg-background/70 rounded-lg border border-border/50 flex flex-col items-center justify-center min-h-[80px] hover:bg-background/90 hover:scale-105 hover:shadow-lg transition-all duration-200 cursor-pointer">
-                    <Users className="h-4 w-4 text-foreground mx-auto mb-1" />
+                  <Link to="/auth" className="text-center p-3 bg-background/70 rounded-lg border border-border/50 flex flex-col items-center justify-center min-h-[80px] hover:bg-background/90 hover:border-border transition-all duration-200 cursor-pointer">
+                    <Users className="h-4 w-4 text-foreground mx-auto mb-1 transition-colors duration-200 hover:text-primary" />
                     <div className="font-bold text-lg text-foreground">5,000+</div>
                     <div className="text-xs text-muted-foreground">Active</div>
                   </Link>
                   
-                  <Link to="/library" className="text-center p-3 bg-background/70 rounded-lg border border-border/50 flex flex-col items-center justify-center min-h-[80px] hover:bg-background/90 hover:scale-105 hover:shadow-lg transition-all duration-200 cursor-pointer">
-                    <Sparkles className="h-4 w-4 text-foreground mx-auto mb-1" />
+                  <Link to="/library" className="text-center p-3 bg-background/70 rounded-lg border border-border/50 flex flex-col items-center justify-center min-h-[80px] hover:bg-background/90 hover:border-border transition-all duration-200 cursor-pointer">
+                    <Sparkles className="h-4 w-4 text-foreground mx-auto mb-1 transition-colors duration-200 hover:text-primary" />
                     <div className="font-bold text-lg text-foreground">100K+</div>
                     <div className="text-xs text-muted-foreground">Prompts</div>
                   </Link>
                   
-                  <Link to="/studio" className="text-center p-3 bg-background/70 rounded-lg border border-border/50 flex flex-col items-center justify-center min-h-[80px] hover:bg-background/90 hover:scale-105 hover:shadow-lg transition-all duration-200 cursor-pointer">
-                    <Rocket className="h-4 w-4 text-foreground mx-auto mb-1" />
+                  <Link to="/studio" className="text-center p-3 bg-background/70 rounded-lg border border-border/50 flex flex-col items-center justify-center min-h-[80px] hover:bg-background/90 hover:border-border transition-all duration-200 cursor-pointer">
+                    <Rocket className="h-4 w-4 text-foreground mx-auto mb-1 transition-colors duration-200 hover:text-primary" />
                     <div className="font-bold text-lg text-foreground">500+</div>
                     <div className="text-xs text-muted-foreground">Customised Prompts</div>
                   </Link>
