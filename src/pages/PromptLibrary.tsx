@@ -659,33 +659,6 @@ const PromptLibrary = () => {
           ]}
         />
 
-        {/* Library Stats & Social Proof */}
-        <section className="mb-8">
-          <div className="text-center mb-6">
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Users className="h-4 w-4 text-primary" />
-                </div>
-                <span>50,000+ users</span>
-              </div>
-              <span className="hidden sm:inline">•</span>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Copy className="h-4 w-4 text-primary" />
-                </div>
-                <span>1.2M+ prompts copied</span>
-              </div>
-              <span className="hidden sm:inline">•</span>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Star className="h-4 w-4 text-primary" />
-                </div>
-                <span>4.9/5 rating</span>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* Compact Browse & Search Section */}
         <section className="mb-6">
