@@ -7,7 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { useState, useEffect } from "react";
 import { AppSidebar } from "@/components/AppSidebar";
-import ConversionBar from "@/components/layout/ConversionBar";
+
 import ExitIntentPopup from "@/components/conversion/ExitIntentPopup";
 import LiveActivityTicker from "@/components/conversion/LiveActivityTicker";
 import Index from "./pages/Index";
@@ -127,7 +127,6 @@ const AppContent = () => {
     return (
       <LoginWidgetProvider>
         <GlobalStructuredData />
-        <ConversionBar />
         
         <div className="w-full min-h-screen flex flex-col overflow-x-hidden">
           <Header />
@@ -213,7 +212,6 @@ const AppContent = () => {
     <SidebarProvider defaultOpen={false}>
       <LoginWidgetProvider>
         <GlobalStructuredData />
-        <ConversionBar />
         
         <div className="flex min-h-screen w-full overflow-hidden">
           <AppSidebar />
