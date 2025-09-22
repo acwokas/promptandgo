@@ -83,7 +83,7 @@ export const TestimonialHighlights = () => {
         </div>
       </div>
       
-      <div className="block md:hidden">
+      <div className="md:hidden">
         {/* Mobile: Single testimonial carousel */}
         <div className="relative">
           {/* Navigation buttons */}
