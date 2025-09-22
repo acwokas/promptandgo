@@ -1,5 +1,8 @@
-import { Shield, Star, Award, Users, CheckCircle, Zap } from "lucide-react";
+import { Shield, Star, Award, Users, CheckCircle, Zap, ChevronLeft, ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useState } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Button } from "@/components/ui/button";
 
 export const SecurityBadges = () => (
   <div className="flex items-center justify-center gap-6 py-4">
@@ -41,57 +44,113 @@ export const UserStats = () => (
   </div>
 );
 
-export const TestimonialHighlights = () => (
-  <div className="space-y-4">
-    <div className="text-center mb-6">
-      <h3 className="text-xl font-semibold mb-2">Trusted by Professionals Worldwide</h3>
-      <div className="flex items-center justify-center gap-1">
-        {Array.from({ length: 5 }, (_, i) => (
-          <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-        ))}
-        <span className="ml-2 text-sm text-muted-foreground">4.9/5 from 1,200+ reviews</span>
-      </div>
-    </div>
-    
-    <div className="grid gap-4 md:grid-cols-3">
-      <div className="bg-white border rounded-lg p-4 text-center">
-        <div className="flex items-center gap-0.5 justify-center mb-2">
+const testimonials = [
+  {
+    quote: "Saves me 2+ hours every day. The prompts actually work!",
+    author: "Sarah M. - Marketing Director"
+  },
+  {
+    quote: "Best investment for my freelance business. ROI in first week.",
+    author: "Mike R. - Freelance Writer"
+  },
+  {
+    quote: "Game changer for content creation. Can't work without it now.",
+    author: "Lisa K. - Content Creator"
+  }
+];
+
+export const TestimonialHighlights = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const isMobile = useIsMobile();
+
+  const nextTestimonial = () => {
+    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+  };
+
+  const prevTestimonial = () => {
+    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
+
+  return (
+    <div className="space-y-4">
+      <div className="text-center mb-6">
+        <h3 className="text-xl font-semibold mb-2">Trusted by Professionals Worldwide</h3>
+        <div className="flex items-center justify-center gap-1">
           {Array.from({ length: 5 }, (_, i) => (
-            <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+            <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
           ))}
+          <span className="ml-2 text-sm text-muted-foreground">4.9/5 from 1,200+ reviews</span>
         </div>
-        <p className="text-sm text-muted-foreground mb-2">
-          "Saves me 2+ hours every day. The prompts actually work!"
-        </p>
-        <p className="text-xs font-medium">Sarah M. - Marketing Director</p>
       </div>
       
-      <div className="bg-white border rounded-lg p-4 text-center">
-        <div className="flex items-center gap-0.5 justify-center mb-2">
-          {Array.from({ length: 5 }, (_, i) => (
-            <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+      {isMobile ? (
+        // Mobile: Single testimonial carousel
+        <div className="relative">
+          {/* Navigation buttons */}
+          <div className="flex items-center justify-between mb-4">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={prevTestimonial}
+              className="h-8 w-8 p-0"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <div className="flex gap-2">
+              {testimonials.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentIndex(index)}
+                  className={`w-2 h-2 rounded-full transition-colors ${
+                    index === currentIndex ? 'bg-primary' : 'bg-primary/30'
+                  }`}
+                />
+              ))}
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={nextTestimonial}
+              className="h-8 w-8 p-0"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+          
+          {/* Single testimonial */}
+          <div className="bg-background border rounded-lg p-4 text-center">
+            <div className="flex items-center gap-0.5 justify-center mb-2">
+              {Array.from({ length: 5 }, (_, i) => (
+                <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+              ))}
+            </div>
+            <p className="text-sm text-muted-foreground mb-2">
+              "{testimonials[currentIndex].quote}"
+            </p>
+            <p className="text-xs font-medium">{testimonials[currentIndex].author}</p>
+          </div>
+        </div>
+      ) : (
+        // Desktop: Grid layout
+        <div className="grid gap-4 md:grid-cols-3">
+          {testimonials.map((testimonial, index) => (
+            <div key={index} className="bg-background border rounded-lg p-4 text-center">
+              <div className="flex items-center gap-0.5 justify-center mb-2">
+                {Array.from({ length: 5 }, (_, i) => (
+                  <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                ))}
+              </div>
+              <p className="text-sm text-muted-foreground mb-2">
+                "{testimonial.quote}"
+              </p>
+              <p className="text-xs font-medium">{testimonial.author}</p>
+            </div>
           ))}
         </div>
-        <p className="text-sm text-muted-foreground mb-2">
-          "Best investment for my freelance business. ROI in first week."
-        </p>
-        <p className="text-xs font-medium">Mike R. - Freelance Writer</p>
-      </div>
-      
-      <div className="bg-white border rounded-lg p-4 text-center">
-        <div className="flex items-center gap-0.5 justify-center mb-2">
-          {Array.from({ length: 5 }, (_, i) => (
-            <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-          ))}
-        </div>
-        <p className="text-sm text-muted-foreground mb-2">
-          "Game changer for content creation. Can't work without it now."
-        </p>
-        <p className="text-xs font-medium">Lisa K. - Content Creator</p>
-      </div>
+      )}
     </div>
-  </div>
-);
+  );
+};
 
 export const AsSeenIn = () => (
   <div className="text-center py-8">
