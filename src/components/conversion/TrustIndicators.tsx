@@ -83,8 +83,8 @@ export const TestimonialHighlights = () => {
         </div>
       </div>
       
-      {isMobile ? (
-        // Mobile: Single testimonial carousel
+      <div className="block md:hidden">
+        {/* Mobile: Single testimonial carousel */}
         <div className="relative">
           {/* Navigation buttons */}
           <div className="flex items-center justify-between mb-4">
@@ -130,8 +130,10 @@ export const TestimonialHighlights = () => {
             <p className="text-xs font-medium">{testimonials[currentIndex].author}</p>
           </div>
         </div>
-      ) : (
-        // Desktop: Grid layout
+      </div>
+      
+      <div className="hidden md:block">
+        {/* Desktop: Grid layout */}
         <div className="grid gap-4 md:grid-cols-3">
           {testimonials.map((testimonial, index) => (
             <div key={index} className="bg-background border rounded-lg p-4 text-center">
@@ -147,7 +149,7 @@ export const TestimonialHighlights = () => {
             </div>
           ))}
         </div>
-      )}
+      </div>
     </div>
   );
 };
