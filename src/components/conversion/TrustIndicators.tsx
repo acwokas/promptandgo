@@ -46,16 +46,22 @@ export const UserStats = () => (
 
 const testimonials = [
   {
-    quote: "Saves me 2+ hours every day. The prompts actually work!",
-    author: "Sarah M. - Marketing Director"
+    quote: "The platform adaptation is pure genius. Same concept, perfectly optimized for ChatGPT vs Claude vs MidJourney. I'm 10x more productive now.",
+    author: "Michael Rodriguez",
+    title: "Senior Content Writer",
+    initials: "MR"
   },
   {
-    quote: "Best investment for my freelance business. ROI in first week.",
-    author: "Mike R. - Freelance Writer"
+    quote: "Started with proven prompts, then Scout customized them for our needs. We've streamlined our entire content workflow and saved $5,000/month.",
+    author: "Alex Liu",
+    title: "Founder @ GrowthCo", 
+    initials: "AL"
   },
   {
     quote: "Game changer for content creation. Can't work without it now.",
-    author: "Lisa K. - Content Creator"
+    author: "Lisa K.",
+    title: "Content Creator",
+    initials: "LK"
   }
 ];
 
@@ -94,16 +100,16 @@ export const TestimonialHighlights = () => {
         </div>
       </div>
       
-      {/* Mobile: Single testimonial carousel */}
-      <div className="block md:hidden">
+      {isMobile ? (
+        // Mobile: Single testimonial with navigation
         <div className="relative">
-          {/* Navigation buttons */}
+          {/* Navigation buttons and dots */}
           <div className="flex items-center justify-between mb-4">
             <Button
               variant="ghost"
               size="sm"
               onClick={prevTestimonial}
-              className="h-8 w-8 p-0"
+              className="h-8 w-8 p-0 shrink-0"
             >
               <ChevronLeft className="h-4 w-4" />
             </Button>
@@ -122,43 +128,63 @@ export const TestimonialHighlights = () => {
               variant="ghost"
               size="sm"
               onClick={nextTestimonial}
-              className="h-8 w-8 p-0"
+              className="h-8 w-8 p-0 shrink-0"
             >
               <ChevronRight className="h-4 w-4" />
             </Button>
           </div>
           
-          {/* Single testimonial */}
-          <div className="bg-background border rounded-lg p-4 text-center">
-            <div className="flex items-center gap-0.5 justify-center mb-2">
-              {Array.from({ length: 5 }, (_, i) => (
-                <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-              ))}
+          {/* Current testimonial only */}
+          <div className="bg-background border rounded-lg p-4">
+            <div className="flex items-start gap-3 mb-3">
+              <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">
+                {testimonials[currentIndex].initials}
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-0.5 mb-1">
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+                <p className="text-sm text-muted-foreground mb-2">
+                  "{testimonials[currentIndex].quote}"
+                </p>
+                <div className="text-xs">
+                  <p className="font-medium">{testimonials[currentIndex].author}</p>
+                  <p className="text-muted-foreground">{testimonials[currentIndex].title}</p>
+                </div>
+              </div>
             </div>
-            <p className="text-sm text-muted-foreground mb-2">
-              "{testimonials[currentIndex].quote}"
-            </p>
-            <p className="text-xs font-medium">{testimonials[currentIndex].author}</p>
           </div>
         </div>
-      </div>
-      
-      {/* Desktop: Grid layout */}
-      <div className="hidden md:grid gap-4 md:grid-cols-3">
-        {testimonials.map((testimonial, index) => (
-          <div key={index} className="bg-background border rounded-lg p-4 text-center">
-            <div className="flex items-center gap-0.5 justify-center mb-2">
-              {Array.from({ length: 5 }, (_, i) => (
-                <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-              ))}
+      ) : (
+        // Desktop: Grid layout
+        <div className="grid gap-4 md:grid-cols-3">
+          {testimonials.map((testimonial, index) => (
+            <div key={index} className="bg-background border rounded-lg p-4">
+              <div className="flex items-start gap-3 mb-3">
+                <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">
+                  {testimonial.initials}
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-0.5 mb-1">
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    "{testimonial.quote}"
+                  </p>
+                  <div className="text-xs">
+                    <p className="font-medium">{testimonial.author}</p>
+                    <p className="text-muted-foreground">{testimonial.title}</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <p className="text-sm text-muted-foreground mb-2">
-              "{testimonial.quote}"
-            </p>
-            <p className="text-xs font-medium">{testimonial.author}</p>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
