@@ -1,6 +1,6 @@
 import { Shield, Star, Award, Users, CheckCircle, Zap, ChevronLeft, ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
 
@@ -71,6 +71,17 @@ export const TestimonialHighlights = () => {
     setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
+  // Auto-rotate testimonials on mobile
+  useEffect(() => {
+    if (isMobile) {
+      const interval = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+      }, 5000); // Rotate every 5 seconds
+      
+      return () => clearInterval(interval);
+    }
+  }, [isMobile]);
+
   return (
     <div className="space-y-4">
       <div className="text-center mb-6">
@@ -83,8 +94,8 @@ export const TestimonialHighlights = () => {
         </div>
       </div>
       
-      {isMobile ? (
-        // Mobile: Single testimonial carousel
+      {/* Mobile: Single testimonial carousel */}
+      <div className="block md:hidden">
         <div className="relative">
           {/* Navigation buttons */}
           <div className="flex items-center justify-between mb-4">
@@ -130,24 +141,24 @@ export const TestimonialHighlights = () => {
             <p className="text-xs font-medium">{testimonials[currentIndex].author}</p>
           </div>
         </div>
-      ) : (
-        // Desktop: Grid layout
-        <div className="grid gap-4 md:grid-cols-3">
-          {testimonials.map((testimonial, index) => (
-            <div key={index} className="bg-background border rounded-lg p-4 text-center">
-              <div className="flex items-center gap-0.5 justify-center mb-2">
-                {Array.from({ length: 5 }, (_, i) => (
-                  <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                ))}
-              </div>
-              <p className="text-sm text-muted-foreground mb-2">
-                "{testimonial.quote}"
-              </p>
-              <p className="text-xs font-medium">{testimonial.author}</p>
+      </div>
+      
+      {/* Desktop: Grid layout */}
+      <div className="hidden md:grid gap-4 md:grid-cols-3">
+        {testimonials.map((testimonial, index) => (
+          <div key={index} className="bg-background border rounded-lg p-4 text-center">
+            <div className="flex items-center gap-0.5 justify-center mb-2">
+              {Array.from({ length: 5 }, (_, i) => (
+                <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+              ))}
             </div>
-          ))}
-        </div>
-      )}
+            <p className="text-sm text-muted-foreground mb-2">
+              "{testimonial.quote}"
+            </p>
+            <p className="text-xs font-medium">{testimonial.author}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
