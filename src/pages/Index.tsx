@@ -422,7 +422,7 @@ const Index = () => {
         </section>
 
         {/* Key Differentiators */}
-        <section className="container py-12">
+        <section className="container py-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Why Scout Beats DIY Prompting</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
