@@ -59,7 +59,8 @@ export function AppSidebar() {
   const { state, isMobile } = useSidebar()
   const location = useLocation()
   const currentPath = location.pathname
-  const isCollapsed = state === "collapsed"
+  // On mobile offcanvas mode, always show text. Only hide on desktop when collapsed
+  const showText = isMobile || state !== "collapsed"
 
   const isActive = (path: string) => {
     if (path === "/") {
@@ -90,7 +91,7 @@ export function AppSidebar() {
                       className={({ isActive: linkActive }) => getNavCls({ isActive: linkActive })}
                     >
                       <item.icon className="h-4 w-4" />
-                      {!isCollapsed && <span className="text-sm">{item.title}</span>}
+                      {showText && <span className="text-sm">{item.title}</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -112,7 +113,7 @@ export function AppSidebar() {
                       className={({ isActive: linkActive }) => getNavCls({ isActive: linkActive })}
                     >
                       <item.icon className="h-4 w-4" />
-                      {!isCollapsed && <span className="text-sm">{item.title}</span>}
+                      {showText && <span className="text-sm">{item.title}</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -134,7 +135,7 @@ export function AppSidebar() {
                       className={({ isActive: linkActive }) => getNavCls({ isActive: linkActive })}
                     >
                       <item.icon className="h-4 w-4" />
-                      {!isCollapsed && <span className="text-sm">{item.title}</span>}
+                      {showText && <span className="text-sm">{item.title}</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -156,7 +157,7 @@ export function AppSidebar() {
                       className={({ isActive: linkActive }) => getNavCls({ isActive: linkActive })}
                     >
                       <item.icon className="h-4 w-4" />
-                      {!isCollapsed && <span className="text-sm">{item.title}</span>}
+                      {showText && <span className="text-sm">{item.title}</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
