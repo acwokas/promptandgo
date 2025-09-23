@@ -366,78 +366,6 @@ const Index = () => {
           </div>
         </section>
 
-        <section className="container py-12">
-          <div className="grid gap-6 md:grid-cols-3">
-            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Bot className="h-5 w-5 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-0.5 mb-2">
-                      {Array.from({ length: 5 }, (_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
-                    </div>
-                    <p className="text-sm text-muted-foreground">"I went from spending 3 hours crafting prompts to just copying proven ones. Scout's optimization saved my entire workflow. ROI in the first week!"</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 pl-14">
-                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">SJ</div>
-                  <div>
-                    <p className="text-sm font-medium">Sarah Johnson</p>
-                    <p className="text-xs text-muted-foreground">Marketing Director @ TechCorp</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Sparkles className="h-5 w-5 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-0.5 mb-2">
-                      {Array.from({ length: 5 }, (_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
-                    </div>
-                    <p className="text-sm text-muted-foreground">"The platform adaptation is pure genius. Same concept, perfectly optimized for ChatGPT vs Claude vs MidJourney. I'm 10x more productive now."</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 pl-14">
-                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">MR</div>
-                  <div>
-                    <p className="text-sm font-medium">Michael Rodriguez</p>
-                    <p className="text-xs text-muted-foreground">Senior Content Writer</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Rocket className="h-5 w-5 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-0.5 mb-2">
-                      {Array.from({ length: 5 }, (_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
-                    </div>
-                    <p className="text-sm text-muted-foreground">"Started with proven prompts, then Scout customized them for our needs. We've streamlined our entire content workflow and saved $5,000/month."</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 pl-14">
-                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">AL</div>
-                  <div>
-                    <p className="text-sm font-medium">Alex Liu</p>
-                    <p className="text-xs text-muted-foreground">Founder @ GrowthCo</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
 
         {/* Scout Demo - Interactive Prompt Card */}
         <ScoutDemo />
@@ -585,6 +513,80 @@ const Index = () => {
                 <p className="text-xs text-muted-foreground">& More</p>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Testimonials Section */}
+        <section className="container py-12">
+          <div className="grid gap-6 md:grid-cols-3">
+            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Bot className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-0.5 mb-2">
+                      {Array.from({ length: 5 }, (_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
+                    </div>
+                    <p className="text-sm text-muted-foreground">"I went from spending 3 hours crafting prompts to just copying proven ones. Scout's optimization saved my entire workflow. ROI in the first week!"</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 pl-14">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">SJ</div>
+                  <div>
+                    <p className="text-sm font-medium">Sarah Johnson</p>
+                    <p className="text-xs text-muted-foreground">Marketing Director @ TechCorp</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Sparkles className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-0.5 mb-2">
+                      {Array.from({ length: 5 }, (_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
+                    </div>
+                    <p className="text-sm text-muted-foreground">"The platform adaptation is pure genius. Same concept, perfectly optimized for ChatGPT vs Claude vs MidJourney. I'm 10x more productive now."</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 pl-14">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">MR</div>
+                  <div>
+                    <p className="text-sm font-medium">Michael Rodriguez</p>
+                    <p className="text-xs text-muted-foreground">Senior Content Writer</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-primary/5 to-transparent">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Rocket className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-0.5 mb-2">
+                      {Array.from({ length: 5 }, (_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
+                    </div>
+                    <p className="text-sm text-muted-foreground">"Started with proven prompts, then Scout customized them for our needs. We've streamlined our entire content workflow and saved $5,000/month."</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 pl-14">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">AL</div>
+                  <div>
+                    <p className="text-sm font-medium">Alex Liu</p>
+                    <p className="text-xs text-muted-foreground">Founder @ GrowthCo</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </section>
 
