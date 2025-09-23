@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Share2, Copy, Facebook, Linkedin, Smartphone, Instagram } from "lucide-react";
@@ -63,7 +63,7 @@ const ShareButton = ({
   const { isSharing, shareToClipboard, shareToSocial, nativeShare } = useSharing();
   const [open, setOpen] = useState(false);
 
-  const shareOptions = { url, contentType, contentId, title };
+  const shareOptions = useMemo(() => ({ url, contentType, contentId, title }), [url, contentType, contentId, title]);
 
   const handleShare = async (method: 'clipboard' | 'x' | 'facebook' | 'linkedin' | 'instagram' | 'tiktok' | 'native') => {
     setOpen(false);

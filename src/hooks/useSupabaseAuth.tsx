@@ -56,7 +56,7 @@ export function useSupabaseAuth() {
     return () => {
       subscription.unsubscribe();
     };
-  }, [toast]);
+  }, []); // Remove toast from dependency array as it's not needed
 
   // Enhanced logout function with immediate state clearing
   const logout = async () => {
