@@ -909,45 +909,47 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
 
           {/* AI Provider Selection */}
           <div className="overflow-hidden">
-            <p className="font-medium text-foreground mb-3">
-              Platform-optimized prompt:
-            </p>
-            
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button 
-                  variant="outline" 
-                  className="w-full justify-between h-auto p-4 bg-background border-2 hover:bg-muted/50 mb-4"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className={`p-2 rounded-full ${
-                      selectedAIPlatform === 'original' 
-                        ? 'bg-blue-100 text-blue-600'
-                        : getProviderColor(selectedAIPlatform)
-                    }`}>
-                      {selectedAIPlatform === 'original' 
-                        ? <Bot className="h-5 w-5" />
-                        : selectedProviderData?.icon || <Bot className="h-5 w-5" />
-                      }
-                    </div>
-                    <div className="text-left">
-                      <div className="font-semibold">
+            <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg p-4 mb-4 border border-primary/20">
+              <p className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                <Bot className="h-4 w-4 text-primary" />
+                Platform-optimized prompt:
+              </p>
+              
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    className="w-full justify-between h-auto p-4 bg-background/80 backdrop-blur-sm border-2 border-primary/30 hover:bg-background hover:border-primary/50 shadow-sm hover:shadow-md transition-all duration-200"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={`p-2 rounded-full ${
+                        selectedAIPlatform === 'original' 
+                          ? 'bg-blue-100 text-blue-600'
+                          : getProviderColor(selectedAIPlatform)
+                      }`}>
                         {selectedAIPlatform === 'original' 
-                          ? 'Core Prompt'
-                          : selectedProviderData?.name || 'Select AI Platform'
+                          ? <Bot className="h-5 w-5" />
+                          : selectedProviderData?.icon || <Bot className="h-5 w-5" />
                         }
                       </div>
-                      <div className="text-sm text-muted-foreground">
-                        {selectedAIPlatform === 'original' 
-                          ? 'Original Version'
-                          : selectedProviderData?.description || 'Choose your preferred AI platform'
-                        }
+                      <div className="text-left">
+                        <div className="font-semibold">
+                          {selectedAIPlatform === 'original' 
+                            ? 'Core Prompt'
+                            : selectedProviderData?.name || 'Select AI Platform'
+                          }
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          {selectedAIPlatform === 'original' 
+                            ? 'Original Version'
+                            : selectedProviderData?.description || 'Choose your preferred AI platform'
+                          }
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <ChevronDown className="h-4 w-4 ml-2" />
-                </Button>
-              </DropdownMenuTrigger>
+                    <ChevronDown className="h-4 w-4 ml-2" />
+                  </Button>
+                </DropdownMenuTrigger>
               
               <DropdownMenuContent 
                 className="w-[280px] bg-background border-2 shadow-lg z-50"
@@ -995,6 +997,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
+            </div>
 
             {/* Demo explanation */}
             <div className="text-center mb-4">
