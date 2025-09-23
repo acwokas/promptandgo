@@ -210,14 +210,39 @@ const PromptStudioPage = () => {
 
           {/* Topic Selection Dropdown */}
           <div className="w-full mobile-safe">
-            <div className="w-full max-w-2xl mx-auto text-center mb-6">
-              <h2 className="text-lg sm:text-xl font-semibold mb-4 text-foreground">
-                Choose your topic and start crafting
-              </h2>
-              <Select value={activeTab} onValueChange={(value) => setActiveTab(value as "adcopy" | "blog" | "business" | "cta" | "event" | "image" | "job" | "learning" | "productivity" | "research" | "salesemail" | "storytelling" | "video")}>
-                <SelectTrigger className="w-full max-w-xs mx-auto bg-card/90 border-2 border-primary/20 hover:border-primary/30 transition-colors shadow-lg">
-                  <SelectValue placeholder="Select a prompt type" />
-                </SelectTrigger>
+            <div className="w-full max-w-3xl mx-auto mb-8">
+              <div className="relative">
+                {/* Background Card */}
+                <div className="bg-gradient-to-br from-card/80 to-card/40 border border-border/50 rounded-2xl p-8 shadow-xl backdrop-blur-sm">
+                  {/* Visual Elements */}
+                  <div className="absolute top-4 right-4 opacity-20">
+                    <Sparkles className="h-8 w-8 text-primary" />
+                  </div>
+                  <div className="absolute bottom-4 left-4 opacity-10">
+                    <div className="w-12 h-12 rounded-full bg-gradient-primary"></div>
+                  </div>
+                  
+                  <div className="text-center relative z-10">
+                    <div className="mb-4">
+                      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-primary/10 border border-primary/20 mb-4">
+                        <Wand2 className="h-8 w-8 text-primary" />
+                      </div>
+                    </div>
+                    
+                    <h2 className="text-2xl sm:text-3xl font-bold mb-2 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+                      Choose Your Topic
+                    </h2>
+                    <p className="text-muted-foreground mb-6 text-sm sm:text-base">
+                      Select a prompt type and let our AI studio guide you through crafting the perfect prompt
+                    </p>
+                    
+                    <Select value={activeTab} onValueChange={(value) => setActiveTab(value as "adcopy" | "blog" | "business" | "cta" | "event" | "image" | "job" | "learning" | "productivity" | "research" | "salesemail" | "storytelling" | "video")}>
+                      <SelectTrigger className="w-full max-w-md mx-auto h-14 bg-background/80 border-2 border-primary/30 hover:border-primary/50 transition-all duration-300 shadow-lg hover:shadow-xl rounded-xl backdrop-blur-sm">
+                        <div className="flex items-center gap-3">
+                          <div className="w-2 h-2 rounded-full bg-gradient-primary"></div>
+                          <SelectValue placeholder="Select a prompt type to get started" />
+                        </div>
+                      </SelectTrigger>
                 <SelectContent className="bg-popover border-2 border-primary/20 shadow-xl z-50">
                   <SelectItem value="adcopy" className="cursor-pointer hover:bg-muted/80">
                     <div className="flex items-center gap-3">
@@ -298,7 +323,10 @@ const PromptStudioPage = () => {
                     </div>
                   </SelectItem>
                 </SelectContent>
-              </Select>
+                </Select>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
