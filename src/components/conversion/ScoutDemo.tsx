@@ -5,7 +5,7 @@ import PromptCardDemo from "./PromptCardDemo";
 
 const ScoutDemo = () => {
   return (
-    <section className="py-16 bg-gradient-to-br from-muted/30 to-background">
+    <section className="pt-8 pb-16 bg-gradient-to-br from-muted/30 to-background">
       <div className="container">
         <div className="grid lg:grid-cols-5 gap-12 items-start">
           {/* Left side - Content */}
