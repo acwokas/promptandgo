@@ -707,6 +707,56 @@ export const videoScriptPromptOptions = {
   ] as PromptOption[]
 };
 
+// Presentation Prompt Options
+export const presentationPromptOptions = {
+  objectives: [
+    { value: "investor-pitch", label: "Pitch to Investors" },
+    { value: "internal-training", label: "Internal Training" },
+    { value: "keynote-speech", label: "Keynote Speech" },
+    { value: "product-launch", label: "Product Launch" },
+    { value: "quarterly-review", label: "Quarterly Review" },
+    { value: "sales-presentation", label: "Sales Presentation" },
+    { value: "conference-talk", label: "Conference Talk" }
+  ] as PromptOption[],
+  audiences: [
+    { value: "executives", label: "Executives" },
+    { value: "employees", label: "Employees" },
+    { value: "customers", label: "Customers" },
+    { value: "investors", label: "Investors" },
+    { value: "industry-peers", label: "Industry Peers" },
+    { value: "students", label: "Students" },
+    { value: "general-public", label: "General Public" }
+  ] as PromptOption[],
+  lengths: [
+    { value: "5-10", label: "5-10 slides (5-10 minutes)" },
+    { value: "10-15", label: "10-15 slides (15-20 minutes)" },
+    { value: "15-25", label: "15-25 slides (30-45 minutes)" },
+    { value: "25-40", label: "25-40 slides (60+ minutes)" }
+  ] as PromptOption[],
+  tones: [
+    { value: "professional", label: "Professional" },
+    { value: "inspiring", label: "Inspiring" },
+    { value: "conversational", label: "Conversational" },
+    { value: "persuasive", label: "Persuasive" },
+    { value: "educational", label: "Educational" },
+    { value: "energetic", label: "Energetic" }
+  ] as PromptOption[],
+  structures: [
+    { value: "problem-solution", label: "Problem-Solution" },
+    { value: "storytelling", label: "Storytelling Arc" },
+    { value: "three-act", label: "Three-Act Structure" },
+    { value: "before-after", label: "Before & After" },
+    { value: "features-benefits", label: "Features & Benefits" },
+    { value: "chronological", label: "Chronological" }
+  ] as PromptOption[],
+  formats: [
+    { value: "slide-by-slide", label: "Slide-by-Slide Guide" },
+    { value: "outline-only", label: "Outline Only" },
+    { value: "detailed-notes", label: "Detailed Speaker Notes" },
+    { value: "visual-suggestions", label: "With Visual Suggestions" }
+  ] as PromptOption[]
+};
+
 // Research Prompt Options
 export const researchPromptOptions = {
   researchGoals: [
