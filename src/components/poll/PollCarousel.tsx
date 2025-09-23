@@ -175,8 +175,29 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
       setShowResults(true);
       setCountdown(20);
       
-      // Refresh results
-      loadPolls();
+      // Update the current poll's results locally instead of refetching all polls
+      const updatedPolls = polls.map(poll => {
+        if (poll.id === currentPoll.id) {
+          const updatedOptions = poll.options.map(option => {
+            if (option.id === optionId) {
+              return { ...option, vote_count: option.vote_count + 1 };
+            }
+            return option;
+          });
+          
+          // Recalculate percentages
+          const totalVotes = updatedOptions.reduce((sum, opt) => sum + opt.vote_count, 0);
+          const optionsWithPercentages = updatedOptions.map(option => ({
+            ...option,
+            percentage: totalVotes > 0 ? Math.round((option.vote_count / totalVotes) * 100) : 0
+          }));
+          
+          return { ...poll, options: optionsWithPercentages };
+        }
+        return poll;
+      });
+      
+      setPolls(updatedPolls);
       
       toast({
         title: "Vote recorded!",
