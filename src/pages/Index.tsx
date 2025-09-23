@@ -517,7 +517,7 @@ const Index = () => {
         </section>
 
         {/* Testimonials Section */}
-        <section className="container py-12">
+        <section className="container py-6">
           <div className="grid gap-6 md:grid-cols-3">
             <Card className="bg-gradient-to-br from-primary/5 to-transparent">
               <CardContent className="p-6">
