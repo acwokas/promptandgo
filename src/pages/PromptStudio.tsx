@@ -83,6 +83,23 @@ const PromptStudioPage = () => {
     }
   }, [searchParams]);
 
+  // Extract initial values from URL parameters for Mini Prompt Studio carry-over
+  const getInitialValues = () => {
+    const subject = searchParams.get('subject') || '';
+    const selections: Record<string, string> = {};
+    
+    // Get all URL parameters except system ones
+    for (const [key, value] of searchParams.entries()) {
+      if (!['tab', 'subject', 'prompt', 'title', 'tags'].includes(key) && value) {
+        selections[key] = value;
+      }
+    }
+    
+    return { subject, selections };
+  };
+  
+  const initialValues = getInitialValues();
+
   const handlePromptGenerated = (prompt: string) => {
     setGeneratedPrompt(prompt);
   };
@@ -355,31 +372,31 @@ const PromptStudioPage = () => {
               </CardHeader>
               <CardContent>
                 {activeTab === "adcopy" ? (
-                  <AdCopyPromptCrafter onPromptGenerated={handlePromptGenerated} />
+                  <AdCopyPromptCrafter onPromptGenerated={handlePromptGenerated} initialSubject={initialValues.subject} initialSelections={initialValues.selections} />
                 ) : activeTab === "blog" ? (
-                  <BlogPromptCrafter onPromptGenerated={handlePromptGenerated} />
+                  <BlogPromptCrafter onPromptGenerated={handlePromptGenerated} initialSubject={initialValues.subject} initialSelections={initialValues.selections} />
                 ) : activeTab === "business" ? (
-                  <BusinessStrategyPromptCrafter onPromptGenerated={handlePromptGenerated} />
+                  <BusinessStrategyPromptCrafter onPromptGenerated={handlePromptGenerated} initialSubject={initialValues.subject} initialSelections={initialValues.selections} />
                 ) : activeTab === "cta" ? (
-                  <CTAPromptCrafter onPromptGenerated={handlePromptGenerated} />
+                  <CTAPromptCrafter onPromptGenerated={handlePromptGenerated} initialSubject={initialValues.subject} initialSelections={initialValues.selections} />
                 ) : activeTab === "event" ? (
-                  <EventPromptCrafter onPromptGenerated={handlePromptGenerated} />
+                  <EventPromptCrafter onPromptGenerated={handlePromptGenerated} initialSubject={initialValues.subject} initialSelections={initialValues.selections} />
                 ) : activeTab === "image" ? (
-                  <PromptCrafter onPromptGenerated={handlePromptGenerated} />
+                  <PromptCrafter onPromptGenerated={handlePromptGenerated} initialSubject={initialValues.subject} initialSelections={initialValues.selections} />
                 ) : activeTab === "job" ? (
-                  <JobApplicationPromptCrafter onPromptGenerated={handlePromptGenerated} />
+                  <JobApplicationPromptCrafter onPromptGenerated={handlePromptGenerated} initialSubject={initialValues.subject} initialSelections={initialValues.selections} />
                 ) : activeTab === "learning" ? (
-                  <LearningStudyPromptCrafter onPromptGenerated={handlePromptGenerated} />
+                  <LearningStudyPromptCrafter onPromptGenerated={handlePromptGenerated} initialSubject={initialValues.subject} initialSelections={initialValues.selections} />
                 ) : activeTab === "productivity" ? (
-                  <ProductivityWorkflowPromptCrafter onPromptGenerated={handlePromptGenerated} />
+                  <ProductivityWorkflowPromptCrafter onPromptGenerated={handlePromptGenerated} initialSubject={initialValues.subject} initialSelections={initialValues.selections} />
                 ) : activeTab === "research" ? (
-                  <ResearchPromptCrafter onPromptGenerated={handlePromptGenerated} />
+                  <ResearchPromptCrafter onPromptGenerated={handlePromptGenerated} initialSubject={initialValues.subject} initialSelections={initialValues.selections} />
                 ) : activeTab === "salesemail" ? (
-                  <SalesEmailPromptCrafter onPromptGenerated={handlePromptGenerated} />
+                  <SalesEmailPromptCrafter onPromptGenerated={handlePromptGenerated} initialSubject={initialValues.subject} initialSelections={initialValues.selections} />
                 ) : activeTab === "storytelling" ? (
-                  <StorytellingPromptCrafter onPromptGenerated={handlePromptGenerated} />
+                  <StorytellingPromptCrafter onPromptGenerated={handlePromptGenerated} initialSubject={initialValues.subject} initialSelections={initialValues.selections} />
                 ) : (
-                  <VideoScriptPromptCrafter onPromptGenerated={handlePromptGenerated} />
+                  <VideoScriptPromptCrafter onPromptGenerated={handlePromptGenerated} initialSubject={initialValues.subject} initialSelections={initialValues.selections} />
                 )}
               </CardContent>
             </Card>

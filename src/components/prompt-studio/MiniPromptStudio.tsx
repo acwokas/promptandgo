@@ -275,14 +275,35 @@ const MiniPromptStudio = () => {
   };
 
   const handleTryStudio = () => {
+    // Create proper tab mapping between MiniPromptStudio and PromptStudio
+    const tabMapping: Record<CrafterType, string> = {
+      "image": "image",
+      "event": "event", 
+      "cta": "cta",
+      "blog": "blog",
+      "job-application": "job",
+      "learning": "learning",
+      "business-strategy": "business",
+      "storytelling": "storytelling", 
+      "productivity": "productivity",
+      "ad-copy": "adcopy",
+      "sales-email": "salesemail",
+      "video-script": "video",
+      "research": "research"
+    };
+
     // Navigate to full studio with selections as URL params
     const params = new URLSearchParams();
-    params.set('tab', activeCrafter);
+    params.set('tab', tabMapping[activeCrafter] || activeCrafter);
+    
     if (subject.trim()) params.set('subject', subject.trim());
+    if (generatedPrompt.trim()) params.set('prompt', generatedPrompt.trim());
+    
     Object.entries(selections).forEach(([key, value]) => {
       if (value) params.set(key, value);
     });
-    navigate(`/ai/studio?${params.toString()}`);
+    
+    navigate(`/studio?${params.toString()}`);
   };
 
   const hasContent = subject.trim() || Object.values(selections).some(value => value);
