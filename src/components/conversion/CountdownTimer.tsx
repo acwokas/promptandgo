@@ -152,43 +152,27 @@ const CountdownTimer = ({
     );
   }
 
-  // Default banner variant
+  // Default banner variant - Force visible on mobile for debugging
   return (
-    <div className="bg-gradient-to-r from-destructive to-destructive/80 text-destructive-foreground">
+    <div className="bg-gradient-to-r from-destructive to-destructive/80 text-destructive-foreground block">
       <div className="container px-4 py-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
+          <div className="flex items-center gap-3 w-full sm:w-auto">
             <div className="flex items-center gap-2">
               <Zap className="h-5 w-5 animate-pulse" />
-              <span className="font-semibold">{offer}</span>
-            </div>
-            <div className="hidden sm:flex items-center gap-2 text-sm">
-              <Clock className="h-4 w-4" />
-              <span>Ends in:</span>
-              <div className="flex gap-1">
-                <div className="bg-white/20 rounded px-2 py-1 text-xs font-mono">
-                  {String(timeLeft.hours).padStart(2, '0')}h
-                </div>
-                <div className="bg-white/20 rounded px-2 py-1 text-xs font-mono">
-                  {String(timeLeft.minutes).padStart(2, '0')}m
-                </div>
-                <div className="bg-white/20 rounded px-2 py-1 text-xs font-mono">
-                  {String(timeLeft.seconds).padStart(2, '0')}s
-                </div>
-              </div>
+              <span className="font-semibold text-sm sm:text-base">{offer}</span>
             </div>
           </div>
           
-          <Button asChild size="sm" variant="secondary" className="shrink-0">
+          <Button asChild size="sm" variant="secondary" className="shrink-0 w-full sm:w-auto">
             <Link to="/packs">
-              <span className="hidden sm:inline">Claim Offer</span>
-              <span className="sm:hidden">Claim</span>
+              Claim Offer Now
             </Link>
           </Button>
         </div>
         
-        {/* Mobile timer */}
-        <div className="sm:hidden flex items-center justify-center gap-2 mt-2 text-sm">
+        {/* Mobile timer - Always visible */}
+        <div className="flex items-center justify-center gap-2 mt-2 text-sm">
           <Clock className="h-4 w-4" />
           <span>Ends in:</span>
           <div className="flex gap-1">
