@@ -78,7 +78,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
             onChange={(e) => onChange({ query: e.target.value })}
             placeholder={searchPlaceholder ?? "Search prompts..."}
             aria-label={searchLabel ?? "Search prompts"}
-            className="bg-muted/60 border shadow-sm focus:ring-2 focus:ring-ring h-8 text-sm px-3 py-1"
+            className="bg-muted/60 border border-primary shadow-sm focus:ring-2 focus:ring-ring h-8 text-sm px-3 py-1"
           />
         </div>
 
@@ -248,7 +248,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
             onChange={(e) => onChange({ query: e.target.value })}
             placeholder={searchPlaceholder ?? "Search prompts..."}
             aria-label={searchLabel ?? "Search prompts"}
-            className="bg-muted/60 border shadow-sm focus:ring-2 focus:ring-ring"
+            className="bg-muted/60 border border-primary shadow-sm focus:ring-2 focus:ring-ring"
           />
         </div>
 
