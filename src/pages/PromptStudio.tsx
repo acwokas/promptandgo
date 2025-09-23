@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Link } from "react-router-dom";
-import { Wand2, Image, Copy, CheckCheck, ArrowRight, Palette, Camera, Sparkles, ChevronDown, Zap, FileText, Briefcase, Megaphone, Calendar, Target, GraduationCap, CheckSquare, Search, Mail, BookOpen, Video, Monitor } from "lucide-react";
+import { Wand2, Image, Copy, CheckCheck, ArrowRight, Palette, Camera, Sparkles, ChevronDown, Zap, FileText, Briefcase, Megaphone, Calendar, Target, GraduationCap, CheckSquare, Search, Mail, BookOpen, Video, Monitor, Layers } from "lucide-react";
 import CountdownTimer from "@/components/conversion/CountdownTimer";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { PromptCrafter } from "@/components/prompt-studio/PromptCrafter";
@@ -22,6 +22,7 @@ import { BusinessStrategyPromptCrafter } from "@/components/prompt-studio/Busine
 import { StorytellingPromptCrafter } from "@/components/prompt-studio/StorytellingPromptCrafter";
 import { ProductivityWorkflowPromptCrafter } from "@/components/prompt-studio/ProductivityWorkflowPromptCrafter";
 import PresentationPromptCrafter from "@/components/prompt-studio/PresentationPromptCrafter";
+import VisualPresentationPromptCrafter from "@/components/prompt-studio/VisualPresentationPromptCrafter";
 import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
@@ -33,7 +34,7 @@ import { AiResponseModal } from "@/components/ai/AiResponseModal";
 
 const PromptStudioPage = () => {
   const [searchParams] = useSearchParams();
-  const [activeTab, setActiveTab] = useState<"adcopy" | "blog" | "business" | "cta" | "event" | "image" | "job" | "learning" | "presentation" | "productivity" | "research" | "salesemail" | "storytelling" | "video">("adcopy");
+  const [activeTab, setActiveTab] = useState<"adcopy" | "blog" | "business" | "cta" | "event" | "image" | "job" | "learning" | "presentation" | "productivity" | "research" | "salesemail" | "storytelling" | "video" | "visual">("adcopy");
   const [generatedPrompt, setGeneratedPrompt] = useState("");
   const [copied, setCopied] = useState(false);
   const [aiResponse, setAiResponse] = useState("");
@@ -237,7 +238,7 @@ const PromptStudioPage = () => {
                       Select a prompt type and let our AI studio guide you through crafting the perfect prompt
                     </p>
                     
-                    <Select value={activeTab} onValueChange={(value) => setActiveTab(value as "adcopy" | "blog" | "business" | "cta" | "event" | "image" | "job" | "learning" | "presentation" | "productivity" | "research" | "salesemail" | "storytelling" | "video")}>
+                    <Select value={activeTab} onValueChange={(value) => setActiveTab(value as "adcopy" | "blog" | "business" | "cta" | "event" | "image" | "job" | "learning" | "presentation" | "productivity" | "research" | "salesemail" | "storytelling" | "video" | "visual")}>
                       <SelectTrigger className="w-full max-w-md mx-auto h-14 bg-background/80 border-2 border-primary/30 hover:border-primary/50 transition-all duration-300 shadow-lg hover:shadow-xl rounded-xl backdrop-blur-sm">
                         <div className="flex items-center gap-3">
                           <div className="w-2 h-2 rounded-full bg-gradient-primary"></div>
@@ -329,6 +330,12 @@ const PromptStudioPage = () => {
                       <span>Video Script</span>
                     </div>
                   </SelectItem>
+                  <SelectItem value="visual" className="cursor-pointer hover:bg-muted/80">
+                    <div className="flex items-center gap-3">
+                      <Layers className="h-4 w-4 text-primary" />
+                      <span>Visual Presentation Design</span>
+                    </div>
+                  </SelectItem>
                 </SelectContent>
                 </Select>
                   </div>
@@ -367,10 +374,12 @@ const PromptStudioPage = () => {
                       <Search className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
                     ) : activeTab === "salesemail" ? (
                       <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
-                    ) : activeTab === "storytelling" ? (
-                      <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
-                    ) : (
-                      <Video className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                     ) : activeTab === "storytelling" ? (
+                       <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                     ) : activeTab === "video" ? (
+                       <Video className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                     ) : (
+                       <Layers className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
                     )}
                   </div>
                   <div className="min-w-0 flex-1">
@@ -388,7 +397,8 @@ const PromptStudioPage = () => {
                        activeTab === "research" ? "Research Prompt Crafter" :
                        activeTab === "salesemail" ? "Sales Email Prompt Crafter" :
                        activeTab === "storytelling" ? "Storytelling Prompt Crafter" :
-                       "Video Script Prompt Crafter"}
+                       activeTab === "video" ? "Video Script Prompt Crafter" :
+                       "Visual Presentation Design Prompt Crafter"}
                     </CardTitle>
                     <CardDescription className="text-sm">
                       {activeTab === "adcopy" ? "Craft high-converting ad copy across platforms" :
@@ -404,7 +414,8 @@ const PromptStudioPage = () => {
                        activeTab === "research" ? "Generate detailed prompts for structured research" :
                        activeTab === "salesemail" ? "Build tailored sales outreach and follow-up emails" :
                        activeTab === "storytelling" ? "Craft creative writing prompts for fiction, non-fiction, or presentation narratives" :
-                       "Generate structured video prompts for ads and content"}
+                       activeTab === "video" ? "Generate structured video prompts for ads and content" :
+                       "Design visually stunning slide deck concepts with layout and visual direction"}
                     </CardDescription>
                   </div>
                 </div>
@@ -436,8 +447,10 @@ const PromptStudioPage = () => {
                   <SalesEmailPromptCrafter onPromptGenerated={handlePromptGenerated} initialSubject={initialValues.subject} initialSelections={initialValues.selections} />
                 ) : activeTab === "storytelling" ? (
                   <StorytellingPromptCrafter onPromptGenerated={handlePromptGenerated} initialSubject={initialValues.subject} initialSelections={initialValues.selections} />
-                ) : (
+                ) : activeTab === "video" ? (
                   <VideoScriptPromptCrafter onPromptGenerated={handlePromptGenerated} initialSubject={initialValues.subject} initialSelections={initialValues.selections} />
+                ) : (
+                  <VisualPresentationPromptCrafter onPromptGenerated={handlePromptGenerated} initialSubject={initialValues.subject} initialSelections={initialValues.selections} />
                 )}
               </CardContent>
             </Card>

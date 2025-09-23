@@ -757,6 +757,77 @@ export const presentationPromptOptions = {
   ] as PromptOption[]
 };
 
+// Visual Presentation Design Prompt Options
+export const visualPresentationPromptOptions = {
+  objectives: [
+    { value: "marketing-pitch", label: "Marketing Pitch" },
+    { value: "creative-proposal", label: "Creative Proposal" },
+    { value: "inspirational-keynote", label: "Inspirational Keynote" },
+    { value: "brand-presentation", label: "Brand Presentation" },
+    { value: "product-showcase", label: "Product Showcase" },
+    { value: "design-portfolio", label: "Design Portfolio" },
+    { value: "vision-statement", label: "Vision Statement" }
+  ] as PromptOption[],
+  audiences: [
+    { value: "clients", label: "Clients" },
+    { value: "investors", label: "Investors" },
+    { value: "internal-team", label: "Internal Team" },
+    { value: "creative-directors", label: "Creative Directors" },
+    { value: "stakeholders", label: "Stakeholders" },
+    { value: "design-community", label: "Design Community" },
+    { value: "general-audience", label: "General Audience" }
+  ] as PromptOption[],
+  styles: [
+    { value: "sleek-corporate", label: "Sleek Corporate" },
+    { value: "minimalist", label: "Minimalist" },
+    { value: "bold-colorful", label: "Bold & Colorful" },
+    { value: "futuristic", label: "Futuristic" },
+    { value: "organic-natural", label: "Organic & Natural" },
+    { value: "vintage-retro", label: "Vintage & Retro" },
+    { value: "editorial-magazine", label: "Editorial/Magazine Style" }
+  ] as PromptOption[],
+  formats: [
+    { value: "slide-outline", label: "Slide-by-Slide Design Outline" },
+    { value: "visual-framework", label: "Visual Framework Only" },
+    { value: "design-system", label: "Complete Design System" },
+    { value: "layout-templates", label: "Layout Templates" }
+  ] as PromptOption[],
+  visualTypes: [
+    { value: "photography", label: "Photography" },
+    { value: "illustrations", label: "Illustrations" },
+    { value: "data-visualizations", label: "Data Visualizations" },
+    { value: "infographics", label: "Infographics" },
+    { value: "icons-symbols", label: "Icons & Symbols" },
+    { value: "abstract-graphics", label: "Abstract Graphics" },
+    { value: "video-animations", label: "Video & Animations" }
+  ] as PromptOption[],
+  storytellingApproaches: [
+    { value: "visual-metaphors", label: "Visual Metaphors" },
+    { value: "progressive-reveal", label: "Progressive Reveal" },
+    { value: "before-after", label: "Before & After" },
+    { value: "journey-mapping", label: "Journey Mapping" },
+    { value: "comparison-contrast", label: "Comparison & Contrast" },
+    { value: "emotional-arc", label: "Emotional Arc" }
+  ] as PromptOption[],
+  colorPalettes: [
+    { value: "monochromatic", label: "Monochromatic" },
+    { value: "complementary", label: "Complementary" },
+    { value: "triadic", label: "Triadic" },
+    { value: "brand-colors", label: "Brand Colors" },
+    { value: "earth-tones", label: "Earth Tones" },
+    { value: "bright-vibrant", label: "Bright & Vibrant" },
+    { value: "muted-pastels", label: "Muted Pastels" }
+  ] as PromptOption[],
+  typography: [
+    { value: "modern-sans", label: "Modern Sans-serif" },
+    { value: "elegant-serif", label: "Elegant Serif" },
+    { value: "bold-display", label: "Bold Display" },
+    { value: "minimal-clean", label: "Minimal & Clean" },
+    { value: "creative-custom", label: "Creative & Custom" },
+    { value: "traditional-classic", label: "Traditional & Classic" }
+  ] as PromptOption[]
+};
+
 // Research Prompt Options
 export const researchPromptOptions = {
   researchGoals: [
