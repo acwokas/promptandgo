@@ -313,7 +313,7 @@ const Index = () => {
         </PageHero>
 
         {/* Social Proof + Today's Featured */}
-        <section className="container py-8">
+        <section className="container py-6">
           <div className="relative overflow-hidden bg-gradient-to-r from-primary/10 via-accent/5 to-primary/10 rounded-2xl border border-primary/20 max-w-5xl mx-auto">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5" />
             <div className="relative px-6 py-4">
