@@ -82,6 +82,15 @@ const CountdownTimer = ({
     return () => clearInterval(timer);
   }, [expiryHours]);
 
+  // Debug logging for mobile issue
+  console.log('CountdownTimer debug:', {
+    isVisible,
+    isSubscribed,
+    subscriptionLoading,
+    settings,
+    shouldRender: isVisible && !isSubscribed && !subscriptionLoading
+  });
+
   // Don't render if disabled in settings, user is subscribed, or still loading subscription status
   if (!isVisible || isSubscribed || subscriptionLoading) {
     return null;
