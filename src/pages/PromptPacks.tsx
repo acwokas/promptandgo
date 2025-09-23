@@ -513,7 +513,7 @@ const PromptPacks = () => {
                       ${(PACK_DISCOUNT_CENTS / 100).toFixed(2)} <span className="text-sm line-through text-muted-foreground">${(PACK_ORIGINAL_CENTS / 100).toFixed(2)}</span>
                     </div>
                     <Button 
-                      variant="outline" 
+                      variant="secondary" 
                       className="w-full"
                       onClick={() => {
                         const element = document.getElementById("popular-power-packs");
