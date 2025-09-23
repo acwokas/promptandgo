@@ -171,10 +171,17 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
                       </div>
                     </DropdownMenuItem>
                   ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+              </DropdownMenuContent>
+            </DropdownMenu>
 
-              {/* Show the optimized prompt */}
+            {/* Demo explanation */}
+            <div className="text-center mb-4">
+              <p className="text-sm text-muted-foreground">
+                ↑ Try selecting different AI platforms to see Scout optimize the same prompt
+              </p>
+            </div>
+
+            {/* Show the optimized prompt */}
               <div className="bg-muted/30 rounded-lg p-4 border-2 border-dashed border-primary/20 min-h-[120px]">
                 <div className="flex items-center gap-2 mb-3">
                   <Bot className="h-4 w-4 text-primary" />
@@ -188,13 +195,6 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
           </div>
         </CardContent>
       </Card>
-      
-      {/* Demo explanation */}
-      <div className="mt-4 text-center">
-        <p className="text-sm text-muted-foreground">
-          ↑ Try selecting different AI platforms to see Scout optimize the same prompt
-        </p>
-      </div>
     </div>
   );
 };
