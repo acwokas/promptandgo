@@ -1010,9 +1010,9 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
             <div className="bg-muted/30 rounded-lg p-4 border-2 border-dashed border-primary/20 min-h-[120px] mb-4 relative">
               <div className="flex items-center gap-2 mb-3">
                 <Bot className="h-4 w-4 text-primary" />
-                <span className="text-sm font-medium text-primary">
-                  {selectedAIPlatform === 'original' ? 'Original Prompt' : `Optimized for ${selectedProviderData?.name}`}
-                </span>
+                 <span className="text-sm font-medium text-primary">
+                   {selectedAIPlatform === 'original' ? 'Core Prompt' : `Optimized for ${selectedProviderData?.name}`}
+                 </span>
               </div>
               <p className="text-sm text-foreground leading-relaxed whitespace-pre-line">
                 {displayPrompt}
