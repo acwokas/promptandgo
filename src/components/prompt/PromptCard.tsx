@@ -909,7 +909,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
 
           {/* AI Provider Selection */}
           <div className="overflow-hidden">
-            <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg p-4 mb-4 border border-primary/20">
+            <div className="rounded-lg p-4 mb-4 border border-primary/20">
               <p className="font-semibold text-foreground mb-3 flex items-center gap-2">
                 <Bot className="h-4 w-4 text-primary" />
                 Platform-optimized prompt:
