@@ -1002,7 +1002,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
             {/* Demo explanation */}
             <div className="text-center mb-4">
               <p className="text-sm text-muted-foreground">
-                ↑ Try selecting different AI platforms to see Scout optimize the same prompt
+                ↑ Try selecting different AI platforms to see Scout optimize the same prompt below
               </p>
             </div>
 
