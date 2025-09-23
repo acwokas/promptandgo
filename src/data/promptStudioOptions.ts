@@ -707,6 +707,72 @@ export const videoScriptPromptOptions = {
   ] as PromptOption[]
 };
 
+// Pitch Deck Prompt Options
+export const pitchDeckPromptOptions = {
+  objectives: [
+    { value: "series-a", label: "Raise Series A Funding" },
+    { value: "seed-funding", label: "Secure Seed Funding" },
+    { value: "pre-seed", label: "Pre-Seed Funding" },
+    { value: "client-partnership", label: "Secure Client Partnership" },
+    { value: "product-sales", label: "Sell a Product/Service" },
+    { value: "strategic-partnership", label: "Strategic Partnership" },
+    { value: "acquisition", label: "Acquisition Proposal" }
+  ] as PromptOption[],
+  audiences: [
+    { value: "vcs", label: "Venture Capitalists (VCs)" },
+    { value: "angel-investors", label: "Angel Investors" },
+    { value: "enterprise-clients", label: "Enterprise Clients" },
+    { value: "strategic-partners", label: "Strategic Partners" },
+    { value: "private-equity", label: "Private Equity" },
+    { value: "corporate-investors", label: "Corporate Investors" },
+    { value: "government-agencies", label: "Government Agencies" }
+  ] as PromptOption[],
+  lengths: [
+    { value: "8-10", label: "8-10 slides (Short pitch)" },
+    { value: "10-12", label: "10-12 slides (Standard)" },
+    { value: "12-15", label: "12-15 slides (Detailed)" },
+    { value: "15-20", label: "15-20 slides (Comprehensive)" }
+  ] as PromptOption[],
+  tones: [
+    { value: "professional", label: "Professional" },
+    { value: "bold", label: "Bold & Confident" },
+    { value: "inspirational", label: "Inspirational" },
+    { value: "minimalist", label: "Minimalist" },
+    { value: "data-driven", label: "Data-Driven" },
+    { value: "storytelling", label: "Storytelling-Focused" }
+  ] as PromptOption[],
+  fundingStages: [
+    { value: "pre-seed", label: "Pre-Seed ($50K - $250K)" },
+    { value: "seed", label: "Seed ($250K - $2M)" },
+    { value: "series-a", label: "Series A ($2M - $15M)" },
+    { value: "series-b", label: "Series B ($10M - $50M)" },
+    { value: "later-stage", label: "Later Stage ($50M+)" },
+    { value: "not-applicable", label: "Not Applicable" }
+  ] as PromptOption[],
+  industries: [
+    { value: "saas", label: "SaaS/Software" },
+    { value: "fintech", label: "FinTech" },
+    { value: "healthtech", label: "HealthTech" },
+    { value: "edtech", label: "EdTech" },
+    { value: "ecommerce", label: "E-commerce" },
+    { value: "marketplace", label: "Marketplace" },
+    { value: "ai-ml", label: "AI/Machine Learning" },
+    { value: "hardware", label: "Hardware/IoT" },
+    { value: "biotech", label: "Biotech" },
+    { value: "cleantech", label: "CleanTech" }
+  ] as PromptOption[],
+  businessModels: [
+    { value: "subscription", label: "Subscription/SaaS" },
+    { value: "marketplace", label: "Marketplace" },
+    { value: "freemium", label: "Freemium" },
+    { value: "transaction", label: "Transaction-based" },
+    { value: "advertising", label: "Advertising" },
+    { value: "licensing", label: "Licensing" },
+    { value: "hardware-sales", label: "Hardware Sales" },
+    { value: "consulting", label: "Consulting/Services" }
+  ] as PromptOption[]
+};
+
 // Presentation Prompt Options
 export const presentationPromptOptions = {
   objectives: [

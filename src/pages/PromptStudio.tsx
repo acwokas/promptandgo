@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Link } from "react-router-dom";
-import { Wand2, Image, Copy, CheckCheck, ArrowRight, Palette, Camera, Sparkles, ChevronDown, Zap, FileText, Briefcase, Megaphone, Calendar, Target, GraduationCap, CheckSquare, Search, Mail, BookOpen, Video, Monitor, Layers } from "lucide-react";
+import { Wand2, Image, Copy, CheckCheck, ArrowRight, Palette, Camera, Sparkles, ChevronDown, Zap, FileText, Briefcase, Megaphone, Calendar, Target, GraduationCap, CheckSquare, Search, Mail, BookOpen, Video, Monitor, Layers, Presentation } from "lucide-react";
 import CountdownTimer from "@/components/conversion/CountdownTimer";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { PromptCrafter } from "@/components/prompt-studio/PromptCrafter";
@@ -22,6 +22,7 @@ import { BusinessStrategyPromptCrafter } from "@/components/prompt-studio/Busine
 import { StorytellingPromptCrafter } from "@/components/prompt-studio/StorytellingPromptCrafter";
 import { ProductivityWorkflowPromptCrafter } from "@/components/prompt-studio/ProductivityWorkflowPromptCrafter";
 import PresentationPromptCrafter from "@/components/prompt-studio/PresentationPromptCrafter";
+import PitchDeckPromptCrafter from "@/components/prompt-studio/PitchDeckPromptCrafter";
 import VisualPresentationPromptCrafter from "@/components/prompt-studio/VisualPresentationPromptCrafter";
 import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -34,7 +35,7 @@ import { AiResponseModal } from "@/components/ai/AiResponseModal";
 
 const PromptStudioPage = () => {
   const [searchParams] = useSearchParams();
-  const [activeTab, setActiveTab] = useState<"adcopy" | "blog" | "business" | "cta" | "event" | "image" | "job" | "learning" | "presentation" | "productivity" | "research" | "salesemail" | "storytelling" | "video" | "visual">("adcopy");
+  const [activeTab, setActiveTab] = useState<"adcopy" | "blog" | "business" | "cta" | "event" | "image" | "job" | "learning" | "pitchdeck" | "presentation" | "productivity" | "research" | "salesemail" | "storytelling" | "video" | "visual">("adcopy");
   const [generatedPrompt, setGeneratedPrompt] = useState("");
   const [copied, setCopied] = useState(false);
   const [aiResponse, setAiResponse] = useState("");
@@ -238,7 +239,7 @@ const PromptStudioPage = () => {
                       Select a prompt type and let our AI studio guide you through crafting the perfect prompt
                     </p>
                     
-                    <Select value={activeTab} onValueChange={(value) => setActiveTab(value as "adcopy" | "blog" | "business" | "cta" | "event" | "image" | "job" | "learning" | "presentation" | "productivity" | "research" | "salesemail" | "storytelling" | "video" | "visual")}>
+                    <Select value={activeTab} onValueChange={(value) => setActiveTab(value as "adcopy" | "blog" | "business" | "cta" | "event" | "image" | "job" | "learning" | "pitchdeck" | "presentation" | "productivity" | "research" | "salesemail" | "storytelling" | "video" | "visual")}>
                       <SelectTrigger className="w-full max-w-md mx-auto h-14 bg-background/80 border-2 border-primary/30 hover:border-primary/50 transition-all duration-300 shadow-lg hover:shadow-xl rounded-xl backdrop-blur-sm">
                         <div className="flex items-center gap-3">
                           <div className="w-2 h-2 rounded-full bg-gradient-primary"></div>
@@ -292,6 +293,12 @@ const PromptStudioPage = () => {
                     <div className="flex items-center gap-3">
                       <GraduationCap className="h-4 w-4 text-primary" />
                       <span>Learning & Study</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="pitchdeck" className="cursor-pointer hover:bg-muted/80">
+                    <div className="flex items-center gap-3">
+                      <Presentation className="h-4 w-4 text-primary" />
+                      <span>Pitch Deck</span>
                     </div>
                   </SelectItem>
                   <SelectItem value="presentation" className="cursor-pointer hover:bg-muted/80">
@@ -364,8 +371,10 @@ const PromptStudioPage = () => {
                       <Image className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
                     ) : activeTab === "job" ? (
                       <Target className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
-                    ) : activeTab === "learning" ? (
-                      <GraduationCap className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                     ) : activeTab === "learning" ? (
+                       <GraduationCap className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                     ) : activeTab === "pitchdeck" ? (
+                       <Presentation className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
                      ) : activeTab === "presentation" ? (
                        <Monitor className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
                      ) : activeTab === "productivity" ? (
@@ -392,6 +401,7 @@ const PromptStudioPage = () => {
                        activeTab === "image" ? "Image Prompt Crafter" :
                        activeTab === "job" ? "Job Application Prompt Crafter" :
                        activeTab === "learning" ? "Learning & Study Prompt Crafter" :
+                       activeTab === "pitchdeck" ? "Pitch Deck Prompt Crafter" :
                        activeTab === "presentation" ? "Presentation Prompt Crafter" :
                        activeTab === "productivity" ? "Productivity & Workflow Prompt Crafter" :
                        activeTab === "research" ? "Research Prompt Crafter" :
@@ -409,6 +419,7 @@ const PromptStudioPage = () => {
                        activeTab === "image" ? "Build the perfect image prompt with guided selections" :
                        activeTab === "job" ? "Build professional prompts for CV tailoring, cover letters, or interview preparation" :
                        activeTab === "learning" ? "Create prompts for study guides, flashcards, or simplifying complex concepts" :
+                       activeTab === "pitchdeck" ? "Design powerful, investor-ready pitch decks with structured slide outlines" :
                        activeTab === "presentation" ? "Design engaging, structured presentations with slide-by-slide guidance" :
                        activeTab === "productivity" ? "Generate prompts for task planning, prioritisation, and workflow optimisation" :
                        activeTab === "research" ? "Generate detailed prompts for structured research" :
@@ -437,6 +448,8 @@ const PromptStudioPage = () => {
                   <JobApplicationPromptCrafter onPromptGenerated={handlePromptGenerated} initialSubject={initialValues.subject} initialSelections={initialValues.selections} />
                 ) : activeTab === "learning" ? (
                   <LearningStudyPromptCrafter onPromptGenerated={handlePromptGenerated} initialSubject={initialValues.subject} initialSelections={initialValues.selections} />
+                ) : activeTab === "pitchdeck" ? (
+                  <PitchDeckPromptCrafter onPromptGenerated={handlePromptGenerated} initialSubject={initialValues.subject} initialSelections={initialValues.selections} />
                 ) : activeTab === "presentation" ? (
                   <PresentationPromptCrafter onPromptGenerated={handlePromptGenerated} initialSubject={initialValues.subject} initialSelections={initialValues.selections} />
                 ) : activeTab === "productivity" ? (
