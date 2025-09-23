@@ -517,7 +517,7 @@ const Index = () => {
         </section>
 
         {/* Testimonials Section */}
-        <section className="container pt-6 pb-12">
+        <section className="container py-6">
           <div className="grid gap-6 md:grid-cols-3">
             <Card className="bg-gradient-to-br from-primary/5 to-transparent">
               <CardContent className="p-6">
@@ -591,7 +591,7 @@ const Index = () => {
         </section>
 
         {/* Newsletter Section - Full Width */}
-        <section className="py-12 bg-gradient-to-br from-primary/5 to-accent/5">
+        <section className="py-6 bg-gradient-to-br from-primary/5 to-accent/5">
           <div className="container mx-auto">
             {/* Newsletter Signup - Only show if user is not logged in or not subscribed to newsletter */}
             {/* If logged in and newsletter subscribed, show matched power packs instead */}
