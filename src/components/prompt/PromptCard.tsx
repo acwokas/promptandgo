@@ -996,6 +996,13 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               </DropdownMenuContent>
             </DropdownMenu>
 
+            {/* Demo explanation */}
+            <div className="text-center mb-4">
+              <p className="text-sm text-muted-foreground">
+                ↑ Try selecting different AI platforms to see Scout optimize the same prompt
+              </p>
+            </div>
+
             {/* Optimized Prompt Display */}
             <div className="bg-muted/30 rounded-lg p-4 border-2 border-dashed border-primary/20 min-h-[120px] mb-4 relative">
               <div className="flex items-center gap-2 mb-3">
