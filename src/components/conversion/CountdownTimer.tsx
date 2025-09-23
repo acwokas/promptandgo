@@ -104,8 +104,8 @@ const CountdownTimer = ({
     shouldRender: isVisible && !isSubscribed && !subscriptionLoading
   });
 
-  // Don't render if disabled in settings, user is subscribed, or still loading subscription status
-  if (!isVisible || isSubscribed || subscriptionLoading) {
+  // Temporarily bypass subscription check for debugging
+  if (!isVisible) {
     return null;
   }
 
