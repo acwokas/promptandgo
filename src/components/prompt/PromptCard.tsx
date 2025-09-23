@@ -1019,7 +1019,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               </p>
               
               {showLock && (
-                <div className="absolute inset-0 rounded-lg bg-blue-50/90 border border-blue-200/50 flex flex-col items-center justify-center min-h-full p-3 sm:p-8">
+                <div className="absolute inset-0 rounded-lg bg-blue-50/95 border border-blue-200/50 flex flex-col items-center justify-center min-h-full p-3 sm:p-8">
                   <div className="text-center space-y-6 sm:space-y-8 w-full max-w-lg">
                     <div className="inline-flex items-center gap-2 text-sm font-medium px-5 py-3 rounded-full bg-white border border-gray-200 text-foreground shadow-sm">
                       <Lock className="h-4 w-4" aria-hidden />
@@ -1034,8 +1034,8 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                       </div>
                     </div>
                     <div className="flex flex-col gap-4 w-full">
-                      <Button size="lg" className="w-full bg-blue-500 hover:bg-blue-600 text-white py-4 text-base font-semibold" onClick={addPromptToCart}>Buy Prompt {fmtUSD(PROMPT_DISCOUNT_CENTS)}</Button>
-                      <Button size="lg" variant="outline" className="w-full py-4 text-base font-semibold border-gray-300 text-foreground hover:bg-gray-50" onClick={handleSubscribeClick}>Subscribe for {fmtUSD(SUB_DISCOUNT_CENTS)}/mo</Button>
+                      <Button size="lg" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 text-base font-semibold shadow-none" onClick={addPromptToCart}>Buy Prompt {fmtUSD(PROMPT_DISCOUNT_CENTS)}</Button>
+                      <Button size="lg" variant="outline" className="w-full py-4 text-base font-semibold border-gray-300 bg-white text-foreground hover:bg-gray-50" onClick={handleSubscribeClick}>Subscribe for {fmtUSD(SUB_DISCOUNT_CENTS)}/mo</Button>
                     </div>
                   </div>
                 </div>
