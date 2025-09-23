@@ -7,7 +7,7 @@ import type { Prompt, Category } from "@/data/prompts";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useLoginWidget } from "@/hooks/useLoginWidget";
-import { Heart, Lock, Copy, MessageSquare, Megaphone, ShoppingBag, BarChart2, Briefcase, User, HeartPulse, Clock, Sparkles, Tag, CheckCircle, Star, Wand2, Send, ExternalLink, Bot } from "lucide-react";
+import { Heart, Lock, Copy, MessageSquare, Megaphone, ShoppingBag, BarChart2, Briefcase, User, HeartPulse, Clock, Sparkles, Tag, CheckCircle, Star, Wand2, Send, ExternalLink, Bot, ChevronDown } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Link, useNavigate } from "react-router-dom";
@@ -820,353 +820,388 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
     return <Tag className="h-3.5 w-3.5" aria-hidden />;
   };
 
+  // Helper function to get provider color
+  const getProviderColor = (providerId: string) => {
+    const colorMap: Record<string, string> = {
+      'chatgpt': 'bg-green-100 text-green-600',
+      'claude': 'bg-purple-100 text-purple-600',
+      'gemini': 'bg-yellow-100 text-yellow-600',
+      'deepseek': 'bg-indigo-100 text-indigo-600',
+      'groq': 'bg-red-100 text-red-600',
+      'mistral': 'bg-orange-100 text-orange-600',
+      'llama': 'bg-pink-100 text-pink-600',
+      'perplexity': 'bg-teal-100 text-teal-600',
+      'zenochat': 'bg-cyan-100 text-cyan-600',
+      'midjourney': 'bg-violet-100 text-violet-600',
+      'ideogram': 'bg-emerald-100 text-emerald-600'
+    };
+    return colorMap[providerId] || 'bg-blue-100 text-blue-600';
+  };
+
   return (
     <>
-    <Card className={cn("relative overflow-hidden h-full transition animate-float-in hover:shadow-glow-strong border", categoryBgClass)}>
-      <CardHeader>
-        <div className="mb-2 flex gap-2 flex-wrap">
-          {(prompt as any).ribbon === "RECOMMENDED" && (
-            <div className="recommended-ribbon inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-primary text-primary-foreground">
-              <Sparkles className="h-3.5 w-3.5" aria-hidden />
-              <span>RECOMMENDED</span>
-            </div>
+    <Card className="border-2 border-primary/20 shadow-lg hover:shadow-xl transition-shadow max-w-full overflow-hidden">
+      <CardHeader className="pb-4">
+        <div className="flex items-start justify-between mb-3">
+          {!isPro && (
+            <Badge className="bg-green-100 text-green-700 hover:bg-green-100">
+              <CheckCircle className="h-3 w-3 mr-1" />
+              FREE
+            </Badge>
           )}
           {isPro && !hasAccess && (
-            <div className="pro-ribbon inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold">
-              <Lock className="h-3.5 w-3.5" aria-hidden />
-              <span>PRO</span>
-            </div>
+            <Badge className="bg-purple-100 text-purple-700 hover:bg-purple-100">
+              <Lock className="h-3 w-3 mr-1" />
+              PRO
+            </Badge>
           )}
-          {!isPro && (
-            <div className="free-ribbon inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold">
-              <CheckCircle className="h-3.5 w-3.5" aria-hidden />
-              <span>FREE</span>
-            </div>
-          )}
-        </div>
-        <div className="flex items-center gap-2 flex-wrap text-xs">
-          {category && (
-            <button
-              type="button"
-              className="text-blue-500 hover:text-blue-600 hover:underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-ring rounded-sm"
-              onClick={() => onCategoryClick?.(category.id)}
-              aria-label={`Filter by category ${category.name}`}
-              title={`Filter by ${category.name}`}
-            >
-              <span className="inline-flex items-center gap-1.5">
-                {getCategoryIcon(category.name)}
-                <span>{category.name}</span>
-              </span>
-            </button>
-          )}
-          {category && sub && <span className="text-muted-foreground">›</span>}
-          {sub && (
-            <button
-              type="button"
-              className="text-blue-500 hover:text-blue-600 hover:underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-ring rounded-sm"
-              onClick={() => onSubcategoryClick?.(sub.id, category?.id as string)}
-              aria-label={`Filter by subcategory ${sub.name}`}
-              title={`Filter by ${sub.name}`}
-            >
-              <span className="inline-flex items-center gap-1.5">
-                <span>{sub.name}</span>
-              </span>
-            </button>
+          
+          {(prompt as any).ribbon === "RECOMMENDED" && (
+            <Badge className="bg-amber-100 text-amber-700 hover:bg-amber-100 ml-2">
+              <Wand2 className="h-3 w-3 mr-1" />
+              RECOMMENDED
+            </Badge>
           )}
         </div>
-        <CardTitle className="text-xl leading-tight text-foreground">{displayTitle}</CardTitle>
         
-         <p className="text-sm text-muted-foreground">{prompt.whatFor}</p>
-         
-         {/* Interactive Star Rating */}
-         <InteractiveStarRating rating={averageRating} count={totalRatings} userRating={userRating} />
+        <div className="flex items-center gap-2 mb-2">
+          <Tag className="h-4 w-4 text-primary" />
+          <span className="text-sm text-primary font-medium">
+            {sub?.name || category?.name || "Uncategorized"}
+          </span>
+        </div>
+        
+        <h3 className="text-xl font-bold text-foreground mb-2">
+          {displayTitle}
+        </h3>
+        
+        {prompt.whatFor && (
+          <p className="text-muted-foreground text-sm mb-3">
+            {prompt.whatFor}
+          </p>
+        )}
+        
+        <InteractiveStarRating rating={averageRating} count={totalRatings} userRating={userRating} />
       </CardHeader>
-      <CardContent>
-        <div>
-          <div className="text-xs font-medium mb-1 text-foreground">Core prompt: {prompt.excerpt?.replace(/\.$/, "").toLowerCase()}:</div>
-          <div className="relative min-h-[320px] sm:min-h-[300px]">
-            <pre className={cn("whitespace-pre-wrap text-foreground bg-background/60 p-4 sm:p-5 rounded-md text-sm leading-6 transition shadow-sm min-h-[320px] sm:min-h-[300px] font-sans", showLock && "blur-sm select-none pointer-events-none")}>
-              {displayPrompt}
-            </pre>
-            {showLock && (
-              <div className="absolute inset-0 rounded-md bg-blue-50/90 border border-blue-200/50 flex flex-col items-center justify-center min-h-full p-6">
-                <div className="text-center space-y-4 w-full max-w-sm">
-                  <div className="inline-flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-full bg-white border border-gray-200 text-foreground">
-                    <Lock className="h-4 w-4" aria-hidden />
-                    <span>Unlock premium prompt</span>
-                  </div>
-                  <div className="text-sm space-y-1">
-                    <div className="text-muted-foreground">
-                      One‑time <span className="line-through">{fmtUSD(PROMPT_ORIGINAL_CENTS)}</span> <span className="text-blue-600 font-medium">{fmtUSD(PROMPT_DISCOUNT_CENTS)}</span>
+      
+      <CardContent className="overflow-hidden">
+        <div className="space-y-4 overflow-hidden">
+          {/* Tags */}
+          {prompt.tags && prompt.tags.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-4">
+              {prompt.tags.slice(0, 4).map((tag) => (
+                <Badge
+                  key={tag}
+                  variant="secondary"
+                  className="text-xs cursor-pointer hover:bg-secondary/80"
+                  onClick={() => onTagClick?.(tag)}
+                >
+                  {tag}
+                </Badge>
+              ))}
+              {prompt.tags.length > 4 && (
+                <Badge variant="outline" className="text-xs">
+                  +{prompt.tags.length - 4} more
+                </Badge>
+              )}
+            </div>
+          )}
+
+          {/* AI Provider Selection */}
+          <div className="overflow-hidden">
+            <p className="font-medium text-foreground mb-3">
+              Platform-optimized prompt:
+            </p>
+            
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-between h-auto p-4 bg-background border-2 hover:bg-muted/50 mb-4"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={`p-2 rounded-full ${
+                      selectedAIPlatform === 'original' 
+                        ? 'bg-blue-100 text-blue-600'
+                        : getProviderColor(selectedAIPlatform)
+                    }`}>
+                      {selectedAIPlatform === 'original' 
+                        ? <Bot className="h-5 w-5" />
+                        : selectedProviderData?.icon || <Bot className="h-5 w-5" />
+                      }
                     </div>
-                    <div className="text-muted-foreground">
-                      Or subscribe <span className="line-through">{fmtUSD(SUB_ORIGINAL_CENTS)}</span> <span className="text-blue-600 font-medium">{fmtUSD(SUB_DISCOUNT_CENTS)}</span> / month
+                    <div className="text-left">
+                      <div className="font-semibold">
+                        {selectedAIPlatform === 'original' 
+                          ? 'Core Prompt'
+                          : selectedProviderData?.name || 'Select AI Platform'
+                        }
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        {selectedAIPlatform === 'original' 
+                          ? 'Original Version'
+                          : selectedProviderData?.description || 'Choose your preferred AI platform'
+                        }
+                      </div>
                     </div>
                   </div>
-                  <div className="flex flex-col gap-2 w-full">
-                    <Button size="default" className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3" onClick={addPromptToCart}>Buy Prompt {fmtUSD(PROMPT_DISCOUNT_CENTS)}</Button>
-                    <Button size="default" variant="outline" className="w-full py-3 border-gray-300 text-foreground hover:bg-gray-50" onClick={handleSubscribeClick}>Subscribe for {fmtUSD(SUB_DISCOUNT_CENTS)}/mo</Button>
+                  <ChevronDown className="h-4 w-4 ml-2" />
+                </Button>
+              </DropdownMenuTrigger>
+              
+              <DropdownMenuContent 
+                className="w-[280px] bg-background border-2 shadow-lg z-50"
+                align="start"
+                side="bottom"
+                sideOffset={4}
+              >
+                <DropdownMenuItem
+                  className="p-4 cursor-pointer hover:bg-muted/50 focus:bg-muted/50"
+                  onClick={() => handleAIPlatformChange('original')}
+                >
+                  <div className="flex items-center gap-3 w-full">
+                    <div className="p-2 rounded-full bg-blue-100 text-blue-600">
+                      <Bot className="h-5 w-5" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-semibold">Core Prompt</div>
+                      <div className="text-sm text-muted-foreground">Original Version</div>
+                    </div>
+                    {selectedAIPlatform === 'original' && (
+                      <CheckCircle className="h-4 w-4 text-primary" />
+                    )}
+                  </div>
+                </DropdownMenuItem>
+                
+                {getFilteredProviders().map((provider) => (
+                  <DropdownMenuItem
+                    key={provider.id}
+                    className="p-4 cursor-pointer hover:bg-muted/50 focus:bg-muted/50"
+                    onClick={() => handleAIPlatformChange(provider.id)}
+                  >
+                    <div className="flex items-center gap-3 w-full">
+                      <div className={`p-2 rounded-full ${getProviderColor(provider.id)}`}>
+                        {provider.icon}
+                      </div>
+                      <div className="flex-1">
+                        <div className="font-semibold">{provider.name}</div>
+                        <div className="text-sm text-muted-foreground">{provider.description}</div>
+                      </div>
+                      {selectedAIPlatform === provider.id && (
+                        <CheckCircle className="h-4 w-4 text-primary" />
+                      )}
+                    </div>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Optimized Prompt Display */}
+            <div className="bg-muted/30 rounded-lg p-4 border-2 border-dashed border-primary/20 min-h-[120px] mb-4 relative">
+              <div className="flex items-center gap-2 mb-3">
+                <Bot className="h-4 w-4 text-primary" />
+                <span className="text-sm font-medium text-primary">
+                  {selectedAIPlatform === 'original' ? 'Original Prompt' : `Optimized for ${selectedProviderData?.name}`}
+                </span>
+              </div>
+              <p className="text-sm text-foreground leading-relaxed whitespace-pre-line">
+                {displayPrompt}
+              </p>
+              
+              {showLock && (
+                <div className="absolute inset-0 rounded-lg bg-blue-50/90 border border-blue-200/50 flex flex-col items-center justify-center min-h-full p-6">
+                  <div className="text-center space-y-4 w-full max-w-sm">
+                    <div className="inline-flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-full bg-white border border-gray-200 text-foreground">
+                      <Lock className="h-4 w-4" aria-hidden />
+                      <span>Unlock premium prompt</span>
+                    </div>
+                    <div className="text-sm space-y-1">
+                      <div className="text-muted-foreground">
+                        One‑time <span className="line-through">{fmtUSD(PROMPT_ORIGINAL_CENTS)}</span> <span className="text-blue-600 font-medium">{fmtUSD(PROMPT_DISCOUNT_CENTS)}</span>
+                      </div>
+                      <div className="text-muted-foreground">
+                        Or subscribe <span className="line-through">{fmtUSD(SUB_ORIGINAL_CENTS)}</span> <span className="text-blue-600 font-medium">{fmtUSD(SUB_DISCOUNT_CENTS)}</span> / month
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-2 w-full">
+                      <Button size="default" className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3" onClick={addPromptToCart}>Buy Prompt {fmtUSD(PROMPT_DISCOUNT_CENTS)}</Button>
+                      <Button size="default" variant="outline" className="w-full py-3 border-gray-300 text-foreground hover:bg-gray-50" onClick={handleSubscribeClick}>Subscribe for {fmtUSD(SUB_DISCOUNT_CENTS)}/mo</Button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
-          </div>
-          <div className="mt-4 flex flex-col gap-2">
-            {/* AI Platform Selector - Clean Design */}
-            <div className="space-y-3">
-              <label className="text-sm font-medium text-gray-900 sm:text-base">Choose your favorite AI platform:</label>
+              )}
               
-              {/* Clean Dropdown Trigger */}
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200/80 rounded-2xl p-3 sm:p-4">
-                <Select value={selectedAIPlatform} onValueChange={handleAIPlatformChange}>
-                  <SelectTrigger className="w-full bg-white/90 border-2 border-blue-200/60 rounded-xl px-4 py-3 sm:px-6 sm:py-4 text-left shadow-sm hover:shadow-md transition-all">
-                    <SelectValue>
-                      <div className="flex items-center gap-2 sm:gap-3">
-                        {selectedAIPlatform === 'original' 
-                          ? '📄 Core Prompt'
-                          : `${AI_PROVIDERS.find(p => p.id === selectedAIPlatform)?.icon} ${AI_PROVIDERS.find(p => p.id === selectedAIPlatform)?.name}`}
-                      </div>
-                    </SelectValue>
-                  </SelectTrigger>
-                  <SelectContent className="bg-white/95 backdrop-blur-sm border-2 border-blue-200/80 rounded-2xl shadow-xl p-2 z-50">
-                    <SelectItem value="original" className={`rounded-xl p-3 sm:p-4 my-1 ${selectedAIPlatform === 'original' ? 'bg-blue-50 border-2 border-blue-200' : 'hover:bg-gray-50 border-2 border-transparent hover:border-gray-200'}`}>
-                      <div className="flex items-center gap-3 w-full">
-                        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                          <span className="text-base sm:text-lg">📄</span>
+              {/* Action buttons */}
+              <div className="flex flex-wrap gap-2 mt-4">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="flex items-center gap-2"
+                  disabled={showLock && !onCopyClick && !hasAccess}
+                  title={showLock && !onCopyClick && !hasAccess ? "Unlock to copy" : undefined}
+                  onClick={() => { 
+                    if (onCopyClick) onCopyClick(); 
+                    else if (!showLock || hasAccess) copy(displayPrompt, "Prompt"); 
+                  }}
+                >
+                  <Copy className="h-4 w-4" />
+                  Copy
+                </Button>
+                
+                {selectedProvider && (
+                  <Button
+                    size="sm"
+                    onClick={handleSendToAI}
+                    disabled={(showLock && !onCopyClick && !hasAccess) || dailyAISends.limit_reached}
+                    className="flex items-center gap-2"
+                    title={
+                      dailyAISends.limit_reached 
+                        ? "Daily limit reached (resets at midnight)" 
+                        : (showLock && !onCopyClick && !hasAccess ? "Unlock to send" : undefined)
+                    }
+                  >
+                    <Send className="h-4 w-4" />
+                    Send to {selectedProviderData?.name}
+                    {!loadingAILimits && (
+                      <span className="text-xs ml-1">
+                        ({dailyAISends.remaining} left)
+                      </span>
+                    )}
+                  </Button>
+                )}
+                
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={handleRefineWithScout}
+                  className="flex items-center gap-2"
+                  disabled={showLock && !onCopyClick && !hasAccess}
+                  title={showLock && !onCopyClick && !hasAccess ? "Unlock to refine" : "Refine this prompt with Scout Assistant"}
+                >
+                  <Bot className="h-4 w-4" />
+                  Scout
+                </Button>
+
+                {user ? (
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="flex items-center gap-2"
+                          onClick={toggleFavorite}
+                          disabled={favLoading}
+                          aria-label={isFav ? "Remove from My Prompts" : "Add to My Prompts"}
+                          title={isFav ? "Remove from My Prompts" : "Add to My Prompts"}
+                        >
+                          <Heart className={cn("h-4 w-4", isFav ? "fill-current text-primary" : "")} />
+                          {isFav ? "Saved" : "Save"}
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        {isFav ? "Remove from My Prompts" : "Add to My Prompts"}
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                ) : (
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            disabled
+                            className="flex items-center gap-2 opacity-50"
+                          >
+                            <Heart className="h-4 w-4" />
+                            Save
+                          </Button>
                         </div>
-                        <div className="flex-1">
-                          <div className="font-bold text-gray-900 text-sm sm:text-base">Core Prompt</div>
-                          <div className="text-gray-500 text-xs sm:text-sm">Original Version</div>
+                      </TooltipTrigger>
+                      <TooltipContent className="bg-popover border shadow-lg p-3 max-w-xs">
+                        <div className="space-y-3">
+                          <p className="text-sm font-medium">Sign up for free to unlock this feature</p>
+                          <div className="flex gap-2">
+                            <Button 
+                              size="sm" 
+                              variant="default"
+                              onClick={openLoginWidget}
+                              className="flex-1"
+                            >
+                              Sign Up
+                            </Button>
+                            <Button 
+                              size="sm" 
+                              variant="outline"
+                              onClick={openLoginWidget}
+                              className="flex-1"
+                            >
+                              Login
+                            </Button>
+                          </div>
                         </div>
-                        {selectedAIPlatform === 'original' && (
-                          <div className="bg-blue-500 text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs font-semibold">
-                            SELECTED
-                          </div>
-                        )}
-                      </div>
-                    </SelectItem>
-                    {getFilteredProviders().filter(p => p.category === 'text').map((provider) => (
-                      <SelectItem key={provider.id} value={provider.id} className={`rounded-xl p-3 sm:p-4 my-1 ${selectedAIPlatform === provider.id ? 'bg-blue-50 border-2 border-blue-200' : 'hover:bg-gray-50 border-2 border-transparent hover:border-gray-200'}`}>
-                        <div className="flex items-center gap-3 w-full">
-                          <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center ${
-                            provider.id === 'chatgpt' ? 'bg-green-100' :
-                            provider.id === 'claude' ? 'bg-pink-100' :
-                            provider.id === 'gemini' ? 'bg-blue-100' : 'bg-gray-100'
-                          }`}>
-                            <span className="text-base sm:text-lg">{provider.icon}</span>
-                          </div>
-                          <div className="flex-1">
-                            <div className="font-bold text-gray-900 text-sm sm:text-base">{provider.name}</div>
-                            <div className="text-gray-500 text-xs sm:text-sm">
-                              {provider.id === 'chatgpt' ? 'OpenAI - Most Popular' :
-                               provider.id === 'claude' ? 'Anthropic - Great for Analysis' :
-                               provider.id === 'gemini' ? 'Google - Multimodal' :
-                               provider.description || 'AI Assistant'}
-                            </div>
-                          </div>
-                          {selectedAIPlatform === provider.id && (
-                            <div className="bg-blue-500 text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs font-semibold">
-                              SELECTED
-                            </div>
-                          )}
-                        </div>
-                      </SelectItem>
-                    ))}
-                    {getFilteredProviders().filter(p => p.category === 'image').map((provider) => (
-                      <SelectItem key={provider.id} value={provider.id} className={`rounded-xl p-3 sm:p-4 my-1 ${selectedAIPlatform === provider.id ? 'bg-blue-50 border-2 border-blue-200' : 'hover:bg-gray-50 border-2 border-transparent hover:border-gray-200'}`}>
-                        <div className="flex items-center gap-3 w-full">
-                          <div className="w-8 h-8 sm:w-10 sm:h-10 bg-purple-100 rounded-full flex items-center justify-center">
-                            <span className="text-base sm:text-lg">{provider.icon}</span>
-                          </div>
-                          <div className="flex-1">
-                            <div className="font-bold text-gray-900 text-sm sm:text-base">{provider.name}</div>
-                            <div className="text-gray-500 text-xs sm:text-sm">
-                              {provider.id === 'midjourney' ? 'Image Generation' :
-                               provider.id === 'dalle' ? 'OpenAI - Image Creation' :
-                               provider.description || 'Image Generation'}
-                            </div>
-                          </div>
-                          {selectedAIPlatform === provider.id && (
-                            <div className="bg-blue-500 text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs font-semibold">
-                              SELECTED
-                            </div>
-                          )}
-                        </div>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                )}
               </div>
             </div>
-            
-            {/* Send to AI Platform - Second */}
-            {selectedProvider && (
-              <div className="space-y-2">
-                <Button 
-                  size="sm"
-                  variant="hero"
-                  onClick={handleSendToAI}
-                  className="w-full"
-                  disabled={(showLock && !onCopyClick && !hasAccess) || dailyAISends.limit_reached || loadingAILimits}
-                  title={
-                    dailyAISends.limit_reached 
-                      ? "Daily limit reached (resets at midnight)" 
-                      : (showLock && !onCopyClick && !hasAccess ? "Unlock to send" : undefined)
-                  }
-                >
-                  <Send className="h-4 w-4" />
-                  <span>Send to {selectedProviderData?.name}</span>
-                </Button>
-                <div className="text-xs text-center text-muted-foreground">
-                  {loadingAILimits ? (
-                    "Loading limits..."
-                  ) : (
-                    `${dailyAISends.remaining || 0}/${dailyAISends.daily_limit} sends remaining today`
-                  )}
+
+            {/* Pack information */}
+            {packs.length > 0 && (
+              <div className="space-y-2 mb-4">
+                <div className="text-xs font-medium text-foreground">Included in:</div>
+                <div className="flex flex-wrap gap-2 text-xs">
+                  {packs.map((p) => (
+                    <Badge key={p.id} variant="outline">{p.name}</Badge>
+                  ))}
+                  <Link to="/packs"><Button size="sm" variant="link">View packs</Button></Link>
+                </div>
+                <div>
+                  <Link to={`/packs?highlight=${packs[0].id}`}>
+                    <Button size="sm" variant="hero" className="w-full">Included in Power Pack. Open Now.</Button>
+                  </Link>
                 </div>
               </div>
             )}
-            
-            {/* Copy Prompt - Third */}
-            <Button
-              size="sm"
-              variant="outline"
-              className="w-full btn-subtle-stroke"
-              disabled={showLock && !onCopyClick && !hasAccess}
-              title={showLock && !onCopyClick && !hasAccess ? "Unlock to copy" : undefined}
-              onClick={() => { 
-                if (onCopyClick) onCopyClick(); 
-                else if (!showLock || hasAccess) copy(displayPrompt, "Prompt"); 
-              }}
-            >
-              <Copy className="h-4 w-4" />
-              <span>Copy Prompt</span>
-            </Button>
-            
-            {/* Refine with Scout - Fourth */}
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={handleRefineWithScout}
-              className="w-full btn-subtle-stroke"
-              disabled={showLock && !onCopyClick && !hasAccess}
-              title={showLock && !onCopyClick && !hasAccess ? "Unlock to refine" : "Refine this prompt with Scout Assistant"}
-            >
-              <Bot className="h-4 w-4" />
-              <span>Refine prompt with Scout</span>
-            </Button>
 
-            {user ? (
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="w-full btn-subtle-stroke"
-                      onClick={toggleFavorite}
-                      disabled={favLoading}
-                      aria-label={isFav ? "Remove from My Prompts" : "Add to My Prompts"}
-                      title={isFav ? "Remove from My Prompts" : "Add to My Prompts"}
-                    >
-                      <Heart className={cn("h-5 w-5", isFav ? "fill-current text-primary" : "")} />
-                      <span>{isFav ? "Remove from My Prompts" : "Add to My Prompts"}</span>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    {isFav ? "Remove from My Prompts" : "Add to My Prompts"}
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            ) : (
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <div className="w-full">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        disabled
-                        className="w-full btn-subtle-stroke opacity-50"
-                      >
-                        <Heart className="h-5 w-5" />
-                        <span>Add to My Prompts</span>
-                      </Button>
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent className="bg-popover border shadow-lg p-3 max-w-xs">
-                    <div className="space-y-3">
-                      <p className="text-sm font-medium">Sign up for free to unlock this feature</p>
-                      <div className="flex gap-2">
-                        <Button 
-                          size="sm" 
-                          variant="default"
-                          onClick={openLoginWidget}
-                          className="flex-1"
-                        >
-                          Sign Up
-                        </Button>
-                        <Button 
-                          size="sm" 
-                          variant="outline"
-                          onClick={openLoginWidget}
-                          className="flex-1"
-                        >
-                          Login
-                        </Button>
-                      </div>
-                    </div>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            )}
+            {/* Category breadcrumbs */}
+            <div className="flex items-center gap-2 flex-wrap text-xs mb-4">
+              {category && (
+                <button
+                  type="button"
+                  className="text-blue-500 hover:text-blue-600 hover:underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-ring rounded-sm"
+                  onClick={() => onCategoryClick?.(category.id)}
+                  aria-label={`Filter by category ${category.name}`}
+                  title={`Filter by ${category.name}`}
+                >
+                  <span className="inline-flex items-center gap-1.5">
+                    {getCategoryIcon(category.name)}
+                    <span>{category.name}</span>
+                  </span>
+                </button>
+              )}
+              {category && sub && <span className="text-muted-foreground">›</span>}
+              {sub && (
+                <button
+                  type="button"
+                  className="text-blue-500 hover:text-blue-600 hover:underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-ring rounded-sm"
+                  onClick={() => onSubcategoryClick?.(sub.id, category?.id as string)}
+                  aria-label={`Filter by subcategory ${sub.name}`}
+                  title={`Filter by ${sub.name}`}
+                >
+                  <span className="inline-flex items-center gap-1.5">
+                    <span>{sub.name}</span>
+                  </span>
+                </button>
+              )}
+            </div>
           </div>
         </div>
-
-
-        {packs.length > 0 && (
-          <div className="space-y-2">
-            <div className="text-xs font-medium text-foreground">Included in:</div>
-            <div className="flex flex-wrap gap-2 text-xs">
-              {packs.map((p) => (
-                <Badge key={p.id} variant="outline">{p.name}</Badge>
-              ))}
-              <Link to="/packs"><Button size="sm" variant="link">View packs</Button></Link>
-            </div>
-            <div>
-              <Link to={`/packs?highlight=${packs[0].id}`}>
-                <Button size="sm" variant="hero" className="w-full">Included in Power Pack. Open Now.</Button>
-              </Link>
-            </div>
-          </div>
-        )}
-
-
-
-        {prompt.tags.length > 0 && (
-          <div className="space-y-2 mt-6">
-            <div className="text-xs font-medium text-foreground">Related Prompts:</div>
-            <div className="flex flex-wrap gap-2 relative">
-              {prompt.tags.map((t) => (
-                <Badge
-                  key={t}
-                  variant="secondary"
-                  onClick={() => onTagClick?.(t)}
-                  role="button"
-                  tabIndex={0}
-                  className="cursor-pointer"
-                  aria-label={`Filter by ${t}`}
-                  title={`Filter by ${t}`}
-                >
-                  {t}
-                </Badge>
-               ))}
-             </div>
-           </div>
-         )}
-
       </CardContent>
-      
+
       <AiResponseModal
         isOpen={isAiModalOpen}
         onClose={() => setIsAiModalOpen(false)}
