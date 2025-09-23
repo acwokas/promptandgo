@@ -32,29 +32,29 @@ const platformOptions: PlatformOption[] = [
     id: "original",
     name: "Core Prompt",
     description: "Original Version",
-    icon: <FileText className="h-5 w-5" />,
-    color: "bg-blue-100 text-blue-600"
+    icon: <FileText className="h-4 w-4" />,
+    color: "bg-blue-100 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400"
   },
   {
     id: "chatgpt",
     name: "ChatGPT",
     description: "OpenAI - Most Popular",
-    icon: <Bot className="h-5 w-5" />,
-    color: "bg-green-100 text-green-600"
+    icon: <Bot className="h-4 w-4" />,
+    color: "bg-green-100 text-green-600 dark:bg-green-900/20 dark:text-green-400"
   },
   {
     id: "claude",
     name: "Claude",
     description: "Anthropic - Great for Analysis",
-    icon: <Brain className="h-5 w-5" />,
-    color: "bg-purple-100 text-purple-600"
+    icon: <Brain className="h-4 w-4" />,
+    color: "bg-purple-100 text-purple-600 dark:bg-purple-900/20 dark:text-purple-400"
   },
   {
     id: "gemini",
     name: "Gemini",
     description: "Google - Multimodal",
-    icon: <Sparkles className="h-5 w-5" />,
-    color: "bg-yellow-100 text-yellow-600"
+    icon: <Sparkles className="h-4 w-4" />,
+    color: "bg-yellow-100 text-yellow-600 dark:bg-yellow-900/20 dark:text-yellow-400"
   }
 ];
 
@@ -85,44 +85,50 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
 
   return (
     <div className={`${className} max-w-full`}>
-      <Card className="border-2 border-primary/20 shadow-lg hover:shadow-xl transition-shadow max-w-full overflow-hidden">
-        <CardHeader className="pb-4">
-          <div className="flex items-start justify-between mb-3">
-            <Badge className="bg-green-100 text-green-700 hover:bg-green-100">
+      <Card className="group relative border-border/50 bg-card hover:shadow-md hover:border-primary/30 transition-all duration-300 cursor-pointer overflow-hidden">
+        <CardHeader className="pb-3">
+          {/* Top badges and category */}
+          <div className="flex items-start justify-between gap-3 mb-3">
+            <div className="flex items-center gap-2">
+              <Tag className="h-3.5 w-3.5 text-primary" />
+              <Badge variant="secondary" className="text-xs bg-primary/10 text-primary border-0 hover:bg-primary/10">
+                AI in Real Estate
+              </Badge>
+            </div>
+            <Badge className="bg-green-500/10 text-green-600 hover:bg-green-500/10 border-0 dark:bg-green-900/20 dark:text-green-400">
               <CheckCircle className="h-3 w-3 mr-1" />
               FREE
             </Badge>
           </div>
           
-          <div className="flex items-center gap-2 mb-2">
-            <Tag className="h-4 w-4 text-primary" />
-            <span className="text-sm text-primary font-medium">AI in Real Estate</span>
-          </div>
-          
-          <h3 className="text-xl font-bold text-foreground mb-2">
+          {/* Title */}
+          <h3 className="text-lg font-bold leading-tight text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
             Neighbourhood Guide: Safety & Services Overview
           </h3>
           
-          <p className="text-muted-foreground text-sm mb-3">
-            Helping professionals excel in AI in real estate with AI-driven systems.
+          {/* Description */}
+          <p className="text-sm text-muted-foreground leading-relaxed mb-3 line-clamp-2">
+            Helping professionals excel in AI in real estate with AI-driven systems and comprehensive neighbourhood analysis.
           </p>
           
-          <div className="flex items-center gap-2">
-            <div className="flex items-center">
+          {/* Rating */}
+          <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-0.5">
               {[1, 2, 3, 4].map((star) => (
-                <Star key={star} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                <Star key={star} className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
               ))}
-              <Star className="h-4 w-4 text-gray-300" />
+              <Star className="h-3.5 w-3.5 text-muted-foreground/30" />
             </div>
-            <span className="font-semibold">4.4</span>
-            <span className="text-muted-foreground text-sm">(318)</span>
+            <span className="text-sm font-semibold text-foreground">4.4</span>
+            <span className="text-xs text-muted-foreground">(318 reviews)</span>
           </div>
         </CardHeader>
         
-        <CardContent className="overflow-hidden">
-          <div className="space-y-4 overflow-hidden">
-            <div className="overflow-hidden">
-              <p className="font-medium text-foreground mb-3">
+        <CardContent className="pt-0">
+          {/* Platform selector */}
+          <div className="space-y-4">
+            <div>
+              <p className="text-sm font-medium text-foreground mb-3">
                 Platform-optimized prompt:
               </p>
               
@@ -130,15 +136,15 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
                 <DropdownMenuTrigger asChild>
                   <Button 
                     variant="outline" 
-                    className="w-full justify-between h-auto p-4 bg-background border-2 hover:bg-muted/50 mb-4"
+                    className="w-full justify-between h-auto p-3 bg-background border hover:bg-muted/50"
                   >
-                    <div className="flex items-center gap-3">
-                      <div className={`p-2 rounded-full ${selectedOption.color}`}>
+                    <div className="flex items-center gap-2">
+                      <div className={`p-1.5 rounded-full ${selectedOption.color}`}>
                         {selectedOption.icon}
                       </div>
                       <div className="text-left">
-                        <div className="font-semibold">{selectedOption.name}</div>
-                        <div className="text-sm text-muted-foreground">{selectedOption.description}</div>
+                        <div className="text-sm font-medium">{selectedOption.name}</div>
+                        <div className="text-xs text-muted-foreground">{selectedOption.description}</div>
                       </div>
                     </div>
                     <ChevronDown className="h-4 w-4 ml-2" />
@@ -146,7 +152,7 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
                 </DropdownMenuTrigger>
                 
                 <DropdownMenuContent 
-                  className="w-[280px] bg-background border-2 shadow-lg z-50"
+                  className="w-[280px] bg-background border shadow-lg z-50"
                   align="start"
                   side="bottom"
                   sideOffset={4}
@@ -154,16 +160,16 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
                   {platformOptions.map((option) => (
                     <DropdownMenuItem
                       key={option.id}
-                      className="p-4 cursor-pointer hover:bg-muted/50 focus:bg-muted/50"
+                      className="p-3 cursor-pointer hover:bg-muted/50 focus:bg-muted/50"
                       onClick={() => setSelectedPlatform(option)}
                     >
                       <div className="flex items-center gap-3 w-full">
-                        <div className={`p-2 rounded-full ${option.color}`}>
+                        <div className={`p-1.5 rounded-full ${option.color}`}>
                           {option.icon}
                         </div>
                         <div className="flex-1">
-                          <div className="font-semibold">{option.name}</div>
-                          <div className="text-sm text-muted-foreground">{option.description}</div>
+                          <div className="text-sm font-medium">{option.name}</div>
+                          <div className="text-xs text-muted-foreground">{option.description}</div>
                         </div>
                         {selectedPlatform.id === option.id && (
                           <CheckCircle className="h-4 w-4 text-primary" />
@@ -171,25 +177,25 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
                       </div>
                     </DropdownMenuItem>
                   ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
 
             {/* Demo explanation */}
-            <div className="text-center mb-4">
-              <p className="text-sm text-muted-foreground">
-                ↑ Try selecting different AI platforms to see Scout optimize the same prompt
+            <div className="text-center">
+              <p className="text-xs text-muted-foreground">
+                ↑ Try selecting different AI platforms to see Scout optimize the same prompt below
               </p>
             </div>
 
-            {/* Show the optimized prompt */}
-              <div className="bg-muted/30 rounded-lg p-4 border-2 border-dashed border-primary/20 min-h-[120px]">
-                <div className="flex items-center gap-2 mb-3">
-                  <Bot className="h-4 w-4 text-primary" />
-                  <span className="text-sm font-medium text-primary">Scout Optimized</span>
-                </div>
-                <p className="text-sm text-foreground leading-relaxed whitespace-pre-line">
-                  {getOptimizedPrompt(selectedPlatform.id)}
-                </p>
+            {/* Optimized prompt display */}
+            <div className="bg-muted/30 rounded-lg p-3 border border-border/50">
+              <div className="flex items-center gap-2 mb-2">
+                <Bot className="h-3.5 w-3.5 text-primary" />
+                <span className="text-xs font-medium text-primary">Scout Optimized</span>
+              </div>
+              <div className="text-sm text-foreground leading-relaxed max-h-32 overflow-y-auto">
+                {getOptimizedPrompt(selectedPlatform.id)}
               </div>
             </div>
           </div>
