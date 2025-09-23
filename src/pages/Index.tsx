@@ -1,5 +1,6 @@
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
+import NanoBananaAnnouncement from "@/components/NanoBananaAnnouncement";
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 import { Link, useNavigate } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
@@ -294,6 +295,8 @@ const Index = () => {
         keywords="Scout AI, AI prompt crafting, prompt customization, AI prompt assistant, ChatGPT prompts, Claude prompts, MidJourney prompts, prompt optimization, AI prompt generator, guided prompt wizards, platform-specific prompts"
         structuredData={homeStructuredData}
       />
+      
+      <NanoBananaAnnouncement />
 
       <main>
         {/* 50% Off Countdown Banner - Only show if enabled in database */}
