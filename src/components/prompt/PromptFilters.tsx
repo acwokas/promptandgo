@@ -66,7 +66,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
   ] as const;
 
   return (
-    <section className="rounded-xl bg-accent/40 border p-3 md:p-6">
+    <section className="rounded-xl bg-accent/40 border border-primary p-3 md:p-6">
       {/* Mobile: Stack vertically with compact spacing */}
       <div className="space-y-3 md:hidden">
         {/* Search first on mobile for immediate access */}
@@ -78,7 +78,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
             onChange={(e) => onChange({ query: e.target.value })}
             placeholder={searchPlaceholder ?? "Search prompts..."}
             aria-label={searchLabel ?? "Search prompts"}
-            className="bg-muted/60 border border-primary shadow-sm focus:ring-2 focus:ring-ring h-8 text-sm px-3 py-1"
+            className="bg-muted/60 border shadow-sm focus:ring-2 focus:ring-ring h-8 text-sm px-3 py-1"
           />
         </div>
 
@@ -248,7 +248,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
             onChange={(e) => onChange({ query: e.target.value })}
             placeholder={searchPlaceholder ?? "Search prompts..."}
             aria-label={searchLabel ?? "Search prompts"}
-            className="bg-muted/60 border border-primary shadow-sm focus:ring-2 focus:ring-ring"
+            className="bg-muted/60 border shadow-sm focus:ring-2 focus:ring-ring"
           />
         </div>
 
