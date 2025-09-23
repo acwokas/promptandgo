@@ -303,7 +303,7 @@ const MiniPromptStudio = () => {
       if (value) params.set(key, value);
     });
     
-    navigate(`/studio?${params.toString()}`);
+    navigate(`/ai/studio?${params.toString()}`);
   };
 
   const hasContent = subject.trim() || Object.values(selections).some(value => value);
