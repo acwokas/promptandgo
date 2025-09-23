@@ -120,6 +120,7 @@ export const eventPromptOptions = {
   ] as PromptOption[],
 
   audienceTypes: [
+    { value: "broad-reach", label: "Broad Reach" },
     { value: "community-members", label: "Community members" },
     { value: "customers-clients", label: "Customers / clients" },
     { value: "employees", label: "Employees" },
@@ -286,6 +287,7 @@ export const ctaPromptOptions = {
   ] as PromptOption[],
 
   audienceSegmentation: [
+    { value: "broad-reach", label: "Broad Reach" },
     { value: "boomers", label: "Boomers (56+)" },
     { value: "entrepreneurs", label: "Entrepreneurs" },
     { value: "executives", label: "Executives / decision makers" },
