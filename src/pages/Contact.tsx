@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
 import { useState, useEffect } from "react";
 import PageHero from "@/components/layout/PageHero";
+import CountdownTimer from "@/components/conversion/CountdownTimer";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
@@ -173,6 +174,7 @@ const Contact = () => {
 
   return (
     <>
+      <CountdownTimer variant="banner" />
       <PageHero
         title={<><span className="text-brand">Got something</span> to share?</>}
         subtitle={<>We'd love to hear from you, whether it's a fresh idea, feedback, a request for more of a certain prompt type, or a challenge you would like us to tackle. Drop us a message, and remember to subscribe to our newsletter for new prompts, tips, and inspiration straight to your inbox.</>}

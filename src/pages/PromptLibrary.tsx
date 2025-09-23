@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import PageHero from "@/components/layout/PageHero";
+import CountdownTimer from "@/components/conversion/CountdownTimer";
 import { Link, useSearchParams } from "react-router-dom";
 import { Search, Heart, Bot, TrendingUp, Clock, Star, Users, Copy, Sparkles, ChevronDown, ChevronUp } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
@@ -600,6 +601,7 @@ const PromptLibrary = () => {
 
   return (
     <>
+      <CountdownTimer variant="banner" />
       <SEO 
         title="Browse AI Prompts Library" 
         description="Discover thousands of ready-to-use AI prompts for ChatGPT, Claude, and more. Copy prompts instantly and get better results from your AI tools."

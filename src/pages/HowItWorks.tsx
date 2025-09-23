@@ -1,5 +1,6 @@
 import SEO from "@/components/SEO";
 import PageHero from "@/components/layout/PageHero";
+import CountdownTimer from "@/components/conversion/CountdownTimer";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -95,6 +96,7 @@ const HowItWorks = () => {
     ],
   };
   return (<>
+    <CountdownTimer variant="banner" />
     <SEO title="How Prompting Works" description="Browse, paste into ChatGPT or Claude, then tweak and go — fast, no jargon." structuredData={[howToSchema, faqSchema]} />
     <PageHero
       title={<>How <span className="text-gradient-brand">Prompting</span> Works</>}

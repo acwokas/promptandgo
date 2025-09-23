@@ -1,5 +1,6 @@
 import SEO from "@/components/SEO";
 import PageHero from "@/components/layout/PageHero";
+import CountdownTimer from "@/components/conversion/CountdownTimer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -160,6 +161,7 @@ const CartPage = () => {
 
   return (
     <>
+      <CountdownTimer variant="banner" />
       <SEO title="Your Cart" description="Review your selected prompts and packs before checkout." />
       <PageHero title={<><span className="text-gradient-brand">Your</span> Cart</>} subtitle={<>Complete your purchase securely. Membership option available at checkout.</>} minHeightClass="min-h-[25svh]"/>
       <main className="container py-8">

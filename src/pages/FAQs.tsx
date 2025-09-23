@@ -1,5 +1,6 @@
 import SEO from "@/components/SEO";
 import PageHero from "@/components/layout/PageHero";
+import CountdownTimer from "@/components/conversion/CountdownTimer";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -166,6 +167,7 @@ const FAQs = () => {
   const { user } = useSupabaseAuth();
   return (
     <>
+      <CountdownTimer variant="banner" />
       <SEO
         title="FAQs – promptandgo"
         description="Find quick answers about promptandgo: getting started, using prompts, payments, licensing, and support."

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Clock, Zap, AlertCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { useSubscriptionStatus } from "@/hooks/useSubscriptionStatus";
 
 interface CountdownTimerProps {
   variant?: "inline" | "banner" | "popup";
@@ -29,6 +30,7 @@ const CountdownTimer = ({
   });
   const [settings, setSettings] = useState<CountdownSettings | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const { isSubscribed, loading: subscriptionLoading } = useSubscriptionStatus();
 
   // Load settings from database
   useEffect(() => {
@@ -80,8 +82,8 @@ const CountdownTimer = ({
     return () => clearInterval(timer);
   }, [expiryHours]);
 
-  // Don't render if disabled in settings
-  if (!isVisible) {
+  // Don't render if disabled in settings, user is subscribed, or still loading subscription status
+  if (!isVisible || isSubscribed || subscriptionLoading) {
     return null;
   }
 

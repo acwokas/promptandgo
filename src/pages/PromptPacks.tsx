@@ -8,6 +8,7 @@ import { addToCart, getCart } from "@/lib/cart";
 import { toast } from "@/hooks/use-toast";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
+import CountdownTimer from "@/components/conversion/CountdownTimer";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { Lock, Check, Heart, Search, Zap, Crown, Infinity, Sparkles, ChevronDown, ChevronUp } from "lucide-react";
@@ -265,6 +266,7 @@ const PromptPacks = () => {
 
   return (
     <>
+      <CountdownTimer variant="banner" />
       <PageHero title={<>⚡️<span className="text-gradient-brand">Power</span> Packs</>} subtitle={<>Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results.</>} minHeightClass="min-h-[28svh]">
         <Button 
           variant="hero"
