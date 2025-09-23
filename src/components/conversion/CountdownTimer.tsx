@@ -39,15 +39,28 @@ const CountdownTimer = ({
         const { data, error } = await supabase
           .from('countdown_settings')
           .select('enabled, offer_text, expiry_hours')
-          .single();
+          .maybeSingle();
 
-        if (!error && data) {
+        if (error) {
+          console.error('Error loading countdown settings:', error);
+          // Fallback to showing countdown if can't load settings
+          setSettings({ enabled: true, offer_text: "50% OFF All Power Packs", expiry_hours: 24 });
+          setIsVisible(true);
+          return;
+        }
+
+        if (data) {
           setSettings(data);
           setIsVisible(data.enabled);
+        } else {
+          // No settings found, use defaults
+          setSettings({ enabled: true, offer_text: "50% OFF All Power Packs", expiry_hours: 24 });
+          setIsVisible(true);
         }
       } catch (err) {
         console.error('Error loading countdown settings:', err);
         // Fallback to showing countdown if can't load settings
+        setSettings({ enabled: true, offer_text: "50% OFF All Power Packs", expiry_hours: 24 });
         setIsVisible(true);
       }
     };
