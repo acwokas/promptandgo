@@ -370,7 +370,7 @@ const Index = () => {
         {/* Scout Demo - Interactive Prompt Card */}
         <ScoutDemo />
 
-        <section className="container -mt-4 pb-8">
+        <section className="container -mt-4 py-6">
           <div className="text-center">
             <p className="text-muted-foreground max-w-2xl mx-auto text-lg">See how Scout optimizes real prompts. Pick one below customize it, push it to your favorite AI platform, and experience the magic instantly.</p>
           </div>
