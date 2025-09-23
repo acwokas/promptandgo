@@ -138,6 +138,22 @@ export const AI_PROVIDERS: AIProvider[] = [
     }
   },
   {
+    id: 'nanobanana',
+    name: 'Nano Banana',
+    icon: '🍌',
+    category: 'image',
+    description: 'Convert prompts to miniature collectible style',
+    rewritePattern: (prompt: string) => {
+      // Convert any image prompt into Nano Banana miniature style
+      const cleanPrompt = prompt.replace(/create|generate|make|design|image of|picture of/gi, '').trim();
+      
+      // Extract main subject/scene
+      const basePrompt = cleanPrompt || 'scene';
+      
+      return `A nano-sized collectible figurine of ${basePrompt}, miniature scale with banana for size reference, posed on wooden tabletop. Macro photography with shallow depth of field, soft background blur, realistic lighting. Painted resin texture with handcrafted details, toy-like finish, whimsical collectible aesthetic. Ultra-detailed miniature craftsmanship, professional product photography lighting.`;
+    }
+  },
+  {
     id: 'zenochat',
     name: 'ZenoChat',
     icon: '🚀',
