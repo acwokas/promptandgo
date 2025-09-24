@@ -375,29 +375,31 @@ const Index = () => {
           <div className="relative overflow-hidden bg-gradient-to-r from-primary/10 via-accent/5 to-primary/10 rounded-2xl border border-primary/20 max-w-5xl mx-auto">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5" />
             <div className="relative px-6 py-4">
-              <div className="grid md:grid-cols-2 gap-6 items-center">
+              <div className={`grid ${todaysFeatured ? 'md:grid-cols-2' : 'md:grid-cols-1'} gap-6 items-center`}>
                 {/* Left - Featured Category */}
-                <div className="flex items-center gap-4">
-                  <div className="relative">
-                    <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center">
-                      {React.createElement(getIconComponent(todaysFeatured.icon), { className: "h-6 w-6 text-white" })}
+                {todaysFeatured && (
+                  <div className="flex items-center gap-4">
+                    <div className="relative">
+                      <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center">
+                        {React.createElement(getIconComponent(todaysFeatured.icon), { className: "h-6 w-6 text-white" })}
+                      </div>
+                      <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full animate-pulse border-2 border-background" />
                     </div>
-                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full animate-pulse border-2 border-background" />
+                    <div className="flex-1">
+                      <h3 className="font-bold text-lg">{todaysFeatured.title}</h3>
+                      <p className="text-sm text-muted-foreground flex items-center gap-2">
+                        <span className="inline-flex items-center gap-1.5 bg-primary/10 px-2 py-0.5 rounded-full text-xs font-medium">
+                          🔥 {todaysFeatured.usage_text}
+                        </span>
+                        <Button asChild variant="ghost" size="sm" className="h-6 px-2 text-xs text-primary hover:text-primary">
+                          <Link to={todaysFeatured.link}>
+                            {todaysFeatured.message} <ArrowRight className="ml-1 h-3 w-3" />
+                          </Link>
+                        </Button>
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="font-bold text-lg">{todaysFeatured.title}</h3>
-                    <p className="text-sm text-muted-foreground flex items-center gap-2">
-                      <span className="inline-flex items-center gap-1.5 bg-primary/10 px-2 py-0.5 rounded-full text-xs font-medium">
-                        🔥 {todaysFeatured.usage_text}
-                      </span>
-                      <Button asChild variant="ghost" size="sm" className="h-6 px-2 text-xs text-primary hover:text-primary">
-                        <Link to={todaysFeatured.link}>
-                          {todaysFeatured.message} <ArrowRight className="ml-1 h-3 w-3" />
-                        </Link>
-                      </Button>
-                    </p>
-                  </div>
-                </div>
+                )}
 
                 {/* Right - Live Stats */}
                 <div className="grid grid-cols-3 gap-3">
