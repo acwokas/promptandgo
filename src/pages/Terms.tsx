@@ -7,7 +7,7 @@ const Terms = () => (
   <>
     <PageHero title={<>Terms &amp; Conditions</>} subtitle={<>Usage rules, IP, payments, privacy, liability, and your rights.</>} minHeightClass="min-h-[28svh]" />
     <main className="container py-10">
-      <SEO title="Terms & Conditions" description="promptandgo.ai Terms & Conditions (Singapore): usage rules, IP, payments, privacy, liability, and your rights." />
+      <SEO title="Terms & Conditions" description="PromptandGo.ai Terms & Conditions (Singapore): usage rules, IP, payments, privacy, liability, and your rights." />
 
       {/* Breadcrumb */}
       <Breadcrumb className="mb-6">
@@ -29,7 +29,7 @@ const Terms = () => (
 
     <section className="prose prose-neutral max-w-none dark:prose-invert">
       <p>
-        Welcome to promptandgo ("we", "our", "us"). These Terms &amp; Conditions ("Terms") govern your use of the
+        Welcome to <strong>Prompt</strong>and<strong>Go</strong> ("we", "our", "us"). These Terms &amp; Conditions ("Terms") govern your use of the
         website https://promptandgo.ai (the "Site") and any related services we provide.
       </p>
       <p>By accessing or using the Site, you agree to be bound by these Terms. If you do not agree, please do not use the Site.</p>
@@ -45,7 +45,7 @@ const Terms = () => (
       <p>We may suspend or terminate your access if you breach these Terms.</p>
 
       <h2>2.&nbsp;&nbsp;AI Tools and Beta Services</h2>
-      <p>promptandgo provides AI-powered tools including but not limited to:</p>
+      <p><strong>Prompt</strong>and<strong>Go</strong> provides AI-powered tools including but not limited to:</p>
       <ul>
         <li><strong>Scout Prompt Generator</strong> – generates customized prompts based on your inputs</li>
         <li><strong>Smart Suggestions</strong> – provides AI-powered recommendations</li>
@@ -110,7 +110,7 @@ const Terms = () => (
       </ul>
 
       <h2>6.&nbsp;&nbsp;Content and Intellectual Property</h2>
-      <p>All content on the Site, including text, graphics, code, prompts, and designs, is owned by or licensed to promptandgo, unless otherwise stated.</p>
+      <p>All content on the Site, including text, graphics, code, prompts, and designs, is owned by or licensed to <strong>Prompt</strong>and<strong>Go</strong>, unless otherwise stated.</p>
       <ul>
         <li>You may use content for personal or internal business purposes only</li>
         <li>You may not copy, redistribute, or commercially exploit any content without our written permission</li>
@@ -132,7 +132,7 @@ const Terms = () => (
       <ul>
         <li>All prices are listed in US Dollars (USD) unless otherwise stated</li>
         <li>Payment processing is handled by Stripe and other secure third-party providers; we do not store full payment details</li>
-        <li>You may see "promptandgo" or an affiliated entity on your payment statements</li>
+        <li>You may see "PromptandGo" or an affiliated entity on your payment statements</li>
         <li>Monthly memberships are billed in advance and renew automatically until cancelled</li>
         <li>Lifetime access is a one-time payment for ongoing access subject to these Terms</li>
         <li>Individual prompt packs are one-time purchases</li>
@@ -198,7 +198,7 @@ const Terms = () => (
       </ul>
 
       <h2>14.&nbsp;&nbsp;Indemnity</h2>
-      <p>You agree to indemnify and hold harmless promptandgo, its officers, employees, and partners from any claims, damages, or expenses arising from your use of the Site, AI tools, or breach of these Terms.</p>
+      <p>You agree to indemnify and hold harmless <strong>Prompt</strong>and<strong>Go</strong>, its officers, employees, and partners from any claims, damages, or expenses arising from your use of the Site, AI tools, or breach of these Terms.</p>
 
       <h2>15.&nbsp;&nbsp;Third-Party Links and Services</h2>
       <p>The Site may contain links to third-party websites and relies on third-party AI providers. We are not responsible for their content, policies, practices, or service availability.</p>

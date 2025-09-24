@@ -68,7 +68,7 @@ const Header = () => {
         >
         <img
           src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
-          alt="**Prompt**and**Go** - AI Prompt Library"
+          alt="PromptandGo - AI Prompt Library"
           width="256"
           height="80"
           loading="eager"

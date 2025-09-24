@@ -11,7 +11,7 @@ const successStories = [
     role: "Marketing Manager",
     company: "TechStartup Inc.",
     avatar: "SC",
-    story: "I was spending 4-5 hours daily creating content for our social media and email campaigns. After finding promptandgo, I now complete the same work in 90 minutes.",
+    story: "I was spending 4-5 hours daily creating content for our social media and email campaigns. After finding PromptandGo, I now complete the same work in 90 minutes.",
     results: [
       "Saved 25+ hours weekly",
       "Increased engagement by 300%",

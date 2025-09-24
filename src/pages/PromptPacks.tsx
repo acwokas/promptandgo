@@ -251,7 +251,7 @@ const PromptPacks = () => {
       description: p.description || "Curated prompt pack",
       sku: p.id,
       url: `${origin}/packs#pack-${p.id}`,
-      brand: { "@type": "Organization", name: "promptandgo" },
+      brand: { "@type": "Organization", name: "PromptandGo" },
       offers: {
         "@type": "Offer",
         priceCurrency: "USD",
@@ -410,7 +410,7 @@ const PromptPacks = () => {
                         url={`${origin}/packs#pack-${p.id}`}
                         contentType="pack"
                         contentId={p.id}
-                        title={`Check out the ${p.name} - AI prompt pack from promptandgo.ai`}
+                        title={`Check out the ${p.name} - AI prompt pack from PromptandGo.ai`}
                         variant="outline"
                         size="sm"
                       />

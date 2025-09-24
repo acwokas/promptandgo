@@ -21,15 +21,15 @@ interface FAQSection {
 
 const sections: FAQSection[] = [
   {
-    title: "About **Prompt**and**Go**",
+    title: "About <strong>Prompt</strong>and<strong>Go</strong>",
     items: [
       {
-        question: "Who created **Prompt**and**Go**?",
+        question: "Who created <strong>Prompt</strong>and<strong>Go</strong>?",
         answer:
-          "**Prompt**and**Go** was created by a team of AI enthusiasts, marketers, and content specialists who test every prompt before publishing. We focus on practical, real-world results rather than theory.",
+          "<strong>Prompt</strong>and<strong>Go</strong> was created by a team of AI enthusiasts, marketers, and content specialists who test every prompt before publishing. We focus on practical, real-world results rather than theory.",
       },
       {
-        question: "Why use **Prompt**and**Go** instead of free prompts online?",
+        question: "Why use <strong>Prompt</strong>and<strong>Go</strong> instead of free prompts online?",
         answer:
           "We curate and test every prompt for clarity, accuracy, and usefulness. This means you will not waste time sifting through outdated or unproven ideas. Everything here is designed to help you get better results, faster.",
       },
@@ -51,7 +51,7 @@ const sections: FAQSection[] = [
       {
         question: "What makes a good prompt?",
         answer:
-          "A good prompt is clear, specific, and written with purpose. The best prompts guide the AI by focusing on your intent without adding unnecessary complexity. Every prompt on **Prompt**and**Go** is designed to help you get strong results without needing to be an expert.",
+          "A good prompt is clear, specific, and written with purpose. The best prompts guide the AI by focusing on your intent without adding unnecessary complexity. Every prompt on <strong>Prompt</strong>and<strong>Go</strong> is designed to help you get strong results without needing to be an expert.",
       },
       {
         question: "Will these prompts work with free AI tools?",
@@ -84,7 +84,7 @@ const sections: FAQSection[] = [
     title: "Payments and Access",
     items: [
       {
-        question: "Do I need to pay to use **Prompt**and**Go**?",
+        question: "Do I need to pay to use <strong>Prompt</strong>and<strong>Go</strong>?",
         answer:
           "Many prompts are free to browse and use. You only pay if you choose to unlock one of our PRO prompt packs for advanced tasks such as job applications or productivity systems.",
       },
@@ -140,7 +140,7 @@ const sections: FAQSection[] = [
       },
       {
         question: "How can I contact support?",
-        answer: "Email us at support@**Prompt**and**Go**.ai. We aim to respond within 2 business days.",
+        answer: "Email us at support@promptandgo.ai. We aim to respond within 2 business days.",
       },
       {
         question: "How often do you add new prompts?",
@@ -169,8 +169,8 @@ const FAQs = () => {
     <>
       <CountdownTimer variant="banner" />
       <SEO
-        title="FAQs – **Prompt**and**Go**"
-        description="Find quick answers about **Prompt**and**Go**: getting started, using prompts, payments, licensing, and support."
+        title="FAQs – PromptandGo"
+        description="Find quick answers about PromptandGo: getting started, using prompts, payments, licensing, and support."
       />
 
       <PageHero

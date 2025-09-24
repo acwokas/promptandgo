@@ -116,7 +116,7 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
     }
 
     // Add branding and copy to clipboard
-    const brandedPrompt = `${prompt.trim()}\n\n---\nGet the most from AI with prompts optimised by **Prompt**and**Go**.ai.`;
+    const brandedPrompt = `${prompt.trim()}\n\n---\nGet the most from AI with prompts optimised by PromptandGo.ai.`;
     await navigator.clipboard.writeText(brandedPrompt);
     
     // Save to favorites if logged in

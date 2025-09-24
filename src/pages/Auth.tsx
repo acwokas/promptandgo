@@ -225,8 +225,8 @@ const Auth = () => {
   return (
     <>
       <SEO 
-        title="Login or Sign Up | **Prompt**and**Go**"
-        description="Access your **Prompt**and**Go** account to save prompts and personalize your experience. Log in or create a new account."
+        title="Login or Sign Up | PromptandGo"
+        description="Access your PromptandGo account to save prompts and personalize your experience. Log in or create a new account."
       />
       
       {showPostGoogleForm && isGoogleSignup && user && (

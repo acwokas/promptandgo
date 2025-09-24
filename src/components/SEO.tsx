@@ -13,7 +13,7 @@ interface SEOProps {
   keywords?: string;
 }
 
-const SITE_NAME = "**Prompt**and**Go**";
+const SITE_NAME = "PromptandGo";
 const DEFAULT_OG_IMAGE =
   typeof window !== "undefined"
     ? `${window.location.origin}/og-default.png`
@@ -61,8 +61,8 @@ const SEO = ({
       <meta name="robots" content={noindex ? "noindex,nofollow" : "index,follow,max-image-preview:large,max-snippet:-1"} />
       
       {/* Enhanced meta tags */}
-      <meta name="author" content="**Prompt**and**Go**.ai" />
-      <meta name="publisher" content="**Prompt**and**Go**.ai" />
+      <meta name="author" content="PromptandGo.ai" />
+      <meta name="publisher" content="PromptandGo.ai" />
       <meta name="application-name" content={SITE_NAME} />
       <meta name="theme-color" content="hsl(220, 90%, 55%)" />
       
@@ -82,8 +82,8 @@ const SEO = ({
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content="@**Prompt**and**Go**" />
-      <meta name="twitter:creator" content="@**Prompt**and**Go**" />
+      <meta name="twitter:site" content="@PromptandGo" />
+      <meta name="twitter:creator" content="@PromptandGo" />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={optimizedDescription} />
       <meta name="twitter:image" content={ogImage} />
