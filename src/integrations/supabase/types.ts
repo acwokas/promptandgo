@@ -246,6 +246,45 @@ export type Database = {
           },
         ]
       }
+      featured_categories: {
+        Row: {
+          created_at: string | null
+          display_order: number | null
+          icon: string
+          id: string
+          is_active: boolean | null
+          link: string
+          message: string
+          title: string
+          updated_at: string | null
+          usage_text: string
+        }
+        Insert: {
+          created_at?: string | null
+          display_order?: number | null
+          icon: string
+          id?: string
+          is_active?: boolean | null
+          link: string
+          message: string
+          title: string
+          updated_at?: string | null
+          usage_text: string
+        }
+        Update: {
+          created_at?: string | null
+          display_order?: number | null
+          icon?: string
+          id?: string
+          is_active?: boolean | null
+          link?: string
+          message?: string
+          title?: string
+          updated_at?: string | null
+          usage_text?: string
+        }
+        Relationships: []
+      }
       newsletter_rate_limits: {
         Row: {
           attempt_count: number | null
@@ -1303,6 +1342,10 @@ export type Database = {
       is_admin_user: {
         Args: Record<PropertyKey, never>
         Returns: boolean
+      }
+      rotate_featured_categories: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
       }
       secure_upsert_subscriber: {
         Args: {
