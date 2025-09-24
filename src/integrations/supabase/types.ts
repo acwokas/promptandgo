@@ -1240,6 +1240,10 @@ export type Database = {
           total_ratings: number
         }[]
       }
+      get_sgt_date: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
       get_subscriber_info: {
         Args: { p_user_id: string }
         Returns: {
