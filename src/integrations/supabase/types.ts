@@ -1235,7 +1235,42 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      safe_subscriber_view: {
+        Row: {
+          created_at: string | null
+          email_hash: string | null
+          has_encrypted_email: boolean | null
+          id: string | null
+          subscribed: boolean | null
+          subscription_end: string | null
+          subscription_tier: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email_hash?: string | null
+          has_encrypted_email?: never
+          id?: string | null
+          subscribed?: boolean | null
+          subscription_end?: string | null
+          subscription_tier?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email_hash?: string | null
+          has_encrypted_email?: never
+          id?: string | null
+          subscribed?: boolean | null
+          subscription_end?: string | null
+          subscription_tier?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       check_and_increment_daily_ai_sends: {
@@ -1308,6 +1343,18 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: string
       }
+      get_subscriber_encrypted_data: {
+        Args: { p_encryption_key: string; p_user_id: string }
+        Returns: {
+          email: string
+          id: string
+          stripe_customer_id: string
+          subscribed: boolean
+          subscription_end: string
+          subscription_tier: string
+          user_id: string
+        }[]
+      }
       get_subscriber_info: {
         Args: { p_user_id: string }
         Returns: {
@@ -1343,6 +1390,17 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: {
           newsletter_subscribed: boolean
+        }[]
+      }
+      get_user_subscription_data: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          created_at: string
+          id: string
+          subscribed: boolean
+          subscription_end: string
+          subscription_tier: string
+          updated_at: string
         }[]
       }
       get_user_subscription_status: {
