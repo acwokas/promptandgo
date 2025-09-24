@@ -95,14 +95,6 @@ const CountdownTimer = ({
     return () => clearInterval(timer);
   }, [expiryHours]);
 
-  // Debug logging for mobile issue
-  console.log('CountdownTimer debug:', {
-    isVisible,
-    isSubscribed,
-    subscriptionLoading,
-    settings,
-    shouldRender: isVisible && !isSubscribed && !subscriptionLoading
-  });
 
   // Temporarily bypass subscription check for debugging
   if (!isVisible) {
