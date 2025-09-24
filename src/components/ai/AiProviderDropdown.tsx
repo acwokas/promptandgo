@@ -6,6 +6,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
+  DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
 import {
   AlertDialog,
@@ -23,10 +25,30 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { ChevronDown, Send, Bot, Sparkles, Brain, Zap, Image, Palette, Search } from 'lucide-react';
+import { ChevronDown, Send, Bot, Sparkles, Brain, Zap, Image, Palette, Search, Rocket, Wind } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
+import { AI_PROVIDERS } from '@/lib/promptRewriter';
+
+// Create icon mapping for the AI providers from promptRewriter
+const getProviderIcon = (providerId: string, providerIcon: string): React.ReactNode => {
+  const iconMap: { [key: string]: React.ReactNode } = {
+    chatgpt: <Bot className="h-4 w-4" />,
+    claude: <Brain className="h-4 w-4" />,
+    gemini: <Sparkles className="h-4 w-4" />,
+    deepseek: <Search className="h-4 w-4" />,
+    groq: <Zap className="h-4 w-4" />,
+    mistral: <Wind className="h-4 w-4" />,
+    llama: <Bot className="h-4 w-4" />,
+    perplexity: <Search className="h-4 w-4" />,
+    zenochat: <Rocket className="h-4 w-4" />,
+    midjourney: <Image className="h-4 w-4" />,
+    ideogram: <Palette className="h-4 w-4" />,
+    nanobanana: <Image className="h-4 w-4" />
+  };
+  return iconMap[providerId] || <Bot className="h-4 w-4" />;
+};
 
 export interface AiProvider {
   id: string;
@@ -35,65 +57,6 @@ export interface AiProvider {
   category: 'text' | 'image';
   description: string;
 }
-
-const AI_PROVIDERS: AiProvider[] = [
-  {
-    id: 'openai',
-    name: 'ChatGPT',
-    icon: <Bot className="h-4 w-4" />,
-    category: 'text',
-    description: 'OpenAI GPT models'
-  },
-  {
-    id: 'anthropic',
-    name: 'Claude',
-    icon: <Brain className="h-4 w-4" />,
-    category: 'text',
-    description: 'Anthropic Claude models'
-  },
-  {
-    id: 'google',
-    name: 'Gemini',
-    icon: <Sparkles className="h-4 w-4" />,
-    category: 'text',
-    description: 'Google Gemini models'
-  },
-  {
-    id: 'groq',
-    name: 'Groq',
-    icon: <Zap className="h-4 w-4" />,
-    category: 'text',
-    description: 'Groq fast inference'
-  },
-  {
-    id: 'deepseek',
-    name: 'DeepSeek',
-    icon: <Brain className="h-4 w-4" />,
-    category: 'text',
-    description: 'DeepSeek models'
-  },
-  {
-    id: 'midjourney',
-    name: 'MidJourney',
-    icon: <Image className="h-4 w-4" />,
-    category: 'image',
-    description: 'MidJourney image generation'
-  },
-  {
-    id: 'ideogram',
-    name: 'Ideogram',
-    icon: <Palette className="h-4 w-4" />,
-    category: 'image',
-    description: 'Ideogram AI image creation'
-  },
-  {
-    id: 'perplexity',
-    name: 'Perplexity',
-    icon: <Search className="h-4 w-4" />,
-    category: 'text',
-    description: 'Perplexity AI with web search'
-  }
-];
 
 interface AiProviderDropdownProps {
   prompt: string;
@@ -212,6 +175,18 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
         case 'deepseek':
           showManualInstructions('https://chat.deepseek.com/');
           break;
+        case 'chatgpt':
+          showManualInstructions('https://chatgpt.com/');
+          break;
+        case 'mistral':
+          showManualInstructions('https://chat.mistral.ai/');
+          break;
+        case 'llama':
+          showManualInstructions('https://www.llama2.ai/');
+          break;
+        case 'zenochat':
+          showManualInstructions('https://www.zenochat.ai/');
+          break;
         default:
           toast({
             title: "Prompt copied",
@@ -227,10 +202,15 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
     
     const urls = {
       openai: 'https://chatgpt.com/',
+      chatgpt: 'https://chatgpt.com/',
       anthropic: 'https://claude.ai/',
       google: 'https://gemini.google.com/',
       groq: 'https://console.groq.com/playground',
-      deepseek: 'https://chat.deepseek.com/'
+      deepseek: 'https://chat.deepseek.com/',
+      mistral: 'https://chat.mistral.ai/',
+      llama: 'https://www.llama2.ai/',
+      perplexity: 'https://www.perplexity.ai/',
+      zenochat: 'https://www.zenochat.ai/'
     };
     
     const url = urls[selectedProvider.id as keyof typeof urls];
@@ -241,9 +221,22 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
     setShowDialog(false);
   };
 
-  const filteredProviders = getFilteredProviders();
-  const textProviders = filteredProviders.filter(p => p.category === 'text');
-  const imageProviders = filteredProviders.filter(p => p.category === 'image');
+  // Convert AI_PROVIDERS to the component format and sort alphabetically
+  const convertedProviders = AI_PROVIDERS.map(provider => ({
+    id: provider.id,
+    name: provider.name,
+    icon: getProviderIcon(provider.id, provider.icon),
+    category: provider.category,
+    description: provider.description
+  }));
+
+  const textProviders = convertedProviders
+    .filter(p => p.category === 'text')
+    .sort((a, b) => a.name.localeCompare(b.name));
+  
+  const imageProviders = convertedProviders
+    .filter(p => p.category === 'image')
+    .sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <TooltipProvider>
@@ -268,10 +261,8 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
             )}
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="center" className="w-56">
-          <div className="px-2 py-1.5 text-sm font-medium text-muted-foreground">
-            Text Generation
-          </div>
+        <DropdownMenuContent align="center" className="w-64 max-h-80 overflow-y-auto">
+          <DropdownMenuLabel>Text Generation</DropdownMenuLabel>
           {textProviders.map((provider) => (
             <DropdownMenuItem
               key={provider.id}
@@ -288,9 +279,8 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
             </DropdownMenuItem>
           ))}
           
-          <div className="px-2 py-1.5 text-sm font-medium text-muted-foreground border-t mt-1">
-            Image Generation
-          </div>
+          <DropdownMenuSeparator />
+          <DropdownMenuLabel>Image-only</DropdownMenuLabel>
           {imageProviders.map((provider) => (
             provider.id === 'midjourney' ? (
               <Tooltip key={provider.id}>
