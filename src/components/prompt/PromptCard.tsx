@@ -841,55 +841,61 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
 
   return (
     <>
-    <Card className="border-2 border-primary/20 shadow-lg hover:shadow-xl transition-shadow max-w-full overflow-hidden">
-      <CardHeader className="pb-4">
-        <div className="flex items-start justify-between mb-3">
-          {!isPro && (
-            <Badge className="bg-green-100 text-green-700 hover:bg-green-100">
-              <CheckCircle className="h-3 w-3 mr-1" />
-              FREE
+    <Card className="group relative border-border/50 bg-card hover:shadow-md hover:border-primary/30 transition-all duration-300 cursor-pointer overflow-hidden">
+      <CardHeader className="pb-3">
+        {/* Top badges and category */}
+        <div className="flex items-start justify-between gap-3 mb-3">
+          <div className="flex items-center gap-2">
+            {getCategoryIcon(sub?.name || category?.name)}
+            <Badge variant="secondary" className="text-xs bg-primary/10 text-primary border-0 hover:bg-primary/10">
+              {sub?.name || category?.name || "Uncategorized"}
             </Badge>
-          )}
-          {isPro && !hasAccess && (
-            <Badge className="bg-purple-100 text-purple-700 hover:bg-purple-100">
-              <Lock className="h-3 w-3 mr-1" />
-              PRO
-            </Badge>
-          )}
-          
-          {(prompt as any).ribbon === "RECOMMENDED" && (
-            <Badge className="bg-amber-100 text-amber-700 hover:bg-amber-100 ml-2">
-              <Wand2 className="h-3 w-3 mr-1" />
-              RECOMMENDED
-            </Badge>
-          )}
+          </div>
+          <div className="flex gap-2">
+            {!isPro && (
+              <Badge className="bg-green-500/10 text-green-600 hover:bg-green-500/10 border-0 dark:bg-green-900/20 dark:text-green-400">
+                <CheckCircle className="h-3 w-3 mr-1" />
+                FREE
+              </Badge>
+            )}
+            {isPro && !hasAccess && (
+              <Badge className="bg-purple-500/10 text-purple-600 hover:bg-purple-500/10 border-0 dark:bg-purple-900/20 dark:text-purple-400">
+                <Lock className="h-3 w-3 mr-1" />
+                PRO
+              </Badge>
+            )}
+            {(prompt as any).ribbon === "RECOMMENDED" && (
+              <Badge className="bg-amber-500/10 text-amber-600 hover:bg-amber-500/10 border-0 dark:bg-amber-900/20 dark:text-amber-400">
+                <Wand2 className="h-3 w-3 mr-1" />
+                RECOMMENDED
+              </Badge>
+            )}
+          </div>
         </div>
         
-        <div className="flex items-center gap-2 mb-2">
-          <Tag className="h-4 w-4 text-primary" />
-          <span className="text-sm text-primary font-medium">
-            {sub?.name || category?.name || "Uncategorized"}
-          </span>
-        </div>
-        
-        <h3 className="text-xl font-bold text-foreground mb-2">
+        {/* Title */}
+        <h3 className="text-lg font-bold leading-tight text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
           {displayTitle}
         </h3>
         
+        {/* Description */}
         {prompt.whatFor && (
-          <p className="text-muted-foreground text-sm mb-3">
+          <p className="text-sm text-muted-foreground leading-relaxed mb-3 line-clamp-2">
             {prompt.whatFor}
           </p>
         )}
         
-        <InteractiveStarRating rating={averageRating} count={totalRatings} userRating={userRating} />
+        {/* Rating */}
+        <div className="mb-4">
+          <InteractiveStarRating rating={averageRating} count={totalRatings} userRating={userRating} />
+        </div>
       </CardHeader>
       
-      <CardContent className="overflow-hidden">
-        <div className="space-y-4 overflow-hidden">
+      <CardContent className="pt-0">
+        <div className="space-y-4">
           {/* Tags */}
           {prompt.tags && prompt.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-4">
+            <div className="flex flex-wrap gap-2">
               {prompt.tags.slice(0, 4).map((tag) => (
                 <Badge
                   key={tag}
@@ -908,49 +914,47 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
             </div>
           )}
 
-          {/* AI Provider Selection */}
-          <div className="overflow-hidden">
-            <div className="rounded-lg p-4 mb-4 border border-primary/20">
-              <p className="font-semibold text-foreground mb-3 flex items-center gap-2">
-                <Bot className="h-4 w-4 text-primary" />
-                Platform-optimized prompt:
-              </p>
-              
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button 
-                    variant="outline" 
-                    className="w-full justify-between h-auto p-4 bg-background/80 backdrop-blur-sm border-2 border-primary/30 hover:bg-background hover:border-primary/50 shadow-sm hover:shadow-md transition-all duration-200"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className={`p-2 rounded-full ${
-                        selectedAIPlatform === 'original' 
-                          ? 'bg-blue-100 text-blue-600'
-                          : getProviderColor(selectedAIPlatform)
-                      }`}>
+          {/* Platform selector */}
+          <div>
+            <p className="text-sm font-medium text-foreground mb-3">
+              Platform-optimized prompt:
+            </p>
+            
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-between h-auto p-3 bg-background border hover:bg-muted/50"
+                >
+                  <div className="flex items-center gap-2">
+                    <div className={`p-1.5 rounded-full ${
+                      selectedAIPlatform === 'original' 
+                        ? 'bg-blue-100 text-blue-600'
+                        : getProviderColor(selectedAIPlatform)
+                    }`}>
+                      {selectedAIPlatform === 'original' 
+                        ? <Bot className="h-4 w-4" />
+                        : selectedProviderData?.icon || <Bot className="h-4 w-4" />
+                      }
+                    </div>
+                    <div className="text-left">
+                      <div className="text-sm font-medium">
                         {selectedAIPlatform === 'original' 
-                          ? <Bot className="h-5 w-5" />
-                          : selectedProviderData?.icon || <Bot className="h-5 w-5" />
+                          ? 'Core Prompt'
+                          : selectedProviderData?.name || 'Select AI Platform'
                         }
                       </div>
-                      <div className="text-left">
-                        <div className="font-semibold">
-                          {selectedAIPlatform === 'original' 
-                            ? 'Core Prompt'
-                            : selectedProviderData?.name || 'Select AI Platform'
-                          }
-                        </div>
-                        <div className="text-sm text-muted-foreground">
-                          {selectedAIPlatform === 'original' 
-                            ? 'Original Version'
-                            : selectedProviderData?.description || 'Choose your preferred AI platform'
-                          }
-                        </div>
+                      <div className="text-xs text-muted-foreground">
+                        {selectedAIPlatform === 'original' 
+                          ? 'Original Version'
+                          : selectedProviderData?.description || 'Choose your preferred AI platform'
+                        }
                       </div>
                     </div>
-                    <ChevronDown className="h-4 w-4 ml-2" />
-                  </Button>
-                </DropdownMenuTrigger>
+                  </div>
+                  <ChevronDown className="h-4 w-4 ml-2" />
+                </Button>
+              </DropdownMenuTrigger>
               
               <DropdownMenuContent 
                 className="w-[280px] bg-background border-2 shadow-lg z-50 p-0"
@@ -1027,26 +1031,24 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                 </ScrollArea>
               </DropdownMenuContent>
             </DropdownMenu>
-            </div>
+          </div>
 
-            {/* Demo explanation */}
-            <div className="text-center mb-4">
-              <p className="text-sm text-muted-foreground">
-                ↑ Try selecting different AI platforms to see Scout optimize the same prompt below
-              </p>
-            </div>
+          {/* Demo explanation */}
+          <div className="text-center">
+            <p className="text-xs text-muted-foreground">
+              ↑ Try selecting different AI platforms to see Scout optimize the same prompt below
+            </p>
+          </div>
 
-            {/* Optimized Prompt Display */}
-            <div className="bg-muted/30 rounded-lg p-4 border-2 border-dashed border-primary/20 min-h-[120px] mb-4 relative">
-              <div className="flex items-center gap-2 mb-3">
-                <Bot className="h-4 w-4 text-primary" />
-                 <span className="text-sm font-medium text-primary">
-                   {selectedAIPlatform === 'original' ? 'Core Prompt' : `Optimized for ${selectedProviderData?.name}`}
-                 </span>
-              </div>
-              <p className="text-sm text-foreground leading-relaxed whitespace-pre-line">
-                {displayPrompt}
-              </p>
+          {/* Optimized prompt display */}
+          <div className="bg-muted/30 rounded-lg p-3 border border-border/50 relative">
+            <div className="flex items-center gap-2 mb-2">
+              <Bot className="h-3.5 w-3.5 text-primary" />
+              <span className="text-xs font-medium text-primary">Scout Optimized</span>
+            </div>
+            <div className="text-sm text-foreground leading-relaxed max-h-32 overflow-y-auto">
+              {displayPrompt}
+            </div>
               
               {showLock && (
                 <div className="absolute inset-0 rounded-lg bg-white/98 backdrop-blur-sm border border-blue-200 flex flex-col items-center justify-center min-h-full p-6 sm:p-10">
