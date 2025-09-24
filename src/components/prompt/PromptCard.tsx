@@ -353,26 +353,46 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
         
         <CardContent className="pt-0">
           <div className="space-y-4">
-            {/* Tags */}
-            {prompt.tags && prompt.tags.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {prompt.tags.slice(0, 4).map((tag) => (
-                  <Badge
-                    key={tag}
-                    variant="secondary"
-                    className="text-xs cursor-pointer hover:bg-secondary/80"
-                    onClick={() => onTagClick?.(tag)}
-                  >
-                    {tag}
-                  </Badge>
-                ))}
-                {prompt.tags.length > 4 && (
-                  <Badge variant="outline" className="text-xs">
-                    +{prompt.tags.length - 4} more
-                  </Badge>
-                )}
-              </div>
-            )}
+            {/* Tags and Favorite */}
+            <div className="flex items-center justify-between gap-3">
+              {prompt.tags && prompt.tags.length > 0 ? (
+                <div className="flex flex-wrap gap-2 flex-1">
+                  {prompt.tags.slice(0, 4).map((tag) => (
+                    <Badge
+                      key={tag}
+                      variant="secondary"
+                      className="text-xs cursor-pointer hover:bg-secondary/80"
+                      onClick={() => onTagClick?.(tag)}
+                    >
+                      {tag}
+                    </Badge>
+                  ))}
+                  {prompt.tags.length > 4 && (
+                    <Badge variant="outline" className="text-xs">
+                      +{prompt.tags.length - 4} more
+                    </Badge>
+                  )}
+                </div>
+              ) : (
+                <div className="flex-1" />
+              )}
+              
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      onClick={handleToggleFavorite} 
+                      className="flex-shrink-0"
+                    >
+                      <Heart className={`h-4 w-4 ${isFavorited ? "fill-red-500 text-red-500" : ""}`} />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>{isFavorited ? "Remove from favorites" : "Add to favorites"}</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
 
             {/* Platform selector */}
             <div>
@@ -550,22 +570,6 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                 </Tooltip>
               </TooltipProvider>
 
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button 
-                      size="sm" 
-                      variant="outline" 
-                      onClick={handleToggleFavorite} 
-                      className="flex-shrink-0"
-                    >
-                      <Heart className={`h-4 w-4 ${isFavorited ? 'fill-red-500 text-red-500' : ''}`} />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>{isFavorited ? 'Remove from favorites' : 'Add to favorites'}</TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-
                {(!showLock || hasAccess) && (
                 <AiProviderDropdown 
                   prompt={displayedPrompt} 
@@ -575,7 +579,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                     setAiProvider(provider);
                     setIsAiModalOpen(true);
                   }} 
-                  className="flex-1"
+                  className="flex-[2]"
                 />
               )}
             </div>
