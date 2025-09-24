@@ -469,17 +469,17 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               </div>
               
               {showLock && (
-                <div className="absolute inset-0 rounded-lg bg-background/95 backdrop-blur-sm border border-primary/20 flex flex-col items-center justify-center min-h-full p-6">
+                <div className="absolute inset-0 rounded-lg bg-blue-600/85 backdrop-blur-sm flex flex-col items-center justify-center min-h-full p-6">
                   <div className="text-center space-y-4">
-                    <div className="inline-flex items-center gap-3 text-base font-semibold px-6 py-3 rounded-full bg-primary/10 border-2 border-primary/20 text-primary">
-                      <Lock className="h-5 w-5" />
-                      <span>Unlock Premium Prompt</span>
+                    <div className="inline-flex items-center gap-2 text-sm text-white/90">
+                      <Lock className="h-4 w-4" />
+                      <span>Unlock PRO Prompt</span>
                     </div>
                     <div className="flex flex-col gap-3 w-full max-w-sm">
-                      <Button size="lg" className="w-full" onClick={addPromptToCart}>
+                      <Button size="lg" className="w-full bg-blue-500 hover:bg-blue-600 text-white border-0" onClick={addPromptToCart}>
                         Buy Prompt $1.49
                       </Button>
-                      <Button size="lg" variant="outline" className="w-full" onClick={handleSubscribeClick}>
+                      <Button size="lg" className="w-full bg-white hover:bg-gray-50 text-gray-900 border-0" onClick={handleSubscribeClick}>
                         Subscribe $4.99/mo
                       </Button>
                     </div>
