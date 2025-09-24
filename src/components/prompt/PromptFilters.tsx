@@ -152,7 +152,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
             >
               <SelectValue placeholder="All" />
             </SelectTrigger>
-            <SelectContent className="max-h-80">
+            <SelectContent className="max-h-80 overflow-y-auto">
               <SelectItem value="all">All</SelectItem>
               <SelectItem value="RECOMMENDED">🎯 Recommended</SelectItem>
               <SelectItem value="MOST_POPULAR">🔥 Most Popular</SelectItem>
@@ -262,7 +262,7 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
             >
               <SelectValue placeholder="All" />
             </SelectTrigger>
-            <SelectContent className="max-h-80">
+            <SelectContent className="max-h-80 overflow-y-auto">
               <SelectItem value="all">All</SelectItem>
               <SelectItem value="RECOMMENDED">🎯 Recommended</SelectItem>
               <SelectItem value="MOST_POPULAR">🔥 Most Popular</SelectItem>
