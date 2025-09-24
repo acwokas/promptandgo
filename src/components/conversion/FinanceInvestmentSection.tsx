@@ -29,8 +29,8 @@ const FinanceInvestmentSection = () => {
       // Randomly select one of the allowed queries
       const randomCategory = allowedQueries[Math.floor(Math.random() * allowedQueries.length)];
       
-      // Generate random usage between 1x and 4x (never above 4x as requested)
-      const randomUsage = Math.floor(Math.random() * 4) + 1;
+      // Generate random usage between 1x and 5x (never above 5x as requested)
+      const randomUsage = Math.floor(Math.random() * 5) + 1;
       
       // Create the search link for the selected category
       const searchLink = `/library?search=${encodeURIComponent(randomCategory)}`;
