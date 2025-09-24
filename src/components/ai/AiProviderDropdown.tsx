@@ -64,13 +64,15 @@ interface AiProviderDropdownProps {
   onResponse?: (response: string, provider: string) => void;
   className?: string;
   disabled?: boolean;
+  optimizedFor?: string; // The AI platform this prompt is optimized for
 }
 
 export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
   prompt,
   onResponse,
   className,
-  disabled
+  disabled,
+  optimizedFor
 }) => {
   const { getFilteredProviders } = useAIPreferences();
   const [isLoading, setIsLoading] = useState(false);
@@ -239,6 +241,15 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
     .filter(p => p.category === 'image')
     .sort((a, b) => a.name.localeCompare(b.name));
 
+  // Get the optimized platform info
+  const optimizedPlatform = optimizedFor && optimizedFor !== 'original' 
+    ? convertedProviders.find(p => p.id === optimizedFor)
+    : null;
+
+  const buttonText = optimizedPlatform 
+    ? `Send to ${optimizedPlatform.name}`
+    : 'Send to AI';
+
   return (
     <TooltipProvider>
       <DropdownMenu>
@@ -256,7 +267,7 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
             ) : (
               <>
                 <Send className="h-4 w-4 mr-2" />
-                Send to AI
+                {buttonText}
                 <ChevronDown className="h-4 w-4 ml-2" />
               </>
             )}

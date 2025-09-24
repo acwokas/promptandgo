@@ -524,9 +524,10 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                 </Tooltip>
               </TooltipProvider>
 
-              {(!showLock || hasAccess) && (
+               {(!showLock || hasAccess) && (
                 <AiProviderDropdown 
                   prompt={displayedPrompt} 
+                  optimizedFor={selectedAIPlatform}
                   onResponse={(response, provider) => {
                     setAiResponse(response);
                     setAiProvider(provider);
