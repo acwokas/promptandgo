@@ -78,7 +78,7 @@ const Footer = () => {
             </Link>
           </nav>
         </div>
-        <div className="md:col-span-3 col-span-full justify-self-end text-right text-muted-foreground">© 2025 <strong>prompt</strong>andgo  |  <Link to="/terms" className="hover:text-foreground">Terms & Conditions</Link>  |  <Link to="/privacy" className="hover:text-foreground">Privacy Policy</Link></div>
+        <div className="md:col-span-3 col-span-full justify-self-end text-right text-muted-foreground">© 2025 <strong>Prompt</strong>and<strong>Go</strong>  |  <Link to="/terms" className="hover:text-foreground">Terms & Conditions</Link>  |  <Link to="/privacy" className="hover:text-foreground">Privacy Policy</Link></div>
       </div>
     </footer>
   );
