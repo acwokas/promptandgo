@@ -81,7 +81,7 @@ const HowItWorks = () => {
   const howToSchema = {
     "@context": "https://schema.org",
     "@type": "HowTo",
-    name: "How PromptAndGo Works",
+    name: "How promptandgo Works",
     description: "Complete AI productivity toolkit with prompt library, Scout optimization, and Power Packs - all free.",
     step: [
       { "@type": "HowToStep", name: "Browse Library", text: "Explore 2700+ tested prompts organized by category and use case." },
@@ -95,7 +95,7 @@ const HowItWorks = () => {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     mainEntity: [
-      { "@type": "Question", name: "What is PromptAndGo?", acceptedAnswer: { "@type": "Answer", text: "A complete AI productivity toolkit with prompt library, Scout optimization, and Power Packs - all completely free." } },
+      { "@type": "Question", name: "What is promptandgo?", acceptedAnswer: { "@type": "Answer", text: "A complete AI productivity toolkit with prompt library, Scout optimization, and Power Packs - all completely free." } },
       { "@type": "Question", name: "How does Scout work?", acceptedAnswer: { "@type": "Answer", text: "Scout AI optimizes any prompt for your specific AI platform, rewriting it for better results on ChatGPT, Claude, Gemini, and more." } },
       { "@type": "Question", name: "Is everything really free?", acceptedAnswer: { "@type": "Answer", text: "Yes! Browse prompts, use Scout optimization, and access many Power Packs completely free. Premium options available for advanced features." } },
     ],
@@ -103,9 +103,9 @@ const HowItWorks = () => {
   
   return (<>
     <CountdownTimer variant="banner" />
-    <SEO title="How PromptAndGo Works - Free AI Tools & Scout Optimization" description="Discover our complete suite: Prompt Library, Power Packs, and Scout AI that optimizes prompts for any AI platform - all completely free." structuredData={[howToSchema, faqSchema]} />
+    <SEO title="How promptandgo Works - Free AI Tools & Scout Optimization" description="Discover our complete suite: Prompt Library, Power Packs, and Scout AI that optimizes prompts for any AI platform - all completely free." structuredData={[howToSchema, faqSchema]} />
     <PageHero
-      title={<>How <span className="text-gradient-brand">PromptAndGo</span> Works</>}
+      title={<>How <span className="text-gradient-brand"><strong>prompt</strong>and<strong>go</strong></span> Works</>}
       subtitle={
         <>
           Get better AI results with our complete toolkit: browse 2700+ tested prompts, use specialized Power Packs, and let Scout optimize everything for your favorite AI platform. All completely free.

@@ -345,7 +345,7 @@ const Index = () => {
   return (
     <>
       <SEO 
-        title="Scout AI - Your Personal Prompt Crafting Assistant | PromptAndGo" 
+        title="Scout AI - Your Personal Prompt Crafting Assistant | promptandgo" 
         description="Meet Scout, your AI prompt crafting partner. Start with curated prompts, customize in real-time with guided wizards, and get platform-specific versions for ChatGPT, Claude, MidJourney & more."
         keywords="Scout AI, AI prompt crafting, prompt customization, AI prompt assistant, ChatGPT prompts, Claude prompts, MidJourney prompts, prompt optimization, AI prompt generator, guided prompt wizards, platform-specific prompts"
         structuredData={homeStructuredData}

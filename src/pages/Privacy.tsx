@@ -29,7 +29,7 @@ const Privacy = () => (
 
     <section className="prose prose-neutral max-w-none dark:prose-invert">
       <p>
-        PromptAndGo (“we”, “our”, “us”) operates the website https://promptandgo.ai (the “Site”). We are
+        promptandgo (“we”, “our”, “us”) operates the website https://promptandgo.ai (the “Site”). We are
         committed to protecting your personal data in compliance with Singapore’s Personal Data Protection Act 2012 (PDPA)
         and other applicable laws.
       </p>

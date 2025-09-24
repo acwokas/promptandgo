@@ -19,7 +19,7 @@ export const ProductSEO = ({
   image, 
   inStock = true, 
   category,
-  brand = "PromptandGo.ai",
+  brand = "promptandgo.ai",
   sku,
   canonical
 }: ProductSEOProps) => {
@@ -74,7 +74,7 @@ interface ServiceSEOProps {
 export const ServiceSEO = ({ 
   name, 
   description, 
-  provider = "PromptandGo.ai", 
+  provider = "promptandgo.ai", 
   areaServed = "Worldwide",
   serviceType = "AI Prompt Library",
   url
