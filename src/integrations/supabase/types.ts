@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_rate_limits: {
+        Row: {
+          action: string
+          count: number
+          created_at: string
+          id: string
+          user_id: string
+          window_start: string
+        }
+        Insert: {
+          action: string
+          count?: number
+          created_at?: string
+          id?: string
+          user_id: string
+          window_start?: string
+        }
+        Update: {
+          action?: string
+          count?: number
+          created_at?: string
+          id?: string
+          user_id?: string
+          window_start?: string
+        }
+        Relationships: []
+      }
       ai_usage: {
         Row: {
           created_at: string
@@ -1268,44 +1295,13 @@ export type Database = {
       }
     }
     Views: {
-      safe_subscriber_view: {
-        Row: {
-          created_at: string | null
-          email_hash: string | null
-          has_encrypted_email: boolean | null
-          id: string | null
-          subscribed: boolean | null
-          subscription_end: string | null
-          subscription_tier: string | null
-          updated_at: string | null
-          user_id: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          email_hash?: string | null
-          has_encrypted_email?: never
-          id?: string | null
-          subscribed?: boolean | null
-          subscription_end?: string | null
-          subscription_tier?: string | null
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          email_hash?: string | null
-          has_encrypted_email?: never
-          id?: string | null
-          subscribed?: boolean | null
-          subscription_end?: string | null
-          subscription_tier?: string | null
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
+      check_admin_rate_limit: {
+        Args: { p_action: string; p_limit?: number; p_window_minutes?: number }
+        Returns: boolean
+      }
       check_and_increment_daily_ai_sends: {
         Args: { p_user_id: string }
         Returns: Json
@@ -1395,6 +1391,20 @@ export type Database = {
         Returns: {
           average_rating: number
           total_ratings: number
+        }[]
+      }
+      get_safe_subscriber_view: {
+        Args: { p_user_id?: string }
+        Returns: {
+          created_at: string
+          email_hash: string
+          has_encrypted_email: boolean
+          id: string
+          subscribed: boolean
+          subscription_end: string
+          subscription_tier: string
+          updated_at: string
+          user_id: string
         }[]
       }
       get_sgt_date: {

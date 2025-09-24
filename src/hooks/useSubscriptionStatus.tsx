@@ -16,10 +16,10 @@ export function useSubscriptionStatus() {
       }
 
       try {
-        // SECURITY FIX: Use secure function for subscription data access
+        // SECURITY FIX: Use new secure subscription status function
         const { data, error } = await supabase
-          .rpc('get_user_subscription_data')
-          .maybeSingle();
+          .rpc('get_user_subscription_status')
+          .single();
 
         if (error) {
           console.error('Error checking subscription:', error);

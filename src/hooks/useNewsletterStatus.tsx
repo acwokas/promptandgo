@@ -19,7 +19,7 @@ export function useNewsletterStatus() {
         // SECURITY FIX: Use secure RPC instead of direct table access
         const { data, error } = await supabase
           .rpc('get_user_newsletter_status')
-          .maybeSingle();
+          .single();
 
         if (error) {
           console.error('Error checking newsletter subscription:', error);
