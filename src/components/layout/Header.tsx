@@ -79,6 +79,12 @@ const Header = () => {
         {/* Desktop Navigation - Simplified for maximum conversion */}
         <nav className="hidden lg:flex items-center gap-8 flex-1 justify-center md:ml-8">
           <Link 
+            to="/how-it-works" 
+            className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+          >
+            How it Works
+          </Link>
+          <Link 
             to="/library" 
             className="text-sm font-medium text-foreground hover:text-primary transition-colors"
           >
