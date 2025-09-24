@@ -48,13 +48,55 @@ const cleanTitle = (t?: string | null) => {
 };
 
 // Generate fallback ratings for prompts without user ratings yet
-const generateFallbackRating = (promptId: string) => {
+const generateFallbackRating = (promptId: string, categories: Category[], prompt: Prompt) => {
   let hash = 0;
   for (let i = 0; i < promptId.length; i++) {
     hash = (hash * 31 + promptId.charCodeAt(i)) >>> 0;
   }
   
-  // Generate rating between 3.8 and 5.0, with most being 4.2-4.8
+  // Find the category for this prompt
+  const category = categories.find((c) => c.id === prompt.categoryId);
+  const categoryName = category?.name?.toLowerCase() || '';
+  const promptTitle = prompt.title?.toLowerCase() || '';
+  const promptWhatFor = prompt.whatFor?.toLowerCase() || '';
+  
+  // Check if this is a career or marketing related prompt
+  const isCareerPrompt = categoryName.includes('career') || 
+                        promptTitle.includes('career') || 
+                        promptTitle.includes('resume') || 
+                        promptTitle.includes('job') ||
+                        promptWhatFor.includes('career') ||
+                        promptWhatFor.includes('resume') ||
+                        promptWhatFor.includes('job');
+  
+  const isMarketingPrompt = categoryName.includes('marketing') || 
+                           categoryName.includes('market') ||
+                           promptTitle.includes('marketing') || 
+                           promptTitle.includes('market') ||
+                           promptWhatFor.includes('marketing') ||
+                           promptWhatFor.includes('market');
+  
+  if (isCareerPrompt || isMarketingPrompt) {
+    // For career and marketing prompts: 4.7 to 5.0 range
+    const base = 4.7;
+    const range = 0.3;
+    const normalized = (hash % 10000) / 10000;
+    
+    // Make 5.0 ratings rare (about 15% chance)
+    const perfectRatingThreshold = 0.85;
+    if (normalized > perfectRatingThreshold) {
+      return 5.0;
+    }
+    
+    // Bias toward higher ratings within 4.7-4.9 range
+    const skewed = Math.pow(normalized, 0.5);
+    const rating = base + (skewed * (range - 0.1)); // 4.7 to 4.9 range mostly
+    
+    // Round to one decimal place
+    return Math.round(rating * 10) / 10;
+  }
+  
+  // Default rating logic for other prompts
   const base = 3.8;
   const range = 1.2;
   const normalized = (hash % 10000) / 10000;
@@ -134,7 +176,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   const hasAccess = user && (!isPro || user.user_metadata?.subscription_status === 'active');
   
   // Get fallback rating data
-  const fallbackRating = generateFallbackRating(prompt.id);
+  const fallbackRating = generateFallbackRating(prompt.id, categories, prompt);
   const fallbackCount = generateFallbackRatingCount(prompt.id);
   
   // Use fallback data as defaults
