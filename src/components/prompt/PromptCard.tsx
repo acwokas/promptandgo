@@ -259,7 +259,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
 
   return (
     <>
-      <Card className="group relative border-border/50 bg-card hover:shadow-md hover:border-primary/30 transition-all duration-300 cursor-pointer overflow-hidden">
+      <Card className="group relative border-border/50 bg-card hover:shadow-md hover:border-primary/30 transition-all duration-300 cursor-pointer">
         <CardHeader className="pb-3">
           {/* Top badges and category */}
           <div className="flex items-start justify-between gap-3 mb-3">
@@ -464,7 +464,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                 <Bot className="h-3.5 w-3.5 text-primary" />
                 <span className="text-xs font-medium text-primary">Scout Optimized</span>
               </div>
-              <div className="text-sm text-foreground leading-relaxed min-h-32">
+              <div className="text-sm text-foreground leading-relaxed">
                 {displayedPrompt}
               </div>
               
