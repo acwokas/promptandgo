@@ -167,6 +167,9 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
         case 'openai':
           showManualInstructions('https://chatgpt.com/');
           break;
+        case 'claude':
+          showManualInstructions('https://claude.ai/');
+          break;
         case 'anthropic':
           showManualInstructions('https://claude.ai/');
           break;
@@ -225,6 +228,7 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
     const urls = {
       openai: 'https://chatgpt.com/',
       chatgpt: 'https://chatgpt.com/',
+      claude: 'https://claude.ai/',
       anthropic: 'https://claude.ai/',
       google: 'https://gemini.google.com/',
       groq: 'https://console.groq.com/playground',
