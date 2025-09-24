@@ -3,6 +3,7 @@ import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import NanoBananaAnnouncement from "@/components/NanoBananaAnnouncement";
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
+import { useFeaturedCategories } from "@/hooks/useFeaturedCategories";
 import { Link, useNavigate } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
 import CountdownTimer from "@/components/conversion/CountdownTimer";
@@ -26,7 +27,19 @@ import {
   Edit3, 
   Settings,
   ArrowRight,
-  Users
+  Users,
+  TrendingUp,
+  Share2,
+  Clock,
+  DollarSign,
+  Palette,
+  Headphones,
+  Target,
+  Plane,
+  ChefHat,
+  Gamepad2,
+  MessageCircle,
+  Home
 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
@@ -59,6 +72,7 @@ const Index = () => {
   const navigate = useNavigate();
   const { latestArticle, loading: articleLoading } = useLatestArticle();
   const { toast } = useToast();
+  const { categories: featuredCategories, loading: categoriesLoading } = useFeaturedCategories();
   
   // Check if user is new or returning
   const [isReturningUser, setIsReturningUser] = useState(false);
@@ -95,61 +109,39 @@ const Index = () => {
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const [existingUserEmail, setExistingUserEmail] = useState("");
 
-  // Daily rotating featured categories
-  const featuredCategories = [
-    {
-      title: "Marketing & Advertising",
-      message: "Boost your campaigns today",
-      link: "/library?category=Marketing%20%26%20Advertising",
-      icon: Briefcase,
-      usage: "5x usage today"
-    },
-    {
-      title: "Personal Growth & Mindfulness", 
-      message: "Transform your mindset",
-      link: "/library?category=Personal%20Growth%20%26%20Mindfulness",
-      icon: Heart,
-      usage: "3x usage today"
-    },
-    {
-      title: "Creative Writing & Content",
-      message: "Unleash your creativity", 
-      link: "/library?category=Creative%20Writing%20%26%20Content",
-      icon: Edit3,
-      usage: "7x usage today"
-    },
-    {
-      title: "Business & Strategy",
-      message: "Scale your business",
-      link: "/library?category=Business%20%26%20Strategy", 
-      icon: BarChart3,
-      usage: "4x usage today"
-    },
-    {
-      title: "Learning & Education",
-      message: "Accelerate your learning",
-      link: "/library?category=Learning%20%26%20Education",
-      icon: BookOpen,
-      usage: "6x usage today"
-    },
-    {
-      title: "Technology & Development",
-      message: "Build smarter solutions",
-      link: "/library?category=Technology%20%26%20Development", 
-      icon: Settings,
-      usage: "8x usage today"
-    },
-    {
-      title: "Visual & Image Creation",
-      message: "Create stunning visuals",
-      link: "/library?category=Visual%20%26%20Image%20Creation",
-      icon: Image,
-      usage: "2x usage today"
-    }
-  ];
+  // Helper function to map icon names to components
+  const getIconComponent = (iconName: string) => {
+    const iconMap: Record<string, any> = {
+      'Briefcase': Briefcase,
+      'Heart': Heart,
+      'Edit3': Edit3,
+      'BarChart3': BarChart3,
+      'BookOpen': BookOpen,
+      'Settings': Settings,
+      'Image': Image,
+      'TrendingUp': TrendingUp,
+      'Share2': Share2,
+      'Clock': Clock,
+      'Users': Users,
+      'Zap': Zap,
+      'DollarSign': DollarSign,
+      'Palette': Palette,
+      'Headphones': Headphones,
+      'Target': Target,
+      'Search': Search,
+      'Plane': Plane,
+      'ChefHat': ChefHat,
+      'Gamepad2': Gamepad2,
+      'MessageCircle': MessageCircle,
+      'Home': Home,
+      'Star': Star
+    };
+    return iconMap[iconName] || Briefcase; // Default to Briefcase if icon not found
+  };
 
   // Get today's featured category (rotates daily)
   const getDailyFeatured = () => {
+    if (!featuredCategories.length) return null;
     const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
     return featuredCategories[dayOfYear % featuredCategories.length];
   };
@@ -388,7 +380,7 @@ const Index = () => {
                 <div className="flex items-center gap-4">
                   <div className="relative">
                     <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center">
-                      {React.createElement(todaysFeatured.icon, { className: "h-6 w-6 text-white" })}
+                      {React.createElement(getIconComponent(todaysFeatured.icon), { className: "h-6 w-6 text-white" })}
                     </div>
                     <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full animate-pulse border-2 border-background" />
                   </div>
@@ -396,7 +388,7 @@ const Index = () => {
                     <h3 className="font-bold text-lg">{todaysFeatured.title}</h3>
                     <p className="text-sm text-muted-foreground flex items-center gap-2">
                       <span className="inline-flex items-center gap-1.5 bg-primary/10 px-2 py-0.5 rounded-full text-xs font-medium">
-                        🔥 {todaysFeatured.usage}
+                        🔥 {todaysFeatured.usage_text}
                       </span>
                       <Button asChild variant="ghost" size="sm" className="h-6 px-2 text-xs text-primary hover:text-primary">
                         <Link to={todaysFeatured.link}>
