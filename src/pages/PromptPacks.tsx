@@ -550,7 +550,7 @@ const PromptPacks = () => {
                   {/* Lifetime Membership */}
                   <Card className="text-center p-6 hover:shadow-lg transition-shadow">
                     <div className="mb-4">
-                      <Infinity className="h-12 w-12 mx-auto text-gradient-brand" />
+                      <Infinity className="h-12 w-12 mx-auto text-purple-500" />
                     </div>
                     <h3 className="text-xl font-bold mb-2">Lifetime Access</h3>
                     <p className="text-muted-foreground mb-4">
