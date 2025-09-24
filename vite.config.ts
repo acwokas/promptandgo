@@ -15,30 +15,37 @@ export default defineConfig(({ mode }) => ({
     ViteImageOptimizer({
       includePublic: true,
       logStats: false,
+      // Much more aggressive PNG optimization
       png: { 
-        quality: 60,  // More aggressive compression
+        quality: 40,  // Heavily compress PNGs
         compressionLevel: 9,
         adaptiveFiltering: true
       },
+      // Aggressive JPEG compression
       jpeg: { 
-        quality: 65,
+        quality: 50,  // Lower quality for smaller files
         progressive: true
       },
+      // Aggressive WebP settings
       webp: { 
-        quality: 65,
-        method: 6  // Better compression
+        quality: 50,  // Lower quality
+        method: 6,    // Best compression
+        autoFilter: true
       },
+      // Very aggressive AVIF compression
       avif: { 
-        quality: 45,
-        speed: 0  // Best compression
+        quality: 35,  // Very low quality but excellent compression
+        speed: 0      // Best compression
       },
       svg: { 
         multipass: true,
         plugins: [
-          { name: 'preset-default', params: { overrides: { removeViewBox: false } } }
+          { name: 'preset-default', params: { overrides: { removeViewBox: false } } },
+          { name: 'removeDimensions' },
+          { name: 'removeUselessStrokeAndFill' }
         ]
       },
-      // Enable format conversion to WebP for better performance
+      // Enable caching
       cache: true,
       cacheLocation: 'node_modules/.vite-imageopt'
     }),

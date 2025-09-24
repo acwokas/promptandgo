@@ -50,6 +50,7 @@ import { PromptStudioCTA } from "@/components/ui/prompt-studio-cta";
 import ProgressivePricing from "@/components/conversion/ProgressivePricing";
 import { TestimonialHighlights, UserStats, SecurityBadges, AsSeenIn } from "@/components/conversion/TrustIndicators";
 import ScoutDemo from "@/components/conversion/ScoutDemo";
+import { SeoOptimizedImage } from "@/components/seo/SeoOptimizedImage";
 
 const Index = () => {
   const { user } = useSupabaseAuth();
@@ -914,11 +915,14 @@ const Index = () => {
                   latestArticle && !articleLoading ? (
                     <Link to={`/tips/${latestArticle.slug}`} className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                       <Card className="overflow-hidden">
-                        <img 
-                          src={latestArticle.thumbnail_url || "/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png"} 
-                          alt={latestArticle.title} 
-                          loading="lazy" 
-                          className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" 
+                        <SeoOptimizedImage
+                          src={latestArticle.thumbnail_url || "/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png"}
+                          alt={latestArticle.title}
+                          loading="lazy"
+                          width={800}
+                          height={450}
+                          sizes="(max-width: 768px) 100vw, 800px"
+                          className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                         />
                         <CardContent className="p-6">
                           <div className="flex items-center gap-2 mb-3">
@@ -959,11 +963,14 @@ const Index = () => {
                     // Fallback to hardcoded article if no latest article found
                     <Link to="/tips/beginners-guide-midjourney-prompts" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                       <Card className="overflow-hidden">
-                        <img 
-                          src="/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png" 
-                          alt="Beginner's Guide to MidJourney Prompts" 
-                          loading="lazy" 
-                          className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" 
+                        <SeoOptimizedImage
+                          src="/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png"
+                          alt="Beginner's Guide to MidJourney Prompts"
+                          loading="lazy"
+                          width={800}
+                          height={450}
+                          sizes="(max-width: 768px) 100vw, 800px"
+                          className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                         />
                         <CardContent className="p-6">
                           <h3 className="text-xl font-semibold leading-snug mb-3">Beginner's Guide to MidJourney Prompts That Actually Work</h3>
@@ -981,15 +988,15 @@ const Index = () => {
                   // Welcome content for new users
                   <Link to="/tips/welcome-to-promptandgo-ai" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                     <Card className="overflow-hidden">
-                      <img 
-                        src="/lovable-uploads/66b1134b-1d55-416b-b7ea-2719a1a22ec1.png" 
-                        alt="Welcome to promptandgo.ai: Your Shortcut to Smarter AI Prompts" 
-                        loading="lazy" 
-                        decoding="async"
-                        width="837" 
-                        height="469"
+                      <SeoOptimizedImage
+                        src="/lovable-uploads/66b1134b-1d55-416b-b7ea-2719a1a22ec1.png"
+                        alt="Welcome to **Prompt**and**Go**: Your Shortcut to Smarter AI Prompts"
+                        loading="lazy"
+                        fetchPriority="low"
+                        width={837}
+                        height={469}
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
-                        className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" 
+                        className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                       />
                       <CardContent className="p-6">
                         <h3 className="text-xl font-semibold leading-snug mb-3">Welcome to promptandgo.ai: Your Shortcut to Smarter AI Prompts</h3>

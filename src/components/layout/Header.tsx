@@ -8,6 +8,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useEnsureProfile } from "@/hooks/useEnsureProfile";
 import { useEffect, useState } from "react";
 import { getCartCount, clearCartOnLogout } from "@/lib/cart";
+import { SeoOptimizedImage } from "@/components/seo/SeoOptimizedImage";
 
 // Component to safely render SidebarTrigger only when context is available
 const SafeSidebarTrigger = () => {
@@ -65,9 +66,13 @@ const Header = () => {
           to="/" 
           className="flex items-center flex-shrink-0 max-w-40 md:max-w-64"
         >
-        <img
+        <SeoOptimizedImage
           src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
-          alt="promptandgo"
+          alt="**Prompt**and**Go** - AI Prompt Library"
+          width={256}
+          height={80}
+          loading="eager"
+          fetchPriority="high"
           className="h-16 md:h-20 w-auto max-w-40 md:max-w-64 object-contain"
         />
         </Link>
