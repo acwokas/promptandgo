@@ -931,11 +931,63 @@ const PromptLibrary = () => {
         )}
 
         <section className="mt-0 pt-6">
-          <h2 className="text-xl font-semibold mb-4">
-            {ribbon === "RECOMMENDED" ? "🎯 Recommended Prompts" : 
-             hasPersonalization && personalizedPrompts.length > 0 && ribbon !== "RECOMMENDED" ? "All Prompts" : 
-             "Browse All Prompts"}
-          </h2>
+          {(() => {
+            // Helper function to get title and description based on ribbon
+            const getTitleAndDescription = () => {
+              switch (ribbon) {
+                case "RECOMMENDED":
+                  return {
+                    title: "🎯 Recommended for You",
+                    description: "Based on your preferences and goals"
+                  };
+                case "MOST_POPULAR":
+                  return {
+                    title: "🔥 Most Popular",
+                    description: "Top prompts loved by our community"
+                  };
+                case "NEW_PROMPTS":
+                  return {
+                    title: "✨ New Prompts",
+                    description: "Fresh additions to our library"
+                  };
+                case "TRENDING":
+                  return {
+                    title: "📈 Trending",
+                    description: "Gaining popularity right now"
+                  };
+                case "HIGHEST_RATED":
+                  return {
+                    title: "⭐ Highest Rated",
+                    description: "Top-rated prompts by users"
+                  };
+                case "MOST_COPIED":
+                  return {
+                    title: "📋 Most Copied",
+                    description: "Frequently used prompts"
+                  };
+                default:
+                  if (hasPersonalization && personalizedPrompts.length > 0) {
+                    return {
+                      title: "All Prompts",
+                      description: "Browse our complete collection"
+                    };
+                  }
+                  return {
+                    title: "Browse All Prompts",
+                    description: "Discover our complete collection of AI prompts"
+                  };
+              }
+            };
+
+            const { title, description } = getTitleAndDescription();
+            
+            return (
+              <div className="mb-6">
+                <h2 className="text-xl font-semibold mb-2">{title}</h2>
+                <p className="text-muted-foreground text-sm">{description}</p>
+              </div>
+            );
+          })()}
           <div id="library-results" ref={listRef} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 scroll-mt-40 md:scroll-mt-48">
             {ribbon === "RECOMMENDED" && hasPersonalization && personalizedPrompts.length > 0 ? (
               // Show personalized prompts when "Recommended" is selected - sorted by complexity
