@@ -16,7 +16,8 @@ import { cn } from "@/lib/utils";
 import { addToCart, getCart } from "@/lib/cart";
 import { AI_PROVIDERS, rewritePromptForProvider } from "@/lib/promptRewriter";
 import { useAIPreferences } from "@/hooks/useAIPreferences";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuLabel } from "@/components/ui/dropdown-menu";
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { AiProviderDropdown } from "@/components/ai/AiProviderDropdown";
 import { AiResponseModal } from "@/components/ai/AiResponseModal";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -952,49 +953,78 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                 </DropdownMenuTrigger>
               
               <DropdownMenuContent 
-                className="w-[280px] bg-background border-2 shadow-lg z-50"
+                className="w-[280px] bg-background border-2 shadow-lg z-50 p-0"
                 align="start"
                 side="bottom"
                 sideOffset={4}
               >
-                <DropdownMenuItem
-                  className="p-4 cursor-pointer hover:bg-muted/50 focus:bg-muted/50"
-                  onClick={() => handleAIPlatformChange('original')}
-                >
-                  <div className="flex items-center gap-3 w-full">
-                    <div className="p-2 rounded-full bg-blue-100 text-blue-600">
-                      <Bot className="h-5 w-5" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="font-semibold">Core Prompt</div>
-                      <div className="text-sm text-muted-foreground">Original Version</div>
-                    </div>
-                    {selectedAIPlatform === 'original' && (
-                      <CheckCircle className="h-4 w-4 text-primary" />
-                    )}
+                <ScrollArea className="h-80">
+                  <div className="p-1">
+                    <DropdownMenuItem
+                      className="p-4 cursor-pointer hover:bg-muted/50 focus:bg-muted/50"
+                      onClick={() => handleAIPlatformChange('original')}
+                    >
+                      <div className="flex items-center gap-3 w-full">
+                        <div className="p-2 rounded-full bg-blue-100 text-blue-600">
+                          <Bot className="h-5 w-5" />
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-semibold">Core Prompt</div>
+                          <div className="text-sm text-muted-foreground">Original Version</div>
+                        </div>
+                        {selectedAIPlatform === 'original' && (
+                          <CheckCircle className="h-4 w-4 text-primary" />
+                        )}
+                      </div>
+                    </DropdownMenuItem>
+                    
+                    <DropdownMenuSeparator />
+                    <DropdownMenuLabel>Text Generation</DropdownMenuLabel>
+                    {getFilteredProviders().filter(p => p.category === 'text').sort((a, b) => a.name.localeCompare(b.name)).map((provider) => (
+                      <DropdownMenuItem
+                        key={provider.id}
+                        className="p-4 cursor-pointer hover:bg-muted/50 focus:bg-muted/50"
+                        onClick={() => handleAIPlatformChange(provider.id)}
+                      >
+                        <div className="flex items-center gap-3 w-full">
+                          <div className={`p-2 rounded-full ${getProviderColor(provider.id)}`}>
+                            {provider.icon}
+                          </div>
+                          <div className="flex-1">
+                            <div className="font-semibold">{provider.name}</div>
+                            <div className="text-sm text-muted-foreground">{provider.description}</div>
+                          </div>
+                          {selectedAIPlatform === provider.id && (
+                            <CheckCircle className="h-4 w-4 text-primary" />
+                          )}
+                        </div>
+                      </DropdownMenuItem>
+                    ))}
+                    
+                    <DropdownMenuSeparator />
+                    <DropdownMenuLabel>Image Generation</DropdownMenuLabel>
+                    {getFilteredProviders().filter(p => p.category === 'image').sort((a, b) => a.name.localeCompare(b.name)).map((provider) => (
+                      <DropdownMenuItem
+                        key={provider.id}
+                        className="p-4 cursor-pointer hover:bg-muted/50 focus:bg-muted/50"
+                        onClick={() => handleAIPlatformChange(provider.id)}
+                      >
+                        <div className="flex items-center gap-3 w-full">
+                          <div className={`p-2 rounded-full ${getProviderColor(provider.id)}`}>
+                            {provider.icon}
+                          </div>
+                          <div className="flex-1">
+                            <div className="font-semibold">{provider.name}</div>
+                            <div className="text-sm text-muted-foreground">{provider.description}</div>
+                          </div>
+                          {selectedAIPlatform === provider.id && (
+                            <CheckCircle className="h-4 w-4 text-primary" />
+                          )}
+                        </div>
+                      </DropdownMenuItem>
+                    ))}
                   </div>
-                </DropdownMenuItem>
-                
-                {getFilteredProviders().map((provider) => (
-                  <DropdownMenuItem
-                    key={provider.id}
-                    className="p-4 cursor-pointer hover:bg-muted/50 focus:bg-muted/50"
-                    onClick={() => handleAIPlatformChange(provider.id)}
-                  >
-                    <div className="flex items-center gap-3 w-full">
-                      <div className={`p-2 rounded-full ${getProviderColor(provider.id)}`}>
-                        {provider.icon}
-                      </div>
-                      <div className="flex-1">
-                        <div className="font-semibold">{provider.name}</div>
-                        <div className="text-sm text-muted-foreground">{provider.description}</div>
-                      </div>
-                      {selectedAIPlatform === provider.id && (
-                        <CheckCircle className="h-4 w-4 text-primary" />
-                      )}
-                    </div>
-                  </DropdownMenuItem>
-                ))}
+                </ScrollArea>
               </DropdownMenuContent>
             </DropdownMenu>
             </div>
