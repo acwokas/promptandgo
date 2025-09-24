@@ -66,13 +66,12 @@ const Header = () => {
           to="/" 
           className="flex items-center flex-shrink-0 max-w-40 md:max-w-64"
         >
-        <SeoOptimizedImage
+        <img
           src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
           alt="**Prompt**and**Go** - AI Prompt Library"
-          width={256}
-          height={80}
+          width="256"
+          height="80"
           loading="eager"
-          fetchPriority="high"
           className="h-16 md:h-20 w-auto max-w-40 md:max-w-64 object-contain"
         />
         </Link>
