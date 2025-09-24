@@ -263,31 +263,106 @@ const PromptLibrary = () => {
         if (!proSearch && rawQuery) q = q.textSearch("search_vector", rawQuery, { type: "websearch" });
         if (promptIdsForTag) q = q.in("id", promptIdsForTag);
         
-        // Handle special ribbon filters
-        if (ribbon === "FREE_ONLY") {
-          q = q.eq("is_pro", false);
-        } else if (ribbon === "PRO_ONLY") {
-          q = q.eq("is_pro", true);
-        } else if (ribbon === "NEW_PROMPTS") {
-          // Filter for prompts created in last 30 days
-          const thirtyDaysAgo = new Date();
-          thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-          q = q.gte("created_at", thirtyDaysAgo.toISOString());
-        } else if (ribbon && ribbon !== "undefined" && !["RECOMMENDED", "MOST_POPULAR", "HIGHEST_RATED", "TRENDING", "MOST_COPIED"].includes(ribbon)) {
-          // Only filter by database ribbon if it's not one of our special filters
-          q = q.eq("ribbon", ribbon);
-        }
+        // Handle special ribbon filters that need mixed results
+        const specialMixedRibbons = ["MOST_POPULAR", "TRENDING", "NEW_PROMPTS"];
         
-        // Handle standard pro/free filtering
-        if (proOnly || proSearch) q = q.eq("is_pro", true);
-        else if (!includePro && !ribbon?.includes("PRO")) q = q.eq("is_pro", false);
+        let rows: any[] = [];
+        let count = 0;
+        let newHasMore = false;
+        
+        if (specialMixedRibbons.includes(ribbon || "")) {
+          // For special ribbons, fetch PRO and free prompts separately to ensure proper mix
+          const maxProPerPage = ribbon === "MOST_COPIED" ? 3 : 2;
+          const proNeeded = Math.min(maxProPerPage, PAGE_SIZE);
+          const freeNeeded = PAGE_SIZE - proNeeded;
+          
+          // Fetch PRO prompts
+          let proQuery = supabase
+            .from("prompts")
+            .select(
+              "id, category_id, subcategory_id, title, what_for, prompt, image_prompt, excerpt, is_pro, ribbon",
+              { count: "exact" }
+            )
+            .eq("is_pro", true);
 
-        q = q.range(from, to);
+          // Apply same filters
+          if (categoryId) proQuery = proQuery.eq("category_id", categoryId);
+          if (subcategoryId) proQuery = proQuery.eq("subcategory_id", subcategoryId);
+          if (!proSearch && rawQuery) proQuery = proQuery.textSearch("search_vector", rawQuery, { type: "websearch" });
+          if (promptIdsForTag) proQuery = proQuery.in("id", promptIdsForTag);
+          
+          // Apply ribbon-specific filters
+          if (ribbon === "NEW_PROMPTS") {
+            const thirtyDaysAgo = new Date();
+            thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+            proQuery = proQuery.gte("created_at", thirtyDaysAgo.toISOString());
+          }
+          
+          proQuery = proQuery.order("created_at", { ascending: false }).limit(proNeeded * 3); // Fetch more to have options
 
-        const { data, error, count } = await q;
-        if (error) throw error;
+          // Fetch FREE prompts
+          let freeQuery = supabase
+            .from("prompts")
+            .select(
+              "id, category_id, subcategory_id, title, what_for, prompt, image_prompt, excerpt, is_pro, ribbon"
+            )
+            .eq("is_pro", false);
 
-        let rows = data || [];
+          // Apply same filters
+          if (categoryId) freeQuery = freeQuery.eq("category_id", categoryId);
+          if (subcategoryId) freeQuery = freeQuery.eq("subcategory_id", subcategoryId);
+          if (!proSearch && rawQuery) freeQuery = freeQuery.textSearch("search_vector", rawQuery, { type: "websearch" });
+          if (promptIdsForTag) freeQuery = freeQuery.in("id", promptIdsForTag);
+          
+          // Apply ribbon-specific filters
+          if (ribbon === "NEW_PROMPTS") {
+            const thirtyDaysAgo = new Date();
+            thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+            freeQuery = freeQuery.gte("created_at", thirtyDaysAgo.toISOString());
+          }
+          
+          freeQuery = freeQuery.order("created_at", { ascending: false }).limit(freeNeeded * 2); // Fetch more to have options
+
+          const [proResult, freeResult] = await Promise.all([proQuery, freeQuery]);
+          
+          if (proResult.error) throw proResult.error;
+          if (freeResult.error) throw freeResult.error;
+
+          // Combine results with proper proportions
+          const proPrompts = (proResult.data || []).slice(0, proNeeded);
+          const freePrompts = (freeResult.data || []).slice(0, freeNeeded);
+          
+          rows = [...proPrompts, ...freePrompts];
+          count = proResult.count || 0;
+          
+          // Estimate total based on PRO count
+          const adjustedTotal = Math.ceil(count * 4);
+          newHasMore = pageNumber * PAGE_SIZE < adjustedTotal;
+          
+        } else {
+          // Regular query for non-special ribbons
+          if (ribbon === "FREE_ONLY") {
+            q = q.eq("is_pro", false);
+          } else if (ribbon === "PRO_ONLY") {
+            q = q.eq("is_pro", true);
+          } else if (ribbon && ribbon !== "undefined" && !["RECOMMENDED", "MOST_POPULAR", "HIGHEST_RATED", "TRENDING", "MOST_COPIED", "NEW_PROMPTS"].includes(ribbon)) {
+            // Only filter by database ribbon if it's not one of our special filters
+            q = q.eq("ribbon", ribbon);
+          }
+          
+          // Handle standard pro/free filtering
+          if (proOnly || proSearch) q = q.eq("is_pro", true);
+          else if (!includePro && !ribbon?.includes("PRO")) q = q.eq("is_pro", false);
+
+          q = q.range(from, to);
+
+          const { data, error, count: queryCount } = await q;
+          if (error) throw error;
+          
+          rows = data || [];
+          count = queryCount || 0;
+          newHasMore = (to + 1) < count && rows.length === PAGE_SIZE;
+        }
         const promptIds = rows.map((r) => r.id as string);
 
         // Fetch tags for this page's prompts
@@ -353,7 +428,11 @@ const PromptLibrary = () => {
         const adjustedTotal = ribbon === "HIGHEST_RATED" || ribbon === "MOST_COPIED" 
           ? Math.ceil(total * 0.4) // Simulate that these filters show ~40% of total
           : total;
-        const newHasMore = (to + 1) < adjustedTotal && filteredMapped.length === PAGE_SIZE;
+        
+        // Only calculate newHasMore if it wasn't already set for special ribbons
+        if (!specialMixedRibbons.includes(ribbon || "")) {
+          newHasMore = (to + 1) < adjustedTotal && filteredMapped.length === PAGE_SIZE;
+        }
         
         return { data: filteredMapped, count: adjustedTotal, hasMore: newHasMore };
       } catch (e) {
