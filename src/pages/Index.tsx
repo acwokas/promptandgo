@@ -915,15 +915,20 @@ const Index = () => {
                   latestArticle && !articleLoading ? (
                     <Link to={`/tips/${latestArticle.slug}`} className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                       <Card className="overflow-hidden">
-                        <SeoOptimizedImage
-                          src={latestArticle.thumbnail_url || "/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png"}
-                          alt={latestArticle.title}
-                          loading="lazy"
-                          width={800}
-                          height={450}
-                          sizes="(max-width: 768px) 100vw, 800px"
-                          className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-                        />
+                        <div className="aspect-[16/9] w-full bg-muted overflow-hidden">
+                          <img
+                            src={latestArticle.thumbnail_url || "/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png"}
+                            alt={latestArticle.title}
+                            loading="eager"
+                            width={800}
+                            height={450}
+                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                            onError={(e) => {
+                              const img = e.target as HTMLImageElement;
+                              img.src = "/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png";
+                            }}
+                          />
+                        </div>
                         <CardContent className="p-6">
                           <div className="flex items-center gap-2 mb-3">
                             <div className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium">

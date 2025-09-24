@@ -15,27 +15,27 @@ export default defineConfig(({ mode }) => ({
     ViteImageOptimizer({
       includePublic: true,
       logStats: false,
-      // Much more aggressive PNG optimization
+      // Balanced PNG optimization
       png: { 
-        quality: 40,  // Heavily compress PNGs
-        compressionLevel: 9,
+        quality: 70,  // Better quality for crisp images
+        compressionLevel: 6,
         adaptiveFiltering: true
       },
-      // Aggressive JPEG compression
+      // Balanced JPEG compression
       jpeg: { 
-        quality: 50,  // Lower quality for smaller files
+        quality: 75,  // Better quality
         progressive: true
       },
-      // Aggressive WebP settings
+      // Balanced WebP settings
       webp: { 
-        quality: 50,  // Lower quality
-        method: 6,    // Best compression
+        quality: 70,  // Better quality
+        method: 4,    // Good compression vs speed balance
         autoFilter: true
       },
-      // Very aggressive AVIF compression
+      // Balanced AVIF compression
       avif: { 
-        quality: 35,  // Very low quality but excellent compression
-        speed: 0      // Best compression
+        quality: 55,  // Better quality
+        speed: 4      // Good compression vs speed balance
       },
       svg: { 
         multipass: true,
