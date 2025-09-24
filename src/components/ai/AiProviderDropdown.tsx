@@ -200,6 +200,24 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
     }
   };
 
+  const handleDirectSend = async () => {
+    if (!prompt?.trim()) {
+      toast({
+        title: "No prompt available",
+        description: "Please generate a prompt first before sending to AI.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Get the optimized platform or default to ChatGPT
+    const targetProvider = optimizedPlatform || convertedProviders.find(p => p.id === 'chatgpt');
+    
+    if (targetProvider) {
+      await handleProviderSelect(targetProvider);
+    }
+  };
+
   const handleOpenAI = () => {
     if (!selectedProvider) return;
     
@@ -253,11 +271,13 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
   return (
     <TooltipProvider>
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+        <div className={cn("flex w-full", className)}>
+          {/* Main send button */}
           <Button
             variant="default"
-            className={cn("w-full", className)}
+            className="flex-1 rounded-r-none border-r-0"
             disabled={disabled || isLoading || !prompt?.trim()}
+            onClick={handleDirectSend}
           >
             {isLoading ? (
               <>
@@ -268,11 +288,21 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
               <>
                 <Send className="h-4 w-4 mr-2" />
                 {buttonText}
-                <ChevronDown className="h-4 w-4 ml-2" />
               </>
             )}
           </Button>
-        </DropdownMenuTrigger>
+          
+          {/* Dropdown trigger */}
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="default"
+              className="px-3 rounded-l-none"
+              disabled={disabled || isLoading}
+            >
+              <ChevronDown className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+        </div>
         <DropdownMenuContent align="center" className="w-64 p-0">
           <ScrollArea className="h-80">
             <div className="p-1">
