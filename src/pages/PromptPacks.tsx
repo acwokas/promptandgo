@@ -14,7 +14,6 @@ import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { Lock, Check, Heart, Search, Zap, Crown, Infinity, Sparkles, ChevronDown, ChevronUp } from "lucide-react";
 import ShareButton from "@/components/ShareButton";
 import { PackFilters } from "@/components/prompt/PackFilters";
-import { PollCarousel } from "@/components/poll/PollCarousel";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { PromptStudioCTA } from "@/components/ui/prompt-studio-cta";
 
@@ -488,11 +487,11 @@ const PromptPacks = () => {
           </section>
         )}
 
-        {/* Poll and Call to Action Section */}
+        {/* Call to Action Section */}
         <section className="py-8">
-          <div className="grid gap-8 lg:grid-cols-3">
+          <div className="max-w-4xl mx-auto">
             {/* Call to Action Column */}
-            <div className="lg:col-span-2">
+            <div>
               <div className="bg-gradient-subtle py-12 rounded-lg">
                 <div className="text-center mb-8">
                   <h2 className="text-2xl md:text-3xl font-bold mb-3">Unlock Premium AI Prompts</h2>
@@ -591,10 +590,6 @@ const PromptPacks = () => {
               </div>
             </div>
 
-            {/* Right Column - Poll */}
-            <div className="lg:col-span-1">
-              <PollCarousel currentPage="packs" />
-            </div>
           </div>
         </section>
 

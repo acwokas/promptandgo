@@ -1,7 +1,6 @@
 import SEO from "@/components/SEO";
 import { PromptFilters } from "@/components/prompt/PromptFilters";
 import { PromptCard } from "@/components/prompt/PromptCard";
-import { PollCarousel } from "@/components/poll/PollCarousel";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -1260,11 +1259,11 @@ const PromptLibrary = () => {
         </section>
 
 
-        {/* Poll and Submit Prompt Section */}
+        {/* Submit Prompt Section */}
         <section className="mt-16 pt-12 border-t border-border">
-          <div className="grid gap-8 lg:grid-cols-3">
+          <div className="max-w-4xl mx-auto">
             {/* Submit a Prompt Column */}
-            <div className="lg:col-span-2">
+            <div>
               <div className="text-center max-w-2xl mx-auto">
                 <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-4">
                   Submit Your Best Prompt
@@ -1296,10 +1295,6 @@ const PromptLibrary = () => {
               </div>
             </div>
 
-            {/* Right Column - Poll */}
-            <div className="lg:col-span-1">
-              <PollCarousel currentPage="library" />
-            </div>
           </div>
         </section>
       </main>
