@@ -256,7 +256,7 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
                       ))}
                       
                       <DropdownMenuSeparator />
-                      <DropdownMenuLabel>Image-only</DropdownMenuLabel>
+                      <DropdownMenuLabel>Image Generation</DropdownMenuLabel>
                       {imageProviders.map((option) => (
                         <DropdownMenuItem
                           key={option.id}

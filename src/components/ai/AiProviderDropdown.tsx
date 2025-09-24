@@ -283,7 +283,7 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
               ))}
               
               <DropdownMenuSeparator />
-              <DropdownMenuLabel>Image-only</DropdownMenuLabel>
+              <DropdownMenuLabel>Image Generation</DropdownMenuLabel>
               {imageProviders.map((provider) => (
                 provider.id === 'midjourney' ? (
                   <Tooltip key={provider.id}>
