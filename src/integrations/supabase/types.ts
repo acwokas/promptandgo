@@ -869,6 +869,39 @@ export type Database = {
         }
         Relationships: []
       }
+      security_audit_log: {
+        Row: {
+          action: string
+          created_at: string
+          id: string
+          ip_address: unknown | null
+          record_id: string | null
+          table_name: string
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          id?: string
+          ip_address?: unknown | null
+          record_id?: string | null
+          table_name: string
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          id?: string
+          ip_address?: unknown | null
+          record_id?: string | null
+          table_name?: string
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       shared_links: {
         Row: {
           clicks: number
@@ -1290,6 +1323,31 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
+      get_admin_contact_data: {
+        Args: { p_contact_id: string; p_encryption_key: string }
+        Returns: {
+          confirmed: boolean
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          newsletter_opt_in: boolean
+          processed: boolean
+        }[]
+      }
+      get_admin_subscriber_data: {
+        Args: { p_encryption_key: string; p_user_id: string }
+        Returns: {
+          email: string
+          id: string
+          stripe_customer_id: string
+          subscribed: boolean
+          subscription_end: string
+          subscription_tier: string
+          user_id: string
+        }[]
+      }
       get_daily_ai_sends_count: {
         Args: { p_user_id: string }
         Returns: Json
@@ -1425,6 +1483,24 @@ export type Database = {
       is_admin_user: {
         Args: Record<PropertyKey, never>
         Returns: boolean
+      }
+      log_data_access: {
+        Args: {
+          p_action: string
+          p_ip_address?: unknown
+          p_record_id?: string
+          p_table_name: string
+          p_user_agent?: string
+        }
+        Returns: undefined
+      }
+      migrate_encrypt_contacts: {
+        Args: { p_encryption_key: string }
+        Returns: undefined
+      }
+      migrate_encrypt_subscribers: {
+        Args: { p_encryption_key: string }
+        Returns: undefined
       }
       rotate_featured_categories: {
         Args: Record<PropertyKey, never>
