@@ -464,7 +464,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                 <Bot className="h-3.5 w-3.5 text-primary" />
                 <span className="text-xs font-medium text-primary">Scout Optimized</span>
               </div>
-              <div className="text-sm text-foreground leading-relaxed min-h-[200px]">
+              <div className="text-sm text-foreground leading-relaxed min-h-[200px] whitespace-pre-wrap">
                 {displayedPrompt}
               </div>
               
