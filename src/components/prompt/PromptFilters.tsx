@@ -162,14 +162,11 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
                   Highest Rated (4.5+)
                 </div>
               </SelectItem>
-              <SelectItem value="MY_PROMPTS">❤️ My Prompts</SelectItem>
               <SelectItem value="NEW_PROMPTS">✨ New Prompts</SelectItem>
               <SelectItem value="TRENDING">📈 Trending</SelectItem>
               <SelectItem value="FREE_ONLY">🆓 Free Only</SelectItem>
               <SelectItem value="PRO_ONLY">💎 PRO Only</SelectItem>
               <SelectItem value="MOST_COPIED">📋 Most Copied</SelectItem>
-              <SelectItem value="QUICK_WIN">⚡ Quick Win</SelectItem>
-              <SelectItem value="RECENTLY_VIEWED">👁️ Recently Viewed</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -275,14 +272,11 @@ export const PromptFilters = ({ categories, categoryId, subcategoryId, query, in
                   Highest Rated (4.5+)
                 </div>
               </SelectItem>
-              <SelectItem value="MY_PROMPTS">❤️ My Prompts</SelectItem>
               <SelectItem value="NEW_PROMPTS">✨ New Prompts</SelectItem>
               <SelectItem value="TRENDING">📈 Trending</SelectItem>
               <SelectItem value="FREE_ONLY">🆓 Free Only</SelectItem>
               <SelectItem value="PRO_ONLY">💎 PRO Only</SelectItem>
               <SelectItem value="MOST_COPIED">📋 Most Copied</SelectItem>
-              <SelectItem value="QUICK_WIN">⚡ Quick Win</SelectItem>
-              <SelectItem value="RECENTLY_VIEWED">👁️ Recently Viewed</SelectItem>
             </SelectContent>
           </Select>
         </div>

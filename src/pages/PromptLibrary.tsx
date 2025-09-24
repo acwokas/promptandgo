@@ -58,9 +58,13 @@ const dedupeByTitle = (arr: PromptUI[]) => {
   });
 };
 
-// Reorder results: max 2 PRO prompts per page in fixed positions (2nd and 6th)
-const reorderByLockedBuckets = (arr: PromptUI[]) => {
+  // Reorder results: limit PRO prompts based on ribbon type
+const reorderByLockedBuckets = (arr: PromptUI[], ribbon?: string) => {
   const PAGE_SIZE = 20;
+  
+  // Determine max PRO prompts per page based on ribbon
+  let maxProPerPage = 2;
+  if (ribbon === "MOST_COPIED") maxProPerPage = 3;
   
   // Sort by prompt length (longest first) within each group
   const pro = arr.filter((p) => !!p.isPro).sort((a, b) => b.prompt.length - a.prompt.length);
@@ -85,10 +89,11 @@ const reorderByLockedBuckets = (arr: PromptUI[]) => {
     // Create page array with placeholders
     const pageItems: (PromptUI | null)[] = new Array(pageSize).fill(null);
     
-    // Place up to 2 PRO prompts in positions 1 (index 1) and 5 (index 5) if page has enough slots
+    // Determine PRO positions based on maxProPerPage
     const proPositions = [];
-    if (pageSize > 1) proPositions.push(1); // 2nd position
-    if (pageSize > 5) proPositions.push(5); // 6th position
+    if (maxProPerPage >= 1 && pageSize > 1) proPositions.push(1); // 2nd position
+    if (maxProPerPage >= 2 && pageSize > 5) proPositions.push(5); // 6th position
+    if (maxProPerPage >= 3 && pageSize > 9) proPositions.push(9); // 10th position
     
     // Place PRO prompts in fixed positions
     for (const pos of proPositions) {
@@ -203,51 +208,6 @@ const PromptLibrary = () => {
     async (pageNumber: number) => {
       setLoading(true);
       try {
-        // Special handling for My Prompts
-        if (ribbon === "MY_PROMPTS") {
-          if (!user) {
-            return { data: [] as PromptUI[], count: 0, hasMore: false };
-          }
-          
-          const favRes = await supabase
-            .from("favorites")
-            .select("prompt_id")
-            .eq("user_id", user.id);
-          
-          if (favRes.error) throw favRes.error;
-          const favoriteIds = (favRes.data || []).map(f => f.prompt_id);
-          
-          if (favoriteIds.length === 0) {
-            return { data: [] as PromptUI[], count: 0, hasMore: false };
-          }
-          
-          const from = (pageNumber - 1) * PAGE_SIZE;
-          const to = from + PAGE_SIZE - 1;
-          
-          const { data, error, count } = await supabase
-            .from("prompts")
-            .select("id, category_id, subcategory_id, title, what_for, prompt, image_prompt, excerpt, is_pro, ribbon", { count: "exact" })
-            .in("id", favoriteIds)
-            .order("created_at", { ascending: false })
-            .range(from, to);
-            
-          if (error) throw error;
-          
-          const mapped = (data || []).map((r: any) => ({
-            id: r.id,
-            categoryId: r.category_id,
-            subcategoryId: r.subcategory_id,
-            title: r.title,
-            whatFor: r.what_for,
-            prompt: r.prompt,
-            imagePrompt: r.image_prompt,
-            excerpt: r.excerpt,
-            tags: [],
-            isPro: !!r.is_pro,
-          }));
-          
-          return { data: mapped, count: count || 0, hasMore: (to + 1) < (count || 0) };
-        }
 
         // If filtering by tag, resolve prompt ids for that tag first
         let promptIdsForTag: string[] | undefined;
@@ -313,7 +273,7 @@ const PromptLibrary = () => {
           const thirtyDaysAgo = new Date();
           thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
           q = q.gte("created_at", thirtyDaysAgo.toISOString());
-        } else if (ribbon && ribbon !== "undefined" && !["RECOMMENDED", "MOST_POPULAR", "HIGHEST_RATED", "TRENDING", "MOST_COPIED", "QUICK_WIN", "RECENTLY_VIEWED"].includes(ribbon)) {
+        } else if (ribbon && ribbon !== "undefined" && !["RECOMMENDED", "MOST_POPULAR", "HIGHEST_RATED", "TRENDING", "MOST_COPIED"].includes(ribbon)) {
           // Only filter by database ribbon if it's not one of our special filters
           q = q.eq("ribbon", ribbon);
         }
@@ -378,21 +338,20 @@ const PromptLibrary = () => {
             const finalRating = Math.round(rating * 10) / 10;
             return finalRating >= 4.5;
           });
-        } else if (ribbon === "QUICK_WIN") {
-          // Filter for shorter, simpler prompts (less than 200 chars)
-          filteredMapped = mapped.filter(p => p.prompt.length < 200);
         } else if (ribbon === "MOST_COPIED") {
-          // Simulate "most copied" by favoring prompts with certain keywords
+          // Simulate "most copied" by favoring prompts with popular keywords and types
           filteredMapped = mapped.filter(p => {
             const text = (p.title + " " + (p.whatFor || "") + " " + p.prompt).toLowerCase();
             return text.includes("email") || text.includes("marketing") || text.includes("content") || 
-                   text.includes("social") || text.includes("linkedin") || text.includes("resume");
+                   text.includes("social") || text.includes("linkedin") || text.includes("resume") ||
+                   text.includes("template") || text.includes("copy") || text.includes("sales") ||
+                   text.includes("business") || text.includes("campaign") || text.includes("strategy");
           });
         }
 
         const total = count || 0;
-        const adjustedTotal = ribbon === "HIGHEST_RATED" || ribbon === "QUICK_WIN" || ribbon === "MOST_COPIED" 
-          ? Math.ceil(total * 0.3) // Simulate that these filters show ~30% of total
+        const adjustedTotal = ribbon === "HIGHEST_RATED" || ribbon === "MOST_COPIED" 
+          ? Math.ceil(total * 0.4) // Simulate that these filters show ~40% of total
           : total;
         const newHasMore = (to + 1) < adjustedTotal && filteredMapped.length === PAGE_SIZE;
         
@@ -473,7 +432,7 @@ const PromptLibrary = () => {
     setPage(1);
     const res = await fetchPromptsPage(1);
     const data = res.data || [];
-    const transform = (arr: PromptUI[]) => (ribbon === "PRO_ONLY" ? arr : reorderByLockedBuckets(dedupeByTitle(arr)));
+    const transform = (arr: PromptUI[]) => (ribbon === "PRO_ONLY" ? arr : reorderByLockedBuckets(dedupeByTitle(arr), ribbon));
     setItems(transform(data));
     setHasMore(!!res.hasMore);
   }, [fetchPromptsPage, ribbon]);
@@ -483,7 +442,7 @@ const PromptLibrary = () => {
     const next = page + 1;
     const res = await fetchPromptsPage(next);
     const data = res.data || [];
-    const transform = (arr: PromptUI[]) => (ribbon === "PRO_ONLY" ? arr : reorderByLockedBuckets(dedupeByTitle(arr)));
+    const transform = (arr: PromptUI[]) => (ribbon === "PRO_ONLY" ? arr : reorderByLockedBuckets(dedupeByTitle(arr), ribbon));
     setItems((prev) => transform([...(prev || []), ...data]));
     setHasMore(!!res.hasMore);
     setPage(next);
