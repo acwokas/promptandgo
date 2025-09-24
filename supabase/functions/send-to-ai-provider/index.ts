@@ -1,5 +1,6 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.54.0';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -209,6 +210,37 @@ serve(async (req) => {
   }
 
   try {
+    // SECURITY FIX: Verify authentication
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: 'Authorization header required' }),
+        { 
+          status: 401, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
+    }
+
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_ANON_KEY') ?? ''
+    );
+
+    const token = authHeader.replace('Bearer ', '');
+    const { data: userData, error: userError } = await supabase.auth.getUser(token);
+    
+    if (userError || !userData.user) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid or expired token' }),
+        { 
+          status: 401, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
+    }
+
+    console.log(`AI Provider request from authenticated user: ${userData.user.email}`);
     const { provider, prompt, temperature = 0.7, maxTokens = 1000 }: ProviderRequest = await req.json();
 
     if (!provider || !prompt) {

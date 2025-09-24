@@ -1,5 +1,8 @@
 project_id = "mncxspmtqvqgvtrxbxzb"
 
+[functions.send-to-ai-provider]
+verify_jwt = true
+
 [functions.create-payment]
 verify_jwt = true
 

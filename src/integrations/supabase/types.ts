@@ -505,9 +505,13 @@ export type Database = {
           confirmed: boolean
           created_at: string
           email: string
+          email_enc: string | null
+          email_hash: string | null
           id: string
           message: string
+          message_enc: string | null
           name: string
+          name_enc: string | null
           newsletter_opt_in: boolean
           processed: boolean
           updated_at: string
@@ -517,9 +521,13 @@ export type Database = {
           confirmed?: boolean
           created_at?: string
           email: string
+          email_enc?: string | null
+          email_hash?: string | null
           id?: string
           message: string
+          message_enc?: string | null
           name: string
+          name_enc?: string | null
           newsletter_opt_in?: boolean
           processed?: boolean
           updated_at?: string
@@ -529,9 +537,13 @@ export type Database = {
           confirmed?: boolean
           created_at?: string
           email?: string
+          email_enc?: string | null
+          email_hash?: string | null
           id?: string
           message?: string
+          message_enc?: string | null
           name?: string
+          name_enc?: string | null
           newsletter_opt_in?: boolean
           processed?: boolean
           updated_at?: string
@@ -1247,6 +1259,19 @@ export type Database = {
         Args: { p_user_id: string }
         Returns: Json
       }
+      get_decrypted_contact: {
+        Args: { p_contact_id: string; p_key: string }
+        Returns: {
+          confirmed: boolean
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          newsletter_opt_in: boolean
+          processed: boolean
+        }[]
+      }
       get_decrypted_subscriber_email: {
         Args: { p_key: string; p_user_id: string }
         Returns: string
@@ -1346,6 +1371,16 @@ export type Database = {
       rotate_featured_categories: {
         Args: Record<PropertyKey, never>
         Returns: undefined
+      }
+      secure_insert_contact: {
+        Args: {
+          p_email: string
+          p_key: string
+          p_message: string
+          p_name: string
+          p_newsletter_opt_in?: boolean
+        }
+        Returns: string
       }
       secure_upsert_subscriber: {
         Args: {
