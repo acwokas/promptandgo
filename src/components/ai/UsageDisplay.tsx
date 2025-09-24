@@ -72,7 +72,7 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
     switch (type) {
       case 'generator': return 'Scout Prompt Generator';
       case 'assistant': return 'Scout Assistant';
-      case 'sends': return 'Scout AI Platform Push';
+      case 'sends': return 'Scout\'s Push to AI Platform';
       default: return 'AI Tools';
     }
   };
@@ -113,7 +113,7 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
     ? [
         { type: 'generator', data: usage.generator, label: 'Scout Prompt Generator' },
         { type: 'assistant', data: usage.assistant, label: 'Scout Assistant' },
-        { type: 'sends', data: usage.sends, label: 'Scout AI Platform Push' }
+        { type: 'sends', data: usage.sends, label: 'Scout\'s Push to AI Platform' }
       ]
     : [{ type: usageType, data: usage[usageType], label: getUsageTypeLabel(usageType) }];
 
@@ -196,7 +196,7 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
               
               <div className="flex justify-between text-sm text-muted-foreground">
                 <span>{data.current_usage} queries used</span>
-                <span>Resets daily at midnight UTC</span>
+                <span>Resets daily at midnight SGT</span>
               </div>
             </div>
           );
@@ -212,7 +212,7 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
                   {!subscriptionInfo?.subscribed ? (
                     <>Upgrade to get <strong>30 generator + 40 assistant + 20 AI sends/day</strong> with monthly membership or <strong>60 queries/day each + 40 AI sends</strong> with lifetime access.</>
                   ) : (
-                    <>You've reached your enhanced daily limits. Your queries will reset at midnight UTC.</>
+                    <>You've reached your enhanced daily limits. Your queries will reset at midnight SGT.</>
                   )}
                 </p>
                 {!subscriptionInfo?.subscribed && (
