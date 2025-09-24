@@ -2,10 +2,10 @@ import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
 import { useMemo, useEffect } from "react";
 
-const SITE_NAME = "promptandgo";
+const SITE_NAME = "**Prompt**and**Go**";
 
 const getOrigin = () =>
-  typeof window !== "undefined" ? window.location.origin : "https://promptandgo.ai";
+  typeof window !== "undefined" ? window.location.origin : "https://**Prompt**and**Go**.ai";
 
 const toTitle = (seg: string) =>
   seg
@@ -63,7 +63,7 @@ const GlobalStructuredData = () => {
     foundingDate: "2024",
     contactPoint: [{
       "@type": "ContactPoint",
-      email: "support@promptandgo.ai",
+      email: "support@**Prompt**and**Go**.ai",
       contactType: "customer support",
       availableLanguage: ["en"],
       areaServed: "Worldwide"

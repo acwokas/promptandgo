@@ -196,7 +196,7 @@ const Contact = () => {
           </BreadcrumbList>
         </Breadcrumb>
 
-        <SEO title="Contact promptandgo" description="Send us a message — we'd love to hear from you." />
+        <SEO title="Contact **Prompt**and**Go**" description="Send us a message — we'd love to hear from you." />
 
         <div className="grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-7">

@@ -50,11 +50,11 @@ const Blog = () => {
 
     <section className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       <article>
-        <Link to="/tips/welcome-to-promptandgo-ai" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+        <Link to="/tips/welcome-to-**Prompt**and**Go**-ai" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
           <Card className="overflow-hidden">
             <img
               src="/lovable-uploads/66b1134b-1d55-416b-b7ea-2719a1a22ec1.png"
-              alt="Welcome to promptandgo: Your Shortcut to Smarter AI Prompts"
+              alt="Welcome to **Prompt**and**Go**: Your Shortcut to Smarter AI Prompts"
               loading="lazy"
               decoding="async"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"

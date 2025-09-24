@@ -345,7 +345,7 @@ const Index = () => {
   return (
     <>
       <SEO 
-        title="Scout AI - Your Personal Prompt Crafting Assistant | promptandgo" 
+        title="Scout AI - Your Personal Prompt Crafting Assistant | **Prompt**and**Go**" 
         description="Meet Scout, your AI prompt crafting partner. Start with curated prompts, customize in real-time with guided wizards, and get platform-specific versions for ChatGPT, Claude, MidJourney & more."
         keywords="Scout AI, AI prompt crafting, prompt customization, AI prompt assistant, ChatGPT prompts, Claude prompts, MidJourney prompts, prompt optimization, AI prompt generator, guided prompt wizards, platform-specific prompts"
         structuredData={homeStructuredData}
@@ -895,7 +895,7 @@ const Index = () => {
           <div className="container mx-auto">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold mb-4">
-                {isReturningUser ? 'Latest Article' : 'Welcome to promptandgo.ai'}
+                {isReturningUser ? 'Latest Article' : 'Welcome to **Prompt**and**Go**.ai'}
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 {isReturningUser ? 'Stay updated with our latest prompt strategies and AI tips' : 'Learn how to get the most out of AI with battle-tested prompts'}
@@ -998,7 +998,7 @@ const Index = () => {
                         className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                       />
                       <CardContent className="p-6">
-                        <h3 className="text-xl font-semibold leading-snug mb-3">Welcome to promptandgo.ai: Your Shortcut to Smarter AI Prompts</h3>
+                        <h3 className="text-xl font-semibold leading-snug mb-3">Welcome to **Prompt**and**Go**.ai: Your Shortcut to Smarter AI Prompts</h3>
                         <p className="text-muted-foreground mb-4">
                           We give you ready-to-use, field-tested prompts designed for real work. No vague ideas, no guesswork, just clear instructions you can drop straight into ChatGPT, Claude, or Gemini.
                         </p>

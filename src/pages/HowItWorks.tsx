@@ -77,11 +77,11 @@ const HowItWorks = () => {
       setIsLoadingFavorite(false);
     }
   };
-  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://promptandgo.ai';
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://**Prompt**and**Go**.ai';
   const howToSchema = {
     "@context": "https://schema.org",
     "@type": "HowTo",
-    name: "How promptandgo Works",
+    name: "How **Prompt**and**Go** Works",
     description: "Complete AI productivity toolkit with prompt library, Scout optimization, and Power Packs - all free.",
     step: [
       { "@type": "HowToStep", name: "Browse Library", text: "Explore 2700+ tested prompts organized by category and use case." },
@@ -95,7 +95,7 @@ const HowItWorks = () => {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     mainEntity: [
-      { "@type": "Question", name: "What is promptandgo?", acceptedAnswer: { "@type": "Answer", text: "A complete AI productivity toolkit with prompt library, Scout optimization, and Power Packs - all completely free." } },
+      { "@type": "Question", name: "What is **Prompt**and**Go**?", acceptedAnswer: { "@type": "Answer", text: "A complete AI productivity toolkit with prompt library, Scout optimization, and Power Packs - all completely free." } },
       { "@type": "Question", name: "How does Scout work?", acceptedAnswer: { "@type": "Answer", text: "Scout AI optimizes any prompt for your specific AI platform, rewriting it for better results on ChatGPT, Claude, Gemini, and more." } },
       { "@type": "Question", name: "Is everything really free?", acceptedAnswer: { "@type": "Answer", text: "Yes! Browse prompts, use Scout optimization, and access many Power Packs completely free. Premium options available for advanced features." } },
     ],
@@ -103,7 +103,7 @@ const HowItWorks = () => {
   
   return (<>
     <CountdownTimer variant="banner" />
-    <SEO title="How promptandgo Works - Free AI Tools & Scout Optimization" description="Discover our complete suite: Prompt Library, Power Packs, and Scout AI that optimizes prompts for any AI platform - all completely free." structuredData={[howToSchema, faqSchema]} />
+    <SEO title="How **Prompt**and**Go** Works - Free AI Tools & Scout Optimization" description="Discover our complete suite: Prompt Library, Power Packs, and Scout AI that optimizes prompts for any AI platform - all completely free." structuredData={[howToSchema, faqSchema]} />
     <PageHero
       title={<>How <span className="text-gradient-brand"><strong>prompt</strong>and<strong>go</strong></span> Works</>}
       subtitle={
@@ -152,7 +152,7 @@ const HowItWorks = () => {
         <div className="relative">
           <img 
             src={workflowImage} 
-            alt="PromptAndGo workflow showing four steps: Browse prompts, Scout optimization, AI platform selection, and results"
+            alt="**Prompt**and**Go** workflow showing four steps: Browse prompts, Scout optimization, AI platform selection, and results"
             className="w-full rounded-xl shadow-lg"
           />
         </div>
