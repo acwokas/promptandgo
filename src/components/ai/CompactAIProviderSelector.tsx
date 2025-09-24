@@ -235,7 +235,7 @@ export const CompactAIProviderSelector: React.FC<CompactAIProviderSelectorProps>
       
       <Button onClick={handleSendToAI} size="sm" className="h-8">
         <Send className="h-3 w-3 mr-1" />
-        Send
+        Send to {selectedProviderData?.name}
       </Button>
 
       {/* Status Badge */}
