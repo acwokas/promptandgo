@@ -464,12 +464,12 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                 <Bot className="h-3.5 w-3.5 text-primary" />
                 <span className="text-xs font-medium text-primary">Scout Optimized</span>
               </div>
-              <div className="text-sm text-foreground leading-relaxed">
+              <div className="text-sm text-foreground leading-relaxed min-h-[200px]">
                 {displayedPrompt}
               </div>
               
               {showLock && (
-                <div className="absolute inset-0 rounded-lg bg-blue-600/85 backdrop-blur-sm flex flex-col items-center justify-center min-h-full p-6">
+                <div className="absolute inset-0 rounded-lg bg-blue-600/85 backdrop-blur-sm flex flex-col items-center justify-center min-h-[200px] p-6">
                   <div className="text-center space-y-4">
                     <div className="inline-flex items-center gap-2 text-sm text-white/90">
                       <Lock className="h-4 w-4" />
