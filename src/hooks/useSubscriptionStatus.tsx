@@ -16,9 +16,9 @@ export function useSubscriptionStatus() {
       }
 
       try {
-        // SECURITY FIX: Use secure RPC function instead of direct table access
+        // SECURITY FIX: Use secure function for subscription data access
         const { data, error } = await supabase
-          .rpc('get_user_subscription_status')
+          .rpc('get_user_subscription_data')
           .maybeSingle();
 
         if (error) {
