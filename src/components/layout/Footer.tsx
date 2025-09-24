@@ -78,7 +78,14 @@ const Footer = () => {
             </Link>
           </nav>
         </div>
-        <div className="md:col-span-3 col-span-full justify-self-end text-right text-muted-foreground">© 2025 <strong>Prompt</strong>and<strong>Go</strong>  |  <Link to="/terms" className="hover:text-foreground">Terms & Conditions</Link>  |  <Link to="/privacy" className="hover:text-foreground">Privacy Policy</Link></div>
+        <div className="md:col-span-3 col-span-full flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-sm text-muted-foreground">
+          <div>
+            Explore AI insights and stories at <a href="http://www.aiinasia.com" target="_blank" rel="noopener noreferrer" className="hover:text-foreground underline">AIinASIA.com</a>
+          </div>
+          <div className="text-right">
+            © 2025 <strong>Prompt</strong>and<strong>Go</strong>  |  <Link to="/terms" className="hover:text-foreground">Terms & Conditions</Link>  |  <Link to="/privacy" className="hover:text-foreground">Privacy Policy</Link>
+          </div>
+        </div>
       </div>
     </footer>
   );
