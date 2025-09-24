@@ -1,3 +1,4 @@
+import React from "react";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import NanoBananaAnnouncement from "@/components/NanoBananaAnnouncement";
@@ -92,6 +93,67 @@ const Index = () => {
   const [newsletterSuccess, setNewsletterSuccess] = useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const [existingUserEmail, setExistingUserEmail] = useState("");
+
+  // Daily rotating featured categories
+  const featuredCategories = [
+    {
+      title: "Marketing & Advertising",
+      message: "Boost your campaigns today",
+      link: "/library?category=Marketing%20%26%20Advertising",
+      icon: Briefcase,
+      usage: "5x usage today"
+    },
+    {
+      title: "Personal Growth & Mindfulness", 
+      message: "Transform your mindset",
+      link: "/library?category=Personal%20Growth%20%26%20Mindfulness",
+      icon: Heart,
+      usage: "3x usage today"
+    },
+    {
+      title: "Creative Writing & Content",
+      message: "Unleash your creativity", 
+      link: "/library?category=Creative%20Writing%20%26%20Content",
+      icon: Edit3,
+      usage: "7x usage today"
+    },
+    {
+      title: "Business & Strategy",
+      message: "Scale your business",
+      link: "/library?category=Business%20%26%20Strategy", 
+      icon: BarChart3,
+      usage: "4x usage today"
+    },
+    {
+      title: "Learning & Education",
+      message: "Accelerate your learning",
+      link: "/library?category=Learning%20%26%20Education",
+      icon: BookOpen,
+      usage: "6x usage today"
+    },
+    {
+      title: "Technology & Development",
+      message: "Build smarter solutions",
+      link: "/library?category=Technology%20%26%20Development", 
+      icon: Settings,
+      usage: "8x usage today"
+    },
+    {
+      title: "Visual & Image Creation",
+      message: "Create stunning visuals",
+      link: "/library?category=Visual%20%26%20Image%20Creation",
+      icon: Image,
+      usage: "2x usage today"
+    }
+  ];
+
+  // Get today's featured category (rotates daily)
+  const getDailyFeatured = () => {
+    const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
+    return featuredCategories[dayOfYear % featuredCategories.length];
+  };
+
+  const todaysFeatured = getDailyFeatured();
 
   useEffect(() => {
     const load = async () => {
@@ -325,19 +387,19 @@ const Index = () => {
                 <div className="flex items-center gap-4">
                   <div className="relative">
                     <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center">
-                      <Zap className="h-6 w-6 text-white" />
+                      {React.createElement(todaysFeatured.icon, { className: "h-6 w-6 text-white" })}
                     </div>
                     <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full animate-pulse border-2 border-background" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-bold text-lg">Personal Growth & Mindfulness</h3>
+                    <h3 className="font-bold text-lg">{todaysFeatured.title}</h3>
                     <p className="text-sm text-muted-foreground flex items-center gap-2">
                       <span className="inline-flex items-center gap-1.5 bg-primary/10 px-2 py-0.5 rounded-full text-xs font-medium">
-                        🔥 3x usage today
+                        🔥 {todaysFeatured.usage}
                       </span>
                       <Button asChild variant="ghost" size="sm" className="h-6 px-2 text-xs text-primary hover:text-primary">
-                        <Link to="/library?category=Personal%20Growth%20%26%20Mindfulness">
-                          Explore <ArrowRight className="ml-1 h-3 w-3" />
+                        <Link to={todaysFeatured.link}>
+                          {todaysFeatured.message} <ArrowRight className="ml-1 h-3 w-3" />
                         </Link>
                       </Button>
                     </p>
