@@ -72,7 +72,7 @@ const Index = () => {
   const navigate = useNavigate();
   const { latestArticle, loading: articleLoading } = useLatestArticle();
   const { toast } = useToast();
-  const { categories: featuredCategories, loading: categoriesLoading } = useFeaturedCategories();
+  const { categories: featuredCategories, loading: categoriesLoading, FinanceInvestmentSection } = useFeaturedCategories();
   
   // Check if user is new or returning
   const [isReturningUser, setIsReturningUser] = useState(false);
@@ -378,27 +378,31 @@ const Index = () => {
               <div className={`grid ${todaysFeatured ? 'md:grid-cols-2' : 'md:grid-cols-1'} gap-6 items-center`}>
                 {/* Left - Featured Category */}
                 {todaysFeatured && (
-                  <div className="flex items-center gap-4">
-                    <div className="relative">
-                      <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center">
-                        {React.createElement(getIconComponent(todaysFeatured.icon), { className: "h-6 w-6 text-white" })}
+                  todaysFeatured.isCustomFinanceSection ? (
+                    <FinanceInvestmentSection />
+                  ) : (
+                    <div className="flex items-center gap-4">
+                      <div className="relative">
+                        <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center">
+                          {React.createElement(getIconComponent(todaysFeatured.icon), { className: "h-6 w-6 text-white" })}
+                        </div>
+                        <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full animate-pulse border-2 border-background" />
                       </div>
-                      <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full animate-pulse border-2 border-background" />
+                      <div className="flex-1">
+                        <h3 className="font-bold text-lg">{todaysFeatured.title}</h3>
+                        <p className="text-sm text-muted-foreground flex items-center gap-2">
+                          <span className="inline-flex items-center gap-1.5 bg-primary/10 px-2 py-0.5 rounded-full text-xs font-medium">
+                            🔥 {todaysFeatured.usage_text}
+                          </span>
+                          <Button asChild variant="ghost" size="sm" className="h-6 px-2 text-xs text-primary hover:text-primary">
+                            <Link to={todaysFeatured.link}>
+                              {todaysFeatured.message} <ArrowRight className="ml-1 h-3 w-3" />
+                            </Link>
+                          </Button>
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h3 className="font-bold text-lg">{todaysFeatured.title}</h3>
-                      <p className="text-sm text-muted-foreground flex items-center gap-2">
-                        <span className="inline-flex items-center gap-1.5 bg-primary/10 px-2 py-0.5 rounded-full text-xs font-medium">
-                          🔥 {todaysFeatured.usage_text}
-                        </span>
-                        <Button asChild variant="ghost" size="sm" className="h-6 px-2 text-xs text-primary hover:text-primary">
-                          <Link to={todaysFeatured.link}>
-                            {todaysFeatured.message} <ArrowRight className="ml-1 h-3 w-3" />
-                          </Link>
-                        </Button>
-                      </p>
-                    </div>
-                  </div>
+                  )
                 )}
 
                 {/* Right - Live Stats */}

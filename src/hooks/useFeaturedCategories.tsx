@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import FinanceInvestmentSection from '@/components/conversion/FinanceInvestmentSection';
 
 interface FeaturedCategory {
   id: string;
@@ -9,6 +10,7 @@ interface FeaturedCategory {
   icon: string;
   usage_text: string;
   display_order: number;
+  isCustomFinanceSection?: boolean;
 }
 
 export function useFeaturedCategories() {
@@ -30,7 +32,35 @@ export function useFeaturedCategories() {
           throw error;
         }
 
-        setCategories(data || []);
+        // Filter out Finance & Investment and replace with custom component flag
+        const filteredCategories: FeaturedCategory[] = (data || [])
+          .filter(cat => cat.title !== 'Finance & Investment')
+          .map(cat => ({
+            id: cat.id,
+            title: cat.title,
+            message: cat.message,
+            link: cat.link,
+            icon: cat.icon,
+            usage_text: cat.usage_text,
+            display_order: cat.display_order
+          }));
+        
+        // Add custom Finance & Investment marker if it was in the original data
+        const hasFinanceSection = (data || []).some(cat => cat.title === 'Finance & Investment');
+        if (hasFinanceSection) {
+          filteredCategories.push({
+            id: 'custom-finance-investment',
+            title: 'Finance & Investment',
+            message: 'Custom section',
+            link: '#',
+            icon: 'DollarSign',
+            usage_text: 'Custom',
+            display_order: 1,
+            isCustomFinanceSection: true
+          });
+        }
+
+        setCategories(filteredCategories);
       } catch (err: any) {
         console.error('Error fetching featured categories:', err);
         setError(err.message);
@@ -73,5 +103,5 @@ export function useFeaturedCategories() {
     fetchCategories();
   }, []);
 
-  return { categories, loading, error };
+  return { categories, loading, error, FinanceInvestmentSection };
 }
