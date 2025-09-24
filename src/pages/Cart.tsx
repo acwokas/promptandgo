@@ -259,7 +259,7 @@ const CartPage = () => {
                   </div>
 
                   <div className="p-4 bg-background text-foreground rounded-lg border border-accent/50 relative">
-                    <Badge className="absolute -top-2 -right-2 bg-accent text-accent-foreground text-xs">
+                    <Badge className="absolute -top-1 -right-1 bg-primary text-white text-xs font-semibold px-2 py-1 shadow-sm">
                       BEST VALUE
                     </Badge>
                     <div className="flex items-center gap-2 mb-2">
