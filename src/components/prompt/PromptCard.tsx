@@ -1019,23 +1019,23 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               </p>
               
               {showLock && (
-                <div className="absolute inset-0 rounded-lg bg-blue-50/95 border border-blue-200/50 flex flex-col items-center justify-center min-h-full p-3 sm:p-8">
-                  <div className="text-center space-y-6 sm:space-y-8 w-full max-w-lg">
-                    <div className="inline-flex items-center gap-2 text-sm font-medium px-5 py-3 rounded-full bg-white border border-gray-200 text-foreground shadow-sm">
-                      <Lock className="h-4 w-4" aria-hidden />
+                <div className="absolute inset-0 rounded-lg bg-white/98 backdrop-blur-sm border border-blue-200 flex flex-col items-center justify-center min-h-full p-6 sm:p-10">
+                  <div className="text-center space-y-8 w-full max-w-lg">
+                    <div className="inline-flex items-center gap-3 text-base font-semibold px-6 py-4 rounded-full bg-blue-50 border-2 border-blue-200 text-blue-700 shadow-md">
+                      <Lock className="h-5 w-5" aria-hidden />
                       <span>Unlock premium prompt</span>
                     </div>
-                    <div className="text-sm space-y-3">
-                      <div className="text-muted-foreground leading-relaxed">
-                        One‑time <span className="line-through">{fmtUSD(PROMPT_ORIGINAL_CENTS)}</span> <span className="text-blue-600 font-semibold text-base">{fmtUSD(PROMPT_DISCOUNT_CENTS)}</span>
+                    <div className="text-base space-y-4">
+                      <div className="text-foreground leading-relaxed font-medium">
+                        One‑time <span className="line-through text-muted-foreground">{fmtUSD(PROMPT_ORIGINAL_CENTS)}</span> <span className="text-blue-600 font-bold text-lg">{fmtUSD(PROMPT_DISCOUNT_CENTS)}</span>
                       </div>
-                      <div className="text-muted-foreground leading-relaxed">
-                        Or subscribe <span className="line-through">{fmtUSD(SUB_ORIGINAL_CENTS)}</span> <span className="text-blue-600 font-semibold text-base">{fmtUSD(SUB_DISCOUNT_CENTS)}</span> / month
+                      <div className="text-foreground leading-relaxed font-medium">
+                        Or subscribe <span className="line-through text-muted-foreground">{fmtUSD(SUB_ORIGINAL_CENTS)}</span> <span className="text-blue-600 font-bold text-lg">{fmtUSD(SUB_DISCOUNT_CENTS)}</span> / month
                       </div>
                     </div>
-                    <div className="flex flex-col gap-4 w-full">
-                      <Button size="lg" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 text-base font-semibold shadow-none" onClick={addPromptToCart}>Buy Prompt {fmtUSD(PROMPT_DISCOUNT_CENTS)}</Button>
-                      <Button size="lg" variant="outline" className="w-full py-4 text-base font-semibold border-gray-300 bg-white text-foreground hover:bg-gray-50" onClick={handleSubscribeClick}>Subscribe for {fmtUSD(SUB_DISCOUNT_CENTS)}/mo</Button>
+                    <div className="flex flex-col gap-5 w-full">
+                      <Button size="lg" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-5 text-lg font-bold border-0 shadow-lg" onClick={addPromptToCart}>Buy Prompt {fmtUSD(PROMPT_DISCOUNT_CENTS)}</Button>
+                      <Button size="lg" variant="outline" className="w-full py-5 text-lg font-semibold border-2 border-blue-300 bg-white text-blue-700 hover:bg-blue-50 hover:border-blue-400" onClick={handleSubscribeClick}>Subscribe for {fmtUSD(SUB_DISCOUNT_CENTS)}/mo</Button>
                     </div>
                   </div>
                 </div>
