@@ -33,7 +33,7 @@ const FinanceInvestmentSection = () => {
       const randomUsage = Math.floor(Math.random() * 5) + 1;
       
       // Create the search link for the selected category
-      const searchLink = `/library?q=${encodeURIComponent(randomCategory)}`;
+      const searchLink = `/library?q=${encodeURIComponent(randomCategory)}&ribbon=undefined`;
       
       return {
         category: randomCategory,
