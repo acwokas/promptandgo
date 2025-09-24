@@ -10,6 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { 
   Star, 
   ChevronDown, 
@@ -206,74 +207,78 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
                 </DropdownMenuTrigger>
                 
                 <DropdownMenuContent 
-                  className="w-[280px] bg-background border shadow-lg z-50"
+                  className="w-[280px] bg-background border shadow-lg z-50 p-0"
                   align="start"
                   side="bottom"
                   sideOffset={4}
                 >
-                  <DropdownMenuItem
-                    className="p-3 cursor-pointer hover:bg-muted/50 focus:bg-muted/50"
-                    onClick={() => setSelectedPlatform(originalOption)}
-                  >
-                    <div className="flex items-center gap-3 w-full">
-                      <div className={`p-1.5 rounded-full ${originalOption.color}`}>
-                        {originalOption.icon}
-                      </div>
-                      <div className="flex-1">
-                        <div className="text-sm font-medium">{originalOption.name}</div>
-                        <div className="text-xs text-muted-foreground">{originalOption.description}</div>
-                      </div>
-                      {selectedPlatform.id === originalOption.id && (
-                        <CheckCircle className="h-4 w-4 text-primary" />
-                      )}
+                  <ScrollArea className="h-80">
+                    <div className="p-1">
+                      <DropdownMenuItem
+                        className="p-3 cursor-pointer hover:bg-muted/50 focus:bg-muted/50"
+                        onClick={() => setSelectedPlatform(originalOption)}
+                      >
+                        <div className="flex items-center gap-3 w-full">
+                          <div className={`p-1.5 rounded-full ${originalOption.color}`}>
+                            {originalOption.icon}
+                          </div>
+                          <div className="flex-1">
+                            <div className="text-sm font-medium">{originalOption.name}</div>
+                            <div className="text-xs text-muted-foreground">{originalOption.description}</div>
+                          </div>
+                          {selectedPlatform.id === originalOption.id && (
+                            <CheckCircle className="h-4 w-4 text-primary" />
+                          )}
+                        </div>
+                      </DropdownMenuItem>
+                      
+                      <DropdownMenuSeparator />
+                      <DropdownMenuLabel>Text Generation</DropdownMenuLabel>
+                      {textProviders.map((option) => (
+                        <DropdownMenuItem
+                          key={option.id}
+                          className="p-3 cursor-pointer hover:bg-muted/50 focus:bg-muted/50"
+                          onClick={() => setSelectedPlatform(option)}
+                        >
+                          <div className="flex items-center gap-3 w-full">
+                            <div className={`p-1.5 rounded-full ${option.color}`}>
+                              {option.icon}
+                            </div>
+                            <div className="flex-1">
+                              <div className="text-sm font-medium">{option.name}</div>
+                              <div className="text-xs text-muted-foreground">{option.description}</div>
+                            </div>
+                            {selectedPlatform.id === option.id && (
+                              <CheckCircle className="h-4 w-4 text-primary" />
+                            )}
+                          </div>
+                        </DropdownMenuItem>
+                      ))}
+                      
+                      <DropdownMenuSeparator />
+                      <DropdownMenuLabel>Image-only</DropdownMenuLabel>
+                      {imageProviders.map((option) => (
+                        <DropdownMenuItem
+                          key={option.id}
+                          className="p-3 cursor-pointer hover:bg-muted/50 focus:bg-muted/50"
+                          onClick={() => setSelectedPlatform(option)}
+                        >
+                          <div className="flex items-center gap-3 w-full">
+                            <div className={`p-1.5 rounded-full ${option.color}`}>
+                              {option.icon}
+                            </div>
+                            <div className="flex-1">
+                              <div className="text-sm font-medium">{option.name}</div>
+                              <div className="text-xs text-muted-foreground">{option.description}</div>
+                            </div>
+                            {selectedPlatform.id === option.id && (
+                              <CheckCircle className="h-4 w-4 text-primary" />
+                            )}
+                          </div>
+                        </DropdownMenuItem>
+                      ))}
                     </div>
-                  </DropdownMenuItem>
-                  
-                  <DropdownMenuSeparator />
-                  <DropdownMenuLabel>Text Generation</DropdownMenuLabel>
-                  {textProviders.map((option) => (
-                    <DropdownMenuItem
-                      key={option.id}
-                      className="p-3 cursor-pointer hover:bg-muted/50 focus:bg-muted/50"
-                      onClick={() => setSelectedPlatform(option)}
-                    >
-                      <div className="flex items-center gap-3 w-full">
-                        <div className={`p-1.5 rounded-full ${option.color}`}>
-                          {option.icon}
-                        </div>
-                        <div className="flex-1">
-                          <div className="text-sm font-medium">{option.name}</div>
-                          <div className="text-xs text-muted-foreground">{option.description}</div>
-                        </div>
-                        {selectedPlatform.id === option.id && (
-                          <CheckCircle className="h-4 w-4 text-primary" />
-                        )}
-                      </div>
-                    </DropdownMenuItem>
-                  ))}
-                  
-                  <DropdownMenuSeparator />
-                  <DropdownMenuLabel>Image-only</DropdownMenuLabel>
-                  {imageProviders.map((option) => (
-                    <DropdownMenuItem
-                      key={option.id}
-                      className="p-3 cursor-pointer hover:bg-muted/50 focus:bg-muted/50"
-                      onClick={() => setSelectedPlatform(option)}
-                    >
-                      <div className="flex items-center gap-3 w-full">
-                        <div className={`p-1.5 rounded-full ${option.color}`}>
-                          {option.icon}
-                        </div>
-                        <div className="flex-1">
-                          <div className="text-sm font-medium">{option.name}</div>
-                          <div className="text-xs text-muted-foreground">{option.description}</div>
-                        </div>
-                        {selectedPlatform.id === option.id && (
-                          <CheckCircle className="h-4 w-4 text-primary" />
-                        )}
-                      </div>
-                    </DropdownMenuItem>
-                  ))}
+                  </ScrollArea>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>

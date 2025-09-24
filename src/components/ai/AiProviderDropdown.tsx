@@ -9,6 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -261,31 +262,52 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
             )}
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="center" className="w-64 max-h-80 overflow-y-auto">
-          <DropdownMenuLabel>Text Generation</DropdownMenuLabel>
-          {textProviders.map((provider) => (
-            <DropdownMenuItem
-              key={provider.id}
-              onClick={() => handleProviderSelect(provider)}
-              className="cursor-pointer"
-            >
-              <div className="flex items-center gap-3 w-full">
-                {provider.icon}
-                <div className="flex-1">
-                  <div className="font-medium">{provider.name}</div>
-                  <div className="text-xs text-muted-foreground">{provider.description}</div>
-                </div>
-              </div>
-            </DropdownMenuItem>
-          ))}
-          
-          <DropdownMenuSeparator />
-          <DropdownMenuLabel>Image-only</DropdownMenuLabel>
-          {imageProviders.map((provider) => (
-            provider.id === 'midjourney' ? (
-              <Tooltip key={provider.id}>
-                <TooltipTrigger asChild>
+        <DropdownMenuContent align="center" className="w-64 p-0">
+          <ScrollArea className="h-80">
+            <div className="p-1">
+              <DropdownMenuLabel>Text Generation</DropdownMenuLabel>
+              {textProviders.map((provider) => (
+                <DropdownMenuItem
+                  key={provider.id}
+                  onClick={() => handleProviderSelect(provider)}
+                  className="cursor-pointer"
+                >
+                  <div className="flex items-center gap-3 w-full">
+                    {provider.icon}
+                    <div className="flex-1">
+                      <div className="font-medium">{provider.name}</div>
+                      <div className="text-xs text-muted-foreground">{provider.description}</div>
+                    </div>
+                  </div>
+                </DropdownMenuItem>
+              ))}
+              
+              <DropdownMenuSeparator />
+              <DropdownMenuLabel>Image-only</DropdownMenuLabel>
+              {imageProviders.map((provider) => (
+                provider.id === 'midjourney' ? (
+                  <Tooltip key={provider.id}>
+                    <TooltipTrigger asChild>
+                      <DropdownMenuItem
+                        onClick={() => handleProviderSelect(provider)}
+                        className="cursor-pointer"
+                      >
+                        <div className="flex items-center gap-3 w-full">
+                          {provider.icon}
+                          <div className="flex-1">
+                            <div className="font-medium">{provider.name}</div>
+                            <div className="text-xs text-muted-foreground">{provider.description}</div>
+                          </div>
+                        </div>
+                      </DropdownMenuItem>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Sorry! MidJourney does not yet allow this. Instead, please use the copy button and paste it directly into MidJourney.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                ) : (
                   <DropdownMenuItem
+                    key={provider.id}
                     onClick={() => handleProviderSelect(provider)}
                     className="cursor-pointer"
                   >
@@ -297,27 +319,10 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
                       </div>
                     </div>
                   </DropdownMenuItem>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Sorry! MidJourney does not yet allow this. Instead, please use the copy button and paste it directly into MidJourney.</p>
-                </TooltipContent>
-              </Tooltip>
-            ) : (
-              <DropdownMenuItem
-                key={provider.id}
-                onClick={() => handleProviderSelect(provider)}
-                className="cursor-pointer"
-              >
-                <div className="flex items-center gap-3 w-full">
-                  {provider.icon}
-                  <div className="flex-1">
-                    <div className="font-medium">{provider.name}</div>
-                    <div className="text-xs text-muted-foreground">{provider.description}</div>
-                  </div>
-                </div>
-              </DropdownMenuItem>
-            )
-          ))}
+                )
+              ))}
+            </div>
+          </ScrollArea>
         </DropdownMenuContent>
       </DropdownMenu>
 
