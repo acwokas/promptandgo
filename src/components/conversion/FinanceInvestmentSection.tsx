@@ -13,14 +13,14 @@ const FinanceInvestmentSection = () => {
   const [financeData, setFinanceData] = useState<FinanceInvestmentData | null>(null);
 
   useEffect(() => {
-    // Allowed search queries as specified by the user
+    // Allowed search queries - using actual category names from database
     const allowedQueries = [
-      'Social Media & Content',
-      'Marketing & Advertising', 
-      'Business & Career',
-      'Productivity & Organization',
+      'Social Media Management',
+      'Content Marketing', 
+      'Career Development',
+      'Productivity & Time Management',
+      'E-commerce & Product Descriptions',
       'Health & Wellness',
-      'Creative Writing & Content',
       'Personal Growth & Mindfulness'
     ];
 
