@@ -13,15 +13,15 @@ const FinanceInvestmentSection = () => {
   const [financeData, setFinanceData] = useState<FinanceInvestmentData | null>(null);
 
   useEffect(() => {
-    // Allowed search queries - using actual category names from database
+    // Allowed search queries - using broader terms that return more results
     const allowedQueries = [
-      'Social Media Management',
-      'Content Marketing', 
-      'Career Development',
-      'Productivity & Time Management',
-      'E-commerce & Product Descriptions',
-      'Health & Wellness',
-      'Personal Growth & Mindfulness'
+      'social media',
+      'marketing', 
+      'career',
+      'productivity',
+      'business',
+      'health',
+      'personal growth'
     ];
 
     // Generate random data on component mount
