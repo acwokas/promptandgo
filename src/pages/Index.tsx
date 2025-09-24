@@ -306,7 +306,7 @@ const Index = () => {
         <PageHero title={<>
             Your Complete <span className="text-gradient-brand">AI Prompt Toolkit</span> — 100% FREE
           </>} subtitle={<>
-            Everything you need to master AI prompting: 5,000+ battle-tested prompts in our Library, curated Power Packs for specific goals, Scout AI for instant optimization, and our AI Prompt Generator for custom creation. No guesswork, no subscriptions, no limits.
+            Everything you need to master AI prompting: 5,000+ battle-tested prompts in our Library, curated Power Packs for specific goals, Scout AI for instant optimization, and our AI Prompt Generator for custom creation. No guesswork, no limits.
           </>}>
           <div className="flex justify-center">
             <Button asChild size="lg" variant="hero" className="px-8">
