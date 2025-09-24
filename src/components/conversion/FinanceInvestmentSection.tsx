@@ -15,13 +15,13 @@ const FinanceInvestmentSection = () => {
   useEffect(() => {
     // Allowed search queries as specified by the user
     const allowedQueries = [
-      'Marketing',
-      'Career', 
-      'Content',
-      'Productivity',
-      'Ecommerce',
-      'Health and Wellness',
-      'Lifestyle and Hobbies'
+      'Social Media & Content',
+      'Marketing & Advertising', 
+      'Business & Career',
+      'Productivity & Organization',
+      'Health & Wellness',
+      'Creative Writing & Content',
+      'Personal Growth & Mindfulness'
     ];
 
     // Generate random data on component mount
