@@ -407,7 +407,7 @@ const Index = () => {
 
                 {/* Right - Live Stats */}
                 <div className="grid grid-cols-3 gap-3">
-                  <Link to="/auth" className="group text-center p-3 bg-background/70 rounded-lg border border-border/50 flex flex-col items-center justify-center min-h-[80px] hover:bg-background/90 hover:border-primary/30 transition-all duration-300 cursor-pointer">
+                  <Link to={user ? "/account" : "/auth"} className="group text-center p-3 bg-background/70 rounded-lg border border-border/50 flex flex-col items-center justify-center min-h-[80px] hover:bg-background/90 hover:border-primary/30 transition-all duration-300 cursor-pointer">
                     <Users className="h-4 w-4 text-foreground mx-auto mb-1 transition-colors duration-300 group-hover:text-primary" />
                     <div className="font-bold text-lg text-foreground transition-colors duration-300 group-hover:text-primary">5,000+</div>
                     <div className="text-xs text-muted-foreground group-hover:text-muted-foreground transition-colors duration-300">Active</div>
