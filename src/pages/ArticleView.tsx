@@ -475,15 +475,30 @@ ${titleHtml}
           </header>
 
           {/* Article Content */}
-          <div className="prose prose-lg max-w-none mb-12">
+          <div className="mb-12 text-foreground">
             <ReactMarkdown
               remarkPlugins={[remarkGfm, remarkBreaks]}
               rehypePlugins={[rehypeRaw]}
               components={{
                 p: ({ children, ...props }) => (
-                  <p className="mb-6 leading-relaxed" {...props}>
+                  <p className="mb-6 leading-relaxed text-foreground" {...props}>
                     {children}
                   </p>
+                ),
+                h1: ({ children, ...props }) => (
+                  <h1 className="text-3xl font-bold mb-6 text-foreground" {...props}>
+                    {children}
+                  </h1>
+                ),
+                h2: ({ children, ...props }) => (
+                  <h2 className="text-2xl font-semibold mb-4 text-foreground" {...props}>
+                    {children}
+                  </h2>
+                ),
+                h3: ({ children, ...props }) => (
+                  <h3 className="text-xl font-semibold mb-3 text-foreground" {...props}>
+                    {children}
+                  </h3>
                 ),
                 img: ({ src, alt, ...props }) => (
                   <img
@@ -503,6 +518,36 @@ ${titleHtml}
                   >
                     {children}
                   </a>
+                ),
+                ul: ({ children, ...props }) => (
+                  <ul className="list-disc ml-6 mb-4 text-foreground" {...props}>
+                    {children}
+                  </ul>
+                ),
+                ol: ({ children, ...props }) => (
+                  <ol className="list-decimal ml-6 mb-4 text-foreground" {...props}>
+                    {children}
+                  </ol>
+                ),
+                li: ({ children, ...props }) => (
+                  <li className="mb-2 text-foreground" {...props}>
+                    {children}
+                  </li>
+                ),
+                blockquote: ({ children, ...props }) => (
+                  <blockquote className="border-l-4 border-primary/30 pl-4 italic my-6 text-muted-foreground" {...props}>
+                    {children}
+                  </blockquote>
+                ),
+                code: ({ children, ...props }) => (
+                  <code className="bg-muted px-1 py-0.5 rounded text-sm font-mono text-foreground" {...props}>
+                    {children}
+                  </code>
+                ),
+                pre: ({ children, ...props }) => (
+                  <pre className="bg-muted p-4 rounded-lg overflow-x-auto my-6" {...props}>
+                    {children}
+                  </pre>
                 ),
                 br: () => <br />,
                 // Allow HTML elements for callouts
