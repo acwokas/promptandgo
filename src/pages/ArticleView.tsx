@@ -406,18 +406,18 @@ ${titleHtml}
 
           {/* Hero Image */}
           {article.thumbnail_url && (
-            <div className="aspect-video mb-8 overflow-hidden rounded-lg shadow-lg static">
+            <div className="aspect-video mb-8 overflow-hidden rounded-lg shadow-lg">
               <img
                 src={article.thumbnail_url}
                 alt={article.title}
-                className="w-full h-full object-cover static"
+                className="w-full h-full object-cover"
               />
             </div>
           )}
 
           {/* Article Header */}
-          <header className="mb-8 static">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight static">
+          <header className="mb-8">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
               {article.title}
             </h1>
             
