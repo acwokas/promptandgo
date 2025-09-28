@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { User, ShoppingCart, Sparkles } from "lucide-react";
+import { User, ShoppingCart, Sparkles, Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import { SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
@@ -76,14 +77,8 @@ const Header = () => {
         />
         </Link>
         
-        {/* Desktop Navigation - Simplified for maximum conversion */}
-        <nav className="hidden lg:flex items-center gap-8 flex-1 justify-center md:ml-8">
-          <Link 
-            to="/how-it-works" 
-            className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-          >
-            How it Works
-          </Link>
+        {/* Desktop Navigation with Search */}
+        <nav className="hidden lg:flex items-center gap-6 flex-1 justify-center md:ml-8">
           <Link 
             to="/library" 
             className="text-sm font-medium text-foreground hover:text-primary transition-colors"
@@ -103,6 +98,24 @@ const Header = () => {
           >
             Power Packs
           </Link>
+          
+          {/* Search Box */}
+          <div className="relative flex-1 max-w-sm ml-4">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Find your perfect prompt..."
+              className="pl-10 pr-4 py-2 text-sm bg-background border-border focus:border-primary focus:ring-1 focus:ring-primary"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  const target = e.target as HTMLInputElement;
+                  if (target.value.trim()) {
+                    window.location.href = `/library?search=${encodeURIComponent(target.value.trim())}`;
+                  }
+                }
+              }}
+            />
+          </div>
         </nav>
         
         {/* Right Actions */}
