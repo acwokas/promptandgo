@@ -587,6 +587,28 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                 </Tooltip>
               </TooltipProvider>
 
+              {/* Refine with Scout button */}
+              {(!showLock || hasAccess) && (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button 
+                        size="sm" 
+                        variant="secondary"
+                        onClick={() => navigate('/ai/generator', { 
+                          state: { initialPrompt: displayedPrompt }
+                        })}
+                        className="flex-1"
+                      >
+                        <Bot className="h-4 w-4 mr-1" />
+                        Refine with Scout
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>Let Scout help you refine this prompt</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              )}
+
                {(!showLock || hasAccess) && (
                 <AiProviderDropdown 
                   prompt={displayedPrompt} 
