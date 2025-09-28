@@ -557,14 +557,14 @@ const Index = () => {
           </div>
 
           {/* Platform Examples - New standalone section */}
-          <div className="bg-gradient-to-br from-muted/30 to-background rounded-2xl p-8">
+          <div className="bg-gradient-to-br from-muted/30 to-background rounded-2xl p-8 pb-12">
             <div className="text-center mb-8">
               <h3 className="text-2xl font-bold mb-4">Optimized for Every Major AI Platform</h3>
               <p className="text-muted-foreground max-w-3xl mx-auto">
                 Scout tailors prompts specifically for each AI platform's strengths and requirements.
               </p>
             </div>
-            <div className="grid gap-4 grid-cols-3 md:grid-cols-6 max-w-2xl mx-auto">
+            <div className="grid gap-4 grid-cols-3 md:grid-cols-6 max-w-2xl mx-auto mb-8">
               <div className="text-center">
                 <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-2">
                   <span className="text-white font-bold text-sm">GPT</span>
