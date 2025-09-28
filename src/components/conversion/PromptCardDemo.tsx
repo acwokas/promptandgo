@@ -445,12 +445,12 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
               </div>
               
               {/* Action buttons */}
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <Button
                   onClick={handleCopy}
                   variant="outline"
                   size="sm"
-                  className="flex-1"
+                  className="w-full sm:flex-1"
                 >
                   <Copy className="h-3.5 w-3.5 mr-1" />
                   Copy
@@ -458,7 +458,7 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
                 {selectedPlatform.id !== 'original' && (
                   <Button
                     onClick={handleSendToAI}
-                    className="flex-1"
+                    className="w-full sm:flex-1"
                     size="sm"
                   >
                     <ExternalLink className="h-3.5 w-3.5 mr-1" />
