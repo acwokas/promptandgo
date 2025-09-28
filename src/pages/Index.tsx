@@ -556,6 +556,54 @@ const Index = () => {
             </Card>
           </div>
 
+          {/* Platform Examples - New standalone section */}
+          <div className="bg-gradient-to-br from-muted/30 to-background rounded-2xl p-8">
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-bold mb-4">Optimized for Every Major AI Platform</h3>
+              <p className="text-muted-foreground max-w-3xl mx-auto">
+                Scout tailors prompts specifically for each AI platform's strengths and requirements.
+              </p>
+            </div>
+            <div className="grid gap-4 grid-cols-3 md:grid-cols-6 max-w-2xl mx-auto">
+              <div className="text-center">
+                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-white font-bold text-sm">GPT</span>
+                </div>
+                <p className="text-xs text-muted-foreground">ChatGPT</p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-white font-bold text-sm">C</span>
+                </div>
+                <p className="text-xs text-muted-foreground">Claude</p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-white font-bold text-sm">G</span>
+                </div>
+                <p className="text-xs text-muted-foreground">Gemini</p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-white font-bold text-sm">MJ</span>
+                </div>
+                <p className="text-xs text-muted-foreground">MidJourney</p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-white font-bold text-sm">P</span>
+                </div>
+                <p className="text-xs text-muted-foreground">Perplexity</p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-white font-bold text-sm">+</span>
+                </div>
+                <p className="text-xs text-muted-foreground">& More</p>
+              </div>
+            </div>
+          </div>
+
           {/* How Everything Works Together */}
           <div className="bg-gradient-to-br from-primary/5 to-accent/5 rounded-2xl p-8">
             <div className="text-center mb-8">
@@ -595,49 +643,6 @@ const Index = () => {
                   Learn More <ArrowRight className="h-4 w-4 ml-2" />
                 </Link>
               </Button>
-            </div>
-
-            {/* Platform Examples */}
-            <div className="mt-8 pt-8 border-t border-border/50">
-              <h4 className="text-lg font-semibold text-center mb-6">Optimized for Every Major AI Platform</h4>
-              <div className="grid gap-4 grid-cols-3 md:grid-cols-6 max-w-2xl mx-auto">
-                <div className="text-center">
-                  <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-2">
-                    <span className="text-white font-bold text-sm">GPT</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground">ChatGPT</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-2">
-                    <span className="text-white font-bold text-sm">C</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground">Claude</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-2">
-                    <span className="text-white font-bold text-sm">G</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground">Gemini</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-2">
-                    <span className="text-white font-bold text-sm">MJ</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground">MidJourney</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-2">
-                    <span className="text-white font-bold text-sm">P</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground">Perplexity</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-12 h-12 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full flex items-center justify-center mx-auto mb-2">
-                    <span className="text-white font-bold text-sm">+</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground">& More</p>
-                </div>
-              </div>
             </div>
           </div>
         </section>
