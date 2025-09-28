@@ -1319,6 +1319,17 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
+      confirm_contact_secure: {
+        Args: { p_encryption_key: string; p_token: string }
+        Returns: {
+          contact_id: string
+          created_at: string
+          email: string
+          message: string
+          name: string
+          newsletter_opt_in: boolean
+        }[]
+      }
       get_admin_contact_data: {
         Args: { p_contact_id: string; p_encryption_key: string }
         Returns: {
@@ -1364,6 +1375,19 @@ export type Database = {
       get_decrypted_subscriber_email: {
         Args: { p_key: string; p_user_id: string }
         Returns: string
+      }
+      get_pending_contacts_admin: {
+        Args: { p_encryption_key: string }
+        Returns: {
+          confirmed: boolean
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          newsletter_opt_in: boolean
+          processed: boolean
+        }[]
       }
       get_poll_results: {
         Args: { poll_id_param: string }
