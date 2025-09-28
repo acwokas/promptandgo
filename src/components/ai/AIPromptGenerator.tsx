@@ -640,10 +640,10 @@ const AIPromptGenerator = () => {
                         className="w-full"
                         disabled={dailyAISends.limit_reached || loadingAILimits}
                         title={dailyAISends.limit_reached ? "Daily limit reached (resets at midnight)" : undefined}
-                      >
-                        <Send className="h-4 w-4" />
-                        <span>Send to {selectedProviderData?.name}</span>
-                      </Button>
+                       >
+                         <ExternalLink className="h-4 w-4" />
+                         <span>Send to {selectedProviderData?.name}</span>
+                       </Button>
                       <div className="text-xs text-center text-muted-foreground">
                         {loadingAILimits ? (
                           "Loading limits..."

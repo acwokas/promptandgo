@@ -26,7 +26,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { ChevronDown, Send, Bot, Sparkles, Brain, Zap, Image, Palette, Search, Rocket, Wind } from 'lucide-react';
+import { ChevronDown, ExternalLink, Bot, Sparkles, Brain, Zap, Image, Palette, Search, Rocket, Wind } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
@@ -332,7 +332,7 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
               </>
             ) : (
               <>
-                <Send className="h-4 w-4 mr-2" />
+                <ExternalLink className="h-4 w-4 mr-2" />
                 {buttonText}
               </>
             )}

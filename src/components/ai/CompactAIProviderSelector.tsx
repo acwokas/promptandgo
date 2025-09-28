@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Copy, Send, ChevronDown, Settings } from 'lucide-react';
+import { Copy, ExternalLink, ChevronDown, Settings } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { AI_PROVIDERS, rewritePromptForProvider } from '@/lib/promptRewriter';
 import { cn } from '@/lib/utils';
@@ -234,7 +234,7 @@ export const CompactAIProviderSelector: React.FC<CompactAIProviderSelectorProps>
       </Button>
       
       <Button onClick={handleSendToAI} size="sm" className="h-8">
-        <Send className="h-3 w-3 mr-1" />
+        <ExternalLink className="h-3 w-3 mr-1" />
         Send to {selectedProviderData?.name}
       </Button>
 

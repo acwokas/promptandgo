@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Copy, Send, Eye, EyeOff } from 'lucide-react';
+import { Copy, ExternalLink, Eye, EyeOff } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { AI_PROVIDERS, rewritePromptForProvider } from '@/lib/promptRewriter';
 import { useAIPreferences } from '@/hooks/useAIPreferences';
@@ -302,7 +302,7 @@ export const AIProviderSelector: React.FC<AIProviderSelectorProps> = ({
                 Copy
               </Button>
               <Button onClick={handleSendToAI} size="sm">
-                <Send className="h-4 w-4 mr-2" />
+                <ExternalLink className="h-4 w-4 mr-2" />
                 Send to {selectedProviderData?.name}
               </Button>
             </div>
