@@ -110,7 +110,7 @@ const Header = () => {
                 if (e.key === 'Enter') {
                   const target = e.target as HTMLInputElement;
                   if (target.value.trim()) {
-                    window.location.href = `/library?search=${encodeURIComponent(target.value.trim())}`;
+                    window.location.href = `/library?q=${encodeURIComponent(target.value.trim())}`;
                   }
                 }
               }}
