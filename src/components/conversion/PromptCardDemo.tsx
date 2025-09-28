@@ -26,7 +26,7 @@ import {
   Tornado,
   Rocket,
   Copy,
-  ExternalLink
+  ArrowRight
 } from "lucide-react";
 import { AI_PROVIDERS } from "@/lib/promptRewriter";
 
@@ -380,7 +380,7 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
                     className="flex-1"
                     size="sm"
                   >
-                    <ExternalLink className="h-3.5 w-3.5 mr-1" />
+                    <ArrowRight className="h-3.5 w-3.5 mr-1" />
                     Send to {selectedPlatform.name}
                   </Button>
                 )}
