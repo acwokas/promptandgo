@@ -16,9 +16,9 @@ async function grantEntitlements(supabaseService: any, userId: string, userEmail
 
   for (const it of items || []) {
     if (it.item_type === 'prompt' && it.item_id) {
-      await supabaseService.from('prompt_access').upsert({ user_id: userId, prompt_id: it.item_id }, { onConflict: 'user_id,prompt_id' });
+      await supabaseService.from('prompt_access').upsert({ user_id: userId, prompt_id: it.item_id });
     } else if (it.item_type === 'pack' && it.item_id) {
-      await supabaseService.from('pack_access').upsert({ user_id: userId, pack_id: it.item_id }, { onConflict: 'user_id,pack_id' });
+      await supabaseService.from('pack_access').upsert({ user_id: userId, pack_id: it.item_id });
     } else if (it.item_type === 'lifetime') {
       // SECURITY FIX: Use secure_upsert_subscriber instead of direct upsert
       const encryptionKey = Deno.env.get("SUBSCRIBERS_ENCRYPTION_KEY");

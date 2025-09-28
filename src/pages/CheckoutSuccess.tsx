@@ -54,12 +54,18 @@ const CheckoutSuccess = () => {
         <div className="rounded-xl border bg-card p-6 text-center">
           <div className="text-lg font-medium mb-4">{status}</div>
           {status.includes('✅') && (
-            <div className="flex gap-4 justify-center">
+            <div className="flex flex-wrap gap-3 justify-center">
               <Link 
-                to="/packs" 
+                to="/prompts" 
                 className="inline-flex items-center px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
               >
-                View My Packs
+                View My Prompts
+              </Link>
+              <Link 
+                to="/packs" 
+                className="inline-flex items-center px-6 py-3 bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/90 transition-colors"
+              >
+                View Packs
               </Link>
               <Link 
                 to="/account/purchases" 
