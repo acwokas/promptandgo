@@ -360,6 +360,48 @@ const CartPage = () => {
                       ⚡️Power Packs $4.99 (was $9.99).
                     </p>
                     
+                    <div className="text-center text-muted-foreground text-sm">
+                      or
+                    </div>
+                    
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 transition-colors">
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <Calendar className="h-4 w-4 text-primary" />
+                            <span className="font-medium">Monthly $12.99</span>
+                            <span className="text-sm text-muted-foreground">(was $24.99)</span>
+                          </div>
+                        </div>
+                        <Button 
+                          onClick={() => handleAddMembership('monthly')}
+                          variant="outline" 
+                          size="sm"
+                          disabled={hasMembership || loading || !user}
+                        >
+                          {loading ? "Loading..." : hasMembership ? "Added" : "Add to Cart"}
+                        </Button>
+                      </div>
+                      
+                      <div className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 transition-colors">
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <Infinity className="h-4 w-4 text-primary" />
+                            <span className="font-medium">Lifetime $99.50</span>
+                            <span className="text-sm text-muted-foreground">(was $199.00)</span>
+                          </div>
+                        </div>
+                        <Button 
+                          onClick={() => handleAddMembership('lifetime')}
+                          variant="outline" 
+                          size="sm"
+                          disabled={hasLifetime || loading || !user}
+                        >
+                          {loading ? "Loading..." : hasLifetime ? "Added" : "Add to Cart"}
+                        </Button>
+                      </div>
+                    </div>
+                    
                     {hasLifetime && items.some(i => i.type === 'membership' || i.type === 'prompt' || i.type === 'pack') && (
                       <div className="p-3 bg-primary/10 rounded-lg border border-primary/20">
                         <p className="text-sm font-medium text-primary mb-2">💡 Pro Tip!</p>
