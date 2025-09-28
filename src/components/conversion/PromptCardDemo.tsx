@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
 import { 
   DropdownMenu, 
   DropdownMenuContent, 
@@ -122,6 +123,60 @@ interface PromptCardDemoProps {
 const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
   const [selectedPlatform, setSelectedPlatform] = useState<PlatformOption>(platformOptions[0]);
   const [showAnimation, setShowAnimation] = useState(true);
+  const [demoPrompt, setDemoPrompt] = useState({
+    title: "Loading...",
+    prompt: "Loading a complex AI prompt from our library...",
+    whatFor: "Please wait while we fetch a detailed prompt to showcase.",
+    category: "Loading",
+    subcategory: ""
+  });
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Load a random complex free prompt from the database
+  useEffect(() => {
+    const loadRandomPrompt = async () => {
+      try {
+        // Get a random complex free prompt (longer than 150 characters, not pro)
+        const { data: prompts, error } = await supabase
+          .from('prompts')
+          .select(`
+            id,
+            title,
+            prompt,
+            what_for,
+            is_pro,
+            categories!inner(name),
+            subcategories(name)
+          `)
+          .eq('is_pro', false)
+          .gte('char_length(prompt)', 200) // Only get prompts longer than 200 chars
+          .order('random()')
+          .limit(1);
+
+        if (error) {
+          console.error('Error loading random prompt:', error);
+          return;
+        }
+
+        if (prompts && prompts.length > 0) {
+          const prompt = prompts[0];
+          setDemoPrompt({
+            title: prompt.title || "AI Prompt Template",
+            prompt: prompt.prompt || "Create a comprehensive analysis...",
+            whatFor: prompt.what_for || "Professional AI-powered task completion.",
+            category: (prompt.categories as any)?.name || "AI Tools",
+            subcategory: (prompt.subcategories as any)?.name || ""
+          });
+        }
+      } catch (error) {
+        console.error('Failed to load random prompt:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadRandomPrompt();
+  }, []);
 
   const handleCopy = async () => {
     const prompt = getOptimizedPrompt(selectedPlatform.id);
@@ -178,7 +233,7 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
 
   // Get optimized prompt using AI_PROVIDERS rewrite patterns
   const getOptimizedPrompt = (platformId: string) => {
-    const basePrompt = "Create a comprehensive neighbourhood guide that covers safety statistics, local services, schools, and amenities for potential homebuyers.";
+    const basePrompt = demoPrompt.prompt;
     
     if (platformId === 'original') {
       return basePrompt;
@@ -209,7 +264,7 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
             <div className="flex items-center gap-2">
               <Tag className="h-3.5 w-3.5 text-primary" />
               <Badge variant="secondary" className="text-xs bg-primary/10 text-primary border-0 hover:bg-primary/10">
-                AI in Real Estate
+                {demoPrompt.subcategory || demoPrompt.category}
               </Badge>
             </div>
             <Badge className="bg-green-500/10 text-green-600 hover:bg-green-500/10 border-0 dark:bg-green-900/20 dark:text-green-400">
@@ -220,12 +275,12 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
           
           {/* Title */}
           <h3 className="text-lg font-bold leading-tight text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
-            Neighbourhood Guide: Safety & Services Overview
+            {demoPrompt.title}
           </h3>
           
           {/* Description */}
           <p className="text-sm text-muted-foreground leading-relaxed mb-3 line-clamp-2">
-            Helping professionals excel in AI in real estate with AI-driven systems and comprehensive neighbourhood analysis.
+            {demoPrompt.whatFor}
           </p>
           
           {/* Rating */}
@@ -359,8 +414,8 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
                 <Bot className="h-3.5 w-3.5 text-primary" />
                 <span className="text-xs font-medium text-primary">Scout Optimized</span>
               </div>
-              <div className="text-sm text-foreground leading-relaxed max-h-32 overflow-y-auto mb-3">
-                {getOptimizedPrompt(selectedPlatform.id)}
+              <div className="text-sm text-foreground leading-relaxed max-h-40 overflow-y-auto mb-3 whitespace-pre-wrap">
+                {isLoading ? "Loading a detailed AI prompt..." : getOptimizedPrompt(selectedPlatform.id)}
               </div>
               
               {/* Action buttons */}
