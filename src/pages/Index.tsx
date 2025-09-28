@@ -637,7 +637,7 @@ const Index = () => {
               </div>
             </div>
 
-            <div className="text-center mt-8 mb-6">
+            <div className="text-center mt-8 mb-12">
               <Button asChild variant="outline" size="lg">
                 <Link to="/how-it-works">
                   Learn More <ArrowRight className="h-4 w-4 ml-2" />
