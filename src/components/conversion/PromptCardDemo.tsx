@@ -202,7 +202,7 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
                 <DropdownMenuTrigger asChild>
                   <Button 
                     variant="outline" 
-                    className={`w-full justify-start h-auto p-3 bg-background hover:bg-muted/50 transition-all duration-500 ${showAnimation ? 'border-primary/40 shadow-md shadow-primary/10' : 'border-border'}`}
+                    className={`w-full justify-start h-auto p-3 hover:bg-muted/50 transition-all duration-500 ${showAnimation ? 'border-primary bg-primary/5 shadow-lg shadow-primary/20' : 'border-border bg-background'}`}
                   >
                     <div className="flex items-center gap-2">
                       <div className={`p-1.5 rounded-full ${selectedOption.color}`}>
