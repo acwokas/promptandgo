@@ -70,7 +70,7 @@ serve(async (req) => {
             product_data: { 
               name: 'Monthly All-Access Membership',
               metadata: {
-                business_name: 'PromptandGo.ai'
+                business_name: 'promptandgo.ai'
               }
             },
             unit_amount: 1299,
@@ -83,11 +83,11 @@ serve(async (req) => {
       cancel_url: `${origin}/membership/canceled`,
       subscription_data: {
         metadata: {
-          business_name: 'PromptandGo.ai'
+          business_name: 'promptandgo.ai'
         }
       },
       metadata: {
-        business_name: 'PromptandGo.ai'
+        business_name: 'promptandgo.ai'
       }
     });
 

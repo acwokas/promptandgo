@@ -94,6 +94,7 @@ serve(async (req) => {
       metadata: {
         order_id: orderId,
         user_id: user.id,
+        business_name: 'promptandgo.ai'
       },
     });
 
