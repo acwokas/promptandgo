@@ -351,7 +351,7 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
                 </DropdownMenuTrigger>
                 
                 <DropdownMenuContent 
-                  className="w-[280px] bg-background border shadow-lg z-50 p-0"
+                  className="w-[280px] bg-card border border-border shadow-lg z-[100] p-0 backdrop-blur-sm"
                   align="start"
                   side="bottom"
                   sideOffset={4}

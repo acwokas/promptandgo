@@ -97,7 +97,7 @@ const ShareButton = ({
           {showText && (isSharing ? "Sharing..." : "Share")}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-48 bg-background border shadow-lg z-50">
+      <DropdownMenuContent align="end" className="w-48 bg-card border border-border shadow-lg z-[100] backdrop-blur-sm">
         <DropdownMenuItem 
           onClick={() => handleShare('clipboard')}
           className="gap-2 cursor-pointer"

@@ -349,7 +349,7 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
             </Button>
           </DropdownMenuTrigger>
         </div>
-        <DropdownMenuContent align="start" className="w-64 p-0 z-50">
+        <DropdownMenuContent align="start" className="w-64 p-0 z-[100] bg-card border border-border shadow-lg backdrop-blur-sm">
           <ScrollArea className="h-80">
             <div className="p-1">
               <DropdownMenuLabel>Text Generation</DropdownMenuLabel>

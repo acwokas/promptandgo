@@ -158,7 +158,7 @@ export const CompactAIProviderSelector: React.FC<CompactAIProviderSelectorProps>
             <ChevronDown className="h-3 w-3 ml-1" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="start" className="w-48">
+        <DropdownMenuContent align="start" className="w-48 z-[100] bg-card border border-border shadow-lg backdrop-blur-sm">
           {!isLoggedIn && (
             <>
               <div className="px-3 py-2 text-xs">
