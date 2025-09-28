@@ -192,7 +192,7 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
                 <DropdownMenuTrigger asChild>
                   <Button 
                     variant="outline" 
-                    className="w-full justify-between h-auto p-3 bg-background border hover:bg-muted/50"
+                    className="w-full justify-start h-auto p-3 bg-background border hover:bg-muted/50"
                   >
                     <div className="flex items-center gap-2">
                       <div className={`p-1.5 rounded-full ${selectedOption.color}`}>
@@ -202,8 +202,8 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
                         <div className="text-sm font-medium">{selectedOption.name}</div>
                         <div className="text-xs text-muted-foreground">{selectedOption.description}</div>
                       </div>
+                      <ChevronDown className="h-4 w-4 ml-2" />
                     </div>
-                    <ChevronDown className="h-4 w-4 ml-2" />
                   </Button>
                 </DropdownMenuTrigger>
                 
