@@ -125,8 +125,8 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
   const [showAnimation, setShowAnimation] = useState(true);
   const [demoPrompt, setDemoPrompt] = useState({
     title: "Loading...",
-    prompt: "Loading a complex AI prompt from our library...",
-    whatFor: "Please wait while we fetch a detailed prompt to showcase.",
+    prompt: "Loading a random AI prompt from our library...",
+    whatFor: "Please wait while we fetch a detailed prompt example.",
     category: "Loading",
     subcategory: ""
   });
@@ -155,6 +155,15 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
 
         if (error) {
           console.error('Error loading random prompt:', error);
+          // Set fallback content on error
+          setDemoPrompt({
+            title: "Content Marketing Strategy Template",
+            prompt: "Create a comprehensive content marketing strategy for a [INDUSTRY] business targeting [TARGET_AUDIENCE]. Include: 1) Content pillars and themes 2) Publishing schedule across platforms 3) Key performance indicators (KPIs) 4) Content formats (blog posts, videos, infographics) 5) Distribution channels and promotion tactics 6) Budget allocation and resource requirements 7) Competitive analysis framework 8) Content calendar template for Q1 execution. Ensure the strategy aligns with business goals and includes measurable outcomes for tracking success.",
+            whatFor: "Perfect for marketing professionals who need a complete framework for developing data-driven content strategies.",
+            category: "Marketing & Growth",
+            subcategory: "Content Strategy"
+          });
+          setIsLoading(false);
           return;
         }
 
@@ -167,9 +176,26 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
             category: (prompt.categories as any)?.name || "AI Tools",
             subcategory: (prompt.subcategories as any)?.name || ""
           });
+        } else {
+          // Fallback if no prompts found
+          setDemoPrompt({
+            title: "Business Email Optimization Template",
+            prompt: "Write a professional business email to [RECIPIENT] regarding [TOPIC]. Structure: 1) Compelling subject line that increases open rates 2) Personalized greeting using recipient's name and context 3) Clear, concise body with specific call-to-action 4) Professional closing with next steps 5) Appropriate tone matching company culture. Include A/B testing suggestions for subject lines and measure engagement metrics. Ensure mobile-friendly formatting and compliance with email marketing best practices.",
+            whatFor: "Essential for sales and marketing teams who need to improve email response rates and professional communication.",
+            category: "Business Communication",
+            subcategory: "Email Marketing"
+          });
         }
       } catch (error) {
         console.error('Failed to load random prompt:', error);
+        // Set fallback content on catch
+        setDemoPrompt({
+          title: "Project Management Workflow Template",
+          prompt: "Design a comprehensive project management workflow for [PROJECT_TYPE] including: 1) Stakeholder identification and communication matrix 2) Project phases with clear deliverables and timelines 3) Risk assessment and mitigation strategies 4) Resource allocation and budget tracking 5) Quality control checkpoints 6) Progress reporting structure 7) Change management procedures 8) Team collaboration protocols. Include templates for status updates, meeting agendas, and milestone reviews to ensure successful project delivery.",
+          whatFor: "Designed for project managers who need a systematic approach to planning and executing complex projects.",
+          category: "Business Operations",
+          subcategory: "Project Management"
+        });
       } finally {
         setIsLoading(false);
       }
@@ -415,7 +441,7 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
                 <span className="text-xs font-medium text-primary">Scout Optimized</span>
               </div>
               <div className="text-sm text-foreground leading-relaxed max-h-40 overflow-y-auto mb-3 whitespace-pre-wrap">
-                {isLoading ? "Loading a detailed AI prompt..." : getOptimizedPrompt(selectedPlatform.id)}
+                {isLoading ? "Loading a random AI prompt from our library..." : getOptimizedPrompt(selectedPlatform.id)}
               </div>
               
               {/* Action buttons */}
