@@ -141,20 +141,25 @@ const Contact = () => {
         }
       }
 
-      // Send contact message directly (no email confirmation needed)
-      const { data: response, error } = await supabase.functions.invoke("send-contact", {
-        body: { name: sanitizedName, email, message: sanitizedMessage },
+      // SECURITY FIX: Send contact through secure encrypted system  
+      const { data: response, error } = await supabase.functions.invoke("secure-contact-form", {
+        body: { 
+          name: sanitizedName, 
+          email, 
+          message: sanitizedMessage,
+          newsletter_opt_in: false // Contact form doesn't have newsletter opt-in currently
+        },
       });
 
       if (error) {
-        console.error("send-contact error:", error);
+        console.error("secure-contact-form error:", error);
         toast({ title: "Failed to send", description: "Please try again in a moment.", variant: "destructive" });
         return;
       }
 
-      // Contact message sent successfully
+      // Contact message sent and stored securely
       toast({ 
-        title: "Message sent!", 
+        title: "Message sent securely!", 
         description: "Thank you for your message. We'll get back to you soon.",
         duration: 5000
       });

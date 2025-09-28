@@ -1528,6 +1528,10 @@ export type Database = {
         }
         Returns: undefined
       }
+      migrate_contacts_service_role: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       migrate_encrypt_contacts: {
         Args: { p_encryption_key: string }
         Returns: undefined
