@@ -57,17 +57,23 @@ serve(async (req: Request): Promise<Response> => {
       });
     }
 
-    // Find and update the pending contact
-    const { data: contact, error: fetchError } = await supabase
-      .from('pending_contacts')
-      .select('*')
-      .eq('confirmation_token', token)
-      .eq('confirmed', false)
-      .eq('processed', false)
-      .single();
+    // SECURITY FIX: Use secure confirmation function
+    console.log("Confirming contact with secure decryption...");
+    
+    const encryptionKey = Deno.env.get("SUBSCRIBERS_ENCRYPTION_KEY");
+    if (!encryptionKey) {
+      console.error("Missing encryption key for contact confirmation");
+      throw new Error("Server configuration error");
+    }
 
-    if (fetchError || !contact) {
-      console.error("Contact not found or already processed", fetchError);
+    // Use secure contact confirmation function
+    const { data: contactData, error: confirmError } = await supabase.rpc('confirm_contact_secure', {
+      p_token: token,
+      p_encryption_key: encryptionKey
+    });
+
+    if (confirmError || !contactData || contactData.length === 0) {
+      console.error("Contact confirmation failed", confirmError);
       return new Response(`
         <html>
           <head><title>Invalid Link</title></head>
@@ -83,43 +89,10 @@ serve(async (req: Request): Promise<Response> => {
       });
     }
 
-    // Check if link is expired (24 hours)
-    const createdAt = new Date(contact.created_at);
-    const now = new Date();
-    const hoursDiff = (now.getTime() - createdAt.getTime()) / (1000 * 3600);
-    
-    if (hoursDiff > 24) {
-      return new Response(`
-        <html>
-          <head><title>Link Expired</title></head>
-          <body style="font-family: system-ui, sans-serif; text-align: center; padding: 50px;">
-            <h1>Link Expired</h1>
-            <p>This confirmation link has expired. Please submit your message again.</p>
-            <a href="https://promptandgo.ai/contact" style="color: #667eea;">Contact Us Again</a>
-          </body>
-        </html>
-      `, { 
-        status: 400,
-        headers: { "Content-Type": "text/html; charset=utf-8" }
-      });
-    }
+    const contact = contactData[0];
+    console.log("Contact confirmed successfully");
 
-    // Mark as confirmed and processed
-    const { error: updateError } = await supabase
-      .from('pending_contacts')
-      .update({ 
-        confirmed: true, 
-        processed: true,
-        updated_at: new Date().toISOString()
-      })
-      .eq('confirmation_token', token);
-
-    if (updateError) {
-      console.error("Failed to update contact", updateError);
-      throw new Error("Failed to process confirmation");
-    }
-
-// Helper function to escape HTML entities for security
+    // Helper function to escape HTML entities for security
     const escapeHtml = (text: string): string => {
       return text.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
     };
@@ -134,8 +107,8 @@ serve(async (req: Request): Promise<Response> => {
         <div style="background: white; padding: 30px; border: 1px solid #e5e7eb; border-radius: 0 0 8px 8px;">
           <div style="margin-bottom: 20px;">
             <p style="margin: 0 0 8px; font-weight: 600; color: #374151;">Contact Information:</p>
-            <p style="margin: 0 0 5px; color: #6b7280;"><strong>Name:</strong> ${contact.name.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&#39;")}</p>
-            <p style="margin: 0 0 5px; color: #6b7280;"><strong>Email:</strong> ${contact.email.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&#39;")}</p>
+            <p style="margin: 0 0 5px; color: #6b7280;"><strong>Name:</strong> ${escapeHtml(contact.name)}</p>
+            <p style="margin: 0 0 5px; color: #6b7280;"><strong>Email:</strong> ${escapeHtml(contact.email)}</p>
             <p style="margin: 0 0 15px; color: #6b7280;">
               <strong>Free PowerPack Request:</strong> 
               <span style="padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; ${contact.newsletter_opt_in ? 'background: #10b981; color: white;' : 'background: #f3f4f6; color: #6b7280;'}">
@@ -149,14 +122,14 @@ serve(async (req: Request): Promise<Response> => {
           <div>
             <p style="margin: 0 0 10px; font-weight: 600; color: #374151;">Message:</p>
             <div style="background: #f9fafb; padding: 20px; border-radius: 6px; border-left: 4px solid #667eea; white-space: pre-wrap; line-height: 1.6; color: #374151;">
-${contact.message.replace(/</g, "&lt;").replace(/>/g, "&gt;")}
+${escapeHtml(contact.message)}
             </div>
           </div>
           
           <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 20px 0;">
           
           <p style="margin: 0; font-size: 12px; color: #9ca3af;">
-            📅 Submitted: ${createdAt.toLocaleString()}<br>
+            📅 Submitted: ${contact.created_at.toLocaleString()}<br>
             ✅ Email confirmed and verified
           </p>
         </div>
@@ -184,7 +157,7 @@ ${contact.message.replace(/</g, "&lt;").replace(/>/g, "&gt;")}
         </div>
         
         <div style="background: white; padding: 40px; border-radius: 0 0 12px 12px; border: 1px solid #e5e7eb;">
-          <h2 style="color: #1f2937; margin: 0 0 20px;">Hi ${contact.name.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&#39;")}! 👋</h2>
+          <h2 style="color: #1f2937; margin: 0 0 20px;">Hi ${escapeHtml(contact.name)}! 👋</h2>
           
           <p style="color: #4b5563; line-height: 1.6; margin: 0 0 20px;">
             Thank you for confirming your email! We've received your message and our team will get back to you within 24 hours.

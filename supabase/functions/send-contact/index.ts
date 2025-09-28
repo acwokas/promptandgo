@@ -183,7 +183,32 @@ serve(async (req: Request): Promise<Response> => {
     const sanitizedName = sanitizeInput(name);
     const sanitizedMessage = sanitizeInput(message);
 
-    // Send contact message directly to hello@promptandgo.ai
+    // SECURITY FIX: Store contact data securely using encryption
+    console.log("Storing contact securely in database...");
+    
+    const encryptionKey = Deno.env.get("SUBSCRIBERS_ENCRYPTION_KEY");
+    if (!encryptionKey) {
+      console.error("Missing encryption key for contact storage");
+      throw new Error("Server configuration error");
+    }
+
+    // Use secure contact insertion function
+    const { data: contactId, error: insertError } = await supabase.rpc('secure_insert_contact', {
+      p_key: encryptionKey,
+      p_name: sanitizedName,
+      p_email: email.toLowerCase(),
+      p_message: sanitizedMessage,
+      p_newsletter_opt_in: false // Contact form doesn't have newsletter opt-in
+    });
+
+    if (insertError) {
+      console.error("Failed to store contact securely", insertError);
+      throw new Error("Failed to process contact request");
+    }
+
+    console.log("Contact stored securely with ID:", contactId);
+
+    // Send contact message directly to hello@promptandgo.ai (unchanged)
     const contactHtml = `
       <div style="font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
         <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px 8px 0 0;">
