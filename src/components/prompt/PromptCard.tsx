@@ -170,10 +170,12 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   const [aiProvider, setAiProvider] = useState('');
   const [showSendDialog, setShowSendDialog] = useState(false);
   const [selectedProviderData, setSelectedProviderData] = useState<any>(null);
+  const [hasPromptAccess, setHasPromptAccess] = useState(false);
 
   const displayTitle = cleanTitle(prompt.title);
   const isPro = (prompt as any).isPro === true || (prompt as any).isPro === "true";
-  const hasAccess = user && (!isPro || user.user_metadata?.subscription_status === 'active');
+  // Updated access logic: check subscription OR individual prompt access
+  const hasAccess = user && (!isPro || user.user_metadata?.subscription_status === 'active' || hasPromptAccess);
   
   // Get fallback rating data
   const fallbackRating = generateFallbackRating(prompt.id, categories, prompt);
@@ -197,12 +199,27 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
           .select('id')
           .eq('user_id', user.id)
           .eq('prompt_id', prompt.id)
-          .single();
+          .maybeSingle();
         setIsFavorited(!!data);
       };
+
+      // Check if user has access to this specific prompt
+      const checkPromptAccess = async () => {
+        const { data } = await supabase
+          .from('prompt_access')
+          .select('prompt_id')
+          .eq('user_id', user.id)
+          .eq('prompt_id', prompt.id)
+          .maybeSingle();
+        setHasPromptAccess(!!data);
+      };
+
       checkFavorite();
+      if (isPro) {
+        checkPromptAccess();
+      }
     }
-  }, [user, prompt.id]);
+  }, [user, prompt.id, isPro]);
 
   const handleAIPlatformChange = (platformId: string) => {
     setSelectedAIPlatform(platformId);
