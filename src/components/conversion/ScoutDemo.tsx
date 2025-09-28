@@ -23,20 +23,9 @@ const ScoutDemo = () => {
               </p>
             </div>
             
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button asChild size="lg" className="text-base">
-                <Link to="/library" className="flex items-center gap-2">
-                  Browse Proven Prompts
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-              
-              <Button asChild size="lg" variant="outline" className="text-base">
-                <Link to="/ai/assistant" className="flex items-center gap-2">
-                  <Zap className="h-4 w-4" />
-                  Try Scout AI
-                </Link>
-              </Button>
+            <div className="flex items-center gap-2 text-lg font-medium text-muted-foreground">
+              Try the template 
+              <ArrowRight className="h-5 w-5" />
             </div>
           </div>
           
