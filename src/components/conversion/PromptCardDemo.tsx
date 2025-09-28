@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -119,6 +119,16 @@ interface PromptCardDemoProps {
 
 const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
   const [selectedPlatform, setSelectedPlatform] = useState<PlatformOption>(platformOptions[0]);
+  const [showAnimation, setShowAnimation] = useState(true);
+
+  // Stop the pulse animation after 6 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowAnimation(false);
+    }, 6000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const selectedOption = platformOptions.find(option => option.id === selectedPlatform.id) || platformOptions[0];
 
@@ -192,7 +202,7 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
                 <DropdownMenuTrigger asChild>
                   <Button 
                     variant="outline" 
-                    className="w-full justify-start h-auto p-3 bg-background border hover:bg-muted/50"
+                    className={`w-full justify-start h-auto p-3 bg-background border hover:bg-muted/50 transition-all duration-200 ${showAnimation ? 'animate-pulse' : ''}`}
                   >
                     <div className="flex items-center gap-2">
                       <div className={`p-1.5 rounded-full ${selectedOption.color}`}>
