@@ -140,6 +140,7 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
 
   return (
     <div className={`${className} max-w-full`}>
+      <h3 className="text-xl font-semibold mb-4 text-center">Prompt Template</h3>
       <Card className="group relative border-border/50 bg-card hover:shadow-md hover:border-primary/30 transition-all duration-300 cursor-pointer overflow-hidden">
         <CardHeader className="pb-3">
           {/* Top badges and category */}
