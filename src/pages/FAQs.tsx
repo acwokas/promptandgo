@@ -222,7 +222,7 @@ const FAQs = () => {
                 <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
                   <MessageCircle className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className="text-lg font-semibold mb-2">1600+ Prompts</h3>
+                <h3 className="text-lg font-semibold mb-2">3,000+ Prompts</h3>
                 <p className="text-sm text-muted-foreground">Tested and curated for real-world use</p>
               </Card>
             </Link>

@@ -8,7 +8,7 @@ const features = [
   {
     category: "Core Features",
     items: [
-      { name: "Access to 1,000+ prompts", free: true, premium: true, lifetime: true },
+      { name: "Access to 3,000+ prompts", free: true, premium: true, lifetime: true },
       { name: "Copy & paste optimization", free: true, premium: true, lifetime: true },
       { name: "Works with all AI tools", free: true, premium: true, lifetime: true },
       { name: "Basic Scout AI", free: true, premium: true, lifetime: true },

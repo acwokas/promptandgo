@@ -23,7 +23,7 @@ const ProgressivePricing = ({ showFull = false }: ProgressivePricingProps) => {
       subtitle: "Join 5,000+ professionals already saving hours daily",
       cta: "Get Started FREE",
       features: [
-        "1,000+ battle-tested AI prompts",
+        "3,000+ battle-tested AI prompts",
         "Copy & paste ready for any AI tool",
         "Works with ChatGPT, Claude, Gemini & more",
         "Instant platform optimization",

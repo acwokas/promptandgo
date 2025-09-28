@@ -197,7 +197,7 @@ const CartPage = () => {
                   <CardContent className="p-4 text-center">
                     <Library className="h-8 w-8 text-primary mx-auto mb-2" />
                     <h3 className="font-semibold mb-1">Prompt Library</h3>
-                    <p className="text-sm text-muted-foreground mb-3">Browse 1600+ free and premium prompts</p>
+                    <p className="text-sm text-muted-foreground mb-3">Browse 3,000+ free and premium prompts</p>
                     <Button asChild variant="outline" size="sm" className="w-full">
                       <Link to="/library">Browse Library</Link>
                     </Button>

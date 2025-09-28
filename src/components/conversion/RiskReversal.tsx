@@ -174,7 +174,7 @@ export const RiskFreeTrial = () => (
           <Badge className="mb-3">Step 1</Badge>
           <h4 className="font-semibold mb-2">Start Free</h4>
           <p className="text-sm text-muted-foreground">
-            Access 1,000+ prompts immediately. No credit card required.
+            Access 3,000+ prompts immediately. No credit card required.
           </p>
         </div>
         

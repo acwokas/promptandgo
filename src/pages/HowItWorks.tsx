@@ -172,7 +172,7 @@ const HowItWorks = () => {
                   <Search className="h-6 w-6 text-primary" />
                   Prompt Library
                 </CardTitle>
-                <Badge variant="secondary">2700+ Prompts</Badge>
+                <Badge variant="secondary">3,000+ Prompts</Badge>
               </div>
             </CardHeader>
             <CardContent>
@@ -615,7 +615,7 @@ const HowItWorks = () => {
             <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
               <Search className="h-8 w-8 text-green-600" />
             </div>
-            <h3 className="text-xl font-semibold mb-2">Browse 2700+ Prompts</h3>
+            <h3 className="text-xl font-semibold mb-2">Browse 3,000+ Prompts</h3>
             <p className="text-muted-foreground mb-4">
               Access thousands of tested prompts across 39+ categories. No limits, no paywalls.
             </p>
