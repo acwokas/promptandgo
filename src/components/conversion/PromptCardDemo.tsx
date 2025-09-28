@@ -123,12 +123,21 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
 
   // Stop the pulse animation after 6 seconds
   useEffect(() => {
+    console.log('PromptCardDemo: Animation started, showAnimation:', showAnimation);
     const timer = setTimeout(() => {
+      console.log('PromptCardDemo: Animation timeout reached, stopping animation');
       setShowAnimation(false);
     }, 6000);
 
-    return () => clearTimeout(timer);
+    return () => {
+      console.log('PromptCardDemo: Cleanup timer');
+      clearTimeout(timer);
+    };
   }, []);
+
+  useEffect(() => {
+    console.log('PromptCardDemo: showAnimation changed to:', showAnimation);
+  }, [showAnimation]);
 
   const selectedOption = platformOptions.find(option => option.id === selectedPlatform.id) || platformOptions[0];
 
@@ -202,7 +211,8 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
                 <DropdownMenuTrigger asChild>
                   <Button 
                     variant="outline" 
-                    className={`w-full justify-start h-auto p-3 hover:bg-muted/50 transition-all duration-500 ${showAnimation ? 'border-primary bg-primary/5 shadow-lg shadow-primary/20' : 'border-border bg-background'}`}
+                    className={`w-full justify-start h-auto p-3 hover:bg-muted/50 transition-all duration-500 ${showAnimation ? 'border-2 border-primary bg-primary/10 shadow-xl shadow-primary/30' : 'border border-border bg-background'}`}
+                    onClick={() => console.log('PromptCardDemo: Dropdown clicked, showAnimation:', showAnimation)}
                   >
                     <div className="flex items-center gap-2">
                       <div className={`p-1.5 rounded-full ${selectedOption.color}`}>
