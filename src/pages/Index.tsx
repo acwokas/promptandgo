@@ -422,7 +422,7 @@ const Index = () => {
                   
                   <Link to="/library" className="group text-center p-3 bg-background/70 rounded-lg border border-border/50 flex flex-col items-center justify-center min-h-[80px] hover:bg-background/90 hover:border-primary/30 transition-all duration-300 cursor-pointer">
                     <Sparkles className="h-4 w-4 text-foreground mx-auto mb-1 transition-colors duration-300 group-hover:text-primary" />
-                    <div className="font-bold text-lg text-foreground transition-colors duration-300 group-hover:text-primary">100K+</div>
+                    <div className="font-bold text-lg text-foreground transition-colors duration-300 group-hover:text-primary">3K+</div>
                     <div className="text-xs text-muted-foreground group-hover:text-muted-foreground transition-colors duration-300">Prompts</div>
                   </Link>
                   
