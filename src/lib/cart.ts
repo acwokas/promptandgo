@@ -59,9 +59,16 @@ export function addToCart(newItem: CartItem, isAuthenticated: boolean = true) {
 // Add items to favorites for when membership activates
 export async function addToMyPrompts(itemIds: string[], itemType: 'prompt' | 'pack'): Promise<boolean> {
   try {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      console.error('addToMyPrompts: No authenticated user');
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      console.error('addToMyPrompts: Authentication error', authError);
+      return false;
+    }
+
+    // Double-check session exists
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+      console.error('addToMyPrompts: No active session');
       return false;
     }
 
@@ -70,9 +77,8 @@ export async function addToMyPrompts(itemIds: string[], itemType: 'prompt' | 'pa
     if (itemType === 'prompt') {
       const { data, error } = await supabase
         .from('favorites')
-        .upsert(
-          itemIds.map(id => ({ user_id: user.id, prompt_id: id })),
-          { onConflict: 'user_id,prompt_id' }
+        .insert(
+          itemIds.map(id => ({ user_id: user.id, prompt_id: id }))
         );
       
       if (error) {
