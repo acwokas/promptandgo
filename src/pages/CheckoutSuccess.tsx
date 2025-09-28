@@ -25,9 +25,8 @@ const CheckoutSuccess = () => {
         toast({ title: 'Payment verification failed' });
         setStatus('Verification failed. You can find your order in Purchases shortly.');
       } else {
-        toast({ title: 'Payment confirmed', description: 'Access granted to your purchase.' });
-        setStatus('Success! Redirecting…');
-        setTimeout(() => navigate('/account/purchases'), 1000);
+        toast({ title: 'Payment confirmed', description: 'Access granted instantly!' });
+        setStatus('✅ Access granted! Your premium content is ready.');
       }
     })();
   }, [search, navigate]);
@@ -35,7 +34,7 @@ const CheckoutSuccess = () => {
   return (
     <>
       <SEO title="Checkout Success" description="Your payment was successful." />
-      <PageHero title={<>Payment <span className="text-gradient-brand">Successful</span></>} subtitle={<>We are finalising your access.</>} minHeightClass="min-h-[28svh]" />
+      <PageHero title={<>Payment <span className="text-gradient-brand">Successful</span></>} subtitle={<>Access granted instantly! Your premium content is ready.</>} minHeightClass="min-h-[28svh]" />
       <main className="container py-8">
         {/* Breadcrumb */}
         <Breadcrumb className="mb-6">
@@ -52,7 +51,25 @@ const CheckoutSuccess = () => {
           </BreadcrumbList>
         </Breadcrumb>
 
-        <div className="rounded-xl border bg-card p-6 text-center text-muted-foreground">{status}</div>
+        <div className="rounded-xl border bg-card p-6 text-center">
+          <div className="text-lg font-medium mb-4">{status}</div>
+          {status.includes('✅') && (
+            <div className="flex gap-4 justify-center">
+              <Link 
+                to="/packs" 
+                className="inline-flex items-center px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+              >
+                View My Packs
+              </Link>
+              <Link 
+                to="/account/purchases" 
+                className="inline-flex items-center px-6 py-3 border border-border rounded-lg hover:bg-accent transition-colors"
+              >
+                Order History
+              </Link>
+            </div>
+          )}
+        </div>
       </main>
     </>
   );
