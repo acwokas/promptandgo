@@ -4,7 +4,7 @@ import CountdownTimer from "@/components/conversion/CountdownTimer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { getCartForUser, getCartTotalCents, removeFromCart, clearCart, addToCart, type CartItem } from "@/lib/cart";
+import { getCartForUser, getCartTotalCents, removeFromCart, clearCart, addToMyPrompts, addToCart, type CartItem } from "@/lib/cart";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
@@ -18,6 +18,7 @@ const centsToUSD = (cents: number) => `$${(cents / 100).toFixed(2)}`;
 const CartPage = () => {
   const { user, loading } = useSupabaseAuth();
   const [items, setItems] = useState<CartItem[]>([]);
+  const [addingToFavorites, setAddingToFavorites] = useState<boolean>(false);
 
   useEffect(() => {
     const updateItems = () => setItems(getCartForUser(!!user));
@@ -99,6 +100,30 @@ const CartPage = () => {
         description: e?.message || 'Something went wrong. Please try again.'
       });
     }
+  };
+
+  const handleAddToMyPrompts = async () => {
+    if (!user || addingToFavorites) return;
+    
+    setAddingToFavorites(true);
+    const promptItems = items.filter(i => i.type === 'prompt');
+    const promptIds = promptItems.map(i => i.id);
+    
+    if (promptIds.length > 0) {
+      const success = await addToMyPrompts(promptIds, 'prompt');
+      if (success) {
+        toast({
+          title: "Added to My Prompts!",
+          description: `${promptIds.length} prompt(s) will unlock when your membership activates.`
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to add prompts to favorites."
+        });
+      }
+    }
+    setAddingToFavorites(false);
   };
 
   const handleAddMembership = (type: 'monthly' | 'lifetime') => {
@@ -335,6 +360,42 @@ const CartPage = () => {
                       ⚡️Power Packs $4.99 (was $9.99).
                     </p>
                     
+                    {hasLifetime && items.some(i => i.type === 'membership' || i.type === 'prompt' || i.type === 'pack') && (
+                      <div className="p-3 bg-primary/10 rounded-lg border border-primary/20">
+                        <p className="text-sm font-medium text-primary mb-2">💡 Pro Tip!</p>
+                        <p className="text-xs text-muted-foreground mb-2">
+                          Your membership, prompts & packs are FREE with Membership! 
+                          Add prompts to "My Prompts" now - they'll unlock when you complete checkout.
+                        </p>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="w-full"
+                          onClick={handleAddToMyPrompts}
+                          disabled={addingToFavorites}
+                        >
+                          {addingToFavorites ? "Adding..." : `Add ${items.filter(i => i.type === 'prompt').length} Prompts to My Library`}
+                        </Button>
+                      </div>
+                    ) || (!hasLifetime && hasMembership && items.some(i => i.type === 'prompt' || i.type === 'pack') && (
+                      <div className="p-3 bg-primary/10 rounded-lg border border-primary/20">
+                        <p className="text-sm font-medium text-primary mb-2">💡 Pro Tip!</p>
+                        <p className="text-xs text-muted-foreground mb-2">
+                          Your prompts & packs are FREE with Membership! 
+                          Add them to "My Prompts" now - they'll unlock when you complete checkout.
+                        </p>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="w-full"
+                          onClick={handleAddToMyPrompts}
+                          disabled={addingToFavorites}
+                        >
+                          {addingToFavorites ? "Adding..." : `Add ${items.filter(i => i.type === 'prompt').length} Prompts to My Library`}
+                        </Button>
+                      </div>
+                    ))}
+                    
                     <div className="text-center text-muted-foreground text-sm">
                       or
                     </div>
@@ -375,18 +436,6 @@ const CartPage = () => {
                           {loading ? "Loading..." : hasLifetime ? "Added" : "Add to Cart"}
                         </Button>
                       </div>
-                    </div>
-                    
-                    <div className="text-center text-sm text-muted-foreground">or</div>
-                    <div className="space-y-2">
-                      <Button variant="outline" className="w-full justify-between text-sm">
-                        <span>Monthly $12.99</span>
-                        <span className="text-xs">(was $24.99)</span>
-                      </Button>
-                      <Button variant="outline" className="w-full justify-between text-sm">
-                        <span>Lifetime $99.50</span>
-                        <span className="text-xs">(was $199.00)</span>
-                      </Button>
                     </div>
                   </div>
                 </CardContent>
