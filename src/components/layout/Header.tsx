@@ -121,14 +121,7 @@ const Header = () => {
         {/* Right Actions */}
         <div className="flex items-center gap-2 flex-shrink-0">
           {/* CTA */}
-          {user ? (
-            <Link 
-              to="/library?random=1"
-              className="bg-primary text-primary-foreground px-3 py-1.5 rounded-md text-sm whitespace-nowrap inline-block hover:bg-primary/90 transition-colors"
-            >
-              Inspire Me!
-            </Link>
-          ) : (
+          {!user && (
             <Link 
               to="/auth?mode=signup"
               className="bg-primary text-primary-foreground px-3 py-1.5 rounded-md text-sm whitespace-nowrap inline-block hover:bg-primary/90 transition-colors"
