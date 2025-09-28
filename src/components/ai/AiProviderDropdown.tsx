@@ -105,13 +105,53 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
       return;
     }
 
-    // Handle MidJourney special case - just show a toast message
+    // Handle MidJourney special case - show dialog but with different messaging
     if (provider.id === 'midjourney') {
-      toast({
-        title: "MidJourney Not Available",
-        description: "Sorry! MidJourney does not yet allow this. Instead, please use the copy button and paste it directly into MidJourney.",
-        variant: "default"
-      });
+      // Add branding and copy to clipboard
+      const brandedPrompt = `${prompt.trim()}\n\n---\nGet the most from AI with prompts optimised by PromptandGo.ai.`;
+      await navigator.clipboard.writeText(brandedPrompt);
+      
+      // Save to favorites if logged in
+      if (isLoggedIn) {
+        try {
+          const { data: { session } } = await supabase.auth.getSession();
+          if (session) {
+            await supabase
+              .from('favorites')
+              .insert({
+                user_id: session.user.id,
+                prompt_id: null,
+                prompt_text: prompt.trim(),
+                created_at: new Date().toISOString()
+              });
+          }
+        } catch (error) {
+          console.error('Error saving to favorites:', error);
+        }
+      }
+
+      setSelectedProvider(provider);
+      
+      if (isLoggedIn) {
+        setShowDialog(true);
+      } else {
+        toast({
+          title: "Prompt ready to use!",
+          description: (
+            <div className="space-y-3">
+              <p className="text-sm font-medium">✅ Your optimized prompt is copied to clipboard</p>
+              <div className="space-y-1">
+                <p className="text-sm font-medium">Manual steps:</p>
+                <p className="text-xs">1. Open Discord and navigate to MidJourney</p>
+                <p className="text-xs">2. Paste your prompt in any channel</p>
+                <p className="text-xs">3. Your image will be generated</p>
+              </div>
+              <p className="text-xs text-muted-foreground">💡 MidJourney works through Discord</p>
+            </div>
+          ),
+          duration: 8000,
+        });
+      }
       return;
     }
 
@@ -236,7 +276,8 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
       mistral: 'https://chat.mistral.ai/',
       llama: 'https://www.llama2.ai/',
       perplexity: 'https://www.perplexity.ai/',
-      zenochat: 'https://www.zenochat.ai/'
+      zenochat: 'https://www.zenochat.ai/',
+      midjourney: 'https://discord.com/channels/@me'
     };
     
     const url = urls[selectedProvider.id as keyof typeof urls];
@@ -380,7 +421,10 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
               {selectedProvider?.name}
             </AlertDialogTitle>
             <AlertDialogDescription>
-              You're all set! It's saved to My Prompts and copied to your clipboard. Now we'll open {selectedProvider?.name} in a new tab and you can paste it directly into the chat.
+              {selectedProvider?.id === 'midjourney' 
+                ? "You're all set! It's saved to My Prompts and copied to your clipboard. Now we'll open Discord where you can paste it directly into any MidJourney channel."
+                : "You're all set! It's saved to My Prompts and copied to your clipboard. Now we'll open " + selectedProvider?.name + " in a new tab and you can paste it directly into the chat."
+              }
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
