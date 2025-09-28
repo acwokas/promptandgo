@@ -152,12 +152,12 @@ Deno.serve(async (req) => {
     );
 
   } catch (error) {
-    console.error('[SECURITY-MIGRATION] Migration failed:', error.message);
+    console.error('[SECURITY-MIGRATION] Migration failed:', (error as Error).message);
     
     return new Response(
       JSON.stringify({
         success: false,
-        error: error.message || 'Security migration failed'
+        error: (error as Error).message || 'Security migration failed'
       }),
       { 
         status: 500, 

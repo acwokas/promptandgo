@@ -284,9 +284,9 @@ Based on our conversation history above, provide specific help. If they need a p
   } catch (error) {
     console.error('Error in ai-prompt-assistant function:', error);
     // Don't expose internal error details to clients
-    const isClientError = error.message?.includes('Input') || error.message?.includes('Context');
+    const isClientError = (error as Error).message?.includes('Input') || (error as Error).message?.includes('Context');
     return new Response(JSON.stringify({ 
-      error: isClientError ? error.message : 'An unexpected error occurred'
+      error: isClientError ? (error as Error).message : 'An unexpected error occurred'
     }), {
       status: isClientError ? 400 : 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

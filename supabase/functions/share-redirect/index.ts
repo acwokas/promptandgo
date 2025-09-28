@@ -55,8 +55,13 @@ serve(async (req: Request) => {
     }
 
     // Increment click count (fire and forget)
-    supabase.rpc('increment_link_clicks', { link_code: shortCode })
-      .catch(e => console.error('Failed to increment clicks:', e));
+    try {
+      supabase.rpc('increment_link_clicks', { link_code: shortCode });
+      console.log('Click count increment initiated');
+    } catch (e) {
+      console.error('Failed to increment clicks:', e);
+    }
+    // Note: Not awaiting to avoid blocking the redirect
 
     // Redirect to original URL
     return new Response(null, {

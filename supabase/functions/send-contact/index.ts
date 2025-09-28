@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "npm:resend@2.0.0";
+import { Resend } from "https://esm.sh/resend@2.0.0";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.54.0';
 
 const corsHeaders = {
@@ -218,7 +218,7 @@ ${escapeHtml(sanitizedMessage)}
     const { error: contactEmailError } = await resend.emails.send({
       from: "PromptAndGo Contact <noreply@promptandgo.ai>",
       to: ["hello@promptandgo.ai"],
-      replyTo: email,
+      reply_to: email,
       subject: `New Contact Message: ${sanitizedName}`,
       html: contactHtml,
     });

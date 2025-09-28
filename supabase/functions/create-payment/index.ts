@@ -33,7 +33,7 @@ serve(async (req) => {
     const items: Array<{ id?: string; type: 'prompt'|'pack'|'lifetime'; title?: string; unitAmountCents?: number; quantity?: number }> = body?.items || [];
     if (!Array.isArray(items) || items.length === 0) throw new Error("No items provided");
 
-    const hasMembership = items.some(i => i.type === 'membership');
+    const hasMembership = items.some((i: any) => i.type === 'membership');
     if (hasMembership) throw new Error("Membership items not allowed in create-payment");
 
     const hasLifetime = items.some(i => i.type === 'lifetime');

@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.54.0";
-import { Resend } from "npm:resend@2.0.0";
+import { Resend } from "https://esm.sh/resend@2.0.0";
 
 // SECURITY: Restrictive CORS headers for production security
 const corsHeaders = {
@@ -291,9 +291,9 @@ serve(async (req: Request) => {
     } catch (emailError) {
       console.error('Failed to send admin notification email. Full error:', emailError);
       console.error('Error details:', {
-        name: emailError?.name,
-        message: emailError?.message,
-        stack: emailError?.stack
+        name: (emailError as Error)?.name,
+        message: (emailError as Error)?.message,
+        stack: (emailError as Error)?.stack
       });
       // Don't fail the request if email fails
     }

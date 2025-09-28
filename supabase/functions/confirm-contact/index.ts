@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "npm:resend@2.0.0";
+import { Resend } from "https://esm.sh/resend@2.0.0";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.54.0';
 
 const corsHeaders = {
@@ -121,9 +121,7 @@ serve(async (req: Request): Promise<Response> => {
 
 // Helper function to escape HTML entities for security
     const escapeHtml = (text: string): string => {
-      const div = document.createElement('div');
-      div.textContent = text;
-      return div.innerHTML;
+      return text.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
     };
 
     // Send the contact message to hello@promptandgo.ai
@@ -168,7 +166,7 @@ ${contact.message.replace(/</g, "&lt;").replace(/>/g, "&gt;")}
     const { error: contactEmailError } = await resend.emails.send({
       from: "PromptAndGo Contact <noreply@promptandgo.ai>",
       to: ["hello@promptandgo.ai"],
-      replyTo: contact.email,
+      reply_to: contact.email,
       subject: `✅ Confirmed Contact: ${contact.name}${contact.newsletter_opt_in ? ' (PowerPack Requested)' : ''}`,
       html: contactHtml,
     });
