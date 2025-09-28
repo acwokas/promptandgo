@@ -61,7 +61,7 @@ export const AI_PROVIDERS: AIProvider[] = [
     rewritePattern: (prompt: string) => {
       // Direct, image-oriented command using art tags, ratio, and rendering cues
       const cleanPrompt = prompt.replace(/create|generate|make|design/gi, '').trim();
-      return `/imagine ${cleanPrompt}, professional photography, highly detailed, cinematic lighting, vibrant colors, ultra-realistic, 8k resolution --ar 16:9 --v 6`;
+      return `${cleanPrompt}, professional photography, highly detailed, cinematic lighting, vibrant colors, ultra-realistic, 8k resolution --ar 16:9 --v 6`;
     }
   },
   {
