@@ -1,5 +1,6 @@
 import React from "react";
 import SEO from "@/components/SEO";
+import { AIOptimizedStructuredData } from "@/components/seo/AIOptimizedStructuredData";
 import { Button } from "@/components/ui/button";
 import NanoBananaAnnouncement from "@/components/NanoBananaAnnouncement";
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
@@ -345,10 +346,16 @@ const Index = () => {
   return (
     <>
       <SEO 
-        title="Scout AI - Your Personal Prompt Crafting Assistant | PromptandGo" 
-        description="Meet Scout, your AI prompt crafting partner. Start with curated prompts, customize in real-time with guided wizards, and get platform-specific versions for ChatGPT, Claude, MidJourney & more."
-        keywords="Scout AI, AI prompt crafting, prompt customization, AI prompt assistant, ChatGPT prompts, Claude prompts, MidJourney prompts, prompt optimization, AI prompt generator, guided prompt wizards, platform-specific prompts"
+        title="3,000+ Curated AI Prompts for ChatGPT, Claude & More" 
+        description="Browse, copy, and run 3,000+ tested AI prompts for ChatGPT, Claude, and more. Use Scout AI optimization and Power Packs for better results. Completely free for professionals, marketers, and creators."
+        keywords="AI prompts, ChatGPT prompts, Claude prompts, Gemini prompts, AI tools, productivity, business automation, content creation, marketing prompts, Scout AI, Power Packs, prompt optimization, free AI tools, professional AI prompts"
         structuredData={homeStructuredData}
+      />
+      
+      <AIOptimizedStructuredData 
+        pageType="HomePage"
+        title="3,000+ Curated AI Prompts for ChatGPT, Claude & More"
+        description="Browse, copy, and run 3,000+ tested AI prompts for ChatGPT, Claude, and more. Use Scout AI optimization and Power Packs for better results. Completely free for professionals, marketers, and creators."
       />
       
       <NanoBananaAnnouncement />

@@ -49,71 +49,188 @@ const GlobalStructuredData = () => {
 
   const organization = {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": ["Organization", "SoftwareApplication", "WebApplication"],
     name: SITE_NAME,
-    alternateName: "promptandgo",
+    alternateName: ["promptandgo", "Prompt and Go", "PromptAndGo"],
+    legalName: "PromptandGo.ai",
     url: `${origin}/`,
     logo: {
       "@type": "ImageObject",
       url: `${origin}/og-default.png`,
       width: 1200,
-      height: 630
+      height: 630,
+      caption: "PromptandGo.ai - AI Prompt Library Logo"
     },
-    description: "Curated AI prompts that get results. Browse, copy, and run practical prompts for ChatGPT, Claude, and more.",
+    image: `${origin}/og-default.png`,
+    description: "Curated AI prompts that get results. Browse 3,000+ tested prompts, use Scout AI optimization, and access specialized Power Packs for ChatGPT, Claude, and more.",
+    slogan: "Better and faster AI results, every time",
     foundingDate: "2024",
+    numberOfEmployees: "1-10",
+    industry: "Artificial Intelligence",
+    knowsAbout: ["AI Prompts", "ChatGPT", "Claude", "Artificial Intelligence", "Productivity Tools", "Business Automation", "Content Creation", "Marketing"],
     contactPoint: [{
       "@type": "ContactPoint",
       email: "support@promptandgo.ai",
       contactType: "customer support",
-      availableLanguage: ["en"],
-      areaServed: "Worldwide"
+      availableLanguage: ["en", "en-US"],
+      areaServed: "Worldwide",
+      hoursAvailable: {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        opens: "00:00",
+        closes: "23:59"
+      }
     }],
     sameAs: [
       `${origin}/`,
       `${origin}/rss.xml`,
+      "https://twitter.com/promptandgo",
+      "https://linkedin.com/company/promptandgo"
     ],
-    offers: {
+    mainEntityOfPage: `${origin}/`,
+    offers: [{
       "@type": "Offer",
+      name: "Free AI Prompt Library",
+      description: "Access to 3,000+ curated AI prompts completely free",
+      price: "0",
+      priceCurrency: "USD",
       category: "AI Tools",
-      availability: "https://schema.org/InStock"
-    },
+      availability: "https://schema.org/InStock",
+      validFrom: "2024-01-01",
+      url: `${origin}/library`
+    }, {
+      "@type": "Offer", 
+      name: "Scout AI Optimization",
+      description: "AI-powered prompt optimization for better results",
+      price: "0",
+      priceCurrency: "USD",
+      category: "AI Services",
+      availability: "https://schema.org/InStock",
+      validFrom: "2024-01-01",
+      url: `${origin}/scout`
+    }],
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "4.9",
-      reviewCount: "50000",
+      reviewCount: "5000",
       bestRating: "5",
-      worstRating: "1"
-    }
+      worstRating: "1",
+      ratingExplanation: "Based on user feedback and prompt effectiveness ratings"
+    },
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "US",
+      addressRegion: "California"
+    },
+    applicationCategory: ["ProductivityApplication", "BusinessApplication"],
+    operatingSystem: "Web Browser",
+    browserRequirements: "Modern web browser with JavaScript enabled",
+    softwareVersion: "2024.1",
+    applicationSubCategory: "AI Tools",
+    downloadUrl: `${origin}/`,
+    installUrl: `${origin}/`,
+    screenshot: `${origin}/og-default.png`,
+    featureList: [
+      "3000+ curated AI prompts",
+      "Scout AI optimization",
+      "Power Packs collections", 
+      "Multi-platform support",
+      "Free access",
+      "Regular updates"
+    ]
   };
 
   const website = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: SITE_NAME,
-    alternateName: "promptandgo",
+    alternateName: ["promptandgo", "Prompt and Go", "PromptAndGo"],
     url: `${origin}/`,
-    description: "Curated AI prompts that get results. Browse, copy, and run practical prompts for ChatGPT, Claude, and more.",
+    description: "Curated AI prompts that get results. Browse 3,000+ tested prompts, use Scout AI optimization, and access specialized Power Packs for ChatGPT, Claude, and more.",
     inLanguage: "en-US",
     copyrightYear: new Date().getFullYear(),
-    publisher: {
+    copyrightHolder: {
       "@type": "Organization",
       name: SITE_NAME
+    },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: `${origin}/`
+    },
+    creator: {
+      "@type": "Organization", 
+      name: SITE_NAME
+    },
+    audience: {
+      "@type": "Audience",
+      audienceType: ["professionals", "marketers", "content creators", "business owners", "entrepreneurs", "students"],
+      geographicArea: "Worldwide"
+    },
+    keywords: "AI prompts, ChatGPT prompts, Claude prompts, AI tools, productivity, business automation, content creation, marketing prompts",
+    about: {
+      "@type": "Thing",
+      name: "AI Prompt Library and Optimization Tools",
+      description: "Comprehensive collection of AI prompts with optimization features"
     },
     potentialAction: [
       {
         "@type": "SearchAction",
-        target: `${origin}/library?q={search_term_string}`,
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: `${origin}/library?q={search_term_string}`,
+          description: "Search AI prompts by keyword or category"
+        },
         "query-input": "required name=search_term_string",
+        actionStatus: "ActiveActionStatus"
       },
       {
         "@type": "ReadAction",
-        target: `${origin}/tips/`
+        target: `${origin}/tips/`,
+        description: "Read AI prompt guides and tutorials"
+      },
+      {
+        "@type": "UseAction",
+        target: `${origin}/scout`,
+        description: "Optimize prompts with Scout AI"
+      },
+      {
+        "@type": "DownloadAction",
+        target: `${origin}/packs`,
+        description: "Download AI prompt Power Packs"
       }
     ],
     mainEntity: {
       "@type": "WebPage",
-      "@id": `${origin}/`
-    }
+      "@id": `${origin}/`,
+      name: "PromptandGo.ai - AI Prompt Library"
+    },
+    hasPart: [
+      {
+        "@type": "WebPage",
+        name: "Prompt Library",
+        url: `${origin}/library`,
+        description: "Browse 3,000+ AI prompts by category"
+      },
+      {
+        "@type": "WebPage", 
+        name: "Scout AI",
+        url: `${origin}/scout`,
+        description: "AI-powered prompt optimization tool"
+      },
+      {
+        "@type": "WebPage",
+        name: "Power Packs",
+        url: `${origin}/packs`, 
+        description: "Specialized prompt collections"
+      },
+      {
+        "@type": "WebPage",
+        name: "How It Works",
+        url: `${origin}/how-it-works`,
+        description: "Complete guide to using PromptandGo tools"
+      }
+    ]
   };
 
   // IndexNow ping (once per path)

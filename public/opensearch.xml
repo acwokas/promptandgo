@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
-  <ShortName>PromptAndGo</ShortName>
-  <Description>Search the PromptAndGo prompt library</Description>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" 
+                       xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+  <ShortName>PromptandGo</ShortName>
+  <Description>Search 3,000+ curated AI prompts for ChatGPT, Claude, and more</Description>
+  <InputEncoding>UTF-8</InputEncoding>
+  <Image width="16" height="16" type="image/x-icon">https://promptandgo.ai/lovable-uploads/favicon.png</Image>
+  <Image width="64" height="64" type="image/png">https://promptandgo.ai/lovable-uploads/favicon-large.png</Image>
   <Url type="text/html" template="https://promptandgo.ai/library?q={searchTerms}"/>
+  <Url type="application/x-suggestions+json" template="https://promptandgo.ai/api/search-suggestions?q={searchTerms}"/>
+  <moz:SearchForm>https://promptandgo.ai/library</moz:SearchForm>
+  <Query role="example" searchTerms="marketing email prompts" />
+  <Developer>PromptandGo.ai</Developer>
+  <Contact>support@promptandgo.ai</Contact>
+  <Tags>AI prompts ChatGPT Claude productivity business</Tags>
+  <LongName>PromptandGo.ai - AI Prompt Library and Optimization Tools</LongName>
+  <Attribution>Search provided by PromptandGo.ai</Attribution>
+  <SyndicationRight>open</SyndicationRight>
+  <AdultContent>false</AdultContent>
+  <Language>en-US</Language>
 </OpenSearchDescription>

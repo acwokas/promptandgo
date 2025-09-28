@@ -1,12 +1,16 @@
+# Global rules for all search engines
 User-agent: *
 Allow: /
 
-# Priority pages
+# Priority pages for enhanced crawling
 Allow: /library
 Allow: /packs
+Allow: /scout
 Allow: /tips/
 Allow: /faqs
 Allow: /how-it-works
+Allow: /contact
+Allow: /submit
 
 # Block admin and sensitive areas
 Disallow: /admin/
@@ -14,30 +18,85 @@ Disallow: /auth
 Disallow: /account/
 Disallow: /checkout/
 Disallow: /s/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /node_modules/
 
-# Block search result pages with parameters
+# Block search result pages with parameters to avoid duplicate content
 Disallow: /*?*categoryId=*
 Disallow: /*?*subcategoryId=*
 Disallow: /*?*proOnly=*
 Disallow: /*?*random=*
+Disallow: /*?*utm_*
+Disallow: /*?*fbclid=*
+Disallow: /*?*gclid=*
 
-# Allow important assets
+# Allow important assets and resources
 Allow: /assets/
 Allow: /lovable-uploads/
-Allow: /*.css
-Allow: /*.js
-Allow: /*.png
-Allow: /*.jpg
-Allow: /*.jpeg
-Allow: /*.gif
-Allow: /*.svg
-Allow: /*.webp
-Allow: /*.ico
+Allow: /public/
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.gif$
+Allow: /*.svg$
+Allow: /*.webp$
+Allow: /*.ico$
+Allow: /*.woff$
+Allow: /*.woff2$
+Allow: /*.ttf$
+Allow: /*.eot$
 
-# Crawl delay
+# Specific rules for major search engines
+User-agent: Googlebot
+Crawl-delay: 1
+Allow: /
+
+User-agent: Bingbot
+Crawl-delay: 1
+Allow: /
+
+User-agent: Slurp
+Crawl-delay: 2
+Allow: /
+
+User-agent: DuckDuckBot
+Crawl-delay: 1
+Allow: /
+
+# AI Chatbot crawlers
+User-agent: ChatGPT-User
+Allow: /
 Crawl-delay: 1
 
-# Sitemap location
+User-agent: ClaudeBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: PerplexityBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: YouBot
+Allow: /
+Crawl-delay: 1
+
+# Block unwanted bots
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+# Sitemap locations
 Sitemap: https://promptandgo.ai/sitemap.xml
 Sitemap: https://promptandgo.ai/rss.xml
+
+# Request rate
+Request-rate: 1/1s
 
