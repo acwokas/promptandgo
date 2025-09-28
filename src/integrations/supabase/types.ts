@@ -71,6 +71,33 @@ export type Database = {
         }
         Relationships: []
       }
+      api_key_rotation_log: {
+        Row: {
+          created_at: string
+          id: string
+          notes: string | null
+          rotated_by: string | null
+          rotation_date: string
+          service_name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          rotated_by?: string | null
+          rotation_date?: string
+          service_name: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          rotated_by?: string | null
+          rotation_date?: string
+          service_name?: string
+        }
+        Relationships: []
+      }
       article_assets: {
         Row: {
           article_id: string
@@ -1315,6 +1342,15 @@ export type Database = {
           remaining: number
         }[]
       }
+      check_api_key_rotation_status: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          days_since_rotation: number
+          last_rotation: string
+          rotation_recommended: boolean
+          service_name: string
+        }[]
+      }
       cleanup_newsletter_rate_limits: {
         Args: Record<PropertyKey, never>
         Returns: undefined
@@ -1329,6 +1365,24 @@ export type Database = {
           name: string
           newsletter_opt_in: boolean
         }[]
+      }
+      detect_unusual_admin_access: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          action_count: number
+          last_action: string
+          risk_level: string
+          user_id: string
+        }[]
+      }
+      enhanced_security_rate_limit: {
+        Args: {
+          p_action: string
+          p_identifier: string
+          p_limit?: number
+          p_window_minutes?: number
+        }
+        Returns: boolean
       }
       get_admin_contact_data: {
         Args: { p_contact_id: string; p_encryption_key: string }
@@ -1525,6 +1579,15 @@ export type Database = {
           p_record_id?: string
           p_table_name: string
           p_user_agent?: string
+        }
+        Returns: undefined
+      }
+      log_security_event: {
+        Args: {
+          p_description?: string
+          p_event_type: string
+          p_metadata?: Json
+          p_severity?: string
         }
         Returns: undefined
       }

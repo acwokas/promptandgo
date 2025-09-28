@@ -47,3 +47,6 @@ verify_jwt = true
 
 [functions.newsletter-subscribe]
 verify_jwt = false
+
+[functions.security-monitoring]
+verify_jwt = true
