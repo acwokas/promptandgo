@@ -560,14 +560,9 @@ const Index = () => {
           <div className="bg-gradient-to-br from-primary/5 to-accent/5 rounded-2xl p-8">
             <div className="text-center mb-8">
               <h3 className="text-2xl font-bold mb-4">How It All Works Together</h3>
-              <p className="text-muted-foreground max-w-3xl mx-auto mb-6">
+              <p className="text-muted-foreground max-w-3xl mx-auto">
                 The magic happens when you combine our tools. Start anywhere, then let Scout enhance and optimize everything for maximum results.
               </p>
-              <Button asChild variant="outline" size="lg">
-                <Link to="/how-it-works">
-                  Learn More <ArrowRight className="h-4 w-4 ml-2" />
-                </Link>
-              </Button>
             </div>
             
             <div className="grid gap-6 md:grid-cols-3 max-w-4xl mx-auto">
@@ -592,6 +587,14 @@ const Index = () => {
                 <h4 className="font-semibold mb-2">3. Get Perfect Results</h4>
                 <p className="text-sm text-muted-foreground">Copy to your favorite AI platform and achieve better outcomes</p>
               </div>
+            </div>
+
+            <div className="text-center mt-8 mb-6">
+              <Button asChild variant="outline" size="lg">
+                <Link to="/how-it-works">
+                  Learn More <ArrowRight className="h-4 w-4 ml-2" />
+                </Link>
+              </Button>
             </div>
 
             {/* Platform Examples */}
