@@ -84,7 +84,7 @@ const HowItWorks = () => {
     name: "How PromptandGo Works",
     description: "Complete AI productivity toolkit with prompt library, Scout optimization, and Power Packs - all free.",
     step: [
-      { "@type": "HowToStep", name: "Browse Library", text: "Explore 2700+ tested prompts organized by category and use case." },
+      { "@type": "HowToStep", name: "Browse Library", text: "Explore 3,000+ tested prompts organized by category and use case." },
       { "@type": "HowToStep", name: "Optimize with Scout", text: "Let Scout AI rewrite prompts for your specific AI platform (ChatGPT, Claude, Gemini, etc)." },
       { "@type": "HowToStep", name: "Use Power Packs", text: "Get themed collections of prompts for specific goals like marketing or business strategy." },
       { "@type": "HowToStep", name: "Get Results", text: "Paste optimized prompts into any AI tool and get better results instantly." },
@@ -108,7 +108,7 @@ const HowItWorks = () => {
       title={<>How <span className="text-gradient-brand"><strong>Prompt</strong>and<strong>Go</strong></span> Works</>}
       subtitle={
         <>
-          Get better AI results with our complete toolkit: browse 2700+ tested prompts, use specialized Power Packs, and let Scout optimize everything for your favorite AI platform. All completely free.
+          Get better AI results with our complete toolkit: browse 3,000+ tested prompts, use specialized Power Packs, and let Scout optimize everything for your favorite AI platform. All completely free.
         </>
       }
       minHeightClass="min-h-[35svh]"
@@ -429,7 +429,7 @@ const HowItWorks = () => {
                 <div className="flex-1">
                   <h3 className="text-xl font-semibold mb-2">Start with Our Library or Power Packs</h3>
                   <p className="text-muted-foreground mb-4">
-                    Browse 2700+ tested prompts or grab a Power Pack for your specific goal. Everything is organized by category and use case.
+                    Browse 3,000+ tested prompts or grab a Power Pack for your specific goal. Everything is organized by category and use case.
                   </p>
                   <div className="flex gap-2">
                     <Button asChild size="sm" variant="outline">

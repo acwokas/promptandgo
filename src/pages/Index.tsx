@@ -361,7 +361,7 @@ const Index = () => {
         <PageHero title={<>
             Better and faster AI results, every time
           </>} subtitle={<>
-            Browse 2700+ tested prompts, use specialized Power Packs, and let Scout optimize everything for your favorite AI platform. All completely free.
+            Browse 3,000+ tested prompts, use specialized Power Packs, and let Scout optimize everything for your favorite AI platform. All completely free.
           </>}>
           <div className="flex justify-center">
             <Button asChild size="lg" variant="hero" className="px-8">
@@ -503,7 +503,7 @@ const Index = () => {
                   <Search className="h-6 w-6 text-white" />
                 </div>
                 <h3 className="text-lg font-semibold mb-2 text-foreground">Prompt Library</h3>
-                <p className="text-sm text-muted-foreground mb-4">5,000+ battle-tested prompts organized by category. Copy, paste, and get results instantly.</p>
+                <p className="text-sm text-muted-foreground mb-4">3,000+ battle-tested prompts organized by category. Copy, paste, and get results instantly.</p>
                 <Button asChild variant="outline" size="sm" className="w-full">
                   <Link to="/library">Browse Library</Link>
                 </Button>

@@ -138,7 +138,7 @@ export const eventPromptOptions = {
     { value: "small", label: "Small (under 50)" },
     { value: "medium", label: "Medium (50-200)" },
     { value: "large", label: "Large (200-1000)" },
-    { value: "massive", label: "Massive (1000+)" }
+    { value: "massive", label: "Massive (3000+)" }
   ] as PromptOption[],
 
   tones: [

@@ -17,7 +17,7 @@ const faqs: FAQ[] = [
   {
     id: '1',
     question: "How quickly can I start saving time with AI prompts?",
-    answer: "You can start immediately! Browse our library of 500+ proven prompts, copy what you need, and start using them right away. Most users save 2-3 hours in their first week.",
+    answer: "You can start immediately! Browse our library of 3,000+ proven prompts, copy what you need, and start using them right away. Most users save 2-3 hours in their first week.",
     category: 'getting-started',
     priority: 1
   },

@@ -13,7 +13,7 @@ const samplePrompts = {
     difficulty: "Easy",
     timeToComplete: "2 minutes",
     prompt: "Create a 5-email welcome series for [BUSINESS TYPE] targeting [AUDIENCE]. Each email should:\n\n1. Welcome & set expectations\n2. Share your story/mission\n3. Provide valuable tips/insights\n4. Introduce products/services\n5. Call-to-action with special offer\n\nTone: [professional/friendly/casual]\nGoal: Build trust and drive [SPECIFIC ACTION]",
-    preview: "📧 Welcome to [Business Name]!\n\nHi [First Name],\n\nWelcome to our community of [audience description]! I'm thrilled you've joined us.\n\nOver the next few days, I'll be sharing:\n✅ Insider tips that have helped 1000+ businesses\n✅ Our proven [specific strategy] framework\n✅ An exclusive offer just for new subscribers\n\n[Continue reading...]",
+    preview: "📧 Welcome to [Business Name]!\n\nHi [First Name],\n\nWelcome to our community of [audience description]! I'm thrilled you've joined us.\n\nOver the next few days, I'll be sharing:\n✅ Insider tips that have helped 3,000+ businesses\n✅ Our proven [specific strategy] framework\n✅ An exclusive offer just for new subscribers\n\n[Continue reading...]",
     results: ["45% higher open rates", "3x more engagement", "25% conversion increase"]
   },
   content: {
@@ -174,7 +174,7 @@ const ContentPreview = () => {
                   <div className="pt-4 border-t">
                     <Button asChild className="w-full">
                       <Link to="/auth?mode=signup">
-                        Get Access to 2,700+ More Prompts
+                        Get Access to 3,000+ More Prompts
                         <ArrowRight className="h-4 w-4 ml-2" />
                       </Link>
                     </Button>
@@ -192,7 +192,7 @@ const ContentPreview = () => {
           Ready to 10x Your Productivity?
         </h3>
         <p className="text-muted-foreground max-w-xl mx-auto">
-          These are just 3 examples from our library of 2,700+ tested prompts. 
+          These are just 3 examples from our library of 3,000+ tested prompts. 
           Start with our free plan and discover what works for you.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">

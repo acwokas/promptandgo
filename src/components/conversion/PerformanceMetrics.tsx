@@ -35,7 +35,7 @@ const metrics = [
 const industries = [
   { name: "Marketing & Advertising", percentage: 35, users: "1,750+" },
   { name: "Content Creation", percentage: 28, users: "1,400+" },
-  { name: "Sales & Business Development", percentage: 20, users: "1,000+" },
+  { name: "Sales & Business Development", percentage: 20, users: "3,000+" },
   { name: "Freelancers & Consultants", percentage: 17, users: "850+" }
 ];
 

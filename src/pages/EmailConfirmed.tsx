@@ -83,7 +83,7 @@ const EmailConfirmed = () => {
                         <CardContent className="p-6">
                           <div className="text-2xl mb-3">📚</div>
                           <h4 className="font-semibold text-foreground mb-2">Prompt Library</h4>
-                          <p className="text-sm text-muted-foreground">Browse 1000+ AI prompts</p>
+                          <p className="text-sm text-muted-foreground">Browse 3,000+ AI prompts</p>
                         </CardContent>
                       </Card>
                     </Link>
