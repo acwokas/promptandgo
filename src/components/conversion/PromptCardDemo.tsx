@@ -24,7 +24,9 @@ import {
   Zap,
   Palette,
   Tornado,
-  Rocket
+  Rocket,
+  Copy,
+  ExternalLink
 } from "lucide-react";
 import { AI_PROVIDERS } from "@/lib/promptRewriter";
 
@@ -121,6 +123,39 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
   const [selectedPlatform, setSelectedPlatform] = useState<PlatformOption>(platformOptions[0]);
   const [showAnimation, setShowAnimation] = useState(true);
 
+  const handleCopy = async () => {
+    const prompt = getOptimizedPrompt(selectedPlatform.id);
+    try {
+      await navigator.clipboard.writeText(prompt);
+    } catch (err) {
+      console.error('Failed to copy prompt:', err);
+    }
+  };
+
+  const handleSendToAI = async () => {
+    const prompt = getOptimizedPrompt(selectedPlatform.id);
+    
+    // Copy to clipboard first
+    try {
+      await navigator.clipboard.writeText(prompt);
+      
+      // Simple URL mapping for major providers
+      const providerUrls: { [key: string]: string } = {
+        chatgpt: 'https://chat.openai.com',
+        claude: 'https://claude.ai',
+        gemini: 'https://gemini.google.com',
+        perplexity: 'https://www.perplexity.ai'
+      };
+      
+      const url = providerUrls[selectedPlatform.id];
+      if (url) {
+        window.open(url, '_blank', 'noopener,noreferrer');
+      }
+    } catch (err) {
+      console.error('Failed to copy prompt or open website:', err);
+    }
+  };
+
   // Stop the pulse animation after 6 seconds
   useEffect(() => {
     console.log('PromptCardDemo: Animation started, showAnimation:', showAnimation);
@@ -159,7 +194,14 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
 
   return (
     <div className={`${className} max-w-full`}>
-      <h3 className="text-xl font-semibold mb-4 text-center">Prompt Template</h3>
+      <div className="text-center mb-6">
+        <h3 className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent mb-2">
+          Try This Prompt Template
+        </h3>
+        <p className="text-sm text-muted-foreground">
+          See how Scout optimizes prompts for different AI platforms
+        </p>
+      </div>
       <Card className="group relative border-border/50 bg-card hover:shadow-md hover:border-primary/30 transition-all duration-300 cursor-pointer overflow-hidden">
         <CardHeader className="pb-3">
           {/* Top badges and category */}
@@ -317,8 +359,31 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
                 <Bot className="h-3.5 w-3.5 text-primary" />
                 <span className="text-xs font-medium text-primary">Scout Optimized</span>
               </div>
-              <div className="text-sm text-foreground leading-relaxed max-h-32 overflow-y-auto">
+              <div className="text-sm text-foreground leading-relaxed max-h-32 overflow-y-auto mb-3">
                 {getOptimizedPrompt(selectedPlatform.id)}
+              </div>
+              
+              {/* Action buttons */}
+              <div className="flex gap-2">
+                <Button
+                  onClick={handleCopy}
+                  variant="outline"
+                  size="sm"
+                  className="flex-1"
+                >
+                  <Copy className="h-3.5 w-3.5 mr-1" />
+                  Copy
+                </Button>
+                {selectedPlatform.id !== 'original' && (
+                  <Button
+                    onClick={handleSendToAI}
+                    className="flex-1"
+                    size="sm"
+                  >
+                    <ExternalLink className="h-3.5 w-3.5 mr-1" />
+                    Send to {selectedPlatform.name}
+                  </Button>
+                )}
               </div>
             </div>
           </div>
