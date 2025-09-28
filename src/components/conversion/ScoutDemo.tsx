@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Zap } from "lucide-react";
+import { ArrowRight, ArrowDown, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 import PromptCardDemo from "./PromptCardDemo";
 
@@ -23,9 +23,10 @@ const ScoutDemo = () => {
               </p>
             </div>
             
-            <div className="flex items-center gap-2 text-lg font-medium text-muted-foreground">
+            <div className="flex items-center justify-end gap-2 text-lg font-medium text-muted-foreground">
               Try the template 
-              <ArrowRight className="h-5 w-5" />
+              <ArrowDown className="h-5 w-5 lg:hidden" />
+              <ArrowRight className="h-5 w-5 hidden lg:block" />
             </div>
           </div>
           
