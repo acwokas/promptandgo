@@ -366,7 +366,7 @@ const Index = () => {
 
         {/* Hero - Complete Toolkit Overview */}
         <PageHero title={<>
-            Better and faster AI results, every time
+            Better and <span className="text-blue-500">faster AI results</span>, every time
           </>} subtitle={<>
             Browse 3,000+ tested prompts, use specialized Power Packs, and let Scout optimize everything for your favorite AI platform. All completely free.
           </>}>
