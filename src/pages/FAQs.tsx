@@ -229,9 +229,9 @@ const FAQs = () => {
             <Link to="/packs#popular-power-packs">
               <Card className="text-center p-6 bg-gradient-to-br from-accent/5 to-primary/5 border-accent/20 hover:shadow-lg transition-all cursor-pointer">
                 <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-accent/10 flex items-center justify-center">
-                  <Sparkles className="w-6 h-6 text-accent" />
+                  <span className="text-2xl">⚡</span>
                 </div>
-                <h3 className="text-lg font-semibold mb-2">⚡ Power Packs</h3>
+                <h3 className="text-lg font-semibold mb-2">Power Packs</h3>
                 <p className="text-sm text-muted-foreground">Curated bundles for specific goals</p>
               </Card>
             </Link>
