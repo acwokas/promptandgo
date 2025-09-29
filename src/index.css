@@ -402,3 +402,12 @@ html {
 .category-bg-4 { background: hsl(25 95% 96%); } /* Light orange */
 .category-bg-5 { background: hsl(346 87% 97%); } /* Light pink */
 .category-bg-6 { background: hsl(60 84% 96%); } /* Light yellow */
+
+/* Animation utilities */
+.hover-scale {
+  transition: transform 0.2s ease-in-out;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
