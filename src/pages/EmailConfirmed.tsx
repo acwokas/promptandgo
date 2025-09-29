@@ -102,7 +102,7 @@ const EmailConfirmed = () => {
                   <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
                     <Button asChild size="lg" className="group">
                       <Link to="/">
-                        Return to [bold]Prompt[close bold]and[bold]Go[close bold]
+                        Return to PromptandGo
                         <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </Link>
                     </Button>

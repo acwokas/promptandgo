@@ -29,7 +29,7 @@ const Terms = () => (
 
     <section className="prose prose-neutral max-w-none dark:prose-invert">
       <p>
-        Welcome to [bold]Prompt[close bold]and[bold]Go[close bold] ("we", "our", "us"). These Terms &amp; Conditions ("Terms") govern your use of the
+        Welcome to PromptandGo ("we", "our", "us"). These Terms &amp; Conditions ("Terms") govern your use of the
         website https://promptandgo.ai (the "Site") and any related services we provide.
       </p>
       <p>By accessing or using the Site, you agree to be bound by these Terms. If you do not agree, please do not use the Site.</p>
@@ -45,7 +45,7 @@ const Terms = () => (
       <p>We may suspend or terminate your access if you breach these Terms.</p>
 
       <h2>2.&nbsp;&nbsp;AI Tools and Beta Services</h2>
-      <p>[bold]Prompt[close bold]and[bold]Go[close bold] provides AI-powered tools including but not limited to:</p>
+      <p>PromptandGo provides AI-powered tools including but not limited to:</p>
       <ul>
         <li><strong>Scout Prompt Generator</strong> – generates customized prompts based on your inputs</li>
         <li><strong>Smart Suggestions</strong> – provides AI-powered recommendations</li>
@@ -110,7 +110,7 @@ const Terms = () => (
       </ul>
 
       <h2>6.&nbsp;&nbsp;Content and Intellectual Property</h2>
-      <p>All content on the Site, including text, graphics, code, prompts, and designs, is owned by or licensed to [bold]Prompt[close bold]and[bold]Go[close bold], unless otherwise stated.</p>
+      <p>All content on the Site, including text, graphics, code, prompts, and designs, is owned by or licensed to PromptandGo, unless otherwise stated.</p>
       <ul>
         <li>You may use content for personal or internal business purposes only</li>
         <li>You may not copy, redistribute, or commercially exploit any content without our written permission</li>
@@ -198,7 +198,7 @@ const Terms = () => (
       </ul>
 
       <h2>14.&nbsp;&nbsp;Indemnity</h2>
-      <p>You agree to indemnify and hold harmless [bold]Prompt[close bold]and[bold]Go[close bold], its officers, employees, and partners from any claims, damages, or expenses arising from your use of the Site, AI tools, or breach of these Terms.</p>
+      <p>You agree to indemnify and hold harmless PromptandGo, its officers, employees, and partners from any claims, damages, or expenses arising from your use of the Site, AI tools, or breach of these Terms.</p>
 
       <h2>15.&nbsp;&nbsp;Third-Party Links and Services</h2>
       <p>The Site may contain links to third-party websites and relies on third-party AI providers. We are not responsible for their content, policies, practices, or service availability.</p>

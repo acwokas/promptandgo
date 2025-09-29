@@ -1413,7 +1413,7 @@ const PromptLibrary = () => {
                 </div>
 
                 <p className="text-xs text-muted-foreground mt-4 italic">
-                  [bold]Prompt[close bold]and[bold]Go[close bold] reserves the right to edit and revise submitted prompts. 
+                  PromptandGo reserves the right to edit and revise submitted prompts. 
                   We'll reach out if your prompt is selected for the library.
                 </p>
               </div>
