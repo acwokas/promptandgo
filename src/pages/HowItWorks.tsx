@@ -105,7 +105,7 @@ const HowItWorks = () => {
     <CountdownTimer variant="banner" />
     <SEO title="How PromptandGo Works - Free AI Tools & Scout Optimization" description="Discover our complete suite: Prompt Library, Power Packs, and Scout AI that optimizes prompts for any AI platform - all completely free." structuredData={[howToSchema, faqSchema]} />
     <PageHero
-      title={<>How <span className="text-gradient-brand"><strong>Prompt</strong>and<strong>Go</strong></span> Works</>}
+      title={<>How <span className="text-gradient-brand">[bold]Prompt[close bold]and[bold]Go[close bold]</span> Works</>}
       subtitle={
         <>
           Get better AI results with our complete toolkit: browse 3,000+ tested prompts, use specialized Power Packs, and let Scout optimize everything for your favorite AI platform. All completely free.

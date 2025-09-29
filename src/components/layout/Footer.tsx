@@ -83,7 +83,7 @@ const Footer = () => {
             Explore AI insights and stories at <a href="http://www.aiinasia.com" target="_blank" rel="noopener noreferrer" className="hover:text-foreground underline font-bold">AIinASIA.com</a>
           </div>
           <div className="text-right">
-            © 2025 <strong>Prompt</strong>and<strong>Go</strong>  |  <Link to="/terms" className="hover:text-foreground">Terms & Conditions</Link>  |  <Link to="/privacy" className="hover:text-foreground">Privacy Policy</Link>
+            © 2025 [bold]Prompt[close bold]and[bold]Go[close bold]  |  <Link to="/terms" className="hover:text-foreground">Terms & Conditions</Link>  |  <Link to="/privacy" className="hover:text-foreground">Privacy Policy</Link>
           </div>
         </div>
       </div>

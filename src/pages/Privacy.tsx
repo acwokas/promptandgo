@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Privacy = () => (
   <>
-    <PageHero title={<>Privacy Policy</>} subtitle={<>How <strong>Prompt</strong>and<strong>Go</strong>.ai collects, uses, and protects your data.</>} minHeightClass="min-h-[28svh]" />
+    <PageHero title={<>Privacy Policy</>} subtitle={<>How [bold]Prompt[close bold]and[bold]Go[close bold].ai collects, uses, and protects your data.</>} minHeightClass="min-h-[28svh]" />
     <main className="container py-10">
       <SEO title="Privacy Policy" description="Privacy Policy (PDPA, Singapore): how PromptandGo.ai collects, uses, and protects your data." />
 
