@@ -45,7 +45,7 @@ const ToolkitPage = () => {
       description: "Stuck on a prompt? Scout is here to help. Whether you need something for images, writing, video or code, just open a chat and work with Scout to shape and refine your prompt until it's ready to use.",
       icon: MessageCircle,
       path: "/ai/assistant",
-      features: ["Interactive chat", "Real-time guidance", "Expert tips", "Personalized help"],
+      features: ["Interactive chat", "Real-time guidance", "Personalized help"],
       color: "from-blue-500 to-cyan-500",
       buttonText: "Ask Scout"
     }
