@@ -2,7 +2,7 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.54.0';
 
-const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
 const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
 const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
@@ -221,35 +221,23 @@ Based on our conversation history above, provide specific help. If they need a p
         throw new Error('Invalid request type');
     }
 
-    console.log('Making OpenAI API request:', { type, userId, systemPrompt: systemPrompt.substring(0, 100) + '...' });
+    console.log('Making Lovable AI request:', { type, userId, systemPrompt: systemPrompt.substring(0, 100) + '...' });
 
-    // Choose model based on complexity - optimize for cost efficiency
-    let model;
-    let requestBody: any = {
+    // Use google/gemini-2.5-flash - it's free until Oct 6, 2025 and perfect for this use case
+    const requestBody = {
+      model: 'google/gemini-2.5-flash',
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userMessage }
-      ]
+      ],
+      max_tokens: type === 'generate_prompt' ? 1000 : 800,
+      temperature: 0.7
     };
 
-    if (type === 'generate_prompt') {
-      // More complex prompt generation - use reliable model
-      model = 'gpt-4o-mini';
-      requestBody.model = model;
-      requestBody.max_tokens = 1000; // Legacy model uses max_tokens
-      requestBody.temperature = 0.7;
-    } else {
-      // Simple suggestions and assistant - use same reliable model 
-      model = 'gpt-4o-mini';  
-      requestBody.model = model;
-      requestBody.max_tokens = 800;
-      requestBody.temperature = 0.7;
-    }
-
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        'Authorization': `Bearer ${lovableApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(requestBody),
@@ -257,8 +245,17 @@ Based on our conversation history above, provide specific help. If they need a p
 
     if (!response.ok) {
       const errorData = await response.text();
-      console.error('OpenAI API error:', response.status, errorData);
-      throw new Error(`OpenAI API error: ${response.status}`);
+      console.error('Lovable AI error:', response.status, errorData);
+      
+      // Handle rate limits and payment errors specifically
+      if (response.status === 429) {
+        throw new Error('Rate limit exceeded. Please try again in a moment.');
+      }
+      if (response.status === 402) {
+        throw new Error('AI usage credits depleted. Please contact support.');
+      }
+      
+      throw new Error(`AI Gateway error: ${response.status}`);
     }
 
     const data = await response.json();
