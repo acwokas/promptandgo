@@ -392,8 +392,8 @@ ${titleHtml}
         publishedTime={article.published_date}
       />
       
-      <article className="container mx-auto px-4 py-8 bg-background">
-        <div className="max-w-4xl mx-auto bg-background">
+      <article className="container mx-auto px-4 py-8 !bg-background">
+        <div className="max-w-4xl mx-auto !bg-background">
           {/* Navigation */}
           <div className="mb-8">
             <Button variant="ghost" asChild className="mb-4">
@@ -406,7 +406,7 @@ ${titleHtml}
 
           {/* Hero Image */}
           {article.thumbnail_url && (
-            <div className="aspect-video mb-8 overflow-hidden rounded-lg shadow-lg">
+            <div className="aspect-video mb-8 overflow-hidden rounded-lg shadow-lg !bg-transparent">
               <img
                 src={article.thumbnail_url}
                 alt={article.title}
@@ -416,19 +416,19 @@ ${titleHtml}
           )}
 
           {/* Article Header */}
-          <header className="mb-8 bg-background">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-foreground bg-background">
+          <header className="mb-8 !bg-background">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-foreground !bg-background">
               {article.title}
             </h1>
             
             {article.synopsis && (
-              <div className="text-xl text-muted-foreground mb-8 leading-relaxed bg-background">
+              <div className="text-xl text-muted-foreground mb-8 leading-relaxed !bg-background">
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm, remarkBreaks]}
                   rehypePlugins={[rehypeRaw]}
                   components={{
                     p: ({ children, ...props }) => (
-                      <p className="mb-4 leading-relaxed bg-background text-muted-foreground" {...props}>
+                      <p className="mb-4 leading-relaxed !bg-background text-muted-foreground" {...props}>
                         {children}
                       </p>
                     ),
@@ -440,8 +440,8 @@ ${titleHtml}
               </div>
             )}
 
-            <div className="flex flex-wrap items-center gap-4 mb-6 bg-background">
-              <div className="flex items-center gap-2 text-muted-foreground bg-background">
+            <div className="flex flex-wrap items-center gap-4 mb-6 !bg-background">
+              <div className="flex items-center gap-2 text-muted-foreground !bg-background">
                 <Clock className="w-4 h-4" />
                 {format(new Date(article.published_date), 'MMMM d, yyyy')}
               </div>
