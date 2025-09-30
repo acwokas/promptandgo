@@ -146,14 +146,14 @@ const AIAssistant = () => {
       <div className="text-center space-y-4 mb-6">
         {/* Scout's Avatar */}
         <div className="flex justify-center">
-          <div className="relative">
+          <div className="relative overflow-hidden rounded-full">
             <video 
               src="/scout-animation-v2.mp4" 
               autoPlay 
               loop 
               muted 
               playsInline
-              className="w-24 h-24 rounded-full object-cover border-2 border-primary/20 shadow-lg hover-scale"
+              className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-2 border-primary/20 shadow-lg hover-scale overflow-hidden"
             />
             <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-primary rounded-full border-2 border-background flex items-center justify-center">
               <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>

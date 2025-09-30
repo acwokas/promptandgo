@@ -62,14 +62,14 @@ const ToolkitPage = () => {
         title={
           <div className="flex flex-col items-center gap-6">
             {/* Scout's Avatar */}
-            <div className="relative">
+            <div className="relative overflow-hidden rounded-full">
               <video 
                 src="/scout-animation-v2.mp4" 
                 autoPlay 
                 loop 
                 muted 
                 playsInline
-                className="w-32 h-32 rounded-full object-cover border-4 border-primary-foreground/20 shadow-xl hover-scale"
+                className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-primary-foreground/20 shadow-xl hover-scale overflow-hidden"
               />
               <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-primary-foreground rounded-full border-4 border-primary/20 flex items-center justify-center">
                 <div className="w-3 h-3 bg-primary rounded-full animate-pulse"></div>

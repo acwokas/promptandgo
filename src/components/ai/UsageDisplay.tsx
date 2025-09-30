@@ -159,7 +159,7 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
                 loop 
                 muted 
                 playsInline
-                className="w-8 h-8 rounded-full object-cover border-2 border-primary/20"
+                className="w-8 h-8 rounded-full object-cover border-2 border-primary/20 overflow-hidden"
               />
             </div>
             <span>Scout AI Usage Today</span>

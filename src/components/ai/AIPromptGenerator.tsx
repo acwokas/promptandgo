@@ -732,14 +732,14 @@ const AIPromptGenerator = () => {
               </div>
             ) : (
               <div className="text-center text-muted-foreground py-12">
-                <div className="flex justify-center mb-4">
+                <div className="flex justify-center mb-4 overflow-hidden rounded-full w-16 h-16 mx-auto">
                   <video 
                     src="/scout-animation-v2.mp4" 
                     autoPlay 
                     loop 
                     muted 
                     playsInline
-                    className="w-16 h-16 rounded-full object-cover border-2 border-primary/20"
+                    className="w-full h-full rounded-full object-cover border-2 border-primary/20 overflow-hidden"
                   />
                 </div>
                 <p className="text-base font-medium mb-1">Scout is ready to help!</p>
