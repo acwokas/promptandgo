@@ -41,12 +41,13 @@ const ToolkitPage = () => {
       color: "from-purple-500 to-pink-500"
     },
     {
-      title: "Ask Scout:",
-      description: "Really stuck on a prompt (e.g. trying to create a prompt for an image generator like Midjourney?) Chat with Scout to craft the prompt together",
+      title: "Ask Scout",
+      description: "Stuck on a prompt? Scout is here to help. Whether you need something for images, writing, video or code, just open a chat and work with Scout to shape and refine your prompt until it's ready to use.",
       icon: MessageCircle,
       path: "/ai/assistant",
       features: ["Interactive chat", "Real-time guidance", "Expert tips", "Personalized help"],
-      color: "from-blue-500 to-cyan-500"
+      color: "from-blue-500 to-cyan-500",
+      buttonText: "Ask Scout"
     }
   ];
 
@@ -158,7 +159,7 @@ const ToolkitPage = () => {
                         ''}` : 
                       tool.path
                     }>
-                      Open Tool
+                      {tool.buttonText || "Open Tool"}
                       <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
                     </Link>
                   </Button>
