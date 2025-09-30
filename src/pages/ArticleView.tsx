@@ -416,19 +416,19 @@ ${titleHtml}
           )}
 
           {/* Article Header */}
-          <header className="mb-8 bg-transparent">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-foreground">
+          <header className="mb-8 bg-background">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-foreground bg-background">
               {article.title}
             </h1>
             
             {article.synopsis && (
-              <div className="text-xl text-muted-foreground mb-8 leading-relaxed bg-transparent">
+              <div className="text-xl text-muted-foreground mb-8 leading-relaxed bg-background">
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm, remarkBreaks]}
                   rehypePlugins={[rehypeRaw]}
                   components={{
                     p: ({ children, ...props }) => (
-                      <p className="mb-4 leading-relaxed bg-transparent" {...props}>
+                      <p className="mb-4 leading-relaxed bg-background text-muted-foreground" {...props}>
                         {children}
                       </p>
                     ),
@@ -440,8 +440,8 @@ ${titleHtml}
               </div>
             )}
 
-            <div className="flex flex-wrap items-center gap-4 mb-6 bg-transparent">
-              <div className="flex items-center gap-2 text-muted-foreground bg-transparent">
+            <div className="flex flex-wrap items-center gap-4 mb-6 bg-background">
+              <div className="flex items-center gap-2 text-muted-foreground bg-background">
                 <Clock className="w-4 h-4" />
                 {format(new Date(article.published_date), 'MMMM d, yyyy')}
               </div>
