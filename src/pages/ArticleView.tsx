@@ -392,8 +392,8 @@ ${titleHtml}
         publishedTime={article.published_date}
       />
       
-      <article className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
+      <article className="container mx-auto px-4 py-8 bg-background">
+        <div className="max-w-4xl mx-auto bg-background">
           {/* Navigation */}
           <div className="mb-8">
             <Button variant="ghost" asChild className="mb-4">
