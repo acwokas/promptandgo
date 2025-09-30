@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Wand2, Brain, ArrowRight, Sparkles, Palette } from "lucide-react";
+import { Wand2, Brain, ArrowRight, Sparkles, Palette, MessageCircle } from "lucide-react";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import PageHero from "@/components/layout/PageHero";
 import { useEffect } from "react";
@@ -39,6 +39,14 @@ const ToolkitPage = () => {
       path: "/ai/generator",
       features: ["Scout-powered creation", "Custom prompts", "Copy & save", "Professional quality"],
       color: "from-purple-500 to-pink-500"
+    },
+    {
+      title: "Ask Scout:",
+      description: "Really stuck on a prompt (e.g. trying to create a prompt for an image generator like Midjourney?) Chat with Scout to craft the prompt together",
+      icon: MessageCircle,
+      path: "/ai/assistant",
+      features: ["Interactive chat", "Real-time guidance", "Expert tips", "Personalized help"],
+      color: "from-blue-500 to-cyan-500"
     }
   ];
 
@@ -115,7 +123,7 @@ const ToolkitPage = () => {
           </Breadcrumb>
 
           {/* Tools Grid */}
-          <div className="grid gap-8 md:grid-cols-2 mb-16">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 mb-16">
             {tools.map((tool) => (
               <Card key={tool.title} className="group hover:shadow-xl transition-all duration-300 border-0 bg-card/50 backdrop-blur-sm hover:bg-card/80">
                 <CardHeader className="space-y-4">
