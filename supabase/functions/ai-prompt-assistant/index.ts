@@ -2,7 +2,7 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.54.0';
 
-const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
+const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
 const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
@@ -221,11 +221,11 @@ Based on our conversation history above, provide specific help. If they need a p
         throw new Error('Invalid request type');
     }
 
-    console.log('Making Lovable AI request:', { type, userId, systemPrompt: systemPrompt.substring(0, 100) + '...' });
+    console.log('Making OpenAI API request:', { type, userId, systemPrompt: systemPrompt.substring(0, 100) + '...' });
 
-    // Use google/gemini-2.5-flash - it's free until Oct 6, 2025 and perfect for this use case
+    // Use gpt-4o-mini for all requests - reliable and cost-effective
     const requestBody = {
-      model: 'google/gemini-2.5-flash',
+      model: 'gpt-4o-mini',
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userMessage }
@@ -234,10 +234,10 @@ Based on our conversation history above, provide specific help. If they need a p
       temperature: 0.7
     };
 
-    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${lovableApiKey}`,
+        'Authorization': `Bearer ${openAIApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(requestBody),
@@ -245,17 +245,14 @@ Based on our conversation history above, provide specific help. If they need a p
 
     if (!response.ok) {
       const errorData = await response.text();
-      console.error('Lovable AI error:', response.status, errorData);
+      console.error('OpenAI API error:', response.status, errorData);
       
-      // Handle rate limits and payment errors specifically
+      // Handle rate limits specifically
       if (response.status === 429) {
         throw new Error('Rate limit exceeded. Please try again in a moment.');
       }
-      if (response.status === 402) {
-        throw new Error('AI usage credits depleted. Please contact support.');
-      }
       
-      throw new Error(`AI Gateway error: ${response.status}`);
+      throw new Error(`OpenAI API error: ${response.status}`);
     }
 
     const data = await response.json();
