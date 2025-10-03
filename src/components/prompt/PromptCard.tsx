@@ -149,9 +149,10 @@ interface PromptCardProps {
   onSubcategoryClick?: (subcategoryId: string, categoryId: string) => void;
   onViewAllPro?: () => void;
   onCopyClick?: () => void;
+  defaultAIProvider?: string;
 }
 
-export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, onSubcategoryClick, onViewAllPro, onCopyClick }: PromptCardProps) => {
+export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, onSubcategoryClick, onViewAllPro, onCopyClick, defaultAIProvider }: PromptCardProps) => {
   const category = categories.find((c) => c.id === prompt.categoryId);
   const sub = category?.subcategories?.find((s) => s.id === prompt.subcategoryId);
   
@@ -160,7 +161,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   const navigate = useNavigate();
   const { getFilteredProviders } = useAIPreferences();
   
-  const [selectedAIPlatform, setSelectedAIPlatform] = useState<string>('original');
+  const [selectedAIPlatform, setSelectedAIPlatform] = useState<string>(defaultAIProvider || 'original');
   const [isFavorited, setIsFavorited] = useState(false);
   const [userRating, setUserRating] = useState<number | null>(null);
   const [averageRating, setAverageRating] = useState<number>(0);

@@ -141,6 +141,7 @@ const PromptLibrary = () => {
   const [ribbon, setRibbon] = useState<string | undefined>();
   const [userExplicitlySelectedAll, setUserExplicitlySelectedAll] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
+  const [defaultAIProvider, setDefaultAIProvider] = useState<string | undefined>();
   const isMobile = useIsMobile();
 
   // Sort prompts by complexity (length) - longest first
@@ -577,11 +578,13 @@ const PromptLibrary = () => {
     const po = searchParams.get('proOnly');
     const q = searchParams.get('q') || undefined;
     const ribbonFromUrl = searchParams.get('ribbon') || undefined;
+    const aiProvider = searchParams.get('aiProvider') || undefined;
     if (cid !== undefined) setCategoryId(cid);
     if (sid !== undefined) setSubcategoryId(sid);
     setProOnly(po === '1' || po === 'true');
     if (q !== undefined) setQuery(q);
     if (ribbonFromUrl !== undefined) setRibbon(ribbonFromUrl);
+    if (aiProvider !== undefined) setDefaultAIProvider(aiProvider);
   }, [searchParams]);
 
   // Set ribbon to "RECOMMENDED" when personalized prompts are available and no explicit ribbon is set
@@ -986,7 +989,8 @@ const PromptLibrary = () => {
                   <PromptCard
                     prompt={p as any}
                     categories={categories}
-                    onTagClick={(t) => { 
+                    defaultAIProvider={defaultAIProvider}
+                    onTagClick={(t) => {
                       clearRandom();
                       setSelectedTag(t);
                       setQuery(t);
@@ -1109,7 +1113,8 @@ const PromptLibrary = () => {
                   <PromptCard
                     prompt={p as any}
                     categories={categories}
-                    onTagClick={(t) => { 
+                    defaultAIProvider={defaultAIProvider}
+                    onTagClick={(t) => {
                       clearRandom();
                       setSelectedTag(t);
                       setQuery(t);
@@ -1155,6 +1160,7 @@ const PromptLibrary = () => {
                   <PromptCard
                     prompt={p as any}
                     categories={categories}
+                    defaultAIProvider={defaultAIProvider}
                   onTagClick={(t) => { clearRandom();
                     setSelectedTag(t);
                     setQuery(t); // reflect in input

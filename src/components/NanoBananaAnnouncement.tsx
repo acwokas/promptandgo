@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Sparkles, X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const NanoBananaAnnouncement = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Check if user has already dismissed this session
@@ -21,6 +23,11 @@ const NanoBananaAnnouncement = () => {
   const handleDismiss = () => {
     setIsOpen(false);
     sessionStorage.setItem('nanoBananaAnnouncementDismissed', 'true');
+  };
+
+  const handleTryNow = () => {
+    handleDismiss();
+    navigate('/library?q=image&aiProvider=nanobanana');
   };
 
   return (
@@ -45,7 +52,7 @@ const NanoBananaAnnouncement = () => {
         
         <div className="flex flex-col sm:flex-row gap-3 mt-6">
           <Button 
-            onClick={handleDismiss}
+            onClick={handleTryNow}
             className="flex-1 bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary/80"
           >
             <Sparkles className="w-4 h-4 mr-2" />
