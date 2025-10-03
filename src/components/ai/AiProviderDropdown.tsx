@@ -332,8 +332,8 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
               </>
             ) : (
               <>
-                <ExternalLink className="h-4 w-4 mr-2" />
-                {buttonText}
+                <ExternalLink className="h-4 w-4 sm:mr-2" />
+                <span className="hidden sm:inline">{buttonText}</span>
               </>
             )}
           </Button>
