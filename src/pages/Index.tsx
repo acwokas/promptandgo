@@ -375,7 +375,7 @@ const Index = () => {
               <Link to="/library"><Search className="h-4 w-4 mr-2" />Get Proven Prompts FREE</Link>
             </Button>
             <Button asChild size="lg" variant="secondary" className="px-8">
-              <Link to="/certification"><Star className="h-4 w-4 mr-2" />Become Certified Creator</Link>
+              <Link to="/certification">New to this site? Start here <ArrowRight className="h-4 w-4 ml-2" /></Link>
             </Button>
           </div>
         </PageHero>
