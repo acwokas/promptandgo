@@ -99,6 +99,11 @@ const OnboardingFlow = () => {
     return (
       <div className="max-w-3xl mx-auto space-y-8">
         <div className="text-center">
+          <img 
+            src="/lovable-uploads/favicon-large.png" 
+            alt="PromptAndGo Logo" 
+            className="h-16 w-16 mx-auto mb-4"
+          />
           <Button variant="ghost" onClick={handleBack} className="mb-4">
             ← Back to options
           </Button>
@@ -200,6 +205,11 @@ const OnboardingFlow = () => {
   return (
     <div className="max-w-5xl mx-auto space-y-8">
       <div className="text-center">
+        <img 
+          src="/lovable-uploads/favicon-large.png" 
+          alt="PromptAndGo Logo" 
+          className="h-16 w-16 mx-auto mb-6"
+        />
         <h2 className="text-3xl font-bold mb-4">What Brings You Here Today?</h2>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
           Choose your path for a personalized experience. Don't worry - you'll have access to everything regardless of your choice.

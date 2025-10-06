@@ -20,6 +20,14 @@ export function WelcomeStep({ onNext }: WelcomeStepProps) {
 
   return (
     <div className="max-w-2xl mx-auto text-center">
+      <div className="mb-6 animate-fade-in">
+        <img 
+          src="/lovable-uploads/favicon-large.png" 
+          alt="PromptAndGo Logo" 
+          className="h-24 w-24 mx-auto mb-6"
+        />
+      </div>
+
       <div className="flex justify-center gap-8 mb-8 animate-fade-in">
         <Brain className="h-16 w-16 text-[#4A90E2] animate-pulse" />
         <Pen className="h-16 w-16 text-[#F5A623] animate-pulse delay-100" />

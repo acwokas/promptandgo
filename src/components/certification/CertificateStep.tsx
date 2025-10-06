@@ -93,6 +93,11 @@ export function CertificateStep({
       <Card className="p-8 mb-8 bg-gradient-to-br from-white to-[#4A90E2]/5 border-[#F5A623]/20 border-2">
         <div className="max-w-2xl mx-auto">
           <div className="mb-6">
+            <img 
+              src="/lovable-uploads/favicon-large.png" 
+              alt="PromptAndGo Logo" 
+              className="h-16 w-16 mx-auto mb-4"
+            />
             <h3 className="text-2xl font-bold text-[#4A90E2] mb-2">
               PromptAndGo Certified Creator
             </h3>
