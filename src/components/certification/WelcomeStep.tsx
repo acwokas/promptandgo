@@ -22,9 +22,9 @@ export function WelcomeStep({ onNext }: WelcomeStepProps) {
     <div className="max-w-2xl mx-auto text-center">
       <div className="mb-6 animate-fade-in">
         <img 
-          src="/lovable-uploads/favicon-large.png" 
+          src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png" 
           alt="PromptAndGo Logo" 
-          className="h-24 w-24 mx-auto mb-6"
+          className="h-24 w-auto mx-auto mb-6"
         />
       </div>
 

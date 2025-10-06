@@ -100,9 +100,9 @@ const OnboardingFlow = () => {
       <div className="max-w-3xl mx-auto space-y-8">
         <div className="text-center">
           <img 
-            src="/lovable-uploads/favicon-large.png" 
+            src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png" 
             alt="PromptAndGo Logo" 
-            className="h-16 w-16 mx-auto mb-4"
+            className="h-16 w-auto mx-auto mb-4"
           />
           <Button variant="ghost" onClick={handleBack} className="mb-4">
             ← Back to options
@@ -206,9 +206,9 @@ const OnboardingFlow = () => {
     <div className="max-w-5xl mx-auto space-y-8">
       <div className="text-center">
         <img 
-          src="/lovable-uploads/favicon-large.png" 
+          src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png" 
           alt="PromptAndGo Logo" 
-          className="h-16 w-16 mx-auto mb-6"
+          className="h-16 w-auto mx-auto mb-6"
         />
         <h2 className="text-3xl font-bold mb-4">What Brings You Here Today?</h2>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">

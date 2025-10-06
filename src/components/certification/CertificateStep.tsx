@@ -94,9 +94,9 @@ export function CertificateStep({
         <div className="max-w-2xl mx-auto">
           <div className="mb-6">
             <img 
-              src="/lovable-uploads/favicon-large.png" 
+              src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png" 
               alt="PromptAndGo Logo" 
-              className="h-16 w-16 mx-auto mb-4"
+              className="h-16 w-auto mx-auto mb-4"
             />
             <h3 className="text-2xl font-bold text-[#4A90E2] mb-2">
               PromptAndGo Certified Creator
