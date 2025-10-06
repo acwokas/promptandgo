@@ -601,8 +601,8 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                         })}
                         className="flex-1"
                       >
-                        <Bot className="h-4 w-4 mr-1" />
-                        Refine with Scout
+                        <Bot className="h-4 w-4 sm:mr-1" />
+                        <span className="hidden sm:inline">Refine with Scout</span>
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent>Let Scout help you refine this prompt</TooltipContent>
