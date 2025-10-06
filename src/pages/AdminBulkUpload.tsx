@@ -683,7 +683,10 @@ const AdminBulkUpload = () => {
             <label className="text-sm font-medium">CSV File</label>
             <Input type="file" accept=".csv" onChange={(e) => handleCsvChange(e.target.files?.[0] ?? null)} aria-label="CSV file input" />
             <p className="text-xs text-muted-foreground">
-              CSV headers should match the selected entity. For prompts: title, prompt, category_slug, [subcategory_slug], [tags], [is_pro], [pro_pack], [ribbon]. Multiple packs can be comma/semicolon/pipe-separated. New packs auto-created at $9.99. Ribbon options: popular, bestseller, new, trending, featured.
+              CSV headers should match the selected entity. For prompts: title, prompt, category_slug, [subcategory_slug], [tags], [is_pro], [packs], [ribbon]. 
+              Tags and packs support semicolon (;) comma (,) or pipe (|) separators. New packs auto-created at $9.99. 
+              Ribbon options: RECOMMENDED, popular, bestseller, new, trending, featured.
+              <br /><strong>Tip:</strong> Use Admin Export to generate a properly formatted CSV for backup and re-import.
             </p>
             {csvStats && (
               <div className="text-xs rounded-md border bg-card p-3">

@@ -91,7 +91,7 @@ const AdminExport = () => {
         });
       });
 
-      // Convert to CSV format
+      // Convert to CSV format optimized for re-import
       const csvData = prompts?.map((prompt: any) => {
         const packInfo = packsByPrompt.get(prompt.id);
         return {
@@ -105,11 +105,11 @@ const AdminExport = () => {
           category_name: prompt.categories?.name || "",
           subcategory_slug: prompt.subcategories?.slug || "",
           subcategory_name: prompt.subcategories?.name || "",
-          tags: tagsByPrompt.get(prompt.id)?.join(", ") || "",
+          tags: tagsByPrompt.get(prompt.id)?.join(";") || "",
           pack_slug: packInfo?.slug || "",
           pack_name: packInfo?.name || "",
           pack_price_cents: packInfo?.price_cents || "",
-          is_pro: prompt.is_pro,
+          is_pro: prompt.is_pro ? "TRUE" : "FALSE",
           ribbon: prompt.ribbon || "",
           created_at: prompt.created_at,
           updated_at: prompt.updated_at
@@ -202,8 +202,8 @@ const AdminExport = () => {
         slug: pack.slug,
         description: pack.description || "",
         price_cents: pack.price_cents,
-        is_active: pack.is_active,
-        tags: tagsByPack.get(pack.id)?.join(", ") || ""
+        is_active: pack.is_active ? "TRUE" : "FALSE",
+        tags: tagsByPack.get(pack.id)?.join(";") || ""
       }));
 
       // Convert to CSV string
@@ -435,7 +435,7 @@ const AdminExport = () => {
           prompt_content: prompt.prompt,
           prompt_image_prompt: prompt.image_prompt || "",
           prompt_excerpt: prompt.excerpt || "",
-          prompt_is_pro: prompt.is_pro,
+          prompt_is_pro: prompt.is_pro ? "TRUE" : "FALSE",
           prompt_ribbon: prompt.ribbon || "",
           prompt_created_at: prompt.created_at,
           prompt_updated_at: prompt.updated_at,
@@ -446,8 +446,8 @@ const AdminExport = () => {
           subcategory_name: subcategory?.name || "",
           subcategory_slug: subcategory?.slug || "",
           
-          // Prompt Tags
-          prompt_tags: tagsByPrompt.get(prompt.id)?.join("; ") || "",
+          // Prompt Tags (semicolon-separated for easy re-import)
+          prompt_tags: tagsByPrompt.get(prompt.id)?.join(";") || "",
           
           // Power Pack data (if associated)
           pack_name: packInfo?.name || "",
@@ -595,9 +595,9 @@ const AdminExport = () => {
                 Download a CSV of all prompts including categories, subcategories, tags, Power Pack associations with names and pricing, PRO status, and ribbons.
               </p>
               <p className="text-sm text-muted-foreground">
-                This CSV format is compatible with the bulk upload tool for re-importing.
+                <strong>Format optimized for re-import:</strong> This CSV can be directly uploaded via Admin Bulk Upload to restore or migrate your prompts. Tags and packs use semicolon separators for clean re-import.
               </p>
-              <Button 
+              <Button
                 onClick={exportPrompts} 
                 disabled={loading}
                 className="w-full"
