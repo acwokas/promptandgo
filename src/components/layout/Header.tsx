@@ -103,6 +103,12 @@ const Header = () => {
             </div>
           </div>
           <Link 
+            to="/certification" 
+            className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+          >
+            Get Certified
+          </Link>
+          <Link 
             to="/packs" 
             className="text-sm font-medium text-foreground hover:text-primary transition-colors"
           >

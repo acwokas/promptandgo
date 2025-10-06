@@ -111,6 +111,13 @@ const AccountPage = () => {
             <h2 className="font-semibold">AI Preferences</h2>
             <p className="text-muted-foreground text-sm mt-1">Choose which AI providers appear in your prompt rewriter.</p>
           </Link>
+          <Link to="/certification" className="rounded-xl border bg-card p-5 block group hover:shadow-md transition-all bg-gradient-to-br from-primary/5 to-accent/5">
+            <h2 className="font-semibold flex items-center gap-2">
+              <span>Certification</span>
+              <span className="text-xs bg-green-500/10 text-green-600 px-2 py-0.5 rounded-full">New</span>
+            </h2>
+            <p className="text-muted-foreground text-sm mt-1">Complete "Prompt Like a Pro" and earn your certified creator badge.</p>
+          </Link>
         </section>
       </main>
     </>

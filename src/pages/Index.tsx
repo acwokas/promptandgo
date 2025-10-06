@@ -370,9 +370,12 @@ const Index = () => {
           </>} subtitle={<>
             Browse 3,000+ tested prompts, use specialized Power Packs, and let Scout optimize everything for your favorite AI platform. All completely free.
           </>}>
-          <div className="flex justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
             <Button asChild size="lg" variant="hero" className="px-8">
               <Link to="/library"><Search className="h-4 w-4 mr-2" />Get Proven Prompts FREE</Link>
+            </Button>
+            <Button asChild size="lg" variant="secondary" className="px-8">
+              <Link to="/certification"><Star className="h-4 w-4 mr-2" />Become Certified Creator</Link>
             </Button>
           </div>
         </PageHero>
