@@ -136,7 +136,7 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
   useEffect(() => {
     const loadRandomPrompt = async () => {
       try {
-        // Get a random complex free prompt (longer than 150 characters, not pro)
+        // Get all free prompts longer than 200 characters
         const { data: prompts, error } = await supabase
           .from('prompts')
           .select(`
@@ -150,8 +150,7 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
           `)
           .eq('is_pro', false)
           .gte('char_length(prompt)', 200) // Only get prompts longer than 200 chars
-          .order('random()')
-          .limit(1);
+          .limit(50); // Get 50 prompts to randomly select from
 
         if (error) {
           console.error('Error loading random prompt:', error);
@@ -168,7 +167,9 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
         }
 
         if (prompts && prompts.length > 0) {
-          const prompt = prompts[0];
+          // Pick a random prompt from the results
+          const randomIndex = Math.floor(Math.random() * prompts.length);
+          const prompt = prompts[randomIndex];
           setDemoPrompt({
             title: prompt.title || "AI Prompt Template",
             prompt: prompt.prompt || "Create a comprehensive analysis...",
