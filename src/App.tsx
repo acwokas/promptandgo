@@ -75,6 +75,7 @@ import AIPromptGeneratorPage from "./pages/AIPromptGenerator";
 import AIAssistantPage from "./pages/AIAssistant";
 import ToolkitPage from "./pages/Toolkit";
 import PromptStudioPage from "./pages/PromptStudio";
+import CertificationPage from "./pages/Certification";
 
 import AICreditsExhaustedPage from "./pages/AICreditsExhausted";
 import GAListener from "@/components/analytics/GAListener";
@@ -169,6 +170,7 @@ const AppContent = () => {
                 <Route path="/ai/studio" element={<PromptStudioPage />} />
                 <Route path="/ai/assistant" element={<AIAssistantPage />} />
                 <Route path="/ai-credits-exhausted" element={<AICreditsExhaustedPage />} />
+                <Route path="/certification" element={<CertificationPage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>

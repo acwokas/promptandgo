@@ -217,6 +217,42 @@ export type Database = {
         }
         Relationships: []
       }
+      certification_completions: {
+        Row: {
+          certificate_id: string
+          completion_date: string
+          created_at: string
+          full_name: string
+          id: string
+          quiz_score: number
+          total_xp: number
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          certificate_id: string
+          completion_date?: string
+          created_at?: string
+          full_name: string
+          id?: string
+          quiz_score: number
+          total_xp?: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          certificate_id?: string
+          completion_date?: string
+          created_at?: string
+          full_name?: string
+          id?: string
+          quiz_score?: number
+          total_xp?: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       countdown_settings: {
         Row: {
           created_at: string
@@ -735,6 +771,7 @@ export type Database = {
       profiles: {
         Row: {
           avatar_url: string | null
+          certification_badge_url: string | null
           context_fields_completed: boolean | null
           context_popup_dismissed: boolean | null
           created_at: string
@@ -742,12 +779,14 @@ export type Database = {
           display_name: string | null
           id: string
           industry: string | null
+          is_certified: boolean | null
           preferred_tone: string | null
           project_type: string | null
           updated_at: string
         }
         Insert: {
           avatar_url?: string | null
+          certification_badge_url?: string | null
           context_fields_completed?: boolean | null
           context_popup_dismissed?: boolean | null
           created_at?: string
@@ -755,12 +794,14 @@ export type Database = {
           display_name?: string | null
           id: string
           industry?: string | null
+          is_certified?: boolean | null
           preferred_tone?: string | null
           project_type?: string | null
           updated_at?: string
         }
         Update: {
           avatar_url?: string | null
+          certification_badge_url?: string | null
           context_fields_completed?: boolean | null
           context_popup_dismissed?: boolean | null
           created_at?: string
@@ -768,6 +809,7 @@ export type Database = {
           display_name?: string | null
           id?: string
           industry?: string | null
+          is_certified?: boolean | null
           preferred_tone?: string | null
           project_type?: string | null
           updated_at?: string
