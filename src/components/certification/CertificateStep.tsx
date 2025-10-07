@@ -54,7 +54,24 @@ export function CertificateStep({
     }
   }, [confettiFired]);
 
-  const handleDownloadCertificate = () => {
+  const handleDownloadCertificate = async () => {
+    // Convert logo to base64 for embedding
+    const logoUrl = '/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png';
+    let logoBase64 = '';
+    
+    try {
+      const response = await fetch(logoUrl);
+      const blob = await response.blob();
+      const reader = new FileReader();
+      
+      logoBase64 = await new Promise<string>((resolve) => {
+        reader.onloadend = () => resolve(reader.result as string);
+        reader.readAsDataURL(blob);
+      });
+    } catch (error) {
+      console.error('Failed to load logo:', error);
+    }
+    
     // Create a simple certificate HTML for PDF generation
     const certificateHTML = `
       <!DOCTYPE html>
@@ -86,7 +103,7 @@ export function CertificateStep({
       </head>
       <body>
         <div class="certificate">
-          <img src="https://796ef56a-0e56-472b-bbac-4eedfcf2a4d0.lovableproject.com/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png" alt="PromptAndGo Logo" class="logo" />
+          ${logoBase64 ? `<img src="${logoBase64}" alt="PromptAndGo Logo" class="logo" />` : '<div style="height: 80px; margin-bottom: 30px;"></div>'}
           <div class="title">PromptAndGo Certified Prompt Master</div>
           <div class="divider"></div>
           <div class="awarded">Awarded to</div>
