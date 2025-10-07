@@ -17,12 +17,12 @@ export function HowItWorksStep({ onNext, onBack }: HowItWorksStepProps) {
     {
       icon: Edit3,
       title: "Adapt",
-      description: "Copy any prompt and adapt it to your needs",
+      description: "Adapt any prompt to your needs with Scout AI",
     },
     {
       icon: Copy,
       title: "Use",
-      description: "Each prompt includes tone, context, and format guidance",
+      description: "Each prompt includes tone, context, and format guidance for the relevant AI platform",
     },
   ];
 
