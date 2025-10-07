@@ -1174,9 +1174,12 @@ export type Database = {
           content: string
           created_at: string
           email: string | null
+          email_enc: string | null
+          email_hash: string | null
           feedback_type: string
           id: string
           name: string | null
+          name_enc: string | null
           priority: string | null
           prompt_id: string | null
           rating: number | null
@@ -1192,9 +1195,12 @@ export type Database = {
           content: string
           created_at?: string
           email?: string | null
+          email_enc?: string | null
+          email_hash?: string | null
           feedback_type: string
           id?: string
           name?: string | null
+          name_enc?: string | null
           priority?: string | null
           prompt_id?: string | null
           rating?: number | null
@@ -1210,9 +1216,12 @@ export type Database = {
           content?: string
           created_at?: string
           email?: string | null
+          email_enc?: string | null
+          email_hash?: string | null
           feedback_type?: string
           id?: string
           name?: string | null
+          name_enc?: string | null
           priority?: string | null
           prompt_id?: string | null
           rating?: number | null
@@ -1538,6 +1547,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      audit_unencrypted_pii: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          issue_type: string
+          record_count: number
+          severity: string
+          table_name: string
+        }[]
+      }
       award_xp: {
         Args: {
           p_activity_key: string
@@ -1621,6 +1639,19 @@ export type Database = {
           name: string
           newsletter_opt_in: boolean
           processed: boolean
+        }[]
+      }
+      get_admin_feedback_data: {
+        Args: { p_encryption_key: string; p_feedback_id: string }
+        Returns: {
+          content: string
+          created_at: string
+          email: string
+          feedback_type: string
+          id: string
+          name: string
+          rating: number
+          user_id: string
         }[]
       }
       get_admin_subscriber_data: {
@@ -1808,6 +1839,14 @@ export type Database = {
         }
         Returns: undefined
       }
+      log_encryption_failure: {
+        Args: {
+          p_error_message: string
+          p_record_id: string
+          p_table_name: string
+        }
+        Returns: undefined
+      }
       log_security_event: {
         Args: {
           p_description?: string
@@ -1822,6 +1861,10 @@ export type Database = {
         Returns: undefined
       }
       migrate_encrypt_contacts: {
+        Args: { p_encryption_key: string }
+        Returns: undefined
+      }
+      migrate_encrypt_feedback: {
         Args: { p_encryption_key: string }
         Returns: undefined
       }
@@ -1848,6 +1891,19 @@ export type Database = {
           p_message: string
           p_name: string
           p_newsletter_opt_in?: boolean
+        }
+        Returns: string
+      }
+      secure_insert_feedback: {
+        Args: {
+          p_content: string
+          p_email?: string
+          p_feedback_type: string
+          p_key: string
+          p_name?: string
+          p_prompt_id?: string
+          p_rating?: number
+          p_user_id: string
         }
         Returns: string
       }
