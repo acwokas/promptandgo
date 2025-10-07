@@ -4,6 +4,8 @@ import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Progress } from "@/components/ui/progress";
+import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
 import { useUserXP } from "@/hooks/useUserXP";
 import { WelcomeStep } from "@/components/certification/WelcomeStep";
 import { HowItWorksStep } from "@/components/certification/HowItWorksStep";
@@ -109,7 +111,18 @@ export default function Certification() {
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium">Prompt Like a Pro</span>
-              <span className="text-sm text-muted-foreground">{progress}%</span>
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-muted-foreground">{progress}%</span>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8"
+                  onClick={() => navigate("/")}
+                  aria-label="Close certification"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
             <Progress value={progress} className="h-2" />
           </div>
