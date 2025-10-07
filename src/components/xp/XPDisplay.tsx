@@ -1,6 +1,7 @@
 import { Award, Sparkles } from "lucide-react";
 import { useUserXP } from "@/hooks/useUserXP";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Link } from "react-router-dom";
 import {
   Tooltip,
   TooltipContent,
@@ -27,24 +28,26 @@ export const XPDisplay = () => {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <div className="relative flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 cursor-pointer group overflow-hidden shadow-md hover:shadow-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300">
-            {/* Content */}
-            <div className="relative flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-white drop-shadow-sm" />
-              
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-bold text-white drop-shadow-sm">
-                  {userXP.available_xp.toLocaleString()}
-                </span>
-                <span className="text-xs text-white/90 drop-shadow-sm">XP</span>
-                <span className="text-xs text-white/70">•</span>
-                <div className="flex items-center gap-1">
-                  <Award className="h-3 w-3 text-white/90 drop-shadow-sm" />
-                  <span className="text-xs font-medium text-white/95 drop-shadow-sm">Lvl {userXP.level}</span>
+          <Link to="/account/xp">
+            <div className="relative flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 cursor-pointer group overflow-hidden shadow-md hover:shadow-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300">
+              {/* Content */}
+              <div className="relative flex items-center gap-2">
+                <Sparkles className="h-4 w-4 text-white drop-shadow-sm" />
+                
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-bold text-white drop-shadow-sm">
+                    {userXP.available_xp.toLocaleString()}
+                  </span>
+                  <span className="text-xs text-white/90 drop-shadow-sm">XP</span>
+                  <span className="text-xs text-white/70">•</span>
+                  <div className="flex items-center gap-1">
+                    <Award className="h-3 w-3 text-white/90 drop-shadow-sm" />
+                    <span className="text-xs font-medium text-white/95 drop-shadow-sm">Lvl {userXP.level}</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
         </TooltipTrigger>
         <TooltipContent side="bottom" className="w-64">
           <div className="space-y-2">

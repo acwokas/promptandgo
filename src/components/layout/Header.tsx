@@ -95,14 +95,6 @@ const Header = () => {
             <Sparkles className="h-3 w-3" />
             Ask Scout
           </Link>
-          {!isCertified && (
-            <Link 
-              to="/certification" 
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-            >
-              Get Certified
-            </Link>
-          )}
           <Link 
             to="/packs" 
             className="text-sm font-medium text-foreground hover:text-primary transition-colors"
