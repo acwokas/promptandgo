@@ -173,7 +173,7 @@ export function QuizStep({ onComplete, onBack }: QuizStepProps) {
       <Card className="p-6 mb-8">
         <h3 className="text-xl font-semibold mb-6">{question.question}</h3>
 
-        <RadioGroup value={selectedAnswer?.toString()} onValueChange={(value) => handleAnswerSelect(parseInt(value))}>
+        <RadioGroup value={selectedAnswer !== null ? selectedAnswer.toString() : undefined} onValueChange={(value) => handleAnswerSelect(parseInt(value))}>
           <div className="space-y-4">
             {question.options.map((option, index) => (
               <div
