@@ -53,21 +53,90 @@ export function CertificateStep({
   }, [confettiFired]);
 
   const handleDownloadCertificate = () => {
-    // In a real implementation, this would generate and download a PDF
-    toast.success("Certificate download started!");
+    // Create a simple certificate HTML for PDF generation
+    const certificateHTML = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <style>
+          body {
+            font-family: 'Arial', sans-serif;
+            padding: 60px;
+            text-align: center;
+            background: linear-gradient(to bottom right, #ffffff, #f0f9ff);
+          }
+          .certificate {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px;
+            border: 3px solid #4A90E2;
+            background: white;
+          }
+          .logo { height: 80px; margin-bottom: 30px; }
+          .title { color: #4A90E2; font-size: 32px; font-weight: bold; margin-bottom: 10px; }
+          .divider { height: 4px; width: 120px; background: linear-gradient(to right, #4A90E2, #F5A623); margin: 20px auto; }
+          .awarded { font-size: 20px; margin: 30px 0 10px; }
+          .name { font-size: 48px; font-weight: bold; margin: 20px 0; font-family: 'Georgia', serif; }
+          .description { color: #666; margin: 30px auto; max-width: 600px; line-height: 1.6; }
+          .footer { display: flex; justify-content: space-between; margin-top: 50px; font-size: 14px; color: #666; }
+          .quote { font-style: italic; color: #888; margin-top: 40px; padding-top: 30px; border-top: 1px solid #ddd; }
+        </style>
+      </head>
+      <body>
+        <div class="certificate">
+          <img src="${window.location.origin}/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png" alt="PromptAndGo Logo" class="logo" />
+          <div class="title">PromptAndGo Certified Prompt Master</div>
+          <div class="divider"></div>
+          <div class="awarded">Awarded to</div>
+          <div class="name">${fullName}</div>
+          <div class="description">
+            In recognition of successfully completing the Prompt Like a Pro onboarding and demonstrating 
+            creative excellence in AI prompt writing.
+          </div>
+          <div class="footer">
+            <div>
+              <strong>Date</strong><br/>
+              ${completionDate}
+            </div>
+            <div>
+              <strong>Certificate ID</strong><br/>
+              ${certificateId}
+            </div>
+          </div>
+          <div class="quote">"Better prompts, faster results."</div>
+        </div>
+      </body>
+      </html>
+    `;
+    
+    // Create blob and download
+    const blob = new Blob([certificateHTML], { type: 'text/html' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `PromptAndGo-Certificate-${certificateId}.html`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+    
+    toast.success("Certificate downloaded! Open the HTML file and use your browser's print function to save as PDF.");
   };
 
+  const shareText = "Just completed my PromptAndGo Certified Prompt Master course! Now crafting smarter AI prompts that actually work. 🧠 Join in at https://promptandgo.ai";
+
   const handleShareLinkedIn = () => {
-    const shareText = encodeURIComponent(
-      "Just completed my PromptAndGo Certified Creator course! Now crafting smarter AI prompts that actually work. 🧠 Join in at https://promptandgo.ai"
-    );
     const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent("https://promptandgo.ai")}`;
+    
+    // Copy share text to clipboard automatically
+    navigator.clipboard.writeText(shareText);
+    toast.success("LinkedIn post text copied to clipboard!");
+    
+    // Open LinkedIn share dialog
     window.open(linkedInUrl, "_blank");
   };
 
   const handleCopyShareText = () => {
-    const shareText =
-      "Just completed my PromptAndGo Certified Creator course! Now crafting smarter AI prompts that actually work. 🧠 Join in at https://promptandgo.ai";
     navigator.clipboard.writeText(shareText);
     toast.success("Share text copied to clipboard!");
   };
@@ -82,11 +151,11 @@ export function CertificateStep({
       </div>
 
       <h2 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-[#4A90E2] to-[#43B581] bg-clip-text text-transparent">
-        You're Officially a PromptAndGo Certified Creator!
+        You're Officially a PromptAndGo Certified Prompt Master!
       </h2>
 
       <p className="text-xl text-muted-foreground mb-8">
-        Congratulations! You've completed the Prompt Like a Pro onboarding and earned your first certificate.
+        Congratulations! You've completed the Prompt Like a Pro onboarding and earned your certification.
       </p>
 
       {/* Certificate Preview */}
@@ -99,7 +168,7 @@ export function CertificateStep({
               className="h-16 w-auto mx-auto mb-4"
             />
             <h3 className="text-2xl font-bold text-[#4A90E2] mb-2">
-              PromptAndGo Certified Creator
+              PromptAndGo Certified Prompt Master
             </h3>
             <div className="h-1 w-24 bg-gradient-to-r from-[#4A90E2] to-[#F5A623] mx-auto" />
           </div>
@@ -140,7 +209,7 @@ export function CertificateStep({
           className="bg-[#4A90E2] hover:bg-[#4A90E2]/90"
         >
           <Download className="h-4 w-4 mr-2" />
-          Download Certificate (PDF)
+          Download Certificate (HTML)
         </Button>
         <Button
           onClick={handleShareLinkedIn}
