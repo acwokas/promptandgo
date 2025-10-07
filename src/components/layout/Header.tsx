@@ -86,23 +86,13 @@ const Header = () => {
           >
             Browse Prompts
           </Link>
-          <div className="relative group">
-            <Link 
-              to="/scout" 
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors flex items-center gap-1"
-            >
-              <Sparkles className="h-3 w-3" />
-              Ask Scout
-            </Link>
-            <div className="absolute top-full left-0 mt-1 w-72 bg-background border border-border rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-              <div className="p-4">
-                <div className="font-medium text-sm mb-2">Ask Scout:</div>
-                <div className="text-xs text-muted-foreground">
-                  Really stuck on a prompt (e.g. trying to create a prompt for an image generator like Midjourney?) Chat with Scout to craft the prompt together.
-                </div>
-              </div>
-            </div>
-          </div>
+          <Link 
+            to="/scout" 
+            className="text-sm font-medium text-foreground hover:text-primary transition-colors flex items-center gap-1"
+          >
+            <Sparkles className="h-3 w-3" />
+            Ask Scout
+          </Link>
           <Link 
             to="/certification" 
             className="text-sm font-medium text-foreground hover:text-primary transition-colors"
