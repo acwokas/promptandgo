@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { getCartCount, clearCartOnLogout } from "@/lib/cart";
 import { SeoOptimizedImage } from "@/components/seo/SeoOptimizedImage";
 import { XPDisplay } from "../xp/XPDisplay";
+import { useIsCertified } from "@/hooks/useIsCertified";
 
 // Component to safely render SidebarTrigger only when context is available
 const SafeSidebarTrigger = () => {
@@ -27,6 +28,7 @@ const Header = () => {
   const { user, logout } = useSupabaseAuth();
   const { toast } = useToast();
   useEnsureProfile();
+  const { isCertified } = useIsCertified();
 
   const [cartCount, setCartCount] = useState<number>(getCartCount(!!user));
   
@@ -93,12 +95,14 @@ const Header = () => {
             <Sparkles className="h-3 w-3" />
             Ask Scout
           </Link>
-          <Link 
-            to="/certification" 
-            className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-          >
-            Get Certified
-          </Link>
+          {!isCertified && (
+            <Link 
+              to="/certification" 
+              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+            >
+              Get Certified
+            </Link>
+          )}
           <Link 
             to="/packs" 
             className="text-sm font-medium text-foreground hover:text-primary transition-colors"
