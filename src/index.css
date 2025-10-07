@@ -154,6 +154,20 @@ All colors MUST be HSL. */
   }
 }
 
+/* XP Display gradient animation */
+@keyframes gradient-x {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 3s ease infinite;
+}
+
 /* Gradient text effect for brand color */
 .text-gradient-brand {
   background: linear-gradient(135deg, hsl(220 90% 60%), hsl(220 80% 65%));
