@@ -5,8 +5,10 @@ import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 
 const CheckoutSuccess = () => {
+  const { user } = useSupabaseAuth();
   const [search] = useSearchParams();
   const navigate = useNavigate();
   const [status, setStatus] = useState("Verifying your payment…");
@@ -27,9 +29,25 @@ const CheckoutSuccess = () => {
       } else {
         toast({ title: 'Payment confirmed', description: 'Access granted instantly!' });
         setStatus('✅ Access granted! Your premium content is ready.');
+        
+        // Award XP for purchase
+        if (user) {
+          try {
+            await supabase.functions.invoke('award-xp', {
+              body: {
+                userId: user.id,
+                activityKey: 'buy_pack',
+                description: 'Purchased a pack',
+                metadata: { orderId, sessionId },
+              },
+            });
+          } catch (xpError) {
+            console.error('Failed to award purchase XP:', xpError);
+          }
+        }
       }
     })();
-  }, [search, navigate]);
+  }, [search, navigate, user]);
 
   return (
     <>

@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, ArrowRight, Zap, Clock, Target, Users } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
+import { supabase } from "@/integrations/supabase/client";
 
 interface OnboardingStep {
   id: string;
@@ -80,12 +82,28 @@ const steps: OnboardingStep[] = [
 ];
 
 const OnboardingFlow = () => {
+  const { user } = useSupabaseAuth();
   const [selectedStep, setSelectedStep] = useState<string | null>(null);
   const [currentView, setCurrentView] = useState<'selection' | 'selected'>('selection');
 
-  const handleStepSelect = (stepId: string) => {
+  const handleStepSelect = async (stepId: string) => {
     setSelectedStep(stepId);
     setCurrentView('selected');
+    
+    // Award XP for completing onboarding
+    if (user) {
+      try {
+        await supabase.functions.invoke('award-xp', {
+          body: {
+            userId: user.id,
+            activityKey: 'complete_onboarding',
+            description: `Completed onboarding: ${stepId}`,
+          },
+        });
+      } catch (error) {
+        console.error('Failed to award onboarding XP:', error);
+      }
+    }
   };
 
   const handleBack = () => {

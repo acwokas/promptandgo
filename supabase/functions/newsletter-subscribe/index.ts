@@ -238,6 +238,23 @@ serve(async (req: Request) => {
           headers: { "Content-Type": "application/json", ...corsHeaders },
         });
       }
+      
+      // Award XP for newsletter signup if user is authenticated
+      if (authenticatedUserId) {
+        try {
+          console.log('Awarding XP for newsletter signup...');
+          await supabase.functions.invoke('award-xp', {
+            body: {
+              userId: authenticatedUserId,
+              activityKey: 'newsletter_signup',
+              description: 'Newsletter subscription',
+            },
+          });
+        } catch (xpError) {
+          console.error('Failed to award newsletter XP:', xpError);
+          // Don't fail the request if XP awarding fails
+        }
+      }
     }
 
     // Send confirmation email to subscriber

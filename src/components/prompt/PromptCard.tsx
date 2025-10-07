@@ -172,6 +172,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   const [showSendDialog, setShowSendDialog] = useState(false);
   const [selectedProviderData, setSelectedProviderData] = useState<any>(null);
   const [hasPromptAccess, setHasPromptAccess] = useState(false);
+  const [hasAwardedDailyView, setHasAwardedDailyView] = useState(false);
 
   const displayTitle = cleanTitle(prompt.title);
   const isPro = (prompt as any).isPro === true || (prompt as any).isPro === "true";
@@ -219,8 +220,29 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
       if (isPro) {
         checkPromptAccess();
       }
+      
+      // Award XP for daily prompt view
+      const awardDailyPromptView = async () => {
+        if (hasAwardedDailyView) return;
+        
+        try {
+          await supabase.functions.invoke('award-xp', {
+            body: {
+              userId: user.id,
+              activityKey: 'daily_prompt_view',
+              description: 'Viewed a prompt',
+              metadata: { promptId: prompt.id, promptTitle: prompt.title },
+            },
+          });
+          setHasAwardedDailyView(true);
+        } catch (error) {
+          console.error('Failed to award prompt view XP:', error);
+        }
+      };
+      
+      awardDailyPromptView();
     }
-  }, [user, prompt.id, isPro]);
+  }, [user, prompt.id, isPro, hasAwardedDailyView, prompt.title]);
 
   const handleAIPlatformChange = (platformId: string) => {
     setSelectedAIPlatform(platformId);
