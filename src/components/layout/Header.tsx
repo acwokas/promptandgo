@@ -92,7 +92,7 @@ const Header = () => {
               className="text-sm font-medium text-foreground hover:text-primary transition-colors flex items-center gap-1"
             >
               <Sparkles className="h-3 w-3" />
-              Scout AI
+              Ask Scout
             </Link>
             <div className="absolute top-full left-0 mt-1 w-72 bg-background border border-border rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
               <div className="p-4">
