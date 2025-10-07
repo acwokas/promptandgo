@@ -27,25 +27,20 @@ export const XPDisplay = () => {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <div className="relative flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_100%] animate-gradient-x cursor-pointer group overflow-hidden shadow-lg hover:shadow-primary/50 transition-all duration-300">
-            {/* Animated background glow */}
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 blur-xl opacity-50 group-hover:opacity-75 transition-opacity" />
-            
+          <div className="relative flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-primary to-accent cursor-pointer group overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
             {/* Content */}
             <div className="relative flex items-center gap-2">
-              {/* Sparkle icon with animation */}
-              <Sparkles className="h-5 w-5 text-primary-foreground animate-pulse" />
+              <Sparkles className="h-4 w-4 text-primary-foreground" />
               
-              <div className="flex flex-col">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-base font-bold text-primary-foreground drop-shadow-md">
-                    {userXP.available_xp.toLocaleString()}
-                  </span>
-                  <span className="text-xs font-semibold text-primary-foreground/90">XP</span>
-                </div>
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-bold text-primary-foreground">
+                  {userXP.available_xp.toLocaleString()}
+                </span>
+                <span className="text-xs text-primary-foreground/80">XP</span>
+                <span className="text-xs text-primary-foreground/60">•</span>
                 <div className="flex items-center gap-1">
                   <Award className="h-3 w-3 text-primary-foreground/80" />
-                  <span className="text-xs font-medium text-primary-foreground/90">Level {userXP.level}</span>
+                  <span className="text-xs font-medium text-primary-foreground/90">Lvl {userXP.level}</span>
                 </div>
               </div>
             </div>
