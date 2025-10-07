@@ -11,7 +11,9 @@ import {
   Bell,
   Wand2,
   Bot,
-  Palette
+  Palette,
+  Trophy,
+  GraduationCap
 } from "lucide-react"
 import { NavLink, useLocation } from "react-router-dom"
 
@@ -33,6 +35,7 @@ const mainItems = [
   { title: "Prompt Library", url: "/library", icon: Library },
   { title: "Prompt Packs", url: "/packs", icon: Package },
   { title: "Articles & Tips", url: "/tips", icon: BookOpen },
+  { title: "Get Certified", url: "/certification", icon: GraduationCap },
 ]
 
 const aiItems = [
@@ -43,6 +46,7 @@ const aiItems = [
 
 const accountItems = [
   { title: "Account Overview", url: "/account", icon: User },
+  { title: "XP Dashboard", url: "/account/xp", icon: Trophy },
   { title: "AI Preferences", url: "/account/ai-preferences", icon: Settings },
   { title: "Favorites", url: "/account/favorites", icon: Heart },
   { title: "Purchases", url: "/account/purchases", icon: CreditCard },
