@@ -36,6 +36,19 @@ export interface XPTransaction {
   created_at: string;
 }
 
+export interface XPReward {
+  id: string;
+  reward_key: string;
+  reward_name: string;
+  reward_description: string | null;
+  reward_type: string;
+  xp_cost: number;
+  reward_value: any;
+  icon: string | null;
+  is_active: boolean;
+  created_at: string;
+}
+
 export const useUserXP = () => {
   const { user } = useSupabaseAuth();
   const queryClient = useQueryClient();
@@ -105,6 +118,20 @@ export const useUserXP = () => {
     enabled: !!user?.id,
   });
 
+  const { data: rewards } = useQuery({
+    queryKey: ['xpRewards'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('xp_rewards')
+        .select('*')
+        .eq('is_active', true)
+        .order('xp_cost', { ascending: true });
+
+      if (error) throw error;
+      return data as XPReward[];
+    },
+  });
+
   const awardXP = useMutation({
     mutationFn: async ({
       activityKey,
@@ -152,12 +179,52 @@ export const useUserXP = () => {
     },
   });
 
+  const redeemReward = useMutation({
+    mutationFn: async (rewardId: string) => {
+      if (!user?.id) {
+        throw new Error('User not authenticated');
+      }
+
+      const { data, error } = await supabase.rpc('redeem_xp_reward', {
+        p_user_id: user.id,
+        p_reward_id: rewardId,
+      });
+
+      if (error) throw error;
+      return data[0]; // Returns {success, message, new_available_xp}
+    },
+    onSuccess: (data) => {
+      // Refetch XP data
+      queryClient.invalidateQueries({ queryKey: ['userXP', user?.id] });
+      queryClient.invalidateQueries({ queryKey: ['xpTransactions', user?.id] });
+
+      if (data.success) {
+        toast.success('🎁 Reward redeemed!', {
+          description: data.message,
+        });
+      } else {
+        toast.error('Redemption failed', {
+          description: data.message,
+        });
+      }
+    },
+    onError: (error: any) => {
+      console.error('Error redeeming reward:', error);
+      toast.error('Failed to redeem reward', {
+        description: error.message,
+      });
+    },
+  });
+
   return {
     userXP,
     activities,
     transactions,
+    rewards,
     isLoadingXP,
     awardXP: awardXP.mutate,
     isAwarding: awardXP.isPending,
+    redeemReward: redeemReward.mutate,
+    isRedeeming: redeemReward.isPending,
   };
 };

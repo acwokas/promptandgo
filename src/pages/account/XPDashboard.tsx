@@ -9,7 +9,7 @@ import { format } from "date-fns";
 import SEO from "@/components/SEO";
 
 export default function XPDashboard() {
-  const { userXP, activities, transactions, isLoadingXP } = useUserXP();
+  const { userXP, activities, transactions, rewards, isLoadingXP, redeemReward, isRedeeming } = useUserXP();
 
   if (isLoadingXP) {
     return <div className="container mx-auto p-6">Loading...</div>;
@@ -189,9 +189,55 @@ export default function XPDashboard() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-center text-muted-foreground py-8">
-                  Rewards redemption coming soon! Stay tuned.
-                </p>
+                {!rewards || rewards.length === 0 ? (
+                  <p className="text-center text-muted-foreground py-8">
+                    No rewards available at the moment. Check back soon!
+                  </p>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {rewards.map((reward) => {
+                      const canAfford = userXP.available_xp >= reward.xp_cost;
+                      
+                      return (
+                        <div
+                          key={reward.id}
+                          className={`p-4 border rounded-lg ${
+                            canAfford ? 'border-primary/20 bg-primary/5' : 'border-border'
+                          }`}
+                        >
+                          <div className="flex items-start justify-between mb-3">
+                            <div className="flex items-center gap-2">
+                              {reward.icon && (
+                                <span className="text-2xl">{reward.icon}</span>
+                              )}
+                              <div>
+                                <h3 className="font-semibold">{reward.reward_name}</h3>
+                                <Badge variant={canAfford ? "default" : "secondary"} className="mt-1">
+                                  {reward.xp_cost.toLocaleString()} XP
+                                </Badge>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          {reward.reward_description && (
+                            <p className="text-sm text-muted-foreground mb-4">
+                              {reward.reward_description}
+                            </p>
+                          )}
+                          
+                          <Button
+                            onClick={() => redeemReward(reward.id)}
+                            disabled={!canAfford || isRedeeming}
+                            className="w-full"
+                            variant={canAfford ? "default" : "outline"}
+                          >
+                            {isRedeeming ? 'Redeeming...' : canAfford ? 'Redeem' : 'Insufficient XP'}
+                          </Button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
