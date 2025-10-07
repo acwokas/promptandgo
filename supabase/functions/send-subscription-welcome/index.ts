@@ -144,6 +144,22 @@ const handler = async (req: Request): Promise<Response> => {
             </div>
           </div>
 
+          <!-- Welcome Bonus -->
+          <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px; border-radius: 10px; margin-bottom: 30px; text-align: center;">
+            <h2 style="color: white; margin: 0 0 15px 0;">
+              🎁 Your Welcome Bonus!
+            </h2>
+            <p style="margin: 0 0 20px 0; font-size: 16px;">
+              As a thank you for joining, here's a special coupon code for your next purchase:
+            </p>
+            <div style="background: white; color: #667eea; padding: 15px 25px; border-radius: 8px; font-size: 24px; font-weight: bold; letter-spacing: 2px; display: inline-block;">
+              WELCOME04!
+            </div>
+            <p style="margin: 15px 0 0 0; font-size: 14px; opacity: 0.9;">
+              Use this code at checkout to get your free welcome Power Pack!
+            </p>
+          </div>
+
           <!-- Quick Start -->
           <div style="background: #e3f2fd; padding: 25px; border-radius: 10px; margin-bottom: 30px;">
             <h2 style="color: #1976d2; margin: 0 0 15px 0;">
@@ -153,7 +169,8 @@ const handler = async (req: Request): Promise<Response> => {
               <p style="margin: 10px 0;"><strong>1.</strong> Visit your <a href="https://promptandgo.ai/account" style="color: #1976d2;">account dashboard</a> to see your new limits</p>
               <p style="margin: 10px 0;"><strong>2.</strong> Try the <a href="https://promptandgo.ai/ai/generator" style="color: #1976d2;">AI Prompt Generator</a> with your enhanced daily limits</p>
               <p style="margin: 10px 0;"><strong>3.</strong> Explore <a href="https://promptandgo.ai/packs" style="color: #1976d2;">Premium Prompt Packs</a> now available to you</p>
-              <p style="margin: 10px 0;"><strong>4.</strong> Use the <a href="https://promptandgo.ai/ai/assistant" style="color: #1976d2;">AI Assistant</a> for personalized help</p>
+              <p style="margin: 10px 0;"><strong>4.</strong> Use your <strong>WELCOME04!</strong> coupon code to get a free Power Pack</p>
+              <p style="margin: 10px 0;"><strong>5.</strong> Use the <a href="https://promptandgo.ai/ai/assistant" style="color: #1976d2;">AI Assistant</a> for personalized help</p>
             </div>
           </div>
 

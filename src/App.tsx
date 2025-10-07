@@ -46,6 +46,7 @@ import AdminArticles from "./pages/AdminArticles";
 import AdminArticleEditor from "./pages/AdminArticleEditor";
 import AdminCountdownSettings from "./pages/AdminCountdownSettings";
 import AdminSecurity from "./pages/AdminSecurity";
+import AdminCoupons from "./pages/AdminCoupons";
 import TipsIndex from "./pages/TipsIndex";
 import ArticleView from "./pages/ArticleView";
 import FavoritesPage from "./pages/account/Favorites";
@@ -152,6 +153,7 @@ const AppContent = () => {
                 <Route path="/admin/articles/new" element={<AdminArticleEditor />} />
                 <Route path="/admin/countdown" element={<AdminCountdownSettings />} />
                 <Route path="/admin/security" element={<AdminSecurity />} />
+                <Route path="/admin/coupons" element={<AdminCoupons />} />
                 <Route path="/account" element={<AccountPage />} />
                 <Route path="/account/profile" element={<ProfilePage />} />
                 <Route path="/account/notifications" element={<NotificationsPage />} />

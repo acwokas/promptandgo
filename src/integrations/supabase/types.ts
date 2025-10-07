@@ -280,6 +280,99 @@ export type Database = {
         }
         Relationships: []
       }
+      coupon_usage: {
+        Row: {
+          coupon_id: string
+          discount_applied: number
+          id: string
+          order_id: string | null
+          used_at: string
+          user_id: string
+        }
+        Insert: {
+          coupon_id: string
+          discount_applied: number
+          id?: string
+          order_id?: string | null
+          used_at?: string
+          user_id: string
+        }
+        Update: {
+          coupon_id?: string
+          discount_applied?: number
+          id?: string
+          order_id?: string | null
+          used_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coupon_usage_coupon_id_fkey"
+            columns: ["coupon_id"]
+            isOneToOne: false
+            referencedRelation: "coupons"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "coupon_usage_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      coupons: {
+        Row: {
+          code: string
+          created_at: string
+          current_uses: number
+          description: string | null
+          discount_type: string
+          discount_value: number | null
+          free_pack_id: string | null
+          id: string
+          is_active: boolean
+          max_uses: number | null
+          minimum_purchase_cents: number | null
+          updated_at: string
+          valid_from: string
+          valid_until: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          current_uses?: number
+          description?: string | null
+          discount_type: string
+          discount_value?: number | null
+          free_pack_id?: string | null
+          id?: string
+          is_active?: boolean
+          max_uses?: number | null
+          minimum_purchase_cents?: number | null
+          updated_at?: string
+          valid_from?: string
+          valid_until?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          current_uses?: number
+          description?: string | null
+          discount_type?: string
+          discount_value?: number | null
+          free_pack_id?: string | null
+          id?: string
+          is_active?: boolean
+          max_uses?: number | null
+          minimum_purchase_cents?: number | null
+          updated_at?: string
+          valid_from?: string
+          valid_until?: string | null
+        }
+        Relationships: []
+      }
       daily_ai_sends: {
         Row: {
           created_at: string
@@ -1918,6 +2011,17 @@ export type Database = {
           p_user_id: string
         }
         Returns: undefined
+      }
+      validate_coupon: {
+        Args: { p_cart_total_cents: number; p_code: string; p_user_id: string }
+        Returns: {
+          coupon_id: string
+          discount_type: string
+          discount_value: number
+          free_pack_id: string
+          message: string
+          valid: boolean
+        }[]
       }
     }
     Enums: {

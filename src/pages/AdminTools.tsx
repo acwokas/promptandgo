@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { Navigate, Link } from "react-router-dom";
-import { Upload, Plus, Download, Settings, MessageCircle, BarChart3, Clock, Shield } from "lucide-react";
+import { Upload, Plus, Download, Settings, MessageCircle, BarChart3, Clock, Shield, Tag } from "lucide-react";
 
 const AdminTools = () => {
   const { user, loading: authLoading } = useSupabaseAuth();
@@ -100,6 +100,13 @@ const AdminTools = () => {
       icon: Shield,
       href: "/admin/security",
       color: "text-red-600"
+    },
+    {
+      title: "Coupon Management",
+      description: "Create and manage discount codes, welcome bonuses, and promotional coupons",
+      icon: Tag,
+      href: "/admin/coupons",
+      color: "text-emerald-500"
     }
   ];
 

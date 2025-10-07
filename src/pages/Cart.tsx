@@ -8,10 +8,12 @@ import { getCartForUser, getCartTotalCents, removeFromCart, clearCart, addToMyPr
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
+import { useCoupon } from "@/hooks/useCoupon";
 import { toast } from "@/hooks/use-toast";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Link } from "react-router-dom";
-import { Star, Zap, Library, Calendar, Infinity, ArrowRight } from "lucide-react";
+import { Star, Zap, Library, Calendar, Infinity, ArrowRight, Tag, X } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 const centsToUSD = (cents: number) => `$${(cents / 100).toFixed(2)}`;
 
@@ -19,6 +21,8 @@ const CartPage = () => {
   const { user, loading } = useSupabaseAuth();
   const [items, setItems] = useState<CartItem[]>([]);
   const [addingToFavorites, setAddingToFavorites] = useState<boolean>(false);
+  const [couponCode, setCouponCode] = useState("");
+  const { appliedCoupon, isValidating, validateCoupon, removeCoupon, calculateDiscount } = useCoupon();
 
   useEffect(() => {
     const updateItems = () => setItems(getCartForUser(!!user));
@@ -57,7 +61,12 @@ const CartPage = () => {
     return sum + i.unitAmountCents * i.quantity;
   }, 0);
   const originalTotal = items.reduce((sum, i) => sum + originalUnitCents(i) * i.quantity, 0);
-  const savings = Math.max(0, originalTotal - total);
+  
+  // Calculate coupon discount
+  const couponDiscount = calculateDiscount(total);
+  const totalAfterCoupon = Math.max(0, total - couponDiscount);
+  
+  const savings = Math.max(0, originalTotal - totalAfterCoupon);
 
   const beginCheckout = async () => {
     if (!user || loading) {
@@ -82,15 +91,23 @@ const CartPage = () => {
     const hasLifetime = cartItems.some((i) => i.type === 'lifetime');
 
     try {
+      const checkoutBody: any = { items: cartItems };
+      
+      // Include coupon information if applied
+      if (appliedCoupon && appliedCoupon.valid) {
+        checkoutBody.couponId = appliedCoupon.couponId;
+        checkoutBody.couponCode = couponCode;
+      }
+      
       if (hasMembership || hasLifetime) {
         // Use create-checkout for recurring memberships or lifetime purchases
-        const { data, error } = await supabase.functions.invoke('create-checkout', { body: { items: cartItems } });
+        const { data, error } = await supabase.functions.invoke('create-checkout', { body: checkoutBody });
         if (error) throw error;
         window.open((data as any).url, '_blank');
         return;
       }
 
-      const { data, error } = await supabase.functions.invoke('create-payment', { body: { items: cartItems } });
+      const { data, error } = await supabase.functions.invoke('create-payment', { body: checkoutBody });
       if (error) throw error;
       window.open((data as any).url, '_blank');
     } catch (e: any) {
@@ -339,14 +356,66 @@ const CartPage = () => {
                   <CardTitle>Order Summary</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
+                  {/* Coupon Code Section */}
+                  <div className="space-y-2 pb-4 border-b">
+                    <label className="text-sm font-medium flex items-center gap-2">
+                      <Tag className="h-4 w-4" />
+                      Coupon Code
+                    </label>
+                    {appliedCoupon && appliedCoupon.valid ? (
+                      <div className="flex items-center justify-between p-3 bg-primary/10 rounded-lg border border-primary/20">
+                        <div className="flex items-center gap-2">
+                          <Tag className="h-4 w-4 text-primary" />
+                          <span className="text-sm font-medium">{couponCode}</span>
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={removeCoupon}
+                          className="h-8 w-8 p-0"
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="flex gap-2">
+                        <Input
+                          placeholder="Enter code"
+                          value={couponCode}
+                          onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                          className="flex-1"
+                        />
+                        <Button
+                          variant="outline"
+                          onClick={() => validateCoupon(couponCode, total)}
+                          disabled={isValidating || !couponCode}
+                        >
+                          {isValidating ? "..." : "Apply"}
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+
                   <div className="flex items-center justify-between">
                     <span>Subtotal</span>
                     <span className="font-semibold">{centsToUSD(total)}</span>
                   </div>
+                  {couponDiscount > 0 && (
+                    <div className="flex items-center justify-between text-sm text-primary">
+                      <span>Coupon Discount</span>
+                      <span className="font-medium">-{centsToUSD(couponDiscount)}</span>
+                    </div>
+                  )}
                   {savings > 0 && (
                     <div className="flex items-center justify-between text-sm text-muted-foreground">
-                      <span>You save</span>
+                      <span>Total Savings</span>
                       <span className="font-medium text-primary">{centsToUSD(savings)}</span>
+                    </div>
+                  )}
+                  {(couponDiscount > 0 || savings > 0) && (
+                    <div className="flex items-center justify-between pt-2 border-t font-bold text-lg">
+                      <span>Total</span>
+                      <span>{centsToUSD(totalAfterCoupon)}</span>
                     </div>
                   )}
                   <div className="flex gap-2">
