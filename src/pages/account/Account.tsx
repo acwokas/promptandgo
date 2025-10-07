@@ -4,11 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 import UsageDisplay from "@/components/ai/UsageDisplay";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { LogOut } from "lucide-react";
+import { LogOut, User, CreditCard, Heart, ShieldCheck, Sparkles, Bell, Award } from "lucide-react";
 
 const AccountPage = () => {
   const { user, logout } = useSupabaseAuth();
@@ -17,6 +16,59 @@ const AccountPage = () => {
   const navigate = useNavigate();
 
   console.log("Account page: Auth state", { user: user?.email, isAdmin });
+
+  const accountSections = [
+    {
+      title: "Profile",
+      description: "Manage your personal information and preferences",
+      icon: User,
+      href: "/account/profile",
+      gradient: "from-blue-500/10 to-blue-500/5",
+    },
+    {
+      title: "XP & Rewards",
+      description: "Track your progress and redeem rewards",
+      icon: Award,
+      href: "/account/xp",
+      gradient: "from-yellow-500/10 to-yellow-500/5",
+      badge: "New",
+    },
+    {
+      title: "Purchases",
+      description: "View your order history and downloads",
+      icon: CreditCard,
+      href: "/account/purchases",
+      gradient: "from-green-500/10 to-green-500/5",
+    },
+    {
+      title: "Favorites",
+      description: "Access your saved prompts and collections",
+      icon: Heart,
+      href: "/account/favorites",
+      gradient: "from-red-500/10 to-red-500/5",
+    },
+    {
+      title: "Security",
+      description: "Update your password and security settings",
+      icon: ShieldCheck,
+      href: "/account/security",
+      gradient: "from-purple-500/10 to-purple-500/5",
+    },
+    {
+      title: "AI Preferences",
+      description: "Customize your AI provider settings",
+      icon: Sparkles,
+      href: "/account/ai-preferences",
+      gradient: "from-cyan-500/10 to-cyan-500/5",
+    },
+    {
+      title: "Notifications",
+      description: "Manage your notification preferences",
+      icon: Bell,
+      href: "/account/notifications",
+      gradient: "from-orange-500/10 to-orange-500/5",
+    },
+  ];
 
   const handleLogout = async () => {
     try {
@@ -91,33 +143,24 @@ const AccountPage = () => {
         </div>
 
         <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          <Link to="/account/profile" className="rounded-xl border bg-card p-5 block group hover:shadow-md transition-all">
-            <h2 className="font-semibold">Profile</h2>
-            <p className="text-muted-foreground text-sm mt-1">Update your display name and avatar.</p>
-          </Link>
-          <Link to="/account/notifications" className="rounded-xl border bg-card p-5 block group hover:shadow-md transition-all">
-            <h2 className="font-semibold">Notifications</h2>
-            <p className="text-muted-foreground text-sm mt-1">Choose what emails you receive.</p>
-          </Link>
-          <Link to="/account/security" className="rounded-xl border bg-card p-5 block group hover:shadow-md transition-all">
-            <h2 className="font-semibold">Security</h2>
-            <p className="text-muted-foreground text-sm mt-1">Change your password and log out.</p>
-          </Link>
-          <Link to="/account/favorites#my-generated-prompts" className="rounded-xl border bg-card p-5 block group hover:shadow-md transition-all">
-            <h2 className="font-semibold">My Saved Prompts</h2>
-            <p className="text-muted-foreground text-sm mt-1">View and manage your saved and AI-generated prompts.</p>
-          </Link>
-          <Link to="/account/ai-preferences" className="rounded-xl border bg-card p-5 block group hover:shadow-md transition-all">
-            <h2 className="font-semibold">AI Preferences</h2>
-            <p className="text-muted-foreground text-sm mt-1">Choose which AI providers appear in your prompt rewriter.</p>
-          </Link>
-          <Link to="/certification" className="rounded-xl border bg-card p-5 block group hover:shadow-md transition-all bg-gradient-to-br from-primary/5 to-accent/5">
-            <h2 className="font-semibold flex items-center gap-2">
-              <span>Certification</span>
-              <span className="text-xs bg-green-500/10 text-green-600 px-2 py-0.5 rounded-full">New</span>
-            </h2>
-            <p className="text-muted-foreground text-sm mt-1">Complete "Prompt Like a Pro" and earn your certified creator badge.</p>
-          </Link>
+          {accountSections.map((section) => (
+            <Link
+              key={section.href}
+              to={section.href}
+              className={`rounded-xl border bg-card p-6 block group hover:shadow-lg transition-all bg-gradient-to-br ${section.gradient || ''}`}
+            >
+              <div className="flex items-start justify-between mb-3">
+                <section.icon className="h-6 w-6 text-primary" />
+                {section.badge && (
+                  <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full font-medium">
+                    {section.badge}
+                  </span>
+                )}
+              </div>
+              <h2 className="font-semibold text-lg mb-1">{section.title}</h2>
+              <p className="text-muted-foreground text-sm">{section.description}</p>
+            </Link>
+          ))}
         </section>
       </main>
     </>

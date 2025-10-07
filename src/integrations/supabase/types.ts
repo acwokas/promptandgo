@@ -1335,6 +1335,36 @@ export type Database = {
         }
         Relationships: []
       }
+      user_xp: {
+        Row: {
+          available_xp: number
+          created_at: string
+          id: string
+          level: number
+          total_xp: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          available_xp?: number
+          created_at?: string
+          id?: string
+          level?: number
+          total_xp?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          available_xp?: number
+          created_at?: string
+          id?: string
+          level?: number
+          total_xp?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       widget_settings: {
         Row: {
           description: string | null
@@ -1362,11 +1392,165 @@ export type Database = {
         }
         Relationships: []
       }
+      xp_activities: {
+        Row: {
+          activity_description: string | null
+          activity_key: string
+          activity_name: string
+          created_at: string
+          icon: string | null
+          id: string
+          is_active: boolean
+          is_repeatable: boolean
+          repeat_interval: string | null
+          xp_value: number
+        }
+        Insert: {
+          activity_description?: string | null
+          activity_key: string
+          activity_name: string
+          created_at?: string
+          icon?: string | null
+          id?: string
+          is_active?: boolean
+          is_repeatable?: boolean
+          repeat_interval?: string | null
+          xp_value: number
+        }
+        Update: {
+          activity_description?: string | null
+          activity_key?: string
+          activity_name?: string
+          created_at?: string
+          icon?: string | null
+          id?: string
+          is_active?: boolean
+          is_repeatable?: boolean
+          repeat_interval?: string | null
+          xp_value?: number
+        }
+        Relationships: []
+      }
+      xp_reward_redemptions: {
+        Row: {
+          id: string
+          metadata: Json | null
+          redeemed_at: string
+          reward_id: string
+          status: string
+          user_id: string
+          xp_spent: number
+        }
+        Insert: {
+          id?: string
+          metadata?: Json | null
+          redeemed_at?: string
+          reward_id: string
+          status?: string
+          user_id: string
+          xp_spent: number
+        }
+        Update: {
+          id?: string
+          metadata?: Json | null
+          redeemed_at?: string
+          reward_id?: string
+          status?: string
+          user_id?: string
+          xp_spent?: number
+        }
+        Relationships: []
+      }
+      xp_rewards: {
+        Row: {
+          created_at: string
+          icon: string | null
+          id: string
+          is_active: boolean
+          reward_description: string | null
+          reward_key: string
+          reward_name: string
+          reward_type: string
+          reward_value: Json | null
+          xp_cost: number
+        }
+        Insert: {
+          created_at?: string
+          icon?: string | null
+          id?: string
+          is_active?: boolean
+          reward_description?: string | null
+          reward_key: string
+          reward_name: string
+          reward_type: string
+          reward_value?: Json | null
+          xp_cost: number
+        }
+        Update: {
+          created_at?: string
+          icon?: string | null
+          id?: string
+          is_active?: boolean
+          reward_description?: string | null
+          reward_key?: string
+          reward_name?: string
+          reward_type?: string
+          reward_value?: Json | null
+          xp_cost?: number
+        }
+        Relationships: []
+      }
+      xp_transactions: {
+        Row: {
+          activity_key: string | null
+          created_at: string
+          description: string | null
+          id: string
+          metadata: Json | null
+          transaction_type: string
+          user_id: string
+          xp_amount: number
+        }
+        Insert: {
+          activity_key?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          metadata?: Json | null
+          transaction_type: string
+          user_id: string
+          xp_amount: number
+        }
+        Update: {
+          activity_key?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          metadata?: Json | null
+          transaction_type?: string
+          user_id?: string
+          xp_amount?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      award_xp: {
+        Args: {
+          p_activity_key: string
+          p_description?: string
+          p_metadata?: Json
+          p_user_id: string
+        }
+        Returns: {
+          new_total_xp: number
+          success: boolean
+          xp_awarded: number
+        }[]
+      }
       check_admin_rate_limit: {
         Args: { p_action: string; p_limit?: number; p_window_minutes?: number }
         Returns: boolean
@@ -1644,6 +1828,14 @@ export type Database = {
       migrate_encrypt_subscribers: {
         Args: { p_encryption_key: string }
         Returns: undefined
+      }
+      redeem_xp_reward: {
+        Args: { p_reward_id: string; p_user_id: string }
+        Returns: {
+          message: string
+          new_available_xp: number
+          success: boolean
+        }[]
       }
       rotate_featured_categories: {
         Args: Record<PropertyKey, never>

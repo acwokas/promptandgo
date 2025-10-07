@@ -4,6 +4,7 @@ import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Progress } from "@/components/ui/progress";
+import { useUserXP } from "@/hooks/useUserXP";
 import { WelcomeStep } from "@/components/certification/WelcomeStep";
 import { HowItWorksStep } from "@/components/certification/HowItWorksStep";
 import { RulesStep } from "@/components/certification/RulesStep";
@@ -31,6 +32,7 @@ const progressMap: Record<number, number> = {
 export default function Certification() {
   const { user } = useSupabaseAuth();
   const navigate = useNavigate();
+  const { awardXP } = useUserXP();
   const [currentStep, setCurrentStep] = useState(0);
   const [fullName, setFullName] = useState("");
   const [quizScore, setQuizScore] = useState(0);
@@ -76,6 +78,12 @@ export default function Certification() {
           await supabase.from("profiles").update({
             is_certified: true,
           }).eq("id", user.id);
+
+          // Award XP for certification completion
+          awardXP({
+            activityKey: 'certification_completed',
+            description: 'Completed Prompt Like a Pro certification',
+          });
 
           toast.success("Congratulations! You're now certified! 🎉");
         } catch (error) {

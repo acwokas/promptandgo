@@ -55,6 +55,7 @@ import ProfilePage from "./pages/account/Profile";
 import NotificationsPage from "./pages/account/Notifications";
 import SecurityPage from "./pages/account/Security";
 import AIPreferencesPage from "./pages/account/AIPreferences";
+import XPDashboard from "./pages/account/XPDashboard";
 
 import CartPage from "./pages/Cart";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
@@ -158,6 +159,7 @@ const AppContent = () => {
                 <Route path="/account/purchases" element={<PurchasesPage />} />
                 <Route path="/account/favorites" element={<FavoritesPage />} />
                 <Route path="/account/ai-preferences" element={<AIPreferencesPage />} />
+                <Route path="/account/xp" element={<XPDashboard />} />
                 <Route path="/cart" element={<CartPage />} />
                 <Route path="/checkout/success" element={<CheckoutSuccess />} />
                 <Route path="/checkout/canceled" element={<CheckoutCanceled />} />

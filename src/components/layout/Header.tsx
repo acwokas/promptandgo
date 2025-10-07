@@ -10,6 +10,7 @@ import { useEnsureProfile } from "@/hooks/useEnsureProfile";
 import { useEffect, useState } from "react";
 import { getCartCount, clearCartOnLogout } from "@/lib/cart";
 import { SeoOptimizedImage } from "@/components/seo/SeoOptimizedImage";
+import { XPDisplay } from "../xp/XPDisplay";
 
 // Component to safely render SidebarTrigger only when context is available
 const SafeSidebarTrigger = () => {
@@ -136,6 +137,9 @@ const Header = () => {
         
         {/* Right Actions */}
         <div className="flex items-center gap-2 flex-shrink-0">
+          {/* XP Display for logged-in users */}
+          {user && <XPDisplay />}
+          
           {/* CTA */}
           {!user && (
             <Link 

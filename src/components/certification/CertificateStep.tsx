@@ -4,6 +4,7 @@ import { Award, Download, Share2, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import confetti from "canvas-confetti";
+import { useUserXP } from "@/hooks/useUserXP";
 
 interface CertificateStepProps {
   fullName: string;
@@ -19,6 +20,7 @@ export function CertificateStep({
   onNext,
 }: CertificateStepProps) {
   const [confettiFired, setConfettiFired] = useState(false);
+  const { awardXP } = useUserXP();
 
   useEffect(() => {
     if (!confettiFired) {
@@ -131,6 +133,12 @@ export function CertificateStep({
     // Copy share text to clipboard automatically
     navigator.clipboard.writeText(shareText);
     toast.success("LinkedIn post text copied to clipboard!");
+    
+    // Award XP for LinkedIn share
+    awardXP({
+      activityKey: 'linkedin_share',
+      description: 'Shared certificate on LinkedIn',
+    });
     
     // Open LinkedIn share dialog
     window.open(linkedInUrl, "_blank");
