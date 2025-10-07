@@ -35,28 +35,26 @@ serve(async (req) => {
     if (customers.data.length === 0) {
       logStep('No customer found; set unsubscribed');
       const encKey = Deno.env.get('SUBSCRIBERS_ENCRYPTION_KEY');
-      if (encKey) {
-        await supabase.rpc('secure_upsert_subscriber', {
-          p_key: encKey,
-          p_user_id: user.id,
-          p_email: user.email,
-          p_stripe_customer_id: null,
-          p_subscribed: false,
-          p_subscription_tier: null,
-          p_subscription_end: null,
-        });
-      } else {
-        // Fallback (no encryption key configured yet)
-        await supabase.from('subscribers').upsert({
-          email: user.email,
-          user_id: user.id,
-          stripe_customer_id: null,
-          subscribed: false,
-          subscription_tier: null,
-          subscription_end: null,
-          updated_at: new Date().toISOString(),
-        }, { onConflict: 'user_id' });
+      
+      // SECURITY: Require encryption key - no fallback to plaintext
+      if (!encKey) {
+        console.error('[CHECK-SUBSCRIPTION] CRITICAL: Missing SUBSCRIBERS_ENCRYPTION_KEY');
+        return new Response(
+          JSON.stringify({ error: 'Server configuration error: encryption not configured' }),
+          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
       }
+      
+      await supabase.rpc('secure_upsert_subscriber', {
+        p_key: encKey,
+        p_user_id: user.id,
+        p_email: user.email,
+        p_stripe_customer_id: null,
+        p_subscribed: false,
+        p_subscription_tier: null,
+        p_subscription_end: null,
+      });
+      
       return new Response(JSON.stringify({ subscribed: false }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 });
     }
 
@@ -91,58 +89,56 @@ serve(async (req) => {
     }
 
     const encKey = Deno.env.get('SUBSCRIBERS_ENCRYPTION_KEY');
-    if (encKey) {
-      await supabase.rpc('secure_upsert_subscriber', {
-        p_key: encKey,
-        p_user_id: user.id,
-        p_email: user.email,
-        p_stripe_customer_id: customerId,
-        p_subscribed: hasActive,
-        p_subscription_tier: tier,
-        p_subscription_end: subEnd,
-      });
+    
+    // SECURITY: Require encryption key - no fallback to plaintext
+    if (!encKey) {
+      console.error('[CHECK-SUBSCRIPTION] CRITICAL: Missing SUBSCRIBERS_ENCRYPTION_KEY');
+      return new Response(
+        JSON.stringify({ error: 'Server configuration error: encryption not configured' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+    
+    await supabase.rpc('secure_upsert_subscriber', {
+      p_key: encKey,
+      p_user_id: user.id,
+      p_email: user.email,
+      p_stripe_customer_id: customerId,
+      p_subscribed: hasActive,
+      p_subscription_tier: tier,
+      p_subscription_end: subEnd,
+    });
+    
+    // Try to fix any orphaned subscriptions for this user
+    try {
+      // Check if there's an orphaned subscription with null user_id but matching email hash
+      const emailHash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(user.email))
+        .then(buffer => Array.from(new Uint8Array(buffer))
+          .map(b => b.toString(16).padStart(2, '0')).join(''));
       
-      // Try to fix any orphaned subscriptions for this user
-      try {
-        // Check if there's an orphaned subscription with null user_id but matching email hash
-        const emailHash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(user.email))
-          .then(buffer => Array.from(new Uint8Array(buffer))
-            .map(b => b.toString(16).padStart(2, '0')).join(''));
+      const { data: orphaned } = await supabase
+        .from('subscribers')
+        .select('id')
+        .eq('email_hash', emailHash)
+        .is('user_id', null)
+        .eq('subscribed', true)
+        .maybeSingle();
         
-        const { data: orphaned } = await supabase
-          .from('subscribers')
-          .select('id')
-          .eq('email_hash', emailHash)
-          .is('user_id', null)
-          .eq('subscribed', true)
-          .maybeSingle();
-          
-        if (orphaned) {
-          // Update the orphaned record with the secure function
-          await supabase.rpc('secure_upsert_subscriber', {
-            p_key: encKey,
-            p_user_id: user.id,
-            p_email: user.email,
-            p_stripe_customer_id: customerId,
-            p_subscribed: true,
-            p_subscription_tier: tier || 'lifetime',
-            p_subscription_end: subEnd,
-          });
-          logStep('Fixed orphaned subscription record');
-        }
-      } catch (linkError) {
-        console.warn('Could not fix orphaned subscription:', linkError);
+      if (orphaned) {
+        // Update the orphaned record with the secure function
+        await supabase.rpc('secure_upsert_subscriber', {
+          p_key: encKey,
+          p_user_id: user.id,
+          p_email: user.email,
+          p_stripe_customer_id: customerId,
+          p_subscribed: true,
+          p_subscription_tier: tier || 'lifetime',
+          p_subscription_end: subEnd,
+        });
+        logStep('Fixed orphaned subscription record');
       }
-    } else {
-      await supabase.from('subscribers').upsert({
-        email: user.email,
-        user_id: user.id,
-        stripe_customer_id: customerId,
-        subscribed: hasActive,
-        subscription_tier: tier,
-        subscription_end: subEnd,
-        updated_at: new Date().toISOString(),
-      }, { onConflict: 'user_id' });
+    } catch (linkError) {
+      console.warn('Could not fix orphaned subscription:', linkError);
     }
 
     // Welcome email sending is gated by SEND_WELCOME_EMAILS env var to prevent duplicates and spam

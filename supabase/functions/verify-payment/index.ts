@@ -20,31 +20,26 @@ async function grantEntitlements(supabaseService: any, userId: string, userEmail
     } else if (it.item_type === 'pack' && it.item_id) {
       await supabaseService.from('pack_access').upsert({ user_id: userId, pack_id: it.item_id });
     } else if (it.item_type === 'lifetime') {
-      // SECURITY FIX: Use secure_upsert_subscriber instead of direct upsert
+      // SECURITY: Always use secure_upsert_subscriber - no fallback to plaintext
       const encryptionKey = Deno.env.get("SUBSCRIBERS_ENCRYPTION_KEY");
-      if (encryptionKey && userEmail) {
-        await supabaseService.rpc("secure_upsert_subscriber", {
-          p_key: encryptionKey,
-          p_user_id: userId,
-          p_email: userEmail,
-          p_stripe_customer_id: customerId ?? null,
-          p_subscribed: true,
-          p_subscription_tier: 'lifetime',
-          p_subscription_end: null,
-        });
-      } else {
-        // Fallback for missing encryption key (should be configured)
-        console.warn("SECURITY: Missing encryption key, using insecure fallback");
-        await supabaseService.from('subscribers').upsert({
-          user_id: userId,
-          email: userEmail || '[encrypted]',
-          stripe_customer_id: customerId ?? null,
-          subscribed: true,
-          subscription_tier: 'lifetime',
-          subscription_end: null,
-          updated_at: new Date().toISOString(),
-        }, { onConflict: 'user_id' });
+      if (!encryptionKey) {
+        console.error('[VERIFY-PAYMENT] CRITICAL: Missing SUBSCRIBERS_ENCRYPTION_KEY');
+        throw new Error('Server configuration error: encryption not configured');
       }
+      
+      if (!userEmail) {
+        throw new Error('User email required for lifetime subscription');
+      }
+      
+      await supabaseService.rpc("secure_upsert_subscriber", {
+        p_key: encryptionKey,
+        p_user_id: userId,
+        p_email: userEmail,
+        p_stripe_customer_id: customerId ?? null,
+        p_subscribed: true,
+        p_subscription_tier: 'lifetime',
+        p_subscription_end: null,
+      });
     }
   }
 }
