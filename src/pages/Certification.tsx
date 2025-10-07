@@ -8,22 +8,24 @@ import { WelcomeStep } from "@/components/certification/WelcomeStep";
 import { HowItWorksStep } from "@/components/certification/HowItWorksStep";
 import { RulesStep } from "@/components/certification/RulesStep";
 import { PracticeStep } from "@/components/certification/PracticeStep";
+import { PracticeStep2 } from "@/components/certification/PracticeStep2";
 import { QuizStep } from "@/components/certification/QuizStep";
 import { CertificateStep } from "@/components/certification/CertificateStep";
 import { UpgradeStep } from "@/components/certification/UpgradeStep";
 import SEO from "@/components/SEO";
 
-const TOTAL_STEPS = 7;
+const TOTAL_STEPS = 8;
 const XP_PER_STEP = 20;
 
 const progressMap: Record<number, number> = {
   0: 0,
-  1: 15,
-  2: 30,
-  3: 45,
-  4: 65,
-  5: 85,
-  6: 100,
+  1: 12,
+  2: 25,
+  3: 38,
+  4: 50,
+  5: 62,
+  6: 75,
+  7: 100,
 };
 
 export default function Certification() {
@@ -121,9 +123,12 @@ export default function Certification() {
               <PracticeStep onNext={handleNext} onBack={handleBack} />
             )}
             {currentStep === 4 && (
-              <QuizStep onComplete={handleQuizComplete} onBack={handleBack} />
+              <PracticeStep2 onNext={handleNext} onBack={handleBack} />
             )}
             {currentStep === 5 && (
+              <QuizStep onComplete={handleQuizComplete} onBack={handleBack} />
+            )}
+            {currentStep === 6 && (
               <CertificateStep
                 fullName={fullName}
                 certificateId={certificateId}
@@ -135,7 +140,7 @@ export default function Certification() {
                 onNext={handleNext}
               />
             )}
-            {currentStep === 6 && (
+            {currentStep === 7 && (
               <UpgradeStep onExplore={() => navigate("/packs")} onHome={() => navigate("/")} />
             )}
           </div>
