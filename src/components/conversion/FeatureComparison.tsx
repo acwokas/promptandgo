@@ -8,31 +8,31 @@ const features = [
   {
     category: "Core Features",
     items: [
-      { name: "Access to 3,000+ prompts", free: true, premium: true, lifetime: true },
-      { name: "Copy & paste optimization", free: true, premium: true, lifetime: true },
-      { name: "Works with all AI tools", free: true, premium: true, lifetime: true },
-      { name: "Basic Scout AI", free: true, premium: true, lifetime: true },
-      { name: "Community support", free: true, premium: true, lifetime: true },
+      { name: "Access to 3,000+ prompts", free: true, premium: true, annual: true },
+      { name: "Copy & paste optimization", free: true, premium: true, annual: true },
+      { name: "Works with all AI tools", free: true, premium: true, annual: true },
+      { name: "Basic Scout AI", free: true, premium: true, annual: true },
+      { name: "Community support", free: true, premium: true, annual: true },
     ]
   },
   {
     category: "Advanced Features",
     items: [
-      { name: "5,000+ premium prompts", free: false, premium: true, lifetime: true },
-      { name: "Industry-specific packs", free: false, premium: true, lifetime: true },
-      { name: "Advanced Scout AI customization", free: false, premium: true, lifetime: true },
-      { name: "Priority email support", free: false, premium: true, lifetime: true },
-      { name: "Early access to new features", free: false, premium: true, lifetime: true },
+      { name: "5,000+ premium prompts", free: false, premium: true, annual: true },
+      { name: "Industry-specific packs", free: false, premium: true, annual: true },
+      { name: "Advanced Scout AI customization", free: false, premium: true, annual: true },
+      { name: "Priority email support", free: false, premium: true, annual: true },
+      { name: "Early access to new features", free: false, premium: true, annual: true },
     ]
   },
   {
     category: "Exclusive Benefits",
     items: [
-      { name: "Lifetime updates guarantee", free: false, premium: false, lifetime: true },
-      { name: "VIP community access", free: false, premium: false, lifetime: true },
-      { name: "Beta features testing", free: false, premium: false, lifetime: true },
-      { name: "Direct founder access", free: false, premium: false, lifetime: true },
-      { name: "Free future product releases", free: false, premium: false, lifetime: true },
+      { name: "Annual updates guarantee", free: false, premium: false, annual: true },
+      { name: "VIP community access", free: false, premium: false, annual: true },
+      { name: "Beta features testing", free: false, premium: false, annual: true },
+      { name: "Direct founder access", free: false, premium: false, annual: true },
+      { name: "Free future product releases", free: false, premium: false, annual: true },
     ]
   }
 ];
@@ -61,7 +61,7 @@ const plans = [
     link: "/auth?mode=signup&plan=premium"
   },
   {
-    name: "Lifetime",
+    name: "Annual",
     price: "$99.50",
     period: "one-time",
     originalPrice: "$199",
@@ -70,8 +70,8 @@ const plans = [
     bgColor: "bg-gradient-to-r from-primary/20 to-accent/20",
     popular: false,
     badge: "Best Value",
-    cta: "Get Lifetime Access",
-    link: "/auth?mode=signup&plan=lifetime"
+    cta: "Get Annual Access",
+    link: "/auth?mode=signup&plan=annual"
   }
 ];
 
@@ -240,7 +240,7 @@ const FeatureComparison = () => {
                             )}
                           </td>
                           <td className="p-4 text-center">
-                            {feature.lifetime ? (
+                            {feature.annual ? (
                               <Check className="h-5 w-5 text-purple-500 mx-auto" />
                             ) : (
                               <X className="h-5 w-5 text-muted-foreground mx-auto" />

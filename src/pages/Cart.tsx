@@ -40,22 +40,22 @@ const CartPage = () => {
     switch (i.type) {
       case 'pack': return 999;
       case 'membership': return 2499;
-      case 'lifetime': return 19900;
+      case 'annual': return 19900;
       case 'prompt': return 199;
       default: return i.unitAmountCents;
     }
   };
 
   const hasMembership = items.some((i) => i.type === 'membership');
-  const hasLifetime = items.some((i) => i.type === 'lifetime');
+  const hasAnnual = items.some((i) => i.type === 'annual');
 
   const total = items.reduce((sum, i) => {
-    // If lifetime is in cart, everything else is free
-    if (hasLifetime && i.type !== 'lifetime') {
+    // If annual is in cart, everything else is free
+    if (hasAnnual && i.type !== 'annual') {
       return sum;
     }
-    // If only membership (no lifetime), prompts and packs are free
-    if (!hasLifetime && hasMembership && (i.type === 'prompt' || i.type === 'pack')) {
+    // If only membership (no annual), prompts and packs are free
+    if (!hasAnnual && hasMembership && (i.type === 'prompt' || i.type === 'pack')) {
       return sum;
     }
     return sum + i.unitAmountCents * i.quantity;
@@ -88,7 +88,7 @@ const CartPage = () => {
     }
 
     const hasMembership = cartItems.some((i) => i.type === 'membership');
-    const hasLifetime = cartItems.some((i) => i.type === 'lifetime');
+    const hasAnnual = cartItems.some((i) => i.type === 'annual');
 
     try {
       const checkoutBody: any = { items: cartItems };
@@ -99,8 +99,8 @@ const CartPage = () => {
         checkoutBody.couponCode = couponCode;
       }
       
-      if (hasMembership || hasLifetime) {
-        // Use create-checkout for recurring memberships or lifetime purchases
+      if (hasMembership || hasAnnual) {
+        // Use create-checkout for recurring memberships or annual purchases
         const { data, error } = await supabase.functions.invoke('create-checkout', { body: checkoutBody });
         if (error) throw error;
         window.open((data as any).url, '_blank');
@@ -143,7 +143,7 @@ const CartPage = () => {
     setAddingToFavorites(false);
   };
 
-  const handleAddMembership = (type: 'monthly' | 'lifetime') => {
+  const handleAddMembership = (type: 'monthly' | 'annual') => {
     if (!user || loading) {
       toast({
         title: "Please wait",
@@ -162,9 +162,9 @@ const CartPage = () => {
       }, !!user);
     } else {
       addToCart({
-        id: 'lifetime-membership', 
-        type: 'lifetime',
-        title: 'Lifetime Access',
+        id: 'annual-membership', 
+        type: 'annual',
+        title: 'Annual Access',
         unitAmountCents: 9950, // $99.50 (50% off from $199.00)
         quantity: 1
       }, !!user);
@@ -172,7 +172,7 @@ const CartPage = () => {
     
     toast({
       title: "Added to Cart!",
-      description: `${type === 'monthly' ? 'Monthly Membership' : 'Lifetime Access'} added to your cart.`
+      description: `${type === 'monthly' ? 'Monthly Membership' : 'Annual Access'} added to your cart.`
     });
   };
 
@@ -281,7 +281,7 @@ const CartPage = () => {
                     </Badge>
                     <div className="flex items-center gap-2 mb-2">
                       <Infinity className="h-5 w-5 text-primary" />
-                      <span className="font-semibold">Lifetime Access</span>
+                      <span className="font-semibold">Annual Access</span>
                     </div>
                     <div className="flex items-center gap-2 mb-2">
                       <span className="text-2xl font-bold text-primary">$99.50</span>
@@ -290,13 +290,13 @@ const CartPage = () => {
                     </div>
                     <p className="text-sm text-muted-foreground mb-3">One-time payment, unlimited access forever</p>
                     <Button 
-                      onClick={() => handleAddMembership('lifetime')}
+                      onClick={() => handleAddMembership('annual')}
                       variant="default" 
                       size="sm" 
                       className="w-full"
-                      disabled={hasLifetime || loading || !user}
+                      disabled={hasAnnual || loading || !user}
                     >
-                      {loading ? "Loading..." : hasLifetime ? "In Cart" : "Add to Cart"}
+                      {loading ? "Loading..." : hasAnnual ? "In Cart" : "Add to Cart"}
                     </Button>
                   </div>
                 </div>
@@ -324,13 +324,13 @@ const CartPage = () => {
                   </CardHeader>
                   <CardContent className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    {hasLifetime && i.type !== 'lifetime' ? (
+                    {hasAnnual && i.type !== 'annual' ? (
                       <>
                         <span className="text-muted-foreground line-through">{centsToUSD(originalUnitCents(i))}</span>
                         <span className="text-xl font-semibold text-primary">{centsToUSD(0)}</span>
                         <span className="text-xs text-primary font-medium">FREE with Membership</span>
                       </>
-                    ) : (!hasLifetime && hasMembership) && (i.type === 'prompt' || i.type === 'pack') ? (
+                    ) : (!hasAnnual && hasMembership) && (i.type === 'prompt' || i.type === 'pack') ? (
                       <>
                         <span className="text-muted-foreground line-through">{centsToUSD(originalUnitCents(i))}</span>
                         <span className="text-xl font-semibold text-primary">{centsToUSD(0)}</span>
@@ -429,7 +429,7 @@ const CartPage = () => {
                       ⚡️Power Packs $4.99 (was $9.99).
                     </p>
                     
-                    {hasLifetime && items.some(i => i.type === 'membership' || i.type === 'prompt' || i.type === 'pack') && (
+                    {hasAnnual && items.some(i => i.type === 'membership' || i.type === 'prompt' || i.type === 'pack') && (
                       <div className="p-3 bg-primary/10 rounded-lg border border-primary/20">
                         <p className="text-sm font-medium text-primary mb-2">💡 Pro Tip!</p>
                         <p className="text-xs text-muted-foreground mb-2">
@@ -446,7 +446,7 @@ const CartPage = () => {
                           {addingToFavorites ? "Adding..." : `Add ${items.filter(i => i.type === 'prompt').length} Prompts to My Library`}
                         </Button>
                       </div>
-                    ) || (!hasLifetime && hasMembership && items.some(i => i.type === 'prompt' || i.type === 'pack') && (
+                    ) || (!hasAnnual && hasMembership && items.some(i => i.type === 'prompt' || i.type === 'pack') && (
                       <div className="p-3 bg-primary/10 rounded-lg border border-primary/20">
                         <p className="text-sm font-medium text-primary mb-2">💡 Pro Tip!</p>
                         <p className="text-xs text-muted-foreground mb-2">
@@ -492,17 +492,17 @@ const CartPage = () => {
                         <div>
                           <div className="flex items-center gap-2">
                             <Infinity className="h-4 w-4 text-primary" />
-                            <span className="font-medium">Lifetime $99.50</span>
+                            <span className="font-medium">Annual $99.50</span>
                             <span className="text-sm text-muted-foreground">(was $199.00)</span>
                           </div>
                         </div>
                         <Button 
-                          onClick={() => handleAddMembership('lifetime')}
+                          onClick={() => handleAddMembership('annual')}
                           variant="outline" 
                           size="sm"
-                          disabled={hasLifetime || loading || !user}
+                          disabled={hasAnnual || loading || !user}
                         >
-                          {loading ? "Loading..." : hasLifetime ? "Added" : "Add to Cart"}
+                          {loading ? "Loading..." : hasAnnual ? "Added" : "Add to Cart"}
                         </Button>
                       </div>
                     </div>

@@ -52,7 +52,7 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
     if (!subscriptionInfo?.subscribed) return 1;
     const tier = subscriptionInfo.subscription_tier?.toLowerCase();
     if (tier === 'basic' || tier === 'monthly') return "3x"; // 30,30,40 vs 10,10,20 is roughly 3x
-    if (tier === 'premium' || tier === 'lifetime') return "6x"; // 60,60,60 vs 10,10,20 is roughly 6x
+    if (tier === 'premium' || tier === 'annual') return "6x"; // 60,60,60 vs 10,10,20 is roughly 6x
     return "Premium";
   };
 
@@ -62,8 +62,8 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
     if (tier === 'basic' || tier === 'monthly') {
       return <Badge variant="secondary" className="text-xs"><Crown className="h-3 w-3 mr-1" />Monthly 3x</Badge>;
     }
-    if (tier === 'premium' || tier === 'lifetime') {
-      return <Badge variant="secondary" className="text-xs"><Infinity className="h-3 w-3 mr-1" />Lifetime 6x</Badge>;
+    if (tier === 'premium' || tier === 'annual') {
+      return <Badge variant="secondary" className="text-xs"><Infinity className="h-3 w-3 mr-1" />Annual 6x</Badge>;
     }
     return <Badge variant="secondary" className="text-xs"><Crown className="h-3 w-3 mr-1" />Premium</Badge>;
   };
@@ -210,7 +210,7 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
                 <h4 className="font-medium">Need more queries?</h4>
                 <p className="text-sm text-muted-foreground mt-1">
                   {!subscriptionInfo?.subscribed ? (
-                    <>Upgrade to get <strong>30 generator + 40 assistant + 20 AI sends/day</strong> with monthly membership or <strong>60 queries/day each + 40 AI sends</strong> with lifetime access.</>
+                    <>Upgrade to get <strong>30 generator + 40 assistant + 20 AI sends/day</strong> with monthly membership or <strong>60 queries/day each + 40 AI sends</strong> with annual access.</>
                   ) : (
                     <>You've reached your enhanced daily limits. Your queries will reset at midnight SGT.</>
                   )}
@@ -223,7 +223,7 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
                     </Button>
                     <Button size="sm" variant="secondary">
                       <Infinity className="h-4 w-4 mr-1" />
-                      Lifetime (60+60+40/day) - $99.50
+                      Annual (60+60+40/day) - $99.50
                     </Button>
                   </div>
                 )}
@@ -235,7 +235,7 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
         {subscriptionInfo?.subscribed && (
           <div className="mt-4 p-3 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg border">
             <div className="flex items-start gap-3">
-              {subscriptionInfo.subscription_tier?.toLowerCase() === 'lifetime' || subscriptionInfo.subscription_tier?.toLowerCase() === 'premium' ? (
+              {subscriptionInfo.subscription_tier?.toLowerCase() === 'annual' || subscriptionInfo.subscription_tier?.toLowerCase() === 'premium' ? (
                 <Infinity className="h-5 w-5 text-primary mt-0.5" />
               ) : (
                 <Crown className="h-5 w-5 text-primary mt-0.5" />
@@ -247,8 +247,8 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
                 </h4>
                 <p className="text-sm text-muted-foreground mt-1">
                   You're enjoying {getSubscriptionMultiplier()}x the standard AI query limits. 
-                  {subscriptionInfo.subscription_tier?.toLowerCase() === 'lifetime' || subscriptionInfo.subscription_tier?.toLowerCase() === 'premium' 
-                    ? ' Thank you for your lifetime support!' 
+                  {subscriptionInfo.subscription_tier?.toLowerCase() === 'annual' || subscriptionInfo.subscription_tier?.toLowerCase() === 'premium' 
+                    ? ' Thank you for your annual support!'
                     : ' Your subscription provides enhanced daily limits.'}
                 </p>
               </div>

@@ -139,7 +139,7 @@ const ProgressivePricing = ({ showFull = false }: ProgressivePricingProps) => {
             </CardContent>
           </Card>
 
-          {/* Lifetime Plan */}
+          {/* Annual Plan */}
           <Card className="relative">
             <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
               <Badge className="bg-gradient-to-r from-primary to-accent text-primary-foreground px-4 py-1">
@@ -150,7 +150,7 @@ const ProgressivePricing = ({ showFull = false }: ProgressivePricingProps) => {
               <div className="w-12 h-12 bg-gradient-to-r from-primary/20 to-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Zap className="h-6 w-6 text-primary" />
               </div>
-              <CardTitle className="text-xl">Lifetime</CardTitle>
+              <CardTitle className="text-xl">Annual</CardTitle>
               <div className="text-3xl font-bold">$99.50</div>
               <p className="text-muted-foreground text-sm">
                 <span className="line-through">$199</span> One-time payment
@@ -164,7 +164,7 @@ const ProgressivePricing = ({ showFull = false }: ProgressivePricingProps) => {
                 </li>
                 <li className="flex items-center gap-2">
                   <Check className="h-4 w-4 text-purple-500" />
-                  <span>Lifetime updates</span>
+                  <span>Annual updates</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Check className="h-4 w-4 text-purple-500" />
@@ -180,7 +180,7 @@ const ProgressivePricing = ({ showFull = false }: ProgressivePricingProps) => {
                 </li>
               </ul>
               <Button asChild className="w-full" variant="default">
-                <Link to="/auth?mode=signup&plan=lifetime">Get Lifetime Access</Link>
+                <Link to="/auth?mode=signup&plan=annual">Get Annual Access</Link>
               </Button>
             </CardContent>
           </Card>

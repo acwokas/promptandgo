@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 export type CartItem = {
   id: string;
-  type: 'prompt' | 'pack' | 'membership' | 'lifetime';
+  type: 'prompt' | 'pack' | 'membership' | 'annual';
   title: string;
   unitAmountCents: number;
   quantity: number;
@@ -123,16 +123,16 @@ export function getCartCount(isAuthenticated: boolean = true): number {
 
 export function getCartTotalCents(isAuthenticated: boolean = true): number {
   const cartItems = getCartForUser(isAuthenticated);
-  const hasLifetime = cartItems.some((i) => i.type === 'lifetime');
+  const hasAnnual = cartItems.some((i) => i.type === 'annual');
   const hasMembership = cartItems.some((i) => i.type === 'membership');
   
   return cartItems.reduce((sum, i) => {
-    // If lifetime is in cart, everything else is free
-    if (hasLifetime && i.type !== 'lifetime') {
+    // If annual is in cart, everything else is free
+    if (hasAnnual && i.type !== 'annual') {
       return sum;
     }
-    // If only membership (no lifetime), prompts and packs are free
-    if (!hasLifetime && hasMembership && (i.type === 'prompt' || i.type === 'pack')) {
+    // If only membership (no annual), prompts and packs are free
+    if (!hasAnnual && hasMembership && (i.type === 'prompt' || i.type === 'pack')) {
       return sum;
     }
     return sum + i.unitAmountCents * i.quantity;

@@ -162,7 +162,7 @@ const PromptPacks = () => {
       return;
     }
     const cart = getCart();
-    const hasLifetime = cart.some((i) => i.type === 'lifetime');
+    const hasAnnual = cart.some((i) => i.type === 'annual');
     
     const exists = cart.some((i) => i.type === 'pack' && i.id === p.id);
     if (exists) {
@@ -172,10 +172,10 @@ const PromptPacks = () => {
     
     addToCart({ id: p.id, type: 'pack', title: p.name, unitAmountCents: PACK_DISCOUNT_CENTS, quantity: 1 }, !!user);
     
-    if (hasLifetime) {
+    if (hasAnnual) {
       toast({ 
-        title: 'Pack added - FREE with Lifetime!', 
-        description: `${p.name} is FREE with your Lifetime Access.` 
+        title: 'Pack added - FREE with Annual!', 
+        description: `${p.name} is FREE with your Annual Access.`
       });
     } else {
       toast({ title: 'Added to cart', description: `${p.name} — ${fmtUSD(PACK_DISCOUNT_CENTS)}` });
@@ -568,16 +568,16 @@ const PromptPacks = () => {
                         }
                         const cart = getCart();
                         
-                        const exists = cart.some((i) => i.type === 'lifetime' && i.id === 'lifetime');
+                        const exists = cart.some((i) => i.type === 'annual' && i.id === 'annual');
                         if (exists) {
-                          toast({ title: 'Already in cart', description: 'Lifetime Access is already in your cart.' });
+                          toast({ title: 'Already in cart', description: 'Annual Access is already in your cart.' });
                           return;
                         }
-                        addToCart({ id: 'lifetime', type: 'lifetime', title: 'Lifetime All-Access', unitAmountCents: LIFETIME_DISCOUNT_CENTS, quantity: 1 }, !!user);
-                        toast({ title: 'Lifetime access added to cart', description: `Lifetime All-Access — ${fmtUSD(LIFETIME_DISCOUNT_CENTS)}. All other items in your cart are now FREE!` });
+                        addToCart({ id: 'annual', type: 'annual', title: 'Annual All-Access', unitAmountCents: LIFETIME_DISCOUNT_CENTS, quantity: 1 }, !!user);
+                        toast({ title: 'Annual access added to cart', description: `Annual All-Access — ${fmtUSD(LIFETIME_DISCOUNT_CENTS)}. All other items in your cart are now FREE!` });
                       }}
                     >
-                      Get Lifetime Access
+                      Get Annual Access
                     </Button>
                   </Card>
                 </div>
