@@ -2,7 +2,7 @@ import React from "react";
 import SEO from "@/components/SEO";
 import { AIOptimizedStructuredData } from "@/components/seo/AIOptimizedStructuredData";
 import { Button } from "@/components/ui/button";
-import NanoBananaAnnouncement from "@/components/NanoBananaAnnouncement";
+
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 import { useFeaturedCategories } from "@/hooks/useFeaturedCategories";
 import { Link, useNavigate } from "react-router-dom";
@@ -358,7 +358,7 @@ const Index = () => {
         description="Browse, copy, and run 3,000+ tested AI prompts for ChatGPT, Claude, and more. Use Scout AI optimization and Power Packs for better results. Completely free for professionals, marketers, and creators."
       />
       
-      <NanoBananaAnnouncement />
+      
 
       <main>
         {/* 50% Off Countdown Banner - Only show if enabled in database */}
