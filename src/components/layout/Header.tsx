@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { User, ShoppingCart, Sparkles, Search } from "lucide-react";
+import { User, ShoppingCart, Sparkles, Search, Bookmark } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
 import { supabase } from "@/integrations/supabase/client";
@@ -100,6 +100,13 @@ const Header = () => {
             className="text-sm font-medium text-foreground hover:text-primary transition-colors"
           >
             Power Packs
+          </Link>
+          <Link 
+            to="/saved" 
+            className="text-sm font-medium text-foreground hover:text-primary transition-colors flex items-center gap-1"
+          >
+            <Bookmark className="h-3 w-3" />
+            Saved
           </Link>
           
           {/* Search Box */}

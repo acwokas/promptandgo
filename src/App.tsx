@@ -83,6 +83,7 @@ import AICreditsExhaustedPage from "./pages/AICreditsExhausted";
 import GAListener from "@/components/analytics/GAListener";
 import { AnalyticsProvider } from "@/components/analytics/AnalyticsProvider";
 import AdminAnalytics from "./pages/AdminAnalytics";
+import SavedPromptsPage from "./pages/SavedPrompts";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 
 const queryClient = new QueryClient();
@@ -126,6 +127,7 @@ const AppContent = () => {
                 <Route path="/" element={<Index />} />
                 <Route path="/library" element={<PromptLibrary />} />
                 <Route path="/packs" element={<PromptPacks />} />
+                <Route path="/saved" element={<SavedPromptsPage />} />
                 <Route path="/submit" element={<SubmitPrompt />} />
                 <Route path="/submit-prompt" element={<SubmitPrompt />} />
                 <Route path="/faqs" element={<FAQs />} />
