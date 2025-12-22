@@ -474,7 +474,7 @@ export type Database = {
           created_at: string | null
           email_hash: string
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           window_start: string | null
         }
         Insert: {
@@ -482,7 +482,7 @@ export type Database = {
           created_at?: string | null
           email_hash: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           window_start?: string | null
         }
         Update: {
@@ -490,7 +490,7 @@ export type Database = {
           created_at?: string | null
           email_hash?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           window_start?: string | null
         }
         Relationships: []
@@ -784,7 +784,7 @@ export type Database = {
         Row: {
           created_at: string
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           option_id: string
           poll_id: string
           user_id: string | null
@@ -792,7 +792,7 @@ export type Database = {
         Insert: {
           created_at?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           option_id: string
           poll_id: string
           user_id?: string | null
@@ -800,7 +800,7 @@ export type Database = {
         Update: {
           created_at?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           option_id?: string
           poll_id?: string
           user_id?: string | null
@@ -978,7 +978,7 @@ export type Database = {
           is_pro: boolean
           prompt: string
           ribbon: string | null
-          search_vector: unknown | null
+          search_vector: unknown
           subcategory_id: string | null
           title: string
           updated_at: string
@@ -993,7 +993,7 @@ export type Database = {
           is_pro?: boolean
           prompt: string
           ribbon?: string | null
-          search_vector?: unknown | null
+          search_vector?: unknown
           subcategory_id?: string | null
           title: string
           updated_at?: string
@@ -1008,7 +1008,7 @@ export type Database = {
           is_pro?: boolean
           prompt?: string
           ribbon?: string | null
-          search_vector?: unknown | null
+          search_vector?: unknown
           subcategory_id?: string | null
           title?: string
           updated_at?: string
@@ -1063,7 +1063,7 @@ export type Database = {
           action: string
           created_at: string
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           record_id: string | null
           table_name: string
           user_agent: string | null
@@ -1073,7 +1073,7 @@ export type Database = {
           action: string
           created_at?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           record_id?: string | null
           table_name: string
           user_agent?: string | null
@@ -1083,7 +1083,7 @@ export type Database = {
           action?: string
           created_at?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           record_id?: string | null
           table_name?: string
           user_agent?: string | null
@@ -1641,7 +1641,7 @@ export type Database = {
     }
     Functions: {
       audit_unencrypted_pii: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           issue_type: string
           record_count: number
@@ -1680,7 +1680,7 @@ export type Database = {
         }[]
       }
       check_api_key_rotation_status: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           days_since_rotation: number
           last_rotation: string
@@ -1688,10 +1688,7 @@ export type Database = {
           service_name: string
         }[]
       }
-      cleanup_newsletter_rate_limits: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      cleanup_newsletter_rate_limits: { Args: never; Returns: undefined }
       confirm_contact_secure: {
         Args: { p_encryption_key: string; p_token: string }
         Returns: {
@@ -1704,7 +1701,7 @@ export type Database = {
         }[]
       }
       detect_unusual_admin_access: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           action_count: number
           last_action: string
@@ -1759,10 +1756,7 @@ export type Database = {
           user_id: string
         }[]
       }
-      get_daily_ai_sends_count: {
-        Args: { p_user_id: string }
-        Returns: Json
-      }
+      get_daily_ai_sends_count: { Args: { p_user_id: string }; Returns: Json }
       get_decrypted_contact: {
         Args: { p_contact_id: string; p_key: string }
         Returns: {
@@ -1835,10 +1829,7 @@ export type Database = {
           user_id: string
         }[]
       }
-      get_sgt_date: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
+      get_sgt_date: { Args: never; Returns: string }
       get_subscriber_encrypted_data: {
         Args: { p_encryption_key: string; p_user_id: string }
         Returns: {
@@ -1863,7 +1854,7 @@ export type Database = {
         }[]
       }
       get_subscribers_admin_view: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           email_hash: string
           id: string
@@ -1883,13 +1874,13 @@ export type Database = {
         }[]
       }
       get_user_newsletter_status: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           newsletter_subscribed: boolean
         }[]
       }
       get_user_subscription_data: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           created_at: string
           id: string
@@ -1914,14 +1905,8 @@ export type Database = {
         }
         Returns: boolean
       }
-      increment_link_clicks: {
-        Args: { link_code: string }
-        Returns: undefined
-      }
-      is_admin_user: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
+      increment_link_clicks: { Args: { link_code: string }; Returns: undefined }
+      is_admin_user: { Args: never; Returns: boolean }
       log_data_access: {
         Args: {
           p_action: string
@@ -1949,10 +1934,7 @@ export type Database = {
         }
         Returns: undefined
       }
-      migrate_contacts_service_role: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      migrate_contacts_service_role: { Args: never; Returns: undefined }
       migrate_encrypt_contacts: {
         Args: { p_encryption_key: string }
         Returns: undefined
@@ -1973,10 +1955,7 @@ export type Database = {
           success: boolean
         }[]
       }
-      rotate_featured_categories: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      rotate_featured_categories: { Args: never; Returns: undefined }
       secure_insert_contact: {
         Args: {
           p_email: string
