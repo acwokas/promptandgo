@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#3b82f6" />
+    <meta name="theme-color" content="#000000" />
     <meta name="color-scheme" content="light dark" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="author" content="PromptAndGo.ai" />
@@ -157,7 +157,10 @@
     </script>
     
     <link rel="icon" href="/lovable-uploads/favicon-large.png" type="image/png" />
-    <link rel="apple-touch-icon" href="/lovable-uploads/favicon-large.png" />
+    <link rel="apple-touch-icon" href="/icons/promptandgo-192.png" />
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.webmanifest" />
     
     <!-- Enhanced default meta tags (will be overridden by React Helmet) -->
     <title>PromptAndGo – 3,000+ Curated AI Prompts for ChatGPT, Claude & More</title>
@@ -212,5 +215,16 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Service Worker Registration for PWA -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('SW registered:', reg.scope))
+            .catch(err => console.log('SW registration failed:', err));
+        });
+      }
+    </script>
   </body>
 </html>
