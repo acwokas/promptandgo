@@ -20,7 +20,8 @@ import {
   Globe,
   Smartphone,
   Monitor,
-  Target
+  Target,
+  Bell
 } from 'lucide-react';
 import { format, subDays, subHours, startOfDay, endOfDay } from 'date-fns';
 import { 
@@ -42,6 +43,8 @@ import {
 } from 'recharts';
 import SEO from '@/components/SEO';
 import Header from '@/components/layout/Header';
+import AnalyticsAlertSettings from '@/components/admin/AnalyticsAlertSettings';
+import { useAnalyticsAlerts } from '@/hooks/useAnalyticsAlerts';
 
 const COLORS = ['hsl(var(--primary))', 'hsl(var(--secondary))', 'hsl(var(--accent))', '#22c55e', '#f59e0b', '#ef4444'];
 
@@ -317,6 +320,10 @@ const AdminAnalytics = () => {
               <TabsTrigger value="events">Events</TabsTrigger>
               <TabsTrigger value="journeys">User Journeys</TabsTrigger>
               <TabsTrigger value="live">Live Feed</TabsTrigger>
+              <TabsTrigger value="alerts" className="flex items-center gap-1">
+                <Bell className="h-3 w-3" />
+                Alerts
+              </TabsTrigger>
             </TabsList>
 
             {/* Overview Tab */}
@@ -599,6 +606,11 @@ const AdminAnalytics = () => {
                   </div>
                 </CardContent>
               </Card>
+            </TabsContent>
+
+            {/* Alerts Tab */}
+            <TabsContent value="alerts">
+              <AnalyticsAlertSettings />
             </TabsContent>
           </Tabs>
         </div>
