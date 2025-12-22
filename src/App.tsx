@@ -83,6 +83,7 @@ import AICreditsExhaustedPage from "./pages/AICreditsExhausted";
 import GAListener from "@/components/analytics/GAListener";
 import { AnalyticsProvider } from "@/components/analytics/AnalyticsProvider";
 import AdminAnalytics from "./pages/AdminAnalytics";
+import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 
 const queryClient = new QueryClient();
 
@@ -196,6 +197,7 @@ const AppContent = () => {
         
         {user ? <FeedbackWidget /> : <LoginWidget />}
         <ExitIntentPopup />
+        <PWAInstallPrompt />
       </LoginWidgetProvider>
     </SidebarProvider>
   );
