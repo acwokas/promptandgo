@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Download, X, Smartphone } from 'lucide-react';
+import { useUserXP } from '@/hooks/useUserXP';
+import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -12,6 +14,8 @@ export const PWAInstallPrompt = () => {
   const [showPrompt, setShowPrompt] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
   const [showPostInstall, setShowPostInstall] = useState(false);
+  const { user } = useSupabaseAuth();
+  const { awardXP } = useUserXP();
 
   useEffect(() => {
     // Check if already installed
@@ -31,6 +35,19 @@ export const PWAInstallPrompt = () => {
       setShowPrompt(false);
       setDeferredPrompt(null);
       setShowPostInstall(true);
+      
+      // Award XP for installing the app (only for logged-in users)
+      if (user) {
+        // Check if already awarded (stored in localStorage)
+        const alreadyAwarded = localStorage.getItem('pwa_install_xp_awarded');
+        if (!alreadyAwarded) {
+          awardXP({
+            activityKey: 'pwa_install',
+            description: 'Installed PromptAndGo as a PWA',
+          });
+          localStorage.setItem('pwa_install_xp_awarded', 'true');
+        }
+      }
       
       // Hide post-install message after 10 seconds
       setTimeout(() => setShowPostInstall(false), 10000);
