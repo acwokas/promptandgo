@@ -81,6 +81,8 @@ import CertificationPage from "./pages/Certification";
 
 import AICreditsExhaustedPage from "./pages/AICreditsExhausted";
 import GAListener from "@/components/analytics/GAListener";
+import { AnalyticsProvider } from "@/components/analytics/AnalyticsProvider";
+import AdminAnalytics from "./pages/AdminAnalytics";
 
 const queryClient = new QueryClient();
 
@@ -116,6 +118,7 @@ const AppContent = () => {
             <Header />
             <div className="flex-1 w-full overflow-x-hidden max-w-full">
               <ScrollToTop />
+              <AnalyticsProvider>
               <GAListener />
               <AuthEffects />
               <Routes>
@@ -154,6 +157,7 @@ const AppContent = () => {
                 <Route path="/admin/countdown" element={<AdminCountdownSettings />} />
                 <Route path="/admin/security" element={<AdminSecurity />} />
                 <Route path="/admin/coupons" element={<AdminCoupons />} />
+                <Route path="/admin/analytics" element={<AdminAnalytics />} />
                 <Route path="/account" element={<AccountPage />} />
                 <Route path="/account/profile" element={<ProfilePage />} />
                 <Route path="/account/notifications" element={<NotificationsPage />} />
@@ -177,6 +181,7 @@ const AppContent = () => {
                 <Route path="/certification" element={<CertificationPage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
+              </AnalyticsProvider>
             </div>
             <Footer />
           </main>

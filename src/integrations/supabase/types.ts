@@ -71,6 +71,206 @@ export type Database = {
         }
         Relationships: []
       }
+      analytics_funnel_completions: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          funnel_id: string | null
+          id: string
+          is_complete: boolean | null
+          session_id: string | null
+          steps_completed: Json
+          user_id: string | null
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          funnel_id?: string | null
+          id?: string
+          is_complete?: boolean | null
+          session_id?: string | null
+          steps_completed?: Json
+          user_id?: string | null
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          funnel_id?: string | null
+          id?: string
+          is_complete?: boolean | null
+          session_id?: string | null
+          steps_completed?: Json
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "analytics_funnel_completions_funnel_id_fkey"
+            columns: ["funnel_id"]
+            isOneToOne: false
+            referencedRelation: "analytics_funnels"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "analytics_funnel_completions_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "analytics_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      analytics_funnels: {
+        Row: {
+          created_at: string
+          funnel_name: string
+          funnel_steps: Json
+          id: string
+          is_active: boolean | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          funnel_name: string
+          funnel_steps?: Json
+          id?: string
+          is_active?: boolean | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          funnel_name?: string
+          funnel_steps?: Json
+          id?: string
+          is_active?: boolean | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      analytics_page_views: {
+        Row: {
+          created_at: string
+          id: string
+          page_path: string
+          page_title: string | null
+          referrer: string | null
+          scroll_depth: number | null
+          session_id: string | null
+          time_on_page_seconds: number | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          page_path: string
+          page_title?: string | null
+          referrer?: string | null
+          scroll_depth?: number | null
+          session_id?: string | null
+          time_on_page_seconds?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          page_path?: string
+          page_title?: string | null
+          referrer?: string | null
+          scroll_depth?: number | null
+          session_id?: string | null
+          time_on_page_seconds?: number | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "analytics_page_views_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "analytics_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      analytics_sessions: {
+        Row: {
+          browser: string | null
+          conversion_type: string | null
+          converted: boolean | null
+          country: string | null
+          created_at: string
+          device_type: string | null
+          entry_page: string | null
+          events_count: number | null
+          exit_page: string | null
+          id: string
+          ip_hash: string | null
+          is_bounce: boolean | null
+          max_scroll_depth: number | null
+          os: string | null
+          pages_viewed: number | null
+          referrer: string | null
+          session_end: string | null
+          session_start: string
+          total_time_seconds: number | null
+          updated_at: string
+          user_id: string | null
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
+        }
+        Insert: {
+          browser?: string | null
+          conversion_type?: string | null
+          converted?: boolean | null
+          country?: string | null
+          created_at?: string
+          device_type?: string | null
+          entry_page?: string | null
+          events_count?: number | null
+          exit_page?: string | null
+          id?: string
+          ip_hash?: string | null
+          is_bounce?: boolean | null
+          max_scroll_depth?: number | null
+          os?: string | null
+          pages_viewed?: number | null
+          referrer?: string | null
+          session_end?: string | null
+          session_start?: string
+          total_time_seconds?: number | null
+          updated_at?: string
+          user_id?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Update: {
+          browser?: string | null
+          conversion_type?: string | null
+          converted?: boolean | null
+          country?: string | null
+          created_at?: string
+          device_type?: string | null
+          entry_page?: string | null
+          events_count?: number | null
+          exit_page?: string | null
+          id?: string
+          ip_hash?: string | null
+          is_bounce?: boolean | null
+          max_scroll_depth?: number | null
+          os?: string | null
+          pages_viewed?: number | null
+          referrer?: string | null
+          session_end?: string | null
+          session_start?: string
+          total_time_seconds?: number | null
+          updated_at?: string
+          user_id?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Relationships: []
+      }
       api_key_rotation_log: {
         Row: {
           created_at: string
@@ -1130,6 +1330,63 @@ export type Database = {
         }
         Relationships: []
       }
+      site_analytics_events: {
+        Row: {
+          browser: string | null
+          country: string | null
+          created_at: string
+          device_type: string | null
+          event_category: string | null
+          event_name: string
+          event_type: string
+          id: string
+          ip_hash: string | null
+          metadata: Json | null
+          os: string | null
+          page_path: string | null
+          page_title: string | null
+          referrer: string | null
+          session_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          browser?: string | null
+          country?: string | null
+          created_at?: string
+          device_type?: string | null
+          event_category?: string | null
+          event_name: string
+          event_type: string
+          id?: string
+          ip_hash?: string | null
+          metadata?: Json | null
+          os?: string | null
+          page_path?: string | null
+          page_title?: string | null
+          referrer?: string | null
+          session_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          browser?: string | null
+          country?: string | null
+          created_at?: string
+          device_type?: string | null
+          event_category?: string | null
+          event_name?: string
+          event_type?: string
+          id?: string
+          ip_hash?: string | null
+          metadata?: Json | null
+          os?: string | null
+          page_path?: string | null
+          page_title?: string | null
+          referrer?: string | null
+          session_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       subcategories: {
         Row: {
           category_id: string
@@ -1756,6 +2013,18 @@ export type Database = {
           user_id: string
         }[]
       }
+      get_analytics_summary: {
+        Args: { p_end_date?: string; p_start_date?: string }
+        Returns: {
+          avg_session_duration: number
+          bounce_rate: number
+          conversion_rate: number
+          total_events: number
+          total_page_views: number
+          total_sessions: number
+          unique_visitors: number
+        }[]
+      }
       get_daily_ai_sends_count: { Args: { p_user_id: string }; Returns: Json }
       get_decrypted_contact: {
         Args: { p_contact_id: string; p_key: string }
@@ -1773,6 +2042,14 @@ export type Database = {
       get_decrypted_subscriber_email: {
         Args: { p_key: string; p_user_id: string }
         Returns: string
+      }
+      get_event_counts: {
+        Args: { p_end_date?: string; p_start_date?: string }
+        Returns: {
+          event_count: number
+          event_name: string
+          event_type: string
+        }[]
       }
       get_pending_contacts_admin: {
         Args: { p_encryption_key: string }
@@ -1863,6 +2140,15 @@ export type Database = {
           subscription_tier: string
           updated_at: string
           user_id: string
+        }[]
+      }
+      get_top_pages: {
+        Args: { p_end_date?: string; p_limit?: number; p_start_date?: string }
+        Returns: {
+          avg_scroll_depth: number
+          avg_time_on_page: number
+          page_path: string
+          view_count: number
         }[]
       }
       get_user_ai_limits: {
