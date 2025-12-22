@@ -6,7 +6,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { Navigate, Link } from "react-router-dom";
-import { Upload, Plus, Download, Settings, MessageCircle, BarChart3, Clock, Shield, Tag } from "lucide-react";
+import { Upload, Plus, Download, Settings, MessageCircle, BarChart3, Clock, Shield, Tag, Activity } from "lucide-react";
+import RealTimeAnalyticsWidget from "@/components/admin/RealTimeAnalyticsWidget";
 
 const AdminTools = () => {
   const { user, loading: authLoading } = useSupabaseAuth();
@@ -107,6 +108,13 @@ const AdminTools = () => {
       icon: Tag,
       href: "/admin/coupons",
       color: "text-emerald-500"
+    },
+    {
+      title: "Analytics Dashboard",
+      description: "View detailed site analytics, user behavior, events, and conversion tracking",
+      icon: Activity,
+      href: "/admin/analytics",
+      color: "text-pink-500"
     }
   ];
 
@@ -138,6 +146,11 @@ const AdminTools = () => {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+
+        {/* Real-Time Analytics Widget */}
+        <div className="max-w-6xl mx-auto mb-8">
+          <RealTimeAnalyticsWidget />
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {tools.map((tool) => (
