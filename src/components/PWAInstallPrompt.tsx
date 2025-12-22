@@ -9,13 +9,25 @@ interface BeforeInstallPromptEvent extends Event {
   userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
 }
 
+const VISIT_COUNT_KEY = 'pag_visit_count';
+const INSTALL_DISMISSED_KEY = 'pag_install_dismissed';
+
 export const PWAInstallPrompt = () => {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [showPrompt, setShowPrompt] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
   const [showPostInstall, setShowPostInstall] = useState(false);
+  const [visitCount, setVisitCount] = useState(0);
   const { user } = useSupabaseAuth();
   const { awardXP } = useUserXP();
+
+  // Track visit count on mount
+  useEffect(() => {
+    const current = parseInt(localStorage.getItem(VISIT_COUNT_KEY) || '0', 10);
+    const newCount = current + 1;
+    localStorage.setItem(VISIT_COUNT_KEY, String(newCount));
+    setVisitCount(newCount);
+  }, []);
 
   useEffect(() => {
     // Check if already installed
@@ -27,7 +39,14 @@ export const PWAInstallPrompt = () => {
     const handleBeforeInstall = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e as BeforeInstallPromptEvent);
-      setShowPrompt(true);
+      
+      // Only show prompt if visit count >= 2 and not dismissed
+      const visits = parseInt(localStorage.getItem(VISIT_COUNT_KEY) || '0', 10);
+      const dismissed = localStorage.getItem(INSTALL_DISMISSED_KEY) === 'true';
+      
+      if (visits >= 2 && !dismissed) {
+        setShowPrompt(true);
+      }
     };
 
     const handleAppInstalled = () => {
@@ -60,7 +79,7 @@ export const PWAInstallPrompt = () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
       window.removeEventListener('appinstalled', handleAppInstalled);
     };
-  }, []);
+  }, [user, awardXP]);
 
   const handleInstall = async () => {
     if (!deferredPrompt) return;
@@ -74,18 +93,16 @@ export const PWAInstallPrompt = () => {
     setDeferredPrompt(null);
   };
 
-  const handleDismiss = () => {
+  const handleDismiss = (permanent = false) => {
     setShowPrompt(false);
-    // Don't show again for this session
-    sessionStorage.setItem('pwa-prompt-dismissed', 'true');
-  };
-
-  // Check if dismissed this session
-  useEffect(() => {
-    if (sessionStorage.getItem('pwa-prompt-dismissed')) {
-      setShowPrompt(false);
+    if (permanent) {
+      // Don't show again permanently
+      localStorage.setItem(INSTALL_DISMISSED_KEY, 'true');
+    } else {
+      // Don't show again for this session
+      sessionStorage.setItem('pwa-prompt-dismissed', 'true');
     }
-  }, []);
+  };
 
   if (isInstalled && showPostInstall) {
     return (
@@ -136,14 +153,20 @@ export const PWAInstallPrompt = () => {
               <Button 
                 size="sm" 
                 variant="ghost" 
-                onClick={handleDismiss}
+                onClick={() => handleDismiss(false)}
               >
                 Not now
               </Button>
             </div>
+            <button 
+              onClick={() => handleDismiss(true)}
+              className="text-xs text-muted-foreground hover:text-foreground underline mt-2"
+            >
+              Don't show again
+            </button>
           </div>
           <button 
-            onClick={handleDismiss}
+            onClick={() => handleDismiss(false)}
             className="text-muted-foreground hover:text-foreground"
           >
             <X className="h-4 w-4" />

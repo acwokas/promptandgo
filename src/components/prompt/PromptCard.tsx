@@ -7,7 +7,7 @@ import type { Prompt, Category } from "@/data/prompts";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useLoginWidget } from "@/hooks/useLoginWidget";
-import { Heart, Lock, Copy, MessageSquare, Megaphone, ShoppingBag, BarChart2, Briefcase, User, HeartPulse, Clock, Sparkles, Tag, CheckCircle, Star, Wand2, Send, ExternalLink, Bot, ChevronDown } from "lucide-react";
+import { Heart, Lock, Copy, MessageSquare, Megaphone, ShoppingBag, BarChart2, Briefcase, User, HeartPulse, Clock, Sparkles, Tag, CheckCircle, Star, Wand2, Send, ExternalLink, Bot, ChevronDown, Bookmark } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Link, useNavigate } from "react-router-dom";
@@ -20,6 +20,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { AiProviderDropdown } from "@/components/ai/AiProviderDropdown";
 import { AiResponseModal } from "@/components/ai/AiResponseModal";
+import { useSavedPrompts } from "@/hooks/useSavedPrompts";
 
 // Clean display title by removing common variant markers
 const cleanTitle = (t?: string | null) => {
@@ -160,6 +161,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   const { openLoginWidget } = useLoginWidget();
   const navigate = useNavigate();
   const { getFilteredProviders } = useAIPreferences();
+  const { isPromptSaved, toggleSavePrompt } = useSavedPrompts();
   
   const [selectedAIPlatform, setSelectedAIPlatform] = useState<string>(defaultAIProvider || 'original');
   const [isFavorited, setIsFavorited] = useState(false);
@@ -417,21 +419,48 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                 <div className="flex-1" />
               )}
               
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button 
-                      size="sm" 
-                      variant="outline" 
-                      onClick={handleToggleFavorite} 
-                      className="flex-shrink-0"
-                    >
-                      <Heart className={`h-4 w-4 ${isFavorited ? "fill-red-500 text-red-500" : ""}`} />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>{isFavorited ? "Remove from favorites" : "Add to favorites"}</TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <div className="flex gap-2 shrink-0">
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button 
+                        size="sm" 
+                        variant="outline" 
+                        onClick={() => {
+                          const saved = toggleSavePrompt({
+                            id: prompt.id,
+                            title: prompt.title,
+                            slug: `/library?search=${encodeURIComponent(prompt.title)}`,
+                            category: sub?.name || category?.name || 'Uncategorized',
+                            excerpt: prompt.whatFor || prompt.excerpt || '',
+                          });
+                          toast({ title: saved ? "Saved for later" : "Removed from saved" });
+                        }}
+                        className="flex-shrink-0"
+                      >
+                        <Bookmark className={`h-4 w-4 ${isPromptSaved(prompt.id) ? "fill-primary text-primary" : ""}`} />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>{isPromptSaved(prompt.id) ? "Remove from saved" : "Save for later"}</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+                
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button 
+                        size="sm" 
+                        variant="outline" 
+                        onClick={handleToggleFavorite} 
+                        className="flex-shrink-0"
+                      >
+                        <Heart className={`h-4 w-4 ${isFavorited ? "fill-red-500 text-red-500" : ""}`} />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>{isFavorited ? "Remove from favorites" : "Add to favorites"}</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
             </div>
 
             {/* Platform selector */}
