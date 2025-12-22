@@ -14,9 +14,12 @@ import {
   Monitor,
   ArrowUpRight,
   Clock,
-  MousePointer
+  MousePointer,
+  Bell,
+  BellRing
 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
+import { useAnalyticsAlerts } from '@/hooks/useAnalyticsAlerts';
 
 interface LiveSession {
   id: string;
@@ -44,6 +47,7 @@ interface ActivePage {
 
 const RealTimeAnalyticsWidget = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
+  const { unreadCount, triggeredThresholds } = useAnalyticsAlerts();
 
   // Update time every second for "time ago" displays
   useEffect(() => {
@@ -151,12 +155,20 @@ const RealTimeAnalyticsWidget = () => {
               <CardDescription>Live visitor activity</CardDescription>
             </div>
           </div>
-          <Button variant="outline" size="sm" asChild>
-            <Link to="/admin/analytics">
-              View Full Dashboard
-              <ArrowUpRight className="ml-1 h-3 w-3" />
-            </Link>
-          </Button>
+          <div className="flex items-center gap-2">
+            {unreadCount > 0 && (
+              <Badge variant="destructive" className="animate-pulse">
+                <BellRing className="h-3 w-3 mr-1" />
+                {unreadCount} alerts
+              </Badge>
+            )}
+            <Button variant="outline" size="sm" asChild>
+              <Link to="/admin/analytics">
+                View Full Dashboard
+                <ArrowUpRight className="ml-1 h-3 w-3" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </CardHeader>
       

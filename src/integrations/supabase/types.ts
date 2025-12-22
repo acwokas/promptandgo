@@ -146,6 +146,53 @@ export type Database = {
         }
         Relationships: []
       }
+      analytics_notifications: {
+        Row: {
+          acknowledged_at: string | null
+          acknowledged_by: string | null
+          id: string
+          message: string
+          metric_type: string
+          metric_value: number
+          notification_type: string
+          sent_at: string
+          threshold_id: string | null
+          threshold_value: number
+        }
+        Insert: {
+          acknowledged_at?: string | null
+          acknowledged_by?: string | null
+          id?: string
+          message: string
+          metric_type: string
+          metric_value: number
+          notification_type: string
+          sent_at?: string
+          threshold_id?: string | null
+          threshold_value: number
+        }
+        Update: {
+          acknowledged_at?: string | null
+          acknowledged_by?: string | null
+          id?: string
+          message?: string
+          metric_type?: string
+          metric_value?: number
+          notification_type?: string
+          sent_at?: string
+          threshold_id?: string | null
+          threshold_value?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "analytics_notifications_threshold_id_fkey"
+            columns: ["threshold_id"]
+            isOneToOne: false
+            referencedRelation: "analytics_thresholds"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       analytics_page_views: {
         Row: {
           created_at: string
@@ -268,6 +315,51 @@ export type Database = {
           utm_campaign?: string | null
           utm_medium?: string | null
           utm_source?: string | null
+        }
+        Relationships: []
+      }
+      analytics_thresholds: {
+        Row: {
+          comparison: string
+          created_at: string
+          id: string
+          is_active: boolean | null
+          last_triggered_at: string | null
+          metric_type: string
+          notify_browser: boolean | null
+          notify_email: boolean | null
+          threshold_name: string
+          threshold_value: number
+          time_window_minutes: number
+          updated_at: string
+        }
+        Insert: {
+          comparison: string
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          last_triggered_at?: string | null
+          metric_type: string
+          notify_browser?: boolean | null
+          notify_email?: boolean | null
+          threshold_name: string
+          threshold_value: number
+          time_window_minutes?: number
+          updated_at?: string
+        }
+        Update: {
+          comparison?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          last_triggered_at?: string | null
+          metric_type?: string
+          notify_browser?: boolean | null
+          notify_email?: boolean | null
+          threshold_name?: string
+          threshold_value?: number
+          time_window_minutes?: number
+          updated_at?: string
         }
         Relationships: []
       }
@@ -1231,6 +1323,33 @@ export type Database = {
           },
         ]
       }
+      push_subscriptions: {
+        Row: {
+          auth: string
+          created_at: string
+          endpoint: string
+          id: string
+          p256dh: string
+          user_id: string
+        }
+        Insert: {
+          auth: string
+          created_at?: string
+          endpoint: string
+          id?: string
+          p256dh: string
+          user_id: string
+        }
+        Update: {
+          auth?: string
+          created_at?: string
+          endpoint?: string
+          id?: string
+          p256dh?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       rate_limits: {
         Row: {
           count: number | null
@@ -1922,6 +2041,18 @@ export type Database = {
       check_admin_rate_limit: {
         Args: { p_action: string; p_limit?: number; p_window_minutes?: number }
         Returns: boolean
+      }
+      check_analytics_thresholds: {
+        Args: never
+        Returns: {
+          current_value: number
+          is_triggered: boolean
+          message: string
+          metric_type: string
+          threshold_id: string
+          threshold_name: string
+          threshold_value: number
+        }[]
       }
       check_and_increment_daily_ai_sends: {
         Args: { p_user_id: string }
