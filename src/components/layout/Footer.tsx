@@ -79,12 +79,47 @@ const Footer = () => {
           </nav>
         </div>
         <div className="md:col-span-3 col-span-full flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-sm text-muted-foreground">
-          <div>
-            Explore AI insights and stories at <a href="http://www.aiinasia.com" target="_blank" rel="noopener noreferrer" className="hover:text-foreground underline font-bold">AIinASIA.com</a>
-          </div>
-          <div className="text-right">
+          <div className="text-right w-full">
             © 2025 PromptandGo  |  <Link to="/terms" className="hover:text-foreground">Terms & Conditions</Link>  |  <Link to="/privacy" className="hover:text-foreground">Privacy Policy</Link>
           </div>
+        </div>
+      </div>
+      
+      {/* Ecosystem Postscript */}
+      <div className="border-t border-border/40">
+        <div className="container py-6 text-center">
+          <p className="text-[11px] text-muted-foreground/70 mb-2">
+            Part of the You.WithThePowerOf.AI ecosystem
+          </p>
+          <p className="text-xs text-muted-foreground/80 leading-relaxed max-w-md mx-auto mb-3">
+            Different parts of the ecosystem support different stages.<br />
+            Most people move through one or two, not all.
+          </p>
+          <p className="text-xs text-muted-foreground mb-2">
+            If you're shaping an idea, BusinessInAByte helps structure it into a clearer direction.
+          </p>
+          <a 
+            href="https://businessinabyte.com/start" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-xs text-foreground/80 hover:text-foreground underline underline-offset-2"
+          >
+            Structure your idea →
+          </a>
+          <p className="text-[10px] text-muted-foreground/60 mt-2 mb-4">
+            You don't need to go further unless it feels useful.
+          </p>
+          <p className="text-[10px] text-muted-foreground/50">
+            You can also read more about the thinking behind this ecosystem.{" "}
+            <a 
+              href="https://you.withthepowerof.ai" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:text-muted-foreground underline underline-offset-2"
+            >
+              you.withthepowerof.ai →
+            </a>
+          </p>
         </div>
       </div>
     </footer>
