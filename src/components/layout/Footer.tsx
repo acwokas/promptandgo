@@ -80,7 +80,7 @@ const Footer = () => {
         </div>
         <div className="md:col-span-3 col-span-full flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-sm text-muted-foreground">
           <div className="text-right w-full">
-            © 2025 PromptandGo  |  <Link to="/terms" className="hover:text-foreground">Terms & Conditions</Link>  |  <Link to="/privacy" className="hover:text-foreground">Privacy Policy</Link>
+            © 2026 PromptandGo  |  <Link to="/terms" className="hover:text-foreground">Terms & Conditions</Link>  |  <Link to="/privacy" className="hover:text-foreground">Privacy Policy</Link>
           </div>
         </div>
       </div>
