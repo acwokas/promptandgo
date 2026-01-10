@@ -99,8 +99,8 @@ const Footer = () => {
             If you're shaping an idea, BusinessInAByte helps structure it into a clearer direction.
           </p>
           <a 
-            href="https://businessinabyte.com/start" 
-            target="_blank" 
+            href="https://businessinabyte.com/start-here" 
+            target="_blank"
             rel="noopener noreferrer"
             className="text-xs text-foreground/80 hover:text-foreground underline underline-offset-2"
           >
