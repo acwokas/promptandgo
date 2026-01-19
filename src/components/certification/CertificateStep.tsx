@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Award, Download, Share2, Sparkles } from "lucide-react";
+import { Award, Download, Linkedin, Share2, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import confetti from "canvas-confetti";
@@ -150,23 +150,56 @@ Ready to level up your AI game? Start here 👉 https://promptandgo.ai
 
 #AI #Prompting #Certification #ChatGPT #AIProductivity`;
 
-  const handleShareLinkedIn = () => {
-    // Copy share text to clipboard automatically
-    navigator.clipboard.writeText(shareText);
+  // Parse completion date to get year and month
+  const getDateParts = () => {
+    try {
+      const date = new Date(completionDate);
+      return {
+        year: date.getFullYear(),
+        month: date.getMonth() + 1 // LinkedIn uses 1-indexed months
+      };
+    } catch {
+      const now = new Date();
+      return { year: now.getFullYear(), month: now.getMonth() + 1 };
+    }
+  };
+
+  const handleAddToLinkedIn = () => {
+    const { year, month } = getDateParts();
+    
+    // Build LinkedIn Add to Profile URL for certifications
+    const params = new URLSearchParams({
+      startTask: 'CERTIFICATION_NAME',
+      name: 'PromptAndGo Certified Prompt Master',
+      organizationName: 'PromptAndGo',
+      issueYear: year.toString(),
+      issueMonth: month.toString(),
+      certId: certificateId,
+      certUrl: `https://promptandgo.ai/certification`
+    });
+    
+    const linkedInUrl = `https://www.linkedin.com/profile/add?${params.toString()}`;
     
     // Award XP for LinkedIn share
+    awardXP({
+      activityKey: 'linkedin_share',
+      description: 'Added certificate to LinkedIn profile',
+    });
+    
+    window.open(linkedInUrl, "_blank");
+    toast.success("Adding certification to your LinkedIn profile!");
+  };
+
+  const handleSharePost = () => {
+    navigator.clipboard.writeText(shareText);
+    
     awardXP({
       activityKey: 'linkedin_share',
       description: 'Shared certificate on LinkedIn',
     });
     
-    // Open LinkedIn post composer (not share-offsite) so user can paste text and add certificate image
     window.open("https://www.linkedin.com/feed/?shareActive=true", "_blank");
-    
-    toast.success(
-      "Post text copied! Paste it in LinkedIn and attach your downloaded certificate as an image for best results.",
-      { duration: 6000 }
-    );
+    toast.success("Post text copied! Paste it in LinkedIn.", { duration: 4000 });
   };
 
   const handleCopyShareText = () => {
@@ -235,28 +268,34 @@ Ready to level up your AI game? Start here 👉 https://promptandgo.ai
       </Card>
 
       {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+      <div className="flex flex-col sm:flex-row gap-4 justify-center mb-4">
         <Button
           onClick={handleDownloadCertificate}
           size="lg"
           className="bg-[#4A90E2] hover:bg-[#4A90E2]/90"
         >
           <Download className="h-4 w-4 mr-2" />
-          Download Certificate (HTML)
+          Download Certificate
         </Button>
         <Button
-          onClick={handleShareLinkedIn}
+          onClick={handleAddToLinkedIn}
           size="lg"
-          variant="outline"
+          className="bg-[#0A66C2] hover:bg-[#0A66C2]/90 text-white"
         >
-          <Share2 className="h-4 w-4 mr-2" />
-          Share on LinkedIn
+          <Linkedin className="h-4 w-4 mr-2" />
+          Add to LinkedIn Profile
         </Button>
       </div>
 
-      <Button onClick={handleCopyShareText} variant="ghost" size="sm">
-        Copy LinkedIn Post Text
-      </Button>
+      <div className="flex gap-2 justify-center mb-8">
+        <Button onClick={handleSharePost} variant="outline" size="sm">
+          <Share2 className="h-4 w-4 mr-2" />
+          Share as Post
+        </Button>
+        <Button onClick={handleCopyShareText} variant="ghost" size="sm">
+          Copy Post Text
+        </Button>
+      </div>
 
       <div className="mt-12">
         <Button onClick={onNext} size="lg" variant="outline">
