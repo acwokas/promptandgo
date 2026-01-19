@@ -142,14 +142,17 @@ export function CertificateStep({
     toast.success("Certificate downloaded! Open the HTML file and use your browser's print function to save as PDF.");
   };
 
-  const shareText = "Just completed my PromptAndGo Certified Prompt Master course! Now crafting smarter AI prompts that actually work. 🧠 Join in at https://promptandgo.ai";
+  const shareText = `🎓 Just earned my PromptAndGo Certified Prompt Master certification!
+
+I completed the Prompt Like a Pro course and I'm now crafting smarter AI prompts that actually work.
+
+Ready to level up your AI game? Start here 👉 https://promptandgo.ai
+
+#AI #Prompting #Certification #ChatGPT #AIProductivity`;
 
   const handleShareLinkedIn = () => {
-    const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent("https://promptandgo.ai")}`;
-    
     // Copy share text to clipboard automatically
     navigator.clipboard.writeText(shareText);
-    toast.success("LinkedIn post text copied to clipboard!");
     
     // Award XP for LinkedIn share
     awardXP({
@@ -157,8 +160,13 @@ export function CertificateStep({
       description: 'Shared certificate on LinkedIn',
     });
     
-    // Open LinkedIn share dialog
-    window.open(linkedInUrl, "_blank");
+    // Open LinkedIn post composer (not share-offsite) so user can paste text and add certificate image
+    window.open("https://www.linkedin.com/feed/?shareActive=true", "_blank");
+    
+    toast.success(
+      "Post text copied! Paste it in LinkedIn and attach your downloaded certificate as an image for best results.",
+      { duration: 6000 }
+    );
   };
 
   const handleCopyShareText = () => {
