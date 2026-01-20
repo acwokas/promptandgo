@@ -255,7 +255,7 @@ export default function AdminCoupons() {
                     <Label htmlFor="code">Coupon Code *</Label>
                     <Input
                       id="code"
-                      placeholder="SUMMER2024"
+                      placeholder="NEWYEAR2025"
                       value={code}
                       onChange={(e) => setCode(e.target.value.toUpperCase())}
                       required
@@ -344,7 +344,7 @@ export default function AdminCoupons() {
                     <Label htmlFor="description">Description</Label>
                     <Input
                       id="description"
-                      placeholder="Summer sale discount"
+                      placeholder="New Year sale discount"
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                     />
