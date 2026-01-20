@@ -50,7 +50,6 @@ const getProviderIcon = (providerId: string): React.ReactNode => {
     mistral: <Tornado className="h-4 w-4" />,
     llama: <Bot className="h-4 w-4" />,
     perplexity: <Search className="h-4 w-4" />,
-    zenochat: <Rocket className="h-4 w-4" />,
     midjourney: <Palette className="h-4 w-4" />,
     ideogram: <Palette className="h-4 w-4" />,
     nanobanana: <Palette className="h-4 w-4" />

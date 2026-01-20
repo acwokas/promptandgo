@@ -275,7 +275,6 @@ const AIPromptGenerator = () => {
       groq: 'https://console.groq.com/playground',
       mistral: 'https://chat.mistral.ai/',
       llama: 'https://www.llama2.ai/',
-      zenochat: 'https://zenochat.ai/',
       midjourney: 'https://discord.com/channels/@me',
       ideogram: 'https://ideogram.ai/'
     };
