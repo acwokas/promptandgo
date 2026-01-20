@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { addToCart, getCart } from "@/lib/cart";
 import { toast } from "@/hooks/use-toast";
-import { useNavigate, useSearchParams, Link } from "react-router-dom";
+import { useNavigate, useSearchParams, Link, useLocation } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
 import CountdownTimer from "@/components/conversion/CountdownTimer";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
@@ -42,6 +42,7 @@ const PromptPacks = () => {
   const [showPopularPacks, setShowPopularPacks] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const { user } = useSupabaseAuth();
 
   useEffect(() => {
@@ -156,7 +157,24 @@ const PromptPacks = () => {
     return () => { cancelled = true; };
   }, [searchParams, user]);
 
+  // Scroll to hash element when page loads
+  useEffect(() => {
+    if (location.hash && location.hash !== '#pack-') {
+      const timeoutId = setTimeout(() => {
+        const element = document.getElementById(location.hash.slice(1));
+        if (element) {
+          const header = document.querySelector('header');
+          const headerHeight = header ? (header as HTMLElement).getBoundingClientRect().height : 0;
+          const y = element.getBoundingClientRect().top + window.scrollY - headerHeight - 20;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }, 300);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [location.hash]);
+
   const handleAdd = (p: Pack) => {
+
     if (ownedPackIds.has(p.id)) {
       toast({ title: 'Already owned', description: `${p.name} is already in your library.` });
       return;
@@ -373,7 +391,7 @@ const PromptPacks = () => {
         ) : filteredPacks.length === 0 ? (
           <div className="text-muted-foreground">No packs match your search.</div>
         ) : (
-          <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <section id="packs-grid" className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 scroll-mt-40">
             {filteredPacks.map((p) => {
               const items = contents[p.id] || [];
               const packOwned = ownedPackIds.has(p.id);

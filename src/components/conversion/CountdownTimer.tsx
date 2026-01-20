@@ -172,7 +172,7 @@ const CountdownTimer = ({
           </div>
           
           <Button asChild size="sm" variant="secondary" className="shrink-0">
-            <Link to="/library#library-results">
+            <Link to="/packs#packs-grid">
               Claim Offer
             </Link>
           </Button>
