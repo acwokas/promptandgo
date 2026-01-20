@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import PageHero from "@/components/layout/PageHero";
 import CountdownTimer from "@/components/conversion/CountdownTimer";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useLocation } from "react-router-dom";
 import { Search, Heart, Bot, TrendingUp, Clock, Star, Users, Copy, Sparkles, ChevronDown, ChevronUp } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -135,6 +135,7 @@ const PromptLibrary = () => {
   const [query, setQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | undefined>();
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
   const [randomMode, setRandomMode] = useState<boolean>(false);
   const [includePro, setIncludePro] = useState(true);
   const [proOnly, setProOnly] = useState(false);
@@ -563,10 +564,24 @@ const PromptLibrary = () => {
   }, [page, hasMore, loading, fetchPromptsPage, ribbon]);
 
 
-  // Always land at top when visiting Library
+  // Scroll to hash element or top when visiting Library
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'auto' });
-  }, []);
+    if (location.hash) {
+      // Delay to ensure DOM is ready
+      const timeoutId = setTimeout(() => {
+        const element = document.getElementById(location.hash.slice(1));
+        if (element) {
+          const header = document.querySelector('header');
+          const headerHeight = header ? (header as HTMLElement).getBoundingClientRect().height : 0;
+          const y = element.getBoundingClientRect().top + window.scrollY - headerHeight - 20;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }, 300);
+      return () => clearTimeout(timeoutId);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+  }, [location.hash]);
 
 
   useEffect(() => {
