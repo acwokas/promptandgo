@@ -12,6 +12,7 @@ import remarkBreaks from "remark-breaks";
 import rehypeRaw from "rehype-raw";
 import SEO from "@/components/SEO";
 import { CalloutBox, PromptExample, CodeBlock, TipCallout } from "@/components/ui/callout-box";
+import { ArticleImage } from "@/components/ui/article-image";
 
 interface Article {
   id: string;
@@ -112,10 +113,12 @@ const ArticleView = () => {
       case 'image':
         return (
           <div key={asset.id} className="my-6">
-            <img
+            <ArticleImage
               src={asset.asset_url}
               alt={asset.asset_title || 'Article image'}
-              className="w-full rounded-lg shadow-md"
+              className="rounded-lg shadow-md"
+              aspectRatio="auto"
+              sizes="(max-width: 896px) 100vw, 896px"
             />
             {(asset.asset_title || asset.asset_description) && (
               <div className="mt-2 text-center">
@@ -406,13 +409,13 @@ ${titleHtml}
 
           {/* Hero Image */}
           {article.thumbnail_url && (
-            <div className="aspect-video mb-8 overflow-hidden rounded-lg shadow-lg !bg-transparent">
-              <img
-                src={article.thumbnail_url}
-                alt={article.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
+            <ArticleImage
+              src={article.thumbnail_url}
+              alt={article.title}
+              className="mb-8 rounded-lg shadow-lg"
+              priority={true}
+              sizes="(max-width: 896px) 100vw, 896px"
+            />
           )}
 
           {/* Article Header */}

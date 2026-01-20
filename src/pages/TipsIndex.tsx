@@ -8,7 +8,7 @@ import { Search, Clock, User } from "lucide-react";
 import { format } from "date-fns";
 import SEO from "@/components/SEO";
 import PageHero from "@/components/layout/PageHero";
-
+import { ArticleImage } from "@/components/ui/article-image";
 interface Article {
   id: string;
   title: string;
@@ -127,13 +127,12 @@ const TipsIndex = () => {
                       <Link to={`/tips/${article.slug}`} className="block">
                         {/* Thumbnail */}
                         {article.thumbnail_url ? (
-                          <div className="aspect-video overflow-hidden">
-                            <img
-                              src={article.thumbnail_url}
-                              alt={article.title}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                            />
-                          </div>
+                          <ArticleImage
+                            src={article.thumbnail_url}
+                            alt={article.title}
+                            className="group-hover:scale-105 transition-transform duration-300"
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          />
                         ) : (
                           <div className="aspect-video bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
                             <div className="text-primary/40">
