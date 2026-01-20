@@ -276,19 +276,37 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
     };
     
     const url = urls[selectedProvider.id as keyof typeof urls];
-    if (url) {
-      // Use a link click to avoid referrer/opener issues that cause ERR_BLOCKED_BY_RESPONSE
-      const link = document.createElement('a');
-      link.href = url;
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      link.referrerPolicy = 'no-referrer';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-    
     setShowDialog(false);
+    
+    if (url) {
+      // Use setTimeout to ensure dialog is fully closed before opening
+      // This helps avoid browser blocking due to the popup being tied to the dialog context
+      setTimeout(() => {
+        // Try window.open with specific features to prevent referrer issues
+        const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+        
+        // If popup was blocked, show instructions
+        if (!newWindow || newWindow.closed) {
+          toast({
+            title: "Open manually",
+            description: (
+              <div className="space-y-2">
+                <p className="text-sm">Your browser blocked the popup. Please open manually:</p>
+                <a 
+                  href={url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-primary underline text-sm block"
+                >
+                  {url}
+                </a>
+              </div>
+            ),
+            duration: 10000,
+          });
+        }
+      }, 100);
+    }
   };
 
   // Convert AI_PROVIDERS to the component format and sort alphabetically
