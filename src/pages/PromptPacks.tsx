@@ -16,6 +16,8 @@ import ShareButton from "@/components/ShareButton";
 import { PackFilters } from "@/components/prompt/PackFilters";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { PromptStudioCTA } from "@/components/ui/prompt-studio-cta";
+import { PacksSocialProof } from "@/components/packs/PacksSocialProof";
+import { PackCTABanner } from "@/components/packs/PackCTABanner";
 
 const PACK_ORIGINAL_CENTS = 999;
 const PACK_DISCOUNT_CENTS = 499;
@@ -318,7 +320,16 @@ const PromptPacks = () => {
           description="Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results."
           structuredData={productSchemas}
         />
-        
+
+        {/* Social Proof Section */}
+        <div className="mb-8">
+          <PacksSocialProof />
+        </div>
+
+        {/* Lifetime Access CTA */}
+        <div className="mb-8">
+          <PackCTABanner variant="lifetime" />
+        </div>
 
         {/* Mobile Toggle Buttons */}
         <div className="lg:hidden mb-4 flex gap-2">
@@ -609,6 +620,11 @@ const PromptPacks = () => {
             </div>
 
           </div>
+        </section>
+
+        {/* Second CTA Banner */}
+        <section className="mt-8">
+          <PackCTABanner variant="membership" />
         </section>
 
         {/* Prompt Studio CTA */}
