@@ -317,23 +317,23 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
   return (
     <TooltipProvider>
       <DropdownMenu>
-        <div className={cn("flex w-full", className)}>
+        <div className={cn("flex w-full min-w-0", className)}>
           {/* Main send button */}
           <Button
             variant="default"
-            className="flex-1 rounded-r-none border-r-0"
+            className="flex-1 rounded-r-none border-r-0 min-w-0 overflow-hidden"
             disabled={disabled || isLoading || !prompt?.trim()}
             onClick={handleDirectSend}
           >
             {isLoading ? (
               <>
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
-                Sending to {selectedProvider?.name}...
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2 shrink-0" />
+                <span className="truncate">Sending...</span>
               </>
             ) : (
               <>
-                <ExternalLink className="h-4 w-4 sm:mr-2" />
-                <span className="hidden sm:inline">{buttonText}</span>
+                <ExternalLink className="h-4 w-4 shrink-0 sm:mr-2" />
+                <span className="hidden sm:inline truncate">{buttonText}</span>
               </>
             )}
           </Button>
