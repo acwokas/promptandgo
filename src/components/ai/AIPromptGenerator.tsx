@@ -281,55 +281,21 @@ const AIPromptGenerator = () => {
 
     const url = urls[selectedProvider!];
     if (url) {
-      try {
-        // Try to open automatically first
-        const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
-        
-        if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-          // Popup was blocked, show manual instructions
-          toast({
-            title: "Popup blocked - Manual steps",
-            description: (
-              <div className="space-y-3">
-                <p className="text-sm font-medium">✅ Your optimized prompt is copied to clipboard</p>
-                <div className="space-y-1">
-                  <p className="text-sm font-medium">Manual steps:</p>
-                  <p className="text-xs">1. Open a new browser tab</p>
-                  <p className="text-xs">2. Go to: <span className="font-mono bg-muted px-1 rounded">{url}</span></p>
-                  <p className="text-xs">3. Paste your prompt and hit enter</p>
-                </div>
-              </div>
-            ),
-            duration: 8000,
-          });
-        } else {
-          // Window opened successfully
-          const successMessage = `${selectedProviderData.name} opened in new tab. Your optimized prompt has been copied to clipboard.`;
-            
-          toast({
-            title: `Opened ${selectedProviderData.name}`,
-            description: successMessage,
-            duration: 4000,
-          });
-        }
-      } catch (error) {
-        // Failed to open, show manual instructions
-        toast({
-          title: "Unable to open automatically",
-          description: (
-            <div className="space-y-3">
-              <p className="text-sm font-medium">✅ Your optimized prompt is copied to clipboard</p>
-              <div className="space-y-1">
-                <p className="text-sm font-medium">Manual steps:</p>
-                <p className="text-xs">1. Open a new browser tab</p>
-                <p className="text-xs">2. Go to: <span className="font-mono bg-muted px-1 rounded">{url}</span></p>
-                <p className="text-xs">3. Paste your prompt and hit enter</p>
-              </div>
-            </div>
-          ),
-          duration: 8000,
-        });
-      }
+      // Use link click to avoid referrer issues that cause ERR_BLOCKED_BY_RESPONSE
+      const link = document.createElement('a');
+      link.href = url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.referrerPolicy = 'no-referrer';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      toast({
+        title: `Opened ${selectedProviderData.name}`,
+        description: `${selectedProviderData.name} opened in new tab. Your optimized prompt has been copied to clipboard.`,
+        duration: 4000,
+      });
     }
   };
 

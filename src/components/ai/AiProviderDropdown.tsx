@@ -277,7 +277,15 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
     
     const url = urls[selectedProvider.id as keyof typeof urls];
     if (url) {
-      window.open(url, '_blank');
+      // Use a link click to avoid referrer/opener issues that cause ERR_BLOCKED_BY_RESPONSE
+      const link = document.createElement('a');
+      link.href = url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.referrerPolicy = 'no-referrer';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
     
     setShowDialog(false);
