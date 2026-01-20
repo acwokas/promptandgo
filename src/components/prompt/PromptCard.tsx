@@ -330,7 +330,6 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
       'mistral': 'bg-orange-100 text-orange-600',
       'llama': 'bg-pink-100 text-pink-600',
       'perplexity': 'bg-teal-100 text-teal-600',
-      'zenochat': 'bg-cyan-100 text-cyan-600',
       'midjourney': 'bg-violet-100 text-violet-600',
       'ideogram': 'bg-emerald-100 text-emerald-600',
       'nanobanana': 'bg-amber-100 text-amber-600'

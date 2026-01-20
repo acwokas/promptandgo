@@ -75,8 +75,7 @@ export const CompactAIProviderSelector: React.FC<CompactAIProviderSelectorProps>
       deepseek: 'https://chat.deepseek.com/',
       groq: 'https://console.groq.com/playground',
       mistral: 'https://chat.mistral.ai/',
-      llama: 'https://www.llama2.ai/',
-      zenochat: 'https://zenochat.ai/'
+      llama: 'https://www.llama2.ai/'
     };
 
     const url = urls[selectedProvider];

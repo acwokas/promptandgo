@@ -43,7 +43,6 @@ const getProviderIcon = (providerId: string, providerIcon: string): React.ReactN
     mistral: <Wind className="h-4 w-4" />,
     llama: <Bot className="h-4 w-4" />,
     perplexity: <Search className="h-4 w-4" />,
-    zenochat: <Rocket className="h-4 w-4" />,
     midjourney: <Image className="h-4 w-4" />,
     ideogram: <Palette className="h-4 w-4" />,
     nanobanana: <Image className="h-4 w-4" />
@@ -231,9 +230,6 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
         case 'llama':
           showManualInstructions('https://www.llama2.ai/');
           break;
-        case 'zenochat':
-          showManualInstructions('https://www.zenochat.ai/');
-          break;
         default:
           toast({
             title: "Prompt copied",
@@ -276,7 +272,6 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
       mistral: 'https://chat.mistral.ai/',
       llama: 'https://www.llama2.ai/',
       perplexity: 'https://www.perplexity.ai/',
-      zenochat: 'https://www.zenochat.ai/',
       midjourney: 'https://discord.com/channels/@me'
     };
     

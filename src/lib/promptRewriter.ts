@@ -152,17 +152,6 @@ export const AI_PROVIDERS: AIProvider[] = [
       
       return `A nano-sized collectible figurine of ${basePrompt}, miniature scale with banana for size reference, posed on wooden tabletop. Macro photography with shallow depth of field, soft background blur, realistic lighting. Painted resin texture with handcrafted details, toy-like finish, whimsical collectible aesthetic. Ultra-detailed miniature craftsmanship, professional product photography lighting.`;
     }
-  },
-  {
-    id: 'zenochat',
-    name: 'ZenoChat',
-    icon: '🚀',
-    category: 'text',
-    description: 'ZenoChat AI assistant',
-    rewritePattern: (prompt: string) => {
-      // Idea or feature expansion in bullets, each with one-sentence practical use/benefit
-      return `**Request**: ${prompt}\n\n**Feature Expansion**:\n• **Core Functionality** - Primary capability that directly addresses the main objective\n• **Enhanced Features** - Additional elements that improve user experience and outcomes\n• **Practical Applications** - Real-world use cases that demonstrate immediate value\n• **Implementation Benefits** - Specific advantages and positive impacts for users\n• **Future Potential** - Scalability and long-term value proposition\n\nDevelop each point with practical insights and actionable recommendations.`;
-    }
   }
 ];
 
