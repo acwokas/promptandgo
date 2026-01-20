@@ -44,7 +44,7 @@ const CountdownTimer = ({
         if (error) {
           console.error('Error loading countdown settings:', error);
           // Fallback to showing countdown if can't load settings
-          setSettings({ enabled: true, offer_text: "50% OFF All Power Packs", expiry_hours: 24 });
+          setSettings({ enabled: true, offer_text: "New Year Offer! 🚀 50% OFF All Premium Packs - Limited Time Only!", expiry_hours: 24 });
           setIsVisible(true);
           return;
         }
@@ -54,13 +54,13 @@ const CountdownTimer = ({
           setIsVisible(data.enabled);
         } else {
           // No settings found, use defaults
-          setSettings({ enabled: true, offer_text: "50% OFF All Power Packs", expiry_hours: 24 });
+          setSettings({ enabled: true, offer_text: "New Year Offer! 🚀 50% OFF All Premium Packs - Limited Time Only!", expiry_hours: 24 });
           setIsVisible(true);
         }
       } catch (err) {
         console.error('Error loading countdown settings:', err);
         // Fallback to showing countdown if can't load settings
-        setSettings({ enabled: true, offer_text: "50% OFF All Power Packs", expiry_hours: 24 });
+        setSettings({ enabled: true, offer_text: "New Year Offer! 🚀 50% OFF All Premium Packs - Limited Time Only!", expiry_hours: 24 });
         setIsVisible(true);
       }
     };
@@ -69,7 +69,7 @@ const CountdownTimer = ({
   }, []);
 
   // Use database settings or props as fallback
-  const offer = settings?.offer_text || propOffer || "50% OFF All Power Packs";
+  const offer = settings?.offer_text || propOffer || "New Year Offer! 🚀 50% OFF All Premium Packs - Limited Time Only!";
   const expiryHours = settings?.expiry_hours || propExpiryHours || 24;
 
   useEffect(() => {
@@ -146,7 +146,7 @@ const CountdownTimer = ({
 
   // Default banner variant - Hidden on mobile
   return (
-    <div className="hidden sm:block bg-gradient-to-r from-destructive to-destructive/80 text-destructive-foreground">
+    <div className="hidden sm:block bg-gradient-to-r from-emerald-600 to-emerald-500 text-white">
       <div className="container px-4 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
