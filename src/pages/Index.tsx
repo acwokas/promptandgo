@@ -380,6 +380,61 @@ const Index = () => {
           </div>
         </PageHero>
 
+
+        {/* Scout Demo - Interactive Prompt Card */}
+        <ScoutDemo />
+
+        <section className="container -mt-8 py-6">
+          <div className="text-center">
+            <p className="text-muted-foreground max-w-2xl mx-auto text-lg">See how Scout optimizes real prompts. Pick one below customize it, push it to your favorite AI platform, and experience the magic instantly.</p>
+          </div>
+        </section>
+
+        {/* Prompts of the Day / Personalized Prompts */}
+        <section className="pb-12">
+          <PromptsOfTheDay />
+        </section>
+
+        {/* Path 2: Generate from Scratch */}
+        <section className="container py-12">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
+              <Wand2 className="h-4 w-4" />
+              Alternative Path
+            </div>
+            <h2 className="text-3xl font-bold mb-4">Generate Custom Prompts with Scout's Prompt Studio</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Craft perfect AI prompts with Scout's guided approach. Choose your options from curated dropdowns and let Scout build a professional-quality prompt for you in real-time. Ask Scout to refine it even further and then push it to your favorite AI platform. All for free.</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-8">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Wand2 className="h-8 w-8 text-primary" />
+              </div>
+              <h4 className="font-semibold mb-2">Guided Creation</h4>
+              <p className="text-sm text-muted-foreground">Choose from curated dropdowns and options</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Bot className="h-8 w-8 text-primary" />
+              </div>
+              <h4 className="font-semibold mb-2">Expert Quality</h4>
+              <p className="text-sm text-muted-foreground">Professional-quality prompts built in real-time</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Rocket className="h-8 w-8 text-primary" />
+              </div>
+              <h4 className="font-semibold mb-2">No Guesswork</h4>
+              <p className="text-sm text-muted-foreground">Scout handles the complexity for you</p>
+            </div>
+          </div>
+          
+          {/* Mini Studio Widget */}
+          <div className="max-w-4xl mx-auto">
+            <MiniPromptStudio />
+          </div>
+        </section>
+
         {/* Social Proof + Today's Featured */}
         <section className="container py-6">
           <div className="relative overflow-hidden bg-gradient-to-r from-primary/10 via-accent/5 to-primary/10 rounded-2xl border border-primary/20 max-w-5xl mx-auto">
@@ -437,61 +492,6 @@ const Index = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-
-
-        {/* Scout Demo - Interactive Prompt Card */}
-        <ScoutDemo />
-
-        <section className="container -mt-8 py-6">
-          <div className="text-center">
-            <p className="text-muted-foreground max-w-2xl mx-auto text-lg">See how Scout optimizes real prompts. Pick one below customize it, push it to your favorite AI platform, and experience the magic instantly.</p>
-          </div>
-        </section>
-
-        {/* Prompts of the Day / Personalized Prompts */}
-        <section className="pb-12">
-          <PromptsOfTheDay />
-        </section>
-
-        {/* Path 2: Generate from Scratch */}
-        <section className="container py-12">
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
-              <Wand2 className="h-4 w-4" />
-              Alternative Path
-            </div>
-            <h2 className="text-3xl font-bold mb-4">Generate Custom Prompts with Scout's Prompt Studio</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Craft perfect AI prompts with Scout's guided approach. Choose your options from curated dropdowns and let Scout build a professional-quality prompt for you in real-time. Ask Scout to refine it even further and then push it to your favorite AI platform. All for free.</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Wand2 className="h-8 w-8 text-primary" />
-              </div>
-              <h4 className="font-semibold mb-2">Guided Creation</h4>
-              <p className="text-sm text-muted-foreground">Choose from curated dropdowns and options</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Bot className="h-8 w-8 text-primary" />
-              </div>
-              <h4 className="font-semibold mb-2">Expert Quality</h4>
-              <p className="text-sm text-muted-foreground">Professional-quality prompts built in real-time</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Rocket className="h-8 w-8 text-primary" />
-              </div>
-              <h4 className="font-semibold mb-2">No Guesswork</h4>
-              <p className="text-sm text-muted-foreground">Scout handles the complexity for you</p>
-            </div>
-          </div>
-          
-          {/* Mini Studio Widget */}
-          <div className="max-w-4xl mx-auto">
-            <MiniPromptStudio />
           </div>
         </section>
 
