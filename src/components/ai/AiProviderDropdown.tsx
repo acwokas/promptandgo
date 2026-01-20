@@ -29,7 +29,7 @@ import {
 import { ChevronDown, ExternalLink, Bot, Sparkles, Brain, Zap, Image, Palette, Search, Rocket, Wind } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { cn } from '@/lib/utils';
+import { cn, openExternalUrl } from '@/lib/utils';
 import { AI_PROVIDERS } from '@/lib/promptRewriter';
 
 // Create icon mapping for the AI providers from promptRewriter
@@ -260,7 +260,7 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
 
   const handleOpenAI = () => {
     if (!selectedProvider) return;
-    
+
     const urls = {
       openai: 'https://chatgpt.com/',
       chatgpt: 'https://chatgpt.com/',
@@ -274,38 +274,35 @@ export const AiProviderDropdown: React.FC<AiProviderDropdownProps> = ({
       perplexity: 'https://www.perplexity.ai/',
       midjourney: 'https://discord.com/channels/@me'
     };
-    
+
     const url = urls[selectedProvider.id as keyof typeof urls];
     setShowDialog(false);
-    
-    if (url) {
-      // Use setTimeout to ensure dialog is fully closed before opening
-      // This helps avoid browser blocking due to the popup being tied to the dialog context
-      setTimeout(() => {
-        // Try window.open with specific features to prevent referrer issues
-        const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
-        
-        // If popup was blocked, show instructions
-        if (!newWindow || newWindow.closed) {
-          toast({
-            title: "Open manually",
-            description: (
-              <div className="space-y-2">
-                <p className="text-sm">Your browser blocked the popup. Please open manually:</p>
-                <a 
-                  href={url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-primary underline text-sm block"
-                >
-                  {url}
-                </a>
-              </div>
-            ),
-            duration: 10000,
-          });
-        }
-      }, 100);
+
+    if (!url) return;
+
+    // Must run synchronously on the click event to avoid popup blockers.
+    // openExternalUrl also strips referrer to prevent ERR_BLOCKED_BY_RESPONSE.
+    const opened = openExternalUrl(url);
+
+    if (!opened) {
+      toast({
+        title: "Open manually",
+        description: (
+          <div className="space-y-2">
+            <p className="text-sm">We couldn't open a new tab automatically. Open this link instead:</p>
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              referrerPolicy="no-referrer"
+              className="text-primary underline text-sm block"
+            >
+              {url}
+            </a>
+          </div>
+        ),
+        duration: 10000,
+      });
     }
   };
 
