@@ -119,7 +119,7 @@ const SocialProofStream = () => {
       
       <div className="mt-3 pt-2 border-t border-primary/10">
         <p className="text-xs text-muted-foreground text-center">
-          Join 5,000+ professionals using our prompts daily
+          Join 2,500+ professionals using our prompts daily
         </p>
       </div>
     </div>

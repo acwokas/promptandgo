@@ -314,7 +314,7 @@ const Index = () => {
       aggregateRating: {
         "@type": "AggregateRating",
         ratingValue: "4.9",
-        reviewCount: "50000",
+        reviewCount: "1800",
         bestRating: "5",
         worstRating: "1"
       },
@@ -338,7 +338,7 @@ const Index = () => {
       aggregateRating: {
         "@type": "AggregateRating",
         ratingValue: "4.9",
-        reviewCount: "50000"
+        reviewCount: "1800"
       }
     }
   ];

@@ -319,8 +319,8 @@ const PromptCardDemo = ({ className = "" }: PromptCardDemoProps) => {
               ))}
               <Star className="h-3.5 w-3.5 text-muted-foreground/30" />
             </div>
-            <span className="text-sm font-semibold text-foreground">4.4</span>
-            <span className="text-xs text-muted-foreground">(318 reviews)</span>
+            <span className="text-sm font-semibold text-foreground">4.8</span>
+            <span className="text-xs text-muted-foreground">(1,247 reviews)</span>
           </div>
         </CardHeader>
         

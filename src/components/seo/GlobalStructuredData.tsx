@@ -112,7 +112,7 @@ const GlobalStructuredData = () => {
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "4.9",
-      reviewCount: "5000",
+      reviewCount: "1800",
       bestRating: "5",
       worstRating: "1",
       ratingExplanation: "Based on user feedback and prompt effectiveness ratings"
