@@ -620,48 +620,53 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
             </div>
 
             {/* Action buttons */}
-            <div className="flex flex-wrap gap-2 pt-2">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button 
-                      size="sm" 
-                      variant="outline" 
-                      onClick={handleCopyPrompt} 
-                      className="flex-1 min-w-[70px]"
-                      disabled={showLock && !onCopyClick && !hasAccess}
-                    >
-                      <Copy className="h-4 w-4 sm:mr-1" />
-                      <span className="hidden sm:inline">Copy</span>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>Copy optimized prompt to clipboard</TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-
-              {/* Refine with Scout button */}
-              {(!showLock || hasAccess) && (
+            <div className="space-y-2 pt-2">
+              {/* Row 1: Copy and Refine buttons */}
+              <div className="flex gap-2">
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button 
                         size="sm" 
-                        variant="secondary"
-                        onClick={() => navigate('/ai/generator', { 
-                          state: { initialPrompt: displayedPrompt }
-                        })}
-                        className="flex-1 min-w-[70px]"
+                        variant="outline" 
+                        onClick={handleCopyPrompt} 
+                        className="flex-1"
+                        disabled={showLock && !onCopyClick && !hasAccess}
                       >
-                        <Bot className="h-4 w-4 sm:mr-1" />
-                        <span className="hidden sm:inline">Refine with Scout</span>
+                        <Copy className="h-4 w-4 mr-1" />
+                        Copy
                       </Button>
                     </TooltipTrigger>
-                    <TooltipContent>Let Scout help you refine this prompt</TooltipContent>
+                    <TooltipContent>Copy optimized prompt to clipboard</TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
-              )}
 
-               {(!showLock || hasAccess) && (
+                {/* Refine with Scout button */}
+                {(!showLock || hasAccess) && (
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button 
+                          size="sm" 
+                          variant="secondary"
+                          onClick={() => navigate('/ai/generator', { 
+                            state: { initialPrompt: displayedPrompt }
+                          })}
+                          className="flex-1"
+                        >
+                          <Bot className="h-4 w-4 mr-1" />
+                          <span className="hidden sm:inline">Refine with Scout</span>
+                          <span className="sm:hidden">Scout</span>
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>Let Scout help you refine this prompt</TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                )}
+              </div>
+
+              {/* Row 2: Send to AI button (full width) */}
+              {(!showLock || hasAccess) && (
                 <AiProviderDropdown 
                   prompt={displayedPrompt} 
                   optimizedFor={selectedAIPlatform}
@@ -670,7 +675,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                     setAiProvider(provider);
                     setIsAiModalOpen(true);
                   }} 
-                  className="w-full sm:w-auto sm:flex-1 sm:min-w-[120px]"
+                  className="w-full"
                 />
               )}
             </div>
