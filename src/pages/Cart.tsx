@@ -203,7 +203,7 @@ const CartPage = () => {
             <CardContent className="p-6">
               <div className="text-center mb-6">
                 <Badge className="mb-3 bg-primary text-white font-semibold px-4 py-1">
-                  🎉 Late Summer Sale - 50% Off Everything!
+                  🎉 New Year Sale - 50% Off Everything!
                 </Badge>
                 <h2 className="text-2xl font-bold mb-2">Unlock Your AI Potential</h2>
                 <p className="text-muted-foreground">Get unlimited access to premium prompts and boost your AI usage limits</p>
@@ -424,7 +424,7 @@ const CartPage = () => {
                   </div>
                   <div className="space-y-4">
                     <p className="text-sm text-muted-foreground">
-                      Summer Sale for a limited time only:<br/>
+                      New Year Sale for a limited time only:<br/>
                       🏷️ All PRO prompts $0.99 (was $1.99).<br/>
                       ⚡️Power Packs $4.99 (was $9.99).
                     </p>
