@@ -17,6 +17,7 @@ import { usePersonalizedPrompts } from "@/hooks/usePersonalizedPrompts";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { PromptStudioCTA } from "@/components/ui/prompt-studio-cta";
+import { SearchUpsellPacks } from "@/components/library/SearchUpsellPacks";
 import React from "react";
 
 const PAGE_SIZE = 6;
@@ -1060,6 +1061,13 @@ const PromptLibrary = () => {
               </p>
             </div>
           </section>
+        )}
+
+        {/* Search Upsell - Show relevant packs when user searches */}
+        {query.trim().length >= 2 && (
+          <div className="mb-6">
+            <SearchUpsellPacks searchQuery={query} />
+          </div>
         )}
 
         <section className="mt-0 pt-6">
