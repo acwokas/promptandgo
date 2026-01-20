@@ -25,20 +25,20 @@ export const UserStats = () => (
   <div className="bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl p-6 text-center">
     <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
       <div>
-        <div className="text-2xl font-bold">5,000+</div>
-        <div className="text-sm text-muted-foreground">Active Users</div>
+        <div className="text-2xl font-bold">2,500+</div>
+        <div className="text-sm text-muted-foreground">Happy Users</div>
       </div>
       <div>
-        <div className="text-2xl font-bold">100K+</div>
+        <div className="text-2xl font-bold">50K+</div>
         <div className="text-sm text-muted-foreground">Prompts Used</div>
       </div>
       <div>
-        <div className="text-2xl font-bold">50+</div>
-        <div className="text-sm text-muted-foreground">Hours Saved Daily</div>
+        <div className="text-2xl font-bold">10K+</div>
+        <div className="text-sm text-muted-foreground">Hours Saved</div>
       </div>
       <div>
         <div className="text-2xl font-bold">4.9★</div>
-        <div className="text-sm text-muted-foreground">User Rating</div>
+        <div className="text-sm text-muted-foreground">1,800+ Reviews</div>
       </div>
     </div>
   </div>
@@ -96,7 +96,7 @@ export const TestimonialHighlights = () => {
           {Array.from({ length: 5 }, (_, i) => (
             <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
           ))}
-          <span className="ml-2 text-sm text-muted-foreground">4.9/5 from 1,200+ reviews</span>
+          <span className="ml-2 text-sm text-muted-foreground">4.9/5 from 1,800+ reviews</span>
         </div>
       </div>
       

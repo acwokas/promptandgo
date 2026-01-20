@@ -213,10 +213,10 @@ const SuccessStoriesSection = () => {
           
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {[
-              { industry: "Marketing", users: "1,200+", avgSavings: "15 hrs/week" },
-              { industry: "Sales", users: "800+", avgSavings: "12 hrs/week" },
-              { industry: "Content", users: "900+", avgSavings: "20 hrs/week" },
-              { industry: "Freelance", users: "1,500+", avgSavings: "18 hrs/week" }
+              { industry: "Marketing", users: "650+", avgSavings: "15 hrs/week" },
+              { industry: "Sales", users: "480+", avgSavings: "12 hrs/week" },
+              { industry: "Content", users: "520+", avgSavings: "20 hrs/week" },
+              { industry: "Freelance", users: "850+", avgSavings: "18 hrs/week" }
             ].map((stat, index) => (
               <div key={index} className="text-center p-4 bg-background rounded-lg border">
                 <div className="text-2xl font-bold text-primary mb-1">{stat.users}</div>

@@ -114,7 +114,7 @@ const ExitIntentPopup = () => {
         <div className="p-6">
           <div className="text-center mb-6">
             <h3 className="font-semibold text-lg mb-2">
-              Join 5,000+ professionals who save 10+ hours weekly
+              Join 2,500+ professionals who save 10+ hours weekly
             </h3>
             <div className="grid grid-cols-1 gap-2 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
@@ -150,7 +150,7 @@ const ExitIntentPopup = () => {
               {isSubmitting ? "Sending..." : "Get My FREE Prompts 🚀"}
             </Button>
             <p className="text-xs text-muted-foreground text-center">
-              No spam. Unsubscribe anytime. Trusted by 5,000+ professionals.
+              No spam. Unsubscribe anytime. Trusted by 2,500+ professionals.
             </p>
           </form>
         </div>

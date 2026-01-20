@@ -20,7 +20,7 @@ const ProgressivePricing = ({ showFull = false }: ProgressivePricingProps) => {
   const steps = {
     free: {
       title: "Start Free - No Credit Card Required",
-      subtitle: "Join 5,000+ professionals already saving hours daily",
+      subtitle: "Join 2,500+ professionals already saving hours daily",
       cta: "Get Started FREE",
       features: [
         "3,000+ battle-tested AI prompts",
@@ -199,7 +199,7 @@ const ProgressivePricing = ({ showFull = false }: ProgressivePricingProps) => {
             </div>
             <div className="flex items-center gap-2">
               <Users className="h-4 w-4 text-blue-500" />
-              <span>5,000+ happy customers</span>
+              <span>2,500+ happy customers</span>
             </div>
           </div>
           <p className="text-xs text-muted-foreground">

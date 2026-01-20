@@ -22,8 +22,8 @@ const testimonials = [
 
 const stats = [
   { icon: Users, value: "2,500+", label: "Happy Users" },
-  { icon: Star, value: "4.9/5", label: "Average Rating" },
-  { icon: TrendingUp, value: "10x", label: "Productivity Boost" },
+  { icon: Star, value: "4.9/5", label: "1,800+ Reviews" },
+  { icon: TrendingUp, value: "50K+", label: "Prompts Used" },
 ];
 
 export function PacksSocialProof() {
