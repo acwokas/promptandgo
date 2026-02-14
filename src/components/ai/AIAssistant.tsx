@@ -11,8 +11,9 @@ import { Bot, Send, User, Loader2, Lightbulb, Search } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useAIUsage } from "@/hooks/useAIUsage";
 import UsageDisplay from "@/components/ai/UsageDisplay";
-import DOMPurify from 'dompurify';
-import { validateSecureInput, sanitizeHtml } from "@/lib/securityUtils";
+import ReactMarkdown from 'react-markdown';
+import remarkBreaks from 'remark-breaks';
+import { validateSecureInput } from "@/lib/securityUtils";
 import { AI_PERSONA } from "@/lib/aiPersona";
 
 
@@ -225,18 +226,11 @@ const AIAssistant = () => {
                   >
                     <div className="text-sm">
                       {message.role === 'assistant' ? (
-                        <div 
-                          className="prose prose-sm max-w-none dark:prose-invert"
-                          dangerouslySetInnerHTML={{
-                            __html: sanitizeHtml(
-                              message.content
-                                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                                .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                                .replace(/`(.*?)`/g, '<code>$1</code>')
-                                .replace(/\n/g, '<br>')
-                            )
-                          }}
-                        />
+                        <div className="prose prose-sm max-w-none dark:prose-invert">
+                          <ReactMarkdown remarkPlugins={[remarkBreaks]}>
+                            {message.content}
+                          </ReactMarkdown>
+                        </div>
                       ) : (
                         <div className="whitespace-pre-wrap">{message.content}</div>
                       )}
