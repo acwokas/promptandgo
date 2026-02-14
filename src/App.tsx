@@ -80,6 +80,7 @@ import PromptStudioPage from "./pages/PromptStudio";
 import CertificationPage from "./pages/Certification";
 
 import AICreditsExhaustedPage from "./pages/AICreditsExhausted";
+import PromptOptimizerPage from "./pages/PromptOptimizer";
 import GAListener from "@/components/analytics/GAListener";
 import { AnalyticsProvider } from "@/components/analytics/AnalyticsProvider";
 import AdminAnalytics from "./pages/AdminAnalytics";
@@ -185,6 +186,7 @@ const AppContent = () => {
                 <Route path="/ai/assistant" element={<AIAssistantPage />} />
                 <Route path="/ai-credits-exhausted" element={<AICreditsExhaustedPage />} />
                 <Route path="/certification" element={<CertificationPage />} />
+                <Route path="/optimize" element={<PromptOptimizerPage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               </AnalyticsProvider>

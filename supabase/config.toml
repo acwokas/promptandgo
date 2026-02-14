@@ -56,3 +56,6 @@ verify_jwt = true
 
 [functions.recover-abandoned-cart]
 verify_jwt = false
+
+[functions.optimize-prompt]
+verify_jwt = false
