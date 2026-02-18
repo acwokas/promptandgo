@@ -14,21 +14,27 @@ interface SEOProps {
 }
 
 const SITE_NAME = "PromptandGo";
-const DEFAULT_OG_IMAGE =
-  typeof window !== "undefined"
-    ? `${window.location.origin}/og-default.png`
-    : "/og-default.png";
+const SITE_DOMAIN = "https://promptandgo.ai";
+const DEFAULT_OG_IMAGE = `${SITE_DOMAIN}/og-default.png`;
 
 const normalizeCanonical = (url?: string) => {
-  if (typeof window === "undefined") return url;
-  try {
-    const u = new URL(url || window.location.href);
-    u.hash = "";
-    u.search = "";
-    return u.toString();
-  } catch {
-    return url || window.location.href;
+  if (url) {
+    // If already a full URL with the correct domain, clean it
+    try {
+      const u = new URL(url);
+      u.hash = "";
+      u.search = "";
+      return u.toString();
+    } catch {
+      // Treat as a path
+      return `${SITE_DOMAIN}${url.startsWith("/") ? url : `/${url}`}`;
+    }
   }
+  // Fallback: derive from current pathname
+  if (typeof window !== "undefined") {
+    return `${SITE_DOMAIN}${window.location.pathname}`;
+  }
+  return SITE_DOMAIN;
 };
 
 const SEO = ({
