@@ -1,5 +1,4 @@
 import SEO from "@/components/SEO";
-import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -46,17 +45,7 @@ const BestAIPromptsForSmallBusiness2025 = () => {
 
   return (
     <main className="container mx-auto px-6 py-6 max-w-4xl">
-      <SEO title={seoTitle} description={description} canonical={canonical} image={origin ? `${origin}${heroImage}` : heroImage} ogType="article" publishedTime={lastmod} modifiedTime={lastmod} />
-      <Helmet>
-        <script type="application/ld+json">{JSON.stringify(schema)}</script>
-        <link rel="canonical" href={canonical} />
-        <meta name="keywords" content={tags.join(", ")} />
-        <meta property="article:section" content={category} />
-        {tags.map((t) => (
-          <meta key={t} property="article:tag" content={t} />
-        ))}
-        <link rel="preload" as="image" href={heroImage} fetchPriority="high" />
-      </Helmet>
+      <SEO title={seoTitle} description={description} canonical={canonical} image={origin ? `${origin}${heroImage}` : heroImage} ogType="article" publishedTime={lastmod} modifiedTime={lastmod} keywords={tags.join(", ")} structuredData={schema} />
 
       {/* Breadcrumb */}
       <Breadcrumb className="mb-6">

@@ -171,6 +171,7 @@ const FAQs = () => {
       <SEO
         title="FAQs – PromptandGo"
         description="Find quick answers about PromptandGo: getting started, using prompts, payments, licensing, and support."
+        structuredData={faqSchema}
       />
 
       <PageHero
@@ -208,11 +209,6 @@ const FAQs = () => {
           </BreadcrumbList>
         </Breadcrumb>
 
-        {/* Structured data for SEO */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-        />
 
         {/* Quick Stats Section */}
         <section className="mb-12">

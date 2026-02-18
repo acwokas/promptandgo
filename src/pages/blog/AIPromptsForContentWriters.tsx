@@ -1,5 +1,4 @@
 import SEO from "@/components/SEO";
-import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -73,25 +72,7 @@ const AIPromptsForContentWriters = () => {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <SEO
-        title={title}
-        description={description}
-        canonical={canonical}
-        image={origin ? `${origin}${heroImage}` : heroImage}
-        ogType="article"
-        publishedTime={lastmod}
-        modifiedTime={lastmod}
-      />
-      <Helmet>
-        <script type="application/ld+json">{JSON.stringify(schema)}</script>
-        <link rel="canonical" href={canonical} />
-        <meta name="keywords" content={tags.join(", ")} />
-        <meta property="article:section" content={category} />
-        {tags.map((t) => (
-          <meta key={t} property="article:tag" content={t} />
-        ))}
-        <link rel="preload" as="image" href={heroImage} fetchPriority="high" />
-      </Helmet>
+      <SEO title={title} description={description} canonical={canonical} image={origin ? `${origin}${heroImage}` : heroImage} ogType="article" publishedTime={lastmod} modifiedTime={lastmod} keywords={tags.join(", ")} structuredData={schema} />
 
       <article className="mx-auto max-w-3xl">
         <header>
