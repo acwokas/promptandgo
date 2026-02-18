@@ -1,6 +1,6 @@
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 
 const poems = [
   {
@@ -19,7 +19,7 @@ const poems = [
       "I followed the link,",
       "I really did try,",
       "But it wandered away,",
-      "And I’m not sure why.",
+      "And I'm not sure why.",
     ],
     primary: "Find Me Something That Exists",
   },
@@ -29,7 +29,7 @@ const poems = [
       "A prompt was here,",
       "Then it was gone,",
       "Like a half-baked rhyme",
-      "That just won’t go on.",
+      "That just won't go on.",
     ],
     primary: "Back to the Prompt Buffet",
   },
@@ -46,9 +46,9 @@ const poems = [
   {
     title: "Quantum Glitch",
     lines: [
-      "One second it’s there,",
-      "The next it’s not,",
-      "Maybe it’s stuck",
+      "One second it's there,",
+      "The next it's not,",
+      "Maybe it's stuck",
       "In a Schrödinger plot.",
     ],
     primary: "Collapse the Wave and Take Me Home",
@@ -73,7 +73,6 @@ const NotFound = () => {
   }, [location.pathname]);
 
   useEffect(() => {
-    // reset countdown whenever poem changes
     setSeconds(20);
 
     if (timerRef.current) window.clearInterval(timerRef.current);
@@ -94,23 +93,17 @@ const NotFound = () => {
   }, [index, navigate]);
 
   const handleAnother = () => {
-    // pick a different poem index
     const next = Math.floor(Math.random() * poems.length);
     setIndex((prev) => (next === prev ? (prev + 1) % poems.length : next));
   };
 
-  const canonical = typeof window !== "undefined" ? `${window.location.origin}${location.pathname}` : location.pathname;
-
   return (
     <>
-      <Helmet>
-        <title>404 - Page not found | Prompt Library</title>
-        <meta
-          name="description"
-          content="404 page not found. Enjoy a playful AI poem while we guide you back to the Prompt Library."
-        />
-        <link rel="canonical" href={canonical} />
-      </Helmet>
+      <SEO
+        title="404 - Page Not Found"
+        description="404 page not found. Enjoy a playful AI poem while we guide you back to the Prompt Library."
+        noindex
+      />
 
       <main className="min-h-screen bg-background">
         <section className="container mx-auto px-4 py-16 grid gap-10 md:grid-cols-2 items-center">
