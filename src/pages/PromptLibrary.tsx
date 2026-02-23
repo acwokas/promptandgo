@@ -155,10 +155,9 @@ const PromptLibrary = () => {
 
   return (
     <>
-      <CountdownTimer variant="banner" />
       <SEO
-        title="Browse AI Prompts Library | Free for ChatGPT, Claude, Gemini | PromptAndGo"
-        description="Explore 3,000+ free AI prompts organized by category. Optimized for ChatGPT, Claude, MidJourney, Gemini and more. Copy, customize, and get better AI results."
+        title="Browse 3,000+ AI Prompts | Free for ChatGPT, Claude, Gemini | PromptAndGo"
+        description="Explore 3,000+ free AI prompts organised by category. Optimised for ChatGPT, Claude, MidJourney, Gemini and more. Copy, customise, and get better results from any AI tool."
         canonical="https://promptandgo.ai/library"
         structuredData={libraryStructuredData}
       />

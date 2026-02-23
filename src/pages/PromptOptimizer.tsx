@@ -1,6 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import SEO from "@/components/SEO";
-import PageHero from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -13,7 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
 import {
   Wand2, Copy, Check, ChevronDown, Shield, Sparkles, RotateCcw,
-  ArrowRight, BookOpen, Lightbulb, Settings2, Eye,
+  ArrowRight, BookOpen, Lightbulb, Settings2, Eye, Zap, Globe,
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
@@ -25,8 +24,8 @@ const EXAMPLES = [
   },
   {
     label: "Data Analysis",
-    original: "Analyze this data",
-    optimized: `Analyze this sales data for trends. Specifically: 1) Identify top 3 performing products by revenue, 2) Note any seasonal patterns, 3) Flag anomalies or unexpected changes, 4) Suggest 2-3 actionable insights. Present findings in a table followed by 3 bullet points.`,
+    original: "Analyse this data",
+    optimized: `Analyse this sales data for trends. Specifically: 1) Identify top 3 performing products by revenue, 2) Note any seasonal patterns, 3) Flag anomalies or unexpected changes, 4) Suggest 2-3 actionable insights. Present findings in a table followed by 3 bullet points.`,
   },
   {
     label: "Image Generation",
@@ -34,27 +33,25 @@ const EXAMPLES = [
     optimized: `Create a photorealistic image of a sunset over the ocean. Style: dramatic lighting, vibrant oranges and purples, calm water with reflections. Composition: sun 1/3 from left edge, horizon at lower third. Include: silhouetted sailboat, wispy clouds. Exclude: people, buildings. Aspect ratio: 16:9.`,
   },
   {
-    label: "Technical Explanation",
-    original: "Explain blockchain",
-    optimized: `Explain blockchain technology to a business executive with no technical background. Cover: 1) Core concept in one sentence, 2) How it works (simplified), 3) One concrete business use case, 4) Key benefit vs traditional databases. Length: 200 words. Avoid: jargon, technical details, crypto/speculation topics. Use analogies.`,
+    label: "Investor Pitch",
+    original: "Help me pitch to investors",
+    optimized: `Write a 3-minute investor pitch script for a [stage] startup in [industry]. Structure: Hook (10 sec) > Problem (30 sec) > Solution demo (45 sec) > Market size with TAM/SAM/SOM (30 sec) > Traction metrics (20 sec) > Ask (15 sec). Tone: confident, data-driven, founder-authentic. Regional context: Southeast Asia market.`,
   },
 ];
 
 const FOCUS_OPTIONS = [
   { id: "clarity", label: "Clarity", desc: "Make instructions clearer" },
   { id: "specificity", label: "Specificity", desc: "Add helpful constraints" },
-  { id: "structure", label: "Structure", desc: "Improve organization" },
+  { id: "structure", label: "Structure", desc: "Improve organisation" },
   { id: "context", label: "Context", desc: "Add relevant background" },
   { id: "output_format", label: "Output format", desc: "Specify desired format" },
 ];
 
 const LOADING_STEPS = [
-  "Analyzing your prompt…",
-  "Identifying improvements…",
-  "Generating optimized version…",
+  "Analysing your prompt...",
+  "Identifying improvements...",
+  "Generating optimised version...",
 ];
-
-/* ────────── helpers ────────── */
 
 function parseOptimizedPrompt(md: string): string {
   const match = md.match(/## OPTIMIZED PROMPT\s*\n([\s\S]*?)(?=\n## |$)/i);
@@ -67,20 +64,16 @@ function parseSection(md: string, heading: string): string {
   return match ? match[1].trim() : "";
 }
 
-/* ────────── component ────────── */
-
 const PromptOptimizer = () => {
   const { toast } = useToast();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // input state
   const [prompt, setPrompt] = useState("");
   const [aiTool, setAiTool] = useState("");
   const [goal, setGoal] = useState("");
   const [focusAreas, setFocusAreas] = useState<string[]>([]);
   const [contextOpen, setContextOpen] = useState(false);
 
-  // result state
   const [result, setResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [loadingStep, setLoadingStep] = useState(0);
@@ -88,7 +81,6 @@ const PromptOptimizer = () => {
   const [showExample, setShowExample] = useState(false);
   const [exampleIdx, setExampleIdx] = useState(0);
 
-  // auto-resize textarea
   const autoResize = useCallback(() => {
     const el = textareaRef.current;
     if (!el) return;
@@ -98,7 +90,6 @@ const PromptOptimizer = () => {
 
   useEffect(autoResize, [prompt, autoResize]);
 
-  // loading step animation
   useEffect(() => {
     if (!isLoading) return;
     const interval = setInterval(() => {
@@ -107,7 +98,6 @@ const PromptOptimizer = () => {
     return () => clearInterval(interval);
   }, [isLoading]);
 
-  /* ── keyboard shortcut ── */
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "Enter" && prompt.trim() && !isLoading) {
@@ -117,10 +107,8 @@ const PromptOptimizer = () => {
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prompt, isLoading]);
 
-  /* ── optimize (streaming) ── */
   const optimize = async () => {
     if (!prompt.trim()) return;
     setResult("");
@@ -147,8 +135,8 @@ const PromptOptimizer = () => {
       );
 
       if (!resp.ok) {
-        const err = await resp.json().catch(() => ({ error: "Optimization failed" }));
-        throw new Error(err.error || "Optimization failed");
+        const err = await resp.json().catch(() => ({ error: "Optimisation failed" }));
+        throw new Error(err.error || "Optimisation failed");
       }
 
       const reader = resp.body?.getReader();
@@ -184,7 +172,7 @@ const PromptOptimizer = () => {
         }
       }
     } catch (err: any) {
-      toast({ title: "Optimization failed", description: err.message, variant: "destructive" });
+      toast({ title: "Optimisation failed", description: err.message, variant: "destructive" });
     } finally {
       setIsLoading(false);
     }
@@ -225,17 +213,36 @@ const PromptOptimizer = () => {
   return (
     <>
       <SEO
-        title="AI Prompt Optimizer | Make Any Prompt Better | PromptAndGo"
-        description="Paste any prompt and get it optimized for ChatGPT, Claude, Gemini, or MidJourney in seconds. Free AI prompt optimizer by Scout — built for Asia-Pacific professionals."
+        title="AI Prompt Optimiser | Make Any Prompt Better | PromptAndGo"
+        description="Paste any prompt and get it optimised for ChatGPT, Claude, Gemini, or MidJourney in seconds. Free AI prompt optimiser by Scout. Built for Asia-Pacific professionals."
         canonical="https://promptandgo.ai/optimize"
-        keywords="prompt optimizer, AI prompt improvement, prompt engineering tool, optimize prompts, ChatGPT prompts, Claude prompts"
+        keywords="prompt optimiser, AI prompt improvement, prompt engineering tool, optimise prompts, ChatGPT prompts, Claude prompts"
       />
 
-      <PageHero title="Prompt Optimizer" subtitle="Turn good prompts into great ones" />
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-hero">
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <div className="absolute top-[-20%] left-[10%] w-[500px] h-[500px] rounded-full bg-violet-500/20 blur-[120px]" />
+          <div className="absolute bottom-[-10%] right-[10%] w-[400px] h-[400px] rounded-full bg-blue-500/15 blur-[100px]" />
+        </div>
+        <div className="relative z-10 container max-w-4xl mx-auto px-4 py-16 md:py-24 text-center">
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/10 text-white/90 px-4 py-1.5 rounded-full text-sm mb-6">
+            <Zap className="h-3.5 w-3.5 text-yellow-400" />
+            Free. No signup required.
+          </div>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1]">
+            Make any prompt
+            <span className="text-gradient-brand block">dramatically better.</span>
+          </h1>
+          <p className="text-white/60 mt-5 text-lg max-w-xl mx-auto">
+            Paste your prompt. Scout analyses it, rewrites it, and tailors it to your AI platform. Takes about 15 seconds.
+          </p>
+        </div>
+      </section>
 
       <section className="container max-w-4xl mx-auto px-4 py-10 space-y-8">
-        {/* ── INPUT ── */}
-        <Card>
+        {/* Input */}
+        <Card className="border-2 border-primary/20">
           <CardContent className="p-6 space-y-5">
             <div>
               <label htmlFor="prompt-input" className="block text-sm font-semibold mb-1.5">
@@ -246,44 +253,41 @@ const PromptOptimizer = () => {
                 ref={textareaRef}
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
-                placeholder="Paste or write your prompt here. The AI will analyze it and suggest improvements."
+                placeholder="Paste or type your prompt here. Scout will analyse it and suggest improvements."
                 className="min-h-[160px] resize-none text-base"
                 onInput={autoResize}
               />
               <p className="text-xs text-muted-foreground mt-1">{prompt.length} characters</p>
             </div>
 
-            {/* collapsible context */}
             <Collapsible open={contextOpen} onOpenChange={setContextOpen}>
               <CollapsibleTrigger asChild>
                 <Button variant="ghost" size="sm" className="gap-1.5 text-muted-foreground">
                   <Settings2 className="h-4 w-4" />
-                  Add context
+                  Add context (optional)
                   <ChevronDown className={`h-3.5 w-3.5 transition-transform ${contextOpen ? "rotate-180" : ""}`} />
                 </Button>
               </CollapsibleTrigger>
               <CollapsibleContent className="space-y-4 pt-3">
                 <div>
-                  <label className="block text-sm font-medium mb-1">What AI tool will you use this with?</label>
+                  <label className="block text-sm font-medium mb-1">Which AI tool?</label>
                   <Input
                     value={aiTool}
                     onChange={(e) => setAiTool(e.target.value)}
-                    placeholder="e.g., ChatGPT, Claude, Gemini, Midjourney"
+                    placeholder="e.g. ChatGPT, Claude, Gemini, MidJourney"
                   />
-                  <p className="text-xs text-muted-foreground mt-1">Helps tailor optimization to platform-specific best practices</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">What's your goal?</label>
+                  <label className="block text-sm font-medium mb-1">What is your goal?</label>
                   <Textarea
                     value={goal}
                     onChange={(e) => setGoal(e.target.value)}
-                    placeholder="e.g., Generate marketing copy, analyze data, create an image, explain a concept"
+                    placeholder="e.g. Generate marketing copy, analyse data, create an image"
                     className="min-h-[80px]"
                   />
-                  <p className="text-xs text-muted-foreground mt-1">Knowing your objective helps optimize for results</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Optimization focus</label>
+                  <label className="block text-sm font-medium mb-2">Focus areas</label>
                   <div className="flex flex-wrap gap-3">
                     {FOCUS_OPTIONS.map((opt) => (
                       <label key={opt.id} className="flex items-center gap-2 text-sm cursor-pointer">
@@ -295,31 +299,30 @@ const PromptOptimizer = () => {
                       </label>
                     ))}
                   </div>
-                  <p className="text-xs text-muted-foreground mt-1">Leave blank to optimize all aspects</p>
                 </div>
               </CollapsibleContent>
             </Collapsible>
 
             <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
               <Shield className="h-3.5 w-3.5" />
-              Your prompts are analyzed in real-time and never stored.
+              Your prompts are analysed in real time and never stored.
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3">
-              <Button onClick={optimize} disabled={!prompt.trim() || isLoading} className="gap-2">
-                <Wand2 className="h-4 w-4" />
-                {isLoading ? "Optimizing…" : "Optimize prompt"}
+              <Button onClick={optimize} disabled={!prompt.trim() || isLoading} size="lg" className="gap-2">
+                <Sparkles className="h-4 w-4" />
+                {isLoading ? "Optimising..." : "Optimise my prompt"}
               </Button>
               <Button variant="outline" onClick={loadExample} disabled={isLoading}>
                 <Eye className="h-4 w-4 mr-1.5" />
-                See example
+                See an example
               </Button>
             </div>
-            <p className="text-xs text-muted-foreground">Tip: Press <kbd className="border rounded px-1 py-0.5 text-[10px]">⌘</kbd>+<kbd className="border rounded px-1 py-0.5 text-[10px]">Enter</kbd> to optimize</p>
+            <p className="text-xs text-muted-foreground">Tip: press <kbd className="border rounded px-1 py-0.5 text-[10px]">Ctrl</kbd>+<kbd className="border rounded px-1 py-0.5 text-[10px]">Enter</kbd> to optimise</p>
           </CardContent>
         </Card>
 
-        {/* ── LOADING ── */}
+        {/* Loading */}
         {isLoading && !result && (
           <Card>
             <CardContent className="p-6 space-y-4">
@@ -336,24 +339,22 @@ const PromptOptimizer = () => {
                 </div>
               ))}
               <Skeleton className="h-24 w-full mt-4" />
-              <p className="text-xs text-muted-foreground">Estimated time: 15–30 seconds</p>
             </CardContent>
           </Card>
         )}
 
-        {/* ── EXAMPLE ── */}
+        {/* Example */}
         {showExample && !result && (
           <ExampleComparison example={EXAMPLES[(exampleIdx - 1 + EXAMPLES.length) % EXAMPLES.length]} onCopy={copyText} copiedId={copiedId} />
         )}
 
-        {/* ── RESULTS ── */}
+        {/* Results */}
         {hasResult && (
           <div className="space-y-6">
-            {/* side-by-side comparison */}
             <div className="grid md:grid-cols-2 gap-4">
               <Card className="border-muted">
                 <CardContent className="p-5 space-y-3">
-                  <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Original Prompt</h3>
+                  <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Original</h3>
                   <p className="text-sm text-muted-foreground whitespace-pre-wrap">{prompt}</p>
                   <CopyBtn text={prompt} id="orig" copiedId={copiedId} onCopy={copyText} label="Copy original" />
                 </CardContent>
@@ -361,59 +362,51 @@ const PromptOptimizer = () => {
               <Card className="border-primary/40 ring-1 ring-primary/20">
                 <CardContent className="p-5 space-y-3">
                   <h3 className="text-sm font-semibold text-primary uppercase tracking-wide flex items-center gap-1.5">
-                    <Sparkles className="h-4 w-4" /> Optimized Prompt
+                    <Sparkles className="h-4 w-4" /> Optimised
                   </h3>
                   <p className="text-sm whitespace-pre-wrap">{optimizedPrompt}</p>
-                  <CopyBtn text={optimizedPrompt} id="opt" copiedId={copiedId} onCopy={copyText} label="Copy optimized prompt" variant="default" />
+                  <CopyBtn text={optimizedPrompt} id="opt" copiedId={copiedId} onCopy={copyText} label="Copy optimised prompt" variant="default" />
                 </CardContent>
               </Card>
             </div>
 
-            {/* expandable sections */}
             <Accordion type="multiple" defaultValue={["improvements"]}>
               {keyImprovements && (
                 <AccordionItem value="improvements">
                   <AccordionTrigger className="text-base font-semibold">
-                    <span className="flex items-center gap-2"><Check className="h-4 w-4 text-primary" /> Key Improvements</span>
+                    <span className="flex items-center gap-2"><Check className="h-4 w-4 text-primary" /> Key improvements</span>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <div className="prose prose-sm max-w-none text-foreground">
-                      <ReactMarkdown>{keyImprovements}</ReactMarkdown>
-                    </div>
+                    <div className="prose prose-sm max-w-none text-foreground"><ReactMarkdown>{keyImprovements}</ReactMarkdown></div>
                   </AccordionContent>
                 </AccordionItem>
               )}
               {explanation && (
                 <AccordionItem value="explanation">
                   <AccordionTrigger className="text-base font-semibold">
-                    <span className="flex items-center gap-2"><BookOpen className="h-4 w-4 text-primary" /> Detailed Explanation</span>
+                    <span className="flex items-center gap-2"><BookOpen className="h-4 w-4 text-primary" /> Detailed explanation</span>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <div className="prose prose-sm max-w-none text-foreground">
-                      <ReactMarkdown>{explanation}</ReactMarkdown>
-                    </div>
+                    <div className="prose prose-sm max-w-none text-foreground"><ReactMarkdown>{explanation}</ReactMarkdown></div>
                   </AccordionContent>
                 </AccordionItem>
               )}
               {enhancements && (
                 <AccordionItem value="enhancements">
                   <AccordionTrigger className="text-base font-semibold">
-                    <span className="flex items-center gap-2"><Lightbulb className="h-4 w-4 text-primary" /> Optional Enhancements</span>
+                    <span className="flex items-center gap-2"><Lightbulb className="h-4 w-4 text-primary" /> Optional enhancements</span>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <div className="prose prose-sm max-w-none text-foreground">
-                      <ReactMarkdown>{enhancements}</ReactMarkdown>
-                    </div>
+                    <div className="prose prose-sm max-w-none text-foreground"><ReactMarkdown>{enhancements}</ReactMarkdown></div>
                   </AccordionContent>
                 </AccordionItem>
               )}
             </Accordion>
 
-            {/* actions */}
             <div className="flex flex-wrap gap-3">
               <Button onClick={() => copyText(optimizedPrompt, "opt-bottom")} className="gap-2">
                 {copiedId === "opt-bottom" ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-                Copy optimized prompt
+                Copy optimised prompt
               </Button>
               <Button variant="outline" asChild>
                 <Link to="/scout" className="gap-2">
@@ -421,26 +414,23 @@ const PromptOptimizer = () => {
                 </Link>
               </Button>
               <Button variant="ghost" onClick={reset} className="gap-2">
-                <RotateCcw className="h-4 w-4" /> Optimize another
+                <RotateCcw className="h-4 w-4" /> Optimise another
               </Button>
             </div>
           </div>
         )}
 
-        {/* ── CALLOUT ── */}
+        {/* Multilingual hint */}
         <Card className="bg-muted/50 border-muted">
           <CardContent className="p-6">
-            <h3 className="font-semibold mb-2">Want more?</h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              PromptAndGo.ai offers 3,000+ tested prompts, Power Packs for specific goals, Scout AI for platform optimization, and a Prompt Generator for custom creation.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <Button variant="outline" size="sm" asChild>
-                <Link to="/library">Browse Library</Link>
-              </Button>
-              <Button variant="outline" size="sm" asChild>
-                <Link to="/scout">Try Scout AI</Link>
-              </Button>
+            <div className="flex gap-4">
+              <Globe className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+              <div>
+                <h3 className="font-semibold mb-1">Works in any language</h3>
+                <p className="text-sm text-muted-foreground">
+                  Write your prompt in English, Bahasa, Mandarin, Malay, Vietnamese, or any language. Scout will optimise it and keep it in your original language. Perfect for multilingual teams across Asia-Pacific.
+                </p>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -448,8 +438,6 @@ const PromptOptimizer = () => {
     </>
   );
 };
-
-/* ── small sub-components ── */
 
 function CopyBtn({
   text, id, copiedId, onCopy, label, variant = "outline",
