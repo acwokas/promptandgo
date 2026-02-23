@@ -47,14 +47,14 @@ const Terms = () => (
       <h2>2.&nbsp;&nbsp;AI Tools and Beta Services</h2>
       <p>PromptandGo provides AI-powered tools including but not limited to:</p>
       <ul>
-        <li><strong>Scout Prompt Generator</strong> – generates customized prompts based on your inputs</li>
-        <li><strong>Smart Suggestions</strong> – provides AI-powered recommendations</li>
-        <li><strong>Scout Assistant</strong> – interactive AI chat assistance</li>
-        <li><strong>Personalized Recommendations</strong> – content and feature suggestions based on user behavior</li>
-        <li><strong>Behavior Analytics</strong> – tracking user engagement and interaction patterns for service improvement</li>
-        <li><strong>Smart FAQ System</strong> – context-aware help and support features</li>
-        <li><strong>ROI Calculator</strong> – tools to estimate time and cost savings</li>
-        <li><strong>Lead Generation Tools</strong> – email capture and newsletter signup features</li>
+        <li><strong>Scout Prompt Generator</strong> - generates customized prompts based on your inputs</li>
+        <li><strong>Smart Suggestions</strong> - provides AI-powered recommendations</li>
+        <li><strong>Scout Assistant</strong> - interactive AI chat assistance</li>
+        <li><strong>Personalized Recommendations</strong> - content and feature suggestions based on user behavior</li>
+        <li><strong>Behavior Analytics</strong> - tracking user engagement and interaction patterns for service improvement</li>
+        <li><strong>Smart FAQ System</strong> - context-aware help and support features</li>
+        <li><strong>ROI Calculator</strong> - tools to estimate time and cost savings</li>
+        <li><strong>Lead Generation Tools</strong> - email capture and newsletter signup features</li>
       </ul>
       <p><strong>IMPORTANT BETA DISCLAIMER:</strong> All AI tools are currently in beta testing. We reserve the right to:</p>
       <ul>
@@ -70,13 +70,13 @@ const Terms = () => (
       <h2>3.&nbsp;&nbsp;User Behavior Tracking and Analytics</h2>
       <p>To improve our services and provide personalized experiences, we track various user behaviors including:</p>
       <ul>
-        <li><strong>Page Navigation</strong> – pages visited, time spent, navigation patterns</li>
-        <li><strong>Interaction Tracking</strong> – clicks, form interactions, button presses, and feature usage</li>
-        <li><strong>Scroll Behavior</strong> – scroll depth, reading patterns, and content engagement</li>
-        <li><strong>Session Analytics</strong> – visit frequency, session duration, and user journey mapping</li>
-        <li><strong>Engagement Scoring</strong> – automated assessment of user interest and intent levels</li>
-        <li><strong>Exit Intent Detection</strong> – monitoring cursor movement to detect potential page exits</li>
-        <li><strong>Conversion Tracking</strong> – monitoring signup completions, downloads, and other goal achievements</li>
+        <li><strong>Page Navigation</strong> - pages visited, time spent, navigation patterns</li>
+        <li><strong>Interaction Tracking</strong> - clicks, form interactions, button presses, and feature usage</li>
+        <li><strong>Scroll Behavior</strong> - scroll depth, reading patterns, and content engagement</li>
+        <li><strong>Session Analytics</strong> - visit frequency, session duration, and user journey mapping</li>
+        <li><strong>Engagement Scoring</strong> - automated assessment of user interest and intent levels</li>
+        <li><strong>Exit Intent Detection</strong> - monitoring cursor movement to detect potential page exits</li>
+        <li><strong>Conversion Tracking</strong> - monitoring signup completions, downloads, and other goal achievements</li>
       </ul>
       <p>This data is used to:</p>
       <ul>
@@ -143,11 +143,11 @@ const Terms = () => (
       <h2>8.&nbsp;&nbsp;Email Marketing and Newsletter Services</h2>
       <p>We offer email marketing services including:</p>
       <ul>
-        <li><strong>Newsletter Subscriptions</strong> – regular updates about new prompts, features, and AI tips</li>
-        <li><strong>Lead Magnets</strong> – free prompt packs and resources in exchange for email addresses</li>
-        <li><strong>Personalized Email Content</strong> – recommendations based on your interests and usage patterns</li>
-        <li><strong>Promotional Campaigns</strong> – information about new products, discounts, and special offers</li>
-        <li><strong>Transactional Emails</strong> – account notifications, purchase confirmations, and service updates</li>
+        <li><strong>Newsletter Subscriptions</strong> - regular updates about new prompts, features, and AI tips</li>
+        <li><strong>Lead Magnets</strong> - free prompt packs and resources in exchange for email addresses</li>
+        <li><strong>Personalized Email Content</strong> - recommendations based on your interests and usage patterns</li>
+        <li><strong>Promotional Campaigns</strong> - information about new products, discounts, and special offers</li>
+        <li><strong>Transactional Emails</strong> - account notifications, purchase confirmations, and service updates</li>
       </ul>
       <p>Email marketing terms:</p>
       <ul>

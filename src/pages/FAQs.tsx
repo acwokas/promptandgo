@@ -167,7 +167,7 @@ const FAQs = () => {
   return (
     <>
       <SEO
-        title="FAQs – PromptandGo"
+        title="FAQs - PromptandGo"
         description="Find quick answers about PromptandGo: getting started, using prompts, payments, licensing, and support."
         structuredData={faqSchema}
       />

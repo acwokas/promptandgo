@@ -36,7 +36,7 @@ const NotificationsPage = () => {
 
   return (
     <>
-      <SEO title="My Account – Notifications" description="Manage your email notification preferences." />
+      <SEO title="My Account - Notifications" description="Manage your email notification preferences." />
       <PageHero title={<>Notifications</>} subtitle={<>Choose what updates you want to receive.</>} minHeightClass="min-h-[25svh]" />
 
       <main className="container py-8 max-w-3xl">

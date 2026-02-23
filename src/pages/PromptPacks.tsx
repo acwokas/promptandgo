@@ -314,7 +314,7 @@ const PromptPacks = () => {
         </Breadcrumb>
 
         <SEO
-          title="⚡️Power Packs – Save 50%"
+          title="⚡️Power Packs - Save 50%"
           description="Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results."
           structuredData={productSchemas}
         />
@@ -424,9 +424,6 @@ const PromptPacks = () => {
                       )}
                       {isRisingStar && (
                         <Badge className="border-transparent bg-[hsl(var(--accent-3))] text-primary-foreground hover:bg-[hsl(var(--accent-3))]/90">⭐ POPULAR</Badge>
-                      )}
-                      {Math.random() > 0.7 && (
-                        <Badge className="border-transparent bg-primary text-primary-foreground animate-pulse">⏰ LIMITED TIME</Badge>
                       )}
                     </div>
                     <CardTitle className="text-xl leading-tight">{p.name}</CardTitle>

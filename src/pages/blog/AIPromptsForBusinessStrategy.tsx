@@ -77,7 +77,7 @@ const AIPromptsForBusinessStrategy = () => {
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight">{title}</h1>
           <img
             src={heroImage}
-            alt="AI prompts for business strategy and planning – dashboard with charts"
+            alt="AI prompts for business strategy and planning - dashboard with charts"
             className="mt-4 w-full rounded-lg border aspect-[16/9] object-cover"
             loading="eager"
             fetchPriority="high"

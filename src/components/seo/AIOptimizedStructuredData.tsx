@@ -104,7 +104,7 @@ export const AIOptimizedStructuredData = ({
       "Favorites and collections"
     ],
     screenshot: `${origin}/og-default.png`,
-    softwareVersion: "2024.1",
+    softwareVersion: "2025.1",
     dateCreated: "2024-01-01",
     dateModified: new Date().toISOString().split('T')[0],
     author: {
@@ -194,7 +194,7 @@ export const AIOptimizedStructuredData = ({
       }
     ],
     spatialCoverage: "Worldwide",
-    temporalCoverage: "2024/ongoing"
+    temporalCoverage: "2025/ongoing"
   };
 
   // Service schema for Scout AI optimization

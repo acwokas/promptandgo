@@ -29,7 +29,7 @@ const Blog = () => {
       </Button>
     </PageHero>
     <main className="container py-10">
-      <SEO title="Tips – Prompt tips, tricks & examples" description="Tips, tricks and examples to get the most out of your prompting." canonical={canonical} />
+      <SEO title="Tips - Prompt tips, tricks & examples" description="Tips, tricks and examples to get the most out of your prompting." canonical={canonical} />
 
       {/* Breadcrumb */}
       <Breadcrumb className="mb-6">

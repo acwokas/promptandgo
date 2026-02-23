@@ -125,7 +125,7 @@ const GlobalStructuredData = () => {
     applicationCategory: ["ProductivityApplication", "BusinessApplication"],
     operatingSystem: "Web Browser",
     browserRequirements: "Modern web browser with JavaScript enabled",
-    softwareVersion: "2024.1",
+    softwareVersion: "2025.1",
     applicationSubCategory: "AI Tools",
     downloadUrl: `${origin}/`,
     installUrl: `${origin}/`,

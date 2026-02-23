@@ -642,7 +642,7 @@ const AdminBulkUpload = () => {
 
       <main className="container py-10">
         <SEO
-          title="Bulk Upload – Admin"
+          title="Bulk Upload - Admin"
           description="Upload categories, subcategories, tags, and prompts in bulk via JSON."
         />
 

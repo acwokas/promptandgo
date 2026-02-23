@@ -59,7 +59,7 @@ export const ResultsGuarantee = () => (
           
           <p className="text-blue-700 dark:text-blue-300 mb-4">
             Save at least 5 hours per week in your first month, or we'll extend your access for free until you do. 
-            Our prompts are proven to work – we guarantee it.
+            Our prompts are proven to work - we guarantee it.
           </p>
           
           <div className="flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400">

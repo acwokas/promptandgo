@@ -99,7 +99,7 @@ const ProfilePage = () => {
   if (loading) {
     return (
       <>
-        <SEO title="My Account – Profile" description="Edit your display name and avatar for PromptAndGo." />
+        <SEO title="My Account - Profile" description="Edit your display name and avatar for PromptAndGo." />
         <PageHero title={<>Profile</>} subtitle={<>Manage your personal details.</>} minHeightClass="min-h-[25svh]" />
         <main className="container py-8 max-w-3xl">
           <div className="rounded-xl border bg-card p-6 text-center">
@@ -114,7 +114,7 @@ const ProfilePage = () => {
   if (!user) {
     return (
       <>
-        <SEO title="My Account – Profile" description="Sign in to manage your profile on PromptAndGo." />
+        <SEO title="My Account - Profile" description="Sign in to manage your profile on PromptAndGo." />
         <PageHero title={<>Profile</>} subtitle={<>Manage your personal details.</>} minHeightClass="min-h-[25svh]" />
         <main className="container py-8 max-w-3xl">
           <div className="rounded-xl border bg-card p-6 text-center space-y-4">
@@ -131,7 +131,7 @@ const ProfilePage = () => {
 
   return (
     <>
-      <SEO title="My Account – Profile" description="Edit your display name and avatar for PromptAndGo." />
+      <SEO title="My Account - Profile" description="Edit your display name and avatar for PromptAndGo." />
       <PageHero title={<>Profile</>} subtitle={<>Manage your personal details.</>} minHeightClass="min-h-[25svh]" />
 
       <main className="container py-8 max-w-3xl">

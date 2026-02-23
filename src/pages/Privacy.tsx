@@ -38,15 +38,15 @@ const Privacy = () => (
       <h2>1.&nbsp;&nbsp;Information We Collect</h2>
       <p>We may collect the following types of personal data:</p>
       <ul>
-        <li><strong>Contact Information</strong> – name, email address, and other details you provide when signing up or contacting us.</li>
-        <li><strong>Account Information</strong> – username, password, profile settings, subscription details, and preferences if you create an account.</li>
-        <li><strong>Usage Data</strong> – IP address, browser type, device information, pages visited, time spent on the Site, and AI tool usage patterns.</li>
-        <li><strong>Content Submissions</strong> – prompts, AI-generated content, comments, feedback, favorites, or other materials you submit or interact with.</li>
-        <li><strong>AI Interaction Data</strong> – conversations with AI tools, prompt inputs, generated outputs, usage frequency, and personalization data for Smart Suggestions.</li>
-        <li><strong>Profile Context</strong> – industry, project type, preferred tone, desired outcomes, and other context you provide to enhance AI recommendations.</li>
-        <li><strong>Transactional Data</strong> – payment details are processed securely via Stripe and other third-party payment providers; we do not store full credit card details. This includes purchases of Monthly Memberships ($12.99 USD/month), Lifetime Access ($99.50 USD), and individual Prompt Packs ($9.99 USD each).</li>
-        <li><strong>Analytics Data</strong> – aggregated usage statistics, feature adoption metrics, and performance data for our AI services.</li>
-        <li><strong>Behavioral Tracking Data</strong> – detailed user interaction patterns including:</li>
+        <li><strong>Contact Information</strong> - name, email address, and other details you provide when signing up or contacting us.</li>
+        <li><strong>Account Information</strong> - username, password, profile settings, subscription details, and preferences if you create an account.</li>
+        <li><strong>Usage Data</strong> - IP address, browser type, device information, pages visited, time spent on the Site, and AI tool usage patterns.</li>
+        <li><strong>Content Submissions</strong> - prompts, AI-generated content, comments, feedback, favorites, or other materials you submit or interact with.</li>
+        <li><strong>AI Interaction Data</strong> - conversations with AI tools, prompt inputs, generated outputs, usage frequency, and personalization data for Smart Suggestions.</li>
+        <li><strong>Profile Context</strong> - industry, project type, preferred tone, desired outcomes, and other context you provide to enhance AI recommendations.</li>
+        <li><strong>Transactional Data</strong> - payment details are processed securely via Stripe and other third-party payment providers; we do not store full credit card details. This includes purchases of Monthly Memberships ($12.99 USD/month), Lifetime Access ($99.50 USD), and individual Prompt Packs ($9.99 USD each).</li>
+        <li><strong>Analytics Data</strong> - aggregated usage statistics, feature adoption metrics, and performance data for our AI services.</li>
+        <li><strong>Behavioral Tracking Data</strong> - detailed user interaction patterns including:</li>
         <ul>
           <li>Page navigation history and time spent on each page</li>
           <li>Click tracking on buttons, links, and interactive elements</li>
@@ -57,9 +57,9 @@ const Privacy = () => (
           <li>Engagement scores and user intent level assessments</li>
           <li>Conversion funnel progression and drop-off points</li>
         </ul>
-        <li><strong>Email Marketing Data</strong> – newsletter subscription status, email preferences, engagement metrics (opens, clicks), unsubscribe history, and lead magnet interactions.</li>
-        <li><strong>Personalization Data</strong> – preferences, recommendation history, content interaction patterns, and algorithmic profiling for customized user experiences.</li>
-        <li><strong>Social Proof Data</strong> – aggregated and anonymized user activity data used to display social proof elements (e.g., "X users copied this prompt today").</li>
+        <li><strong>Email Marketing Data</strong> - newsletter subscription status, email preferences, engagement metrics (opens, clicks), unsubscribe history, and lead magnet interactions.</li>
+        <li><strong>Personalization Data</strong> - preferences, recommendation history, content interaction patterns, and algorithmic profiling for customized user experiences.</li>
+        <li><strong>Social Proof Data</strong> - aggregated and anonymized user activity data used to display social proof elements (e.g., "X users copied this prompt today").</li>
       </ul>
 
       <h2>2.&nbsp;&nbsp;How We Use Your Information</h2>
@@ -74,7 +74,7 @@ const Privacy = () => (
         <li>Send you updates, newsletters, and marketing (only with your consent).</li>
         <li>Analyze usage patterns to improve our AI algorithms and service quality.</li>
         <li>Comply with legal obligations and enforce our terms of use.</li>
-        <li><strong>Behavioral Analysis and Optimization</strong> – analyze user interactions, navigation patterns, and engagement levels to:</li>
+        <li><strong>Behavioral Analysis and Optimization</strong> - analyze user interactions, navigation patterns, and engagement levels to:</li>
         <ul>
           <li>Optimize website layout, content placement, and user interface design</li>
           <li>Personalize call-to-action messages and content recommendations</li>
@@ -82,24 +82,24 @@ const Privacy = () => (
           <li>Improve conversion rates and user experience optimization</li>
           <li>Generate engagement scores and user behavior insights</li>
         </ul>
-        <li><strong>Email Marketing and Communication</strong> – deliver personalized newsletters, promotional content, lead magnets, and transactional messages based on user preferences and behavior patterns.</li>
-        <li><strong>Social Proof Generation</strong> – create anonymized activity feeds and testimonials to demonstrate platform usage and build trust with new users.</li>
-        <li><strong>A/B Testing and Experimentation</strong> – test different features, content, and user experience variations to optimize our services.</li>
-        <li><strong>Fraud Prevention and Security</strong> – monitor for suspicious activity, prevent abuse, and protect user accounts and data.</li>
+        <li><strong>Email Marketing and Communication</strong> - deliver personalized newsletters, promotional content, lead magnets, and transactional messages based on user preferences and behavior patterns.</li>
+        <li><strong>Social Proof Generation</strong> - create anonymized activity feeds and testimonials to demonstrate platform usage and build trust with new users.</li>
+        <li><strong>A/B Testing and Experimentation</strong> - test different features, content, and user experience variations to optimize our services.</li>
+        <li><strong>Fraud Prevention and Security</strong> - monitor for suspicious activity, prevent abuse, and protect user accounts and data.</li>
       </ul>
 
       <h2>3.&nbsp;&nbsp;How We Share Your Information</h2>
       <p>We do not sell your personal data. We may share your data with:</p>
       <ul>
-        <li><strong>AI Service Providers</strong> – third-party AI providers (including OpenAI) to process your prompts and generate AI responses. These providers have their own privacy policies and data handling practices.</li>
-        <li><strong>Payment Processors</strong> – transactions are processed by Stripe and other secure payment providers who have their own privacy policies and data handling practices.</li>
-        <li><strong>Service Providers</strong> – third parties who help us operate the Site, such as hosting, analytics, and infrastructure services (including Supabase).</li>
-        <li><strong>Email Service Providers</strong> – third-party services for newsletter delivery, email marketing campaigns, and transactional email communications.</li>
-        <li><strong>Analytics and Tracking Services</strong> – services that help us understand user behavior, track conversions, and optimize our platform performance.</li>
-        <li><strong>Legal Authorities</strong> – if required by law, court order, or government regulation.</li>
-        <li><strong>Business Transfers</strong> – if promptandgo is acquired, merged, or reorganised.</li>
-        <li><strong>Aggregated Data</strong> – we may share anonymized, aggregated usage statistics that do not identify individual users.</li>
-        <li><strong>Social Proof Data</strong> – anonymized activity data may be shared in aggregate form to display social proof elements and testimonials.</li>
+        <li><strong>AI Service Providers</strong> - third-party AI providers (including OpenAI) to process your prompts and generate AI responses. These providers have their own privacy policies and data handling practices.</li>
+        <li><strong>Payment Processors</strong> - transactions are processed by Stripe and other secure payment providers who have their own privacy policies and data handling practices.</li>
+        <li><strong>Service Providers</strong> - third parties who help us operate the Site, such as hosting, analytics, and infrastructure services (including Supabase).</li>
+        <li><strong>Email Service Providers</strong> - third-party services for newsletter delivery, email marketing campaigns, and transactional email communications.</li>
+        <li><strong>Analytics and Tracking Services</strong> - services that help us understand user behavior, track conversions, and optimize our platform performance.</li>
+        <li><strong>Legal Authorities</strong> - if required by law, court order, or government regulation.</li>
+        <li><strong>Business Transfers</strong> - if promptandgo is acquired, merged, or reorganised.</li>
+        <li><strong>Aggregated Data</strong> - we may share anonymized, aggregated usage statistics that do not identify individual users.</li>
+        <li><strong>Social Proof Data</strong> - anonymized activity data may be shared in aggregate form to display social proof elements and testimonials.</li>
       </ul>
 
       <h2>4.&nbsp;&nbsp;International Data Transfers</h2>
@@ -111,15 +111,15 @@ const Privacy = () => (
       <h2>5.&nbsp;&nbsp;Data Retention and Business Continuity</h2>
       <p>We retain your personal data only for as long as necessary to fulfil the purposes stated in this policy or as required by law. Specifically:</p>
       <ul>
-        <li><strong>AI Conversation Data</strong> – stored for up to 30 days to improve service quality and provide support.</li>
-        <li><strong>Account Data</strong> – retained while your account is active and for a reasonable period thereafter.</li>
-        <li><strong>Usage Analytics</strong> – aggregated data may be retained indefinitely in anonymized form.</li>
-        <li><strong>User-Generated Content</strong> – prompts and favorites are retained until you delete them or close your account.</li>
-        <li><strong>Payment Records</strong> – transaction history retained for legal and accounting purposes as required by Singapore law.</li>
-        <li><strong>Membership Data</strong> – subscription status and access rights maintained for active memberships and lifetime purchases.</li>
-        <li><strong>Behavioral Tracking Data</strong> – session data and interaction patterns retained for up to 12 months for analytics and personalization purposes.</li>
-        <li><strong>Email Marketing Data</strong> – subscription status and preferences retained until unsubscribe; engagement metrics retained for up to 24 months for campaign optimization.</li>
-        <li><strong>Personalization Data</strong> – user preferences and recommendation history retained while account is active and for up to 6 months after account closure.</li>
+        <li><strong>AI Conversation Data</strong> - stored for up to 30 days to improve service quality and provide support.</li>
+        <li><strong>Account Data</strong> - retained while your account is active and for a reasonable period thereafter.</li>
+        <li><strong>Usage Analytics</strong> - aggregated data may be retained indefinitely in anonymized form.</li>
+        <li><strong>User-Generated Content</strong> - prompts and favorites are retained until you delete them or close your account.</li>
+        <li><strong>Payment Records</strong> - transaction history retained for legal and accounting purposes as required by Singapore law.</li>
+        <li><strong>Membership Data</strong> - subscription status and access rights maintained for active memberships and lifetime purchases.</li>
+        <li><strong>Behavioral Tracking Data</strong> - session data and interaction patterns retained for up to 12 months for analytics and personalization purposes.</li>
+        <li><strong>Email Marketing Data</strong> - subscription status and preferences retained until unsubscribe; engagement metrics retained for up to 24 months for campaign optimization.</li>
+        <li><strong>Personalization Data</strong> - user preferences and recommendation history retained while account is active and for up to 6 months after account closure.</li>
       </ul>
       
       <h3>Business Discontinuation and Data Handling</h3>
@@ -161,13 +161,13 @@ const Privacy = () => (
       </ul>
       <p><strong>Specific Tracking Technologies:</strong></p>
       <ul>
-        <li><strong>Essential Cookies</strong> – necessary for site functionality, authentication, and security</li>
-        <li><strong>Analytics Cookies</strong> – track page views, user journeys, and site performance</li>
-        <li><strong>Personalization Cookies</strong> – remember preferences and enable customized experiences</li>
-        <li><strong>Marketing Cookies</strong> – track conversions, email signups, and campaign effectiveness</li>
-        <li><strong>Behavioral Tracking Scripts</strong> – monitor user interactions, scroll behavior, and engagement patterns</li>
-        <li><strong>Session Storage</strong> – temporary data storage for current session management</li>
-        <li><strong>Local Storage</strong> – persistent storage for user preferences and behavior tracking</li>
+        <li><strong>Essential Cookies</strong> - necessary for site functionality, authentication, and security</li>
+        <li><strong>Analytics Cookies</strong> - track page views, user journeys, and site performance</li>
+        <li><strong>Personalization Cookies</strong> - remember preferences and enable customized experiences</li>
+        <li><strong>Marketing Cookies</strong> - track conversions, email signups, and campaign effectiveness</li>
+        <li><strong>Behavioral Tracking Scripts</strong> - monitor user interactions, scroll behavior, and engagement patterns</li>
+        <li><strong>Session Storage</strong> - temporary data storage for current session management</li>
+        <li><strong>Local Storage</strong> - persistent storage for user preferences and behavior tracking</li>
       </ul>
       <p>You may disable cookies in your browser settings, but some Site features may not function properly. Disabling behavioral tracking may limit personalization features.</p>
 
@@ -188,11 +188,11 @@ const Privacy = () => (
       <h2>10.&nbsp;&nbsp;Email Marketing and Communication Preferences</h2>
       <p>We offer various email communication services:</p>
       <ul>
-        <li><strong>Newsletter Subscriptions</strong> – periodic updates about new features, prompts, and AI industry insights</li>
-        <li><strong>Lead Magnets</strong> – free resources offered in exchange for email subscription</li>
-        <li><strong>Promotional Campaigns</strong> – information about discounts, new products, and special offers</li>
-        <li><strong>Behavioral Triggered Emails</strong> – automated messages based on user actions and engagement patterns</li>
-        <li><strong>Transactional Emails</strong> – account notifications, purchase confirmations, and service updates</li>
+        <li><strong>Newsletter Subscriptions</strong> - periodic updates about new features, prompts, and AI industry insights</li>
+        <li><strong>Lead Magnets</strong> - free resources offered in exchange for email subscription</li>
+        <li><strong>Promotional Campaigns</strong> - information about discounts, new products, and special offers</li>
+        <li><strong>Behavioral Triggered Emails</strong> - automated messages based on user actions and engagement patterns</li>
+        <li><strong>Transactional Emails</strong> - account notifications, purchase confirmations, and service updates</li>
       </ul>
       <p>Email communication practices:</p>
       <ul>
