@@ -6,7 +6,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Link } from "react-router-dom";
 import { Wand2, Image, Copy, CheckCheck, ArrowRight, Palette, Camera, Sparkles, ChevronDown, Zap, FileText, Briefcase, Megaphone, Calendar, Target, GraduationCap, CheckSquare, Search, Mail, BookOpen, Video, Monitor, Layers, Presentation } from "lucide-react";
-import CountdownTimer from "@/components/conversion/CountdownTimer";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { PromptCrafter } from "@/components/prompt-studio/PromptCrafter";
 import { EventPromptCrafter } from "@/components/prompt-studio/EventPromptCrafter";
@@ -155,7 +154,6 @@ const PromptStudioPage = () => {
 
   return (
     <>
-      <CountdownTimer variant="banner" />
       <SEO 
         title="Scout's Prompt Studio - Guided AI Prompt Creation"
         description="Use Scout's Prompt Studio to craft perfect AI prompts with guided dropdowns. Create image prompts, text prompts, and more with expert guidance."

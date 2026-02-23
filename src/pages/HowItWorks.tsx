@@ -1,6 +1,5 @@
 import SEO from "@/components/SEO";
 import PageHero from "@/components/layout/PageHero";
-import CountdownTimer from "@/components/conversion/CountdownTimer";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -102,7 +101,6 @@ const HowItWorks = () => {
   };
   
   return (<>
-    <CountdownTimer variant="banner" />
     <SEO title="How PromptandGo Works - Free AI Tools & Scout Optimization" description="Discover our complete suite: Prompt Library, Power Packs, and Scout AI that optimizes prompts for any AI platform - all completely free." structuredData={[howToSchema, faqSchema]} />
     <PageHero
       title={<>How <span className="text-gradient-brand">PromptandGo</span> Works</>}

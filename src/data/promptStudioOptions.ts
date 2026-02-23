@@ -291,9 +291,9 @@ export const ctaPromptOptions = {
     { value: "boomers", label: "Boomers (56+)" },
     { value: "entrepreneurs", label: "Entrepreneurs" },
     { value: "executives", label: "Executives / decision makers" },
-    { value: "gen-x", label: "Gen X (41–55)" },
-    { value: "gen-z", label: "Gen Z (18–25)" },
-    { value: "millennials", label: "Millennials (26–40)" },
+    { value: "gen-x", label: "Gen X (41-55)" },
+    { value: "gen-z", label: "Gen Z (18-25)" },
+    { value: "millennials", label: "Millennials (26-40)" },
     { value: "parents", label: "Parents" },
     { value: "students", label: "Students" },
     { value: "young-professionals", label: "Young professionals" }
@@ -349,8 +349,8 @@ export const ctaPromptOptions = {
     { value: "campaign-specific", label: "Campaign-specific hashtag" },
     { value: "community-hashtag", label: "Community hashtag" },
     { value: "event-hashtag", label: "Event hashtag" },
-    { value: "maximal-hashtags", label: "Maximal hashtags (10–20)" },
-    { value: "minimal-hashtags", label: "Minimal hashtags (1–3)" },
+    { value: "maximal-hashtags", label: "Maximal hashtags (10-20)" },
+    { value: "minimal-hashtags", label: "Minimal hashtags (1-3)" },
     { value: "niche-industry", label: "Niche industry hashtag" },
     { value: "trending-hashtag", label: "Trending hashtag" }
   ] as PromptOption[],
@@ -494,9 +494,9 @@ export const businessStrategyPromptOptions = {
   ] as PromptOption[],
 
   strategyHorizons: [
-    { value: "short-term", label: "Short-term (0–6 months)" },
-    { value: "mid-term", label: "Mid-term (1–3 years)" },
-    { value: "long-term", label: "Long-term (3–5+ years)" }
+    { value: "short-term", label: "Short-term (0-6 months)" },
+    { value: "mid-term", label: "Mid-term (1-3 years)" },
+    { value: "long-term", label: "Long-term (3-5+ years)" }
   ] as PromptOption[],
 
   outputFormats: [
@@ -681,7 +681,7 @@ export const videoScriptPromptOptions = {
     { value: "15s", label: "15s" },
     { value: "30s", label: "30s" },
     { value: "60s", label: "60s" },
-    { value: "2-3min", label: "2–3 min" },
+    { value: "2-3min", label: "2-3 min" },
     { value: "long-form", label: "Long-form YouTube" }
   ] as PromptOption[],
   audiences: [
@@ -916,9 +916,9 @@ export const researchPromptOptions = {
     { value: "infographic-outline", label: "Infographic Outline" }
   ] as PromptOption[],
   timeHorizons: [
-    { value: "current", label: "Current (0–1 year)" },
-    { value: "short-term", label: "Short-term (1–3 years)" },
-    { value: "long-term", label: "Long-term (3–10 years)" }
+    { value: "current", label: "Current (0-1 year)" },
+    { value: "short-term", label: "Short-term (1-3 years)" },
+    { value: "long-term", label: "Long-term (3-10 years)" }
   ] as PromptOption[],
   depthLevels: [
     { value: "quick-overview", label: "Quick overview" },

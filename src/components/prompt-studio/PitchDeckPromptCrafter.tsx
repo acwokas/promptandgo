@@ -88,17 +88,17 @@ export default function PitchDeckPromptCrafter({ onPromptGenerated, initialSelec
     }
 
     prompt += `\nStructure:\n`;
-    prompt += `1. Title Slide – strong headline and tagline\n`;
-    prompt += `2. Problem – clear pain points backed by evidence\n`;
-    prompt += `3. Solution – how we solve it, unique value proposition\n`;
-    prompt += `4. Market – TAM, SAM, SOM, with context\n`;
-    prompt += `5. Product – demo, screenshots, or concept visuals\n`;
-    prompt += `6. Business Model – how we make money\n`;
-    prompt += `7. Traction – growth metrics, case studies, milestones\n`;
-    prompt += `8. Competition – landscape, our edge\n`;
-    prompt += `9. Team – expertise and credibility\n`;
-    prompt += `10. Financials – key projections, ask, and use of funds\n`;
-    prompt += `11. Closing – recap and call-to-action\n\n`;
+    prompt += `1. Title Slide - strong headline and tagline\n`;
+    prompt += `2. Problem - clear pain points backed by evidence\n`;
+    prompt += `3. Solution - how we solve it, unique value proposition\n`;
+    prompt += `4. Market - TAM, SAM, SOM, with context\n`;
+    prompt += `5. Product - demo, screenshots, or concept visuals\n`;
+    prompt += `6. Business Model - how we make money\n`;
+    prompt += `7. Traction - growth metrics, case studies, milestones\n`;
+    prompt += `8. Competition - landscape, our edge\n`;
+    prompt += `9. Team - expertise and credibility\n`;
+    prompt += `10. Financials - key projections, ask, and use of funds\n`;
+    prompt += `11. Closing - recap and call-to-action\n\n`;
 
     prompt += `Content: Suggest concise text, data visuals, and story flow for each slide.\n`;
     

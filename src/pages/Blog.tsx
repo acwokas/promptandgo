@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import PageHero from "@/components/layout/PageHero";
-import CountdownTimer from "@/components/conversion/CountdownTimer";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 const Blog = () => {
@@ -12,7 +11,6 @@ const Blog = () => {
   const canonical = origin ? `${origin}/tips` : undefined;
   return (
   <>
-    <CountdownTimer variant="banner" />
     <PageHero title={<>Tips</>} subtitle={<>Tips, tricks and examples to get the most out of your prompting.</>} minHeightClass="min-h-[28svh]">
       <Button asChild size="lg" variant="hero" className="px-6">
         <Link to="/library#library-filters">Browse Prompt Library</Link>

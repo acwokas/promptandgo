@@ -64,7 +64,7 @@ const successStories = [
     ],
     timeToResults: "1 week",
     favoritePrompt: "Sales Email Sequences",
-    quote: "These aren't just templates – they're frameworks that help us think strategically about each prospect."
+    quote: "These aren't just templates - they're frameworks that help us think strategically about each prospect."
   },
   {
     name: "Lisa Thompson",
@@ -94,7 +94,7 @@ const successStories = [
     ],
     timeToResults: "6 weeks",
     favoritePrompt: "Career Accelerator Pack",
-    quote: "These prompts didn't just help me write better applications – they helped me understand what employers actually want."
+    quote: "These prompts didn't just help me write better applications - they helped me understand what employers actually want."
   }
 ];
 
