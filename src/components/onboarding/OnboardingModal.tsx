@@ -183,28 +183,27 @@ export const OnboardingModal: React.FC = () => {
       case 3:
         const recommendedActions = getRecommendedActions();
         return (
-          <div className="space-y-6">
+          <div className="space-y-4">
             <div>
-              <h2 className="text-2xl font-bold text-foreground mb-2">Here's your personalized starting point</h2>
-              <p className="text-muted-foreground">Based on your preferences, we recommend:</p>
+              <h2 className="text-xl font-bold text-foreground mb-1">You're all set!</h2>
+              <p className="text-sm text-muted-foreground">Jump in anywhere to get started:</p>
             </div>
-            <div className="space-y-3">
+            <div className="space-y-2">
               {recommendedActions.map((action, index) => (
                 <a
                   key={index}
                   href={action.link}
-                  className="p-4 rounded-lg border-2 border-border hover:border-primary/50 bg-background hover:bg-primary/5 transition-all text-left group"
+                  className="block p-3 rounded-lg border border-border hover:border-primary/50 bg-background hover:bg-primary/5 transition-all text-left group"
                   onClick={(e) => {
                     e.preventDefault();
                     handleComplete();
-                    // Navigate after closing modal
                     setTimeout(() => {
                       window.location.href = action.link;
                     }, 100);
                   }}
                 >
-                  <div className="font-medium text-foreground group-hover:text-primary transition-colors">{action.title}</div>
-                  <div className="text-sm text-muted-foreground">{action.description}</div>
+                  <div className="font-medium text-sm text-foreground group-hover:text-primary transition-colors">{action.title}</div>
+                  <div className="text-xs text-muted-foreground">{action.description}</div>
                 </a>
               ))}
             </div>
@@ -218,13 +217,13 @@ export const OnboardingModal: React.FC = () => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-center sr-only">Onboarding</DialogTitle>
         </DialogHeader>
 
         {/* Progress dots */}
-        <div className="flex justify-center gap-2 mb-6">
+        <div className="flex justify-center gap-2 mb-4">
           {[1, 2, 3].map((dot) => (
             <div
               key={dot}
@@ -236,7 +235,7 @@ export const OnboardingModal: React.FC = () => {
         </div>
 
         {/* Step content */}
-        <div className="min-h-[300px] flex flex-col">
+        <div className="flex flex-col">
           <div className="flex-1">
             {renderStep()}
           </div>
@@ -270,7 +269,6 @@ export const OnboardingModal: React.FC = () => {
               <Button
                 onClick={handleComplete}
                 className="flex items-center gap-2 px-6"
-                variant="hero"
               >
                 Let's Go!
               </Button>
