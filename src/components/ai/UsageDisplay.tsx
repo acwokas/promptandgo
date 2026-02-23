@@ -223,7 +223,7 @@ const UsageDisplay = ({ usageType = 'all', compact = false }: UsageDisplayProps)
                     </Button>
                     <Button size="sm" variant="secondary">
                       <Infinity className="h-4 w-4 mr-1" />
-                      Annual (60+60+40/day) - $99.50
+                      Lifetime (60+60+40/day) - $99.50
                     </Button>
                   </div>
                 )}

@@ -14,5 +14,4 @@ export const BLOG_POSTS: BlogPost[] = [
   { path: "/tips/ai-prompts-for-content-writers", title: "AI Prompts for Content Writers and Copywriters" },
   { path: "/tips/ai-prompts-for-business-strategy", title: "AI Prompts for Business Strategy and Planning" },
   { path: "/tips/beginners-guide-midjourney-prompts", title: "Beginner's Guide: Creating Detailed Prompts for MidJourney" },
-  { path: "/tips/why-most-prompts-fail-before-you-even-press-enter", title: "Why Most Prompts Fail Before You Even Press Enter" },
 ];
