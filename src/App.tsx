@@ -20,6 +20,7 @@ import Privacy from "./pages/Privacy";
 import FAQs from "./pages/FAQs";
 import HowItWorks from "./pages/HowItWorks";
 import Contact from "./pages/Contact";
+import SingaporeStartups from "./pages/SingaporeStartups";
 import Header from "@/components/layout/Header";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import Footer from "@/components/layout/Footer";
@@ -151,6 +152,7 @@ const AppContent = () => {
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/how-it-works" element={<HowItWorks />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/singapore-startups" element={<SingaporeStartups />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/admin" element={<AdminTools />} />
                 <Route path="/admin/polls" element={<AdminPolls />} />

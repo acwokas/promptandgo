@@ -1,58 +1,49 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Bot, Sparkles, Rocket, Star } from "lucide-react";
+import { Globe, TrendingUp, Target } from "lucide-react";
 
-const testimonials = [
+const proofPoints = [
   {
-    icon: Bot,
-    quote: "I went from spending 3 hours crafting prompts to just copying proven ones. Scout's optimization saved my entire workflow. ROI in the first week!",
-    initials: "SJ",
-    name: "Sarah Johnson",
-    role: "Marketing Director @ TechCorp"
+    icon: Globe,
+    stat: "1.9M+",
+    label: "professionals across Asia-Pacific actively seeking better AI prompts",
+    source: "Market research across Singapore, Indonesia, Vietnam, Malaysia & Australia"
   },
   {
-    icon: Sparkles,
-    quote: "The platform adaptation is pure genius. Same concept, perfectly optimized for ChatGPT vs Claude vs MidJourney. I'm 10x more productive now.",
-    initials: "MR",
-    name: "Michael Rodriguez",
-    role: "Senior Content Writer"
+    icon: TrendingUp,
+    stat: "28.6%",
+    label: "of the creative content market is wide open — no major AI brand serves it yet",
+    source: "Brand whitespace analysis, Singapore 2026"
   },
   {
-    icon: Rocket,
-    quote: "Started with proven prompts, then Scout customized them for our needs. We've streamlined our entire content workflow and saved $5,000/month.",
-    initials: "AL",
-    name: "Alex Liu",
-    role: "Founder @ GrowthCo"
+    icon: Target,
+    stat: "62.7%",
+    label: "of business professionals want to automate document management with AI",
+    source: "Singapore sector analysis, Q1 2026"
   }
 ];
 
 export function TestimonialsSection() {
   return (
     <section className="container pt-6 pb-12">
+      <div className="text-center mb-8">
+        <h2 className="text-3xl font-bold mb-4">Market Opportunity</h2>
+        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Why PromptandGo is positioned to lead AI prompt optimization in Asia-Pacific</p>
+      </div>
       <div className="grid gap-6 md:grid-cols-3">
-        {testimonials.map((testimonial) => (
-          <Card key={testimonial.name} className="bg-gradient-to-br from-primary/5 to-transparent">
-            <CardContent className="p-6">
-              <div className="flex items-start gap-4 mb-4">
-                <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                  <testimonial.icon className="h-5 w-5 text-primary" />
+        {proofPoints.map((point, index) => (
+          <Card key={index} className="bg-gradient-to-br from-primary/5 to-transparent flex flex-col">
+            <CardContent className="p-6 flex flex-col h-full">
+              <div className="flex items-start gap-4 mb-6">
+                <div className="w-14 h-14 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                  <point.icon className="h-7 w-7 text-primary" />
                 </div>
                 <div className="flex-1">
-                  <div className="flex items-center gap-0.5 mb-2">
-                    {Array.from({ length: 5 }, (_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <p className="text-sm text-muted-foreground">"{testimonial.quote}"</p>
+                  <p className="text-4xl font-bold text-primary mb-2">{point.stat}</p>
+                  <p className="text-sm font-medium text-foreground leading-snug">{point.label}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3 pl-14">
-                <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-sm font-semibold">
-                  {testimonial.initials}
-                </div>
-                <div>
-                  <p className="text-sm font-medium">{testimonial.name}</p>
-                  <p className="text-xs text-muted-foreground">{testimonial.role}</p>
-                </div>
+              <div className="mt-auto">
+                <p className="text-xs text-muted-foreground italic border-t border-border/30 pt-4">{point.source}</p>
               </div>
             </CardContent>
           </Card>

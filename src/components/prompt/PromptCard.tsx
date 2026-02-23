@@ -21,6 +21,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { AiProviderDropdown } from "@/components/ai/AiProviderDropdown";
 import { AiResponseModal } from "@/components/ai/AiResponseModal";
 import { useSavedPrompts } from "@/hooks/useSavedPrompts";
+import { SharePromptButton } from "./SharePromptButton";
 
 // Clean display title by removing common variant markers
 const cleanTitle = (t?: string | null) => {
@@ -422,9 +423,9 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Button 
-                        size="sm" 
-                        variant="outline" 
+                      <Button
+                        size="sm"
+                        variant="outline"
                         onClick={() => {
                           const saved = toggleSavePrompt({
                             id: prompt.id,
@@ -443,20 +444,33 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                     <TooltipContent>{isPromptSaved(prompt.id) ? "Remove from saved" : "Save for later"}</TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
-                
+
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Button 
-                        size="sm" 
-                        variant="outline" 
-                        onClick={handleToggleFavorite} 
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={handleToggleFavorite}
                         className="flex-shrink-0"
                       >
                         <Heart className={`h-4 w-4 ${isFavorited ? "fill-red-500 text-red-500" : ""}`} />
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent>{isFavorited ? "Remove from favorites" : "Add to favorites"}</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <SharePromptButton
+                        promptTitle={displayTitle}
+                        promptSlug={prompt.id}
+                        promptCategory={sub?.name || category?.name || 'General'}
+                      />
+                    </TooltipTrigger>
+                    <TooltipContent>Share this prompt</TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
               </div>

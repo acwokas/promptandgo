@@ -49,7 +49,7 @@ const Footer = () => {
             <Link to="/" className="text-muted-foreground hover:text-foreground">👋 Welcome</Link>
             <Link to="/library" className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
               <Search className="h-3 w-3" />
-              Browse Library
+              Browse Prompts
             </Link>
             <Link to="/packs" className="text-muted-foreground hover:text-foreground">⚡️ Power Packs</Link>
             <Link to="/scout" className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
@@ -57,12 +57,13 @@ const Footer = () => {
               Scout AI
             </Link>
             <Link to="/how-it-works" className="text-muted-foreground hover:text-foreground">🤓 How it Works</Link>
+            <Link to="/singapore-startups" className="text-muted-foreground hover:text-foreground">Singapore Startups</Link>
             <Link to="/tips" className="text-muted-foreground hover:text-foreground">💡 Tips</Link>
             <Link to="/faqs" className="text-muted-foreground hover:text-foreground">❓ FAQs</Link>
           </nav>
           <nav className="flex flex-col gap-2">
             <span className="text-foreground font-medium">Tools</span>
-            <Link to="/ai/generator" className="text-muted-foreground hover:text-foreground">Scout AI Prompt Generator</Link>
+            <Link to="/ai/studio" className="text-muted-foreground hover:text-foreground">Prompt Studio</Link>
             <Link to="/ai/assistant" className="text-muted-foreground hover:text-foreground">Scout AI Assistant</Link>
             <Link to="/library" className="text-muted-foreground hover:text-foreground">Prompt Library</Link>
             <Link to="/submit" className="text-muted-foreground hover:text-foreground">Submit a Prompt</Link>

@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { useFeaturedCategories } from "@/hooks/useFeaturedCategories";
 import { Link } from "react-router-dom";
 import PageHero from "@/components/layout/PageHero";
-import CountdownTimer from "@/components/conversion/CountdownTimer";
 import { Sparkles, Wand2, Rocket, Search, Bot, Users, ArrowRight } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useSubscriptionStatus } from "@/hooks/useSubscriptionStatus";
@@ -15,6 +14,7 @@ import MiniPromptStudio from "@/components/prompt-studio/MiniPromptStudio";
 import PromptsOfTheDay from "@/components/prompt/PromptsOfTheDay";
 import { useLatestArticle } from "@/hooks/useLatestArticle";
 import ScoutDemo from "@/components/conversion/ScoutDemo";
+import OnboardingModal from "@/components/onboarding/OnboardingModal";
 
 // Extracted components
 import { CoreProductsSection } from "@/components/home/CoreProductsSection";
@@ -56,36 +56,49 @@ const Index = () => {
 
   const todaysFeatured = getDailyFeatured();
 
-  const homeStructuredData = [{
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    name: "PromptandGo.ai",
-    applicationCategory: "ProductivityApplication",
-    operatingSystem: "Web",
-    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-    aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", reviewCount: "1800", bestRating: "5", worstRating: "1" },
-    description: "Browse, copy, and run practical AI prompts for ChatGPT, Claude, and more."
-  }];
+  const homeStructuredData = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "PromptAndGo",
+      url: "https://promptandgo.ai",
+      description: "Browse 3,000+ curated AI prompts optimized for professionals across Singapore, Indonesia, Vietnam, Malaysia and Australia.",
+      sameAs: [
+        "https://twitter.com/PromptandGo"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      name: "PromptAndGo",
+      applicationCategory: "ProductivityApplication",
+      operatingSystem: "Web",
+      description: "AI prompt library and optimizer for professionals across Asia-Pacific",
+      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+      aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", reviewCount: "1800", bestRating: "5", worstRating: "1" }
+    }
+  ];
 
   return (
     <>
-      <SEO 
-        title="3,000+ Curated AI Prompts for ChatGPT, Claude & More" 
-        description="Browse, copy, and run 3,000+ tested AI prompts for ChatGPT, Claude, and more. Use Scout AI optimization and Power Packs for better results."
+      <SEO
+        title="AI Prompts for Asia-Pacific | ChatGPT, Claude & More | PromptAndGo"
+        description="Browse 3,000+ curated AI prompts optimized for professionals across Singapore, Indonesia, Vietnam, Malaysia and Australia. Free prompt optimizer powered by Scout AI."
+        canonical="https://promptandgo.ai"
+        image="https://promptandgo.ai/og-default.png"
+        ogType="website"
         structuredData={homeStructuredData}
       />
       <AIOptimizedStructuredData pageType="HomePage" title="3,000+ Curated AI Prompts" description="Browse, copy, and run tested AI prompts." />
       
       <main>
-        <CountdownTimer variant="banner" />
-
-        <PageHero title={<>Better and <span className="text-blue-500">faster AI results</span>, every time</>} subtitle={<>Browse 3,000+ tested prompts, use specialized Power Packs, and let Scout optimize everything. All completely free.</>}>
+        <PageHero title={<>AI Prompts That Actually Work. Optimized for Asia-Pacific.</>} subtitle={<>Browse 3,000+ battle-tested prompts or let Scout optimize yours for ChatGPT, Claude, MidJourney &amp; more. Built for professionals across Singapore, Jakarta, KL, and beyond.</>}>
           <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
             <Button asChild size="lg" variant="hero" className="px-8">
-              <Link to="/library"><Search className="h-4 w-4 mr-2" />Get Proven Prompts FREE</Link>
+              <Link to="/optimize">Try the Prompt Optimizer <ArrowRight className="h-4 w-4 ml-2" /></Link>
             </Button>
             <Button asChild size="lg" variant="secondary" className="px-8">
-              <Link to="/certification">New to this site? Start here <ArrowRight className="h-4 w-4 ml-2" /></Link>
+              <Link to="/library"><Search className="h-4 w-4 mr-2" />Browse Prompt Library</Link>
             </Button>
           </div>
         </PageHero>
@@ -100,7 +113,8 @@ const Index = () => {
 
         <section className="pb-12"><PromptsOfTheDay /></section>
 
-        <section className="container py-12">
+        {/* Prompt Studio section - commented out */}
+        {/* <section className="container py-12">
           <div className="text-center mb-8">
             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
               <Wand2 className="h-4 w-4" />Alternative Path
@@ -118,10 +132,10 @@ const Index = () => {
             ))}
           </div>
           <div className="max-w-4xl mx-auto"><MiniPromptStudio /></div>
-        </section>
+        </section> */}
 
-        {/* Social Proof with Featured Category */}
-        <section className="container py-6">
+        {/* Social Proof with Featured Category - commented out */}
+        {/* <section className="container py-6">
           <div className="relative overflow-hidden bg-gradient-to-r from-primary/10 via-accent/5 to-primary/10 rounded-2xl border border-primary/20 max-w-5xl mx-auto">
             <div className="relative px-6 py-4">
               <div className="grid md:grid-cols-2 gap-6 items-center">
@@ -153,16 +167,17 @@ const Index = () => {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
         <CoreProductsSection />
         <TestimonialsSection />
         <NewsletterSection user={user} isNewsletterSubscribed={isNewsletterSubscribed} />
         <FAQSection />
-        <MainCTASection />
+        {/* <MainCTASection /> */}
         <LatestArticleSection isReturningUser={isReturningUser} latestArticle={latestArticle} articleLoading={articleLoading} />
-        <FinalCTASection />
+        {/* <FinalCTASection /> */}
       </main>
+      <OnboardingModal />
     </>
   );
 };

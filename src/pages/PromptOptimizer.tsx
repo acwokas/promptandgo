@@ -225,10 +225,10 @@ const PromptOptimizer = () => {
   return (
     <>
       <SEO
-        title="Prompt Optimizer"
-        description="Turn good prompts into great ones. Paste your prompt and get an AI-optimized version with explanations of every improvement."
-        canonical="https://promptandgo.lovable.app/optimize"
-        keywords="prompt optimizer, AI prompt improvement, prompt engineering tool, optimize prompts"
+        title="AI Prompt Optimizer | Make Any Prompt Better | PromptAndGo"
+        description="Paste any prompt and get it optimized for ChatGPT, Claude, Gemini, or MidJourney in seconds. Free AI prompt optimizer by Scout — built for Asia-Pacific professionals."
+        canonical="https://promptandgo.ai/optimize"
+        keywords="prompt optimizer, AI prompt improvement, prompt engineering tool, optimize prompts, ChatGPT prompts, Claude prompts"
       />
 
       <PageHero title="Prompt Optimizer" subtitle="Turn good prompts into great ones" />
