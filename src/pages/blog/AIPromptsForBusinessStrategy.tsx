@@ -86,7 +86,7 @@ const AIPromptsForBusinessStrategy = () => {
             width="1200" height="675"
           />
           <p className="mt-3 text-muted-foreground">
-            Business strategy is about making the right decisions at the right time. Whether you are launching a startup, entering a new market, or scaling operations, the ability to analyse data, identify opportunities, and map a clear path forward is essential. AI can dramatically speed up this process by providing structured insights and strategic recommendations—if you use the right prompts.
+            Business strategy is about making the right decisions at the right time. Whether you are launching a startup, entering a new market, or scaling operations, the ability to analyse data, identify opportunities, and map a clear path forward is essential. AI can dramatically speed up this process by providing structured insights and strategic recommendations - if you use the right prompts.
           </p>
           <p className="mt-3 text-muted-foreground">
             This guide covers AI prompts designed to help you plan more effectively, from analysing competition to creating growth roadmaps.

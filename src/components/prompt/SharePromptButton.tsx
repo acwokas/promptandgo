@@ -18,7 +18,7 @@ export const SharePromptButton = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const shareUrl = `https://www.promptandgo.ai/library?prompt=${promptSlug}&ref=share`;
-  const shareText = `Check out this AI prompt for ${promptCategory}: ${promptTitle} — optimized for ChatGPT, Claude & more on @promptandgo`;
+  const shareText = `Check out this AI prompt for ${promptCategory}: ${promptTitle} - optimised for ChatGPT, Claude & more on @promptandgo`;
 
   const handleCopyLink = async () => {
     try {

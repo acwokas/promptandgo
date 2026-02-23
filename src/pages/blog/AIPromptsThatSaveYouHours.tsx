@@ -164,7 +164,7 @@ const AIPromptsThatSaveYouHours = () => {
 
           <h2 className="text-2xl font-semibold">Final Thoughts</h2>
           <p>
-            AI prompts are more than a convenience—they are a way to scale your productivity without adding more hours to your day. By using the prompts in this guide, you can reclaim time for the work that truly moves your business forward.
+            AI prompts are more than a convenience - they are a way to scale your productivity without adding more hours to your day. By using the prompts in this guide, you can reclaim time for the work that truly moves your business forward.
           </p>
           <p>
             For more ready-to-use prompts across marketing, operations, and strategy, visit the PromptAndGo library.

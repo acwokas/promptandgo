@@ -59,7 +59,7 @@ export function PacksSocialProof() {
                 <blockquote className="text-sm italic text-foreground mb-3">
                   "{t.quote}"
                 </blockquote>
-                <div className="text-xs text-muted-foreground">— {t.author}</div>
+                <div className="text-xs text-muted-foreground">- {t.author}</div>
               </div>
             ))}
           </div>

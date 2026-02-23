@@ -198,7 +198,7 @@ const PromptPacks = () => {
         description: `${p.name} is FREE with your Annual Access.`
       });
     } else {
-      toast({ title: 'Added to cart', description: `${p.name} — ${fmtUSD(PACK_DISCOUNT_CENTS)}` });
+      toast({ title: 'Added to cart', description: `${p.name} - ${fmtUSD(PACK_DISCOUNT_CENTS)}` });
     }
   };
   const handleSubscribe = async () => {
@@ -214,7 +214,7 @@ const PromptPacks = () => {
       return;
     }
     addToCart({ id: 'monthly', type: 'membership', title: 'Monthly All-Access Membership', unitAmountCents: SUB_DISCOUNT_CENTS, quantity: 1 }, !!user);
-    toast({ title: 'Membership added to cart', description: `Monthly All-Access Membership — ${fmtUSD(SUB_DISCOUNT_CENTS)}/mo` });
+    toast({ title: 'Membership added to cart', description: `Monthly All-Access Membership - ${fmtUSD(SUB_DISCOUNT_CENTS)}/mo` });
   };
 
   const handleSearch = () => {
@@ -603,7 +603,7 @@ const PromptPacks = () => {
                           return;
                         }
                         addToCart({ id: 'annual', type: 'annual', title: 'Annual All-Access', unitAmountCents: LIFETIME_DISCOUNT_CENTS, quantity: 1 }, !!user);
-                        toast({ title: 'Annual access added to cart', description: `Annual All-Access — ${fmtUSD(LIFETIME_DISCOUNT_CENTS)}. All other items in your cart are now FREE!` });
+                        toast({ title: 'Annual access added to cart', description: `Annual All-Access - ${fmtUSD(LIFETIME_DISCOUNT_CENTS)}. All other items in your cart are now FREE!` });
                       }}
                     >
                       Get Annual Access

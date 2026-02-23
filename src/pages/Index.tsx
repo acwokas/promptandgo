@@ -96,7 +96,7 @@ const Index = () => {
   return (
     <>
       <SEO
-        title="PromptAndGo — AI Prompts That Actually Work | Free for ChatGPT, Claude & More"
+        title="PromptAndGo - AI Prompts That Actually Work | Free for ChatGPT, Claude & More"
         description="3,000+ battle-tested AI prompts + a free optimizer that makes any prompt better. Built for professionals across Singapore, Indonesia, Vietnam, Malaysia and Australia."
         canonical="https://promptandgo.ai"
         image="https://promptandgo.ai/og-default.png"
@@ -138,7 +138,7 @@ const Index = () => {
               <Button asChild size="lg" className="px-8 text-base bg-white text-gray-900 hover:bg-white/90 h-12">
                 <Link to="/optimize">
                   <Zap className="h-4 w-4 mr-2" />
-                  Optimize a Prompt — Free
+                  Optimize a Prompt - Free
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="px-8 text-base border-white/20 text-white hover:bg-white/10 h-12">
@@ -228,7 +228,7 @@ const Index = () => {
               Three ways to get perfect prompts
             </h2>
             <p className="text-muted-foreground mt-4 max-w-2xl mx-auto text-lg">
-              Whether you want ready-made, custom-built, or optimized — we've got it.
+              Whether you want ready-made, custom-built, or optimized - we've got it.
             </p>
           </div>
 
@@ -245,7 +245,7 @@ const Index = () => {
               {
                 icon: Zap,
                 title: "Optimize Any Prompt",
-                desc: "Paste your rough prompt. Scout rewrites it with precision — tailored to ChatGPT, Claude, MidJourney, or any AI tool.",
+                desc: "Paste your rough prompt. Scout rewrites it with precision - tailored to ChatGPT, Claude, MidJourney, or any AI tool.",
                 link: "/optimize",
                 cta: "Try the optimizer",
                 gradient: "from-violet-500 to-purple-500",
@@ -333,7 +333,7 @@ const Index = () => {
               {
                 icon: TrendingUp,
                 title: "Actually tested",
-                desc: "Every prompt in our library has been tested across multiple AI platforms. No theoretical nonsense — just results.",
+                desc: "Every prompt in our library has been tested across multiple AI platforms. No theoretical nonsense - just results.",
               },
               {
                 icon: Bot,
@@ -382,7 +382,7 @@ const Index = () => {
                   "Write me a marketing email"
                 </p>
                 <div className="mt-4 pt-4 border-t border-white/10">
-                  <p className="text-xs text-white/30">Vague. No context. No structure. The AI will guess — and usually guess wrong.</p>
+                  <p className="text-xs text-white/30">Vague. No context. No structure. The AI will guess - and usually guess wrong.</p>
                 </div>
               </div>
 
@@ -453,7 +453,7 @@ const Index = () => {
               The Asia-Pacific prompt advantage
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
-              1.9 million professionals across Singapore, Indonesia, Vietnam, Malaysia, and Australia are searching for better AI prompts. PromptAndGo is the only prompt library built specifically for APAC markets — with cultural context, local business use cases, and regional language understanding baked in.
+              1.9 million professionals across Singapore, Indonesia, Vietnam, Malaysia, and Australia are searching for better AI prompts. PromptAndGo is the only prompt library built specifically for APAC markets - with cultural context, local business use cases, and regional language understanding baked in.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild size="lg" className="h-11">
@@ -487,7 +487,7 @@ const Index = () => {
               <Button asChild size="lg" className="bg-white text-gray-900 hover:bg-white/90 h-12 px-8 text-base">
                 <Link to="/optimize">
                   <Zap className="h-4 w-4 mr-2" />
-                  Start Optimizing — Free
+                  Start Optimizing - Free
                 </Link>
               </Button>
             </div>

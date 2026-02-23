@@ -22,7 +22,7 @@ const AuthorBio = ({ author }: { author: Author }) => {
       <h2 id="about-author" className="text-lg font-semibold">About the author</h2>
       <p className="mt-1 text-sm text-muted-foreground">
         <strong className="font-medium">{author.name}</strong>
-        {author.title ? ` — ${author.title}` : ""}
+        {author.title ? ` - ${author.title}` : ""}
         {author.bio ? ` · ${author.bio}` : ""}
       </p>
       {domains.length > 0 && (

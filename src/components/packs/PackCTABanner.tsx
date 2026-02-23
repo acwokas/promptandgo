@@ -22,7 +22,7 @@ export function PackCTABanner({ variant = "lifetime" }: PackCTABannerProps) {
                 </span>
               </div>
               <h3 className="text-xl md:text-2xl font-bold text-primary-foreground mb-2">
-                Lifetime Access — All Packs Included
+                Lifetime Access - All Packs Included
               </h3>
               <p className="text-primary-foreground/80 text-sm">
                 One payment. Every pack. Forever. Plus all future releases.

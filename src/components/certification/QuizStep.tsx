@@ -126,7 +126,7 @@ export function QuizStep({ onComplete, onBack }: QuizStepProps) {
             </p>
           ) : (
             <p className="text-lg">
-              Not bad! Try again to earn your badge — you're one step away from certification.
+              Not bad! Try again to earn your badge - you're one step away from certification.
             </p>
           )}
         </Card>

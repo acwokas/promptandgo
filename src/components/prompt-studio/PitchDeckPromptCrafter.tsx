@@ -106,7 +106,7 @@ export default function PitchDeckPromptCrafter({ onPromptGenerated, initialSelec
       prompt += `Speaker Notes: Add persuasive phrasing, storytelling hooks, and closing techniques for each slide.\n`;
     }
     
-    prompt += `Constraints: Keep it lean and persuasive — no overcrowding slides.\n`;
+    prompt += `Constraints: Keep it lean and persuasive - no overcrowding slides.\n`;
 
     if (additionalFeatures.length > 0) {
       const otherFeatures = additionalFeatures.filter(f => f !== "Speaker notes");

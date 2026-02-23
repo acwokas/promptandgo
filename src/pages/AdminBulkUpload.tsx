@@ -698,7 +698,7 @@ const AdminBulkUpload = () => {
                   <li>
                     Distinct packs detected: {csvStats.distinctPacks}
                     {csvStats.samplePacks.length > 0 && (
-                      <> — e.g. {csvStats.samplePacks.join(', ')}</>
+                      <> - e.g. {csvStats.samplePacks.join(', ')}</>
                     )}
                   </li>
                 </ul>

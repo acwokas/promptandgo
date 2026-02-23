@@ -27,7 +27,7 @@ export function RulesStep({ onNext, onBack }: RulesStepProps) {
     },
     {
       icon: Volume2,
-      title: "Avoid filler words — your AI will thank you",
+      title: "Avoid filler words - your AI will thank you",
       color: "#6DD5FA",
       description: "Every word should add value. Skip phrases like 'please', 'I want you to', 'can you', and get straight to the instruction. Concise prompts = better results.",
       goodExample: "Generate 5 subject lines for a product launch email. Make them urgent and benefit-focused. Under 50 characters each.",

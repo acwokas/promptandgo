@@ -11,7 +11,7 @@ const proofPoints = [
   {
     icon: TrendingUp,
     stat: "28.6%",
-    label: "of the creative content market is wide open — no major AI brand serves it yet",
+    label: "of the creative content market is wide open - no major AI brand serves it yet",
     source: "Brand whitespace analysis, Singapore 2026"
   },
   {

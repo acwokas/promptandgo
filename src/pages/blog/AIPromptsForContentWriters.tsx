@@ -88,7 +88,7 @@ const AIPromptsForContentWriters = () => {
             width="1280" height="720"
           />
           <p className="mt-3 text-muted-foreground">
-            Content writers and copywriters are under constant pressure to produce high-quality work at speed. Whether it’s a blog post, an ad campaign, or a sales page, the ability to write well—and write fast—can make a big difference to business success. AI can be a powerful creative partner, providing ideas, outlines, and drafts that you can refine into polished work.
+            Content writers and copywriters are under constant pressure to produce high-quality work at speed. Whether it’s a blog post, an ad campaign, or a sales page, the ability to write well - and write fast - can make a big difference to business success. AI can be a powerful creative partner, providing ideas, outlines, and drafts that you can refine into polished work.
           </p>
           <p className="mt-3 text-muted-foreground">
             This guide shares AI prompts specifically for content writers and copywriters to help you work smarter without losing your unique voice.

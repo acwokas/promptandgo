@@ -538,7 +538,7 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
     <>
       <SEO
         title="My Favourite Prompts"
-        description="Your saved favourite prompts — quick access to what you use most."
+        description="Your saved favourite prompts - quick access to what you use most."
       />
       <PageHero
         title={<><span className="text-gradient-brand">My</span> Prompts</>}
