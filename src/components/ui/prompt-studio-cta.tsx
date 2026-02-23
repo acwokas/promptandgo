@@ -18,7 +18,7 @@ export const PromptStudioCTA = ({ variant = "default", className }: PromptStudio
         </div>
         <div className="flex-1">
           <h3 className="font-semibold text-sm">Create Custom Prompts</h3>
-          <p className="text-xs text-muted-foreground">Use Scout's Prompt Studio to craft personalized prompts</p>
+          <p className="text-xs text-muted-foreground">Use Scout's Prompt Studio to craft personalised prompts</p>
         </div>
         <Button asChild variant="outline" size="sm">
           <Link to="/ai/studio">
@@ -66,7 +66,7 @@ export const PromptStudioCTA = ({ variant = "default", className }: PromptStudio
           </div>
         </div>
         <p className="text-sm text-muted-foreground mb-4">
-          Let Scout help you craft the perfect prompt for your specific needs. Choose your topic, customize parameters, and get a tailored prompt in seconds.
+          Let Scout help you craft the perfect prompt for your specific needs. Choose your topic, customise parameters, and get a tailored prompt in seconds.
         </p>
         <Button asChild className="w-full" variant="default">
           <Link to="/ai/studio">

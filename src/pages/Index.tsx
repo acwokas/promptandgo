@@ -195,7 +195,7 @@ const Index = () => {
                   </div>
                 </div>
               </div>
-              <p className="text-center text-white/30 text-xs mt-3">Scout analyzes and optimizes prompts for 12+ AI platforms in real-time</p>
+              <p className="text-center text-white/30 text-xs mt-3">Scout analyses and optimises prompts for 12+ AI platforms in real-time</p>
             </div>
           </div>
         </section>
@@ -228,7 +228,7 @@ const Index = () => {
               Three ways to get perfect prompts
             </h2>
             <p className="text-muted-foreground mt-4 max-w-2xl mx-auto text-lg">
-              Whether you want ready-made, custom-built, or optimized - we've got it.
+              Whether you want ready-made, custom-built, or optimised - we've got it.
             </p>
           </div>
 
@@ -323,7 +323,7 @@ const Index = () => {
               {
                 icon: Zap,
                 title: "Instant, not hours",
-                desc: "Stop spending 20 minutes crafting prompts. Paste, optimize, copy. Done in seconds.",
+                desc: "Stop spending 20 minutes crafting prompts. Paste, optimise, copy. Done in seconds.",
               },
               {
                 icon: Award,

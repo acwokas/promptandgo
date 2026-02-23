@@ -33,7 +33,7 @@ export const AIOptimizedStructuredData = ({
         name: "What is PromptandGo.ai?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "PromptandGo.ai is a comprehensive AI productivity platform offering 3,000+ curated prompts, Scout AI optimization, and specialized Power Packs. It helps professionals, marketers, and creators get better results from AI tools like ChatGPT, Claude, Gemini, and others - completely free."
+          text: "PromptandGo.ai is a comprehensive AI productivity platform offering 3,000+ curated prompts, Scout AI optimization, and specialised Power Packs. It helps professionals, marketers, and creators get better results from AI tools like ChatGPT, Claude, Gemini, and others - completely free."
         }
       },
       {
@@ -41,7 +41,7 @@ export const AIOptimizedStructuredData = ({
         name: "How does Scout AI optimization work?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Scout AI analyzes your prompt and automatically rewrites it for optimal performance on your chosen AI platform (ChatGPT, Claude, Gemini, etc.). It adjusts formatting, adds context, and optimizes language patterns specific to each AI model for better, more consistent results."
+          text: "Scout AI analyses your prompt and automatically rewrites it for optimal performance on your chosen AI platform (ChatGPT, Claude, Gemini, etc.). It adjusts formatting, adds context, and optimizes language patterns specific to each AI model for better, more consistent results."
         }
       },
       {
@@ -95,7 +95,7 @@ export const AIOptimizedStructuredData = ({
       "3000+ tested AI prompts",
       "Scout AI optimization engine", 
       "Platform-specific prompt adaptation",
-      "Power Packs for specialized use cases",
+      "Power Packs for specialised use cases",
       "Free access to core features",
       "Regular content updates",
       "Multi-platform compatibility",

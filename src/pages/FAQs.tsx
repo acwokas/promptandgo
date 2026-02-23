@@ -347,7 +347,7 @@ const FAQs = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Can't find what you're looking for? Our support team responds within 24 hours with personalized help.
+                  Can't find what you're looking for? Our support team responds within 24 hours with personalised help.
                 </p>
                 <Button asChild className="w-full" variant="secondary">
                   <Link to="/contact">Contact Support</Link>

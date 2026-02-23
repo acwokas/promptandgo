@@ -23,11 +23,11 @@ export const AI_PERSONA = {
   // UI text
   ui: {
     assistantTitle: "Chat with Scout",
-    assistantSubtitle: "Get personalized help finding and creating the perfect prompts",
+    assistantSubtitle: "Get personalised help finding and creating the perfect prompts",
     generatorTitle: "Scout AI Prompt Generator",
     generatorSubtitle: "Let Scout create custom AI prompts tailored to your needs. Scout understands what makes prompts effective for ChatGPT, Claude, Gemini, and more.",
     upsellTitle: "Need Help Getting Started?",
-    upsellDescription: "Not sure what to create? Chat with Scout for personalized recommendations and expert guidance.",
+    upsellDescription: "Not sure what to create? Chat with Scout for personalised recommendations and expert guidance.",
     upsellButton: "Chat with Scout",
     generateButton: "Ask Scout to Generate",
     generatingButton: "Scout is Working...",

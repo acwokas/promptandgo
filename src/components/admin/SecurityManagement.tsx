@@ -198,7 +198,7 @@ export function SecurityManagement() {
               <div className="border rounded-lg p-3">
                 <h4 className="font-medium text-green-700">✅ RLS Policies Strengthened</h4>
                 <p className="text-sm text-muted-foreground mt-1">
-                  Row-level security policies have been tightened to restrict unauthorized data access.
+                  Row-level security policies have been tightened to restrict unauthorised data access.
                 </p>
               </div>
             </div>

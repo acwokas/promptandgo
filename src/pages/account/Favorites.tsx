@@ -935,7 +935,7 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
                       <div>
                         <h4 className="font-semibold mb-2">Regular Cleanup</h4>
                         <p className="text-muted-foreground">
-                          Delete prompts you no longer need to keep your collection organized.
+                          Delete prompts you no longer need to keep your collection organised.
                         </p>
                       </div>
                       <div>

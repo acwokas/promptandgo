@@ -58,7 +58,7 @@ const ctaVariants: CTAVariant[] = [
   },
   {
     id: 'new-user',
-    title: "Complete your profile to get personalized prompts",
+    title: "Complete your profile to get personalised prompts",
     description: "Tell us about your work and we'll recommend the best prompts for you",
     buttonText: "Complete Profile",
     buttonLink: "/account/profile",

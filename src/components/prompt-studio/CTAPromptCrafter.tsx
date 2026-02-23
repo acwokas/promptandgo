@@ -82,7 +82,7 @@ const CTAPromptCrafter: React.FC<CTAPromptCrafterProps> = ({ onPromptGenerated, 
     prompt += "- Relevant hashtags based on the strategy\n";
     prompt += "- Visual description or suggestions\n";
     prompt += "- Optimal posting recommendations\n";
-    prompt += "- Engagement tactics to maximize reach and interaction";
+    prompt += "- Engagement tactics to maximise reach and interaction";
 
     return prompt;
   };

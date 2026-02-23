@@ -25,7 +25,7 @@ const recommendations: Recommendation[] = [
     id: 'ai-assistant',
     type: 'feature',
     title: "Try Scout AI Assistant",
-    description: "Get personalized prompt suggestions based on your needs",
+    description: "Get personalised prompt suggestions based on your needs",
     link: "/ai-assistant",
     priority: 1,
     badge: "Popular",

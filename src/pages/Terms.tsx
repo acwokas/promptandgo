@@ -47,7 +47,7 @@ const Terms = () => (
       <h2>2.&nbsp;&nbsp;AI Tools and Beta Services</h2>
       <p>PromptandGo provides AI-powered tools including but not limited to:</p>
       <ul>
-        <li><strong>Scout Prompt Generator</strong> - generates customized prompts based on your inputs</li>
+        <li><strong>Scout Prompt Generator</strong> - generates customised prompts based on your inputs</li>
         <li><strong>Smart Suggestions</strong> - provides AI-powered recommendations</li>
         <li><strong>Scout Assistant</strong> - interactive AI chat assistance</li>
         <li><strong>Personalized Recommendations</strong> - content and feature suggestions based on user behavior</li>
@@ -68,7 +68,7 @@ const Terms = () => (
       <p>AI services are provided "as is" without guarantees of availability, accuracy, or fitness for any particular purpose. Usage limits may change based on operational needs and cost considerations.</p>
 
       <h2>3.&nbsp;&nbsp;User Behavior Tracking and Analytics</h2>
-      <p>To improve our services and provide personalized experiences, we track various user behaviors including:</p>
+      <p>To improve our services and provide personalised experiences, we track various user behaviors including:</p>
       <ul>
         <li><strong>Page Navigation</strong> - pages visited, time spent, navigation patterns</li>
         <li><strong>Interaction Tracking</strong> - clicks, form interactions, button presses, and feature usage</li>
@@ -95,7 +95,7 @@ const Terms = () => (
         <li>Attempt to reverse engineer or extract AI models or training data</li>
         <li>Use the services for any unlawful purpose or in violation of applicable laws</li>
         <li>Exceed usage limits or attempt to circumvent access controls</li>
-        <li>Share account credentials or allow unauthorized access to AI tools</li>
+        <li>Share account credentials or allow unauthorised access to AI tools</li>
         <li>Generate content that infringes intellectual property rights</li>
       </ul>
       <p>We reserve the right to monitor AI usage and suspend access for violations.</p>
@@ -106,7 +106,7 @@ const Terms = () => (
         <li>Provide accurate and complete information</li>
         <li>Keep your login credentials secure</li>
         <li>Be responsible for all activities under your account</li>
-        <li>Maintain the security of your AI usage and not share access with unauthorized parties</li>
+        <li>Maintain the security of your AI usage and not share access with unauthorised parties</li>
       </ul>
 
       <h2>6.&nbsp;&nbsp;Content and Intellectual Property</h2>

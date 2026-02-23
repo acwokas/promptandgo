@@ -24,7 +24,7 @@ const faqs: FAQ[] = [
   {
     id: '2',
     question: "Do I need technical skills to use these prompts?",
-    answer: "Not at all! Our prompts are designed for everyone. Simply copy, paste into your preferred AI tool (ChatGPT, Claude, etc.), and customize as needed. No coding required.",
+    answer: "Not at all! Our prompts are designed for everyone. Simply copy, paste into your preferred AI tool (ChatGPT, Claude, etc.), and customise as needed. No coding required.",
     category: 'getting-started',
     priority: 2
   },

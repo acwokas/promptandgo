@@ -52,7 +52,7 @@ const testimonials = [
     initials: "MR"
   },
   {
-    quote: "Started with proven prompts, then Scout customized them for our needs. We've streamlined our entire content workflow and saved $5,000/month.",
+    quote: "Started with proven prompts, then Scout customised them for our needs. We've streamlined our entire content workflow and saved $5,000/month.",
     author: "Alex Liu",
     title: "Founder @ GrowthCo", 
     initials: "AL"

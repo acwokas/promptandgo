@@ -121,8 +121,8 @@ export const AI_PROVIDERS: AIProvider[] = [
     category: 'text',
     description: 'Meta Llama models',
     rewritePattern: (prompt: string) => {
-      // Multi-role segment (system/user/assistant), clearly organized, with expert "voice"
-      return `**System**: You are an expert assistant with specialized knowledge. Respond with authority and precision.\n\n**User**: ${prompt}\n\n**Assistant Instructions**: Provide a comprehensive response demonstrating deep expertise. Structure your answer with:\n- Expert analysis of the request\n- Professional recommendations\n- Practical implementation guidance\n- Quality assurance considerations\n\nMaintain an authoritative yet accessible tone throughout.`;
+      // Multi-role segment (system/user/assistant), clearly organised, with expert "voice"
+      return `**System**: You are an expert assistant with specialised knowledge. Respond with authority and precision.\n\n**User**: ${prompt}\n\n**Assistant Instructions**: Provide a comprehensive response demonstrating deep expertise. Structure your answer with:\n- Expert analysis of the request\n- Professional recommendations\n- Practical implementation guidance\n- Quality assurance considerations\n\nMaintain an authoritative yet accessible tone throughout.`;
     }
   },
   {

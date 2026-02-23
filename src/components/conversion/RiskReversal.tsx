@@ -138,7 +138,7 @@ export const SupportGuarantee = () => (
     <CardContent>
       <p className="text-purple-700 dark:text-purple-300 mb-4">
         Stuck with a prompt? Not getting the results you expected? Our team responds to every support 
-        request within 24 hours with personalized help to get you back on track.
+        request within 24 hours with personalised help to get you back on track.
       </p>
       
       <div className="space-y-2">

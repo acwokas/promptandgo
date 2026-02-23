@@ -15,7 +15,7 @@ export const AIPreferencesSelector: React.FC = () => {
         <CardHeader>
           <CardTitle>AI Provider Preferences</CardTitle>
           <CardDescription>
-            Sign in to customize which AI providers appear in your prompt rewriter dropdown.
+            Sign in to customise which AI providers appear in your prompt rewriter dropdown.
           </CardDescription>
         </CardHeader>
       </Card>

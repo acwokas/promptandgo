@@ -129,7 +129,7 @@ export const CompactAIProviderSelector: React.FC<CompactAIProviderSelectorProps>
           {!isLoggedIn && (
             <>
               <div className="px-3 py-2 text-xs">
-                <div className="font-medium text-foreground">🔓 Sign in to customize</div>
+                <div className="font-medium text-foreground">🔓 Sign in to customise</div>
                 <div className="text-muted-foreground mt-1">
                   Choose your preferred AI providers
                 </div>

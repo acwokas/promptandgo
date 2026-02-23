@@ -56,7 +56,7 @@ const successStories = [
     role: "Sales Director",
     company: "CloudSoft Solutions",
     avatar: "DK",
-    story: "Our sales team was struggling with personalized outreach at scale. The sales email prompts helped us create targeted messages that actually get responses.",
+    story: "Our sales team was struggling with personalised outreach at scale. The sales email prompts helped us create targeted messages that actually get responses.",
     results: [
       "Response rates up 180%",
       "Qualified leads increased 250%",

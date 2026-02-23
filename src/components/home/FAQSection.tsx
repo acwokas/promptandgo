@@ -51,7 +51,7 @@ export function FAQSection() {
           <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl p-6 h-fit sticky top-6">
             <h3 className="font-semibold mb-3 text-center">🤖 Everything You Need, Free Forever</h3>
             <p className="text-sm text-muted-foreground mb-6 text-center">
-              Browse battle-tested prompts, use Scout AI optimization, and get platform-specific versions. Upgrade only for specialized collections.
+              Browse battle-tested prompts, use Scout AI optimization, and get platform-specific versions. Upgrade only for specialised collections.
             </p>
             
             <div className="space-y-3 mb-6">

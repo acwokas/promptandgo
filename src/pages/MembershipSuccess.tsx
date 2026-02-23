@@ -77,7 +77,7 @@ const MembershipSuccess = () => {
     {
       icon: <Palette className="h-5 w-5 text-primary" />,
       title: "AI Assistant",
-      description: "Get personalized help with your AI prompt needs",
+      description: "Get personalised help with your AI prompt needs",
       link: "/ai/assistant"
     }
   ];

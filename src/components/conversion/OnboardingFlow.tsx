@@ -127,7 +127,7 @@ const OnboardingFlow = () => {
           </Button>
           <h2 className="text-3xl font-bold mb-4">Perfect! Let's Get You Started</h2>
           <p className="text-lg text-muted-foreground">
-            Based on your selection, here's your personalized quick-start guide
+            Based on your selection, here's your personalised quick-start guide
           </p>
         </div>
 
@@ -230,7 +230,7 @@ const OnboardingFlow = () => {
         />
         <h2 className="text-3xl font-bold mb-4">What Brings You Here Today?</h2>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Choose your path for a personalized experience. Don't worry - you'll have access to everything regardless of your choice.
+          Choose your path for a personalised experience. Don't worry - you'll have access to everything regardless of your choice.
         </p>
       </div>
 

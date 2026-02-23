@@ -22,7 +22,7 @@ export function CoreProductsSection() {
               <Search className="h-6 w-6 text-white" />
             </div>
             <h3 className="text-lg font-semibold mb-2 text-foreground">Prompt Library</h3>
-            <p className="text-sm text-muted-foreground mb-4">3,000+ battle-tested prompts organized by category. Copy, paste, and get results instantly.</p>
+            <p className="text-sm text-muted-foreground mb-4">3,000+ battle-tested prompts organised by category. Copy, paste, and get results instantly.</p>
             <Button asChild variant="outline" size="sm" className="w-full">
               <Link to="/library">Browse Library</Link>
             </Button>

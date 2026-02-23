@@ -58,14 +58,14 @@ const Privacy = () => (
           <li>Conversion funnel progression and drop-off points</li>
         </ul>
         <li><strong>Email Marketing Data</strong> - newsletter subscription status, email preferences, engagement metrics (opens, clicks), unsubscribe history, and lead magnet interactions.</li>
-        <li><strong>Personalization Data</strong> - preferences, recommendation history, content interaction patterns, and algorithmic profiling for customized user experiences.</li>
+        <li><strong>Personalization Data</strong> - preferences, recommendation history, content interaction patterns, and algorithmic profiling for customised user experiences.</li>
         <li><strong>Social Proof Data</strong> - aggregated and anonymized user activity data used to display social proof elements (e.g., "X users copied this prompt today").</li>
       </ul>
 
       <h2>2.&nbsp;&nbsp;How We Use Your Information</h2>
       <p>We use your personal data to:</p>
       <ul>
-        <li>Provide, maintain, and improve our services, including AI tools and personalized recommendations.</li>
+        <li>Provide, maintain, and improve our services, including AI tools and personalised recommendations.</li>
         <li>Process your account registration and authenticate your access.</li>
         <li>Generate AI-powered prompts, suggestions, and assist with your queries through Scout, our AI Assistant.</li>
         <li>Track usage limits and quotas for our AI services (currently in beta).</li>
@@ -74,7 +74,7 @@ const Privacy = () => (
         <li>Send you updates, newsletters, and marketing (only with your consent).</li>
         <li>Analyze usage patterns to improve our AI algorithms and service quality.</li>
         <li>Comply with legal obligations and enforce our terms of use.</li>
-        <li><strong>Behavioral Analysis and Optimization</strong> - analyze user interactions, navigation patterns, and engagement levels to:</li>
+        <li><strong>Behavioural Analysis and Optimisation</strong> - analyse user interactions, navigation patterns, and engagement levels to:</li>
         <ul>
           <li>Optimize website layout, content placement, and user interface design</li>
           <li>Personalize call-to-action messages and content recommendations</li>
@@ -82,7 +82,7 @@ const Privacy = () => (
           <li>Improve conversion rates and user experience optimization</li>
           <li>Generate engagement scores and user behavior insights</li>
         </ul>
-        <li><strong>Email Marketing and Communication</strong> - deliver personalized newsletters, promotional content, lead magnets, and transactional messages based on user preferences and behavior patterns.</li>
+        <li><strong>Email Marketing and Communication</strong> - deliver personalised newsletters, promotional content, lead magnets, and transactional messages based on user preferences and behavior patterns.</li>
         <li><strong>Social Proof Generation</strong> - create anonymized activity feeds and testimonials to demonstrate platform usage and build trust with new users.</li>
         <li><strong>A/B Testing and Experimentation</strong> - test different features, content, and user experience variations to optimize our services.</li>
         <li><strong>Fraud Prevention and Security</strong> - monitor for suspicious activity, prevent abuse, and protect user accounts and data.</li>
@@ -153,7 +153,7 @@ const Privacy = () => (
       <ul>
         <li>Improve your user experience and remember your preferences.</li>
         <li>Analyse Site performance and user behavior patterns.</li>
-        <li>Deliver relevant content and personalized recommendations.</li>
+        <li>Deliver relevant content and personalised recommendations.</li>
         <li>Track user interactions for conversion optimization.</li>
         <li>Provide social proof and engagement metrics.</li>
         <li>Enable personalization features and smart recommendations.</li>
@@ -163,7 +163,7 @@ const Privacy = () => (
       <ul>
         <li><strong>Essential Cookies</strong> - necessary for site functionality, authentication, and security</li>
         <li><strong>Analytics Cookies</strong> - track page views, user journeys, and site performance</li>
-        <li><strong>Personalization Cookies</strong> - remember preferences and enable customized experiences</li>
+        <li><strong>Personalization Cookies</strong> - remember preferences and enable customised experiences</li>
         <li><strong>Marketing Cookies</strong> - track conversions, email signups, and campaign effectiveness</li>
         <li><strong>Behavioral Tracking Scripts</strong> - monitor user interactions, scroll behavior, and engagement patterns</li>
         <li><strong>Session Storage</strong> - temporary data storage for current session management</li>

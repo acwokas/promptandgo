@@ -283,7 +283,7 @@ const ContextPopup = ({ isOpen, onClose, onDismissPermanently, onComplete }: Con
               <CardHeader className="pb-3">
                 <CardTitle className="text-base">Sign up to save your preferences</CardTitle>
                 <CardDescription className="text-sm">
-                  Create an account to get personalized prompt recommendations
+                  Create an account to get personalised prompt recommendations
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">

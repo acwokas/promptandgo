@@ -83,10 +83,10 @@ const HowItWorks = () => {
     name: "How PromptandGo Works",
     description: "Complete AI productivity toolkit with prompt library, Scout optimization, and Power Packs - all free.",
     step: [
-      { "@type": "HowToStep", name: "Browse Library", text: "Explore 3,000+ tested prompts organized by category and use case." },
+      { "@type": "HowToStep", name: "Browse Library", text: "Explore 3,000+ tested prompts organised by category and use case." },
       { "@type": "HowToStep", name: "Optimize with Scout", text: "Let Scout AI rewrite prompts for your specific AI platform (ChatGPT, Claude, Gemini, etc)." },
       { "@type": "HowToStep", name: "Use Power Packs", text: "Get themed collections of prompts for specific goals like marketing or business strategy." },
-      { "@type": "HowToStep", name: "Get Results", text: "Paste optimized prompts into any AI tool and get better results instantly." },
+      { "@type": "HowToStep", name: "Get Results", text: "Paste optimised prompts into any AI tool and get better results instantly." },
     ],
     mainEntityOfPage: { "@type": "WebPage", "@id": `${origin}/how-it-works` },
   };
@@ -106,7 +106,7 @@ const HowItWorks = () => {
       title={<>How <span className="text-gradient-brand">PromptandGo</span> Works</>}
       subtitle={
         <>
-          Get better AI results with our complete toolkit: browse 3,000+ tested prompts, use specialized Power Packs, and let Scout optimize everything for your favorite AI platform. All completely free.
+          Get better AI results with our complete toolkit: browse 3,000+ tested prompts, use specialised Power Packs, and let Scout optimize everything for your favorite AI platform. All completely free.
         </>
       }
       minHeightClass="min-h-[35svh]"
@@ -323,7 +323,7 @@ const HowItWorks = () => {
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4">Scout Makes Every Prompt Better</h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Scout analyzes your prompts and rewrites them specifically for your chosen AI platform. Get 3x better results instantly.
+            Scout analyses your prompts and rewrites them specifically for your chosen AI platform. Get 3x better results instantly.
           </p>
         </div>
 
@@ -362,7 +362,7 @@ const HowItWorks = () => {
                     <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold">4</div>
                     <div>
                       <h4 className="font-semibold">Copy & Get Better Results</h4>
-                      <p className="text-sm text-muted-foreground">Paste the optimized prompt and see improved output</p>
+                      <p className="text-sm text-muted-foreground">Paste the optimised prompt and see improved output</p>
                     </div>
                   </div>
                 </div>
@@ -427,7 +427,7 @@ const HowItWorks = () => {
                 <div className="flex-1">
                   <h3 className="text-xl font-semibold mb-2">Start with Our Library or Power Packs</h3>
                   <p className="text-muted-foreground mb-4">
-                    Browse 3,000+ tested prompts or grab a Power Pack for your specific goal. Everything is organized by category and use case.
+                    Browse 3,000+ tested prompts or grab a Power Pack for your specific goal. Everything is organised by category and use case.
                   </p>
                   <div className="flex gap-2">
                     <Button asChild size="sm" variant="outline">
@@ -468,7 +468,7 @@ const HowItWorks = () => {
                 <div className="flex-1">
                   <h3 className="text-xl font-semibold mb-2">Copy & Paste into Any AI Tool</h3>
                   <p className="text-muted-foreground mb-4">
-                    Take your optimized prompt and paste it into ChatGPT, Claude, Gemini, Perplexity, or any other AI platform. Works universally.
+                    Take your optimised prompt and paste it into ChatGPT, Claude, Gemini, Perplexity, or any other AI platform. Works universally.
                   </p>
                   <div className="flex gap-2 text-sm text-muted-foreground">
                     <span>✅ ChatGPT</span>
@@ -689,7 +689,7 @@ const HowItWorks = () => {
               <div className="space-y-6">
                 <div className="border-l-4 border-primary pl-4 py-2">
                   <h3 className="font-semibold mb-1">How does Scout optimization work?</h3>
-                  <p className="text-sm text-muted-foreground">Scout analyzes your prompt and rewrites it with platform-specific optimizations, better structure, and clearer instructions for improved results.</p>
+                  <p className="text-sm text-muted-foreground">Scout analyses your prompt and rewrites it with platform-specific optimizations, better structure, and clearer instructions for improved results.</p>
                 </div>
                 
                 <div className="border-l-4 border-primary pl-4 py-2">
@@ -699,7 +699,7 @@ const HowItWorks = () => {
                 
                 <div className="border-l-4 border-primary pl-4 py-2">
                   <h3 className="font-semibold mb-1">Which AI platforms work with Scout?</h3>
-                  <p className="text-sm text-muted-foreground">Scout optimizes for ChatGPT, Claude, Gemini, Perplexity, and virtually any text-based AI platform. Just select your platform and get optimized prompts.</p>
+                  <p className="text-sm text-muted-foreground">Scout optimizes for ChatGPT, Claude, Gemini, Perplexity, and virtually any text-based AI platform. Just select your platform and get optimised prompts.</p>
                 </div>
               </div>
               
@@ -716,7 +716,7 @@ const HowItWorks = () => {
                 
                 <div className="border-l-4 border-primary pl-4 py-2">
                   <h3 className="font-semibold mb-1">How fast will I see better results?</h3>
-                  <p className="text-sm text-muted-foreground">Immediately! Users typically see 3x better results from their first optimized prompt. The difference is noticeable from the first use.</p>
+                  <p className="text-sm text-muted-foreground">Immediately! Users typically see 3x better results from their first optimised prompt. The difference is noticeable from the first use.</p>
                 </div>
               </div>
             </div>
