@@ -15,6 +15,7 @@ import {
   ArrowRight, BookOpen, Lightbulb, Settings2, Eye, Zap, Globe,
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import { supabase } from "@/integrations/supabase/client";
 
 const EXAMPLES = [
   {
@@ -117,13 +118,18 @@ const PromptOptimizer = () => {
     setShowExample(false);
 
     try {
+      // Use the user's session token if logged in, otherwise fall back to the anon key
+      const { data: sessionData } = await supabase.auth.getSession();
+      const token = sessionData?.session?.access_token
+        ?? "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1uY3hzcG10cXZxZ3Z0cnhieHpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ4MjI0NjUsImV4cCI6MjA3MDM5ODQ2NX0.UjglB_MtyXQgsAHbdWKk_sn2hSyOX9iPWIU8EOayn2M";
+
       const resp = await fetch(
         `https://mncxspmtqvqgvtrxbxzb.supabase.co/functions/v1/optimize-prompt`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1uY3hzcG10cXZxZ3Z0cnhieHpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ4MjI0NjUsImV4cCI6MjA3MDM5ODQ2NX0.UjglB_MtyXQgsAHbdWKk_sn2hSyOX9iPWIU8EOayn2M`,
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             prompt: prompt.trim(),
