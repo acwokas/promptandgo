@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
-import { User as UserIcon, Bot, Search, Heart } from "lucide-react";
+import { User as UserIcon, Bot, Search, Heart, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Footer = () => {
@@ -53,11 +53,15 @@ const Footer = () => {
             </Link>
             <Link to="/packs" className="text-muted-foreground hover:text-foreground">⚡️ Power Packs</Link>
             <Link to="/scout" className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
-              <Bot className="h-3 w-3 text-blue-500" />
+              <Bot className="h-3 w-3 text-accent" />
               Scout AI
             </Link>
             <Link to="/how-it-works" className="text-muted-foreground hover:text-foreground">🤓 How it Works</Link>
             <Link to="/singapore-startups" className="text-muted-foreground hover:text-foreground">Singapore Startups</Link>
+            <Link to="/market-insights" className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
+              <TrendingUp className="h-3 w-3 text-accent" />
+              Market Insights
+            </Link>
             <Link to="/tips" className="text-muted-foreground hover:text-foreground">💡 Tips</Link>
             <Link to="/faqs" className="text-muted-foreground hover:text-foreground">❓ FAQs</Link>
           </nav>

@@ -48,66 +48,66 @@ All colors MUST be HSL. */
   }
 
   :root {
-    --background: 0 0% 100%;
-    --foreground: 224 71.4% 4.1%;
+    --background: 28 76% 97%;
+    --foreground: 240 28% 14%;
     --card: 0 0% 100%;
-    --card-foreground: 224 71.4% 4.1%;
+    --card-foreground: 240 28% 14%;
     --popover: 0 0% 100%;
-    --popover-foreground: 224 71.4% 4.1%;
-    --primary: 220 90% 55%;
-    --primary-foreground: 210 20% 98%;
-    --secondary: 220 14.3% 95.9%;
-    --secondary-foreground: 220.9 39.3% 11%;
-    --muted: 220 14.3% 95.9%;
-    --muted-foreground: 220 8.9% 46.1%;
-    --accent: 220 14.3% 95.9%;
-    --accent-foreground: 220.9 39.3% 11%;
+    --popover-foreground: 240 28% 14%;
+    --primary: 350 78% 59%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 28 30% 94%;
+    --secondary-foreground: 240 28% 14%;
+    --muted: 28 20% 94%;
+    --muted-foreground: 240 10% 46%;
+    --accent: 174 82% 33%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 20% 98%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 220 90% 55%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --border: 28 18% 89%;
+    --input: 28 18% 89%;
+    --ring: 350 78% 59%;
+    --chart-1: 350 78% 59%;
+    --chart-2: 174 82% 33%;
+    --chart-3: 240 28% 14%;
+    --chart-4: 49 91% 78%;
+    --chart-5: 25 95% 53%;
     --radius: 0.75rem;
-    
+
     /* Brand colors for hero backgrounds */
-    --brand: 220 90% 55%;
-    --brand-2: 220 80% 65%;
+    --brand: 350 78% 59%;
+    --brand-2: 174 82% 33%;
   }
 
   .dark {
-    --background: 224 71.4% 4.1%;
-    --foreground: 210 20% 98%;
-    --card: 224 71.4% 4.1%;
-    --card-foreground: 210 20% 98%;
-    --popover: 224 71.4% 4.1%;
-    --popover-foreground: 210 20% 98%;
-    --primary: 220 90% 55%;
-    --primary-foreground: 210 20% 98%;
-    --secondary: 215 27.9% 16.9%;
-    --secondary-foreground: 210 20% 98%;
-    --muted: 215 27.9% 16.9%;
-    --muted-foreground: 217.9 10.6% 64.9%;
-    --accent: 215 27.9% 16.9%;
-    --accent-foreground: 210 20% 98%;
+    --background: 240 28% 7%;
+    --foreground: 28 76% 97%;
+    --card: 240 25% 10%;
+    --card-foreground: 28 76% 97%;
+    --popover: 240 25% 10%;
+    --popover-foreground: 28 76% 97%;
+    --primary: 350 78% 59%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 20% 16%;
+    --secondary-foreground: 28 76% 97%;
+    --muted: 240 20% 16%;
+    --muted-foreground: 240 10% 65%;
+    --accent: 174 82% 33%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 20% 98%;
-    --border: 215 27.9% 16.9%;
-    --input: 215 27.9% 16.9%;
-    --ring: 210 100% 60%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-    
+    --border: 240 20% 16%;
+    --input: 240 20% 16%;
+    --ring: 350 78% 59%;
+    --chart-1: 350 78% 59%;
+    --chart-2: 174 82% 40%;
+    --chart-3: 49 91% 78%;
+    --chart-4: 25 95% 53%;
+    --chart-5: 280 65% 60%;
+
     /* Brand colors for hero backgrounds */
-    --brand: 220 90% 55%;
-    --brand-2: 220 80% 65%;
+    --brand: 350 78% 59%;
+    --brand-2: 174 82% 33%;
   }
 }
 
@@ -156,7 +156,7 @@ All colors MUST be HSL. */
 
 /* Gradient text effect for brand color */
 .text-gradient-brand {
-  background: linear-gradient(135deg, hsl(210 100% 70%), hsl(250 100% 75%), hsl(280 100% 72%));
+  background: linear-gradient(135deg, hsl(350 78% 59%), hsl(174 82% 33%));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -183,19 +183,19 @@ All colors MUST be HSL. */
 /* Custom utility classes for conversion components */
 /* Button gradients and effects */
 .bg-gradient-primary {
-  background: linear-gradient(135deg, hsl(220 90% 55%) 0%, hsl(220 85% 60%) 100%);
+  background: linear-gradient(135deg, hsl(350 78% 59%) 0%, hsl(350 72% 52%) 100%);
 }
 
 .bg-gradient-primary-hover {
-  background: linear-gradient(135deg, hsl(220 95% 60%) 0%, hsl(220 90% 65%) 100%);
+  background: linear-gradient(135deg, hsl(350 82% 63%) 0%, hsl(350 78% 56%) 100%);
 }
 
 .shadow-glow {
-  box-shadow: 0 4px 15px hsl(220 90% 55% / 0.3);
+  box-shadow: 0 4px 15px hsl(350 78% 59% / 0.3);
 }
 
 .shadow-glow-strong {
-  box-shadow: 0 8px 25px hsl(220 90% 55% / 0.5);
+  box-shadow: 0 8px 25px hsl(350 78% 59% / 0.5);
 }
 
 .conversion-glow {
@@ -377,11 +377,11 @@ html {
 
 /* Hero Background Classes */
 .bg-hero {
-  background: linear-gradient(135deg, hsl(220 100% 8%) 0%, hsl(220 90% 12%) 100%);
+  background: linear-gradient(135deg, hsl(240 28% 8%) 0%, hsl(240 28% 14%) 100%);
 }
 
 .bg-hero-prompt {
-  background: linear-gradient(135deg, hsl(220 100% 8%) 0%, hsl(220 90% 12%) 100%);
+  background: linear-gradient(135deg, hsl(240 28% 8%) 0%, hsl(240 28% 14%) 100%);
 }
 
 .bg-hero-admin {
@@ -405,20 +405,20 @@ html {
 }
 
 /* Category Accent Colors */
-.accent-1 { color: hsl(210 100% 60%); }
-.accent-2 { color: hsl(142 69% 58%); }
-.accent-3 { color: hsl(280 87% 65%); }
-.accent-4 { color: hsl(25 95% 53%); }
-.accent-5 { color: hsl(346 87% 65%); }
-.accent-6 { color: hsl(60 84% 51%); }
+.accent-1 { color: hsl(350 78% 59%); }
+.accent-2 { color: hsl(174 82% 33%); }
+.accent-3 { color: hsl(280 67% 55%); }
+.accent-4 { color: hsl(49 91% 50%); }
+.accent-5 { color: hsl(25 95% 53%); }
+.accent-6 { color: hsl(240 28% 30%); }
 
 /* Category Background Colors for Cards */
-.category-bg-1 { background: hsl(210 100% 97%); } /* Light blue */
-.category-bg-2 { background: hsl(142 69% 95%); } /* Light green */
-.category-bg-3 { background: hsl(280 87% 97%); } /* Light purple */
-.category-bg-4 { background: hsl(25 95% 96%); } /* Light orange */
-.category-bg-5 { background: hsl(346 87% 97%); } /* Light pink */
-.category-bg-6 { background: hsl(60 84% 96%); } /* Light yellow */
+.category-bg-1 { background: hsl(350 78% 97%); } /* Light coral */
+.category-bg-2 { background: hsl(174 82% 95%); } /* Light teal */
+.category-bg-3 { background: hsl(280 67% 97%); } /* Light purple */
+.category-bg-4 { background: hsl(49 91% 95%); } /* Light gold */
+.category-bg-5 { background: hsl(25 95% 96%); } /* Light orange */
+.category-bg-6 { background: hsl(240 28% 96%); } /* Light navy */
 
 /* Animation utilities */
 .hover-scale {

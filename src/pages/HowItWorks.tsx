@@ -198,11 +198,11 @@ const HowItWorks = () => {
           </Card>
 
           {/* Power Packs */}
-          <Card className="relative overflow-hidden border-purple-200 bg-gradient-to-br from-purple-50 to-transparent dark:border-purple-800 dark:from-purple-950">
+          <Card className="relative overflow-hidden border-accent/20 bg-gradient-to-br from-accent/5 to-transparent dark:border-accent/20 dark:from-accent/10">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle className="flex items-center gap-2">
-                  <Zap className="h-6 w-6 text-purple-600" />
+                  <Zap className="h-6 w-6 text-accent" />
                   Power Packs
                 </CardTitle>
                 <Badge variant="secondary">Themed Collections</Badge>
@@ -240,14 +240,14 @@ const HowItWorks = () => {
           </Card>
 
           {/* Scout AI */}
-          <Card className="relative overflow-hidden border-blue-200 bg-gradient-to-br from-blue-50 to-transparent dark:border-blue-800 dark:from-blue-950">
+          <Card className="relative overflow-hidden border-primary/20 bg-gradient-to-br from-primary/5 to-transparent dark:border-primary/20 dark:from-primary/10">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle className="flex items-center gap-2">
-                  <Bot className="h-6 w-6 text-blue-600" />
+                  <Bot className="h-6 w-6 text-primary" />
                   Scout AI Assistant
                 </CardTitle>
-                <Badge className="bg-blue-600 text-white">✨ Smart Optimization</Badge>
+                <Badge className="bg-primary text-white">✨ Smart Optimization</Badge>
               </div>
             </CardHeader>
             <CardContent>
@@ -263,19 +263,19 @@ const HowItWorks = () => {
               </div>
               <div className="space-y-2 mb-4">
                 <div className="flex items-center gap-2 text-sm">
-                  <Sparkles className="h-4 w-4 text-blue-500" />
+                  <Sparkles className="h-4 w-4 text-primary" />
                   <span>Platform-specific optimization</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
-                  <Sparkles className="h-4 w-4 text-blue-500" />
+                  <Sparkles className="h-4 w-4 text-primary" />
                   <span>Instant prompt rewrites</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
-                  <Sparkles className="h-4 w-4 text-blue-500" />
+                  <Sparkles className="h-4 w-4 text-primary" />
                   <span>Works with any AI tool</span>
                 </div>
               </div>
-              <Button asChild className="w-full bg-blue-600 hover:bg-blue-700">
+              <Button asChild className="w-full bg-primary hover:bg-primary/90">
                 <Link to="/scout">Try Scout Free</Link>
               </Button>
             </CardContent>
@@ -327,39 +327,39 @@ const HowItWorks = () => {
           </p>
         </div>
 
-        <Card className="bg-gradient-to-br from-blue-50 to-transparent border-blue-200 dark:from-blue-950 dark:border-blue-800">
+        <Card className="bg-gradient-to-br from-primary/5 to-transparent border-primary/20 dark:from-primary/10 dark:border-primary/20">
           <CardContent className="p-8">
             <div className="grid gap-8 lg:grid-cols-2">
               <div className="space-y-6">
                 <h3 className="text-2xl font-semibold">How Scout Optimization Works</h3>
-                
+
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
+                    <div className="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
                     <div>
                       <h4 className="font-semibold">Input Any Prompt</h4>
                       <p className="text-sm text-muted-foreground">Paste any prompt from our library or write your own</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold">2</div>
+                    <div className="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold">2</div>
                     <div>
                       <h4 className="font-semibold">Choose Your AI Platform</h4>
                       <p className="text-sm text-muted-foreground">Select ChatGPT, Claude, Gemini, or any other AI tool</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold">3</div>
+                    <div className="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold">3</div>
                     <div>
                       <h4 className="font-semibold">Get Optimized Prompt</h4>
                       <p className="text-sm text-muted-foreground">Scout rewrites it with platform-specific optimizations</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold">4</div>
+                    <div className="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold">4</div>
                     <div>
                       <h4 className="font-semibold">Copy & Get Better Results</h4>
                       <p className="text-sm text-muted-foreground">Paste the optimised prompt and see improved output</p>
@@ -377,7 +377,7 @@ const HowItWorks = () => {
                   </ul>
                 </div>
                 
-                <Button asChild className="w-full bg-blue-600 hover:bg-blue-700">
+                <Button asChild className="w-full bg-primary hover:bg-primary/90">
                   <Link to="/scout">Try Scout Free <ArrowRight className="h-4 w-4 ml-2" /></Link>
                 </Button>
               </div>
@@ -391,15 +391,15 @@ const HowItWorks = () => {
                 </div>
                 
                 <div className="flex justify-center">
-                  <ArrowRight className="h-6 w-6 text-blue-600" />
+                  <ArrowRight className="h-6 w-6 text-primary" />
                 </div>
-                
-                <div className="bg-white dark:bg-gray-900 rounded-lg p-4 border border-blue-200">
-                  <div className="text-xs text-blue-600 mb-2">After Scout (Optimized for ChatGPT):</div>
-                  <p className="text-sm font-mono bg-blue-50 dark:bg-blue-950 p-3 rounded text-wrap">
+
+                <div className="bg-white dark:bg-gray-900 rounded-lg p-4 border border-primary/20">
+                  <div className="text-xs text-primary mb-2">After Scout (Optimized for ChatGPT):</div>
+                  <p className="text-sm font-mono bg-primary/5 dark:bg-primary/10 p-3 rounded text-wrap">
                     "Act as an expert email marketer. Write a compelling marketing email for [PRODUCT] targeting [AUDIENCE]. Include: 1) Attention-grabbing subject line, 2) Personal greeting, 3) Problem/solution hook, 4) 3 key benefits, 5) Social proof, 6) Clear CTA. Tone: [SPECIFY]. Length: 150-200 words."
                   </p>
-                  <div className="mt-2 text-xs text-blue-600">
+                  <div className="mt-2 text-xs text-primary">
                     ↑ 3x more specific, structured for better results
                   </div>
                 </div>
@@ -443,16 +443,16 @@ const HowItWorks = () => {
           </Card>
 
           {/* Step 2 */}
-          <Card className="bg-gradient-to-r from-blue-50 to-transparent border-blue-200 dark:from-blue-950 dark:border-blue-800">
+          <Card className="bg-gradient-to-r from-primary/5 to-transparent border-primary/20 dark:from-primary/10 dark:border-primary/20">
             <CardContent className="p-6">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center text-xl font-bold">2</div>
+                <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold">2</div>
                 <div className="flex-1">
                   <h3 className="text-xl font-semibold mb-2">Optimize with Scout (Optional but Recommended)</h3>
                   <p className="text-muted-foreground mb-4">
                     Let Scout rewrite your prompt specifically for ChatGPT, Claude, Gemini, or any other AI platform. Get 3x better results instantly.
                   </p>
-                  <Button asChild size="sm" className="bg-blue-600 hover:bg-blue-700">
+                  <Button asChild size="sm" className="bg-primary hover:bg-primary/90">
                     <Link to="/scout">Try Scout Free</Link>
                   </Button>
                 </div>
@@ -483,10 +483,10 @@ const HowItWorks = () => {
           </Card>
 
           {/* Step 4 */}
-          <Card className="bg-gradient-to-r from-purple-50 to-transparent border-purple-200 dark:from-purple-950 dark:border-purple-800">
+          <Card className="bg-gradient-to-r from-accent/5 to-transparent border-accent/20 dark:from-accent/10 dark:border-accent/20">
             <CardContent className="p-6">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center text-xl font-bold">4</div>
+                <div className="w-12 h-12 bg-accent text-white rounded-full flex items-center justify-center text-xl font-bold">4</div>
                 <div className="flex-1">
                   <h3 className="text-xl font-semibold mb-2">Get Better Results, Faster</h3>
                   <p className="text-muted-foreground mb-4">
@@ -494,15 +494,15 @@ const HowItWorks = () => {
                   </p>
                   <div className="flex items-center gap-4 text-sm">
                     <div className="flex items-center gap-1">
-                      <Rocket className="h-4 w-4 text-purple-600" />
+                      <Rocket className="h-4 w-4 text-accent" />
                       <span>3x Better Results</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <Clock className="h-4 w-4 text-purple-600" />
+                      <Clock className="h-4 w-4 text-accent" />
                       <span>Save Hours</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <Check className="h-4 w-4 text-purple-600" />
+                      <Check className="h-4 w-4 text-accent" />
                       <span>100% Free</span>
                     </div>
                   </div>
@@ -579,9 +579,9 @@ const HowItWorks = () => {
                   Let Scout optimize & paste into ChatGPT
                 </h3>
                 <div className="bg-background rounded-lg border p-4 text-sm">
-                  <div className="text-xs text-blue-600 mb-2">Scout Optimized for ChatGPT:</div>
+                  <div className="text-xs text-primary mb-2">Scout Optimized for ChatGPT:</div>
                   <div className="space-y-2">
-                    <p className="font-mono text-xs bg-blue-50 dark:bg-blue-950 p-2 rounded">
+                    <p className="font-mono text-xs bg-primary/5 dark:bg-primary/10 p-2 rounded">
                       "Act as an expert email marketer. Write a compelling email for [PRODUCT] targeting [AUDIENCE]..."
                     </p>
                     <div className="text-xs text-green-600">✨ 3x more specific structure</div>
@@ -620,26 +620,26 @@ const HowItWorks = () => {
             <Badge className="bg-green-600 text-white">FREE FOREVER</Badge>
           </Card>
 
-          <Card className="text-center p-6 bg-gradient-to-br from-blue-50 to-transparent border-blue-200 dark:from-blue-950 dark:border-blue-800">
-            <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Bot className="h-8 w-8 text-blue-600" />
+          <Card className="text-center p-6 bg-gradient-to-br from-primary/5 to-transparent border-primary/20 dark:from-primary/10 dark:border-primary/20">
+            <div className="w-16 h-16 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Bot className="h-8 w-8 text-primary" />
             </div>
             <h3 className="text-xl font-semibold mb-2">Scout Optimization</h3>
             <p className="text-muted-foreground mb-4">
               Get unlimited prompt optimizations for any AI platform. Better results, every time.
             </p>
-            <Badge className="bg-blue-600 text-white">FREE FOREVER</Badge>
+            <Badge className="bg-primary text-white">FREE FOREVER</Badge>
           </Card>
 
-          <Card className="text-center p-6 bg-gradient-to-br from-purple-50 to-transparent border-purple-200 dark:from-purple-950 dark:border-purple-800">
-            <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Zap className="h-8 w-8 text-purple-600" />
+          <Card className="text-center p-6 bg-gradient-to-br from-accent/5 to-transparent border-accent/20 dark:from-accent/10 dark:border-accent/20">
+            <div className="w-16 h-16 bg-accent/10 dark:bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Zap className="h-8 w-8 text-accent" />
             </div>
             <h3 className="text-xl font-semibold mb-2">Power Pack Access</h3>
             <p className="text-muted-foreground mb-4">
               Many Power Packs are completely free. Premium collections available for advanced needs.
             </p>
-            <Badge className="bg-purple-600 text-white">FREEMIUM</Badge>
+            <Badge className="bg-accent text-white">FREEMIUM</Badge>
           </Card>
         </div>
       </section>
@@ -659,7 +659,7 @@ const HowItWorks = () => {
                 Browse Library
               </Link>
             </Button>
-            <Button asChild className="bg-blue-600 hover:bg-blue-700">
+            <Button asChild className="bg-primary hover:bg-primary/90">
               <Link to="/scout">
                 <Bot className="h-4 w-4 mr-2" />
                 Try Scout AI

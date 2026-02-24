@@ -9,7 +9,7 @@ const calloutVariants = cva(
     variants: {
       variant: {
         default: "bg-muted border-muted-foreground/20",
-        info: "bg-blue-50 border-blue-200 dark:bg-blue-950/30 dark:border-blue-800",
+        info: "bg-primary/5 border-primary/20 dark:bg-primary/10 dark:border-primary/20",
         success: "bg-green-50 border-green-200 dark:bg-green-950/30 dark:border-green-800",
         warning: "bg-yellow-50 border-yellow-200 dark:bg-yellow-950/30 dark:border-yellow-800",
         danger: "bg-red-50 border-red-200 dark:bg-red-950/30 dark:border-red-800",
@@ -34,8 +34,8 @@ const iconMap = {
 }
 
 const colorMap = {
-  info: "text-blue-600 dark:text-blue-400",
-  success: "text-green-600 dark:text-green-400", 
+  info: "text-primary dark:text-primary",
+  success: "text-green-600 dark:text-green-400",
   warning: "text-yellow-600 dark:text-yellow-400",
   danger: "text-red-600 dark:text-red-400",
   code: "text-slate-600 dark:text-slate-400",

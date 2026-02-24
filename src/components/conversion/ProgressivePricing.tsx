@@ -159,23 +159,23 @@ const ProgressivePricing = ({ showFull = false }: ProgressivePricingProps) => {
             <CardContent className="space-y-4">
               <ul className="space-y-2 text-sm">
                 <li className="flex items-center gap-2">
-                  <Check className="h-4 w-4 text-purple-500" />
+                  <Check className="h-4 w-4 text-accent" />
                   <span>Everything in Premium +</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <Check className="h-4 w-4 text-purple-500" />
+                  <Check className="h-4 w-4 text-accent" />
                   <span>Annual updates</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <Check className="h-4 w-4 text-purple-500" />
+                  <Check className="h-4 w-4 text-accent" />
                   <span>VIP community access</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <Check className="h-4 w-4 text-purple-500" />
+                  <Check className="h-4 w-4 text-accent" />
                   <span>Early beta features</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <Check className="h-4 w-4 text-purple-500" />
+                  <Check className="h-4 w-4 text-accent" />
                   <span>Direct founder access</span>
                 </li>
               </ul>

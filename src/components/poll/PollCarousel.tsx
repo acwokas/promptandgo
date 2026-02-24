@@ -254,7 +254,7 @@ export const PollCarousel = ({ currentPage = "home" }: PollCarouselProps) => {
   }
 
   return (
-    <Card className="w-full max-w-2xl mx-auto bg-blue-50/95 border-2 border-primary/30 shadow-lg transform-gpu will-change-transform">
+    <Card className="w-full max-w-2xl mx-auto bg-primary/5 border-2 border-primary/30 shadow-lg transform-gpu will-change-transform">
       <CardHeader className="pb-4 relative overflow-hidden">
         {/* Eye-catching "POLL" badge */}
         <div className="absolute top-0 right-0 bg-primary text-primary-foreground px-4 py-2 rounded-bl-lg font-bold text-lg">

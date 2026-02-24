@@ -222,8 +222,8 @@ const PromptOptimizer = () => {
       {/* Hero */}
       <section className="relative overflow-hidden bg-hero">
         <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="absolute top-[-20%] left-[10%] w-[500px] h-[500px] rounded-full bg-violet-500/20 blur-[120px]" />
-          <div className="absolute bottom-[-10%] right-[10%] w-[400px] h-[400px] rounded-full bg-blue-500/15 blur-[100px]" />
+          <div className="absolute top-[-20%] left-[10%] w-[500px] h-[500px] rounded-full bg-accent/20 blur-[120px]" />
+          <div className="absolute bottom-[-10%] right-[10%] w-[400px] h-[400px] rounded-full bg-primary/15 blur-[100px]" />
         </div>
         <div className="relative z-10 container max-w-4xl mx-auto px-4 py-16 md:py-24 text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/10 text-white/90 px-4 py-1.5 rounded-full text-sm mb-6">

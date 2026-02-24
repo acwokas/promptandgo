@@ -17,20 +17,21 @@ interface OnboardingPreferences {
 
 const AI_TOOLS = [
   { id: 'chatgpt', name: 'ChatGPT', color: '#10a37f' },
-  { id: 'claude', name: 'Claude', color: '#6366f1' },
-  { id: 'gemini', name: 'Gemini', color: '#ea4335' },
-  { id: 'midjourney', name: 'MidJourney', color: '#9370db' },
-  { id: 'perplexity', name: 'Perplexity', color: '#0066cc' },
+  { id: 'claude', name: 'Claude', color: '#E94560' },
+  { id: 'gemini', name: 'Gemini', color: '#0F9B8E' },
+  { id: 'midjourney', name: 'MidJourney', color: '#1A1A2E' },
+  { id: 'perplexity', name: 'Perplexity', color: '#E94560' },
+  { id: 'deepseek', name: 'DeepSeek', color: '#0F9B8E' },
   { id: 'other', name: 'Other', color: '#6b7280' },
 ];
 
 const USE_CASES = [
-  { id: 'marketing', name: 'Marketing & Content', description: 'Content creation and campaigns' },
-  { id: 'operations', name: 'Business Operations', description: 'Workflows and productivity' },
-  { id: 'creative', name: 'Creative & Design', description: 'Visual and creative work' },
-  { id: 'learning', name: 'Learning & Research', description: 'Education and research' },
-  { id: 'development', name: 'Software Development', description: 'Coding and technical work' },
-  { id: 'startup', name: 'Startup Growth', description: 'Building and scaling' },
+  { id: 'marketing', name: 'Marketing & Growth', description: 'Campaigns, content, and customer acquisition' },
+  { id: 'operations', name: 'Business & Productivity', description: 'Workflows, reporting, and daily operations' },
+  { id: 'creative', name: 'Creative & Entrepreneurship', description: 'Design, branding, and building something new' },
+  { id: 'learning', name: 'Learning & Upskilling', description: 'Education, research, and professional development' },
+  { id: 'development', name: 'Software & Technical', description: 'Coding, automation, and technical writing' },
+  { id: 'startup', name: 'Startup & Strategy', description: 'Planning, pitching, and scaling' },
 ];
 
 interface RecommendedAction {

@@ -91,33 +91,33 @@ export function QuickDiscoverySection({ onSearchClick }: QuickDiscoverySectionPr
         </Card>
 
         {/* Community Favorites */}
-        <Card className="bg-gradient-to-br from-purple-50 to-transparent border-purple-200 dark:from-purple-950 dark:border-purple-800">
+        <Card className="bg-gradient-to-br from-accent/10 to-transparent border-accent/20 dark:from-accent/20 dark:border-accent/30">
           <CardContent className="p-6">
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 bg-purple-500/10 rounded-full flex items-center justify-center">
-                <Star className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+              <div className="w-10 h-10 bg-accent/10 rounded-full flex items-center justify-center">
+                <Star className="h-5 w-5 text-accent" />
               </div>
               <h3 className="font-semibold">Community Favorites</h3>
             </div>
             <p className="text-sm text-muted-foreground mb-4">Highest rated by users</p>
             <div className="space-y-2">
-              <Badge 
-                variant="secondary" 
-                className="text-xs cursor-pointer hover:bg-purple-500/20 transition-colors"
+              <Badge
+                variant="secondary"
+                className="text-xs cursor-pointer hover:bg-accent/20 transition-colors"
                 onClick={() => onSearchClick("resume writing")}
               >
                 Resume writing
               </Badge>
-              <Badge 
-                variant="secondary" 
-                className="text-xs cursor-pointer hover:bg-purple-500/20 transition-colors"
+              <Badge
+                variant="secondary"
+                className="text-xs cursor-pointer hover:bg-accent/20 transition-colors"
                 onClick={() => onSearchClick("product description")}
               >
                 Product description
               </Badge>
-              <Badge 
-                variant="secondary" 
-                className="text-xs cursor-pointer hover:bg-purple-500/20 transition-colors"
+              <Badge
+                variant="secondary"
+                className="text-xs cursor-pointer hover:bg-accent/20 transition-colors"
                 onClick={() => onSearchClick("social media post")}
               >
                 Social media post

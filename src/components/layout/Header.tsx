@@ -58,7 +58,7 @@ const Header = () => {
   }, [user]);
 
   return (
-    <header className="w-full bg-background border-b border-border sticky top-0 z-50">
+    <header className="w-full bg-background/95 backdrop-blur-md border-b border-border/50 sticky top-0 z-50 shadow-sm">
       <div className="w-full max-w-7xl mx-auto px-4 flex items-center justify-between min-h-14 box-border">
         {/* Hamburger Menu - All Devices */}
         <div className="flex flex-shrink-0">

@@ -45,24 +45,24 @@ export const MoneyBackGuarantee = () => (
 );
 
 export const ResultsGuarantee = () => (
-  <Card className="bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-200 dark:from-blue-950 dark:to-cyan-950 dark:border-blue-800">
+  <Card className="bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20 dark:from-primary/10 dark:to-primary/15 dark:border-primary/20">
     <CardContent className="p-6">
       <div className="flex items-start gap-4">
-        <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 dark:bg-blue-800">
-          <Zap className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+        <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 dark:bg-primary/20">
+          <Zap className="h-6 w-6 text-primary dark:text-primary" />
         </div>
-        
+
         <div className="flex-1">
-          <h3 className="text-xl font-semibold text-blue-800 dark:text-blue-200 mb-2">
+          <h3 className="text-xl font-semibold text-primary dark:text-primary mb-2">
             Results Guarantee
           </h3>
-          
-          <p className="text-blue-700 dark:text-blue-300 mb-4">
-            Save at least 5 hours per week in your first month, or we'll extend your access for free until you do. 
+
+          <p className="text-primary/80 dark:text-primary/80 mb-4">
+            Save at least 5 hours per week in your first month, or we'll extend your access for free until you do.
             Our prompts are proven to work - we guarantee it.
           </p>
-          
-          <div className="flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400">
+
+          <div className="flex items-center gap-2 text-sm text-primary dark:text-primary">
             <Clock className="h-4 w-4" />
             <span>Average user saves 10-15 hours weekly</span>
           </div>
@@ -126,31 +126,31 @@ export const QualityAssurance = () => (
 );
 
 export const SupportGuarantee = () => (
-  <Card className="bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 dark:from-purple-950 dark:to-pink-950 dark:border-purple-800">
+  <Card className="bg-gradient-to-r from-accent/5 to-accent/10 border-accent/20 dark:from-accent/10 dark:to-accent/15 dark:border-accent/20">
     <CardHeader>
-      <CardTitle className="flex items-center gap-3 text-purple-800 dark:text-purple-200">
-        <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center dark:bg-purple-800">
-          <CheckCircle className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+      <CardTitle className="flex items-center gap-3 text-accent dark:text-accent">
+        <div className="w-10 h-10 bg-accent/10 rounded-full flex items-center justify-center dark:bg-accent/20">
+          <CheckCircle className="h-5 w-5 text-accent dark:text-accent" />
         </div>
         Unlimited Support Promise
       </CardTitle>
     </CardHeader>
     <CardContent>
-      <p className="text-purple-700 dark:text-purple-300 mb-4">
-        Stuck with a prompt? Not getting the results you expected? Our team responds to every support 
+      <p className="text-accent/80 dark:text-accent/80 mb-4">
+        Stuck with a prompt? Not getting the results you expected? Our team responds to every support
         request within 24 hours with personalised help to get you back on track.
       </p>
-      
+
       <div className="space-y-2">
-        <div className="flex items-center gap-2 text-sm text-purple-600 dark:text-purple-400">
+        <div className="flex items-center gap-2 text-sm text-accent dark:text-accent">
           <CheckCircle className="h-4 w-4" />
           <span>24-hour response guarantee</span>
         </div>
-        <div className="flex items-center gap-2 text-sm text-purple-600 dark:text-purple-400">
+        <div className="flex items-center gap-2 text-sm text-accent dark:text-accent">
           <CheckCircle className="h-4 w-4" />
           <span>Personalized prompt optimization</span>
         </div>
-        <div className="flex items-center gap-2 text-sm text-purple-600 dark:text-purple-400">
+        <div className="flex items-center gap-2 text-sm text-accent dark:text-accent">
           <CheckCircle className="h-4 w-4" />
           <span>Free strategy consultation calls</span>
         </div>

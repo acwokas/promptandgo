@@ -183,8 +183,8 @@ const LeadMagnet = ({
         </p>
       </form>
 
-      <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
-        <div className="flex items-center gap-2 text-sm text-blue-800">
+      <div className="mt-4 p-3 bg-primary/5 rounded-lg border border-primary/20">
+        <div className="flex items-center gap-2 text-sm text-primary">
           <Clock className="h-4 w-4" />
           <span className="font-medium">Limited time:</span>
           Free access expires soon

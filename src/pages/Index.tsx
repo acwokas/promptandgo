@@ -111,8 +111,8 @@ const Index = () => {
           {/* Ambient background effects */}
           <div aria-hidden className="pointer-events-none absolute inset-0">
             <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-primary/20 blur-[120px]" />
-            <div className="absolute bottom-[-30%] right-[-5%] w-[500px] h-[500px] rounded-full bg-blue-400/15 blur-[100px]" />
-            <div className="absolute top-[30%] right-[20%] w-[300px] h-[300px] rounded-full bg-violet-500/10 blur-[80px]" />
+            <div className="absolute bottom-[-30%] right-[-5%] w-[500px] h-[500px] rounded-full bg-accent/15 blur-[100px]" />
+            <div className="absolute top-[30%] right-[20%] w-[300px] h-[300px] rounded-full bg-primary/10 blur-[80px]" />
           </div>
 
           <div className="relative z-10 container max-w-6xl mx-auto px-4 pt-20 pb-16 md:pt-28 md:pb-24">
@@ -166,14 +166,14 @@ const Index = () => {
                   {/* Input area */}
                   <div className="p-5">
                     <div className="flex items-start gap-3 mb-4">
-                      <div className="flex-shrink-0 w-6 h-6 rounded bg-blue-500/20 flex items-center justify-center mt-0.5">
-                        <MessageSquare className="h-3.5 w-3.5 text-blue-400" />
+                      <div className="flex-shrink-0 w-6 h-6 rounded bg-primary/20 flex items-center justify-center mt-0.5">
+                        <MessageSquare className="h-3.5 w-3.5 text-primary" />
                       </div>
                       <div>
                         <p className="text-white/40 text-xs mb-1 font-mono">YOUR PROMPT</p>
                         <p className="text-white/90 text-sm font-mono">
                           {typedText}
-                          {isTyping && <span className="inline-block w-0.5 h-4 bg-blue-400 ml-0.5 animate-pulse align-middle" />}
+                          {isTyping && <span className="inline-block w-0.5 h-4 bg-primary ml-0.5 animate-pulse align-middle" />}
                         </p>
                       </div>
                     </div>
@@ -206,12 +206,12 @@ const Index = () => {
             <p className="text-center text-xs text-muted-foreground mb-4 uppercase tracking-widest">Optimized for</p>
             <div className="flex flex-wrap justify-center gap-6 md:gap-10">
               {[
-                { name: "ChatGPT", color: "text-green-600" },
-                { name: "Claude", color: "text-orange-500" },
-                { name: "Gemini", color: "text-blue-500" },
-                { name: "MidJourney", color: "text-indigo-500" },
-                { name: "Perplexity", color: "text-purple-500" },
-                { name: "DeepSeek", color: "text-cyan-500" },
+                { name: "ChatGPT", color: "text-emerald-600" },
+                { name: "Claude", color: "text-primary" },
+                { name: "Gemini", color: "text-accent" },
+                { name: "MidJourney", color: "text-foreground/70" },
+                { name: "Perplexity", color: "text-primary/80" },
+                { name: "DeepSeek", color: "text-accent/80" },
               ].map((p) => (
                 <span key={p.name} className={`text-sm font-semibold ${p.color} opacity-70`}>
                   {p.name}
@@ -240,7 +240,7 @@ const Index = () => {
                 desc: "3,000+ prompts across marketing, coding, creative, business, and more. Tested, tagged, and ready to copy.",
                 link: "/library",
                 cta: "Browse prompts",
-                gradient: "from-blue-500 to-cyan-500",
+                gradient: "from-primary to-primary/80",
               },
               {
                 icon: Zap,
@@ -248,7 +248,7 @@ const Index = () => {
                 desc: "Paste your rough prompt. Scout rewrites it with precision - tailored to ChatGPT, Claude, MidJourney, or any AI tool.",
                 link: "/optimize",
                 cta: "Try the optimizer",
-                gradient: "from-violet-500 to-purple-500",
+                gradient: "from-accent to-teal-600",
                 featured: true,
               },
               {
@@ -257,7 +257,7 @@ const Index = () => {
                 desc: "Describe what you need in plain English. Scout builds a professional-grade prompt using guided templates.",
                 link: "/ai/studio",
                 cta: "Create a prompt",
-                gradient: "from-amber-500 to-orange-500",
+                gradient: "from-amber-500 to-yellow-500",
               },
             ].map((item) => (
               <Link
@@ -424,10 +424,10 @@ const Index = () => {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { icon: Search, title: "Prompt Library", desc: "3,000+ ready to use", link: "/library", color: "bg-blue-500" },
-              { icon: ShoppingBag, title: "Power Packs", desc: "Themed collections", link: "/packs", color: "bg-emerald-500" },
-              { icon: Bot, title: "Scout AI", desc: "Chat with your AI coach", link: "/scout", color: "bg-orange-500" },
-              { icon: Award, title: "Certification", desc: "Prove your skills", link: "/certification", color: "bg-violet-500" },
+              { icon: Search, title: "Prompt Library", desc: "3,000+ ready to use", link: "/library", color: "bg-primary" },
+              { icon: ShoppingBag, title: "Power Packs", desc: "Themed collections", link: "/packs", color: "bg-accent" },
+              { icon: Bot, title: "Scout AI", desc: "Chat with your AI coach", link: "/scout", color: "bg-amber-500" },
+              { icon: Award, title: "Certification", desc: "Prove your skills", link: "/certification", color: "bg-foreground" },
             ].map((tool) => (
               <Link
                 key={tool.title}
@@ -457,13 +457,13 @@ const Index = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild size="lg" className="h-11">
-                <Link to="/singapore-startups">
-                  Singapore Startups <ArrowRight className="h-4 w-4 ml-2" />
+                <Link to="/market-insights">
+                  See the Data <ArrowRight className="h-4 w-4 ml-2" />
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="h-11">
-                <Link to="/library">
-                  Explore the library
+                <Link to="/singapore-startups">
+                  Singapore Startups
                 </Link>
               </Button>
             </div>

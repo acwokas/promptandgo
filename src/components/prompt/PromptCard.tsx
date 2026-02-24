@@ -324,18 +324,18 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
   const getProviderColor = (providerId: string) => {
     const colorMap: Record<string, string> = {
       'chatgpt': 'bg-green-100 text-green-600',
-      'claude': 'bg-purple-100 text-purple-600',
+      'claude': 'bg-accent/20 text-accent',
       'gemini': 'bg-yellow-100 text-yellow-600',
-      'deepseek': 'bg-indigo-100 text-indigo-600',
+      'deepseek': 'bg-primary/20 text-primary/80',
       'groq': 'bg-red-100 text-red-600',
       'mistral': 'bg-orange-100 text-orange-600',
       'llama': 'bg-pink-100 text-pink-600',
       'perplexity': 'bg-teal-100 text-teal-600',
-      'midjourney': 'bg-violet-100 text-violet-600',
+      'midjourney': 'bg-accent/20 text-accent',
       'ideogram': 'bg-emerald-100 text-emerald-600',
       'nanobanana': 'bg-amber-100 text-amber-600'
     };
-    return colorMap[providerId] || 'bg-blue-100 text-blue-600';
+    return colorMap[providerId] || 'bg-primary/20 text-primary';
   };
 
   const selectedProviderInfo = AI_PROVIDERS.find(p => p.id === selectedAIPlatform);
@@ -490,8 +490,8 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                   >
                     <div className="flex items-center gap-2">
                       <div className={`p-1.5 rounded-full ${
-                        selectedAIPlatform === 'original' 
-                          ? 'bg-blue-100 text-blue-600'
+                        selectedAIPlatform === 'original'
+                          ? 'bg-primary/20 text-primary'
                           : getProviderColor(selectedAIPlatform)
                       }`}>
                         {selectedAIPlatform === 'original' 
@@ -531,7 +531,7 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
                         onClick={() => handleAIPlatformChange('original')}
                       >
                         <div className="flex items-center gap-3 w-full">
-                          <div className="p-1.5 rounded-full bg-blue-100 text-blue-600">
+                          <div className="p-1.5 rounded-full bg-primary/20 text-primary">
                             <Bot className="h-4 w-4" />
                           </div>
                           <div className="flex-1">
@@ -613,14 +613,14 @@ export const PromptCard = ({ prompt, categories, onTagClick, onCategoryClick, on
               </div>
               
               {showLock && (
-                <div className="absolute inset-0 rounded-lg bg-blue-600/85 backdrop-blur-sm flex flex-col items-center justify-center min-h-[200px] p-6">
+                <div className="absolute inset-0 rounded-lg bg-primary/85 backdrop-blur-sm flex flex-col items-center justify-center min-h-[200px] p-6">
                   <div className="text-center space-y-4">
                     <div className="inline-flex items-center gap-2 text-sm text-white/90">
                       <Lock className="h-4 w-4" />
                       <span>Unlock PRO Prompt</span>
                     </div>
                     <div className="flex flex-col gap-3 w-full max-w-sm">
-                      <Button size="lg" className="w-full bg-blue-500 hover:bg-blue-600 text-white border-0" onClick={addPromptToCart}>
+                      <Button size="lg" className="w-full bg-primary hover:bg-primary/90 text-white border-0" onClick={addPromptToCart}>
                         Buy Prompt $1.49
                       </Button>
                       <Button size="lg" className="w-full bg-white hover:bg-gray-50 text-gray-900 border-0" onClick={handleSubscribeClick}>

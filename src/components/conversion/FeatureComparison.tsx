@@ -66,7 +66,7 @@ const plans = [
     period: "one-time",
     originalPrice: "$199",
     icon: Zap,
-    iconColor: "text-purple-600",
+    iconColor: "text-accent",
     bgColor: "bg-gradient-to-r from-primary/20 to-accent/20",
     popular: false,
     badge: "Best Value",
@@ -241,7 +241,7 @@ const FeatureComparison = () => {
                           </td>
                           <td className="p-4 text-center">
                             {feature.annual ? (
-                              <Check className="h-5 w-5 text-purple-500 mx-auto" />
+                              <Check className="h-5 w-5 text-accent mx-auto" />
                             ) : (
                               <X className="h-5 w-5 text-muted-foreground mx-auto" />
                             )}

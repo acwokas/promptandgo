@@ -16,9 +16,9 @@ export function CoreProductsSection() {
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4 mb-12">
         {/* Prompt Library */}
         <Card className="relative overflow-hidden group hover:shadow-lg transition-all duration-300">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           <CardContent className="p-6 relative z-10">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center mb-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center mb-4">
               <Search className="h-6 w-6 text-white" />
             </div>
             <h3 className="text-lg font-semibold mb-2 text-foreground">Prompt Library</h3>
@@ -61,9 +61,9 @@ export function CoreProductsSection() {
 
         {/* AI Prompt Generator */}
         <Card className="relative overflow-hidden group hover:shadow-lg transition-all duration-300">
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           <CardContent className="p-6 relative z-10">
-            <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center mb-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-accent to-accent rounded-lg flex items-center justify-center mb-4">
               <Wand2 className="h-6 w-6 text-white" />
             </div>
             <h3 className="text-lg font-semibold mb-2 text-foreground">AI Prompt Generator</h3>
@@ -87,9 +87,9 @@ export function CoreProductsSection() {
           {[
             { label: "GPT", name: "ChatGPT", gradient: "from-green-500 to-emerald-500" },
             { label: "C", name: "Claude", gradient: "from-orange-500 to-red-500" },
-            { label: "G", name: "Gemini", gradient: "from-blue-500 to-purple-500" },
-            { label: "MJ", name: "MidJourney", gradient: "from-indigo-500 to-blue-600" },
-            { label: "P", name: "Perplexity", gradient: "from-purple-500 to-pink-500" },
+            { label: "G", name: "Gemini", gradient: "from-primary to-accent" },
+            { label: "MJ", name: "MidJourney", gradient: "from-primary/80 to-primary" },
+            { label: "P", name: "Perplexity", gradient: "from-accent to-accent" },
             { label: "+", name: "& More", gradient: "from-pink-500 to-rose-500" },
           ].map((platform) => (
             <div key={platform.name} className="text-center">

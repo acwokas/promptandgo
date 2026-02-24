@@ -86,6 +86,7 @@ import GAListener from "@/components/analytics/GAListener";
 import { AnalyticsProvider } from "@/components/analytics/AnalyticsProvider";
 import AdminAnalytics from "./pages/AdminAnalytics";
 import SavedPromptsPage from "./pages/SavedPrompts";
+import MarketInsights from "./pages/MarketInsights";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
@@ -153,6 +154,7 @@ const AppContent = () => {
                 <Route path="/how-it-works" element={<HowItWorks />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/singapore-startups" element={<SingaporeStartups />} />
+                <Route path="/market-insights" element={<MarketInsights />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/admin" element={<AdminTools />} />
                 <Route path="/admin/polls" element={<AdminPolls />} />

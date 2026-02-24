@@ -29,7 +29,7 @@ export const XPDisplay = () => {
       <Tooltip>
         <TooltipTrigger asChild>
           <Link to="/account/xp">
-            <div className="relative flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 cursor-pointer group overflow-hidden shadow-md hover:shadow-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300">
+            <div className="relative flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-primary to-accent cursor-pointer group overflow-hidden shadow-md hover:shadow-lg hover:from-primary/90 hover:to-accent/90 transition-all duration-300">
               {/* Content */}
               <div className="relative flex items-center gap-2">
                 <Sparkles className="h-4 w-4 text-white drop-shadow-sm" />

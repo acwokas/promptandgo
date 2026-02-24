@@ -23,7 +23,7 @@ const AccountPage = () => {
       description: "Manage your personal information and preferences",
       icon: User,
       href: "/account/profile",
-      gradient: "from-blue-500/10 to-blue-500/5",
+      gradient: "from-primary/10 to-primary/5",
     },
     {
       title: "XP & Rewards",
@@ -52,14 +52,14 @@ const AccountPage = () => {
       description: "Update your password and security settings",
       icon: ShieldCheck,
       href: "/account/security",
-      gradient: "from-purple-500/10 to-purple-500/5",
+      gradient: "from-accent/10 to-accent/5",
     },
     {
       title: "AI Preferences",
       description: "Customize your AI provider settings",
       icon: Sparkles,
       href: "/account/ai-preferences",
-      gradient: "from-cyan-500/10 to-cyan-500/5",
+      gradient: "from-primary/10 to-primary/5",
     },
     {
       title: "Notifications",

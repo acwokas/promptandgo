@@ -73,7 +73,7 @@ export function PacksSocialProof() {
           Secure Checkout
         </Badge>
         <Badge variant="outline" className="gap-1.5 py-1.5 px-3">
-          <Clock className="h-3.5 w-3.5 text-blue-500" />
+          <Clock className="h-3.5 w-3.5 text-primary" />
           Instant Access
         </Badge>
         <Badge variant="outline" className="gap-1.5 py-1.5 px-3">

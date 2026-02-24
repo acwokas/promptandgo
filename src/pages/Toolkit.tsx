@@ -46,7 +46,7 @@ const ToolkitPage = () => {
       icon: MessageCircle,
       path: "/ai/assistant",
       features: ["Interactive chat", "Real-time guidance", "Personalized help"],
-      color: "from-blue-500 to-cyan-500",
+      color: "from-primary to-primary/80",
       buttonText: "Ask Scout"
     }
   ];

@@ -186,8 +186,8 @@ const PromptStudioPage = () => {
           {/* Hero Section */}
           <div className="text-center mb-8 sm:mb-12 space-y-4 sm:space-y-6">
             <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4">
-              <div className="p-2 sm:p-3 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl sm:rounded-2xl">
-                <Palette className="h-6 w-6 sm:h-8 sm:w-8 text-purple-500" />
+              <div className="p-2 sm:p-3 bg-gradient-to-r from-accent/20 to-accent/20 rounded-xl sm:rounded-2xl">
+                <Palette className="h-6 w-6 sm:h-8 sm:w-8 text-accent" />
               </div>
               <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
                 Scout's Prompt Studio
@@ -217,7 +217,7 @@ const PromptStudioPage = () => {
                 <div className="bg-gradient-to-br from-card/80 to-card/40 border border-border/50 rounded-2xl p-8 shadow-xl backdrop-blur-sm">
                   {/* Visual Elements */}
                   <div className="absolute top-4 right-4 opacity-20">
-                    <Sparkles className="h-8 w-8 text-primary" />
+                    <Sparkles className="h-8 w-8 text-accent" />
                   </div>
                   <div className="absolute bottom-4 left-4 opacity-10">
                     <div className="w-12 h-12 rounded-full bg-gradient-primary"></div>
@@ -354,39 +354,39 @@ const PromptStudioPage = () => {
             <Card className="ring-1 ring-primary/20 bg-gradient-to-br from-primary/20 via-primary/10 to-transparent shadow-lg">
               <CardHeader className="pb-4 sm:pb-6">
                 <div className="flex items-center gap-2 sm:gap-3">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-r from-purple-500/20 to-pink-500/20 flex items-center justify-center">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-r from-accent/20 to-accent/20 flex items-center justify-center">
                     {activeTab === "adcopy" ? (
-                      <Zap className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                      <Zap className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
                     ) : activeTab === "blog" ? (
-                      <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                      <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
                     ) : activeTab === "business" ? (
-                      <Briefcase className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                      <Briefcase className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
                     ) : activeTab === "cta" ? (
-                      <Megaphone className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                      <Megaphone className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
                     ) : activeTab === "event" ? (
-                      <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                      <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
                     ) : activeTab === "image" ? (
-                      <Image className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                      <Image className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
                     ) : activeTab === "job" ? (
-                      <Target className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                      <Target className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
                      ) : activeTab === "learning" ? (
-                       <GraduationCap className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                       <GraduationCap className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
                      ) : activeTab === "pitchdeck" ? (
-                       <Presentation className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                       <Presentation className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
                      ) : activeTab === "presentation" ? (
-                       <Monitor className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                       <Monitor className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
                      ) : activeTab === "productivity" ? (
-                       <CheckSquare className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                       <CheckSquare className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
                      ) : activeTab === "research" ? (
-                      <Search className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                      <Search className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
                     ) : activeTab === "salesemail" ? (
-                      <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                      <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
                      ) : activeTab === "storytelling" ? (
-                       <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                       <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
                      ) : activeTab === "video" ? (
-                       <Video className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                       <Video className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
                      ) : (
-                       <Layers className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                       <Layers className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
                     )}
                   </div>
                   <div className="min-w-0 flex-1">

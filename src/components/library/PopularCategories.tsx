@@ -6,9 +6,9 @@ interface PopularCategoriesProps {
 }
 
 const categories = [
-  { query: "marketing", icon: TrendingUp, label: "Marketing", count: "850+", colorClass: "from-blue-50 to-transparent border-blue-200 dark:from-blue-950 dark:border-blue-800", iconColorClass: "bg-blue-500/10 text-blue-600 dark:text-blue-400" },
+  { query: "marketing", icon: TrendingUp, label: "Marketing", count: "850+", colorClass: "from-primary/5 to-transparent border-primary/20 dark:from-primary/10 dark:border-primary/20", iconColorClass: "bg-primary/10 text-primary dark:text-primary" },
   { query: "career", icon: Users, label: "Career", count: "420+", colorClass: "from-green-50 to-transparent border-green-200 dark:from-green-950 dark:border-green-800", iconColorClass: "bg-green-500/10 text-green-600 dark:text-green-400" },
-  { query: "content", icon: Copy, label: "Content", count: "380+", colorClass: "from-purple-50 to-transparent border-purple-200 dark:from-purple-950 dark:border-purple-800", iconColorClass: "bg-purple-500/10 text-purple-600 dark:text-purple-400" },
+  { query: "content", icon: Copy, label: "Content", count: "380+", colorClass: "from-accent/5 to-transparent border-accent/20 dark:from-accent/10 dark:border-accent/20", iconColorClass: "bg-accent/10 text-accent dark:text-accent" },
   { query: "productivity", icon: Clock, label: "Productivity", count: "290+", colorClass: "from-orange-50 to-transparent border-orange-200 dark:from-orange-950 dark:border-orange-800", iconColorClass: "bg-orange-500/10 text-orange-600 dark:text-orange-400" },
 ];
 

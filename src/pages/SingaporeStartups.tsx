@@ -89,13 +89,13 @@ const SingaporeStartups = () => {
               icon: PresentationIcon,
               title: "Investor Pitch",
               desc: "Craft compelling pitch decks, executive summaries, and one-pagers that Singapore VCs actually want to read.",
-              gradient: "from-blue-500 to-cyan-500",
+              gradient: "from-primary to-primary/80",
             },
             {
               icon: Rocket,
               title: "Go-to-Market",
               desc: "Build GTM strategies for SEA markets. Localised messaging, channel selection, and launch timelines.",
-              gradient: "from-violet-500 to-purple-500",
+              gradient: "from-accent to-accent",
             },
             {
               icon: BarChart3,
@@ -119,7 +119,7 @@ const SingaporeStartups = () => {
               icon: FileText,
               title: "Financial Models",
               desc: "Revenue projections, unit economics, and burn rate calculations. Impress investors with the numbers.",
-              gradient: "from-cyan-500 to-blue-500",
+              gradient: "from-primary/80 to-primary",
             },
           ].map((item) => (
             <Link
