@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Award, Download, Linkedin, Share2, Sparkles } from "lucide-react";
+import { Award, Download, Linkedin, Share2, Sparkles, Copy, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import confetti from "canvas-confetti";
@@ -20,28 +20,29 @@ export function CertificateStep({
   onNext,
 }: CertificateStepProps) {
   const [confettiFired, setConfettiFired] = useState(false);
+  const [copiedId, setCopiedId] = useState(false);
   const { awardXP } = useUserXP();
 
   useEffect(() => {
     if (!confettiFired) {
-      // Fire confetti
-      const duration = 3000;
+      // Fire confetti with brand colors - converting to hex for confetti library
+      const duration = 4000;
       const end = Date.now() + duration;
 
       const frame = () => {
         confetti({
-          particleCount: 3,
+          particleCount: 4,
           angle: 60,
-          spread: 55,
+          spread: 65,
           origin: { x: 0 },
-          colors: ["#4A90E2", "#F5A623", "#6DD5FA", "#43B581"],
+          colors: ["hsl(350, 78%, 59%)", "hsl(174, 82%, 33%)", "hsl(49, 91%, 78%)", "hsl(25, 95%, 53%)"],
         });
         confetti({
-          particleCount: 3,
+          particleCount: 4,
           angle: 120,
-          spread: 55,
+          spread: 65,
           origin: { x: 1 },
-          colors: ["#4A90E2", "#F5A623", "#6DD5FA", "#43B581"],
+          colors: ["hsl(350, 78%, 59%)", "hsl(174, 82%, 33%)", "hsl(49, 91%, 78%)", "hsl(25, 95%, 53%)"],
         });
 
         if (Date.now() < end) {
@@ -58,12 +59,12 @@ export function CertificateStep({
     // Convert logo to base64 for embedding
     const logoUrl = '/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png';
     let logoBase64 = '';
-    
+
     try {
       const response = await fetch(logoUrl);
       const blob = await response.blob();
       const reader = new FileReader();
-      
+
       logoBase64 = await new Promise<string>((resolve) => {
         reader.onloadend = () => resolve(reader.result as string);
         reader.readAsDataURL(blob);
@@ -71,63 +72,192 @@ export function CertificateStep({
     } catch (error) {
       console.error('Failed to load logo:', error);
     }
-    
-    // Create a simple certificate HTML for PDF generation
+
+    // Create a premium certificate HTML for PDF generation with brand colors
     const certificateHTML = `
       <!DOCTYPE html>
       <html>
       <head>
         <style>
+          * { margin: 0; padding: 0; box-sizing: border-box; }
           body {
-            font-family: 'Arial', sans-serif;
-            padding: 60px;
+            font-family: 'Georgia', 'Playfair Display', serif;
+            padding: 40px;
             text-align: center;
-            background: linear-gradient(to bottom right, #ffffff, #f0f9ff);
+            background: linear-gradient(135deg, hsl(28 76% 97%) 0%, hsl(28 76% 94%) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
           }
-          .certificate {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 60px;
-            border: 3px solid #4A90E2;
+          .certificate-container {
+            max-width: 900px;
+            width: 100%;
+            padding: 80px;
             background: white;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            border: 2px solid hsl(350, 78%, 59%);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
           }
-          .logo { height: 80px; margin-bottom: 30px; }
-          .title { color: #4A90E2; font-size: 32px; font-weight: bold; margin-bottom: 10px; }
-          .divider { height: 4px; width: 120px; background: linear-gradient(to right, #4A90E2, #F5A623); margin: 20px auto; }
-          .awarded { font-size: 20px; margin: 30px 0 10px; }
-          .name { font-size: 48px; font-weight: bold; margin: 20px 0; font-family: 'Georgia', serif; }
-          .description { color: #666; margin: 30px auto; max-width: 600px; line-height: 1.6; }
-          .footer { display: flex; justify-content: space-between; margin-top: 50px; font-size: 14px; color: #666; }
-          .quote { font-style: italic; color: #888; margin-top: 40px; padding-top: 30px; border-top: 1px solid #ddd; }
+          .certificate-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, hsl(350, 78%, 59%), hsl(174, 82%, 33%));
+          }
+          .logo { height: 90px; margin-bottom: 40px; display: block; }
+          .seal {
+            display: inline-block;
+            width: 120px;
+            height: 120px;
+            border: 3px solid hsl(350, 78%, 59%);
+            border-radius: 50%;
+            background: linear-gradient(135deg, hsl(350, 78%, 95%), hsl(350, 78%, 90%));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            margin: 30px 0;
+            position: relative;
+          }
+          .seal::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border: 2px dashed hsl(350, 78%, 59%);
+            border-radius: 50%;
+            opacity: 0.5;
+          }
+          .title {
+            color: hsl(350, 78%, 59%);
+            font-size: 42px;
+            font-weight: 700;
+            margin: 20px 0;
+            letter-spacing: -1px;
+          }
+          .subtitle {
+            color: hsl(174, 82%, 33%);
+            font-size: 18px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 40px;
+          }
+          .divider {
+            height: 3px;
+            width: 150px;
+            background: linear-gradient(90deg, hsl(350, 78%, 59%), hsl(174, 82%, 33%), hsl(350, 78%, 59%));
+            margin: 30px auto;
+          }
+          .awarded {
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: hsl(240, 28%, 14%);
+            margin: 30px 0 10px;
+          }
+          .name {
+            font-size: 56px;
+            font-weight: 700;
+            margin: 20px 0 30px;
+            color: hsl(350, 78%, 59%);
+            font-family: 'Playfair Display', serif;
+          }
+          .description {
+            color: hsl(240, 10%, 46%);
+            margin: 30px auto;
+            max-width: 700px;
+            line-height: 1.8;
+            font-size: 16px;
+            font-style: italic;
+          }
+          .credentials {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 60px;
+            gap: 40px;
+            padding-top: 40px;
+            border-top: 2px solid hsl(28, 18%, 89%);
+          }
+          .credential {
+            flex: 1;
+            text-align: center;
+          }
+          .credential-label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: hsl(240, 28%, 14%);
+            margin-bottom: 8px;
+          }
+          .credential-value {
+            font-size: 18px;
+            color: hsl(350, 78%, 59%);
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+          }
+          .quote {
+            font-style: italic;
+            color: hsl(240, 10%, 46%);
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid hsl(28, 18%, 89%);
+            font-size: 14px;
+          }
+          .verification {
+            margin-top: 40px;
+            padding: 15px;
+            background: hsl(174, 82%, 95%);
+            border-left: 4px solid hsl(174, 82%, 33%);
+            text-align: left;
+            font-size: 12px;
+            color: hsl(240, 28%, 14%);
+            font-family: 'Courier New', monospace;
+          }
         </style>
       </head>
       <body>
-        <div class="certificate">
-          ${logoBase64 ? `<img src="${logoBase64}" alt="PromptAndGo Logo" class="logo" />` : '<div style="height: 80px; margin-bottom: 30px;"></div>'}
-          <div class="title">PromptAndGo Certified Prompt Master</div>
+        <div class="certificate-container">
+          ${logoBase64 ? `<img src="${logoBase64}" alt="PromptAndGo Logo" class="logo" />` : ''}
+          <div class="seal">🏆</div>
+          <div class="title">Certificate of Completion</div>
+          <div class="subtitle">Prompt Like a Pro</div>
           <div class="divider"></div>
-          <div class="awarded">Awarded to</div>
+          <div class="awarded">Presented to</div>
           <div class="name">${fullName}</div>
           <div class="description">
-            In recognition of successfully completing the Prompt Like a Pro onboarding and demonstrating 
-            creative excellence in AI prompt writing.
+            This certificate recognizes successful completion of the PromptAndGo Prompt Like a Pro certification program. The holder has demonstrated mastery in AI prompt engineering and earned the distinction of PromptAndGo Certified Professional.
           </div>
-          <div class="footer">
-            <div>
-              <strong>Date</strong><br/>
-              ${completionDate}
+          <div class="credentials">
+            <div class="credential">
+              <div class="credential-label">Completion Date</div>
+              <div class="credential-value">${completionDate}</div>
             </div>
-            <div>
-              <strong>Certificate ID</strong><br/>
-              ${certificateId}
+            <div class="credential">
+              <div class="credential-label">Certificate ID</div>
+              <div class="credential-value">${certificateId}</div>
+            </div>
+            <div class="credential">
+              <div class="credential-label">Status</div>
+              <div class="credential-value" style="color: hsl(174, 82%, 33%);">Verified</div>
             </div>
           </div>
-          <div class="quote">"Get better prompts and faster results with www.promptandgo.ai"</div>
+          <div class="quote">"Master prompt engineering, shape the future of AI." — PromptAndGo</div>
+          <div class="verification">
+            Verify this certificate: https://promptandgo.ai/verify/${certificateId}
+          </div>
         </div>
       </body>
       </html>
     `;
-    
+
     // Create blob and download
     const blob = new Blob([certificateHTML], { type: 'text/html' });
     const url = window.URL.createObjectURL(blob);
@@ -138,7 +268,7 @@ export function CertificateStep({
     link.click();
     document.body.removeChild(link);
     window.URL.revokeObjectURL(url);
-    
+
     toast.success("Certificate downloaded! Open the HTML file and use your browser's print function to save as PDF.");
   };
 
@@ -207,100 +337,174 @@ Ready to level up your AI game? Start here 👉 https://promptandgo.ai
     toast.success("Share text copied to clipboard!");
   };
 
+  const handleCopyId = () => {
+    navigator.clipboard.writeText(certificateId);
+    setCopiedId(true);
+    setTimeout(() => setCopiedId(false), 2000);
+    toast.success("Certificate ID copied!");
+  };
+
   return (
-    <div className="max-w-3xl mx-auto text-center">
-      <div className="mb-8 animate-scale-in">
-        <div className="relative inline-block">
-          <Award className="h-32 w-32 text-[#F5A623] mx-auto mb-4" />
-          <Sparkles className="h-8 w-8 text-[#6DD5FA] absolute top-0 right-0 animate-pulse" />
+    <div className="max-w-4xl mx-auto">
+      {/* Success Animation */}
+      <div className="text-center mb-8 animate-float-in">
+        <div className="inline-block relative mb-6">
+          <div className="absolute inset-0 animate-pulse bg-primary/20 rounded-full blur-2xl"></div>
+          <div className="relative bg-gradient-to-br from-primary to-accent rounded-full p-6 shadow-xl">
+            <Award className="h-20 w-20 text-white" />
+          </div>
         </div>
       </div>
 
-      <h2 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-[#4A90E2] to-[#43B581] bg-clip-text text-transparent">
-        You're Officially a PromptAndGo Certified Prompt Master!
-      </h2>
+      {/* Congratulations Header */}
+      <div className="text-center mb-12 animate-float-in" style={{ animationDelay: "0.1s" }}>
+        <h2 className="text-5xl md:text-6xl font-black mb-4">
+          <span className="text-gradient-brand">Congratulations!</span>
+        </h2>
+        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          You're now officially a <strong>PromptAndGo Certified Professional</strong>. Your achievement has been recorded and verified.
+        </p>
+      </div>
 
-      <p className="text-xl text-muted-foreground mb-8">
-        Congratulations! You've completed the Prompt Like a Pro onboarding and earned your certification.
-      </p>
+      {/* Premium Certificate Card */}
+      <Card className="mb-12 overflow-hidden shadow-xl animate-float-in border-2 border-primary/20" style={{ animationDelay: "0.2s" }}>
+        <div className="relative p-8 md:p-12 bg-gradient-to-br from-card to-card/50">
+          {/* Decorative Corner Elements */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-full -mr-16 -mt-16 blur-2xl"></div>
+          <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/5 rounded-full -ml-16 -mb-16 blur-2xl"></div>
 
-      {/* Certificate Preview */}
-      <Card className="p-8 mb-8 bg-gradient-to-br from-white to-[#4A90E2]/5 border-[#F5A623]/20 border-2">
-        <div className="max-w-2xl mx-auto">
-          <div className="mb-6">
-            <img 
-              src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png" 
-              alt="PromptAndGo Logo" 
-              className="h-16 w-auto mx-auto mb-4"
-            />
-            <h3 className="text-2xl font-bold text-[#4A90E2] mb-2">
-              PromptAndGo Certified Prompt Master
-            </h3>
-            <div className="h-1 w-24 bg-gradient-to-r from-[#4A90E2] to-[#F5A623] mx-auto" />
-          </div>
-
-          <p className="text-lg mb-4">Awarded to</p>
-          <p className="text-3xl font-bold mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
-            {fullName}
-          </p>
-
-          <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
-            In recognition of successfully completing the Prompt Like a Pro onboarding and demonstrating creative excellence in AI prompt writing.
-          </p>
-
-          <div className="flex justify-between items-end text-sm text-muted-foreground">
-            <div>
-              <p className="font-semibold">Date</p>
-              <p>{completionDate}</p>
+          <div className="relative z-10 max-w-2xl mx-auto">
+            {/* Certificate Header */}
+            <div className="text-center mb-8">
+              <img
+                src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
+                alt="PromptAndGo Logo"
+                className="h-20 w-auto mx-auto mb-6"
+              />
+              <div className="space-y-2 mb-6">
+                <div className="inline-block px-4 py-1 bg-accent/10 rounded-full">
+                  <p className="text-xs font-bold text-accent uppercase tracking-widest">Official Certificate</p>
+                </div>
+                <h3 className="text-3xl md:text-4xl font-black text-gradient-brand">
+                  Prompt Like a Pro
+                </h3>
+                <p className="text-sm text-muted-foreground font-semibold">PromptAndGo Certified Professional</p>
+              </div>
+              <div className="h-1 w-32 bg-gradient-to-r from-primary via-accent to-primary mx-auto rounded-full"></div>
             </div>
-            <div>
-              <p className="font-semibold">Certificate ID</p>
-              <p className="font-mono">{certificateId}</p>
-            </div>
-          </div>
 
-          <div className="mt-8 pt-8 border-t">
-            <p className="text-sm italic text-muted-foreground">
-              "Get better prompts and faster results with www.promptandgo.ai"
-            </p>
+            {/* Certification Details */}
+            <div className="text-center space-y-6 py-8">
+              <p className="text-sm font-semibold text-muted-foreground uppercase tracking-widest">Presented to</p>
+              <p className="text-4xl md:text-5xl font-black text-foreground" style={{ fontFamily: "'Playfair Display', serif" }}>
+                {fullName}
+              </p>
+
+              <p className="text-base text-muted-foreground max-w-lg mx-auto leading-relaxed italic">
+                For successfully completing the comprehensive PromptAndGo certification program and demonstrating exceptional mastery in AI prompt engineering and creative excellence.
+              </p>
+            </div>
+
+            {/* Footer with Credentials */}
+            <div className="grid grid-cols-3 gap-4 pt-8 border-t border-border/50 mt-8">
+              <div className="text-center">
+                <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-2">Completion Date</p>
+                <p className="text-sm font-semibold text-foreground">{completionDate}</p>
+              </div>
+              <div className="text-center">
+                <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-2">Status</p>
+                <div className="flex items-center justify-center gap-1">
+                  <CheckCircle2 className="h-4 w-4 text-accent" />
+                  <p className="text-sm font-semibold text-accent">Verified</p>
+                </div>
+              </div>
+              <div className="text-center">
+                <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-2">Certificate ID</p>
+                <button
+                  onClick={handleCopyId}
+                  className="text-sm font-mono font-bold text-primary hover:text-accent transition-colors flex items-center justify-center gap-1 mx-auto"
+                  title="Click to copy"
+                >
+                  {certificateId}
+                  {copiedId ? (
+                    <CheckCircle2 className="h-3 w-3" />
+                  ) : (
+                    <Copy className="h-3 w-3 opacity-50" />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* Verification URL */}
+            <div className="mt-8 p-4 bg-accent/5 rounded-lg border border-accent/20">
+              <p className="text-xs text-muted-foreground mb-2">Verify this credential online:</p>
+              <p className="text-xs font-mono text-accent break-all">promptandgo.ai/verify/{certificateId}</p>
+            </div>
           </div>
         </div>
       </Card>
 
-      {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row gap-4 justify-center mb-4">
-        <Button
-          onClick={handleDownloadCertificate}
-          size="lg"
-          className="bg-[#4A90E2] hover:bg-[#4A90E2]/90"
-        >
-          <Download className="h-4 w-4 mr-2" />
-          Download Certificate
-        </Button>
-        <Button
-          onClick={handleAddToLinkedIn}
-          size="lg"
-          className="bg-[#0A66C2] hover:bg-[#0A66C2]/90 text-white"
-        >
-          <Linkedin className="h-4 w-4 mr-2" />
-          Add to LinkedIn Profile
-        </Button>
+      {/* Action Buttons - Primary CTA */}
+      <div className="space-y-4 mb-8 animate-float-in" style={{ animationDelay: "0.3s" }}>
+        <div className="grid md:grid-cols-2 gap-4">
+          <Button
+            onClick={handleDownloadCertificate}
+            size="lg"
+            className="h-12 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+          >
+            <Download className="h-4 w-4 mr-2" />
+            Download Certificate
+          </Button>
+          <Button
+            onClick={handleAddToLinkedIn}
+            size="lg"
+            className="h-12 bg-[#0A66C2] hover:bg-[#0A66C2]/90 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+          >
+            <Linkedin className="h-4 w-4 mr-2" />
+            Add to LinkedIn
+          </Button>
+        </div>
       </div>
 
-      <div className="flex gap-2 justify-center mb-8">
-        <Button onClick={handleSharePost} variant="outline" size="sm">
-          <Share2 className="h-4 w-4 mr-2" />
-          Share as Post
-        </Button>
-        <Button onClick={handleCopyShareText} variant="ghost" size="sm">
-          Copy Post Text
-        </Button>
+      {/* Social Sharing */}
+      <div className="bg-card border border-border rounded-lg p-6 mb-8 animate-float-in" style={{ animationDelay: "0.4s" }}>
+        <p className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2">
+          <Share2 className="h-4 w-4 text-primary" />
+          Share your achievement with your network
+        </p>
+        <div className="space-y-3">
+          <Button
+            onClick={handleSharePost}
+            variant="outline"
+            className="w-full justify-start h-11 hover:border-primary hover:text-primary transition-colors"
+          >
+            <Sparkles className="h-4 w-4 mr-2 text-accent" />
+            Share on LinkedIn Feed
+          </Button>
+          <Button
+            onClick={handleCopyShareText}
+            variant="outline"
+            className="w-full justify-start h-11 hover:border-accent hover:text-accent transition-colors"
+          >
+            <Copy className="h-4 w-4 mr-2" />
+            Copy Share Text
+          </Button>
+        </div>
       </div>
 
-      <div className="mt-12">
-        <Button onClick={onNext} size="lg" variant="outline">
-          Continue to Next Step
+      {/* Next Step */}
+      <div className="text-center animate-float-in" style={{ animationDelay: "0.5s" }}>
+        <Button
+          onClick={onNext}
+          size="lg"
+          variant="outline"
+          className="px-8 h-12 border-2 hover:border-primary hover:bg-primary/5 font-semibold transition-all duration-300"
+        >
+          Continue to Final Step →
         </Button>
+        <p className="text-xs text-muted-foreground mt-4">
+          You're one step away from unlocking exclusive benefits
+        </p>
       </div>
     </div>
   );

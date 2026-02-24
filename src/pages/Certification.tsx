@@ -59,12 +59,12 @@ export default function Certification() {
 
   const handleQuizComplete = async (score: number) => {
     setQuizScore(score);
-    
+
     if (score >= 4) {
       // Generate certificate ID
       const certId = Math.random().toString(36).substring(2, 8).toUpperCase();
       setCertificateId(certId);
-      
+
       // Save certification completion
       if (user) {
         try {
@@ -98,25 +98,32 @@ export default function Certification() {
 
   const progress = progressMap[currentStep];
 
+  const stepNames = ["Welcome", "How It Works", "Rules", "Practice", "Practice", "Quiz", "Certificate", "Upgrade"];
+
   return (
     <>
       <SEO
         title="Prompt Like a Pro - Certification | PromptAndGo"
         description="Complete our interactive certification course and become a PromptAndGo Certified Creator. Learn how to write effective AI prompts and earn your certificate."
       />
-      
+
       <div className="min-h-screen bg-background">
-        {/* Progress Bar */}
-        <div className="fixed top-0 left-0 right-0 z-50 bg-card border-b">
+        {/* Enhanced Progress Bar */}
+        <div className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border">
           <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium">Prompt Like a Pro</span>
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <div className="h-8 w-8 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white text-xs font-bold">
+                  ✓
+                </div>
+                <span className="text-sm font-semibold text-gradient-brand">Prompt Like a Pro</span>
+              </div>
               <div className="flex items-center gap-3">
-                <span className="text-sm text-muted-foreground">{progress}%</span>
+                <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{progress}% Complete</span>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-8 w-8"
+                  className="h-8 w-8 hover:bg-muted"
                   onClick={() => navigate("/")}
                   aria-label="Close certification"
                 >
@@ -124,7 +131,13 @@ export default function Certification() {
                 </Button>
               </div>
             </div>
-            <Progress value={progress} className="h-2" />
+            <div className="space-y-2">
+              <Progress value={progress} className="h-1.5" />
+              <div className="flex items-center justify-between text-xs text-muted-foreground">
+                <span>Step {currentStep + 1} of {TOTAL_STEPS}</span>
+                <span className="font-medium text-foreground">{stepNames[currentStep]}</span>
+              </div>
+            </div>
           </div>
         </div>
 
