@@ -57,6 +57,7 @@ const Footer = () => {
               Scout AI
             </Link>
             <Link to="/how-it-works" className="text-muted-foreground hover:text-foreground">🤓 How it Works</Link>
+            <Link to="/small-business" className="text-muted-foreground hover:text-foreground">Small Business</Link>
             <Link to="/singapore-startups" className="text-muted-foreground hover:text-foreground">Singapore Startups</Link>
             <Link to="/market-insights" className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
               <TrendingUp className="h-3 w-3 text-accent" />
