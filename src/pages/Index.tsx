@@ -89,10 +89,6 @@ const LIVE_ACTIVITIES = [
   { name: "James", location: "Sydney", action: "started a prompt pack", time: 15 },
 ];
 
-const TRUSTED_COMPANIES = [
-  "Grab", "Gojek", "Lazada", "Shopee", "Canva",
-  "Wise", "Zendesk", "Wave", "Tiger Global", "Accel"
-];
 
 // Animated counter component
 const AnimatedCounter = ({ value, duration = 2000 }: { value: number; duration?: number }) => {
@@ -593,22 +589,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* ═══════════════════════ TRUSTED BY SECTION ═══════════════════════ */}
-        <section className="py-20 md:py-24 bg-muted/30 border-y border-border/50">
-          <div className="container max-w-5xl mx-auto px-4">
-            <p className="text-center text-xs text-muted-foreground mb-12 uppercase tracking-widest font-bold">Trusted by leading APAC teams</p>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-              {TRUSTED_COMPANIES.map((company) => (
-                <div
-                  key={company}
-                  className="flex items-center justify-center p-4 rounded-xl border border-border/50 bg-card hover:border-primary/30 hover:bg-primary/5 transition-all"
-                >
-                  <span className="font-semibold text-sm text-foreground/70 group-hover:text-primary">{company}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* ═══════════════════════ SOCIAL PROOF - STATS ═══════════════════════ */}
         <section className="container max-w-5xl mx-auto px-4 py-24 md:py-32">
