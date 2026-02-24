@@ -4,17 +4,17 @@ import { Button } from "@/components/ui/button";
 import {
   Users, TrendingUp, Globe, Target, BarChart3,
   ArrowRight, Sparkles, Brain, Briefcase, GraduationCap,
-  Palette, Building2, Heart
+  Palette, Building2, Heart, ChevronRight
 } from "lucide-react";
 
-/* ─── SQREEM Intelligence data (Singapore focus) ─── */
+/* ─── SQREEM Intelligence data (APAC) ─── */
 const MARKET_SIZE = {
-  sg: { people: "50,625", label: "Singapore" },
-  my: { people: "162,800", label: "Malaysia" },
-  id: { people: "489,500", label: "Indonesia" },
-  vn: { people: "312,400", label: "Vietnam" },
-  au: { people: "285,100", label: "Australia" },
-  total: "1.9M+",
+  sg: { people: "50,625", label: "Singapore", slug: "" },
+  my: { people: "10,969", label: "Malaysia", slug: "/market-insights/malaysia" },
+  id: { people: "537,854", label: "Indonesia", slug: "/market-insights/indonesia" },
+  vn: { people: "425,343", label: "Vietnam", slug: "/market-insights/vietnam" },
+  au: { people: "104,647", label: "Australia", slug: "/market-insights/australia" },
+  total: "1.1M+",
 };
 
 const PERSONAS = [
@@ -133,16 +133,37 @@ const MarketInsights = () => {
                 { ...MARKET_SIZE.id, flag: "🇮🇩" },
                 { ...MARKET_SIZE.vn, flag: "🇻🇳" },
                 { ...MARKET_SIZE.au, flag: "🇦🇺" },
-              ].map((country) => (
-                <div
-                  key={country.label}
-                  className="rounded-xl border border-border bg-card p-5 text-center hover:border-primary/30 transition-colors"
-                >
-                  <span className="text-2xl mb-2 block">{country.flag}</span>
-                  <div className="text-2xl md:text-3xl font-bold text-foreground">{country.people}</div>
-                  <p className="text-sm text-muted-foreground mt-1">{country.label}</p>
-                </div>
-              ))}
+              ].map((country) => {
+                const content = (
+                  <>
+                    <span className="text-2xl mb-2 block">{country.flag}</span>
+                    <div className="text-2xl md:text-3xl font-bold text-foreground">{country.people}</div>
+                    <p className="text-sm text-muted-foreground mt-1">{country.label}</p>
+                    {country.slug && (
+                      <span className="inline-flex items-center text-xs text-primary mt-2 gap-0.5">
+                        Deep dive <ChevronRight className="h-3 w-3" />
+                      </span>
+                    )}
+                  </>
+                );
+                return country.slug ? (
+                  <Link
+                    key={country.label}
+                    to={country.slug}
+                    className="rounded-xl border border-border bg-card p-5 text-center hover:border-primary/30 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
+                  >
+                    {content}
+                  </Link>
+                ) : (
+                  <div
+                    key={country.label}
+                    className="rounded-xl border border-primary/30 bg-card p-5 text-center ring-1 ring-primary/10"
+                  >
+                    {content}
+                    <span className="inline-flex items-center text-xs text-primary/60 mt-2">Current page</span>
+                  </div>
+                );
+              })}
             </div>
 
             <div className="mt-8 text-center">

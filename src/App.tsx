@@ -87,6 +87,10 @@ import { AnalyticsProvider } from "@/components/analytics/AnalyticsProvider";
 import AdminAnalytics from "./pages/AdminAnalytics";
 import SavedPromptsPage from "./pages/SavedPrompts";
 import MarketInsights from "./pages/MarketInsights";
+import MalaysiaInsights from "./pages/market/MalaysiaInsights";
+import IndonesiaInsights from "./pages/market/IndonesiaInsights";
+import VietnamInsights from "./pages/market/VietnamInsights";
+import AustraliaInsights from "./pages/market/AustraliaInsights";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
@@ -155,6 +159,10 @@ const AppContent = () => {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/singapore-startups" element={<SingaporeStartups />} />
                 <Route path="/market-insights" element={<MarketInsights />} />
+                <Route path="/market-insights/malaysia" element={<MalaysiaInsights />} />
+                <Route path="/market-insights/indonesia" element={<IndonesiaInsights />} />
+                <Route path="/market-insights/vietnam" element={<VietnamInsights />} />
+                <Route path="/market-insights/australia" element={<AustraliaInsights />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/admin" element={<AdminTools />} />
                 <Route path="/admin/polls" element={<AdminPolls />} />
