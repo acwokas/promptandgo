@@ -111,7 +111,7 @@ const SmallBusiness = () => {
                 Browse Prompts - Free
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10 h-12 px-8 text-base">
+            <Button asChild size="lg" variant="outline" className="border-white/50 !text-white hover:bg-white/20 h-12 px-8 text-base bg-white/10">
               <Link to="/optimize">
                 <Zap className="h-4 w-4 mr-2" />
                 Optimize Any Prompt
@@ -375,7 +375,7 @@ const SmallBusiness = () => {
                 Browse 3,000+ Prompts
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10 h-12 px-8 text-base">
+            <Button asChild size="lg" variant="outline" className="border-white/50 !text-white hover:bg-white/20 h-12 px-8 text-base bg-white/10">
               <Link to="/optimize">
                 <Zap className="h-4 w-4 mr-2" />
                 Try the Optimizer
