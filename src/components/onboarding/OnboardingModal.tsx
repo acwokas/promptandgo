@@ -217,7 +217,12 @@ export const OnboardingModal: React.FC = () => {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={isOpen} onOpenChange={(open) => {
+        if (!open) {
+          localStorage.setItem('pag_onboarded', 'true');
+        }
+        setIsOpen(open);
+      }}>
       <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-center sr-only">Onboarding</DialogTitle>
