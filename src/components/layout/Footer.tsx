@@ -52,25 +52,25 @@ const Footer = () => {
               Browse Prompts
             </Link>
             <Link to="/packs" className="text-muted-foreground hover:text-foreground">⚡️ Power Packs</Link>
+            <Link to="/optimize" className="text-muted-foreground hover:text-foreground">✨ Prompt Optimizer</Link>
             <Link to="/scout" className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
               <Bot className="h-3 w-3 text-accent" />
               Scout AI
             </Link>
             <Link to="/how-it-works" className="text-muted-foreground hover:text-foreground">🤓 How it Works</Link>
+            <Link to="/tips" className="text-muted-foreground hover:text-foreground">💡 Tips & Blog</Link>
+            <Link to="/faqs" className="text-muted-foreground hover:text-foreground">❓ FAQs</Link>
+          </nav>
+          <nav className="flex flex-col gap-2">
+            <span className="text-foreground font-medium">Tools & More</span>
+            <Link to="/ai/studio" className="text-muted-foreground hover:text-foreground">Prompt Studio</Link>
+            <Link to="/ai/assistant" className="text-muted-foreground hover:text-foreground">Scout AI Assistant</Link>
+            <Link to="/certification" className="text-muted-foreground hover:text-foreground">Certification</Link>
             <Link to="/small-business" className="text-muted-foreground hover:text-foreground">Small Business</Link>
-            <Link to="/singapore-startups" className="text-muted-foreground hover:text-foreground">Singapore Startups</Link>
             <Link to="/market-insights" className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
               <TrendingUp className="h-3 w-3 text-accent" />
               Market Insights
             </Link>
-            <Link to="/tips" className="text-muted-foreground hover:text-foreground">💡 Tips</Link>
-            <Link to="/faqs" className="text-muted-foreground hover:text-foreground">❓ FAQs</Link>
-          </nav>
-          <nav className="flex flex-col gap-2">
-            <span className="text-foreground font-medium">Tools</span>
-            <Link to="/ai/studio" className="text-muted-foreground hover:text-foreground">Prompt Studio</Link>
-            <Link to="/ai/assistant" className="text-muted-foreground hover:text-foreground">Scout AI Assistant</Link>
-            <Link to="/library" className="text-muted-foreground hover:text-foreground">Prompt Library</Link>
             <Link to="/submit" className="text-muted-foreground hover:text-foreground">Submit a Prompt</Link>
             <Link to="/contact" className="text-muted-foreground hover:text-foreground">Contact Us</Link>
             {user && (
@@ -78,9 +78,9 @@ const Footer = () => {
                 <span className="inline-flex items-center gap-2"><UserIcon className="h-4 w-4" aria-hidden="true" /> My Account</span>
               </Link>
             )}
-            <Link to={user ? "/account/favorites" : "/auth"} className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
+            <Link to={user ? "/saved" : "/auth"} className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
               <Heart className="h-3 w-3 text-red-500" />
-              My Prompts
+              Saved Prompts
             </Link>
           </nav>
         </div>
