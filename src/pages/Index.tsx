@@ -826,7 +826,7 @@ const Index = () => {
                   Optimize Your Prompt - Free
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-white/40 text-white hover:bg-white/20 h-16 px-12 text-lg font-bold backdrop-blur-sm">
+              <Button asChild variant="outline" size="lg" className="border-white/50 !text-white hover:bg-white/20 h-16 px-12 text-lg font-bold backdrop-blur-sm bg-white/10">
                 <Link to="/library" className="flex items-center gap-3">
                   <Search className="h-6 w-6" />
                   Browse 3,000+ Prompts
