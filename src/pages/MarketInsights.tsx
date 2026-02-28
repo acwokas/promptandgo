@@ -538,7 +538,7 @@ const MarketInsights = () => {
                     Try the Optimizer
                   </Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10 h-13 px-8 font-semibold">
+                <Button asChild size="lg" variant="outline" className="border-white/50 !text-white hover:bg-white/20 h-13 px-8 font-semibold bg-white/10">
                   <Link to="/library">
                     Browse the Library <ArrowRight className="h-5 w-5 ml-2" />
                   </Link>

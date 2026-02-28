@@ -190,7 +190,7 @@ const CountryInsightLayout = ({ data }: { data: CountryData }) => {
                     Try the Optimizer
                   </Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10 h-12 px-8">
+                <Button asChild size="lg" variant="outline" className="border-white/50 !text-white hover:bg-white/20 h-12 px-8 bg-white/10">
                   <Link to="/market-insights">
                     All Markets <ArrowRight className="h-4 w-4 ml-2" />
                   </Link>

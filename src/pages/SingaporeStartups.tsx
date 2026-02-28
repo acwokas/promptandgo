@@ -41,7 +41,7 @@ const SingaporeStartups = () => {
                 Try the Optimiser Free
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10 h-12 px-8">
+            <Button asChild size="lg" variant="outline" className="border-white/50 !text-white hover:bg-white/20 h-12 px-8 bg-white/10">
               <Link to="/library">
                 Browse Startup Prompts
               </Link>
@@ -193,7 +193,7 @@ const SingaporeStartups = () => {
                 Start Optimising
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10 h-12 px-8">
+            <Button asChild size="lg" variant="outline" className="border-white/50 !text-white hover:bg-white/20 h-12 px-8 bg-white/10">
               <Link to="/library">
                 Browse All Prompts
               </Link>
