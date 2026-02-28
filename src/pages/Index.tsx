@@ -506,7 +506,7 @@ const Index = () => {
         </section>
 
         {/* ═══════════════════════ HOW IT WORKS - INTERACTIVE ═══════════════════════ */}
-        <section className="container max-w-5xl mx-auto px-4 py-24 md:py-32">
+        <section className="container max-w-5xl mx-auto px-4 py-24 md:py-32 overflow-visible">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/30 text-accent px-4 py-2 rounded-full text-sm font-semibold mb-4">
               <Zap className="h-4 w-4" />
@@ -520,9 +520,8 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 relative pt-6">
-            {/* Connecting lines */}
-            <div className="hidden md:block absolute top-24 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-border to-transparent -z-10" />
+          <div className="grid md:grid-cols-3 gap-8 relative pt-6 overflow-visible">
+            {/* Connecting line removed */}
 
             {[
               {
