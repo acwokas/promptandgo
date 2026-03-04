@@ -241,16 +241,16 @@ const MarketInsights = () => {
                   <div className="flex flex-col h-full">
                     <div className="flex-1">
                       <div className="text-4xl mb-4">{country.flag}</div>
-                      <h3 className="text-2xl font-bold text-white mb-2">{country.label}</h3>
+                      <h3 className="text-2xl font-bold text-foreground mb-2">{country.label}</h3>
                       <div className="mb-6">
                         <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                           <AnimatedCounter target={country.people} duration={2000} />
                         </div>
-                        <p className="text-sm text-white/60 mt-2">{percentage}% of APAC</p>
+                        <p className="text-sm text-muted-foreground mt-2">{percentage}% of APAC</p>
                       </div>
 
                       {/* Proportional bar */}
-                      <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden mb-6">
+                      <div className="w-full h-2 bg-muted rounded-full overflow-hidden mb-6">
                         <div
                           className="h-full bg-gradient-to-r from-primary to-accent rounded-full"
                           style={{ width: `${percentage}%` }}
@@ -259,12 +259,12 @@ const MarketInsights = () => {
                     </div>
 
                     {country.slug && (
-                      <div className="text-xs text-accent/80 font-medium inline-flex items-center gap-1">
+                      <div className="text-xs text-accent font-medium inline-flex items-center gap-1">
                         Deep dive <ChevronRight className="h-3 w-3" />
                       </div>
                     )}
                     {isCurrentPage && (
-                      <div className="text-xs text-primary/70 font-medium">You are here</div>
+                      <div className="text-xs text-primary font-medium">You are here</div>
                     )}
                   </div>
                 );
@@ -273,7 +273,7 @@ const MarketInsights = () => {
                   <Link
                     key={country.label}
                     to={country.slug}
-                    className="group relative rounded-2xl border border-white/10 bg-gradient-to-br from-white/8 to-white/4 backdrop-blur-sm p-8 text-white overflow-hidden transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-1"
+                    className="group relative rounded-2xl border border-border bg-card p-8 overflow-hidden transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-1"
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/0 to-primary/0 group-hover:from-primary/10 group-hover:to-primary/5 transition-all duration-300" />
                     <div className="relative z-10">{CardContent}</div>
@@ -281,7 +281,7 @@ const MarketInsights = () => {
                 ) : (
                   <div
                     key={country.label}
-                    className="relative rounded-2xl border border-primary/40 bg-gradient-to-br from-primary/15 to-primary/5 backdrop-blur-sm p-8 text-white overflow-hidden ring-1 ring-primary/20"
+                    className="relative rounded-2xl border border-primary/40 bg-gradient-to-br from-primary/10 to-card p-8 overflow-hidden ring-1 ring-primary/20"
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent" />
                     <div className="relative z-10">{CardContent}</div>
@@ -292,7 +292,7 @@ const MarketInsights = () => {
 
             {/* Total stat badge */}
             <div className="flex justify-center">
-              <div className="inline-flex items-center gap-3 bg-gradient-to-r from-primary/20 to-accent/20 text-white px-8 py-4 rounded-2xl border border-primary/30 backdrop-blur-sm">
+              <div className="inline-flex items-center gap-3 bg-gradient-to-r from-primary/10 to-accent/10 text-foreground px-8 py-4 rounded-2xl border border-primary/30">
                 <Zap className="h-5 w-5 text-primary animate-pulse" />
                 <span className="font-semibold">
                   Combined APAC market: <span className="text-gradient-brand">{(MARKET_SIZE.total).toLocaleString()}</span> professionals actively seeking prompt solutions
