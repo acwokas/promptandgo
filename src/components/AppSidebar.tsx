@@ -60,7 +60,7 @@ const supportItems = [
 ]
 
 export function AppSidebar() {
-  const { state, isMobile } = useSidebar()
+  const { state, isMobile, setOpenMobile } = useSidebar()
   const location = useLocation()
   const currentPath = location.pathname
   // On mobile offcanvas mode, always show text. Only hide on desktop when collapsed
@@ -75,6 +75,12 @@ export function AppSidebar() {
 
   const getNavCls = ({ isActive }: { isActive: boolean }) =>
     isActive ? "bg-primary/10 text-primary font-medium border-r-2 border-primary" : "hover:bg-muted/50"
+
+  const handleLinkClick = () => {
+    if (isMobile) {
+      setOpenMobile(false)
+    }
+  }
 
   return (
     <Sidebar
@@ -93,6 +99,7 @@ export function AppSidebar() {
                       to={item.url} 
                       end={item.url === "/"} 
                       className={({ isActive: linkActive }) => getNavCls({ isActive: linkActive })}
+                      onClick={handleLinkClick}
                     >
                       <item.icon className="h-4 w-4" />
                       {showText && <span className="text-sm">{item.title}</span>}
@@ -115,6 +122,7 @@ export function AppSidebar() {
                     <NavLink 
                       to={item.url} 
                       className={({ isActive: linkActive }) => getNavCls({ isActive: linkActive })}
+                      onClick={handleLinkClick}
                     >
                       <item.icon className="h-4 w-4" />
                       {showText && <span className="text-sm">{item.title}</span>}
@@ -137,6 +145,7 @@ export function AppSidebar() {
                     <NavLink 
                       to={item.url} 
                       className={({ isActive: linkActive }) => getNavCls({ isActive: linkActive })}
+                      onClick={handleLinkClick}
                     >
                       <item.icon className="h-4 w-4" />
                       {showText && <span className="text-sm">{item.title}</span>}
@@ -159,6 +168,7 @@ export function AppSidebar() {
                     <NavLink 
                       to={item.url} 
                       className={({ isActive: linkActive }) => getNavCls({ isActive: linkActive })}
+                      onClick={handleLinkClick}
                     >
                       <item.icon className="h-4 w-4" />
                       {showText && <span className="text-sm">{item.title}</span>}
