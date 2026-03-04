@@ -48,8 +48,8 @@ export const OnboardingModal: React.FC = () => {
   const { user } = useSupabaseAuth();
 
   useEffect(() => {
-    // Check if user has already onboarded
-    const hasOnboarded = localStorage.getItem('pag_onboarded') === 'true';
+    // Show only once per session
+    const hasOnboarded = sessionStorage.getItem('pag_onboarded') === 'true';
     if (!hasOnboarded) {
       setIsOpen(true);
     }
@@ -70,11 +70,10 @@ export const OnboardingModal: React.FC = () => {
   };
 
   const handleComplete = () => {
-    localStorage.setItem('pag_onboarded', 'true');
+    sessionStorage.setItem('pag_onboarded', 'true');
 
     // Save preferences if user is logged in
     if (user && aiTool && useCase) {
-      // This would typically be saved to the database via a hook or API call
       localStorage.setItem('pag_preferences', JSON.stringify({
         aiTool,
         useCase,
@@ -219,7 +218,7 @@ export const OnboardingModal: React.FC = () => {
   return (
     <Dialog open={isOpen} onOpenChange={(open) => {
         if (!open) {
-          localStorage.setItem('pag_onboarded', 'true');
+          sessionStorage.setItem('pag_onboarded', 'true');
         }
         setIsOpen(open);
       }}>
