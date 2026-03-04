@@ -229,7 +229,7 @@ const Index = () => {
             </h1>
 
             <p className="text-center text-lg md:text-2xl text-white/80 mt-8 max-w-3xl mx-auto leading-relaxed font-light animate-fade-in" style={{ animationDelay: "0.1s" }}>
-              Transform vague ideas into laser-focused, production-ready prompts. 3,000+ battle-tested templates. Instant AI optimization. Zero setup.
+              Transform vague ideas into laser-focused, production-ready prompts. 3,000+ battle-tested templates. Instant AI optimization. Zero setup. Multiple languages.
             </p>
 
             {/* Animated Counter - Live Professional Count */}
