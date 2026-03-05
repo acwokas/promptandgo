@@ -48,12 +48,15 @@ export const OnboardingModal: React.FC = () => {
   const { user } = useSupabaseAuth();
 
   useEffect(() => {
-    // Show only once per session
+    // Show only once per session, and only for non-logged-in users
     const hasOnboarded = sessionStorage.getItem('pag_onboarded') === 'true';
-    if (!hasOnboarded) {
+    if (!hasOnboarded && !user) {
       setIsOpen(true);
+    } else if (user) {
+      // If user logs in during session, close the modal
+      setIsOpen(false);
     }
-  }, []);
+  }, [user]);
 
   const handleNext = () => {
     if (step === 1 && aiTool) {
