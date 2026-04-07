@@ -204,7 +204,7 @@ const Index = () => {
       <AIOptimizedStructuredData pageType="HomePage" title="3,000+ Curated AI Prompts" description="Browse, copy, and run tested AI prompts." />
 
       <main>
-        {/* ═══════════════════════ HERO - PREMIUM & IMPACTFUL ═══════════════════════ */}
+        {/* ═══════════════════════ HERO ═══════════════════════ */}
         <section className="relative overflow-hidden bg-hero">
           {/* Ambient background effects */}
           <div aria-hidden className="pointer-events-none absolute inset-0">
@@ -214,52 +214,64 @@ const Index = () => {
           </div>
 
           <div className="relative z-10 container max-w-6xl mx-auto px-4 pt-24 pb-20 md:pt-32 md:pb-28">
-            {/* Premium Badge */}
-            <div className="flex justify-center mb-8 animate-fade-in">
-              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-primary/30 text-white/95 px-4 py-2 rounded-full text-sm font-medium shadow-lg shadow-primary/20">
-                <Flame className="h-4 w-4 text-primary animate-bounce" style={{ animationDuration: "2s" }} />
-                <span>Trusted by 1.9M+ APAC professionals</span>
+            {/* Twin differentiator badges */}
+            <div className="flex flex-wrap justify-center gap-3 mb-8 animate-fade-in">
+              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-amber-400/40 text-amber-300 px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                <span className="text-base">🌏</span>
+                Built for Asia
+              </div>
+              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-primary/40 text-primary px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                <Zap className="h-4 w-4" />
+                Any Platform · Any Language
               </div>
             </div>
 
-            {/* Headline - Bold & Premium */}
-            <h1 className="text-center text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white tracking-tight leading-[1.05] max-w-5xl mx-auto animate-fade-in">
-              Prompts that
-              <span className="block text-gradient-brand"> absolutely dominate.</span>
+            {/* Headline */}
+            <h1 className="text-center text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.08] max-w-5xl mx-auto animate-fade-in">
+              The only AI prompt tool
+              <span className="block text-gradient-brand"> built for Asia.</span>
             </h1>
 
-            <p className="text-center text-lg md:text-2xl text-white/80 mt-8 max-w-3xl mx-auto leading-relaxed font-light animate-fade-in" style={{ animationDelay: "0.1s" }}>
-              Transform vague ideas into laser-focused, production-ready prompts. 3,000+ battle-tested templates. Instant AI optimization. Zero setup. Multiple languages.
+            <p className="text-center text-lg md:text-xl text-white/80 mt-8 max-w-3xl mx-auto leading-relaxed font-light animate-fade-in" style={{ animationDelay: "0.1s" }}>
+              Prompts that understand Japanese business formality, Southeast Asian market dynamics, Mandarin tone, and Indian enterprise context — then optimize them for <strong className="text-white font-semibold">any AI platform</strong> in <strong className="text-white font-semibold">any language</strong>.
             </p>
 
-            {/* Animated Counter - Live Professional Count */}
-            <div className="flex justify-center mt-12 mb-12 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-              <div className="inline-flex flex-col items-center gap-2 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-8 py-4">
-                <span className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
-                  <AnimatedCounter value={1947438} />
-                </span>
-                <span className="text-sm text-white/60 font-medium">APAC professionals optimizing prompts</span>
-              </div>
-            </div>
-
-            {/* CTAs - Premium Styling */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8 animate-fade-in" style={{ animationDelay: "0.3s" }}>
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10 animate-fade-in" style={{ animationDelay: "0.2s" }}>
               <Button asChild size="lg" className="px-10 text-base bg-white text-gray-900 hover:bg-white/95 h-14 font-semibold shadow-xl shadow-white/20 group">
                 <Link to="/optimize" className="flex items-center gap-2">
                   <ZapIcon className="h-5 w-5 group-hover:animate-spin" />
-                  Optimize Your Prompt - Free
+                  Optimize for Any Platform — Free
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="px-10 text-base border-white/50 !text-white hover:bg-white/15 h-14 font-semibold backdrop-blur-sm bg-white/10">
                 <Link to="/library" className="flex items-center gap-2">
-                  <Search className="h-5 w-5" />
-                  Explore 3,000+ Prompts
+                  <Globe className="h-5 w-5" />
+                  Explore Asian AI Prompts
                 </Link>
               </Button>
             </div>
 
-            {/* Live Demo Card - Premium */}
-            <div className="mt-20 max-w-4xl mx-auto animate-fade-in" style={{ animationDelay: "0.4s" }}>
+            {/* Platform logos strip inline */}
+            <div className="flex flex-wrap justify-center gap-3 mt-10 animate-fade-in" style={{ animationDelay: "0.3s" }}>
+              {[
+                { name: "ChatGPT", color: "text-emerald-400" },
+                { name: "Claude", color: "text-orange-300" },
+                { name: "Gemini", color: "text-blue-300" },
+                { name: "Copilot", color: "text-cyan-300" },
+                { name: "Perplexity", color: "text-violet-300" },
+                { name: "MidJourney", color: "text-pink-300" },
+                { name: "DeepSeek", color: "text-teal-300" },
+                { name: "Local Models", color: "text-white/60" },
+              ].map((p) => (
+                <span key={p.name} className={`text-xs font-bold ${p.color} bg-white/5 border border-white/10 px-3 py-1.5 rounded-full`}>
+                  {p.name}
+                </span>
+              ))}
+            </div>
+
+            {/* Live Demo Card */}
+            <div className="mt-16 max-w-4xl mx-auto animate-fade-in" style={{ animationDelay: "0.4s" }}>
               <div className="relative bg-white/[0.08] backdrop-blur-xl border border-white/15 rounded-3xl p-1 shadow-2xl shadow-primary/20">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 rounded-3xl opacity-0 hover:opacity-100 transition-opacity duration-500" />
                 <div className="bg-gray-950/90 rounded-2xl overflow-hidden">
@@ -271,6 +283,9 @@ const Index = () => {
                       <div className="w-3 h-3 rounded-full bg-green-500/80" />
                     </div>
                     <span className="text-white/50 text-xs ml-3 font-mono font-semibold">promptandgo-scout</span>
+                    <div className="ml-auto flex items-center gap-1.5 text-xs text-white/30 font-mono">
+                      <Globe className="h-3 w-3" /> Multi-platform · Multi-language
+                    </div>
                   </div>
 
                   {/* Input area */}
@@ -295,7 +310,7 @@ const Index = () => {
                           <Sparkles className="h-4 w-4 text-emerald-400" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-emerald-400/90 text-xs mb-2 font-mono font-semibold uppercase tracking-widest">OPTIMIZED PROMPT</p>
+                          <p className="text-emerald-400/90 text-xs mb-2 font-mono font-semibold uppercase tracking-widest">OPTIMIZED FOR CHATGPT</p>
                           <p className="text-white/85 text-sm font-mono leading-relaxed break-words">
                             {OPTIMIZED_RESULTS[promptIndex]}
                           </p>
@@ -305,33 +320,111 @@ const Index = () => {
                   </div>
                 </div>
               </div>
-              <p className="text-center text-white/40 text-xs mt-4 font-medium">Powered by Scout AI • Works with ChatGPT, Claude, Gemini, MidJourney, and 8+ more platforms</p>
             </div>
           </div>
         </section>
 
-        {/* ═══════════════════════ PLATFORM STRIP ═══════════════════════ */}
-        <section className="border-b border-border/50 bg-muted/20 backdrop-blur-sm">
-          <div className="container max-w-5xl mx-auto px-4 py-8">
-            <p className="text-center text-xs text-muted-foreground mb-5 uppercase tracking-widest font-semibold">Optimized for every AI platform</p>
-            <div className="flex flex-wrap justify-center gap-8 md:gap-12">
-              {[
-                { name: "ChatGPT", color: "text-emerald-500" },
-                { name: "Claude", color: "text-primary" },
-                { name: "Gemini", color: "text-accent" },
-                { name: "MidJourney", color: "text-violet-500" },
-                { name: "Perplexity", color: "text-blue-500" },
-                { name: "DeepSeek", color: "text-cyan-500" },
-              ].map((p) => (
-                <span key={p.name} className={`text-sm font-bold ${p.color} opacity-85 hover:opacity-100 transition-opacity`}>
-                  {p.name}
+        {/* ═══════════════════════ THREE DIFFERENTIATOR CARDS ═══════════════════════ */}
+        <section className="container max-w-6xl mx-auto px-4 py-24 md:py-32 overflow-visible">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/30 text-accent px-4 py-2 rounded-full text-sm font-semibold mb-4">
+              <Star className="h-4 w-4" />
+              What Makes Us Different
+            </div>
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4">
+              No Other Prompt Tool Does This
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Generic prompt libraries are everywhere. Ours is the only one built for Asian markets with true multi-platform optimization.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 relative pt-6 overflow-visible">
+            {/* Card 1 — Platform Optimizer */}
+            <Link
+              to="/optimize"
+              className="group relative rounded-2xl border border-primary/40 bg-gradient-to-br from-primary/10 to-primary/5 ring-2 ring-primary/20 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 overflow-visible"
+            >
+              <div className="absolute -top-3 right-6 z-10 bg-primary text-white text-xs font-black px-3 py-1 rounded-full shadow-lg">
+                KILLER FEATURE
+              </div>
+              <div className="p-8 pt-10">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary to-red-500 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <Zap className="h-7 w-7 text-white" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Optimize for Any Platform</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed mb-5">
+                  Paste any prompt and get it rewritten specifically for ChatGPT, Claude, Gemini, Copilot, Perplexity, MidJourney, DeepSeek, or local models. Each platform has different strengths — Scout knows them all.
+                </p>
+                <div className="flex flex-wrap gap-1.5 mb-5">
+                  {["ChatGPT", "Claude", "Gemini", "Copilot", "Perplexity", "MidJourney", "DeepSeek", "+More"].map((p) => (
+                    <span key={p} className="text-[10px] font-bold bg-primary/10 text-primary border border-primary/20 px-2 py-0.5 rounded-full">{p}</span>
+                  ))}
+                </div>
+                <span className="inline-flex items-center text-sm font-semibold text-primary group-hover:gap-2 transition-all">
+                  Try the optimizer <ArrowRight className="h-4 w-4 ml-1" />
                 </span>
-              ))}
-            </div>
+              </div>
+            </Link>
+
+            {/* Card 2 — Any Language, Any Culture */}
+            <Link
+              to="/library"
+              className="group relative rounded-2xl border border-border/50 bg-card hover:border-border transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 overflow-visible"
+            >
+              <div className="p-8 pt-10">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-accent to-cyan-500 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <Globe className="h-7 w-7 text-white" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Any Language, Any Culture</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed mb-5">
+                  Generate and optimize prompts in Bahasa, Vietnamese, Mandarin, Malay, Thai, Hindi, Japanese, Korean, and English. Scout adapts tone, formality, and cultural context automatically.
+                </p>
+                <div className="flex flex-wrap gap-2 mb-5">
+                  {MULTILINGUAL_EXAMPLES.map((item) => (
+                    <span key={item.code} className="text-sm">{item.flag}</span>
+                  ))}
+                  <span className="text-sm">🇯🇵</span>
+                  <span className="text-sm">🇰🇷</span>
+                  <span className="text-sm">🇮🇳</span>
+                  <span className="text-sm">🇬🇧</span>
+                </div>
+                <span className="inline-flex items-center text-sm font-semibold text-primary group-hover:gap-2 transition-all">
+                  Explore prompts <ArrowRight className="h-4 w-4 ml-1" />
+                </span>
+              </div>
+            </Link>
+
+            {/* Card 3 — Built for Asia */}
+            <Link
+              to="/market-insights"
+              className="group relative rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-500/5 to-orange-500/5 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 overflow-visible"
+            >
+              <div className="absolute -top-3 right-6 z-10 bg-amber-500 text-white text-xs font-black px-3 py-1 rounded-full shadow-lg">
+                ASIA-FIRST
+              </div>
+              <div className="p-8 pt-10">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <span className="text-2xl">🌏</span>
+                </div>
+                <h3 className="text-xl font-bold mb-3">Built for Asia</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed mb-5">
+                  Not a Western tool with a translation layer. Our prompts are designed from the ground up for Japanese business formality, SEA startup culture, Indian enterprise workflows, and APAC market dynamics.
+                </p>
+                <div className="flex flex-wrap gap-1.5 mb-5">
+                  {["Singapore", "Indonesia", "Vietnam", "Malaysia", "Japan", "India", "Australia"].map((c) => (
+                    <span key={c} className="text-[10px] font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded-full">{c}</span>
+                  ))}
+                </div>
+                <span className="inline-flex items-center text-sm font-semibold text-primary group-hover:gap-2 transition-all">
+                  Explore APAC insights <ArrowRight className="h-4 w-4 ml-1" />
+                </span>
+              </div>
+            </Link>
           </div>
         </section>
 
-        {/* ═══════════════════════ MULTILINGUAL SECTION - DIFFERENTIATOR ═══════════════════════ */}
+        {/* ═══════════════════════ MULTILINGUAL SECTION ═══════════════════════ */}
         <section className="relative py-24 md:py-32 bg-gradient-to-b from-muted/30 via-background to-background">
           <div className="container max-w-6xl mx-auto px-4">
             <div className="text-center mb-16">
@@ -389,7 +482,7 @@ const Index = () => {
           </div>
         </section>
 
-        {/* ═══════════════════════ MARKET INTELLIGENCE - DYNAMIC & ANIMATED ═══════════════════════ */}
+        {/* ═══════════════════════ MARKET INTELLIGENCE ═══════════════════════ */}
         <section className="relative py-24 md:py-32 bg-hero text-white">
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div className="absolute top-10 right-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
@@ -411,7 +504,7 @@ const Index = () => {
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-              {MARKET_DATA.map((item, idx) => (
+              {MARKET_DATA.map((item) => (
                 <div
                   key={item.country}
                   className="group relative bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-6 hover:bg-white/15 transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/20"
@@ -504,90 +597,6 @@ const Index = () => {
             </div>
           </div>
         </section>
-
-        {/* ═══════════════════════ HOW IT WORKS - INTERACTIVE ═══════════════════════ */}
-        <section className="container max-w-5xl mx-auto px-4 py-24 md:py-32 overflow-visible">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/30 text-accent px-4 py-2 rounded-full text-sm font-semibold mb-4">
-              <Zap className="h-4 w-4" />
-              Three Ways
-            </div>
-            <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4">
-              Perfect Prompts, Your Way
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Whether you need ready-made templates, instant optimization, or custom creation - we've got you covered.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 relative pt-6 overflow-visible">
-            {/* Connecting line removed */}
-
-            {[
-              {
-                num: "1",
-                icon: Search,
-                title: "Browse the Library",
-                desc: "3,000+ prompts across marketing, coding, creative, business, and more. Tested, tagged, and ready to copy.",
-                link: "/library",
-                cta: "Explore prompts",
-                gradient: "from-primary to-red-500",
-              },
-              {
-                num: "2",
-                icon: Zap,
-                title: "Optimize Any Prompt",
-                desc: "Paste your rough prompt. Scout rewrites it with precision - tailored to ChatGPT, Claude, MidJourney, or any AI tool.",
-                link: "/optimize",
-                cta: "Try the optimizer",
-                gradient: "from-accent to-cyan-500",
-                featured: true,
-              },
-              {
-                num: "3",
-                icon: Wand2,
-                title: "Generate from Scratch",
-                desc: "Describe what you need in plain English. Scout builds a professional-grade prompt using guided templates.",
-                link: "/ai/studio",
-                cta: "Create a prompt",
-                gradient: "from-amber-500 to-yellow-500",
-              },
-            ].map((item) => (
-              <Link
-                key={item.title}
-                to={item.link}
-                className={`group relative rounded-2xl border transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 overflow-visible ${
-                  item.featured
-                    ? "border-primary/40 bg-gradient-to-br from-primary/10 to-primary/5 ring-2 ring-primary/20"
-                    : "border-border/50 bg-card hover:border-border"
-                }`}
-              >
-                {/* Step number */}
-                <div className={`absolute -top-5 left-6 z-10 w-10 h-10 rounded-full bg-gradient-to-br ${item.gradient} text-white flex items-center justify-center font-black text-lg shadow-lg`}>
-                  {item.num}
-                </div>
-
-                {item.featured && (
-                  <div className="absolute -top-3 right-6 z-10 bg-accent text-white text-xs font-black px-3 py-1 rounded-full shadow-lg">
-                    MOST POPULAR
-                  </div>
-                )}
-
-                <div className="p-8 pt-10">
-                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${item.gradient} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
-                    <item.icon className="h-7 w-7 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-6">{item.desc}</p>
-                  <span className="inline-flex items-center text-sm font-semibold text-primary group-hover:gap-2 transition-all">
-                    {item.cta} <ArrowRight className="h-4 w-4 ml-1" />
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
-
 
         {/* ═══════════════════════ SOCIAL PROOF - STATS ═══════════════════════ */}
         <section className="container max-w-5xl mx-auto px-4 py-24 md:py-32">
