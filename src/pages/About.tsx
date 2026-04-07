@@ -27,7 +27,7 @@ const About = () => {
       <SEO
         title="About PromptAndGo | Built for Asia, Optimized for Every Platform"
         description="PromptAndGo is the only AI prompt optimization tool built specifically for Asia. Multi-platform, multi-language, culturally aware."
-        canonicalPath="/about"
+        canonical="/about"
       />
       <PageSchema
         type="AboutPage"
