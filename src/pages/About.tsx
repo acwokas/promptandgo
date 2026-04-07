@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { SEO } from "@/components/SEO";
+import SEO from "@/components/SEO";
 import { PageSchema } from "@/components/seo/PageSchema";
 import { Button } from "@/components/ui/button";
 import { Globe, Languages, MapPin, Zap, Users, GraduationCap, Rocket, Code } from "lucide-react";
