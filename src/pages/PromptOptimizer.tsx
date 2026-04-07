@@ -8,36 +8,64 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
 import {
   Wand2, Copy, Check, ChevronDown, Shield, Sparkles, RotateCcw,
   ArrowRight, BookOpen, Lightbulb, Settings2, Eye, Zap, Globe,
+  ShoppingCart, Utensils, Landmark, GraduationCap, TrendingUp,
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { supabase } from "@/integrations/supabase/client";
 
+/* ─── Constants ─── */
+
+const AI_PLATFORMS = [
+  { id: "chatgpt", label: "ChatGPT", color: "bg-emerald-500", tip: "Best with structured instructions, numbered steps, and explicit output formats. Responds well to role prompts." },
+  { id: "claude", label: "Claude", color: "bg-orange-500", tip: "Excels at nuanced reasoning. Use natural language, provide context generously, and ask it to think step-by-step." },
+  { id: "gemini", label: "Gemini", color: "bg-blue-500", tip: "Strong at multimodal tasks. Be explicit about desired format and leverage its knowledge of Google ecosystem." },
+  { id: "copilot", label: "Copilot", color: "bg-cyan-500", tip: "Optimized for code and productivity tasks. Reference specific languages, frameworks, and coding conventions." },
+  { id: "deepseek", label: "DeepSeek", color: "bg-teal-500", tip: "Strong at technical and analytical tasks. Works well with detailed chain-of-thought prompting." },
+  { id: "perplexity", label: "Perplexity", color: "bg-violet-500", tip: "Research-focused. Ask specific questions, request sources, and use it for fact-checking and exploration." },
+  { id: "midjourney", label: "MidJourney", color: "bg-pink-500", tip: "Image generation. Use descriptive adjectives, specify style/medium/lighting, and include aspect ratio parameters." },
+  { id: "stable-diffusion", label: "Stable Diffusion", color: "bg-amber-500", tip: "Use comma-separated tags, weight important terms with (parentheses), specify negative prompts, and include model-specific tokens." },
+];
+
+const LANGUAGES = [
+  { code: "en", label: "English", flag: "🇬🇧" },
+  { code: "zh", label: "中文 (Chinese)", flag: "🇨🇳" },
+  { code: "ja", label: "日本語 (Japanese)", flag: "🇯🇵" },
+  { code: "ko", label: "한국어 (Korean)", flag: "🇰🇷" },
+  { code: "id", label: "Bahasa Indonesia", flag: "🇮🇩" },
+  { code: "ms", label: "Bahasa Melayu", flag: "🇲🇾" },
+  { code: "th", label: "ไทย (Thai)", flag: "🇹🇭" },
+  { code: "vi", label: "Tiếng Việt", flag: "🇻🇳" },
+  { code: "hi", label: "हिन्दी (Hindi)", flag: "🇮🇳" },
+  { code: "tl", label: "Tagalog", flag: "🇵🇭" },
+];
+
+const PLATFORM_COMPARISON = {
+  prompt: "Write a product description for a bubble tea brand targeting Gen Z in Southeast Asia",
+  results: [
+    { platform: "ChatGPT", color: "bg-emerald-500", output: "Write a 120-word product description for [bubble tea brand] targeting Gen Z consumers (18-25) in Singapore, Malaysia, and Indonesia. Tone: playful, emoji-friendly, social-media-native. Include: 1) catchy opening hook, 2) flavour highlight with local twist (e.g. gula melaka, taro), 3) Instagram-worthy visual cue, 4) FOMO-inducing CTA. Use casual Southeast Asian English slang where natural." },
+    { platform: "Claude", color: "bg-orange-500", output: "I'd like you to craft a product description for a bubble tea brand. Context: the audience is Gen Z in Southeast Asia — they value authenticity, local flavours, and social sharing. Please consider cultural nuances across Singapore, Malaysia, and Indonesia. Think about what makes bubble tea culturally significant in these markets (study culture, social gathering, treat culture). Write in an authentic voice that doesn't feel like a Western brand trying to sound Asian." },
+    { platform: "MidJourney", color: "bg-pink-500", output: "Aesthetic flat-lay photo of artisanal bubble tea, tapioca pearls visible through clear cup, Southeast Asian street market background, neon signage in Chinese and Malay, tropical flowers, warm golden hour lighting, Gen Z lifestyle photography, Instagram aesthetic, shot on Sony A7III, 35mm lens --ar 4:5 --v 6 --style raw" },
+  ],
+};
+
+const POPULAR_ASIA = [
+  { icon: ShoppingCart, label: "E-Commerce", desc: "Shopee, Lazada, Tokopedia product listings and ad copy", gradient: "from-orange-500 to-red-500" },
+  { icon: Utensils, label: "Food & Delivery", desc: "GrabFood, GoFood, Foodpanda menu descriptions and promos", gradient: "from-green-500 to-emerald-500" },
+  { icon: Landmark, label: "Fintech", desc: "GCash, OVO, GoPay onboarding flows and financial content", gradient: "from-blue-500 to-cyan-500" },
+  { icon: GraduationCap, label: "EdTech", desc: "Ruangguru, Byju's, tutoring prompts in local languages", gradient: "from-violet-500 to-purple-500" },
+];
+
 const EXAMPLES = [
-  {
-    label: "Marketing Copy",
-    original: "Write me a marketing email",
-    optimized: `Write a 150-word marketing email for [product] targeting [audience]. Use a professional but friendly tone. Include: 1) attention-grabbing subject line, 2) one clear benefit, 3) social proof element, 4) specific call-to-action. Avoid: hype, jargon, multiple CTAs.`,
-  },
-  {
-    label: "Data Analysis",
-    original: "Analyse this data",
-    optimized: `Analyse this sales data for trends. Specifically: 1) Identify top 3 performing products by revenue, 2) Note any seasonal patterns, 3) Flag anomalies or unexpected changes, 4) Suggest 2-3 actionable insights. Present findings in a table followed by 3 bullet points.`,
-  },
-  {
-    label: "Image Generation",
-    original: "Create an image of a sunset",
-    optimized: `Create a photorealistic image of a sunset over the ocean. Style: dramatic lighting, vibrant oranges and purples, calm water with reflections. Composition: sun 1/3 from left edge, horizon at lower third. Include: silhouetted sailboat, wispy clouds. Exclude: people, buildings. Aspect ratio: 16:9.`,
-  },
-  {
-    label: "Investor Pitch",
-    original: "Help me pitch to investors",
-    optimized: `Write a 3-minute investor pitch script for a [stage] startup in [industry]. Structure: Hook (10 sec) > Problem (30 sec) > Solution demo (45 sec) > Market size with TAM/SAM/SOM (30 sec) > Traction metrics (20 sec) > Ask (15 sec). Tone: confident, data-driven, founder-authentic. Regional context: Southeast Asia market.`,
-  },
+  { label: "Marketing Copy", original: "Write me a marketing email", optimized: "Write a 150-word marketing email for [product] targeting [audience]. Use a professional but friendly tone. Include: 1) attention-grabbing subject line, 2) one clear benefit, 3) social proof element, 4) specific call-to-action. Avoid: hype, jargon, multiple CTAs." },
+  { label: "Data Analysis", original: "Analyse this data", optimized: "Analyse this sales data for trends. Specifically: 1) Identify top 3 performing products by revenue, 2) Note any seasonal patterns, 3) Flag anomalies or unexpected changes, 4) Suggest 2-3 actionable insights. Present findings in a table followed by 3 bullet points." },
+  { label: "Image Generation", original: "Create an image of a sunset", optimized: "Create a photorealistic image of a sunset over the ocean. Style: dramatic lighting, vibrant oranges and purples, calm water with reflections. Composition: sun 1/3 from left edge, horizon at lower third. Include: silhouetted sailboat, wispy clouds. Exclude: people, buildings. Aspect ratio: 16:9." },
+  { label: "Investor Pitch", original: "Help me pitch to investors", optimized: "Write a 3-minute investor pitch script for a [stage] startup in [industry]. Structure: Hook (10 sec) > Problem (30 sec) > Solution demo (45 sec) > Market size with TAM/SAM/SOM (30 sec) > Traction metrics (20 sec) > Ask (15 sec). Tone: confident, data-driven, founder-authentic. Regional context: Southeast Asia market." },
 ];
 
 const FOCUS_OPTIONS = [
@@ -65,6 +93,8 @@ function parseSection(md: string, heading: string): string {
   return match ? match[1].trim() : "";
 }
 
+/* ─── Main Component ─── */
+
 const PromptOptimizer = () => {
   const { toast } = useToast();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -75,12 +105,19 @@ const PromptOptimizer = () => {
   const [focusAreas, setFocusAreas] = useState<string[]>([]);
   const [contextOpen, setContextOpen] = useState(false);
 
+  const [selectedPlatform, setSelectedPlatform] = useState("chatgpt");
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const [asianContext, setAsianContext] = useState(false);
+
   const [result, setResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [loadingStep, setLoadingStep] = useState(0);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [showExample, setShowExample] = useState(false);
   const [exampleIdx, setExampleIdx] = useState(0);
+
+  const activePlatform = AI_PLATFORMS.find((p) => p.id === selectedPlatform)!;
+  const activeLanguageObj = LANGUAGES.find((l) => l.code === selectedLanguage)!;
 
   const autoResize = useCallback(() => {
     const el = textareaRef.current;
@@ -110,6 +147,11 @@ const PromptOptimizer = () => {
     return () => window.removeEventListener("keydown", handler);
   }, [prompt, isLoading]);
 
+  // Sync selectedPlatform → aiTool text field for the API
+  useEffect(() => {
+    setAiTool(activePlatform.label);
+  }, [selectedPlatform]);
+
   const optimize = async () => {
     if (!prompt.trim()) return;
     setResult("");
@@ -118,10 +160,18 @@ const PromptOptimizer = () => {
     setShowExample(false);
 
     try {
-      // Use the user's session token if logged in, otherwise fall back to the anon key
       const { data: sessionData } = await supabase.auth.getSession();
       const token = sessionData?.session?.access_token
         ?? "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1uY3hzcG10cXZxZ3Z0cnhieHpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ4MjI0NjUsImV4cCI6MjA3MDM5ODQ2NX0.UjglB_MtyXQgsAHbdWKk_sn2hSyOX9iPWIU8EOayn2M";
+
+      // Build enhanced goal with language and Asian context
+      let enhancedGoal = goal.trim() || "";
+      if (selectedLanguage !== "en") {
+        enhancedGoal += ` Output language: ${activeLanguageObj.label}.`;
+      }
+      if (asianContext) {
+        enhancedGoal += " Apply Asian cultural context awareness: appropriate formality levels, honorifics where relevant, local business conventions, and regional market understanding.";
+      }
 
       const resp = await fetch(
         `https://mncxspmtqvqgvtrxbxzb.supabase.co/functions/v1/optimize-prompt`,
@@ -133,8 +183,8 @@ const PromptOptimizer = () => {
           },
           body: JSON.stringify({
             prompt: prompt.trim(),
-            aiTool: aiTool.trim() || undefined,
-            goal: goal.trim() || undefined,
+            aiTool: activePlatform.label,
+            goal: enhancedGoal || undefined,
             focusAreas: focusAreas.length ? focusAreas : undefined,
           }),
         }
@@ -197,7 +247,6 @@ const PromptOptimizer = () => {
   const reset = () => {
     setPrompt("");
     setResult("");
-    setAiTool("");
     setGoal("");
     setFocusAreas([]);
     setShowExample(false);
@@ -219,10 +268,10 @@ const PromptOptimizer = () => {
   return (
     <>
       <SEO
-        title="AI Prompt Optimiser | Make Any Prompt Better | PromptAndGo"
-        description="Paste any prompt and get it optimised for ChatGPT, Claude, Gemini, or MidJourney in seconds. Free AI prompt optimiser by Scout. Built for Asia-Pacific professionals."
+        title="AI Prompt Optimiser | Any Platform, Any Language | PromptAndGo"
+        description="Optimize any prompt for ChatGPT, Claude, Gemini, Copilot, MidJourney, or Stable Diffusion — in 10+ Asian languages with cultural context awareness. Free."
         canonical="https://promptandgo.ai/optimize"
-        keywords="prompt optimiser, AI prompt improvement, prompt engineering tool, optimise prompts, ChatGPT prompts, Claude prompts"
+        keywords="prompt optimiser, AI prompt improvement, prompt engineering tool, ChatGPT prompts, Claude prompts, Asian AI prompts, multilingual prompts"
       />
 
       {/* Hero */}
@@ -232,22 +281,102 @@ const PromptOptimizer = () => {
           <div className="absolute bottom-[-10%] right-[10%] w-[400px] h-[400px] rounded-full bg-primary/15 blur-[100px]" />
         </div>
         <div className="relative z-10 container max-w-4xl mx-auto px-4 py-16 md:py-24 text-center">
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/10 text-white/90 px-4 py-1.5 rounded-full text-sm mb-6">
-            <Zap className="h-3.5 w-3.5 text-yellow-400" />
-            Free. No signup required.
+          <div className="flex flex-wrap justify-center gap-2 mb-6">
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-primary/30 text-primary px-4 py-1.5 rounded-full text-sm font-bold">
+              <Zap className="h-3.5 w-3.5" />
+              8+ AI Platforms
+            </div>
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-amber-400/30 text-amber-300 px-4 py-1.5 rounded-full text-sm font-bold">
+              <Globe className="h-3.5 w-3.5" />
+              10+ Languages
+            </div>
+            <div className="inline-flex items-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/10 text-white/80 px-4 py-1.5 rounded-full text-sm">
+              Free · No signup
+            </div>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1]">
-            Make any prompt
-            <span className="text-gradient-brand block">dramatically better.</span>
+            Optimize for any platform.
+            <span className="text-gradient-brand block">In any language.</span>
           </h1>
           <p className="text-white/60 mt-5 text-lg max-w-xl mx-auto">
-            Paste your prompt. Scout analyses it, rewrites it, and tailors it to your AI platform. Takes about 15 seconds.
+            Select your AI platform, choose your language, enable Asian cultural context — and watch Scout transform your prompt.
           </p>
         </div>
       </section>
 
       <section className="container max-w-4xl mx-auto px-4 py-10 space-y-8">
-        {/* Input */}
+
+        {/* ═══ Platform Selector ═══ */}
+        <div>
+          <h2 className="text-sm font-semibold mb-3 flex items-center gap-2">
+            <Zap className="h-4 w-4 text-primary" />
+            Select your AI platform
+          </h2>
+          <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
+            {AI_PLATFORMS.map((p) => (
+              <button
+                key={p.id}
+                onClick={() => setSelectedPlatform(p.id)}
+                className={`flex flex-col items-center gap-1.5 p-3 rounded-xl border-2 transition-all duration-200 text-center ${
+                  selectedPlatform === p.id
+                    ? "border-primary bg-primary/10 shadow-md shadow-primary/10"
+                    : "border-border/50 bg-card hover:border-border hover:bg-muted/50"
+                }`}
+              >
+                <div className={`w-8 h-8 rounded-lg ${p.color} flex items-center justify-center`}>
+                  <span className="text-white text-xs font-black">{p.label.slice(0, 2).toUpperCase()}</span>
+                </div>
+                <span className="text-[11px] font-medium leading-tight">{p.label}</span>
+              </button>
+            ))}
+          </div>
+          {/* Platform tip */}
+          <div className="mt-3 p-3 rounded-lg bg-primary/5 border border-primary/15 text-sm text-muted-foreground flex gap-2">
+            <Lightbulb className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
+            <span><strong className="text-foreground">{activePlatform.label} tip:</strong> {activePlatform.tip}</span>
+          </div>
+        </div>
+
+        {/* ═══ Language & Asian Context Row ═══ */}
+        <div className="grid sm:grid-cols-2 gap-4">
+          {/* Language selector */}
+          <div>
+            <label className="block text-sm font-semibold mb-1.5 flex items-center gap-2">
+              <Globe className="h-4 w-4 text-primary" />
+              Output language
+            </label>
+            <select
+              value={selectedLanguage}
+              onChange={(e) => setSelectedLanguage(e.target.value)}
+              className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              {LANGUAGES.map((lang) => (
+                <option key={lang.code} value={lang.code}>
+                  {lang.flag} {lang.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Asian Context Toggle */}
+          <div>
+            <label className="block text-sm font-semibold mb-1.5">Asian Context</label>
+            <div
+              className={`flex items-center gap-3 p-3 rounded-lg border-2 transition-all cursor-pointer ${
+                asianContext ? "border-amber-500/50 bg-amber-500/5" : "border-border/50 bg-card"
+              }`}
+              onClick={() => setAsianContext(!asianContext)}
+            >
+              <Switch checked={asianContext} onCheckedChange={setAsianContext} />
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium">🌏 Cultural awareness</p>
+                <p className="text-xs text-muted-foreground">Formality, honorifics, local business context</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ═══ Prompt Input ═══ */}
         <Card className="border-2 border-primary/20">
           <CardContent className="p-6 space-y-5">
             <div>
@@ -263,7 +392,15 @@ const PromptOptimizer = () => {
                 className="min-h-[160px] resize-none text-base"
                 onInput={autoResize}
               />
-              <p className="text-xs text-muted-foreground mt-1">{prompt.length} characters</p>
+              <div className="flex items-center justify-between mt-1">
+                <p className="text-xs text-muted-foreground">{prompt.length} characters</p>
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <span className="font-medium text-foreground">{activePlatform.label}</span>
+                  <span>·</span>
+                  <span>{activeLanguageObj.flag} {activeLanguageObj.label}</span>
+                  {asianContext && <><span>·</span><span>🌏 Asian context</span></>}
+                </div>
+              </div>
             </div>
 
             <Collapsible open={contextOpen} onOpenChange={setContextOpen}>
@@ -276,19 +413,11 @@ const PromptOptimizer = () => {
               </CollapsibleTrigger>
               <CollapsibleContent className="space-y-4 pt-3">
                 <div>
-                  <label className="block text-sm font-medium mb-1">Which AI tool?</label>
-                  <Input
-                    value={aiTool}
-                    onChange={(e) => setAiTool(e.target.value)}
-                    placeholder="e.g. ChatGPT, Claude, Gemini, MidJourney"
-                  />
-                </div>
-                <div>
                   <label className="block text-sm font-medium mb-1">What is your goal?</label>
                   <Textarea
                     value={goal}
                     onChange={(e) => setGoal(e.target.value)}
-                    placeholder="e.g. Generate marketing copy, analyse data, create an image"
+                    placeholder="e.g. Generate marketing copy for Shopee, analyse fintech data, create social media content for Indonesian audience"
                     className="min-h-[80px]"
                   />
                 </div>
@@ -317,7 +446,7 @@ const PromptOptimizer = () => {
             <div className="flex flex-col sm:flex-row gap-3">
               <Button onClick={optimize} disabled={!prompt.trim() || isLoading} size="lg" className="gap-2">
                 <Sparkles className="h-4 w-4" />
-                {isLoading ? "Optimising..." : "Optimise my prompt"}
+                {isLoading ? "Optimising..." : `Optimise for ${activePlatform.label}`}
               </Button>
               <Button variant="outline" onClick={loadExample} disabled={isLoading}>
                 <Eye className="h-4 w-4 mr-1.5" />
@@ -368,7 +497,7 @@ const PromptOptimizer = () => {
               <Card className="border-primary/40 ring-1 ring-primary/20">
                 <CardContent className="p-5 space-y-3">
                   <h3 className="text-sm font-semibold text-primary uppercase tracking-wide flex items-center gap-1.5">
-                    <Sparkles className="h-4 w-4" /> Optimised
+                    <Sparkles className="h-4 w-4" /> Optimised for {activePlatform.label}
                   </h3>
                   <p className="text-sm whitespace-pre-wrap">{optimizedPrompt}</p>
                   <CopyBtn text={optimizedPrompt} id="opt" copiedId={copiedId} onCopy={copyText} label="Copy optimised prompt" variant="default" />
@@ -426,6 +555,69 @@ const PromptOptimizer = () => {
           </div>
         )}
 
+        {/* ═══ Platform Comparison Section ═══ */}
+        <div className="pt-8 space-y-6">
+          <div className="text-center">
+            <h2 className="text-2xl md:text-3xl font-black tracking-tight mb-2">Same Prompt, Different Platforms</h2>
+            <p className="text-muted-foreground max-w-xl mx-auto text-sm">
+              See how the same idea gets optimized differently for each AI platform's unique strengths.
+            </p>
+          </div>
+
+          <Card className="border-border/50 bg-muted/30">
+            <CardContent className="p-6">
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Original prompt</p>
+              <p className="text-sm font-medium text-foreground mb-6">"{PLATFORM_COMPARISON.prompt}"</p>
+
+              <div className="grid gap-4">
+                {PLATFORM_COMPARISON.results.map((r) => (
+                  <div key={r.platform} className="rounded-xl border border-border/50 bg-card p-5 space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className={`w-6 h-6 rounded-md ${r.color} flex items-center justify-center`}>
+                        <span className="text-white text-[9px] font-black">{r.platform.slice(0, 2).toUpperCase()}</span>
+                      </div>
+                      <span className="text-sm font-bold">{r.platform}</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{r.output}</p>
+                    <CopyBtn text={r.output} id={`cmp-${r.platform}`} copiedId={copiedId} onCopy={copyText} label="Copy" />
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* ═══ Popular in Asia ═══ */}
+        <div className="pt-8 space-y-6">
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 px-3 py-1.5 rounded-full text-xs font-bold mb-3">
+              <TrendingUp className="h-3.5 w-3.5" />
+              TRENDING IN ASIA
+            </div>
+            <h2 className="text-2xl md:text-3xl font-black tracking-tight mb-2">Popular in Asian Markets</h2>
+            <p className="text-muted-foreground max-w-xl mx-auto text-sm">
+              Top prompt categories used by professionals across Southeast Asia, East Asia, and South Asia.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-4">
+            {POPULAR_ASIA.map((cat) => (
+              <div
+                key={cat.label}
+                className="group flex gap-4 p-5 rounded-xl border border-border/50 bg-card hover:border-primary/30 hover:shadow-lg transition-all"
+              >
+                <div className={`flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br ${cat.gradient} flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                  <cat.icon className="h-6 w-6 text-white" />
+                </div>
+                <div className="min-w-0">
+                  <h3 className="font-bold text-base mb-1 group-hover:text-primary transition-colors">{cat.label}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{cat.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Multilingual hint */}
         <Card className="bg-muted/50 border-muted">
           <CardContent className="p-6">
@@ -434,7 +626,7 @@ const PromptOptimizer = () => {
               <div>
                 <h3 className="font-semibold mb-1">Works in any language</h3>
                 <p className="text-sm text-muted-foreground">
-                  Write your prompt in English, Bahasa, Mandarin, Malay, Vietnamese, or any language. Scout will optimise it and keep it in your original language. Perfect for multilingual teams across Asia-Pacific.
+                  Write your prompt in English, Bahasa, Mandarin, Japanese, Korean, Thai, Vietnamese, Hindi, Tagalog, or any language. Scout will optimise it and keep it in your chosen output language. Perfect for multilingual teams across Asia-Pacific.
                 </p>
               </div>
             </div>
@@ -444,6 +636,8 @@ const PromptOptimizer = () => {
     </>
   );
 };
+
+/* ─── Sub-components ─── */
 
 function CopyBtn({
   text, id, copiedId, onCopy, label, variant = "outline",
