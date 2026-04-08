@@ -292,8 +292,11 @@ const PromptLibrary = () => {
       />
       <PageHero
         variant="prompt"
-        title={<><span className="text-gradient-brand">Prompt</span> Library</>}
-        subtitle={<>Find the perfect prompt fast: browse free prompts by category, save your favourites in <Link to="/account/favorites" className="text-accent hover:underline">My Prompts</Link>, or <Link to="/cart" className="text-accent hover:underline">subscribe</Link> to unlock all premium items.</>}
+        title={<><span className="text-gradient-brand">Asia's Largest AI</span> Prompt Library</>}
+        subtitle={<>
+          <Badge variant="secondary" className="mr-2 mb-1">150+ Expert Prompts</Badge>
+          Find the perfect prompt fast: browse free prompts by category, save your favourites in <Link to="/account/favorites" className="text-accent hover:underline">My Prompts</Link>, or <Link to="/cart" className="text-accent hover:underline">subscribe</Link> to unlock all premium items.
+        </>}
       >
         <Button asChild size="lg" variant="hero" className="px-6">
           <a href="#library-filters"><Search className="h-4 w-4 mr-2" />Browse Prompt Library</a>
