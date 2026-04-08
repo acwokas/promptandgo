@@ -274,6 +274,7 @@ const AppContent = () => {
                 <Route path="/newsletter" element={<NewsletterArchive />} />
                 <Route path="/sitemap" element={<HtmlSitemap />} />
                 <Route path="/shortcuts" element={<KeyboardShortcuts />} />
+                <Route path="/accessibility" element={<Accessibility />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               </Suspense>
