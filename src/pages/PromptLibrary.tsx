@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import SEO from "@/components/SEO";
 import { PromptFilters } from "@/components/prompt/PromptFilters";
 import { PromptCard } from "@/components/prompt/PromptCard";
@@ -7,19 +7,60 @@ import { Card, CardContent } from "@/components/ui/card";
 import PageHero from "@/components/layout/PageHero";
 import CountdownTimer from "@/components/conversion/CountdownTimer";
 import { Link } from "react-router-dom";
-import { Search, Heart } from "lucide-react";
+import { Search, Heart, Globe, Sparkles, Flame, Monitor } from "lucide-react";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { PromptStudioCTA } from "@/components/ui/prompt-studio-cta";
 import { SearchUpsellPacks } from "@/components/library/SearchUpsellPacks";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
-// Extracted components and hook
 import { usePromptLibrary, sortByComplexity } from "@/hooks/usePromptLibrary";
 import { PopularCategories } from "@/components/library/PopularCategories";
 import { QuickDiscoverySection } from "@/components/library/QuickDiscoverySection";
 
+const PLATFORMS = [
+  { id: "all", name: "All Platforms" },
+  { id: "chatgpt", name: "ChatGPT", badge: "G", color: "bg-[hsl(160,82%,35%)]" },
+  { id: "claude", name: "Claude", badge: "C", color: "bg-[hsl(348,76%,59%)]" },
+  { id: "gemini", name: "Gemini", badge: "G", color: "bg-[hsl(174,82%,33%)]" },
+  { id: "deepseek", name: "DeepSeek", badge: "D", color: "bg-[hsl(220,60%,50%)]" },
+  { id: "qwen", name: "Qwen", badge: "Q", color: "bg-[hsl(260,50%,55%)]" },
+  { id: "ernie", name: "Ernie", badge: "E", color: "bg-[hsl(210,80%,45%)]" },
+  { id: "baidu", name: "Baidu", badge: "B", color: "bg-[hsl(210,90%,50%)]" },
+  { id: "midjourney", name: "MidJourney", badge: "M", color: "bg-[hsl(240,20%,20%)]" },
+  { id: "perplexity", name: "Perplexity", badge: "P", color: "bg-[hsl(200,60%,45%)]" },
+];
+
+const LANGUAGES = [
+  { id: "all", name: "All Languages", flag: "🌐" },
+  { id: "en", name: "English", flag: "🇬🇧" },
+  { id: "zh", name: "Chinese", flag: "🇨🇳" },
+  { id: "ja", name: "Japanese", flag: "🇯🇵" },
+  { id: "ko", name: "Korean", flag: "🇰🇷" },
+  { id: "th", name: "Thai", flag: "🇹🇭" },
+  { id: "vi", name: "Vietnamese", flag: "🇻🇳" },
+  { id: "id", name: "Indonesian", flag: "🇮🇩" },
+  { id: "ms", name: "Malay", flag: "🇲🇾" },
+  { id: "hi", name: "Hindi", flag: "🇮🇳" },
+];
+
+const ASIA_CATEGORIES = [
+  { label: "E-commerce", query: "ecommerce", icon: "🛒" },
+  { label: "Social Media", query: "social media", icon: "📱" },
+  { label: "Education", query: "education", icon: "🎓" },
+  { label: "Business", query: "business", icon: "💼" },
+  { label: "Creative", query: "creative", icon: "🎨" },
+  { label: "Marketing", query: "marketing", icon: "📣" },
+];
+
 const PromptLibrary = () => {
   const isMobile = useIsMobile();
+  const [platform, setPlatform] = useState("all");
+  const [language, setLanguage] = useState("all");
+  const [asianContext, setAsianContext] = useState(false);
+
   const {
     user,
     categories,
@@ -47,7 +88,6 @@ const PromptLibrary = () => {
     loadMore,
   } = usePromptLibrary();
 
-  // Scroll to hash element or top
   useEffect(() => {
     if (location.hash) {
       const timeoutId = setTimeout(() => {
@@ -128,6 +168,9 @@ const PromptLibrary = () => {
     setPage(1);
     setUserExplicitlySelectedAll(true);
     setRibbon(undefined);
+    setPlatform("all");
+    setLanguage("all");
+    setAsianContext(false);
     setSearchParams(new URLSearchParams(), { replace: true });
   };
 
@@ -177,6 +220,31 @@ const PromptLibrary = () => {
         )}
       </PageHero>
 
+      {/* Multi-platform banner */}
+      <section className="bg-hero border-b border-white/10">
+        <div className="container max-w-6xl mx-auto px-4 py-5">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
+                <Globe className="h-4 w-4 text-accent" />
+                <span className="text-sm font-semibold text-white">Every prompt optimized for any platform, any language.</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-1.5">
+              {PLATFORMS.filter(p => p.id !== "all").map((p) => (
+                <div
+                  key={p.id}
+                  title={p.name}
+                  className={`w-6 h-6 rounded ${p.color} flex items-center justify-center text-white text-[10px] font-bold opacity-70`}
+                >
+                  {p.badge}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <main className="container py-10">
         <Breadcrumb className="mb-6">
           <BreadcrumbList>
@@ -185,6 +253,113 @@ const PromptLibrary = () => {
             <BreadcrumbItem><BreadcrumbPage>Browse Library</BreadcrumbPage></BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+
+        {/* Asian market category tags */}
+        <section className="mb-6">
+          <div className="flex items-center gap-2 mb-3">
+            <Flame className="h-4 w-4 text-accent" />
+            <span className="text-sm font-semibold text-foreground">Popular in Asian markets</span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {ASIA_CATEGORIES.map((cat) => (
+              <button
+                key={cat.query}
+                onClick={() => handleCategoryClick(cat.query)}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium bg-accent/10 text-accent border border-accent/20 hover:bg-accent/20 hover:border-accent/40 transition-colors"
+              >
+                <span>{cat.icon}</span>
+                {cat.label}
+              </button>
+            ))}
+          </div>
+        </section>
+
+        {/* Platform, Language, Asian Context filters */}
+        <section className="mb-6">
+          <div className="rounded-xl bg-muted/30 border border-border p-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-end">
+              {/* Platform filter */}
+              <div className="space-y-1.5">
+                <Label className="text-xs font-medium text-muted-foreground flex items-center gap-1.5">
+                  <Monitor className="h-3 w-3" />
+                  Platform
+                </Label>
+                <Select value={platform} onValueChange={setPlatform}>
+                  <SelectTrigger className="bg-background border-border h-9 text-sm">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {PLATFORMS.map((p) => (
+                      <SelectItem key={p.id} value={p.id}>
+                        <span className="flex items-center gap-2">
+                          {p.badge && (
+                            <span className={`w-4 h-4 rounded text-[9px] font-bold flex items-center justify-center text-white ${p.color}`}>
+                              {p.badge}
+                            </span>
+                          )}
+                          {p.name}
+                        </span>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Language filter */}
+              <div className="space-y-1.5">
+                <Label className="text-xs font-medium text-muted-foreground flex items-center gap-1.5">
+                  <Globe className="h-3 w-3" />
+                  Language
+                </Label>
+                <Select value={language} onValueChange={setLanguage}>
+                  <SelectTrigger className="bg-background border-border h-9 text-sm">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {LANGUAGES.map((l) => (
+                      <SelectItem key={l.id} value={l.id}>
+                        <span className="flex items-center gap-2">
+                          <span>{l.flag}</span>
+                          {l.name}
+                        </span>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Asian Context toggle */}
+              <div className="space-y-1.5">
+                <Label className="text-xs font-medium text-muted-foreground">Asian Context</Label>
+                <div className="flex items-center gap-2 h-9 px-3 rounded-md border border-border bg-background">
+                  <Switch
+                    checked={asianContext}
+                    onCheckedChange={setAsianContext}
+                    className="data-[state=checked]:bg-accent"
+                  />
+                  <span className="text-sm text-muted-foreground">
+                    {asianContext ? "On" : "Off"}
+                  </span>
+                  {asianContext && (
+                    <span className="ml-auto text-[10px] font-bold text-accent bg-accent/10 px-1.5 py-0.5 rounded">ASIA</span>
+                  )}
+                </div>
+              </div>
+
+              {/* Active filter summary */}
+              <div className="flex items-end h-full">
+                {(platform !== "all" || language !== "all" || asianContext) && (
+                  <button
+                    onClick={() => { setPlatform("all"); setLanguage("all"); setAsianContext(false); }}
+                    className="text-xs text-muted-foreground hover:text-foreground underline underline-offset-2 pb-2"
+                  >
+                    Clear platform filters
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Browse & Search Section */}
         <section className="mb-6">
