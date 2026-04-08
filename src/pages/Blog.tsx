@@ -1,5 +1,7 @@
 import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
+import blogAsianLangs from "@/assets/blog-ai-prompts-asian-languages.jpg";
+import blogMultiPlatform from "@/assets/blog-multi-platform-prompting.jpg";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import PageHero from "@/components/layout/PageHero";
@@ -47,6 +49,50 @@ const Blog = () => {
       </Breadcrumb>
 
     <section className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <article>
+        <Link to="/tips/ai-prompts-in-asian-languages" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+          <Card className="overflow-hidden">
+            <img
+              src={blogAsianLangs}
+              alt="How to Write AI Prompts in Asian Languages"
+              loading="lazy"
+              decoding="async"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+              width="400" height="225"
+              className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+            />
+            <CardContent className="pt-4">
+              <h2 className="text-xl font-semibold leading-snug">How to Write AI Prompts in Asian Languages (And Why It Matters)</h2>
+              <p className="mt-2 text-muted-foreground">
+                Prompting in your native Asian language works better than English. Learn techniques for Chinese, Japanese, Korean, Thai, Hindi, and more.
+              </p>
+              <span className="mt-3 inline-block font-medium text-primary">Read more →</span>
+            </CardContent>
+          </Card>
+        </Link>
+      </article>
+      <article>
+        <Link to="/tips/multi-platform-prompting-guide" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+          <Card className="overflow-hidden">
+            <img
+              src={blogMultiPlatform}
+              alt="Multi-Platform Prompting Guide for 2026"
+              loading="lazy"
+              decoding="async"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+              width="400" height="225"
+              className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+            />
+            <CardContent className="pt-4">
+              <h2 className="text-xl font-semibold leading-snug">One Prompt, Nine Platforms: The Multi-Platform Prompting Guide for 2026</h2>
+              <p className="mt-2 text-muted-foreground">
+                ChatGPT, Claude, DeepSeek, Qwen, and more all respond differently. Learn how to tailor prompts for each platform.
+              </p>
+              <span className="mt-3 inline-block font-medium text-primary">Read more →</span>
+            </CardContent>
+          </Card>
+        </Link>
+      </article>
       <article>
         <Link to="/tips/welcome-to-promptandgo-ai" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
           <Card className="overflow-hidden">
