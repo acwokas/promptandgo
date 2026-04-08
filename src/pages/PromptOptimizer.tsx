@@ -497,6 +497,18 @@ const PromptOptimizer = () => {
               </CollapsibleContent>
             </Collapsible>
 
+            {/* Advanced Options */}
+            <AdvancedOptions
+              tone={advTone}
+              setTone={setAdvTone}
+              outputLength={advLength}
+              setOutputLength={setAdvLength}
+              industry={advIndustry}
+              setIndustry={setAdvIndustry}
+              isOpen={advOpen}
+              setIsOpen={setAdvOpen}
+            />
+
             <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
               <Shield className="h-3.5 w-3.5" />
               Your prompts are analysed in real time and never stored.
