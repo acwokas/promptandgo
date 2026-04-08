@@ -136,7 +136,7 @@ export const OnboardingModal: React.FC = () => {
               <h2 className="text-2xl font-bold text-foreground mb-2">What AI tool do you use most?</h2>
               <p className="text-muted-foreground">This helps us personalize your experience</p>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
               {AI_TOOLS.map((tool) => (
                 <button
                   key={tool.id}

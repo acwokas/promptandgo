@@ -300,7 +300,7 @@ const PromptOptimizer = () => {
             </div>
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-amber-400/30 text-amber-300 px-4 py-1.5 rounded-full text-sm font-bold">
               <Globe className="h-3.5 w-3.5" />
-              10+ Languages
+              12+ Languages
             </div>
             <div className="inline-flex items-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/10 text-white/80 px-4 py-1.5 rounded-full text-sm">
               Free · No signup
@@ -324,7 +324,7 @@ const PromptOptimizer = () => {
             <Zap className="h-4 w-4 text-primary" />
             Select your AI platform
           </h2>
-          <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
+          <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-12 gap-2">
             {AI_PLATFORMS.map((p) => (
               <button
                 key={p.id}
