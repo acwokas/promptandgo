@@ -54,6 +54,9 @@ const REGIONS: Region[] = [
   {
     name: 'Central & West Asia',
     languages: [
+      { code: 'kk', name: 'Kazakh', nativeName: 'Қазақ', flag: '🇰🇿', sample: 'Менің SaaS өнімім үшін шағын және орта бизнеске бағытталған маркетинг электрондық хатын жазыңыз' },
+      { code: 'uz', name: 'Uzbek', nativeName: 'Oʻzbek', flag: '🇺🇿', sample: "Mening SaaS mahsulotim uchun KO'Blarni nishonga olgan marketing elektron pochta xabarini yozing" },
+      { code: 'ka', name: 'Georgian', nativeName: 'ქართული', flag: '🇬🇪', sample: 'დაწერეთ მარკეტინგული ელ-ფოსტა ჩემი SaaS პროდუქტისთვის, რომელიც მიზნად ისახავს მცირე ბიზნესს' },
       { code: 'ar', name: 'Arabic', nativeName: 'العربية', flag: '🇦🇪', sample: 'اكتب بريدًا إلكترونيًا تسويقيًا لمنتج SaaS الخاص بي يستهدف الشركات الصغيرة' },
       { code: 'tr', name: 'Turkish', nativeName: 'Türkçe', flag: '🇹🇷', sample: "SaaS ürünüm için KOBİ'leri hedefleyen bir pazarlama e-postası yazın" },
       { code: 'he', name: 'Hebrew', nativeName: 'עברית', flag: '🇮🇱', sample: 'כתוב אימייל שיווקי למוצר ה-SaaS שלי המיועד לעסקים קטנים ובינוניים' },
@@ -64,7 +67,7 @@ const REGIONS: Region[] = [
 const ALL_LANGUAGES = REGIONS.flatMap((r) => r.languages);
 
 const HERO_STATS = [
-  { value: '23', label: 'Asian Languages' },
+  { value: '26', label: 'Asian Languages' },
   { value: '4.7B', label: 'People Across Asia' },
   { value: '6', label: 'Regional Zones' },
 ];
