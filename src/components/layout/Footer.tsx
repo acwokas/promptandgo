@@ -147,6 +147,7 @@ const Footer = () => {
             <Link to="/changelog" className="text-sm text-white/70 hover:text-white transition-colors">Changelog</Link>
             <Link to="/community" className="text-sm text-white/70 hover:text-white transition-colors">Community</Link>
             <Link to="/referral" className="text-sm text-white/70 hover:text-white transition-colors">Refer &amp; Earn</Link>
+            <Link to="/shortcuts" className="text-sm text-white/70 hover:text-white transition-colors">Shortcuts</Link>
           </nav>
         </div>
       </div>
