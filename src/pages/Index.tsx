@@ -261,22 +261,22 @@ const Index = () => {
             {/* Platform logos strip inline */}
             <div className="flex flex-wrap justify-center gap-3 mt-10 animate-fade-in" style={{ animationDelay: "0.3s" }}>
               {[
-                { name: "ChatGPT", color: "text-emerald-400" },
-                { name: "Claude", color: "text-orange-300" },
-                { name: "Gemini", color: "text-blue-300" },
-                { name: "Copilot", color: "text-cyan-300" },
-                { name: "Perplexity", color: "text-violet-300" },
-                { name: "MidJourney", color: "text-pink-300" },
-                { name: "DeepSeek", color: "text-teal-300" },
-                { name: "Qwen", color: "text-indigo-300" },
-                { name: "Meta AI", color: "text-sky-300" },
-                { name: "Ernie Bot", color: "text-red-300" },
-                { name: "Grok", color: "text-slate-300" },
-                { name: "Local Models", color: "text-white/60" },
+                { name: "ChatGPT", color: "text-emerald-400", slug: "chatgpt" },
+                { name: "Claude", color: "text-orange-300", slug: "claude" },
+                { name: "Gemini", color: "text-blue-300", slug: "gemini" },
+                { name: "Copilot", color: "text-cyan-300", slug: "copilot" },
+                { name: "Perplexity", color: "text-violet-300", slug: "perplexity" },
+                { name: "MidJourney", color: "text-pink-300", slug: "midjourney" },
+                { name: "DeepSeek", color: "text-teal-300", slug: "deepseek" },
+                { name: "Qwen", color: "text-indigo-300", slug: "qwen" },
+                { name: "Meta AI", color: "text-sky-300", slug: "meta" },
+                { name: "Ernie Bot", color: "text-red-300", slug: "ernie" },
+                { name: "Grok", color: "text-slate-300", slug: "grok" },
+                { name: "Local Models", color: "text-white/60", slug: "local" },
               ].map((p) => (
-                <span key={p.name} className={`text-xs font-bold ${p.color} bg-white/5 border border-white/10 px-3 py-1.5 rounded-full`}>
+                <Link key={p.name} to={`/optimize?platform=${p.slug}`} className={`text-xs font-bold ${p.color} bg-white/5 border border-white/10 px-3 py-1.5 rounded-full hover:bg-white/15 hover:border-white/30 transition-all`}>
                   {p.name}
-                </span>
+                </Link>
               ))}
             </div>
 
