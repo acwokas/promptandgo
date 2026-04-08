@@ -349,7 +349,21 @@ const PromptOptimizer = () => {
         </div>
       </section>
 
+      {/* Optimization History Sidebar */}
+      <OptimizationHistory
+        entries={history}
+        isOpen={historyOpen}
+        onToggle={() => setHistoryOpen(!historyOpen)}
+        onReuse={(p) => {
+          setPrompt(p);
+          setHistoryOpen(false);
+        }}
+      />
+
       <section className="container max-w-4xl mx-auto px-4 py-10 space-y-8">
+
+        {/* ═══ Template Quick Start ═══ */}
+        <TemplateQuickStart onSelect={(p) => setPrompt(p)} />
 
         {/* ═══ Platform Selector ═══ */}
         <div>
