@@ -96,6 +96,7 @@ import AustraliaInsights from "./pages/market/AustraliaInsights";
 import SmallBusiness from "./pages/SmallBusiness";
 import About from "./pages/About";
 import Pricing from "./pages/Pricing";
+import HelpCenterPage from "./pages/HelpCenter";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
@@ -209,6 +210,7 @@ const AppContent = () => {
                 <Route path="/ai-credits-exhausted" element={<AICreditsExhaustedPage />} />
                 <Route path="/certification" element={<CertificationPage />} />
                 <Route path="/optimize" element={<PromptOptimizerPage />} />
+                <Route path="/help" element={<HelpCenterPage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               </AnalyticsProvider>

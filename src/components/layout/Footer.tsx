@@ -105,7 +105,7 @@ const Footer = () => {
           {/* Resources */}
           <nav className="flex flex-col gap-3">
             <span className="text-xs font-semibold uppercase tracking-widest text-white/40 mb-1">Resources</span>
-            <Link to="/how-it-works" className="text-sm text-white/70 hover:text-white transition-colors">Help Center</Link>
+            <Link to="/help" className="text-sm text-white/70 hover:text-white transition-colors">Help Center</Link>
             <Link to="/faqs" className="text-sm text-white/70 hover:text-white transition-colors">FAQs</Link>
             <Link to="/certification" className="text-sm text-white/70 hover:text-white transition-colors">Certification</Link>
           </nav>
