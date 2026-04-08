@@ -96,6 +96,7 @@ import AustraliaInsights from "./pages/market/AustraliaInsights";
 import SmallBusiness from "./pages/SmallBusiness";
 import About from "./pages/About";
 import Pricing from "./pages/Pricing";
+import AskScout from "./pages/AskScout";
 import HelpCenterPage from "./pages/HelpCenter";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import ErrorBoundary from "@/components/ErrorBoundary";

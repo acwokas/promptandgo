@@ -330,7 +330,48 @@ const Contact = () => {
               </div>
             </form>
           </div>
-          <aside className="lg:col-span-5">
+          <aside className="lg:col-span-5 space-y-8">
+            {/* We're here to help */}
+            <div className="rounded-xl border border-border bg-card p-6">
+              <h3 className="font-bold text-lg mb-4">We're here to help</h3>
+              <div className="space-y-4 text-sm">
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+                    <span className="text-primary text-xs font-bold">⏱</span>
+                  </div>
+                  <div>
+                    <p className="font-medium">Response Time</p>
+                    <p className="text-muted-foreground">We typically respond within 24 hours during business days (SGT, GMT+8).</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center shrink-0 mt-0.5">
+                    <span className="text-accent text-xs font-bold">🌏</span>
+                  </div>
+                  <div>
+                    <p className="font-medium">Asia-Pacific Based</p>
+                    <p className="text-muted-foreground">Our team is based in Singapore with members across ASEAN, Japan, and India.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+                    <span className="text-primary text-xs font-bold">💬</span>
+                  </div>
+                  <div>
+                    <p className="font-medium">Multilingual Support</p>
+                    <p className="text-muted-foreground">We can respond in English, Mandarin, Bahasa, and Japanese.</p>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-6 pt-4 border-t border-border">
+                <p className="text-xs text-muted-foreground mb-2">Follow us</p>
+                <div className="flex gap-3">
+                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground hover:text-primary transition-colors">LinkedIn</a>
+                  <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground hover:text-primary transition-colors">X / Twitter</a>
+                </div>
+              </div>
+            </div>
+
             <div className="sticky top-24">
               <Link
                 to="/submit"
