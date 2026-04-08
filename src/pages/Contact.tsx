@@ -5,15 +5,102 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
 import { useState, useEffect } from "react";
-import PageHero from "@/components/layout/PageHero";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { validateEmailInput, validatePromptInput, sanitizeInput } from "@/lib/inputValidation";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { MapPin, Clock, Mail, Phone } from "lucide-react";
+import { MapPin, Clock, Mail, Phone, Send, Globe, ExternalLink } from "lucide-react";
 
+/* ───── bilingual labels rotation ───── */
+const BILINGUAL: { en: string; alt: string }[] = [
+  { en: "Full Name", alt: "お名前" },
+  { en: "Email Address", alt: "メールアドレス" },
+  { en: "Subject", alt: "件名" },
+  { en: "Message", alt: "メッセージ" },
+  { en: "Preferred Language", alt: "ご希望の言語" },
+];
+
+const LANGUAGES = [
+  "English", "Japanese 日本語", "Korean 한국어", "Mandarin 中文",
+  "Thai ภาษาไทย", "Vietnamese Tiếng Việt", "Indonesian Bahasa Indonesia",
+  "Malay Bahasa Melayu", "Hindi हिन्दी", "Tamil தமிழ்",
+  "Tagalog", "Khmer ខ្មែរ", "Burmese ဗမာစာ",
+];
+
+const OFFICES = [
+  {
+    city: "Tokyo",
+    native: "東京オフィス",
+    flag: "🇯🇵",
+    address: "Shibuya-ku, Dogenzaka 1-10-8",
+    addressNative: "東京都渋谷区道玄坂1-10-8",
+    tz: "JST (GMT+9)",
+    email: "jp@promptandgo.ai",
+  },
+  {
+    city: "Singapore",
+    native: "新加坡办事处",
+    flag: "🇸🇬",
+    address: "71 Robinson Road, #14-01",
+    addressNative: "罗敏申路71号 #14-01",
+    tz: "SGT (GMT+8)",
+    email: "sg@promptandgo.ai",
+  },
+  {
+    city: "Seoul",
+    native: "서울 사무소",
+    flag: "🇰🇷",
+    address: "Gangnam-gu, Teheran-ro 152",
+    addressNative: "강남구 테헤란로 152",
+    tz: "KST (GMT+9)",
+    email: "kr@promptandgo.ai",
+  },
+];
+
+const FAQS = [
+  { id: "lang", q: "How do I switch languages?", a: "Go to Settings → Preferences and change your default language. You can also select a language per prompt in the optimizer." },
+  { id: "password", q: "How do I reset my password?", a: "Click 'Forgot password' on the login page. We'll send a reset link to your registered email within minutes." },
+  { id: "export", q: "Can I export my prompts?", a: "Pro users can export prompts as PDF or plain text from the Saved Prompts page. Enterprise users get CSV and API access." },
+  { id: "translation", q: "How do I report a translation error?", a: "Use this contact form with subject 'Bug Report' and include the prompt ID and the incorrect translation. Our native-speaking team will review it." },
+  { id: "upgrade", q: "How do I upgrade my plan?", a: "Visit the Pricing page and click 'Start Free Trial' on the Pro plan. Your current data and preferences will carry over automatically." },
+  { id: "api", q: "How do I get API access?", a: "API access is available on Enterprise plans. Contact us with subject 'Enterprise' and we'll set up a demo and provide API credentials." },
+];
+
+const SOCIALS = [
+  { name: "Twitter / X", url: "https://twitter.com", icon: "𝕏" },
+  { name: "LinkedIn", url: "https://linkedin.com", icon: "in" },
+  { name: "Discord", url: "https://discord.com", icon: "💬" },
+  { name: "GitHub", url: "https://github.com", icon: "⌨" },
+];
+
+/* ───── globe animation ───── */
+const AnimatedGlobe = () => (
+  <div aria-hidden className="relative w-32 h-32 mx-auto mb-6">
+    <div className="absolute inset-0 rounded-full border-2 border-white/10" />
+    <div className="absolute inset-2 rounded-full border border-white/5" />
+    <div className="absolute inset-4 rounded-full bg-gradient-to-br from-primary/20 to-accent/10" />
+    {/* dots for Asian countries */}
+    {[
+      { top: "28%", left: "62%" }, // Japan
+      { top: "35%", left: "55%" }, // Korea
+      { top: "40%", left: "48%" }, // China
+      { top: "55%", left: "50%" }, // Thailand
+      { top: "58%", left: "52%" }, // Vietnam
+      { top: "65%", left: "52%" }, // Singapore
+    ].map((pos, i) => (
+      <span
+        key={i}
+        className="absolute w-2 h-2 rounded-full bg-primary animate-pulse"
+        style={{ top: pos.top, left: pos.left, animationDelay: `${i * 0.3}s` }}
+      />
+    ))}
+    <Globe className="absolute inset-0 m-auto h-10 w-10 text-white/20" />
+  </div>
+);
+
+/* ───── component ───── */
 const Contact = () => {
   const { user } = useSupabaseAuth();
   const [isLoading, setIsLoading] = useState(false);
@@ -22,25 +109,22 @@ const Contact = () => {
   const [accountEmail, setAccountEmail] = useState("");
   const [accountPassword, setAccountPassword] = useState("");
   const [userProfile, setUserProfile] = useState<{ display_name?: string } | null>(null);
+  const [prefLang, setPrefLang] = useState("English");
 
-  // Fetch user profile data when user is available
   useEffect(() => {
     const fetchProfile = async () => {
       if (!user) return;
-      
       try {
         const { data } = await supabase
           .from("profiles")
           .select("display_name")
           .eq("id", user.id)
           .maybeSingle();
-        
         setUserProfile(data);
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
     };
-
     fetchProfile();
   }, [user]);
 
@@ -50,36 +134,19 @@ const Contact = () => {
       const { error } = await supabase.auth.signUp({
         email,
         password,
-        options: { 
+        options: {
           emailRedirectTo: redirectUrl,
-          data: { 
-            display_name: name,
-            wants_power_pack: true // Everyone gets PowerPack automatically
-          }
+          data: { display_name: name, wants_power_pack: true },
         },
       });
-      
       if (error) {
-        toast({ 
-          title: "Account creation failed", 
-          description: error.message, 
-          variant: "destructive" 
-        });
+        toast({ title: "Account creation failed", description: error.message, variant: "destructive" });
         return false;
-      } else {
-        toast({ 
-          title: "Account created!", 
-          description: "Check your email to confirm your account and get your ⚡️Power Pack!", 
-          duration: 8000
-        });
-        return true;
       }
-    } catch (err) {
-      toast({ 
-        title: "Account creation failed", 
-        description: "Please try again.", 
-        variant: "destructive" 
-      });
+      toast({ title: "Account created!", description: "Check your email to confirm your account and get your ⚡️Power Pack!", duration: 8000 });
+      return true;
+    } catch {
+      toast({ title: "Account creation failed", description: "Please try again.", variant: "destructive" });
       return false;
     }
   };
@@ -93,34 +160,35 @@ const Contact = () => {
     const email = String(data.get("email") || "").trim();
     const message = String(data.get("message") || "").trim();
     const notRobot = data.get("captcha") === "on";
-    const honey = String(data.get("company") || ""); // honeypot
+    const honey = String(data.get("company") || "");
 
-    if (honey) return; // silently drop bots
+    if (honey) return;
 
     if (!name || !email || !message) {
-      toast({ title: "Missing fields", description: "Please complete all fields.", variant: "destructive" });
+      toast({ title: "Missing fields", description: "Please complete all required fields.", variant: "destructive" });
       return;
     }
 
-    // Validate email
+    if (message.length < 20) {
+      toast({ title: "Message too short", description: "Please write at least 20 characters.", variant: "destructive" });
+      return;
+    }
+
     const emailValidation = validateEmailInput(email);
     if (!emailValidation.isValid) {
       toast({ title: "Invalid Email", description: emailValidation.error, variant: "destructive" });
       return;
     }
 
-    // Validate message content
     const messageValidation = validatePromptInput(message);
     if (!messageValidation.isValid) {
       toast({ title: "Invalid Message", description: messageValidation.error, variant: "destructive" });
       return;
     }
 
-    // Sanitize inputs
     const sanitizedName = sanitizeInput(name);
     const sanitizedMessage = sanitizeInput(message);
 
-    // Only validate account creation fields if user is not logged in and wants to create account
     if (!user && showAccountCreation && (!accountName || !accountEmail || !accountPassword)) {
       toast({ title: "Account details required", description: "Please fill in name, email and password for your account.", variant: "destructive" });
       return;
@@ -133,23 +201,13 @@ const Contact = () => {
 
     setIsLoading(true);
     try {
-      // Handle account creation if requested and user is not logged in
       if (!user && showAccountCreation && accountName && accountEmail && accountPassword) {
         const accountCreated = await handleAccountCreation(accountName, accountEmail, accountPassword);
-        if (!accountCreated) {
-          setIsLoading(false);
-          return; // Stop if account creation failed
-        }
+        if (!accountCreated) { setIsLoading(false); return; }
       }
 
-      // SECURITY FIX: Send contact through secure encrypted system  
-      const { data: response, error } = await supabase.functions.invoke("secure-contact-form", {
-        body: { 
-          name: sanitizedName, 
-          email, 
-          message: sanitizedMessage,
-          newsletter_opt_in: false // Contact form doesn't have newsletter opt-in currently
-        },
+      const { error } = await supabase.functions.invoke("secure-contact-form", {
+        body: { name: sanitizedName, email, message: sanitizedMessage, newsletter_opt_in: false },
       });
 
       if (error) {
@@ -158,18 +216,9 @@ const Contact = () => {
         return;
       }
 
-      // Contact message sent and stored securely
-      toast({ 
-        title: "Message sent securely!", 
-        description: "Thank you for your message. We'll get back to you soon.",
-        duration: 5000
-      });
+      toast({ title: "Message sent securely!", description: "Thank you — we'll get back to you soon.", duration: 5000 });
       form.reset();
-      // Also reset account creation fields
-      setAccountName("");
-      setAccountEmail("");
-      setAccountPassword("");
-      setShowAccountCreation(false);
+      setAccountName(""); setAccountEmail(""); setAccountPassword(""); setShowAccountCreation(false);
     } catch (error) {
       console.error("Contact form error:", error);
       toast({ title: "Failed to send", description: "Please try again in a moment.", variant: "destructive" });
@@ -180,310 +229,253 @@ const Contact = () => {
 
   return (
     <>
-      <PageHero
-        title={<><span className="text-brand">Get in Touch</span></>}
-        subtitle={<>We'd love to hear from you — whether you're in Tokyo, Mumbai, or anywhere in between. Drop us a message and we'll get back to you promptly.</>}
-        minHeightClass="min-h-[28svh]"
+      <SEO
+        title="Contact Us — PromptAndGo | We Speak Your Language"
+        description="Get in touch with the PromptAndGo team. Support in Japanese, Korean, Mandarin, Thai, Vietnamese, and Indonesian."
+        canonical="https://promptandgo.ai/contact"
       />
-      <main className="container py-10">
-        {/* Breadcrumb */}
-        <Breadcrumb className="mb-6">
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link to="/">Home</Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>Contact</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
 
-        <SEO title="Contact Us | PromptAndGo" description="Get in touch with the PromptAndGo team. Questions about AI prompts, Scout optimizer, Power Packs, or partnerships? We'd love to hear from you." canonical="https://promptandgo.ai/contact" />
-
-        <div className="grid gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-7">
-            {user && (
-              <div className="mb-4 p-3 bg-muted/30 border border-border rounded-lg">
-                <p className="text-sm text-muted-foreground">
-                  Logged in as <span className="font-medium text-foreground">{user.email}</span>
-                </p>
-              </div>
-            )}
-            
-            <form onSubmit={onSubmit} className="grid gap-4 max-w-xl">
-              <Input 
-                required 
-                name="name" 
-                placeholder="Full Name" 
-                defaultValue={user ? (userProfile?.display_name || user.email?.split("@")[0] || "") : ""}
-              />
-              <Input 
-                required 
-                type="email" 
-                name="email" 
-                placeholder="Email Address" 
-                defaultValue={user?.email || ""}
-                readOnly={!!user}
-                className={user ? "bg-muted/50" : ""}
-              />
-              <Input 
-                name="company_name" 
-                placeholder="Company (optional)" 
-              />
-              <select
-                name="country"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                defaultValue=""
-              >
-                <option value="" disabled>Select country...</option>
-                <optgroup label="Asia-Pacific">
-                  <option value="SG">Singapore</option>
-                  <option value="JP">Japan</option>
-                  <option value="KR">South Korea</option>
-                  <option value="CN">China</option>
-                  <option value="IN">India</option>
-                  <option value="TH">Thailand</option>
-                  <option value="VN">Vietnam</option>
-                  <option value="ID">Indonesia</option>
-                  <option value="MY">Malaysia</option>
-                  <option value="PH">Philippines</option>
-                  <option value="TW">Taiwan</option>
-                  <option value="HK">Hong Kong</option>
-                  <option value="AU">Australia</option>
-                </optgroup>
-                <optgroup label="Other">
-                  <option value="US">United States</option>
-                  <option value="GB">United Kingdom</option>
-                  <option value="other">Other</option>
-                </optgroup>
-              </select>
-              <select
-                name="subject"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                defaultValue=""
-              >
-                <option value="" disabled>Select a subject...</option>
-                <option value="general">General Inquiry</option>
-                <option value="enterprise">Enterprise Plans</option>
-                <option value="partnership">Partnership</option>
-                <option value="bug">Bug Report</option>
-                <option value="feature">Feature Request</option>
-              </select>
-              <Textarea required name="message" placeholder="Your message..." rows={5} />
-
-              {/* Honeypot field */}
-              <input type="text" name="company" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
-
-              {/* Create account option - only show if not logged in */}
-              {!user && (
-                <>
-                  <label className="flex items-center gap-2 text-sm">
-                    <input 
-                      type="checkbox" 
-                      className="h-4 w-4" 
-                      checked={showAccountCreation}
-                      onChange={(e) => setShowAccountCreation(e.target.checked)}
-                    />
-                    Create a free account (optional)
-                  </label>
-
-                  {/* Account creation form */}
-                  {showAccountCreation && (
-                    <div className="space-y-3 p-4 border border-border rounded-lg bg-muted/20">
-                      <div className="text-sm font-medium text-foreground mb-2">
-                        Account Details
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="account-name" className="text-xs">Full Name</Label>
-                        <Input 
-                          id="account-name"
-                          type="text" 
-                          value={accountName}
-                          onChange={(e) => setAccountName(e.target.value)}
-                          placeholder="Your full name"
-                          className="h-9"
-                          required
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="account-email" className="text-xs">Email for account</Label>
-                        <Input 
-                          id="account-email"
-                          type="email" 
-                          value={accountEmail}
-                          onChange={(e) => setAccountEmail(e.target.value)}
-                          placeholder="Account email (can be same as above)"
-                          className="h-9"
-                          onFocus={(e) => {
-                            // Auto-fill with contact email if empty
-                            if (!accountEmail) {
-                              const contactEmailInput = document.querySelector('input[name="email"]') as HTMLInputElement;
-                              if (contactEmailInput?.value) {
-                                setAccountEmail(contactEmailInput.value);
-                              }
-                            }
-                          }}
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="account-password" className="text-xs">Choose password</Label>
-                        <Input 
-                          id="account-password"
-                          type="password" 
-                          value={accountPassword}
-                          onChange={(e) => setAccountPassword(e.target.value)}
-                          placeholder="Create a secure password"
-                          className="h-9"
-                        />
-                      </div>
-                      
-                      <p className="text-xs text-muted-foreground">
-                        Creating an account lets you save favorite prompts and access premium features. You'll also get a FREE ⚡️Power Pack!
-                      </p>
-                    </div>
-                  )}
-                </>
-              )}
-
-              {/* Simple captcha */}
-              <label className="flex items-center gap-2 text-sm">
-                <input type="checkbox" name="captcha" className="h-4 w-4" />
-                I'm not a robot
-              </label>
-
-              <div className="pt-2">
-                <Button type="submit" variant="cta" disabled={isLoading}>
-                  {isLoading ? "Sending..." : (!user && showAccountCreation) ? "Create Account & Claim My FREE ⚡️Power Pack" : "Send Message"}
-                </Button>
-              </div>
-            </form>
+      <main>
+        {/* Hero */}
+        <section className="relative overflow-hidden bg-hero">
+          <div aria-hidden className="pointer-events-none absolute inset-0">
+            <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-primary/20 blur-[120px]" />
           </div>
-          <aside className="lg:col-span-5 space-y-8">
-            {/* We're here to help */}
-            <div className="rounded-xl border border-border bg-card p-6">
-              <h3 className="font-bold text-lg mb-4">We're here to help</h3>
-              <div className="space-y-4 text-sm">
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
-                    <Clock className="w-4 h-4 text-primary" />
-                  </div>
-                  <div>
-                    <p className="font-medium">Response Time</p>
-                    <p className="text-muted-foreground">We typically respond within 24 hours during business days (SGT, GMT+8).</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center shrink-0 mt-0.5">
-                    <MapPin className="w-4 h-4 text-accent" />
-                  </div>
-                  <div>
-                    <p className="font-medium">Asia-Pacific Based</p>
-                    <p className="text-muted-foreground">Our team is based in Singapore with members across ASEAN, Japan, and India.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
-                    <Mail className="w-4 h-4 text-primary" />
-                  </div>
-                  <div>
-                    <p className="font-medium">Multilingual Support</p>
-                    <p className="text-muted-foreground">We can respond in English, Mandarin, Bahasa, and Japanese.</p>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-6 pt-4 border-t border-border">
-                <p className="text-xs text-muted-foreground mb-2">Follow us</p>
-                <div className="flex gap-3">
-                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground hover:text-primary transition-colors">LinkedIn</a>
-                  <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground hover:text-primary transition-colors">X / Twitter</a>
-                  <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground hover:text-primary transition-colors">GitHub</a>
-                  <a href="https://discord.com" target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground hover:text-primary transition-colors">Discord</a>
-                </div>
-              </div>
-            </div>
-          </aside>
-        </div>
-
-        {/* Our Offices */}
-        <section className="mt-16 mb-12">
-          <h2 className="text-2xl font-bold mb-8">Our Offices</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { city: "Singapore", label: "HQ", address: "71 Robinson Road, #14-01", phone: "+65 6123 4567", email: "sg@promptandgo.ai", hours: "Mon-Fri 9am-6pm SGT" },
-              { city: "Tokyo", label: "Japan", address: "Shibuya-ku, Dogenzaka 1-10-8", phone: "+81 3-1234-5678", email: "jp@promptandgo.ai", hours: "Mon-Fri 9am-6pm JST" },
-              { city: "Mumbai", label: "India", address: "Bandra Kurla Complex, Unit 402", phone: "+91 22 1234 5678", email: "in@promptandgo.ai", hours: "Mon-Fri 9:30am-6:30pm IST" },
-              { city: "Seoul", label: "Korea", address: "Gangnam-gu, Teheran-ro 152", phone: "+82 2-1234-5678", email: "kr@promptandgo.ai", hours: "Mon-Fri 9am-6pm KST" },
-            ].map((office) => (
-              <div key={office.city} className="rounded-xl border border-border bg-card p-5">
-                <div className="flex items-center gap-2 mb-3">
-                  <MapPin className="w-4 h-4 text-primary" />
-                  <h3 className="font-bold">{office.city}</h3>
-                  <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">{office.label}</span>
-                </div>
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  <p>{office.address}</p>
-                  <div className="flex items-center gap-1.5">
-                    <Phone className="w-3 h-3" />
-                    <span>{office.phone}</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <Mail className="w-3 h-3" />
-                    <span>{office.email}</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <Clock className="w-3 h-3" />
-                    <span>{office.hours}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className="relative z-10 container max-w-4xl mx-auto px-4 pt-16 pb-10 md:pt-24 md:pb-14 text-center">
+            <AnimatedGlobe />
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight mb-3">
+              Get in Touch
+            </h1>
+            <p className="text-lg text-white/60 max-w-lg mx-auto">
+              We speak your language — support in 12+ Asian languages
+            </p>
           </div>
         </section>
 
-        {/* FAQ Section */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
-          <Accordion type="single" collapsible className="max-w-2xl">
-            <AccordionItem value="free">
-              <AccordionTrigger>Is PromptAndGo free?</AccordionTrigger>
-              <AccordionContent>
-                Yes! PromptAndGo offers a generous free tier that includes access to the prompt library, the optimizer tool, and Ask Scout. Power Packs and Pro features are available for users who want deeper capabilities.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="platforms">
-              <AccordionTrigger>Which AI platforms do you support?</AccordionTrigger>
-              <AccordionContent>
-                We support 12 major platforms including ChatGPT, Claude, Gemini, Qwen, DeepSeek, Ernie Bot, Copilot, Meta AI, Grok, MidJourney, Perplexity, and Stable Diffusion. Each prompt is optimized for the specific strengths of each platform.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="enterprise">
-              <AccordionTrigger>Do you offer enterprise plans?</AccordionTrigger>
-              <AccordionContent>
-                Yes, we offer custom enterprise plans for teams and organizations. Contact us with the Enterprise Plans subject to learn more about volume pricing, custom prompt libraries, and dedicated support.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="optimizer">
-              <AccordionTrigger>How does the prompt optimizer work?</AccordionTrigger>
-              <AccordionContent>
-                Our optimizer analyzes your prompt for clarity, specificity, and context, then restructures it using platform-specific best practices. It considers language nuances, cultural context, and the target AI platform to produce optimized results.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="contribute">
-              <AccordionTrigger>Can I contribute prompts?</AccordionTrigger>
-              <AccordionContent>
-                Absolutely! We welcome community contributions. Visit the Submit Prompt page to share your best prompts with the community and earn XP rewards.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="language">
-              <AccordionTrigger>Do you support my language?</AccordionTrigger>
-              <AccordionContent>
-                We currently support 12+ Asian languages including Mandarin, Japanese, Korean, Thai, Vietnamese, Bahasa Indonesia, Bahasa Melayu, Hindi, Tamil, Tagalog, Bengali, and Khmer, plus English. More languages are being added regularly.
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+        {/* Main content */}
+        <section className="py-12 md:py-16 bg-background">
+          <div className="container max-w-6xl mx-auto px-4">
+            <Breadcrumb className="mb-8">
+              <BreadcrumbList>
+                <BreadcrumbItem><BreadcrumbLink asChild><Link to="/">Home</Link></BreadcrumbLink></BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem><BreadcrumbPage>Contact</BreadcrumbPage></BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+
+            <div className="grid gap-10 lg:grid-cols-12">
+              {/* Form */}
+              <div className="lg:col-span-7">
+                <h2 className="text-2xl font-bold text-foreground mb-6">Send us a message</h2>
+
+                {user && (
+                  <div className="mb-4 p-3 bg-muted/30 border border-border rounded-lg">
+                    <p className="text-sm text-muted-foreground">
+                      Logged in as <span className="font-medium text-foreground">{user.email}</span>
+                    </p>
+                  </div>
+                )}
+
+                <form onSubmit={onSubmit} className="grid gap-5 max-w-xl">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="contact-name">{BILINGUAL[0].en} <span className="text-xs text-muted-foreground ml-1">{BILINGUAL[0].alt}</span></Label>
+                    <Input
+                      id="contact-name"
+                      required
+                      name="name"
+                      placeholder="Your full name"
+                      defaultValue={user ? (userProfile?.display_name || user.email?.split("@")[0] || "") : ""}
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <Label htmlFor="contact-email">{BILINGUAL[1].en} <span className="text-xs text-muted-foreground ml-1">{BILINGUAL[1].alt}</span></Label>
+                    <Input
+                      id="contact-email"
+                      required
+                      type="email"
+                      name="email"
+                      placeholder="you@example.com"
+                      defaultValue={user?.email || ""}
+                      readOnly={!!user}
+                      className={user ? "bg-muted/50" : ""}
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <Label htmlFor="contact-subject">{BILINGUAL[2].en} <span className="text-xs text-muted-foreground ml-1">{BILINGUAL[2].alt}</span></Label>
+                    <select
+                      id="contact-subject"
+                      name="subject"
+                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:border-2 focus-visible:border-ring transition-colors"
+                      defaultValue=""
+                    >
+                      <option value="" disabled>Select a subject…</option>
+                      <option value="general">General Inquiry</option>
+                      <option value="bug">Bug Report</option>
+                      <option value="feature">Feature Request</option>
+                      <option value="partnership">Partnership</option>
+                      <option value="translation">Translation Help</option>
+                      <option value="enterprise">Enterprise</option>
+                    </select>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <Label htmlFor="contact-message">{BILINGUAL[3].en} <span className="text-xs text-muted-foreground ml-1">{BILINGUAL[3].alt}</span> <span className="text-xs text-muted-foreground">(min 20 chars)</span></Label>
+                    <Textarea id="contact-message" required name="message" placeholder="Tell us how we can help…" rows={5} />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <Label htmlFor="contact-lang">{BILINGUAL[4].en} <span className="text-xs text-muted-foreground ml-1">{BILINGUAL[4].alt}</span></Label>
+                    <select
+                      id="contact-lang"
+                      value={prefLang}
+                      onChange={(e) => setPrefLang(e.target.value)}
+                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:border-2 focus-visible:border-ring transition-colors"
+                    >
+                      {LANGUAGES.map((l) => (
+                        <option key={l} value={l}>{l}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Honeypot */}
+                  <input type="text" name="company" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+
+                  {/* Account creation (existing logic preserved) */}
+                  {!user && (
+                    <>
+                      <label className="flex items-center gap-2 text-sm">
+                        <input type="checkbox" className="h-4 w-4" checked={showAccountCreation} onChange={(e) => setShowAccountCreation(e.target.checked)} />
+                        Create a free account (optional)
+                      </label>
+                      {showAccountCreation && (
+                        <div className="space-y-3 p-4 border border-border rounded-lg bg-muted/20">
+                          <p className="text-sm font-medium text-foreground mb-2">Account Details</p>
+                          <div className="space-y-2">
+                            <Label htmlFor="account-name" className="text-xs">Full Name</Label>
+                            <Input id="account-name" value={accountName} onChange={(e) => setAccountName(e.target.value)} placeholder="Your full name" className="h-9" required />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="account-email" className="text-xs">Email for account</Label>
+                            <Input id="account-email" type="email" value={accountEmail} onChange={(e) => setAccountEmail(e.target.value)} placeholder="Account email" className="h-9" />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="account-password" className="text-xs">Choose password</Label>
+                            <Input id="account-password" type="password" value={accountPassword} onChange={(e) => setAccountPassword(e.target.value)} placeholder="Secure password" className="h-9" />
+                          </div>
+                          <p className="text-xs text-muted-foreground">Creating an account lets you save prompts and access premium features. You'll also get a FREE ⚡️Power Pack!</p>
+                        </div>
+                      )}
+                    </>
+                  )}
+
+                  <label className="flex items-center gap-2 text-sm">
+                    <input type="checkbox" name="captcha" className="h-4 w-4" />
+                    I'm not a robot
+                  </label>
+
+                  <div className="pt-2">
+                    <Button type="submit" disabled={isLoading} className="gap-2">
+                      <Send className="h-4 w-4" />
+                      {isLoading ? "Sending…" : (!user && showAccountCreation) ? "Create Account & Send" : "Send Message"}
+                    </Button>
+                  </div>
+                </form>
+              </div>
+
+              {/* Sidebar */}
+              <aside className="lg:col-span-5 space-y-6">
+                {/* Response time */}
+                <div className="rounded-xl border border-border bg-card p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                      <Clock className="w-5 h-5 text-primary animate-pulse" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-foreground">We typically respond within 24 hours</p>
+                      <p className="text-xs text-muted-foreground">Mon–Fri, across SGT / JST / KST timezones</p>
+                    </div>
+                  </div>
+                  <div className="space-y-3 text-sm">
+                    <div className="flex items-start gap-3">
+                      <Mail className="w-4 h-4 text-muted-foreground mt-0.5" />
+                      <p className="text-muted-foreground">Multilingual support in English, Japanese, Mandarin, and Korean</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Social links */}
+                <div className="rounded-xl border border-border bg-card p-6">
+                  <h3 className="font-bold text-foreground mb-4">Connect With Us</h3>
+                  <div className="grid grid-cols-2 gap-3">
+                    {SOCIALS.map((s) => (
+                      <a
+                        key={s.name}
+                        href={s.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 rounded-lg border border-border p-3 text-sm text-muted-foreground hover:text-foreground hover:border-primary/30 transition-colors"
+                      >
+                        <span className="text-lg">{s.icon}</span>
+                        <span>{s.name}</span>
+                        <ExternalLink className="h-3 w-3 ml-auto" />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        {/* Offices */}
+        <section className="py-12 md:py-16 bg-muted/30 border-y border-border">
+          <div className="container max-w-5xl mx-auto px-4">
+            <h2 className="text-2xl font-bold text-foreground mb-8 text-center">Our Offices</h2>
+            <div className="grid sm:grid-cols-3 gap-6">
+              {OFFICES.map((o) => (
+                <div key={o.city} className="rounded-xl border border-border bg-card overflow-hidden">
+                  {/* Map placeholder */}
+                  <div className="h-28 bg-gradient-to-br from-primary/10 to-accent/5 relative flex items-center justify-center">
+                    <MapPin className="h-8 w-8 text-primary" />
+                    <span className="absolute top-2 right-2 text-xl">{o.flag}</span>
+                  </div>
+                  <div className="p-5">
+                    <h3 className="font-bold text-foreground">{o.city}</h3>
+                    <p className="text-sm text-primary mb-2">{o.native}</p>
+                    <div className="space-y-1.5 text-sm text-muted-foreground">
+                      <p>{o.address}</p>
+                      <p className="text-xs">{o.addressNative}</p>
+                      <div className="flex items-center gap-1.5 pt-1">
+                        <Clock className="w-3 h-3" />
+                        <span>{o.tz}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Mail className="w-3 h-3" />
+                        <span>{o.email}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="py-12 md:py-16 bg-background">
+          <div className="container max-w-3xl mx-auto px-4">
+            <h2 className="text-2xl font-bold text-foreground mb-8 text-center">Quick Help</h2>
+            <Accordion type="single" collapsible className="space-y-3">
+              {FAQS.map((f) => (
+                <AccordionItem key={f.id} value={f.id} className="rounded-xl border border-border bg-card overflow-hidden">
+                  <AccordionTrigger className="px-5 py-4 text-sm md:text-base font-semibold">{f.q}</AccordionTrigger>
+                  <AccordionContent className="px-5 pb-4 text-sm text-muted-foreground leading-relaxed">{f.a}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
         </section>
       </main>
     </>
