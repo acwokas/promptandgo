@@ -263,6 +263,22 @@ const PromptOptimizer = () => {
     }
   };
 
+  // Add to history after successful optimization
+  useEffect(() => {
+    if (optimizedPrompt && prompt.trim()) {
+      const metrics = [70, 75, 68, 72]; // rough base
+      const avgScore = Math.round(metrics.reduce((a, b) => a + b, 0) / metrics.length + Math.min(optimizedPrompt.length / prompt.length * 10, 25));
+      const entry: HistoryEntry = {
+        id: Date.now().toString(),
+        originalPrompt: prompt,
+        platform: activePlatform.label,
+        score: Math.min(avgScore, 96),
+        timestamp: Date.now(),
+      };
+      setHistory((prev) => [entry, ...prev].slice(0, 5));
+    }
+  }, [result]); // only trigger when result stream completes
+
   const copyText = async (text: string, id: string) => {
     await navigator.clipboard.writeText(text);
     setCopiedId(id);
