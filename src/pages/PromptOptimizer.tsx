@@ -135,6 +135,16 @@ const PromptOptimizer = () => {
   const [showExample, setShowExample] = useState(false);
   const [exampleIdx, setExampleIdx] = useState(0);
 
+  // Advanced options state
+  const [advTone, setAdvTone] = useState("professional");
+  const [advLength, setAdvLength] = useState("detailed");
+  const [advIndustry, setAdvIndustry] = useState("technology");
+  const [advOpen, setAdvOpen] = useState(false);
+
+  // History sidebar state
+  const [history, setHistory] = useState<HistoryEntry[]>([]);
+  const [historyOpen, setHistoryOpen] = useState(false);
+
   const activePlatform = AI_PLATFORMS.find((p) => p.id === selectedPlatform)!;
   const activeLanguageObj = OPTIMIZER_LANGUAGES.find((l) => l.code === selectedLanguage)!;
 
