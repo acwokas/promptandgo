@@ -456,6 +456,17 @@ const PromptPacks = () => {
                       </div>
                     )}
                     
+                    {/* Works in languages badge */}
+                    <div className="flex items-center gap-1.5 mt-2">
+                      <span className="text-[10px] font-semibold text-muted-foreground uppercase">Works in</span>
+                      <div className="flex gap-0.5">
+                        {["🇬🇧","🇨🇳","🇯🇵","🇰🇷","🇮🇩","🇻🇳","🇹🇭","🇮🇳","🇲🇾","🇵🇭","🇧🇩","🇰🇭"].map((flag, i) => (
+                          <span key={i} className="text-xs" title="Supported language">{flag}</span>
+                        ))}
+                      </div>
+                      <Badge variant="outline" className="text-[9px] h-4 px-1 border-primary/30 text-primary">12+ langs</Badge>
+                    </div>
+                    
                     <div className="text-sm text-muted-foreground">
                       {packOwned ? 'You own this pack.' : `You own ${ownedCount}/${items.length} items`} • {freeCount} free, {proCount} PRO
                     </div>
