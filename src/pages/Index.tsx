@@ -14,6 +14,7 @@ import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useNewsletterStatus } from "@/hooks/useNewsletterStatus";
 import { NewsletterSection } from "@/components/home/NewsletterSection";
 import { FAQSection } from "@/components/home/FAQSection";
+import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import OnboardingModal from "@/components/onboarding/OnboardingModal";
 
 const TYPED_PROMPTS = [
@@ -764,6 +765,9 @@ const Index = () => {
             </div>
           </div>
         </section>
+
+        {/* ═══════════════════════ TESTIMONIALS ═══════════════════════ */}
+        <TestimonialsSection />
 
         {/* ═══════════════════════ NEWSLETTER & FAQ ═══════════════════════ */}
         <NewsletterSection user={user} isNewsletterSubscribed={isNewsletterSubscribed} />

@@ -14,7 +14,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import {
   Wand2, Copy, Check, ChevronDown, Shield, Sparkles, RotateCcw,
   ArrowRight, BookOpen, Lightbulb, Settings2, Eye, Zap, Globe,
-  ShoppingCart, Utensils, Landmark, GraduationCap, TrendingUp, Languages,
+  ShoppingCart, Utensils, Landmark, GraduationCap, TrendingUp, Languages, Share2,
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { supabase } from "@/integrations/supabase/client";
@@ -500,6 +500,37 @@ const PromptOptimizer = () => {
         {/* Results */}
         {hasResult && (
           <div className="space-y-6">
+            {/* Prominent Copy & Share bar */}
+            <div className="flex flex-wrap gap-3 p-4 rounded-xl bg-primary/5 border border-primary/20">
+              <Button onClick={() => copyText(optimizedPrompt, "opt-hero")} size="lg" className="gap-2 flex-1 sm:flex-none">
+                {copiedId === "opt-hero" ? <Check className="h-5 w-5" /> : <Copy className="h-5 w-5" />}
+                {copiedId === "opt-hero" ? "Copied!" : "Copy Optimized Prompt"}
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                className="gap-2"
+                onClick={async () => {
+                  const shareUrl = `${window.location.origin}/optimize?platform=${selectedPlatform}&lang=${selectedLanguage}`;
+                  try {
+                    if (navigator.share) {
+                      await navigator.share({ title: `Optimized prompt for ${activePlatform.label}`, text: optimizedPrompt.slice(0, 200) + "...", url: shareUrl });
+                    } else {
+                      await navigator.clipboard.writeText(shareUrl);
+                      toast({ title: "Share link copied!" });
+                    }
+                  } catch (e) {
+                    if ((e as Error).name !== "AbortError") {
+                      await navigator.clipboard.writeText(shareUrl);
+                      toast({ title: "Share link copied!" });
+                    }
+                  }
+                }}
+              >
+                <Share2 className="h-4 w-4" /> Share
+              </Button>
+            </div>
+
             <div className="grid md:grid-cols-2 gap-4">
               <Card className="border-muted">
                 <CardContent className="p-5 space-y-3">
@@ -518,6 +549,36 @@ const PromptOptimizer = () => {
                 </CardContent>
               </Card>
             </div>
+
+            {/* Educational optimization insights */}
+            <Card className="border-blue-500/20 bg-blue-500/5">
+              <CardContent className="p-5 space-y-3">
+                <h3 className="text-sm font-semibold flex items-center gap-2">
+                  <Lightbulb className="h-4 w-4 text-blue-500" />
+                  Why Scout Made These Changes
+                </h3>
+                <div className="grid sm:grid-cols-2 gap-3 text-sm">
+                  <div className="flex gap-2 items-start">
+                    <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0" />
+                    <p className="text-muted-foreground"><strong className="text-foreground">Structure added:</strong> {activePlatform.label} performs better with numbered steps and clear sections.</p>
+                  </div>
+                  <div className="flex gap-2 items-start">
+                    <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0" />
+                    <p className="text-muted-foreground"><strong className="text-foreground">Audience targeting:</strong> Specific context helps the AI generate more relevant output.</p>
+                  </div>
+                  <div className="flex gap-2 items-start">
+                    <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0" />
+                    <p className="text-muted-foreground"><strong className="text-foreground">Constraints defined:</strong> Word limits, tone, and format prevent vague, unusable responses.</p>
+                  </div>
+                  {asianContext && (
+                    <div className="flex gap-2 items-start">
+                      <div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-2 flex-shrink-0" />
+                      <p className="text-muted-foreground"><strong className="text-foreground">Cultural context:</strong> Formality, honorifics, and local business norms adapted for Asian audience.</p>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
 
             <Accordion type="multiple" defaultValue={["improvements"]}>
               {keyImprovements && (
@@ -585,10 +646,6 @@ const PromptOptimizer = () => {
             </Card>
 
             <div className="flex flex-wrap gap-3">
-              <Button onClick={() => copyText(optimizedPrompt, "opt-bottom")} className="gap-2">
-                {copiedId === "opt-bottom" ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-                Copy optimised prompt
-              </Button>
               <Button variant="outline" asChild>
                 <Link to="/scout" className="gap-2">
                   <ArrowRight className="h-4 w-4" /> Try in Scout AI
