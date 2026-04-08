@@ -222,6 +222,7 @@ const Footer = () => {
             </select>
             <Link to="/privacy" className="hover:text-white/70 transition-colors">Privacy Policy</Link>
             <Link to="/terms" className="hover:text-white/70 transition-colors">Terms</Link>
+            <Link to="/accessibility" className="hover:text-white/70 transition-colors">Accessibility</Link>
           </div>
         </div>
       </div>

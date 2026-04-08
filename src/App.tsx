@@ -122,6 +122,7 @@ const Glossary = lazy(() => import("./pages/Glossary"));
 const NewsletterArchive = lazy(() => import("./pages/NewsletterArchive"));
 const HtmlSitemap = lazy(() => import("./pages/HtmlSitemap"));
 const KeyboardShortcuts = lazy(() => import("./pages/KeyboardShortcuts"));
+const Accessibility = lazy(() => import("./pages/Accessibility"));
 
 const queryClient = new QueryClient();
 
@@ -273,6 +274,7 @@ const AppContent = () => {
                 <Route path="/newsletter" element={<NewsletterArchive />} />
                 <Route path="/sitemap" element={<HtmlSitemap />} />
                 <Route path="/shortcuts" element={<KeyboardShortcuts />} />
+                <Route path="/accessibility" element={<Accessibility />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               </Suspense>
