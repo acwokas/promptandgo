@@ -343,6 +343,9 @@ const PromptLibrary = () => {
           </BreadcrumbList>
         </Breadcrumb>
 
+        {/* Community Favorites */}
+        <CommunityFavorites />
+
         {/* Category filter badges */}
         <section className="mb-6">
           <div className="flex items-center gap-2 mb-3">
