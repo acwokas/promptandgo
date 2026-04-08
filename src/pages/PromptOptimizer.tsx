@@ -30,6 +30,10 @@ const AI_PLATFORMS = [
   { id: "perplexity", label: "Perplexity", color: "bg-violet-500", tip: "Research-focused. Ask specific questions, request sources, and use it for fact-checking and exploration." },
   { id: "midjourney", label: "MidJourney", color: "bg-pink-500", tip: "Image generation. Use descriptive adjectives, specify style/medium/lighting, and include aspect ratio parameters." },
   { id: "stable-diffusion", label: "Stable Diffusion", color: "bg-amber-500", tip: "Use comma-separated tags, weight important terms with (parentheses), specify negative prompts, and include model-specific tokens." },
+  { id: "qwen", label: "Qwen", color: "bg-indigo-500", tip: "Alibaba's multilingual model. Excels at Chinese and Southeast Asian languages. Great for e-commerce, cross-border trade, and Asian market content." },
+  { id: "meta-ai", label: "Meta AI", color: "bg-sky-500", tip: "Built on Llama open-source models. Strong at conversational tasks, multilingual content, and social media-oriented prompts." },
+  { id: "ernie", label: "Ernie Bot", color: "bg-red-500", tip: "Baidu's AI model dominant in China. Best for Chinese-language content, Baidu SEO, and mainland China market context." },
+  { id: "grok", label: "Grok", color: "bg-slate-500", tip: "xAI's model with real-time knowledge. Direct, witty style. Good for current events, analysis, and unfiltered responses." },
 ];
 
 export const OPTIMIZER_LANGUAGES = [
@@ -292,11 +296,11 @@ const PromptOptimizer = () => {
           <div className="flex flex-wrap justify-center gap-2 mb-6">
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-primary/30 text-primary px-4 py-1.5 rounded-full text-sm font-bold">
               <Zap className="h-3.5 w-3.5" />
-              8+ AI Platforms
+              12 AI Platforms
             </div>
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-amber-400/30 text-amber-300 px-4 py-1.5 rounded-full text-sm font-bold">
               <Globe className="h-3.5 w-3.5" />
-              10+ Languages
+              12+ Languages
             </div>
             <div className="inline-flex items-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/10 text-white/80 px-4 py-1.5 rounded-full text-sm">
               Free · No signup
@@ -320,7 +324,7 @@ const PromptOptimizer = () => {
             <Zap className="h-4 w-4 text-primary" />
             Select your AI platform
           </h2>
-          <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
+          <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-12 gap-2">
             {AI_PLATFORMS.map((p) => (
               <button
                 key={p.id}
