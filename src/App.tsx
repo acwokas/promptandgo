@@ -109,6 +109,8 @@ import Changelog from "./pages/Changelog";
 import Integrations from "./pages/Integrations";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import BackToTop from "@/components/BackToTop";
+import CookieConsent from "@/components/CookieConsent";
 
 const queryClient = new QueryClient();
 
@@ -251,6 +253,8 @@ const AppContent = () => {
         {user ? <FeedbackWidget /> : <LoginWidget />}
         <ExitIntentPopup />
         <PWAInstallPrompt />
+        <BackToTop />
+        <CookieConsent />
       </LoginWidgetProvider>
     </SidebarProvider>
   );
