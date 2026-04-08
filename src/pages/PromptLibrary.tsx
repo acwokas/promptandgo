@@ -7,7 +7,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import PageHero from "@/components/layout/PageHero";
 import CountdownTimer from "@/components/conversion/CountdownTimer";
 import { Link } from "react-router-dom";
-import { Search, Heart, Globe, Sparkles, Flame, Monitor } from "lucide-react";
+import { Search, Heart, Globe, Sparkles, Flame, Monitor, Copy } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { toast } from "@/hooks/use-toast";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { PromptStudioCTA } from "@/components/ui/prompt-studio-cta";
 import { SearchUpsellPacks } from "@/components/library/SearchUpsellPacks";
@@ -44,7 +46,75 @@ const LANGUAGES = [
   { id: "id", name: "Indonesian", flag: "🇮🇩" },
   { id: "ms", name: "Malay", flag: "🇲🇾" },
   { id: "hi", name: "Hindi", flag: "🇮🇳" },
+  { id: "ta", name: "Tamil", flag: "🇱🇰" },
+  { id: "tl", name: "Tagalog", flag: "🇵🇭" },
+  { id: "bn", name: "Bengali", flag: "🇧🇩" },
+  { id: "km", name: "Khmer", flag: "🇰🇭" },
 ];
+
+// Native-script prompt examples shown when a language filter is active
+const NATIVE_PROMPTS: Record<string, Array<{ title: string; prompt: string; category: string }>> = {
+  id: [
+    { title: "Copywriting Iklan Instagram", prompt: "Buatkan copywriting iklan Instagram untuk peluncuran produk skincare lokal yang ramah lingkungan, termasuk caption dan hashtag yang sedang tren", category: "Marketing" },
+    { title: "Email Proposal Bisnis", prompt: "Tulis email proposal kerjasama bisnis B2B kepada perusahaan distribusi FMCG di Jakarta, dengan nada profesional dan meyakinkan", category: "Business" },
+    { title: "Deskripsi Produk Tokopedia", prompt: "Buat deskripsi produk yang menarik untuk tas kulit handmade di Tokopedia, sertakan keunggulan bahan dan cara perawatan", category: "E-commerce" },
+  ],
+  vi: [
+    { title: "Email Đề Xuất Hợp Tác", prompt: "Soạn email chuyên nghiệp gửi đối tác về đề xuất hợp tác kinh doanh xuất nhập khẩu nông sản Việt Nam sang thị trường châu Âu", category: "Business" },
+    { title: "Bài Đăng Mạng Xã Hội", prompt: "Viết bài đăng Facebook thu hút cho quán cà phê mới khai trương tại Sài Gòn, kèm kêu gọi check-in và chia sẻ", category: "Social Media" },
+    { title: "Mô Tả Sản Phẩm Shopee", prompt: "Tạo mô tả sản phẩm hấp dẫn cho áo dài thiết kế bán trên Shopee, nhấn mạnh chất liệu lụa tơ tằm và tay nghề thủ công", category: "E-commerce" },
+  ],
+  zh: [
+    { title: "小红书种草文案", prompt: "帮我写一条小红书种草文案，推荐一款适合亚洲肌肤的防晒霜，包含使用体验和适合的肤质说明", category: "Social Media" },
+    { title: "产品发布会邀请函", prompt: "为科技公司新品发布会撰写一封正式的中文邀请函，面向行业媒体和合作伙伴", category: "Business" },
+    { title: "淘宝商品描述", prompt: "为一款智能手表撰写淘宝详情页文案，突出健康监测功能和性价比优势", category: "E-commerce" },
+  ],
+  ja: [
+    { title: "敬語お詫びメール", prompt: "取引先への敬語を使った納期延長のお詫びメールを作成してください。原因説明と改善策を含めてください", category: "Business" },
+    { title: "商品レビュー依頼", prompt: "Amazonで購入した美容家電の詳細なレビューを書いてください。使用感、メリット・デメリットを含めて", category: "E-commerce" },
+    { title: "採用ページ文面", prompt: "IT企業のエンジニア採用ページ用のキャッチコピーと職場環境紹介文を作成してください", category: "Business" },
+  ],
+  ko: [
+    { title: "쿠팡 상품 리뷰", prompt: "신제품 블루투스 이어폰에 대한 상세한 쿠팡 리뷰를 작성해주세요. 음질, 배터리, 착용감을 포함해서", category: "E-commerce" },
+    { title: "인스타그램 브랜드 소개", prompt: "한국 스킨케어 브랜드의 인스타그램 소개글을 작성해주세요. 브랜드 철학과 주요 성분을 강조해서", category: "Social Media" },
+    { title: "비즈니스 제안서", prompt: "중소기업 대상 클라우드 서비스 도입 제안서의 핵심 내용을 작성해주세요", category: "Business" },
+  ],
+  th: [
+    { title: "ตอบลูกค้าไม่พอใจ", prompt: "เขียนข้อความตอบลูกค้าที่ไม่พอใจสินค้าใน Shopee โดยใช้ภาษาสุภาพ เสนอทางแก้ไขและชดเชย", category: "Customer Service" },
+    { title: "โพสต์ Facebook โปรโมชั่น", prompt: "เขียนโพสต์ Facebook สำหรับร้านอาหารที่มีโปรโมชั่นพิเศษวันเกิด ให้น่าสนใจและชวนแชร์", category: "Social Media" },
+    { title: "รายละเอียดสินค้า Lazada", prompt: "เขียนรายละเอียดสินค้ากระเป๋าหนังแท้แฮนด์เมดสำหรับขายใน Lazada เน้นคุณภาพวัสดุและงานฝีมือ", category: "E-commerce" },
+  ],
+  hi: [
+    { title: "ब्लॉग रूपरेखा", prompt: "डिजिटल मार्केटिंग पर एक विस्तृत ब्लॉग की रूपरेखा तैयार करें जो छोटे व्यवसायों के लिए हो, SEO और सोशल मीडिया रणनीति शामिल करें", category: "Content" },
+    { title: "ग्राहक सेवा टेम्पलेट", prompt: "ई-कॉमर्स वेबसाइट के लिए हिंदी में ग्राहक शिकायत का जवाब देने का एक पेशेवर टेम्पलेट बनाएं", category: "Customer Service" },
+    { title: "जॉब पोस्टिंग", prompt: "एक सॉफ्टवेयर डेवलपर पद के लिए LinkedIn पर हिंदी में नौकरी का विज्ञापन लिखें", category: "Business" },
+  ],
+  ta: [
+    { title: "வேலை விளம்பரம்", prompt: "ஒரு மென்பொருள் நிறுவனத்திற்கான ஜூனியர் டெவலப்பர் வேலை விளம்பரம் எழுதுங்கள்", category: "Business" },
+    { title: "தயாரிப்பு விளக்கம்", prompt: "இயற்கை அழகுசாதனப் பொருளின் விரிவான தயாரிப்பு விளக்கத்தை எழுதுங்கள்", category: "E-commerce" },
+    { title: "வலைப்பதிவு அறிமுகம்", prompt: "சிறு தொழில் உரிமையாளர்களுக்கான டிஜிட்டல் மார்க்கெட்டிங் வலைப்பதிவு அறிமுகம் எழுதுங்கள்", category: "Content" },
+  ],
+  tl: [
+    { title: "Product Description", prompt: "Gumawa ng product description para sa online shop ng handmade na bag na gawa sa abaca, i-highlight ang pagiging eco-friendly", category: "E-commerce" },
+    { title: "Social Media Post", prompt: "Sumulat ng engaging Facebook post para sa bagong bukas na milk tea shop sa Makati, kasama ang promo para sa grand opening", category: "Social Media" },
+    { title: "Customer Service Reply", prompt: "Gumawa ng magalang na reply sa customer na nagrereklamo tungkol sa late delivery sa Lazada", category: "Customer Service" },
+  ],
+  bn: [
+    { title: "গ্রাহক সেবা টেমপ্লেট", prompt: "আমাদের ই-কমার্স সাইটের জন্য একটি গ্রাহক সেবা প্রতিক্রিয়া টেমপ্লেট তৈরি করুন যা বিলম্বিত ডেলিভারির জন্য ক্ষমা চায়", category: "Customer Service" },
+    { title: "ব্লগ পরিচিতি", prompt: "ফ্রিল্যান্সিং নিয়ে বাংলায় একটি ব্লগ পোস্টের ভূমিকা লিখুন যা নতুনদের জন্য", category: "Content" },
+    { title: "পণ্যের বিবরণ", prompt: "দারাজে বিক্রির জন্য হাতে বোনা শাড়ির একটি আকর্ষণীয় পণ্যের বিবরণ লিখুন", category: "E-commerce" },
+  ],
+  km: [
+    { title: "ការពិពណ៌នាផលិតផល", prompt: "សរសេរការពិពណ៌នាផលិតផលសម្រាប់ហាងអនឡាញលក់សម្លៀកបំពាក់ ដែលផ្តោតលើគុណភាពក្រណាត់និងការរចនា", category: "E-commerce" },
+    { title: "ការឆ្លើយតបអតិថិជន", prompt: "សរសេរសារឆ្លើយតបអតិថិជនដែលមិនពេញចិត្តនឹងសេវាកម្ម ដោយប្រើភាសាគួរសមនិងផ្តល់ដំណោះស្រាយ", category: "Customer Service" },
+    { title: "ប្រកាសហ្វេសប៊ុក", prompt: "សរសេរប្រកាសហ្វេសប៊ុកសម្រាប់ភោជនីយដ្ឋានថ្មីក្នុងភ្នំពេញ ដើម្បីទាក់ទាញអតិថិជន", category: "Social Media" },
+  ],
+  ms: [
+    { title: "Agenda Mesyuarat", prompt: "Sediakan agenda mesyuarat bulanan pasukan jualan termasuk KPI, pencapaian suku tahun dan sasaran akan datang", category: "Business" },
+    { title: "Posting Media Sosial", prompt: "Tulis posting Instagram untuk kedai kopi artisan baru di Kuala Lumpur, sertakan hashtag popular Malaysia", category: "Social Media" },
+    { title: "Deskripsi Produk Shopee", prompt: "Buat deskripsi produk untuk beg tangan kulit buatan tangan di Shopee Malaysia, tekankan kualiti dan ketahanan", category: "E-commerce" },
+  ],
+};
 
 const ASIA_CATEGORIES = [
   { label: "E-commerce", query: "ecommerce", icon: "🛒" },
@@ -361,6 +431,44 @@ const PromptLibrary = () => {
           </div>
         </section>
 
+        {/* Native-script prompt examples when a language is selected */}
+        {language !== "all" && language !== "en" && NATIVE_PROMPTS[language] && (
+          <section className="mb-6">
+            <div className="rounded-xl bg-primary/5 border border-primary/20 p-4">
+              <div className="flex items-center gap-2 mb-3">
+                <Globe className="h-4 w-4 text-primary" />
+                <span className="text-sm font-semibold text-foreground">
+                  {LANGUAGES.find(l => l.id === language)?.flag} Prompts in {LANGUAGES.find(l => l.id === language)?.name}
+                </span>
+                <Badge variant="outline" className="text-[10px]">Native Script</Badge>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {NATIVE_PROMPTS[language].map((np, idx) => (
+                  <Card key={idx} className="bg-background border-border">
+                    <CardContent className="p-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Badge variant="secondary" className="text-[10px]">{np.category}</Badge>
+                      </div>
+                      <h4 className="font-semibold text-sm mb-2">{np.title}</h4>
+                      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">{np.prompt}</p>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="mt-2 h-7 text-xs text-primary"
+                        onClick={() => {
+                          navigator.clipboard.writeText(np.prompt);
+                          toast({ title: "Copied!", description: "Prompt copied to clipboard" });
+                        }}
+                      >
+                        <Copy className="h-3 w-3 mr-1" /> Copy
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
         {/* Browse & Search Section */}
         <section className="mb-6">
           <div className="grid gap-6 lg:grid-cols-3">
