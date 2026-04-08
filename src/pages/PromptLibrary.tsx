@@ -429,6 +429,44 @@ const PromptLibrary = () => {
           </div>
         </section>
 
+        {/* Native-script prompt examples when a language is selected */}
+        {language !== "all" && language !== "en" && NATIVE_PROMPTS[language] && (
+          <section className="mb-6">
+            <div className="rounded-xl bg-primary/5 border border-primary/20 p-4">
+              <div className="flex items-center gap-2 mb-3">
+                <Globe className="h-4 w-4 text-primary" />
+                <span className="text-sm font-semibold text-foreground">
+                  {LANGUAGES.find(l => l.id === language)?.flag} Prompts in {LANGUAGES.find(l => l.id === language)?.name}
+                </span>
+                <Badge variant="outline" className="text-[10px]">Native Script</Badge>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {NATIVE_PROMPTS[language].map((np, idx) => (
+                  <Card key={idx} className="bg-background border-border">
+                    <CardContent className="p-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Badge variant="secondary" className="text-[10px]">{np.category}</Badge>
+                      </div>
+                      <h4 className="font-semibold text-sm mb-2">{np.title}</h4>
+                      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">{np.prompt}</p>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="mt-2 h-7 text-xs text-primary"
+                        onClick={() => {
+                          navigator.clipboard.writeText(np.prompt);
+                          toast({ title: "Copied!", description: "Prompt copied to clipboard" });
+                        }}
+                      >
+                        <Copy className="h-3 w-3 mr-1" /> Copy
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
         {/* Browse & Search Section */}
         <section className="mb-6">
           <div className="grid gap-6 lg:grid-cols-3">
