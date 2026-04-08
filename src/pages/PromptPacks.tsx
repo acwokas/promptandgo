@@ -314,8 +314,9 @@ const PromptPacks = () => {
         </Breadcrumb>
 
         <SEO
-          title="⚡️Power Packs - Save 50%"
-          description="Curated bundles built for specific goals, offering outcome-oriented prompt frameworks that deliver deep, high-value, structured results."
+          title="AI Prompt Power Packs | Curated Bundles for ChatGPT, Claude & More | PromptAndGo"
+          description="Save 50% on curated AI prompt bundles built for specific goals. Outcome-oriented frameworks for marketing, sales, content & more — works in 12+ Asian languages."
+          canonical="https://promptandgo.ai/packs"
           structuredData={productSchemas}
         />
 

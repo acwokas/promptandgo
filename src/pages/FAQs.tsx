@@ -167,8 +167,9 @@ const FAQs = () => {
   return (
     <>
       <SEO
-        title="FAQs - PromptandGo"
-        description="Find quick answers about PromptandGo: getting started, using prompts, payments, licensing, and support."
+        title="Frequently Asked Questions | PromptAndGo"
+        description="Answers about PromptAndGo's free AI prompt library, Scout optimizer, Power Packs, 12+ Asian language support, and platform compatibility with ChatGPT, Claude & more."
+        canonical="https://promptandgo.ai/faqs"
         structuredData={faqSchema}
       />
 

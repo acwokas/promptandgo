@@ -200,11 +200,12 @@ const Index = () => {
   return (
     <>
       <SEO
-        title="PromptAndGo - AI Prompts That Actually Work | Free for ChatGPT, Claude & More"
-        description="3,000+ battle-tested AI prompts + a free optimizer that makes any prompt better. Built for professionals across Singapore, Indonesia, Vietnam, Malaysia and Australia."
+        title="PromptAndGo.ai | AI Prompt Optimizer for 12+ Asian Languages | ChatGPT, Claude, Gemini & More"
+        description="3,000+ battle-tested AI prompts + free Scout optimizer for ChatGPT, Claude, Gemini, Qwen & 12 platforms. Optimized for Japanese, Mandarin, Bahasa, Vietnamese & more."
         canonical="https://promptandgo.ai"
         image="https://promptandgo.ai/og-default.png"
         ogType="website"
+        keywords="AI prompts, ChatGPT prompts, Claude prompts, Gemini prompts, Asian AI prompts, multilingual prompts, prompt optimizer, Qwen, DeepSeek, Japanese prompts, Mandarin prompts"
         structuredData={homeStructuredData}
       />
       <AIOptimizedStructuredData pageType="HomePage" title="3,000+ Curated AI Prompts" description="Browse, copy, and run tested AI prompts." />
