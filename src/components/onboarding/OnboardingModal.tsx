@@ -102,7 +102,7 @@ export const OnboardingModal = () => {
 
   return (
     <Dialog open={isOpen} onOpenChange={open => { if (!open) dismiss(); }}>
-      <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto relative p-0">
+      <DialogContent className="max-w-[100vw] sm:max-w-lg max-h-[100dvh] sm:max-h-[90vh] overflow-y-auto relative p-0 rounded-none sm:rounded-lg">
         <button
           onClick={dismiss}
           className="absolute top-3 right-3 p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors z-10"

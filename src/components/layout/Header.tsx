@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { User, ShoppingCart, Sparkles, Search, Bookmark, Sun, Moon } from "lucide-react";
+import { User, ShoppingCart, Sparkles, Search, Bookmark, Sun, Moon, Settings } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
 import { supabase } from "@/integrations/supabase/client";
@@ -169,14 +169,23 @@ const Header = () => {
           {/* Notifications */}
           <NotificationCenter />
 
-          {/* Dark mode toggle */}
+          {/* Dark mode toggle — hidden on small mobile */}
           <button
             onClick={toggleTheme}
-            className="p-2 flex items-center justify-center text-foreground hover:text-primary transition-colors rounded-md hover:bg-muted/50"
+            className="hidden sm:flex p-2 items-center justify-center text-foreground hover:text-primary transition-colors rounded-md hover:bg-muted/50"
             aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
           >
             {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
           </button>
+
+          {/* Settings — hidden on small mobile */}
+          <Link
+            to="/settings"
+            className="hidden sm:flex p-2 items-center justify-center text-foreground hover:text-primary transition-colors rounded-md hover:bg-muted/50"
+            aria-label="Settings"
+          >
+            <Settings size={18} />
+          </Link>
 
           {/* XP Display for logged-in users */}
           {user && <XPDisplay />}
