@@ -37,73 +37,73 @@ const MULTILINGUAL_EXAMPLES = [
     lang: "Bahasa",
     flag: "🇮🇩",
     code: "id",
-    example: "Tuliskan email pemasaran profesional untuk startup fintech"
+    example: "Buatkan copywriting iklan Instagram untuk peluncuran produk skincare lokal yang ramah lingkungan"
   },
   {
     lang: "Vietnamese",
     flag: "🇻🇳",
     code: "vi",
-    example: "Viết email quảng cáo cho sản phẩm công nghệ của tôi"
+    example: "Soạn email chuyên nghiệp gửi đối tác về đề xuất hợp tác kinh doanh xuất nhập khẩu"
   },
   {
     lang: "Mandarin",
     flag: "🇨🇳",
     code: "zh",
-    example: "为我的产品编写营销文案"
+    example: "帮我写一条小红书种草文案，推荐一款适合亚洲肌肤的防晒霜"
   },
   {
     lang: "Malay",
     flag: "🇲🇾",
     code: "ms",
-    example: "Tulis strategi media sosial untuk permulaan kami"
+    example: "Sediakan agenda mesyuarat bulanan pasukan jualan termasuk KPI dan sasaran suku tahunan"
   },
   {
     lang: "Thai",
     flag: "🇹🇭",
     code: "th",
-    example: "เขียนข้อความการตลาดสำหรับผลิตภัณฑ์ของฉัน"
+    example: "เขียนข้อความตอบลูกค้าที่ไม่พอใจสินค้า โดยใช้ภาษาสุภาพและเสนอทางแก้ไข"
   },
   {
     lang: "Japanese",
     flag: "🇯🇵",
     code: "ja",
-    example: "製品のマーケティングメールを書いてください"
+    example: "取引先への敬語を使った納期延長のお詫びメールを作成してください"
   },
   {
     lang: "Korean",
     flag: "🇰🇷",
     code: "ko",
-    example: "제품 마케팅 이메일을 작성해주세요"
+    example: "신제품 블루투스 이어폰에 대한 상세한 쿠팡 리뷰를 작성해주세요"
   },
   {
     lang: "Hindi",
     flag: "🇮🇳",
     code: "hi",
-    example: "मेरे उत्पाद के लिए मार्केटिंग ईमेल लिखें"
+    example: "डिजिटल मार्केटिंग पर एक विस्तृत ब्लॉग की रूपरेखा तैयार करें जो छोटे व्यवसायों के लिए हो"
   },
   {
     lang: "Tamil",
     flag: "🇱🇰",
     code: "ta",
-    example: "எனது தயாரிப்புக்கான சந்தைப்படுத்தல் மின்னஞ்சலை எழுதுங்கள்"
+    example: "ஒரு மென்பொருள் நிறுவனத்திற்கான வேலை விளம்பரம் எழுதுங்கள்"
   },
   {
     lang: "Tagalog",
     flag: "🇵🇭",
     code: "tl",
-    example: "Sumulat ng marketing email para sa aking produkto"
+    example: "Gumawa ng product description para sa online shop ng handmade na bag"
   },
   {
     lang: "Bengali",
     flag: "🇧🇩",
     code: "bn",
-    example: "আমার পণ্যের জন্য একটি মার্কেটিং ইমেইল লিখুন"
+    example: "আমাদের ই-কমার্স সাইটের জন্য একটি গ্রাহক সেবা প্রতিক্রিয়া টেমপ্লেট তৈরি করুন"
   },
   {
     lang: "Khmer",
     flag: "🇰🇭",
     code: "km",
-    example: "សរសេរអ៊ីមែលទីផ្សារសម្រាប់ផលិតផលរបស់ខ្ញុំ"
+    example: "សរសេរការពិពណ៌នាផលិតផលសម្រាប់ហាងអនឡាញលក់សម្លៀកបំពាក់"
   },
 ];
 
@@ -388,15 +388,12 @@ const Index = () => {
                 </div>
                 <h3 className="text-xl font-bold mb-3">Any Language, Any Culture</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed mb-5">
-                  Generate and optimize prompts in Bahasa, Vietnamese, Mandarin, Malay, Thai, Hindi, Japanese, Korean, and English. Scout adapts tone, formality, and cultural context automatically.
+                  Generate and optimize prompts in 12+ Asian languages including Bahasa, Vietnamese, Mandarin, Japanese, Korean, Thai, Hindi, Tamil, and more. Scout adapts tone, formality, and cultural context automatically.
                 </p>
                 <div className="flex flex-wrap gap-2 mb-5">
                   {MULTILINGUAL_EXAMPLES.map((item) => (
                     <span key={item.code} className="text-sm">{item.flag}</span>
                   ))}
-                  <span className="text-sm">🇯🇵</span>
-                  <span className="text-sm">🇰🇷</span>
-                  <span className="text-sm">🇮🇳</span>
                   <span className="text-sm">🇬🇧</span>
                 </div>
                 <span className="inline-flex items-center text-sm font-semibold text-primary group-hover:gap-2 transition-all">
@@ -446,24 +443,23 @@ const Index = () => {
                 Prompt in Your Language
               </h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                62.7% of APAC professionals search in non-English languages. Scout optimizes prompts in Bahasa, Vietnamese, Mandarin, Malay, Thai, and English with full cultural context.
+                62.7% of APAC professionals search in non-English languages. Scout optimizes prompts in 12+ Asian languages — from CJK to Southeast Asian and South Asian scripts — with full cultural context.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-5 gap-4 mb-12">
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 mb-12">
               {MULTILINGUAL_EXAMPLES.map((item, idx) => (
                 <button
                   key={item.code}
                   onClick={() => setActiveLanguage(idx)}
-                  className={`p-4 rounded-xl border-2 transition-all duration-300 group ${
+                  className={`p-3 rounded-xl border-2 transition-all duration-300 group ${
                     activeLanguage === idx
                       ? "border-primary bg-primary/10"
                       : "border-border/50 bg-card hover:border-border hover:bg-muted/50"
                   }`}
                 >
-                  <div className="text-2xl mb-2">{item.flag}</div>
-                  <p className="font-semibold text-sm group-hover:text-primary transition-colors">{item.lang}</p>
-                  <p className="text-xs text-muted-foreground mt-1 group-hover:text-foreground/70 transition-colors">28.6% YoY growth</p>
+                  <div className="text-2xl mb-1">{item.flag}</div>
+                  <p className="font-semibold text-xs group-hover:text-primary transition-colors">{item.lang}</p>
                 </button>
               ))}
             </div>
