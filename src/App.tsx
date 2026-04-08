@@ -104,6 +104,9 @@ import LanguageLearning from "./pages/LanguageLearning";
 import PromptTemplates from "./pages/PromptTemplates";
 import Enterprise from "./pages/Enterprise";
 import ApiDocs from "./pages/ApiDocs";
+import Community from "./pages/Community";
+import Changelog from "./pages/Changelog";
+import Integrations from "./pages/Integrations";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
@@ -227,6 +230,9 @@ const AppContent = () => {
                 <Route path="/templates" element={<PromptTemplates />} />
                 <Route path="/enterprise" element={<Enterprise />} />
                 <Route path="/api-docs" element={<ApiDocs />} />
+                <Route path="/community" element={<Community />} />
+                <Route path="/changelog" element={<Changelog />} />
+                <Route path="/integrations" element={<Integrations />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               </AnalyticsProvider>
