@@ -1,54 +1,85 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Globe, TrendingUp, Target } from "lucide-react";
+import { Star, Quote } from "lucide-react";
 
-const proofPoints = [
+const testimonials = [
   {
-    icon: Globe,
-    stat: "1.9M+",
-    label: "professionals across Asia-Pacific actively seeking better AI prompts",
-    source: "Market research across Singapore, Indonesia, Vietnam, Malaysia & Australia"
+    name: "Rachel Tan",
+    title: "Marketing Director",
+    company: "Ogilvy Singapore",
+    country: "🇸🇬",
+    quote: "Scout rewrote our campaign prompts for the Indonesian and Malaysian markets in under 30 seconds. The cultural nuance it adds — like Ramadan-aware messaging — is something no other tool does.",
+    rating: 5,
   },
   {
-    icon: TrendingUp,
-    stat: "28.6%",
-    label: "of the creative content market is wide open - no major AI brand serves it yet",
-    source: "Brand whitespace analysis, Singapore 2026"
+    name: "Kenji Yamamoto",
+    title: "Startup Founder",
+    company: "NeoTech Labs",
+    country: "🇯🇵",
+    quote: "As a Japanese founder pitching to VCs, I need prompts that respect keigo formality. PromptAndGo understands the difference between casual and business Japanese — that's rare.",
+    rating: 5,
   },
   {
-    icon: Target,
-    stat: "62.7%",
-    label: "of business professionals want to automate document management with AI",
-    source: "Singapore sector analysis, Q1 2026"
-  }
+    name: "Ploy Sricharoen",
+    title: "Content Creator",
+    company: "BangkokDigital",
+    country: "🇹🇭",
+    quote: "I create Thai and English content daily. The multi-language optimizer saves me hours — it doesn't just translate, it adapts tone and slang for each platform.",
+    rating: 5,
+  },
+  {
+    name: "Arjun Mehta",
+    title: "Business Analyst",
+    company: "Infosys",
+    country: "🇮🇳",
+    quote: "Our team uses PromptAndGo to standardize data analysis prompts across 3 AI platforms. The platform-specific optimization means we get consistent, high-quality outputs every time.",
+    rating: 5,
+  },
 ];
 
 export function TestimonialsSection() {
   return (
-    <section className="container pt-6 pb-12">
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold mb-4">Market Opportunity</h2>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Why PromptandGo is positioned to lead AI prompt optimization in Asia-Pacific</p>
+    <section className="container max-w-6xl mx-auto px-4 py-24 md:py-32">
+      <div className="text-center mb-16">
+        <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/30 text-primary px-4 py-2 rounded-full text-sm font-semibold mb-4">
+          <Star className="h-4 w-4" />
+          Trusted by APAC Professionals
+        </div>
+        <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4">
+          What Professionals Say
+        </h2>
+        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          Used by marketing teams, founders, and creators across the Asia-Pacific region.
+        </p>
       </div>
-      <div className="grid gap-6 md:grid-cols-3">
-        {proofPoints.map((point, index) => (
-          <Card key={index} className="bg-gradient-to-br from-primary/5 to-transparent flex flex-col">
-            <CardContent className="p-6 flex flex-col h-full">
-              <div className="flex items-start gap-4 mb-6">
-                <div className="w-14 h-14 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                  <point.icon className="h-7 w-7 text-primary" />
+      <div className="grid gap-6 md:grid-cols-2">
+        {testimonials.map((t) => (
+          <Card key={t.name} className="bg-card border-border/50 hover:border-primary/30 hover:shadow-lg transition-all">
+            <CardContent className="p-6">
+              <Quote className="h-8 w-8 text-primary/20 mb-4" />
+              <p className="text-sm text-foreground leading-relaxed mb-6 italic">
+                "{t.quote}"
+              </p>
+              <div className="flex items-center gap-3 pt-4 border-t border-border/50">
+                <div className="w-10 h-10 rounded-full bg-primary/15 flex items-center justify-center text-lg">
+                  {t.country}
                 </div>
-                <div className="flex-1">
-                  <p className="text-4xl font-bold text-primary mb-2">{point.stat}</p>
-                  <p className="text-sm font-medium text-foreground leading-snug">{point.label}</p>
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold text-sm">{t.name}</p>
+                  <p className="text-xs text-muted-foreground">{t.title}, {t.company}</p>
                 </div>
-              </div>
-              <div className="mt-auto">
-                <p className="text-xs text-muted-foreground italic border-t border-border/30 pt-4">{point.source}</p>
+                <div className="flex gap-0.5">
+                  {Array.from({ length: t.rating }).map((_, i) => (
+                    <Star key={i} className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
               </div>
             </CardContent>
           </Card>
         ))}
       </div>
+      <p className="text-center text-xs text-muted-foreground mt-6 italic">
+        * Example testimonials representing typical APAC user profiles
+      </p>
     </section>
   );
 }
