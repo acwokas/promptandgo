@@ -251,6 +251,8 @@ const AppContent = () => {
                 <Route path="/settings" element={<SettingsPage />} />
                 <Route path="/referral" element={<ReferralPage />} />
                 <Route path="/testimonials" element={<Testimonials />} />
+                <Route path="/tutorial" element={<Tutorial />} />
+                <Route path="/glossary" element={<Glossary />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               </AnalyticsProvider>
