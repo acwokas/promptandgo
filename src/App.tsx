@@ -111,6 +111,8 @@ import SearchPage from "./pages/Search";
 import PlatformComparison from "./pages/PlatformComparison";
 import BlogArticle from "@/components/blog/BlogArticle";
 import OnboardingModal from "@/components/onboarding/OnboardingModal";
+import SettingsPage from "./pages/Settings";
+import ReferralPage from "./pages/Referral";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import BackToTop from "@/components/BackToTop";
@@ -243,6 +245,8 @@ const AppContent = () => {
                 <Route path="/compare" element={<PlatformComparison />} />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/:slug" element={<BlogArticle />} />
+                <Route path="/settings" element={<SettingsPage />} />
+                <Route path="/referral" element={<ReferralPage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               </AnalyticsProvider>
