@@ -125,6 +125,7 @@ const KeyboardShortcuts = lazy(() => import("./pages/KeyboardShortcuts"));
 const Accessibility = lazy(() => import("./pages/Accessibility"));
 const Partners = lazy(() => import("./pages/Partners"));
 const UseCasesPage = lazy(() => import("./pages/UseCases"));
+const StatusPage = lazy(() => import("./pages/StatusPage"));
 
 const queryClient = new QueryClient();
 
@@ -279,6 +280,7 @@ const AppContent = () => {
                 <Route path="/accessibility" element={<Accessibility />} />
                 <Route path="/partners" element={<Partners />} />
                 <Route path="/use-cases" element={<UseCasesPage />} />
+                <Route path="/status" element={<StatusPage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               </Suspense>
