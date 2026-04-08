@@ -1,131 +1,118 @@
 import { Link } from "react-router-dom";
-import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
-import { User as UserIcon, Bot, Search, Heart, TrendingUp } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Bot, MessageSquare, Sparkles } from "lucide-react";
+
+const PLATFORMS = [
+  { name: "ChatGPT", letter: "G", bg: "bg-[hsl(160,82%,35%)]" },
+  { name: "Claude", letter: "C", bg: "bg-[hsl(348,76%,59%)]" },
+  { name: "Gemini", letter: "G", bg: "bg-[hsl(174,82%,33%)]" },
+  { name: "DeepSeek", letter: "D", bg: "bg-[hsl(220,60%,50%)]" },
+  { name: "Qwen", letter: "Q", bg: "bg-[hsl(260,50%,55%)]" },
+  { name: "Ernie", letter: "E", bg: "bg-[hsl(210,80%,45%)]" },
+];
 
 const Footer = () => {
-  const { user } = useSupabaseAuth();
   return (
-    <footer className="border-t mt-16">
-      <div className="container py-10 grid gap-6 md:grid-cols-3 text-sm">
-        <div>
-          <Link to="/" className="inline-flex items-center mb-1" aria-label="PromptandGo home">
-            <img
-              src="/lovable-uploads/9e8de25b-d91c-445a-b211-d156a28e4b33.png"
-              alt="PromptandGo logo"
-              className="h-8 w-auto object-contain -mt-1 max-w-[200px]"
-              loading="lazy"
-              decoding="async"
-            />
-          </Link>
-          <div className="ml-1.5 mt-3">
-            {user ? (
-              <Button asChild variant="hero" size="sm" aria-label="Inspire Me!">
-                <Link to="/library?random=1">Inspire Me!</Link>
-              </Button>
-            ) : (
-              <Button asChild variant="cta" size="sm" aria-label="Get 1 FREE ⚡️Power Pack!">
-                <Link to="/auth?mode=signup">Get 1 FREE ⚡️Power Pack!</Link>
-              </Button>
-            )}
+    <footer className="bg-hero text-white mt-16">
+      {/* Main footer */}
+      <div className="container max-w-6xl mx-auto px-4 pt-16 pb-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-8">
+          {/* Brand column */}
+          <div className="col-span-2 md:col-span-1">
+            <Link to="/" className="inline-block mb-4" aria-label="PromptandGo home">
+              <img
+                src="/lovable-uploads/9e8de25b-d91c-445a-b211-d156a28e4b33.png"
+                alt="PromptandGo logo"
+                className="h-7 w-auto object-contain max-w-[180px] brightness-0 invert"
+                loading="lazy"
+                decoding="async"
+              />
+            </Link>
+            <p className="text-sm text-white/60 leading-relaxed mb-6">
+              The only prompt optimization tool built for Asia.
+            </p>
+
+            {/* Platform logos */}
+            <div className="flex flex-wrap gap-2">
+              {PLATFORMS.map((p) => (
+                <div
+                  key={p.name}
+                  title={p.name}
+                  className={`w-7 h-7 rounded-md ${p.bg} flex items-center justify-center text-white text-xs font-bold opacity-80 hover:opacity-100 transition-opacity`}
+                >
+                  {p.letter}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-        <div className="md:col-span-2 grid grid-cols-3 gap-4">
-          <nav className="flex flex-col gap-2">
-            <span className="text-foreground font-medium">Popular categories</span>
-            <Link to="/library?q=marketing" className="text-muted-foreground hover:text-foreground">Marketing prompts</Link>
-            <Link to="/library?q=productivity" className="text-muted-foreground hover:text-foreground">Productivity prompts</Link>
-            <Link to="/library?q=sales" className="text-muted-foreground hover:text-foreground">Sales prompts</Link>
-            <Link to="/library?q=seo" className="text-muted-foreground hover:text-foreground">SEO prompts</Link>
-            <Link to="/library?q=content" className="text-muted-foreground hover:text-foreground">Content creation prompts</Link>
-            <Link to="/library?q=social%20media" className="text-muted-foreground hover:text-foreground">Social media prompts</Link>
-            <Link to="/library?q=business" className="text-muted-foreground hover:text-foreground">Business strategy prompts</Link>
-            <Link to="/library?q=writing" className="text-muted-foreground hover:text-foreground">Writing prompts</Link>
-            <Link to="/library?q=customer%20service" className="text-muted-foreground hover:text-foreground">Customer service prompts</Link>
-            <Link to="/library?q=creative" className="text-muted-foreground hover:text-foreground">Creative prompts</Link>
+
+          {/* Product */}
+          <nav className="flex flex-col gap-3">
+            <span className="text-xs font-semibold uppercase tracking-widest text-white/40 mb-1">Product</span>
+            <Link to="/optimize" className="text-sm text-white/70 hover:text-white transition-colors">Optimize</Link>
+            <Link to="/library" className="text-sm text-white/70 hover:text-white transition-colors">Browse Prompts</Link>
+            <Link to="/packs" className="text-sm text-white/70 hover:text-white transition-colors">Power Packs</Link>
+            <Link to="/scout" className="text-sm text-white/70 hover:text-white transition-colors inline-flex items-center gap-1.5">
+              <Bot className="h-3.5 w-3.5 text-accent" />
+              Ask Scout
+            </Link>
+            <Link to="/market-insights" className="text-sm text-white/70 hover:text-white transition-colors">Market Intelligence</Link>
           </nav>
-          <nav className="flex flex-col gap-2">
-            <span className="text-foreground font-medium">Main sections</span>
-            <Link to="/" className="text-muted-foreground hover:text-foreground">👋 Welcome</Link>
-            <Link to="/library" className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
-              <Search className="h-3 w-3" />
-              Browse Prompts
-            </Link>
-            <Link to="/packs" className="text-muted-foreground hover:text-foreground">⚡️ Power Packs</Link>
-            <Link to="/optimize" className="text-muted-foreground hover:text-foreground">✨ Prompt Optimizer</Link>
-            <Link to="/scout" className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
-              <Bot className="h-3 w-3 text-accent" />
-              Scout AI
-            </Link>
-            <Link to="/how-it-works" className="text-muted-foreground hover:text-foreground">🤓 How it Works</Link>
-            <Link to="/tips" className="text-muted-foreground hover:text-foreground">💡 Tips & Blog</Link>
-            <Link to="/faqs" className="text-muted-foreground hover:text-foreground">❓ FAQs</Link>
+
+          {/* Company */}
+          <nav className="flex flex-col gap-3">
+            <span className="text-xs font-semibold uppercase tracking-widest text-white/40 mb-1">Company</span>
+            <Link to="/about" className="text-sm text-white/70 hover:text-white transition-colors">About</Link>
+            <Link to="/tips" className="text-sm text-white/70 hover:text-white transition-colors">Blog</Link>
+            <Link to="/contact" className="text-sm text-white/70 hover:text-white transition-colors">Contact</Link>
           </nav>
-          <nav className="flex flex-col gap-2">
-            <span className="text-foreground font-medium">Tools & More</span>
-            <Link to="/ai/studio" className="text-muted-foreground hover:text-foreground">Prompt Studio</Link>
-            <Link to="/ai/assistant" className="text-muted-foreground hover:text-foreground">Scout AI Assistant</Link>
-            <Link to="/certification" className="text-muted-foreground hover:text-foreground">Certification</Link>
-            <Link to="/small-business" className="text-muted-foreground hover:text-foreground">Small Business</Link>
-            <Link to="/market-insights" className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
-              <TrendingUp className="h-3 w-3 text-accent" />
-              Market Intelligence
-            </Link>
-            <Link to="/submit" className="text-muted-foreground hover:text-foreground">Submit a Prompt</Link>
-            <Link to="/contact" className="text-muted-foreground hover:text-foreground">Contact Us</Link>
-            {user && (
-              <Link to="/account" className="text-muted-foreground hover:text-foreground" title="My Account" aria-label="My Account">
-                <span className="inline-flex items-center gap-2"><UserIcon className="h-4 w-4" aria-hidden="true" /> My Account</span>
-              </Link>
-            )}
-            <Link to={user ? "/saved" : "/auth"} className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
-              <Heart className="h-3 w-3 text-red-500" />
-              Saved Prompts
-            </Link>
+
+          {/* Resources */}
+          <nav className="flex flex-col gap-3">
+            <span className="text-xs font-semibold uppercase tracking-widest text-white/40 mb-1">Resources</span>
+            <Link to="/how-it-works" className="text-sm text-white/70 hover:text-white transition-colors">Help Center</Link>
+            <Link to="/faqs" className="text-sm text-white/70 hover:text-white transition-colors">FAQs</Link>
+            <Link to="/certification" className="text-sm text-white/70 hover:text-white transition-colors">Certification</Link>
           </nav>
-        </div>
-        <div className="md:col-span-3 col-span-full flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-sm text-muted-foreground">
-          <div className="text-right w-full">
-            © 2026 PromptandGo  |  <Link to="/terms" className="hover:text-foreground">Terms & Conditions</Link>  |  <Link to="/privacy" className="hover:text-foreground">Privacy Policy</Link>
-          </div>
         </div>
       </div>
-      
-      {/* Ecosystem Postscript */}
-      <div className="border-t border-border/40">
-        <div className="container py-6 text-center">
-          <p className="text-[11px] text-muted-foreground/70 mb-2">
+
+      {/* Ecosystem postscript */}
+      <div className="border-t border-white/10">
+        <div className="container max-w-6xl mx-auto px-4 py-6 text-center">
+          <p className="text-[11px] text-white/30 mb-1">
             Part of the You.WithThePowerOf.AI ecosystem
           </p>
-          <p className="text-xs text-muted-foreground/80 leading-relaxed max-w-md mx-auto mb-3">
-            Different parts of the ecosystem support different stages.<br />
-            Most people move through one or two, not all.
-          </p>
-          <p className="text-xs text-muted-foreground mb-2">
-            If you're shaping an idea, BusinessInAByte helps structure it into a clearer direction.
-          </p>
-          <a 
-            href="https://businessinabyte.com/" 
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-foreground/80 hover:text-foreground underline underline-offset-2"
-          >
-            Structure your idea →
-          </a>
-          <p className="text-[10px] text-muted-foreground/60 mt-2 mb-4">
-            You don't need to go further unless it feels useful.
-          </p>
-          <p className="text-[10px] text-muted-foreground/50">
-            You can also read more about the thinking behind this ecosystem.{" "}
-            <a 
-              href="https://you.withthepowerof.ai" 
-              target="_blank" 
+          <p className="text-[11px] text-white/40">
+            Shaping an idea?{" "}
+            <a
+              href="https://businessinabyte.com/"
+              target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-muted-foreground underline underline-offset-2"
+              className="text-white/50 hover:text-white/70 underline underline-offset-2"
             >
-              you.withthepowerof.ai →
+              BusinessInAByte
+            </a>
+            {" "}helps structure it.{" "}
+            <a
+              href="https://you.withthepowerof.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/50 hover:text-white/70 underline underline-offset-2"
+            >
+              Learn more →
             </a>
           </p>
+        </div>
+      </div>
+
+      {/* Bottom bar */}
+      <div className="border-t border-white/10">
+        <div className="container max-w-6xl mx-auto px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
+          <span>© 2026 PromptandGo. All rights reserved.</span>
+          <div className="flex items-center gap-4">
+            <Link to="/privacy" className="hover:text-white/70 transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-white/70 transition-colors">Terms</Link>
+          </div>
         </div>
       </div>
     </footer>
