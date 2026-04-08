@@ -67,7 +67,7 @@ const CountryInsightLayout = ({ data }: { data: CountryData }) => {
             <div className="flex justify-center mb-6">
               <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/10 text-white/90 px-4 py-1.5 rounded-full text-sm">
                 <Brain className="h-3.5 w-3.5 text-accent" />
-                <span>SQREEM Intelligence {data.flag}</span>
+                <span>Market Intelligence {data.flag}</span>
               </div>
             </div>
 
@@ -96,7 +96,7 @@ const CountryInsightLayout = ({ data }: { data: CountryData }) => {
               Who's searching for better prompts?
             </h2>
             <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-              SQREEM's behavioural AI identified distinct audience segments in {data.name} actively seeking prompt optimisation solutions.
+              Behavioural AI identified distinct audience segments in {data.name} actively seeking prompt optimisation solutions.
             </p>
           </div>
 
@@ -145,7 +145,7 @@ const CountryInsightLayout = ({ data }: { data: CountryData }) => {
                 Market opportunities
               </h2>
               <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-                Gaps and whitespace identified through SQREEM's competitive analysis of the {data.name} market.
+                Gaps and whitespace identified through competitive analysis of the {data.name} market.
               </p>
             </div>
 
@@ -205,7 +205,7 @@ const CountryInsightLayout = ({ data }: { data: CountryData }) => {
           <div className="text-center">
             <h2 className="text-2xl font-bold tracking-tight mb-4">About this data</h2>
             <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto text-sm">
-              All data comes from SQREEM Intelligence, an AI-powered behavioural analytics platform that analyses billions of digital signals to build audience profiles. No surveys, no self-reported data - just actual behavioural signals from people in {data.name} actively seeking prompt optimisation solutions.
+              All data comes from AI-powered behavioural analytics that analyses billions of digital signals to build audience profiles. No surveys, no self-reported data - just actual behavioural signals from people in {data.name} actively seeking prompt optimisation solutions.
             </p>
           </div>
         </section>

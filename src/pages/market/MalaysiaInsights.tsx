@@ -8,8 +8,8 @@ const data: CountryData = {
   slug: "malaysia",
   audience: "10,969",
   ageRange: "27-55 years",
-  seoTitle: "Malaysia Market Insights - SQREEM Intelligence | PromptAndGo",
-  seoDescription: "10,969 professionals in Malaysia are actively seeking better AI prompts. SQREEM behavioural data reveals two distinct personas and untapped market whitespace.",
+  seoTitle: "Malaysia Market Insights | PromptAndGo",
+  seoDescription: "10,969 professionals in Malaysia are actively seeking better AI prompts. Behavioural data reveals two distinct personas and untapped market whitespace.",
   headline: "10,969 professionals seeking better prompts",
   subheadline: "Malaysia's AI prompt market is dominated by technical professionals hungry for workflow automation, prompt engineering mastery, and career advancement through AI skills.",
   personas: [
@@ -49,7 +49,7 @@ const data: CountryData = {
     },
   ],
   keyInsight: "Malaysia's AI prompt market is heavily skewed towards technical professionals who see prompt engineering not as a nice-to-have, but as a career differentiator. The 20% who explicitly link AI skills to promotion prospects represent the most conversion-ready segment.",
-  keyInsightAttribution: "- SQREEM behavioural analysis, Malaysia market, 2025",
+  keyInsightAttribution: "- Behavioural analysis, Malaysia market, 2025",
 };
 
 const MalaysiaInsights = () => <CountryInsightLayout data={data} />;

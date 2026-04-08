@@ -65,21 +65,6 @@ const MULTILINGUAL_EXAMPLES = [
   },
 ];
 
-const MARKET_DATA = [
-  { country: "Indonesia", count: 537854, abbr: "ID", gradient: "from-orange-500 to-red-500" },
-  { country: "Vietnam", count: 425343, abbr: "VN", gradient: "from-yellow-500 to-amber-500" },
-  { country: "Australia", count: 104647, abbr: "AU", gradient: "from-blue-500 to-cyan-500" },
-  { country: "Singapore", count: 50625, abbr: "SG", gradient: "from-red-500 to-pink-500" },
-  { country: "Malaysia", count: 10969, abbr: "MY", gradient: "from-emerald-500 to-teal-500" },
-];
-
-const PERSONAS = [
-  { label: "Business Professionals", pct: 49, color: "bg-primary" },
-  { label: "Creative Entrepreneurs", pct: 32, color: "bg-accent" },
-  { label: "Students", pct: 14, color: "bg-amber-500" },
-  { label: "Public Sector", pct: 2.5, color: "bg-violet-500" },
-  { label: "Retirees", pct: 2.2, color: "bg-emerald-500" },
-];
 
 const LIVE_ACTIVITIES = [
   { name: "Sarah", location: "Singapore", action: "optimized a marketing prompt", time: 2 },
@@ -90,27 +75,6 @@ const LIVE_ACTIVITIES = [
 ];
 
 
-// Animated counter component
-const AnimatedCounter = ({ value, duration = 2000 }: { value: number; duration?: number }) => {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    let start = 0;
-    const increment = value / (duration / 16);
-    const timer = setInterval(() => {
-      start += increment;
-      if (start >= value) {
-        setCount(value);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(start));
-      }
-    }, 16);
-    return () => clearInterval(timer);
-  }, [value, duration]);
-
-  return <span>{count.toLocaleString()}</span>;
-};
 
 const Index = () => {
   const { user } = useSupabaseAuth();
@@ -482,85 +446,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* ═══════════════════════ MARKET INTELLIGENCE ═══════════════════════ */}
-        <section className="relative py-24 md:py-32 bg-hero text-white">
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div className="absolute top-10 right-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
-            <div className="absolute -bottom-20 left-20 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
-          </div>
-
-          <div className="relative z-10 container max-w-6xl mx-auto px-4">
-            <div className="text-center mb-16">
-              <div className="inline-flex items-center gap-2 bg-white/10 border border-primary/40 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4 backdrop-blur-sm">
-                <BarChart3 className="h-4 w-4" />
-                SQREEM Intelligence
-              </div>
-              <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4">
-                Market Intelligence
-              </h2>
-              <p className="text-white/70 text-lg max-w-2xl mx-auto">
-                Real-time insights into APAC prompt-seeking behavior. 1.9M+ professionals. 28.6% YoY growth.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-              {MARKET_DATA.map((item) => (
-                <div
-                  key={item.country}
-                  className="group relative bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-6 hover:bg-white/15 transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/20"
-                >
-                  <div className={`absolute -top-2 -right-2 w-16 h-16 rounded-full bg-gradient-to-br ${item.gradient} opacity-20 group-hover:opacity-40 transition-opacity`} />
-
-                  <div className="relative z-10">
-                    <div className="flex items-start justify-between mb-4">
-                      <div>
-                        <p className="text-2xl font-black text-white mb-1">{item.abbr}</p>
-                        <p className="text-sm text-white/70 font-semibold">{item.country}</p>
-                      </div>
-                      <div className={`px-3 py-1 rounded-lg bg-gradient-to-br ${item.gradient} text-white text-xs font-bold`}>
-                        +28.6%
-                      </div>
-                    </div>
-
-                    <div className="mb-4 pt-4 border-t border-white/10">
-                      <div className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-white/70">
-                        <AnimatedCounter value={item.count} duration={2500} />
-                      </div>
-                      <p className="text-xs text-white/50 mt-2 font-medium">professionals seeking better prompts</p>
-                    </div>
-
-                    <div className="space-y-2">
-                      {PERSONAS.slice(0, 3).map((persona) => (
-                        <div key={persona.label} className="flex items-center gap-2">
-                          <div className={`h-2 rounded-full ${persona.color} opacity-70`} style={{ width: `${(persona.pct / 50) * 100}%` }} />
-                          <span className="text-xs text-white/60">{persona.label}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-8">
-              <h3 className="text-xl font-bold text-white mb-6">Persona Breakdown (All Markets)</h3>
-              <div className="space-y-4">
-                {PERSONAS.map((persona) => (
-                  <div key={persona.label} className="flex items-center gap-4">
-                    <span className="text-sm font-semibold text-white/80 min-w-[160px]">{persona.label}</span>
-                    <div className="flex-1 h-3 bg-white/10 rounded-full overflow-hidden">
-                      <div
-                        className={`h-full bg-gradient-to-r ${persona.color} transition-all duration-1000`}
-                        style={{ width: `${persona.pct}%` }}
-                      />
-                    </div>
-                    <span className="text-sm font-bold text-white min-w-[50px] text-right">{persona.pct}%</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* ═══════════════════════ LIVE ACTIVITY TICKER ═══════════════════════ */}
         <section className="py-16 md:py-20 bg-gradient-to-b from-background to-muted/20">

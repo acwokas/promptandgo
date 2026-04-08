@@ -69,7 +69,7 @@ const Footer = () => {
             <Link to="/small-business" className="text-muted-foreground hover:text-foreground">Small Business</Link>
             <Link to="/market-insights" className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
               <TrendingUp className="h-3 w-3 text-accent" />
-              Market Insights
+              Market Intelligence
             </Link>
             <Link to="/submit" className="text-muted-foreground hover:text-foreground">Submit a Prompt</Link>
             <Link to="/contact" className="text-muted-foreground hover:text-foreground">Contact Us</Link>
