@@ -79,7 +79,7 @@ const Footer = () => {
 
   const handleLangChange = (code: string) => {
     setSelectedLang(code);
-    const langRoutes: Record<string, string> = { ja: "/ja", ko: "/ko", zh: "/zh" };
+    const langRoutes: Record<string, string> = { ja: "/ja", ko: "/ko", zh: "/zh", th: "/th", vi: "/vi" };
     if (langRoutes[code]) {
       window.location.href = langRoutes[code];
     }

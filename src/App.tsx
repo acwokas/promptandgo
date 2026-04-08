@@ -131,6 +131,9 @@ const KoreanLanding = lazy(() => import("./pages/KoreanLanding"));
 const ChineseLanding = lazy(() => import("./pages/ChineseLanding"));
 const CareersPage = lazy(() => import("./pages/Careers"));
 const CookiePolicyPage = lazy(() => import("./pages/CookiePolicy"));
+const ThaiLanding = lazy(() => import("./pages/ThaiLanding"));
+const VietnameseLanding = lazy(() => import("./pages/VietnameseLanding"));
+const PromptHistory = lazy(() => import("./pages/PromptHistory"));
 
 const queryClient = new QueryClient();
 
@@ -291,6 +294,9 @@ const AppContent = () => {
                 <Route path="/zh" element={<ChineseLanding />} />
                 <Route path="/careers" element={<CareersPage />} />
                 <Route path="/cookies" element={<CookiePolicyPage />} />
+                <Route path="/th" element={<ThaiLanding />} />
+                <Route path="/vi" element={<VietnameseLanding />} />
+                <Route path="/history" element={<PromptHistory />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               </Suspense>
