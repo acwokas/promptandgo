@@ -37,6 +37,7 @@ const REGIONS: Region[] = [
       { code: 'tl', name: 'Filipino', nativeName: 'Tagalog', flag: '🇵🇭', sample: 'Sumulat ng marketing email para sa aking SaaS product na para sa mga SME' },
       { code: 'my', name: 'Burmese', nativeName: 'မြန်မာဘာသာ', flag: '🇲🇲', sample: 'SME များအတွက် ကျွန်ုပ်၏ SaaS ထုတ်ကုန်အတွက် စျေးကွက်ရှာဖွေရေး အီးမေးလ် ရေးပါ' },
       { code: 'km', name: 'Khmer', nativeName: 'ភាសាខ្មែរ', flag: '🇰🇭', sample: 'សរសេរអ៊ីមែលទីផ្សារសម្រាប់ផលិតផល SaaS របស់ខ្ញុំដែលផ្តោតលើ SME' },
+      { code: 'lo', name: 'Lao', nativeName: 'ລາວ', flag: '🇱🇦', sample: 'ຂຽນອີເມວການຕະຫຼາດສຳລັບຜະลิดຕະພັນ SaaS ຂອງຂ້ອຍທີ່ແນໃສ່ SME' },
     ],
   },
   {
@@ -46,6 +47,8 @@ const REGIONS: Region[] = [
       { code: 'bn', name: 'Bengali', nativeName: 'বাংলা', flag: '🇧🇩', sample: 'আমার SaaS পণ্যের জন্য SME লক্ষ্য করে একটি মার্কেটিং ইমেইল লিখুন' },
       { code: 'ta', name: 'Tamil', nativeName: 'தமிழ்', flag: '🇱🇰', sample: 'SME-களை குறிவைத்து எனது SaaS தயாரிப்புக்கான சந்தைப்படுத்தல் மின்னஞ்சலை எழுதுங்கள்' },
       { code: 'ur', name: 'Urdu', nativeName: 'اردو', flag: '🇵🇰', sample: 'SMEs کو ہدف بناتے ہوئے میری SaaS پروڈکٹ کے لیے مارکیٹنگ ای میل لکھیں' },
+      { code: 'si', name: 'Sinhala', nativeName: 'සිංහල', flag: '🇱🇰', sample: 'SME ඉලක්ක කරගනිමින් මගේ SaaS නිෂ්පාදනය සඳහා අලෙවිකරණ ඊමේල් එකක් ලියන්න' },
+      { code: 'ne', name: 'Nepali', nativeName: 'नेपाली', flag: '🇳🇵', sample: 'SME लाई लक्षित गर्दै मेरो SaaS उत्पादनको लागि मार्केटिङ इमेल लेख्नुहोस्' },
     ],
   },
   {
@@ -61,7 +64,7 @@ const REGIONS: Region[] = [
 const ALL_LANGUAGES = REGIONS.flatMap((r) => r.languages);
 
 const HERO_STATS = [
-  { value: '20+', label: 'Asian Languages' },
+  { value: '23', label: 'Asian Languages' },
   { value: '4.7B', label: 'People Across Asia' },
   { value: '6', label: 'Regional Zones' },
 ];
