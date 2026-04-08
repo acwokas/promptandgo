@@ -122,6 +122,7 @@ const Glossary = lazy(() => import("./pages/Glossary"));
 const NewsletterArchive = lazy(() => import("./pages/NewsletterArchive"));
 const HtmlSitemap = lazy(() => import("./pages/HtmlSitemap"));
 const KeyboardShortcuts = lazy(() => import("./pages/KeyboardShortcuts"));
+const Accessibility = lazy(() => import("./pages/Accessibility"));
 
 const queryClient = new QueryClient();
 
