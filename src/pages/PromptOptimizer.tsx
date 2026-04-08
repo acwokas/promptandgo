@@ -265,9 +265,10 @@ const PromptOptimizer = () => {
 
   // Add to history after successful optimization
   useEffect(() => {
-    if (optimizedPrompt && prompt.trim()) {
-      const metrics = [70, 75, 68, 72]; // rough base
-      const avgScore = Math.round(metrics.reduce((a, b) => a + b, 0) / metrics.length + Math.min(optimizedPrompt.length / prompt.length * 10, 25));
+    const parsed = parseOptimizedPrompt(result);
+    if (parsed && prompt.trim() && !isLoading) {
+      const ratio = Math.min(parsed.length / Math.max(prompt.length, 1), 5);
+      const avgScore = Math.round(70 + ratio * 5);
       const entry: HistoryEntry = {
         id: Date.now().toString(),
         originalPrompt: prompt,
@@ -275,9 +276,13 @@ const PromptOptimizer = () => {
         score: Math.min(avgScore, 96),
         timestamp: Date.now(),
       };
-      setHistory((prev) => [entry, ...prev].slice(0, 5));
+      setHistory((prev) => {
+        // Prevent duplicate entries for same result
+        if (prev.length > 0 && prev[0].originalPrompt === prompt) return prev;
+        return [entry, ...prev].slice(0, 5);
+      });
     }
-  }, [result]); // only trigger when result stream completes
+  }, [isLoading]); // trigger when loading finishes
 
   const copyText = async (text: string, id: string) => {
     await navigator.clipboard.writeText(text);
