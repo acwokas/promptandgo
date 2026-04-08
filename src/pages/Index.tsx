@@ -286,7 +286,10 @@ const Index = () => {
               </Button>
             </div>
 
-            {/* Platform logos strip inline */}
+            {/* No signup microcopy */}
+            <p className="text-center text-sm text-white/50 mt-4 animate-fade-in" style={{ animationDelay: "0.25s" }}>
+              No signup required. Start optimizing instantly.
+            </p>
             <div className="flex flex-wrap justify-center gap-3 mt-10 animate-fade-in" style={{ animationDelay: "0.3s" }}>
               {[
                 { name: "ChatGPT", color: "text-emerald-400", slug: "chatgpt" },
