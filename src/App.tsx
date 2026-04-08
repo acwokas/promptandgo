@@ -1,74 +1,19 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
-import { useState, useEffect } from "react";
+import { lazy, Suspense } from "react";
 import { AppSidebar } from "@/components/AppSidebar";
 import { ThemeProvider } from "@/hooks/useTheme";
 
 import ExitIntentPopup from "@/components/conversion/ExitIntentPopup";
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
-import PromptLibrary from "./pages/PromptLibrary";
-import PromptPacks from "./pages/PromptPacks";
-import SubmitPrompt from "./pages/SubmitPrompt";
-import Blog from "./pages/Blog";
-import Terms from "./pages/Terms";
-import Privacy from "./pages/Privacy";
-import FAQs from "./pages/FAQs";
-import HowItWorks from "./pages/HowItWorks";
-import Contact from "./pages/Contact";
-import SingaporeStartups from "./pages/SingaporeStartups";
 import Header from "@/components/layout/Header";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import Footer from "@/components/layout/Footer";
 import GlobalStructuredData from "@/components/seo/GlobalStructuredData";
-import WelcomeToPromptAndGo from "./pages/blog/WelcomeToPromptAndGo";
-import BestAIPromptsForSmallBusiness2025 from "./pages/blog/BestAIPromptsForSmallBusiness2025";
-import HowToWriteAIPrompts from "./pages/blog/HowToWriteAIPrompts";
-import AIPromptsThatSaveYouHours from "./pages/blog/AIPromptsThatSaveYouHours";
-import AIPromptsForMarketingCampaigns from "./pages/blog/AIPromptsForMarketingCampaigns";
-import AIPromptsForCustomerSupport from "./pages/blog/AIPromptsForCustomerSupport";
-import AIPromptsForSocialMediaContent from "./pages/blog/AIPromptsForSocialMediaContent";
-import AIPromptsForContentWriters from "./pages/blog/AIPromptsForContentWriters";
-import AIPromptsForBusinessStrategy from "./pages/blog/AIPromptsForBusinessStrategy";
-import BeginnersGuideMidjourneyPrompts from "./pages/blog/BeginnersGuideMidjourneyPrompts";
-import AIPromptsInAsianLanguages from "./pages/blog/AIPromptsInAsianLanguages";
-import MultiPlatformPromptingGuide from "./pages/blog/MultiPlatformPromptingGuide";
-import Auth from "./pages/Auth";
-import AdminBulkUpload from "./pages/AdminBulkUpload";
-import AdminTools from "./pages/AdminTools";
-import AdminPromptTool from "./pages/AdminPromptTool";
-import AdminExport from "./pages/AdminExport";
-import AdminWidgetSettings from "./pages/AdminWidgetSettings";
-import AdminFeedback from "./pages/AdminFeedback";
-import AdminPolls from "./pages/AdminPolls";
-import AdminArticles from "./pages/AdminArticles";
-import AdminArticleEditor from "./pages/AdminArticleEditor";
-import AdminCountdownSettings from "./pages/AdminCountdownSettings";
-import AdminSecurity from "./pages/AdminSecurity";
-import AdminCoupons from "./pages/AdminCoupons";
-import TipsIndex from "./pages/TipsIndex";
-import ArticleView from "./pages/ArticleView";
-import FavoritesPage from "./pages/account/Favorites";
-import AccountPage from "./pages/account/Account";
-import PurchasesPage from "./pages/account/Purchases";
-import ProfilePage from "./pages/account/Profile";
-import NotificationsPage from "./pages/account/Notifications";
-import SecurityPage from "./pages/account/Security";
-import AIPreferencesPage from "./pages/account/AIPreferences";
-import XPDashboard from "./pages/account/XPDashboard";
-
-import CartPage from "./pages/Cart";
-import CheckoutSuccess from "./pages/CheckoutSuccess";
-import CheckoutCanceled from "./pages/CheckoutCanceled";
-import MembershipSuccess from "./pages/MembershipSuccess";
-import MembershipCanceled from "./pages/MembershipCanceled";
-import EmailConfirmed from "./pages/EmailConfirmed";
-import ShareRedirect from "./pages/ShareRedirect";
 import AuthEffects from "@/components/auth/AuthEffects";
 import ContextPopup from "@/components/ContextPopup";
 import { FeedbackWidget } from "@/components/FeedbackWidget";
@@ -76,54 +21,124 @@ import { LoginWidget } from "@/components/LoginWidget";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { LoginWidgetProvider } from "@/hooks/useLoginWidget";
 import { usePageVisitTracker } from "@/hooks/usePageVisitTracker";
-import AIPromptGeneratorPage from "./pages/AIPromptGenerator";
-
-import AIAssistantPage from "./pages/AIAssistant";
-import ToolkitPage from "./pages/Toolkit";
-import PromptStudioPage from "./pages/PromptStudio";
-import CertificationPage from "./pages/Certification";
-
-import AICreditsExhaustedPage from "./pages/AICreditsExhausted";
-import PromptOptimizerPage from "./pages/PromptOptimizer";
 import GAListener from "@/components/analytics/GAListener";
 import { AnalyticsProvider } from "@/components/analytics/AnalyticsProvider";
-import AdminAnalytics from "./pages/AdminAnalytics";
-import SavedPromptsPage from "./pages/SavedPrompts";
-import MarketInsights from "./pages/MarketInsights";
-import MalaysiaInsights from "./pages/market/MalaysiaInsights";
-import IndonesiaInsights from "./pages/market/IndonesiaInsights";
-import VietnamInsights from "./pages/market/VietnamInsights";
-import AustraliaInsights from "./pages/market/AustraliaInsights";
-import SmallBusiness from "./pages/SmallBusiness";
-import About from "./pages/About";
-import Pricing from "./pages/Pricing";
-import AskScout from "./pages/AskScout";
-import HelpCenterPage from "./pages/HelpCenter";
-import Dashboard from "./pages/Dashboard";
-import LanguageLearning from "./pages/LanguageLearning";
-import PromptTemplates from "./pages/PromptTemplates";
-import Enterprise from "./pages/Enterprise";
-import ApiDocs from "./pages/ApiDocs";
-import Community from "./pages/Community";
-import Changelog from "./pages/Changelog";
-import Integrations from "./pages/Integrations";
-import SearchPage from "./pages/Search";
-import PlatformComparison from "./pages/PlatformComparison";
-import BlogArticle from "@/components/blog/BlogArticle";
 import OnboardingModal from "@/components/onboarding/OnboardingModal";
-import SettingsPage from "./pages/Settings";
-import ReferralPage from "./pages/Referral";
-import Testimonials from "./pages/Testimonials";
-import Tutorial from "./pages/Tutorial";
-import Glossary from "./pages/Glossary";
-import NewsletterArchive from "./pages/NewsletterArchive";
-import HtmlSitemap from "./pages/HtmlSitemap";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import BackToTop from "@/components/BackToTop";
 import CookieConsent from "@/components/CookieConsent";
 
+// Lazy-loaded route components
+const Index = lazy(() => import("./pages/Index"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const PromptLibrary = lazy(() => import("./pages/PromptLibrary"));
+const PromptPacks = lazy(() => import("./pages/PromptPacks"));
+const SubmitPrompt = lazy(() => import("./pages/SubmitPrompt"));
+const Blog = lazy(() => import("./pages/Blog"));
+const Terms = lazy(() => import("./pages/Terms"));
+const Privacy = lazy(() => import("./pages/Privacy"));
+const FAQs = lazy(() => import("./pages/FAQs"));
+const HowItWorks = lazy(() => import("./pages/HowItWorks"));
+const Contact = lazy(() => import("./pages/Contact"));
+const SingaporeStartups = lazy(() => import("./pages/SingaporeStartups"));
+const WelcomeToPromptAndGo = lazy(() => import("./pages/blog/WelcomeToPromptAndGo"));
+const BestAIPromptsForSmallBusiness2025 = lazy(() => import("./pages/blog/BestAIPromptsForSmallBusiness2025"));
+const HowToWriteAIPrompts = lazy(() => import("./pages/blog/HowToWriteAIPrompts"));
+const AIPromptsThatSaveYouHours = lazy(() => import("./pages/blog/AIPromptsThatSaveYouHours"));
+const AIPromptsForMarketingCampaigns = lazy(() => import("./pages/blog/AIPromptsForMarketingCampaigns"));
+const AIPromptsForCustomerSupport = lazy(() => import("./pages/blog/AIPromptsForCustomerSupport"));
+const AIPromptsForSocialMediaContent = lazy(() => import("./pages/blog/AIPromptsForSocialMediaContent"));
+const AIPromptsForContentWriters = lazy(() => import("./pages/blog/AIPromptsForContentWriters"));
+const AIPromptsForBusinessStrategy = lazy(() => import("./pages/blog/AIPromptsForBusinessStrategy"));
+const BeginnersGuideMidjourneyPrompts = lazy(() => import("./pages/blog/BeginnersGuideMidjourneyPrompts"));
+const AIPromptsInAsianLanguages = lazy(() => import("./pages/blog/AIPromptsInAsianLanguages"));
+const MultiPlatformPromptingGuide = lazy(() => import("./pages/blog/MultiPlatformPromptingGuide"));
+const Auth = lazy(() => import("./pages/Auth"));
+const AdminBulkUpload = lazy(() => import("./pages/AdminBulkUpload"));
+const AdminTools = lazy(() => import("./pages/AdminTools"));
+const AdminPromptTool = lazy(() => import("./pages/AdminPromptTool"));
+const AdminExport = lazy(() => import("./pages/AdminExport"));
+const AdminWidgetSettings = lazy(() => import("./pages/AdminWidgetSettings"));
+const AdminFeedback = lazy(() => import("./pages/AdminFeedback"));
+const AdminPolls = lazy(() => import("./pages/AdminPolls"));
+const AdminArticles = lazy(() => import("./pages/AdminArticles"));
+const AdminArticleEditor = lazy(() => import("./pages/AdminArticleEditor"));
+const AdminCountdownSettings = lazy(() => import("./pages/AdminCountdownSettings"));
+const AdminSecurity = lazy(() => import("./pages/AdminSecurity"));
+const AdminCoupons = lazy(() => import("./pages/AdminCoupons"));
+const AdminAnalytics = lazy(() => import("./pages/AdminAnalytics"));
+const TipsIndex = lazy(() => import("./pages/TipsIndex"));
+const ArticleView = lazy(() => import("./pages/ArticleView"));
+const FavoritesPage = lazy(() => import("./pages/account/Favorites"));
+const AccountPage = lazy(() => import("./pages/account/Account"));
+const PurchasesPage = lazy(() => import("./pages/account/Purchases"));
+const ProfilePage = lazy(() => import("./pages/account/Profile"));
+const NotificationsPage = lazy(() => import("./pages/account/Notifications"));
+const SecurityPage = lazy(() => import("./pages/account/Security"));
+const AIPreferencesPage = lazy(() => import("./pages/account/AIPreferences"));
+const XPDashboard = lazy(() => import("./pages/account/XPDashboard"));
+const CartPage = lazy(() => import("./pages/Cart"));
+const CheckoutSuccess = lazy(() => import("./pages/CheckoutSuccess"));
+const CheckoutCanceled = lazy(() => import("./pages/CheckoutCanceled"));
+const MembershipSuccess = lazy(() => import("./pages/MembershipSuccess"));
+const MembershipCanceled = lazy(() => import("./pages/MembershipCanceled"));
+const EmailConfirmed = lazy(() => import("./pages/EmailConfirmed"));
+const ShareRedirect = lazy(() => import("./pages/ShareRedirect"));
+const AIPromptGeneratorPage = lazy(() => import("./pages/AIPromptGenerator"));
+const AIAssistantPage = lazy(() => import("./pages/AIAssistant"));
+const ToolkitPage = lazy(() => import("./pages/Toolkit"));
+const PromptStudioPage = lazy(() => import("./pages/PromptStudio"));
+const CertificationPage = lazy(() => import("./pages/Certification"));
+const AICreditsExhaustedPage = lazy(() => import("./pages/AICreditsExhausted"));
+const PromptOptimizerPage = lazy(() => import("./pages/PromptOptimizer"));
+const SavedPromptsPage = lazy(() => import("./pages/SavedPrompts"));
+const MarketInsights = lazy(() => import("./pages/MarketInsights"));
+const MalaysiaInsights = lazy(() => import("./pages/market/MalaysiaInsights"));
+const IndonesiaInsights = lazy(() => import("./pages/market/IndonesiaInsights"));
+const VietnamInsights = lazy(() => import("./pages/market/VietnamInsights"));
+const AustraliaInsights = lazy(() => import("./pages/market/AustraliaInsights"));
+const SmallBusiness = lazy(() => import("./pages/SmallBusiness"));
+const About = lazy(() => import("./pages/About"));
+const Pricing = lazy(() => import("./pages/Pricing"));
+const AskScout = lazy(() => import("./pages/AskScout"));
+const HelpCenterPage = lazy(() => import("./pages/HelpCenter"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const LanguageLearning = lazy(() => import("./pages/LanguageLearning"));
+const PromptTemplates = lazy(() => import("./pages/PromptTemplates"));
+const Enterprise = lazy(() => import("./pages/Enterprise"));
+const ApiDocs = lazy(() => import("./pages/ApiDocs"));
+const Community = lazy(() => import("./pages/Community"));
+const Changelog = lazy(() => import("./pages/Changelog"));
+const Integrations = lazy(() => import("./pages/Integrations"));
+const SearchPage = lazy(() => import("./pages/Search"));
+const PlatformComparison = lazy(() => import("./pages/PlatformComparison"));
+const BlogArticle = lazy(() => import("@/components/blog/BlogArticle"));
+const SettingsPage = lazy(() => import("./pages/Settings"));
+const ReferralPage = lazy(() => import("./pages/Referral"));
+const Testimonials = lazy(() => import("./pages/Testimonials"));
+const Tutorial = lazy(() => import("./pages/Tutorial"));
+const Glossary = lazy(() => import("./pages/Glossary"));
+const NewsletterArchive = lazy(() => import("./pages/NewsletterArchive"));
+const HtmlSitemap = lazy(() => import("./pages/HtmlSitemap"));
+const KeyboardShortcuts = lazy(() => import("./pages/KeyboardShortcuts"));
+
 const queryClient = new QueryClient();
+
+const LoadingSpinner = () => (
+  <div className="flex items-center justify-center min-h-[60vh]">
+    <div className="flex flex-col items-center gap-4">
+      <div className="relative w-16 h-16">
+        <div className="absolute inset-0 rounded-full border-2 border-primary/20" />
+        <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-primary animate-spin" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-lg font-bold text-primary animate-pulse">P</span>
+        </div>
+      </div>
+      <p className="text-sm text-muted-foreground animate-pulse">読み込み中... Loading...</p>
+    </div>
+  </div>
+);
 
 const App = () => {
   return (
@@ -149,7 +164,6 @@ const AppContent = () => {
   const { shouldShowPopup, dismissPopup, markContextFieldsCompleted } = usePageVisitTracker();
   const { user } = useSupabaseAuth();
 
-  // Unified Layout - With SidebarProvider for all devices
   return (
     <SidebarProvider defaultOpen={false}>
       <LoginWidgetProvider>
@@ -165,6 +179,7 @@ const AppContent = () => {
               <AnalyticsProvider>
               <GAListener />
               <AuthEffects />
+              <Suspense fallback={<LoadingSpinner />}>
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/library" element={<PromptLibrary />} />
@@ -257,8 +272,10 @@ const AppContent = () => {
                 <Route path="/glossary" element={<Glossary />} />
                 <Route path="/newsletter" element={<NewsletterArchive />} />
                 <Route path="/sitemap" element={<HtmlSitemap />} />
+                <Route path="/shortcuts" element={<KeyboardShortcuts />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
+              </Suspense>
               </AnalyticsProvider>
             </div>
             <Footer />
