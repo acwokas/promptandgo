@@ -255,6 +255,8 @@ const AppContent = () => {
                 <Route path="/testimonials" element={<Testimonials />} />
                 <Route path="/tutorial" element={<Tutorial />} />
                 <Route path="/glossary" element={<Glossary />} />
+                <Route path="/newsletter" element={<NewsletterArchive />} />
+                <Route path="/sitemap" element={<HtmlSitemap />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               </AnalyticsProvider>
