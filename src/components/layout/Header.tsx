@@ -118,6 +118,18 @@ const Header = () => {
             Enterprise
           </Link>
           <Link 
+            to="/compare" 
+            className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+          >
+            Compare
+          </Link>
+          <Link 
+            to="/blog" 
+            className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+          >
+            Blog
+          </Link>
+          <Link 
             to="/saved" 
             className="text-sm font-medium text-foreground hover:text-primary transition-colors flex items-center gap-1"
           >
@@ -154,6 +166,8 @@ const Header = () => {
           >
             <Search size={18} />
           </Link>
+          {/* Notifications */}
+          <NotificationCenter />
 
           {/* Dark mode toggle */}
           <button
