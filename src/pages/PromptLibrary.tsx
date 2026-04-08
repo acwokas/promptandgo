@@ -337,6 +337,25 @@ const PromptLibrary = () => {
           </BreadcrumbList>
         </Breadcrumb>
 
+        {/* Category filter badges */}
+        <section className="mb-6">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-sm font-semibold text-foreground">Browse by Category</span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {CATEGORY_FILTERS.map((cat) => (
+              <button
+                key={cat.label}
+                onClick={() => handleCategoryClick(cat.query)}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium border hover:opacity-80 transition-colors ${cat.color}`}
+              >
+                <span>{cat.icon}</span>
+                {cat.label}
+              </button>
+            ))}
+          </div>
+        </section>
+
         {/* Asian market category tags */}
         <section className="mb-6">
           <div className="flex items-center gap-2 mb-3">
