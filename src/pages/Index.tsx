@@ -258,7 +258,15 @@ const Index = () => {
               <span className="block text-gradient-brand"> built for Asia.</span>
             </h1>
 
-            <p className="text-center text-lg md:text-xl text-white/80 mt-8 max-w-3xl mx-auto leading-relaxed font-light animate-fade-in" style={{ animationDelay: "0.1s" }}>
+            {/* Animated multilingual subtitle */}
+            <div className="text-center mt-6 h-10 flex items-center justify-center animate-fade-in" style={{ animationDelay: "0.05s" }}>
+              <p className="text-xl md:text-2xl font-semibold text-white/90 transition-opacity duration-500" key={heroPhraseIndex}>
+                {HERO_PHRASES[heroPhraseIndex]}
+                <span className="typing-cursor" />
+              </p>
+            </div>
+
+            <p className="text-center text-lg md:text-xl text-white/80 mt-6 max-w-3xl mx-auto leading-relaxed font-light animate-fade-in" style={{ animationDelay: "0.1s" }}>
               Prompts that understand Japanese business formality, Southeast Asian market dynamics, Mandarin tone, and Indian enterprise context — then optimize them for <strong className="text-white font-semibold">any AI platform</strong> in <strong className="text-white font-semibold">any language</strong>.
             </p>
 
