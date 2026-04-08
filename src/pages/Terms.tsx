@@ -1,264 +1,178 @@
 import SEO from "@/components/SEO";
-import PageHero from "@/components/layout/PageHero";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
-const Terms = () => (
-  <>
-    <PageHero title={<>Terms &amp; Conditions</>} subtitle={<>Usage rules, IP, payments, privacy, liability, and your rights.</>} minHeightClass="min-h-[28svh]" />
-    <main className="container py-10">
-      <SEO title="Terms & Conditions" description="PromptandGo.ai Terms & Conditions (Singapore): usage rules, IP, payments, privacy, liability, and your rights." />
+const SECTIONS = [
+  { id: "acceptance", label: "Acceptance of Terms" },
+  { id: "description", label: "Description of Service" },
+  { id: "accounts", label: "User Accounts" },
+  { id: "acceptable-use", label: "Acceptable Use" },
+  { id: "ip", label: "Intellectual Property" },
+  { id: "billing", label: "Subscription & Billing" },
+  { id: "api-usage", label: "API Usage" },
+  { id: "liability", label: "Limitation of Liability" },
+  { id: "governing-law", label: "Governing Law" },
+  { id: "contact", label: "Contact" },
+];
 
-      {/* Breadcrumb */}
-      <Breadcrumb className="mb-6">
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link to="/">Home</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>Terms & Conditions</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
+const Terms = () => {
+  const [activeSection, setActiveSection] = useState("acceptance");
 
-    <p className="text-sm text-muted-foreground">Effective Date: 01 January 2025</p>
-    <p className="text-sm text-muted-foreground mb-6">Jurisdiction: Singapore</p>
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.find((e) => e.isIntersecting);
+        if (visible) setActiveSection(visible.target.id);
+      },
+      { rootMargin: "-20% 0px -60% 0px" }
+    );
+    SECTIONS.forEach((s) => {
+      const el = document.getElementById(s.id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
 
-    <section className="prose prose-neutral max-w-none dark:prose-invert">
-      <p>
-        Welcome to PromptandGo ("we", "our", "us"). These Terms &amp; Conditions ("Terms") govern your use of the
-        website https://promptandgo.ai (the "Site") and any related services we provide.
-      </p>
-      <p>By accessing or using the Site, you agree to be bound by these Terms. If you do not agree, please do not use the Site.</p>
+  return (
+    <>
+      <SEO title="Terms of Service | PromptAndGo" description="Terms of Service for PromptAndGo — usage rules, intellectual property, billing, liability, and governing law under Singapore jurisdiction." />
 
-      <h2>1.&nbsp;&nbsp;Use of the Site</h2>
-      <p>You may use the Site for lawful purposes only. You must not:</p>
-      <ul>
-        <li>Violate any applicable laws or regulations.</li>
-        <li>Infringe intellectual property rights.</li>
-        <li>Upload or distribute harmful, obscene, defamatory, or unlawful content.</li>
-        <li>Attempt to gain unauthorised access to our systems or interfere with the Site's operation.</li>
-      </ul>
-      <p>We may suspend or terminate your access if you breach these Terms.</p>
+      {/* Hero */}
+      <section className="bg-hero text-white py-16 md:py-24">
+        <div className="container max-w-4xl mx-auto px-4 text-center">
+          <h1 className="text-3xl md:text-5xl font-bold mb-3">Terms of Service</h1>
+          <p className="text-white/60 text-sm mb-1">Last updated: April 9, 2026</p>
+          <p className="text-white/50 text-base">Please read these terms carefully before using PromptAndGo</p>
+        </div>
+      </section>
 
-      <h2>2.&nbsp;&nbsp;AI Tools and Beta Services</h2>
-      <p>PromptandGo provides AI-powered tools including but not limited to:</p>
-      <ul>
-        <li><strong>Scout Prompt Generator</strong> - generates customised prompts based on your inputs</li>
-        <li><strong>Smart Suggestions</strong> - provides AI-powered recommendations</li>
-        <li><strong>Scout Assistant</strong> - interactive AI chat assistance</li>
-        <li><strong>Personalized Recommendations</strong> - content and feature suggestions based on user behavior</li>
-        <li><strong>Behavior Analytics</strong> - tracking user engagement and interaction patterns for service improvement</li>
-        <li><strong>Smart FAQ System</strong> - context-aware help and support features</li>
-        <li><strong>ROI Calculator</strong> - tools to estimate time and cost savings</li>
-        <li><strong>Lead Generation Tools</strong> - email capture and newsletter signup features</li>
-      </ul>
-      <p><strong>IMPORTANT BETA DISCLAIMER:</strong> All AI tools are currently in beta testing. We reserve the right to:</p>
-      <ul>
-        <li>Modify, suspend, or discontinue any AI service at any time without prior notice</li>
-        <li>Change usage limits, quotas, or access restrictions as needed</li>
-        <li>Update AI models, features, or functionality</li>
-        <li>Impose temporary or permanent limitations on service availability</li>
-        <li>Modify personalization algorithms and recommendation systems</li>
-        <li>Change data collection and analytics practices as services evolve</li>
-      </ul>
-      <p>AI services are provided "as is" without guarantees of availability, accuracy, or fitness for any particular purpose. Usage limits may change based on operational needs and cost considerations.</p>
+      <main className="container max-w-6xl mx-auto px-4 py-12">
+        <div className="flex gap-10">
+          {/* TOC Sidebar */}
+          <nav className="hidden lg:block w-56 shrink-0">
+            <div className="sticky top-24 space-y-1">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">Contents</p>
+              {SECTIONS.map((s, i) => (
+                <a
+                  key={s.id}
+                  href={`#${s.id}`}
+                  className={`block text-sm py-1.5 pl-3 border-l-2 transition-colors ${
+                    activeSection === s.id
+                      ? "border-primary text-primary font-medium"
+                      : "border-transparent text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {i + 1}. {s.label}
+                </a>
+              ))}
+            </div>
+          </nav>
 
-      <h2>3.&nbsp;&nbsp;User Behavior Tracking and Analytics</h2>
-      <p>To improve our services and provide personalised experiences, we track various user behaviors including:</p>
-      <ul>
-        <li><strong>Page Navigation</strong> - pages visited, time spent, navigation patterns</li>
-        <li><strong>Interaction Tracking</strong> - clicks, form interactions, button presses, and feature usage</li>
-        <li><strong>Scroll Behavior</strong> - scroll depth, reading patterns, and content engagement</li>
-        <li><strong>Session Analytics</strong> - visit frequency, session duration, and user journey mapping</li>
-        <li><strong>Engagement Scoring</strong> - automated assessment of user interest and intent levels</li>
-        <li><strong>Exit Intent Detection</strong> - monitoring cursor movement to detect potential page exits</li>
-        <li><strong>Conversion Tracking</strong> - monitoring signup completions, downloads, and other goal achievements</li>
-      </ul>
-      <p>This data is used to:</p>
-      <ul>
-        <li>Personalize content recommendations and call-to-action messages</li>
-        <li>Optimize user interface and experience design</li>
-        <li>Provide relevant prompts and suggestions based on usage patterns</li>
-        <li>Improve service performance and identify technical issues</li>
-        <li>Generate anonymized analytics reports for business optimization</li>
-      </ul>
-      <p>You may opt out of behavioral tracking by contacting us, though this may limit personalization features.</p>
+          {/* Content */}
+          <article className="flex-1 min-w-0 prose prose-neutral dark:prose-invert max-w-none">
+            <section id="acceptance">
+              <h2>1. Acceptance of Terms</h2>
+              <p>By accessing or using PromptAndGo ("the Service"), you agree to be bound by these Terms of Service. If you do not agree, please do not use the Service. We may update these terms at any time, and continued use constitutes acceptance of changes.</p>
+            </section>
 
-      <h2>4.&nbsp;&nbsp;Acceptable Use of AI Tools</h2>
-      <p>When using our AI services, you must not:</p>
-      <ul>
-        <li>Generate content that is illegal, harmful, defamatory, or violates others' rights</li>
-        <li>Attempt to reverse engineer or extract AI models or training data</li>
-        <li>Use the services for any unlawful purpose or in violation of applicable laws</li>
-        <li>Exceed usage limits or attempt to circumvent access controls</li>
-        <li>Share account credentials or allow unauthorised access to AI tools</li>
-        <li>Generate content that infringes intellectual property rights</li>
-      </ul>
-      <p>We reserve the right to monitor AI usage and suspend access for violations.</p>
+            <section id="description">
+              <h2>2. Description of Service</h2>
+              <p>PromptAndGo is an AI prompt optimization platform purpose-built for Asian markets. Our services include:</p>
+              <ul>
+                <li>Prompt optimization for multiple AI platforms (ChatGPT, Claude, Gemini, Qwen, DeepSeek, etc.)</li>
+                <li>Multilingual prompt support across 12+ Asian languages</li>
+                <li>Curated prompt library and marketplace</li>
+                <li>AI-powered prompt generation and analysis tools</li>
+                <li>API access for enterprise integration</li>
+              </ul>
+            </section>
 
-      <h2>5.&nbsp;&nbsp;Account Registration</h2>
-      <p>Some features may require creating an account. You agree to:</p>
-      <ul>
-        <li>Provide accurate and complete information</li>
-        <li>Keep your login credentials secure</li>
-        <li>Be responsible for all activities under your account</li>
-        <li>Maintain the security of your AI usage and not share access with unauthorised parties</li>
-      </ul>
+            <section id="accounts">
+              <h2>3. User Accounts</h2>
+              <p>You are responsible for maintaining the confidentiality of your account credentials. You must provide accurate, current, and complete registration information. You are liable for all activity under your account. Notify us immediately of any unauthorized access.</p>
+            </section>
 
-      <h2>6.&nbsp;&nbsp;Content and Intellectual Property</h2>
-      <p>All content on the Site, including text, graphics, code, prompts, and designs, is owned by or licensed to PromptandGo, unless otherwise stated.</p>
-      <ul>
-        <li>You may use content for personal or internal business purposes only</li>
-        <li>You may not copy, redistribute, or commercially exploit any content without our written permission</li>
-        <li>AI-generated content remains subject to the terms of the underlying AI provider and applicable IP laws</li>
-        <li>If you submit content (e.g., prompts, comments, reviews, AI interactions), you grant us a non-exclusive, royalty-free, worldwide licence to use, display, and distribute that content in connection with our services</li>
-        <li>User-generated prompts and favorites are owned by you but may be used by us to improve our services</li>
-        <li>We may use anonymized, aggregated data from AI interactions to enhance our algorithms</li>
-      </ul>
+            <section id="acceptable-use">
+              <h2>4. Acceptable Use</h2>
+              <p>You agree not to:</p>
+              <ul>
+                <li>Use prompts to generate harmful, illegal, or discriminatory content</li>
+                <li>Violate the terms of service of any connected AI platform</li>
+                <li>Attempt to reverse-engineer our optimization algorithms</li>
+                <li>Share or resell premium prompts or pack content without authorization</li>
+                <li>Use automated tools to scrape or bulk-download content</li>
+                <li>Impersonate other users or misrepresent your identity</li>
+              </ul>
+            </section>
 
-      <h2>7.&nbsp;&nbsp;Payment and Memberships</h2>
-      <p>We offer the following paid services:</p>
-      <ul>
-        <li><strong>Monthly Membership</strong> - $12.99 USD per month with enhanced AI usage limits (30 generator + 40 assistant queries daily)</li>
-        <li><strong>Lifetime Access</strong> - $99.50 USD one-time payment with premium AI usage limits (60 queries daily each tool)</li>
-        <li><strong>Prompt Packs</strong> - Individual collections at $9.99 USD each (Social Media, Career, Real Estate, Business Automation, Content Marketing, Wellness & Lifestyle, Midjourney Essentials, Ideogram Essentials)</li>
-        <li><strong>AI Tools</strong> - Access to Scout Prompt Generator, Smart Suggestions, and Scout Assistant with usage limits based on your plan</li>
-      </ul>
-      <p>Payment terms:</p>
-      <ul>
-        <li>All prices are listed in US Dollars (USD) unless otherwise stated</li>
-        <li>Payment processing is handled by Stripe and other secure third-party providers; we do not store full payment details</li>
-        <li>You may see "PromptandGo" or an affiliated entity on your payment statements</li>
-        <li>Monthly memberships are billed in advance and renew automatically until cancelled</li>
-        <li>Lifetime access is a one-time payment for ongoing access subject to these Terms</li>
-        <li>Individual prompt packs are one-time purchases</li>
-        <li>AI usage limits are tied to your subscription tier and may change as services evolve</li>
-        <li>Beta services may affect pricing or access levels without prior notice</li>
-      </ul>
+            <section id="ip">
+              <h2>5. Intellectual Property</h2>
+              <p><strong>Your Content:</strong> You retain full ownership of prompts you create, input, or optimize through our platform.</p>
+              <p><strong>Our Platform:</strong> The PromptAndGo platform, including its design, algorithms, curated prompt libraries, and branding, is our intellectual property protected under Singapore and international copyright laws.</p>
+              <p><strong>Community Submissions:</strong> Prompts submitted to our public library are licensed under a Creative Commons Attribution license.</p>
+            </section>
 
-      <h2>8.&nbsp;&nbsp;Email Marketing and Newsletter Services</h2>
-      <p>We offer email marketing services including:</p>
-      <ul>
-        <li><strong>Newsletter Subscriptions</strong> - regular updates about new prompts, features, and AI tips</li>
-        <li><strong>Lead Magnets</strong> - free prompt packs and resources in exchange for email addresses</li>
-        <li><strong>Personalized Email Content</strong> - recommendations based on your interests and usage patterns</li>
-        <li><strong>Promotional Campaigns</strong> - information about new products, discounts, and special offers</li>
-        <li><strong>Transactional Emails</strong> - account notifications, purchase confirmations, and service updates</li>
-      </ul>
-      <p>Email marketing terms:</p>
-      <ul>
-        <li>You can subscribe to our newsletter and promotional emails through various signup forms on our site</li>
-        <li>We use email service providers to deliver messages and track engagement metrics</li>
-        <li>You can unsubscribe from marketing emails at any time using the unsubscribe link in each email</li>
-        <li>Transactional emails (receipts, account notifications) cannot be opted out of while you maintain an account</li>
-        <li>We may personalize email content based on your preferences, usage patterns, and behavioral data</li>
-        <li>Email engagement data (opens, clicks, etc.) may be used to improve our services and personalization</li>
-      </ul>
+            <section id="billing">
+              <h2>6. Subscription & Billing</h2>
+              <p>PromptAndGo offers three tiers:</p>
+              <div className="not-prose overflow-x-auto my-6">
+                <table className="w-full text-sm border border-border rounded-lg">
+                  <thead>
+                    <tr className="bg-muted/50">
+                      <th className="text-left p-3 font-semibold text-foreground">Feature</th>
+                      <th className="text-center p-3 font-semibold text-foreground">Free</th>
+                      <th className="text-center p-3 font-semibold text-foreground">Pro</th>
+                      <th className="text-center p-3 font-semibold text-foreground">Enterprise</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-muted-foreground">
+                    <tr className="border-t border-border"><td className="p-3">Daily Optimizations</td><td className="p-3 text-center">5</td><td className="p-3 text-center">Unlimited</td><td className="p-3 text-center">Unlimited</td></tr>
+                    <tr className="border-t border-border"><td className="p-3">Prompt Library Access</td><td className="p-3 text-center">Basic</td><td className="p-3 text-center">Full</td><td className="p-3 text-center">Full + Custom</td></tr>
+                    <tr className="border-t border-border"><td className="p-3">API Access</td><td className="p-3 text-center">—</td><td className="p-3 text-center">5,000/day</td><td className="p-3 text-center">Unlimited</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p>Subscriptions are billed monthly or annually. Refunds follow our 14-day money-back guarantee for annual plans. Cancellation takes effect at the end of the current billing period.</p>
+            </section>
 
-      <h2>9.&nbsp;&nbsp;Privacy</h2>
-      <p>Your use of the Site is also governed by our Privacy Policy, which explains how we collect, use, and protect your personal data in compliance with Singapore's Personal Data Protection Act (PDPA).</p>
+            <section id="api-usage">
+              <h2>7. API Usage</h2>
+              <p>API access is subject to rate limits based on your subscription tier. Excessive usage beyond stated limits may result in throttling or temporary suspension. You must not share API keys or use them in applications that violate these terms.</p>
+            </section>
 
-      <h2>10.&nbsp;&nbsp;AI Output Disclaimers</h2>
-      <p>Regarding AI-generated content and services:</p>
-      <ul>
-        <li>AI outputs are generated by third-party providers and we do not guarantee their accuracy, completeness, or appropriateness</li>
-        <li>You are solely responsible for reviewing and validating any AI-generated content before use</li>
-        <li>AI services may be temporarily unavailable due to technical issues or third-party provider limitations</li>
-        <li>We are not liable for any decisions made based on AI-generated content or suggestions</li>
-        <li>Beta AI features may produce unexpected results and should be used with caution</li>
-      </ul>
+            <section id="liability">
+              <h2>8. Limitation of Liability</h2>
+              <p>PromptAndGo is provided "as is" without warranty of any kind. We are not liable for:</p>
+              <ul>
+                <li>Outputs generated by third-party AI platforms using optimized prompts</li>
+                <li>Business decisions made based on AI-generated content</li>
+                <li>Service interruptions or data loss beyond our reasonable control</li>
+                <li>Indirect, consequential, or incidental damages</li>
+              </ul>
+              <p>Our maximum liability shall not exceed the amount paid by you in the 12 months preceding the claim.</p>
+            </section>
 
-      <h2>11.&nbsp;&nbsp;Service Availability and Modifications</h2>
-      <p>We reserve the right to:</p>
-      <ul>
-        <li>Modify, suspend, or discontinue any part of our services, including AI tools, at any time</li>
-        <li>Change usage limits, quotas, or access restrictions without prior notice</li>
-        <li>Update our AI models, algorithms, or service providers as needed</li>
-        <li>Temporarily restrict access for maintenance, updates, or operational needs</li>
-        <li>Implement new features or remove existing ones as part of service evolution</li>
-      </ul>
+            <section id="governing-law">
+              <h2>9. Governing Law</h2>
+              <p>These Terms are governed by the laws of the <strong>Republic of Singapore</strong>. Any disputes shall be resolved through arbitration administered by the Singapore International Arbitration Centre (SIAC) in accordance with its rules.</p>
+            </section>
 
-      <h2>12.&nbsp;&nbsp;General Disclaimers</h2>
-      <ul>
-        <li>The Site and its content are provided "as is" without warranties of any kind</li>
-        <li>We do not guarantee uninterrupted access or that content will be error-free</li>
-        <li>We are not responsible for actions you take based on the content or prompts provided</li>
-        <li>Beta services are provided without warranties and may change or be discontinued</li>
-      </ul>
-
-      <h2>13.&nbsp;&nbsp;Limitation of Liability</h2>
-      <ul>
-        <li>We are not liable for indirect, incidental, special, or consequential damages, to the fullest extent permitted by law</li>
-        <li>Our total liability to you for any claims shall not exceed the total amount paid by you to us in the 6 months preceding the claim</li>
-        <li>We are not liable for AI-generated content, service interruptions, or beta feature limitations</li>
-      </ul>
-
-      <h2>14.&nbsp;&nbsp;Indemnity</h2>
-      <p>You agree to indemnify and hold harmless PromptandGo, its officers, employees, and partners from any claims, damages, or expenses arising from your use of the Site, AI tools, or breach of these Terms.</p>
-
-      <h2>15.&nbsp;&nbsp;Third-Party Links and Services</h2>
-      <p>The Site may contain links to third-party websites and relies on third-party AI providers. We are not responsible for their content, policies, practices, or service availability.</p>
-
-      <h2>16.&nbsp;&nbsp;Governing Law</h2>
-      <p>These Terms are governed by and construed in accordance with the laws of Singapore. You agree to submit to the exclusive jurisdiction of the Singapore courts.</p>
-
-      <h2>17.&nbsp;&nbsp;Changes to the Terms</h2>
-      <p>We may update these Terms at any time by posting a new version on this page, particularly as our AI services evolve. Your continued use of the Site constitutes acceptance of the updated Terms.</p>
-
-      <h2>18.&nbsp;&nbsp;Contact Us</h2>
-      <p>If you have any questions about these Terms, please contact:</p>
-      <p>
-        <strong>prompt</strong>andgo<br />
-        Email: <a href="mailto:legal@promptandgo.ai">legal@promptandgo.ai</a><br />
-        Jurisdiction: Singapore
-      </p>
-
-      <h2>19.&nbsp;&nbsp;Refunds, Cancellations &amp; Business Discontinuation</h2>
-      
-      <h3>Standard Refund Policy</h3>
-      <p>All sales of digital products, including prompt packs, downloads, and memberships, are final. We do not offer refunds, exchanges, or cancellations once a purchase is completed, except as required under Singapore law or as specified below.</p>
-      <p>If a digital product is defective, inaccessible, or not as described, you must notify us within 7 days of purchase at <a href="mailto:legal@promptandgo.ai">legal@promptandgo.ai</a> so we can investigate and, if appropriate, provide a replacement or alternative remedy.</p>
-      <p>Note that changes to AI service limits, features, or availability do not constitute grounds for refunds, as these services are clearly marked as beta and subject to modification.</p>
-      
-      <h3>Monthly Membership Cancellation</h3>
-      <p>Monthly memberships ($12.99/month) can be cancelled at any time. Upon cancellation, your membership benefits will continue until the end of your current billing period, after which no further charges will occur.</p>
-      
-      <h3>Business Discontinuation Rights</h3>
-      <p><strong>IMPORTANT:</strong> We reserve the absolute right to discontinue, suspend, or terminate promptandgo's operations at any time, for any reason, with or without notice. This includes but is not limited to:</p>
-      <ul>
-        <li>Permanent closure of the website and services</li>
-        <li>Discontinuation of specific features, AI tools, or product lines</li>
-        <li>Changes in business model or operational structure</li>
-        <li>Technical, financial, or legal constraints</li>
-      </ul>
-      
-      <h3>Lifetime Access Limitations</h3>
-      <p>Lifetime Access purchases ($99.50) provide ongoing access to promptandgo services <strong>for as long as the business operates</strong>. "Lifetime" refers to the operational life of promptandgo, not the user's natural lifetime. In the event of business discontinuation:</p>
-      <ul>
-        <li>No refunds will be provided for Lifetime Access purchases</li>
-        <li>We may, at our sole discretion, provide reasonable advance notice when possible</li>
-        <li>We may attempt to provide alternative access or export tools, but this is not guaranteed</li>
-        <li>Users acknowledge that business closure is a normal commercial risk</li>
-      </ul>
-      
-      <h3>Force Majeure and Service Interruption</h3>
-      <p>We are not liable for service interruptions, data loss, or business discontinuation due to circumstances beyond our reasonable control, including but not limited to:</p>
-      <ul>
-        <li>Technical failures, cyber attacks, or infrastructure issues</li>
-        <li>Changes in third-party AI provider policies or availability</li>
-        <li>Legal or regulatory changes</li>
-        <li>Economic conditions or market changes</li>
-        <li>Natural disasters, pandemics, or other force majeure events</li>
-      </ul>
-      
-      <p><strong>By purchasing any services, including Lifetime Access, you acknowledge and agree that PromptAndGo may discontinue operations without liability for refunds or damages.</strong></p>
-    </section>
-  </main>
-  </>
-);
+            <section id="contact">
+              <h2>10. Contact</h2>
+              <p>For questions about these Terms:</p>
+              <ul>
+                <li>Email: <strong>legal@promptandgo.ai</strong></li>
+                <li>Address: Singapore</li>
+              </ul>
+              <p className="mt-4">
+                <Link to="/contact" className="text-primary underline underline-offset-2">Contact form →</Link>
+              </p>
+            </section>
+          </article>
+        </div>
+      </main>
+    </>
+  );
+};
 
 export default Terms;
