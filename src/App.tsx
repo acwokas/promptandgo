@@ -163,6 +163,7 @@ const AppContent = () => {
                 <Route path="/singapore-startups" element={<SingaporeStartups />} />
                 <Route path="/small-business" element={<SmallBusiness />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/pricing" element={<Pricing />} />
                 <Route path="/market-insights" element={<MarketInsights />} />
                 <Route path="/market-insights/malaysia" element={<MalaysiaInsights />} />
                 <Route path="/market-insights/indonesia" element={<IndonesiaInsights />} />
