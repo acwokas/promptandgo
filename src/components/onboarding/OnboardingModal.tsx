@@ -225,7 +225,18 @@ export const OnboardingModal: React.FC = () => {
         }
         setIsOpen(open);
       }}>
-      <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto relative">
+        <button
+          onClick={() => {
+            sessionStorage.setItem('pag_onboarded', 'true');
+            setIsOpen(false);
+          }}
+          className="absolute top-3 right-3 p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors z-10"
+          aria-label="Close for this visit"
+          title="Close for this visit"
+        >
+          <X className="h-4 w-4" />
+        </button>
         <DialogHeader>
           <DialogTitle className="text-center sr-only">Onboarding</DialogTitle>
         </DialogHeader>
