@@ -101,6 +101,9 @@ import AskScout from "./pages/AskScout";
 import HelpCenterPage from "./pages/HelpCenter";
 import Dashboard from "./pages/Dashboard";
 import LanguageLearning from "./pages/LanguageLearning";
+import PromptTemplates from "./pages/PromptTemplates";
+import Enterprise from "./pages/Enterprise";
+import ApiDocs from "./pages/ApiDocs";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
@@ -221,6 +224,9 @@ const AppContent = () => {
                 <Route path="/help" element={<HelpCenterPage />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/language-learning" element={<LanguageLearning />} />
+                <Route path="/templates" element={<PromptTemplates />} />
+                <Route path="/enterprise" element={<Enterprise />} />
+                <Route path="/api-docs" element={<ApiDocs />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               </AnalyticsProvider>

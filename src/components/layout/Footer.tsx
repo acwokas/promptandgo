@@ -121,6 +121,8 @@ const Footer = () => {
               Ask Scout
             </Link>
             <Link to="/pricing" className="text-sm text-white/70 hover:text-white transition-colors">Pricing</Link>
+            <Link to="/enterprise" className="text-sm text-white/70 hover:text-white transition-colors">Enterprise</Link>
+            <Link to="/templates" className="text-sm text-white/70 hover:text-white transition-colors">Templates</Link>
           </nav>
 
           {/* Company */}
@@ -140,6 +142,7 @@ const Footer = () => {
             <Link to="/certification" className="text-sm text-white/70 hover:text-white transition-colors">Certification</Link>
             <Link to="/how-it-works" className="text-sm text-white/70 hover:text-white transition-colors">How It Works</Link>
             <Link to="/language-learning" className="text-sm text-white/70 hover:text-white transition-colors">Language Learning</Link>
+            <Link to="/api-docs" className="text-sm text-white/70 hover:text-white transition-colors">API</Link>
           </nav>
         </div>
       </div>

@@ -111,6 +111,12 @@ const Header = () => {
             Pricing
           </Link>
           <Link 
+            to="/enterprise" 
+            className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+          >
+            Enterprise
+          </Link>
+          <Link 
             to="/saved" 
             className="text-sm font-medium text-foreground hover:text-primary transition-colors flex items-center gap-1"
           >
