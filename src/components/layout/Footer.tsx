@@ -87,7 +87,7 @@ const Footer = () => {
             <Link to="/optimize" className="text-sm text-white/70 hover:text-white transition-colors">Optimize</Link>
             <Link to="/library" className="text-sm text-white/70 hover:text-white transition-colors">Browse Prompts</Link>
             <Link to="/packs" className="text-sm text-white/70 hover:text-white transition-colors">Power Packs</Link>
-            <Link to="/scout" className="text-sm text-white/70 hover:text-white transition-colors inline-flex items-center gap-1.5">
+            <Link to="/ask-scout" className="text-sm text-white/70 hover:text-white transition-colors inline-flex items-center gap-1.5">
               <Bot className="h-3.5 w-3.5 text-accent" />
               Ask Scout
             </Link>
