@@ -31,7 +31,7 @@ const Blog = () => {
       </Button>
     </PageHero>
     <main className="container py-10">
-      <SEO title="Tips - Prompt tips, tricks & examples" description="Tips, tricks and examples to get the most out of your prompting." canonical={canonical} />
+      <SEO title="AI Prompt Tips, Guides & Examples | PromptAndGo Blog" description="Learn prompt engineering with expert guides, tutorials, and real examples for ChatGPT, Claude, Gemini & more. Tips for business, marketing, and multilingual AI use." canonical={canonical} />
 
       {/* Breadcrumb */}
       <Breadcrumb className="mb-6">
