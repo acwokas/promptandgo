@@ -109,8 +109,13 @@ const Blog = () => {
   const origin = typeof window !== "undefined" ? window.location.origin : "";
   const canonical = origin ? `${origin}/tips` : undefined;
 
-  const allArticles = [...ARTICLES, ...(showMore ? EXISTING_ARTICLES : [])];
+  const allArticles = [...BLOG_ARTICLES, ...ARTICLES, ...(showMore ? EXISTING_ARTICLES : [])];
   const filtered = activeCategory === "All" ? allArticles : allArticles.filter((a) => a.category === activeCategory);
+
+  const getArticleLink = (slug: string): string => {
+    const blogSlugs = BLOG_ARTICLES.map(a => a.slug);
+    return blogSlugs.includes(slug) ? `/blog/${slug}` : `/tips/${slug}`;
+  };
 
   return (
     <>
