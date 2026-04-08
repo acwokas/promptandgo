@@ -146,6 +146,7 @@ const Footer = () => {
             <Link to="/api-docs" className="text-sm text-white/70 hover:text-white transition-colors">API</Link>
             <Link to="/changelog" className="text-sm text-white/70 hover:text-white transition-colors">Changelog</Link>
             <Link to="/community" className="text-sm text-white/70 hover:text-white transition-colors">Community</Link>
+            <Link to="/referral" className="text-sm text-white/70 hover:text-white transition-colors">Refer &amp; Earn</Link>
           </nav>
         </div>
       </div>
