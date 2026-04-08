@@ -179,8 +179,8 @@ const Contact = () => {
   return (
     <>
       <PageHero
-        title={<><span className="text-brand">Got something</span> to share?</>}
-        subtitle={<>We'd love to hear from you, whether it's a fresh idea, feedback, a request for more of a certain prompt type, or a challenge you would like us to tackle. Drop us a message, and remember to subscribe to our newsletter for new prompts, tips, and inspiration straight to your inbox.</>}
+        title={<><span className="text-brand">Get in Touch</span></>}
+        subtitle={<>We'd love to hear from you — whether you're in Tokyo, Mumbai, or anywhere in between. Drop us a message and we'll get back to you promptly.</>}
         minHeightClass="min-h-[28svh]"
       />
       <main className="container py-10">
@@ -215,18 +215,49 @@ const Contact = () => {
               <Input 
                 required 
                 name="name" 
-                placeholder="Name" 
+                placeholder="Full Name" 
                 defaultValue={user ? (userProfile?.display_name || user.email?.split("@")[0] || "") : ""}
               />
               <Input 
                 required 
                 type="email" 
                 name="email" 
-                placeholder="Email" 
+                placeholder="Email Address" 
                 defaultValue={user?.email || ""}
                 readOnly={!!user}
                 className={user ? "bg-muted/50" : ""}
               />
+              <Input 
+                name="company_name" 
+                placeholder="Company (optional)" 
+              />
+              <select
+                name="country"
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                defaultValue=""
+              >
+                <option value="" disabled>Select country...</option>
+                <optgroup label="Asia-Pacific">
+                  <option value="SG">Singapore</option>
+                  <option value="JP">Japan</option>
+                  <option value="KR">South Korea</option>
+                  <option value="CN">China</option>
+                  <option value="IN">India</option>
+                  <option value="TH">Thailand</option>
+                  <option value="VN">Vietnam</option>
+                  <option value="ID">Indonesia</option>
+                  <option value="MY">Malaysia</option>
+                  <option value="PH">Philippines</option>
+                  <option value="TW">Taiwan</option>
+                  <option value="HK">Hong Kong</option>
+                  <option value="AU">Australia</option>
+                </optgroup>
+                <optgroup label="Other">
+                  <option value="US">United States</option>
+                  <option value="GB">United Kingdom</option>
+                  <option value="other">Other</option>
+                </optgroup>
+              </select>
               <select
                 name="subject"
                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
@@ -234,14 +265,12 @@ const Contact = () => {
               >
                 <option value="" disabled>Select a subject...</option>
                 <option value="general">General Inquiry</option>
-                <option value="support">Technical Support</option>
-                <option value="feedback">Feedback & Suggestions</option>
-                <option value="partnership">Partnership Opportunity</option>
-                <option value="enterprise">Enterprise / Business Inquiry</option>
-                <option value="bug">Report a Bug</option>
-                <option value="other">Other</option>
+                <option value="enterprise">Enterprise Plans</option>
+                <option value="partnership">Partnership</option>
+                <option value="bug">Bug Report</option>
+                <option value="feature">Feature Request</option>
               </select>
-              <Textarea required name="message" placeholder="Message" />
+              <Textarea required name="message" placeholder="Your message..." rows={5} />
 
               {/* Honeypot field */}
               <input type="text" name="company" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
