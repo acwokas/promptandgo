@@ -108,6 +108,8 @@ import Community from "./pages/Community";
 import Changelog from "./pages/Changelog";
 import Integrations from "./pages/Integrations";
 import SearchPage from "./pages/Search";
+import PlatformComparison from "./pages/PlatformComparison";
+import BlogArticle from "@/components/blog/BlogArticle";
 import OnboardingModal from "@/components/onboarding/OnboardingModal";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import ErrorBoundary from "@/components/ErrorBoundary";
