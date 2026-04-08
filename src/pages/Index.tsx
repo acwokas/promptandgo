@@ -8,7 +8,7 @@ import {
   Search, Copy, Check, ChevronRight, Star,
   BookOpen, Wand2, ShoppingBag, Award,
   MessageSquare, TrendingUp, Users, Flame,
-  BarChart3, Zap as ZapIcon, Volume2, Activity
+  Zap as ZapIcon, Volume2, Activity
 } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useNewsletterStatus } from "@/hooks/useNewsletterStatus";
