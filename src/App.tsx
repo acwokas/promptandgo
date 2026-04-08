@@ -205,6 +205,7 @@ const AppContent = () => {
                 <Route path="/email-confirmed" element={<EmailConfirmed />} />
                 <Route path="/s/:shortCode" element={<ShareRedirect />} />
                 <Route path="/scout" element={<ToolkitPage />} />
+                <Route path="/ask-scout" element={<AskScout />} />
                 <Route path="/ai/generator" element={<AIPromptGeneratorPage />} />
                 <Route path="/ai/studio" element={<PromptStudioPage />} />
                 <Route path="/ai/assistant" element={<AIAssistantPage />} />
