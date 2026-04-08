@@ -8,8 +8,8 @@ const data: CountryData = {
   slug: "vietnam",
   audience: "425,343",
   ageRange: "24-40 years",
-  seoTitle: "Vietnam Market Insights - SQREEM Intelligence | PromptAndGo",
-  seoDescription: "425,343 professionals in Vietnam are actively seeking better AI prompts. SQREEM data reveals a creative-first market with high engagement in academic and content use cases.",
+  seoTitle: "Vietnam Market Insights | PromptAndGo",
+  seoDescription: "425,343 professionals in Vietnam are actively seeking better AI prompts. Behavioural data reveals a creative-first market with high engagement in academic and content use cases.",
   headline: "425,343 creatives and professionals",
   subheadline: "Vietnam's AI prompt market is uniquely creative-driven. Freelance writers, content creators, graphic designers, and journalists make up the largest segment, all seeking to enhance their output with AI.",
   personas: [
@@ -49,7 +49,7 @@ const data: CountryData = {
     },
   ],
   keyInsight: "Vietnam's market is the most creative-leaning in APAC. While other countries skew technical or business-focused, Vietnam's prompt seekers are predominantly writers, designers, and content creators. This is an underserved audience that no competitor is specifically targeting.",
-  keyInsightAttribution: "- SQREEM behavioural analysis, Vietnam market, 2025",
+  keyInsightAttribution: "- Behavioural analysis, Vietnam market, 2025",
 };
 
 const VietnamInsights = () => <CountryInsightLayout data={data} />;

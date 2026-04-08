@@ -25,7 +25,7 @@ import {
   Award,
 } from 'lucide-react';
 
-/* ─── SQREEM Intelligence data (APAC) ─── */
+/* ─── Market Intelligence data (APAC) ─── */
 const MARKET_SIZE = {
   sg: { people: 50625, label: 'Singapore', slug: '' },
   my: { people: 10969, label: 'Malaysia', slug: '/market-insights/malaysia' },
@@ -176,8 +176,8 @@ const MarketInsights = () => {
   return (
     <>
       <SEO
-        title="Market Insights - SQREEM Intelligence | PromptAndGo"
-        description="Real data on the 1.9M+ APAC professionals searching for better AI prompts. Powered by SQREEM Intelligence behavioural analysis."
+        title="Market Intelligence | PromptAndGo"
+        description="Real data on the 1.9M+ APAC professionals searching for better AI prompts. Behavioural intelligence across Asia-Pacific."
         canonical="https://promptandgo.ai/market-insights"
       />
 
@@ -196,7 +196,7 @@ const MarketInsights = () => {
             <div className="flex justify-center mb-8">
               <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-white/90 px-5 py-2 rounded-full text-sm font-medium">
                 <Brain className="h-4 w-4 text-accent animate-pulse" />
-                <span>Powered by SQREEM Intelligence</span>
+                <span>Behavioural Intelligence</span>
               </div>
             </div>
 
@@ -210,7 +210,7 @@ const MarketInsights = () => {
             </h1>
 
             <p className="text-center text-lg md:text-xl text-white/70 mt-8 max-w-3xl mx-auto leading-relaxed">
-              Not guesses. Not surveys. Real behavioural data from billions of digital signals across Asia-Pacific, analysed by SQREEM's AI-driven intelligence platform.
+              Not guesses. Not surveys. Real behavioural data from billions of digital signals across Asia-Pacific.
             </p>
           </div>
         </section>
@@ -353,7 +353,7 @@ const MarketInsights = () => {
                 Five distinct personas shaping the market
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-                SQREEM's AI identified five distinct audience segments, each with unique needs, pain points, and purchase triggers.
+                Five distinct audience segments, each with unique needs, pain points, and purchase triggers.
               </p>
             </div>
 
@@ -528,7 +528,7 @@ const MarketInsights = () => {
               </blockquote>
 
               <p className="text-white/50 text-sm mb-12 font-medium">
-                SQREEM behavioural pattern analysis | APAC market | 2025
+                Behavioural pattern analysis | APAC market | 2025
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -564,7 +564,7 @@ const MarketInsights = () => {
                   </h2>
 
                   <p className="text-muted-foreground leading-relaxed mb-8">
-                    All market sizing and persona data comes from SQREEM Intelligence, an AI-powered behavioural analytics platform that analyzes billions of digital signals across the APAC region without relying on surveys or self-reported data.
+                    All market sizing and persona data comes from AI-powered behavioural analytics that analyzes billions of digital signals across the APAC region without relying on surveys or self-reported data.
                   </p>
 
                   <div className="space-y-4">
@@ -605,7 +605,7 @@ const MarketInsights = () => {
                     <div className="absolute inset-0 rounded-3xl border border-primary/30 backdrop-blur-sm flex flex-col items-center justify-center gap-4">
                       <Brain className="h-16 w-16 text-primary" />
                       <div className="text-center">
-                        <p className="text-sm font-semibold text-white">SQREEM</p>
+                        <p className="text-sm font-semibold text-white">Market</p>
                         <p className="text-xs text-white/70">Intelligence</p>
                       </div>
                     </div>

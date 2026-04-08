@@ -8,8 +8,8 @@ const data: CountryData = {
   slug: "australia",
   audience: "104,647",
   ageRange: "22-55 years",
-  seoTitle: "Australia Market Insights - SQREEM Intelligence | PromptAndGo",
-  seoDescription: "104,647 professionals in Australia are actively seeking better AI prompts. SQREEM data reveals five distinct personas across business, creative, technical, education, and public service sectors.",
+  seoTitle: "Australia Market Insights | PromptAndGo",
+  seoDescription: "104,647 professionals in Australia are actively seeking better AI prompts. Behavioural data reveals five distinct personas across business, creative, technical, education, and public service sectors.",
   headline: "104,647 professionals, five distinct personas",
   subheadline: "Australia has the most diverse AI prompt market in APAC. Five clear segments span business, creative, technical, education, and public service - each with unique needs and engagement patterns.",
   personas: [
@@ -73,7 +73,7 @@ const data: CountryData = {
     },
   ],
   keyInsight: "Australia is the most balanced market in APAC, with no single persona dominating. The near-equal split between business (43%) and creative (41%) segments means any prompt solution must serve both analytical and artistic use cases, unlike the tech-heavy markets elsewhere in the region.",
-  keyInsightAttribution: "- SQREEM behavioural analysis, Australia market, 2025",
+  keyInsightAttribution: "- Behavioural analysis, Australia market, 2025",
 };
 
 const AustraliaInsights = () => <CountryInsightLayout data={data} />;

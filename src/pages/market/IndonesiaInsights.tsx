@@ -8,8 +8,8 @@ const data: CountryData = {
   slug: "indonesia",
   audience: "537,854",
   ageRange: "25-45 years",
-  seoTitle: "Indonesia Market Insights - SQREEM Intelligence | PromptAndGo",
-  seoDescription: "537,854 professionals in Indonesia are actively seeking better AI prompts. SQREEM data reveals a massive market split between business and tech professionals.",
+  seoTitle: "Indonesia Market Insights | PromptAndGo",
+  seoDescription: "537,854 professionals in Indonesia are actively seeking better AI prompts. Behavioural data reveals a massive market split between business and tech professionals.",
   headline: "537,854 people want better prompts",
   subheadline: "Indonesia is the largest AI prompt market in APAC by volume. Nearly half a million business and technology professionals are actively seeking prompt optimisation solutions.",
   personas: [
@@ -49,7 +49,7 @@ const data: CountryData = {
     },
   ],
   keyInsight: "Indonesia isn't learning about AI, it's already using it. This is an advanced market that has moved beyond basics and demands sophisticated, security-conscious prompt solutions. The 55% engagement rate on AI personalisation for work efficiency is the highest in APAC.",
-  keyInsightAttribution: "- SQREEM behavioural analysis, Indonesia market, 2025",
+  keyInsightAttribution: "- Behavioural analysis, Indonesia market, 2025",
 };
 
 const IndonesiaInsights = () => <CountryInsightLayout data={data} />;
