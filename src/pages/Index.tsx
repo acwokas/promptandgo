@@ -119,6 +119,15 @@ const LIVE_ACTIVITIES = [
 
 
 
+const HERO_PHRASES = [
+  "Start Writing Phenomenal Prompts",
+  "开始写出色的提示词",
+  "素晴らしいプロンプトを書こう",
+  "Mulai Menulis Prompt Luar Biasa",
+  "เริ่มเขียนพรอมต์ที่ยอดเยี่ยม",
+  "탁월한 프롬프트를 작성하세요",
+];
+
 const Index = () => {
   const { user } = useSupabaseAuth();
   const { isNewsletterSubscribed } = useNewsletterStatus();
@@ -129,6 +138,7 @@ const Index = () => {
   const [copiedHero, setCopiedHero] = useState(false);
   const [activeLanguage, setActiveLanguage] = useState(0);
   const [liveActivityIndex, setLiveActivityIndex] = useState(0);
+  const [heroPhraseIndex, setHeroPhraseIndex] = useState(0);
   const charIndex = useRef(0);
 
   // Typing animation
@@ -179,6 +189,14 @@ const Index = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Hero multilingual phrase cycling
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setHeroPhraseIndex((prev) => (prev + 1) % HERO_PHRASES.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   const homeStructuredData = [
     {
       "@context": "https://schema.org",
@@ -211,9 +229,9 @@ const Index = () => {
       />
       <AIOptimizedStructuredData pageType="HomePage" title="3,000+ Curated AI Prompts" description="Browse, copy, and run tested AI prompts." />
 
-      <main>
+      <main className="page-transition">
         {/* ═══════════════════════ HERO ═══════════════════════ */}
-        <section className="relative overflow-hidden bg-hero">
+        <section className="relative overflow-hidden bg-hero-animated">
           {/* Ambient background effects */}
           <div aria-hidden className="pointer-events-none absolute inset-0">
             <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-primary/25 blur-[120px] animate-pulse" style={{ animationDuration: "6s" }} />
@@ -240,7 +258,15 @@ const Index = () => {
               <span className="block text-gradient-brand"> built for Asia.</span>
             </h1>
 
-            <p className="text-center text-lg md:text-xl text-white/80 mt-8 max-w-3xl mx-auto leading-relaxed font-light animate-fade-in" style={{ animationDelay: "0.1s" }}>
+            {/* Animated multilingual subtitle */}
+            <div className="text-center mt-6 h-10 flex items-center justify-center animate-fade-in" style={{ animationDelay: "0.05s" }}>
+              <p className="text-xl md:text-2xl font-semibold text-white/90 transition-opacity duration-500" key={heroPhraseIndex}>
+                {HERO_PHRASES[heroPhraseIndex]}
+                <span className="typing-cursor" />
+              </p>
+            </div>
+
+            <p className="text-center text-lg md:text-xl text-white/80 mt-6 max-w-3xl mx-auto leading-relaxed font-light animate-fade-in" style={{ animationDelay: "0.1s" }}>
               Prompts that understand Japanese business formality, Southeast Asian market dynamics, Mandarin tone, and Indian enterprise context — then optimize them for <strong className="text-white font-semibold">any AI platform</strong> in <strong className="text-white font-semibold">any language</strong>.
             </p>
 

@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { useState, useEffect } from "react";
 import { AppSidebar } from "@/components/AppSidebar";
+import { ThemeProvider } from "@/hooks/useTheme";
 
 import ExitIntentPopup from "@/components/conversion/ExitIntentPopup";
 import Index from "./pages/Index";
@@ -106,17 +107,19 @@ const queryClient = new QueryClient();
 const App = () => {
   return (
     <ErrorBoundary>
-      <HelmetProvider>
-        <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <AppContent />
-            </BrowserRouter>
-          </TooltipProvider>
-        </QueryClientProvider>
-      </HelmetProvider>
+      <ThemeProvider>
+        <HelmetProvider>
+          <QueryClientProvider client={queryClient}>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <AppContent />
+              </BrowserRouter>
+            </TooltipProvider>
+          </QueryClientProvider>
+        </HelmetProvider>
+      </ThemeProvider>
     </ErrorBoundary>
   );
 };
