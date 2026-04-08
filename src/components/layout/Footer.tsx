@@ -42,7 +42,7 @@ const COLUMNS = [
       { label: "About", to: "/about" },
       { label: "Contact", to: "/contact" },
       { label: "Status", to: "/status" },
-      { label: "Careers", to: "/contact" },
+      { label: "Careers", to: "/careers" },
     ],
   },
   {
@@ -52,7 +52,7 @@ const COLUMNS = [
       { label: "Privacy Policy", to: "/privacy" },
       { label: "Terms of Service", to: "/terms" },
       { label: "Accessibility", to: "/accessibility" },
-      { label: "Cookie Policy", to: "/privacy" },
+      { label: "Cookie Policy", to: "/cookies" },
     ],
   },
 ];
@@ -76,6 +76,14 @@ const SocialIcon = ({ label, children, href }: { label: string; children: React.
 const Footer = () => {
   const [selectedLang, setSelectedLang] = useState("en");
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+
+  const handleLangChange = (code: string) => {
+    setSelectedLang(code);
+    const langRoutes: Record<string, string> = { ja: "/ja", ko: "/ko", zh: "/zh" };
+    if (langRoutes[code]) {
+      window.location.href = langRoutes[code];
+    }
+  };
 
   return (
     <footer className="bg-hero text-white mt-16">
@@ -163,7 +171,7 @@ const Footer = () => {
 
             {/* Right: lang + social */}
             <div className="flex items-center gap-3">
-              <select value={selectedLang} onChange={(e) => setSelectedLang(e.target.value)} className="bg-transparent border border-white/10 rounded px-2 py-1 text-xs text-white/50 focus:outline-none cursor-pointer">
+              <select value={selectedLang} onChange={(e) => handleLangChange(e.target.value)} className="bg-transparent border border-white/10 rounded px-2 py-1 text-xs text-white/50 focus:outline-none cursor-pointer">
                 {LANGUAGES.map((l) => (
                   <option key={l.code} value={l.code} className="bg-[hsl(240,28%,7%)] text-white">{l.label}</option>
                 ))}
