@@ -220,6 +220,7 @@ const AppContent = () => {
                 <Route path="/optimize" element={<PromptOptimizerPage />} />
                 <Route path="/help" element={<HelpCenterPage />} />
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/language-learning" element={<LanguageLearning />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               </AnalyticsProvider>
