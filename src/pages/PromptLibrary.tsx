@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import PageHero from "@/components/layout/PageHero";
 import CountdownTimer from "@/components/conversion/CountdownTimer";
 import { Link } from "react-router-dom";
-import { Search, Heart, Globe, Sparkles, Flame, Monitor, Copy } from "lucide-react";
+import { Search, Heart, Globe, Sparkles, Flame, Monitor, Copy, LayoutGrid, List, ArrowUpDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "@/hooks/use-toast";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
@@ -21,6 +21,7 @@ import { Label } from "@/components/ui/label";
 import { usePromptLibrary, sortByComplexity } from "@/hooks/usePromptLibrary";
 import { PopularCategories } from "@/components/library/PopularCategories";
 import { QuickDiscoverySection } from "@/components/library/QuickDiscoverySection";
+import { CommunityFavorites } from "@/components/library/CommunityFavorites";
 
 const PLATFORMS = [
   { id: "all", name: "All Platforms" },
