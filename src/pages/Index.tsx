@@ -261,22 +261,22 @@ const Index = () => {
             {/* Platform logos strip inline */}
             <div className="flex flex-wrap justify-center gap-3 mt-10 animate-fade-in" style={{ animationDelay: "0.3s" }}>
               {[
-                { name: "ChatGPT", color: "text-emerald-400" },
-                { name: "Claude", color: "text-orange-300" },
-                { name: "Gemini", color: "text-blue-300" },
-                { name: "Copilot", color: "text-cyan-300" },
-                { name: "Perplexity", color: "text-violet-300" },
-                { name: "MidJourney", color: "text-pink-300" },
-                { name: "DeepSeek", color: "text-teal-300" },
-                { name: "Qwen", color: "text-indigo-300" },
-                { name: "Meta AI", color: "text-sky-300" },
-                { name: "Ernie Bot", color: "text-red-300" },
-                { name: "Grok", color: "text-slate-300" },
-                { name: "Local Models", color: "text-white/60" },
+                { name: "ChatGPT", color: "text-emerald-400", slug: "chatgpt" },
+                { name: "Claude", color: "text-orange-300", slug: "claude" },
+                { name: "Gemini", color: "text-blue-300", slug: "gemini" },
+                { name: "Copilot", color: "text-cyan-300", slug: "copilot" },
+                { name: "Perplexity", color: "text-violet-300", slug: "perplexity" },
+                { name: "MidJourney", color: "text-pink-300", slug: "midjourney" },
+                { name: "DeepSeek", color: "text-teal-300", slug: "deepseek" },
+                { name: "Qwen", color: "text-indigo-300", slug: "qwen" },
+                { name: "Meta AI", color: "text-sky-300", slug: "meta" },
+                { name: "Ernie Bot", color: "text-red-300", slug: "ernie" },
+                { name: "Grok", color: "text-slate-300", slug: "grok" },
+                { name: "Local Models", color: "text-white/60", slug: "local" },
               ].map((p) => (
-                <span key={p.name} className={`text-xs font-bold ${p.color} bg-white/5 border border-white/10 px-3 py-1.5 rounded-full`}>
+                <Link key={p.name} to={`/optimize?platform=${p.slug}`} className={`text-xs font-bold ${p.color} bg-white/5 border border-white/10 px-3 py-1.5 rounded-full hover:bg-white/15 hover:border-white/30 transition-all`}>
                   {p.name}
-                </span>
+                </Link>
               ))}
             </div>
 
@@ -657,6 +657,40 @@ const Index = () => {
               </div>
             </div>
 
+            {/* Mandarin Before/After Example */}
+            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12 mt-8">
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-br from-red-500/20 to-red-600/10 blur-xl rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative rounded-2xl border border-red-500/20 bg-white/5 backdrop-blur-sm p-8 group-hover:border-red-500/40 transition-colors">
+                  <div className="flex items-center gap-2 mb-6">
+                    <div className="w-3 h-3 rounded-full bg-red-400 animate-pulse" />
+                    <span className="text-sm font-bold text-red-400/80 uppercase tracking-wide">Before · 🇨🇳 Mandarin</span>
+                  </div>
+                  <p className="text-white/90 font-mono text-sm mb-4">
+                    "帮我写营销文案"
+                  </p>
+                  <div className="pt-4 border-t border-white/10">
+                    <p className="text-xs text-white/40 leading-relaxed">Too vague. No platform, audience, or format. AI will produce generic, culturally flat output.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-cyan-500/10 blur-xl rounded-2xl" />
+                <div className="relative rounded-2xl border border-emerald-400/40 bg-white/5 backdrop-blur-sm p-8 ring-2 ring-emerald-400/20">
+                  <div className="flex items-center gap-2 mb-6">
+                    <div className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="text-sm font-bold text-emerald-400 uppercase tracking-wide">After Scout · 🇨🇳 for Qwen</span>
+                  </div>
+                  <p className="text-white/95 font-mono text-sm mb-4 leading-relaxed">
+                    "为我的护肤品牌撰写一条小红书种草文案。目标受众：25-35岁都市女性。要求：1) 使用口语化、亲切的语气，2) 包含使用体验和肤感描述，3) 添加3-5个热门话题标签，4) 字数控制在300字以内。避免过度营销用语。"
+                  </p>
+                  <div className="pt-4 border-t border-white/10">
+                    <p className="text-xs text-emerald-400/70 leading-relaxed">Platform-specific (小红书), culturally aware, structured with clear constraints. Qwen delivers authentic Chinese content.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div className="text-center">
               <Button asChild size="lg" className="bg-white text-gray-900 hover:bg-white/95 h-14 px-10 font-semibold shadow-xl shadow-white/20">
                 <Link to="/optimize" className="flex items-center gap-2">
