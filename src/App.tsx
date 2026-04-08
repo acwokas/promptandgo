@@ -101,6 +101,9 @@ import AskScout from "./pages/AskScout";
 import HelpCenterPage from "./pages/HelpCenter";
 import Dashboard from "./pages/Dashboard";
 import LanguageLearning from "./pages/LanguageLearning";
+import PromptTemplates from "./pages/PromptTemplates";
+import Enterprise from "./pages/Enterprise";
+import ApiDocs from "./pages/ApiDocs";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
