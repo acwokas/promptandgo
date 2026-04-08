@@ -2,12 +2,17 @@ import { Link } from "react-router-dom";
 import { Bot, MessageSquare, Sparkles } from "lucide-react";
 
 const PLATFORMS = [
-  { name: "ChatGPT", letter: "G", bg: "bg-[hsl(160,82%,35%)]" },
-  { name: "Claude", letter: "C", bg: "bg-[hsl(348,76%,59%)]" },
-  { name: "Gemini", letter: "G", bg: "bg-[hsl(174,82%,33%)]" },
-  { name: "DeepSeek", letter: "D", bg: "bg-[hsl(220,60%,50%)]" },
-  { name: "Qwen", letter: "Q", bg: "bg-[hsl(260,50%,55%)]" },
-  { name: "Ernie", letter: "E", bg: "bg-[hsl(210,80%,45%)]" },
+  { name: "ChatGPT", slug: "chatgpt" },
+  { name: "Claude", slug: "claude" },
+  { name: "Gemini", slug: "gemini" },
+  { name: "DeepSeek", slug: "deepseek" },
+  { name: "Qwen", slug: "qwen" },
+  { name: "Ernie Bot", slug: "ernie" },
+  { name: "Copilot", slug: "copilot" },
+  { name: "Meta AI", slug: "meta" },
+  { name: "Grok", slug: "grok" },
+  { name: "MidJourney", slug: "midjourney" },
+  { name: "Perplexity", slug: "perplexity" },
 ];
 
 const FOOTER_LANGUAGES = [
@@ -46,16 +51,17 @@ const Footer = () => {
               The only prompt optimization tool built for Asia.
             </p>
 
-            {/* Platform logos */}
-            <div className="flex flex-wrap gap-2 mb-4">
+            {/* Platform links — text labels */}
+            <div className="flex flex-wrap gap-1.5 mb-4">
               {PLATFORMS.map((p) => (
-                <div
+                <Link
                   key={p.name}
-                  title={p.name}
-                  className={`w-7 h-7 rounded-md ${p.bg} flex items-center justify-center text-white text-xs font-bold opacity-80 hover:opacity-100 transition-opacity`}
+                  to={`/optimize?platform=${p.slug}`}
+                  title={`Optimize for ${p.name}`}
+                  className="text-[10px] font-semibold text-white/50 bg-white/5 border border-white/10 rounded-full px-2.5 py-1 hover:text-white/90 hover:border-white/30 hover:bg-white/10 transition-all"
                 >
-                  {p.letter}
-                </div>
+                  {p.name}
+                </Link>
               ))}
             </div>
 
