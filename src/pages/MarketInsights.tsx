@@ -83,6 +83,26 @@ const PERSONAS = [
   },
 ];
 
+const PLATFORM_BY_COUNTRY = [
+  { country: "China", flag: "🇨🇳", platforms: [{ name: "Qwen", pct: 38 }, { name: "Ernie Bot", pct: 31 }, { name: "DeepSeek", pct: 18 }, { name: "ChatGPT", pct: 8 }] },
+  { country: "Japan", flag: "🇯🇵", platforms: [{ name: "ChatGPT", pct: 42 }, { name: "Claude", pct: 22 }, { name: "Gemini", pct: 18 }, { name: "Copilot", pct: 12 }] },
+  { country: "Singapore", flag: "🇸🇬", platforms: [{ name: "ChatGPT", pct: 45 }, { name: "Claude", pct: 20 }, { name: "Gemini", pct: 15 }, { name: "Copilot", pct: 10 }] },
+  { country: "Indonesia", flag: "🇮🇩", platforms: [{ name: "ChatGPT", pct: 52 }, { name: "Gemini", pct: 20 }, { name: "DeepSeek", pct: 12 }, { name: "Copilot", pct: 8 }] },
+  { country: "India", flag: "🇮🇳", platforms: [{ name: "ChatGPT", pct: 48 }, { name: "Gemini", pct: 25 }, { name: "Claude", pct: 12 }, { name: "Copilot", pct: 10 }] },
+  { country: "Thailand", flag: "🇹🇭", platforms: [{ name: "ChatGPT", pct: 55 }, { name: "Gemini", pct: 18 }, { name: "Claude", pct: 12 }, { name: "DeepSeek", pct: 8 }] },
+  { country: "South Korea", flag: "🇰🇷", platforms: [{ name: "ChatGPT", pct: 40 }, { name: "Claude", pct: 25 }, { name: "Gemini", pct: 18 }, { name: "Qwen", pct: 10 }] },
+  { country: "Vietnam", flag: "🇻🇳", platforms: [{ name: "ChatGPT", pct: 50 }, { name: "Gemini", pct: 22 }, { name: "DeepSeek", pct: 15 }, { name: "Claude", pct: 8 }] },
+];
+
+const INDUSTRY_STATS = [
+  { industry: "Marketing & Advertising", pct: 34, icon: Target },
+  { industry: "E-commerce & Retail", pct: 22, icon: Briefcase },
+  { industry: "Education & Training", pct: 16, icon: GraduationCap },
+  { industry: "Technology & Development", pct: 14, icon: Zap },
+  { industry: "Finance & Consulting", pct: 8, icon: BarChart3 },
+  { industry: "Healthcare & Wellness", pct: 6, icon: Heart },
+];
+
 const BRAND_WHITESPACE = [
   {
     title: 'APAC-first prompt library',
@@ -299,6 +319,106 @@ const MarketInsights = () => {
                 </span>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* ═══════════════ AI PLATFORMS BY COUNTRY ═══════════════ */}
+        <section className="relative py-24 md:py-32 bg-gradient-to-b from-background to-muted/30">
+          <div className="container max-w-6xl mx-auto px-4">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 text-sm text-muted-foreground mb-6 px-4 py-2 rounded-full bg-accent/5 border border-accent/10">
+                <Globe className="h-4 w-4" />
+                Platform adoption by country
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+                Which AI platforms dominate where?
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+                AI platform preferences vary dramatically across Asia. Understanding local adoption patterns is key to effective prompting.
+              </p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {PLATFORM_BY_COUNTRY.map((c) => (
+                <div key={c.country} className="rounded-xl border border-border bg-card p-5 hover:border-primary/30 transition-colors">
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-2xl">{c.flag}</span>
+                    <h3 className="font-bold text-sm">{c.country}</h3>
+                  </div>
+                  <div className="space-y-2.5">
+                    {c.platforms.map((p, i) => (
+                      <div key={p.name}>
+                        <div className="flex justify-between text-xs mb-1">
+                          <span className={i === 0 ? "font-bold text-foreground" : "text-muted-foreground"}>{p.name}</span>
+                          <span className={i === 0 ? "font-bold text-primary" : "text-muted-foreground"}>{p.pct}%</span>
+                        </div>
+                        <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+                          <div
+                            className={`h-full rounded-full ${i === 0 ? "bg-gradient-to-r from-primary to-accent" : "bg-muted-foreground/30"}`}
+                            style={{ width: `${p.pct}%` }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <p className="text-center text-xs text-muted-foreground mt-6">* Placeholder data based on regional market analysis estimates, 2025</p>
+          </div>
+        </section>
+
+        {/* ═══════════════ INDUSTRY USAGE ═══════════════ */}
+        <section className="relative py-20 md:py-28 bg-muted/30 border-y border-border">
+          <div className="container max-w-5xl mx-auto px-4">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 text-sm text-muted-foreground mb-6 px-4 py-2 rounded-full bg-primary/5 border border-primary/10">
+                <BarChart3 className="h-4 w-4" />
+                Industry breakdown
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+                Who's using AI prompts the most?
+              </h2>
+            </div>
+
+            <div className="space-y-4 max-w-3xl mx-auto">
+              {INDUSTRY_STATS.map((ind) => {
+                const Icon = ind.icon;
+                return (
+                  <div key={ind.industry} className="flex items-center gap-4 p-4 rounded-xl bg-card border border-border">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                      <Icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex justify-between items-center mb-1.5">
+                        <span className="font-semibold text-sm">{ind.industry}</span>
+                        <span className="text-sm font-bold text-primary">{ind.pct}%</span>
+                      </div>
+                      <div className="h-2 bg-muted rounded-full overflow-hidden">
+                        <div className="h-full bg-gradient-to-r from-primary to-accent rounded-full transition-all" style={{ width: `${ind.pct}%` }} />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* State of AI stat cards */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16">
+              {[
+                { stat: "78%", label: "APAC professionals use AI weekly" },
+                { stat: "3.2x", label: "Faster task completion with optimized prompts" },
+                { stat: "62%", label: "Say prompt quality is their biggest AI challenge" },
+                { stat: "45%", label: "Prefer prompting in their native language" },
+              ].map((s) => (
+                <div key={s.label} className="text-center p-5 rounded-xl bg-card border border-border">
+                  <div className="text-3xl font-extrabold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-2">{s.stat}</div>
+                  <p className="text-xs text-muted-foreground leading-snug">{s.label}</p>
+                </div>
+              ))}
+            </div>
+            <p className="text-center text-xs text-muted-foreground mt-4">* Placeholder data based on APAC AI adoption surveys and behavioural analysis, 2025</p>
           </div>
         </section>
 
