@@ -286,19 +286,55 @@ const About = () => {
         </div>
       </section>
 
-      {/* Final CTA */}
+      {/* Values */}
       <section className="py-20 md:py-28 px-4">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-sm font-semibold uppercase tracking-widest text-accent mb-4 text-center">Our Values</p>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-16 text-center">
+            What drives everything we build
+          </h2>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { icon: Globe, title: "Cultural Intelligence", desc: "We don't just translate. We localize with deep awareness of cultural norms, formality, and context." },
+              { icon: Languages, title: "Language First", desc: "Every feature starts with the question: does this work in Japanese, Thai, Hindi, and Bahasa?" },
+              { icon: Target, title: "Platform Agnostic", desc: "We optimize for every major AI platform so you're never locked into a single ecosystem." },
+              { icon: Users, title: "Community Driven", desc: "Our best prompts come from real professionals across Asia sharing what works." },
+            ].map((item) => (
+              <div key={item.title} className="text-center p-6 rounded-xl border border-[hsl(240,20%,16%)] bg-[hsl(240,25%,10%,0.5)] hover:border-primary/20 transition-colors">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                  <item.icon className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="font-bold text-lg mb-2">{item.title}</h3>
+                <p className="text-sm text-[hsl(240,10%,65%)] leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA with email signup */}
+      <section className="py-20 md:py-28 px-4 bg-[hsl(240,25%,10%)]">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-6">
-            Ready to optimize your prompts for Asia?
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+            Join 10,000+ Asian professionals optimizing their AI prompts
           </h2>
           <p className="text-[hsl(240,10%,65%)] text-lg mb-10 max-w-xl mx-auto">
-            Join thousands of marketers, developers, and creators across Asia who use PromptAndGo
-            to get better results from every AI platform.
+            Get weekly prompt techniques, platform updates, and cultural insights for AI in Asia.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild variant="hero" size="lg" className="text-base px-10 py-6 h-auto">
-              <Link to="/optimize">Start Optimizing for Free</Link>
+          <form onSubmit={(e) => e.preventDefault()} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-6">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="flex-1 h-12 rounded-lg border border-[hsl(240,20%,20%)] bg-[hsl(240,28%,7%)] px-4 text-sm text-[hsl(28,76%,97%)] placeholder:text-[hsl(240,10%,45%)] focus:outline-none focus:border-primary transition-colors"
+            />
+            <Button variant="hero" size="lg" className="h-12 px-8 shrink-0">
+              Get Started Free
+            </Button>
+          </form>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+            <Button asChild variant="outline" size="lg" className="text-base px-8 py-6 h-auto border-[hsl(240,20%,22%)] text-[hsl(28,76%,97%)] hover:bg-[hsl(240,20%,16%)]">
+              <Link to="/optimize">Try the Optimizer</Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="text-base px-8 py-6 h-auto border-[hsl(240,20%,22%)] text-[hsl(28,76%,97%)] hover:bg-[hsl(240,20%,16%)]">
               <Link to="/market-insights">
