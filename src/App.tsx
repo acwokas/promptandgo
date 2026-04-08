@@ -108,6 +108,8 @@ import Community from "./pages/Community";
 import Changelog from "./pages/Changelog";
 import Integrations from "./pages/Integrations";
 import SearchPage from "./pages/Search";
+import PlatformComparison from "./pages/PlatformComparison";
+import BlogArticle from "@/components/blog/BlogArticle";
 import OnboardingModal from "@/components/onboarding/OnboardingModal";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import ErrorBoundary from "@/components/ErrorBoundary";
@@ -238,6 +240,9 @@ const AppContent = () => {
                 <Route path="/changelog" element={<Changelog />} />
                 <Route path="/integrations" element={<Integrations />} />
                 <Route path="/search" element={<SearchPage />} />
+                <Route path="/compare" element={<PlatformComparison />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/blog/:slug" element={<BlogArticle />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               </AnalyticsProvider>

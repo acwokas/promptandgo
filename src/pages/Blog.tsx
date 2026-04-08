@@ -87,6 +87,12 @@ const ARTICLES: Article[] = [
   },
 ];
 
+const BLOG_ARTICLES: Article[] = [
+  { title: "Mastering Keigo: How to Write Formal Japanese Business Emails with AI", slug: "mastering-keigo-japanese-business-emails", author: "Yuki Tanaka", date: "Apr 8, 2026", readTime: "8 min read", category: "Asian Markets", excerpt: "Japanese business communication relies on keigo — learn how to prompt AI for correct sonkeigo, kenjōgo, and teineigo output." },
+  { title: "The Complete Guide to Mandarin Tone Markers in AI-Generated Content", slug: "mandarin-tone-markers-ai-guide", author: "Li Wei", date: "Apr 5, 2026", readTime: "7 min read", category: "Platform Guides", excerpt: "Ensure your AI outputs handle Mandarin's four tones correctly with pinyin markers and proper character sets." },
+  { title: "Why Korean Honorifics Matter in AI Prompt Engineering", slug: "korean-honorifics-prompt-engineering", author: "Ji-su Park", date: "Apr 1, 2026", readTime: "6 min read", category: "Asian Markets", excerpt: "Korean's complex honorific system has seven speech levels. Here's how to prompt AI for correct 존댓말 output." },
+];
+
 const EXISTING_ARTICLES: Article[] = [
   { title: "How to Write AI Prompts in Asian Languages", slug: "ai-prompts-in-asian-languages", author: "PromptAndGo Team", date: "Jan 2025", readTime: "6 min", category: "Prompt Engineering", excerpt: "Prompting in your native Asian language works better than English. Learn techniques for Chinese, Japanese, Korean, Thai, Hindi, and more." },
   { title: "Multi-Platform Prompting Guide for 2026", slug: "multi-platform-prompting-guide", author: "PromptAndGo Team", date: "Jan 2025", readTime: "8 min", category: "Platform Guides", excerpt: "ChatGPT, Claude, DeepSeek, Qwen, and more all respond differently. Learn how to tailor prompts for each platform." },
@@ -103,8 +109,13 @@ const Blog = () => {
   const origin = typeof window !== "undefined" ? window.location.origin : "";
   const canonical = origin ? `${origin}/tips` : undefined;
 
-  const allArticles = [...ARTICLES, ...(showMore ? EXISTING_ARTICLES : [])];
+  const allArticles = [...BLOG_ARTICLES, ...ARTICLES, ...(showMore ? EXISTING_ARTICLES : [])];
   const filtered = activeCategory === "All" ? allArticles : allArticles.filter((a) => a.category === activeCategory);
+
+  const getArticleLink = (slug: string): string => {
+    const blogSlugs = BLOG_ARTICLES.map(a => a.slug);
+    return blogSlugs.includes(slug) ? `/blog/${slug}` : `/tips/${slug}`;
+  };
 
   return (
     <>
@@ -143,7 +154,7 @@ const Blog = () => {
         </Breadcrumb>
 
         {/* Featured article */}
-        <Link to={`/tips/${FEATURED.slug}`} className="group block mb-12">
+        <Link to={getArticleLink(FEATURED.slug)} className="group block mb-12">
           <Card className="overflow-hidden border-primary/20 hover:border-primary/40 transition-colors">
             <CardContent className="p-8 md:p-10">
               <div className="flex flex-wrap items-center gap-3 mb-4">
@@ -181,7 +192,7 @@ const Blog = () => {
         <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-12">
           {filtered.map((article, idx) => (
             <article key={`${article.slug}-${idx}`}>
-              <Link to={`/tips/${article.slug}`} className="group block h-full">
+              <Link to={getArticleLink(article.slug)} className="group block h-full">
                 <Card className="h-full overflow-hidden hover:border-primary/30 hover:shadow-lg transition-all">
                   <CardContent className="p-6">
                     <div className="flex items-center gap-2 mb-3">
