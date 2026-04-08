@@ -227,6 +227,20 @@ const Contact = () => {
                 readOnly={!!user}
                 className={user ? "bg-muted/50" : ""}
               />
+              <select
+                name="subject"
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                defaultValue=""
+              >
+                <option value="" disabled>Select a subject...</option>
+                <option value="general">General Inquiry</option>
+                <option value="support">Technical Support</option>
+                <option value="feedback">Feedback & Suggestions</option>
+                <option value="partnership">Partnership Opportunity</option>
+                <option value="enterprise">Enterprise / Business Inquiry</option>
+                <option value="bug">Report a Bug</option>
+                <option value="other">Other</option>
+              </select>
               <Textarea required name="message" placeholder="Message" />
 
               {/* Honeypot field */}

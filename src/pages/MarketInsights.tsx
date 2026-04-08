@@ -83,6 +83,26 @@ const PERSONAS = [
   },
 ];
 
+const PLATFORM_BY_COUNTRY = [
+  { country: "China", flag: "🇨🇳", platforms: [{ name: "Qwen", pct: 38 }, { name: "Ernie Bot", pct: 31 }, { name: "DeepSeek", pct: 18 }, { name: "ChatGPT", pct: 8 }] },
+  { country: "Japan", flag: "🇯🇵", platforms: [{ name: "ChatGPT", pct: 42 }, { name: "Claude", pct: 22 }, { name: "Gemini", pct: 18 }, { name: "Copilot", pct: 12 }] },
+  { country: "Singapore", flag: "🇸🇬", platforms: [{ name: "ChatGPT", pct: 45 }, { name: "Claude", pct: 20 }, { name: "Gemini", pct: 15 }, { name: "Copilot", pct: 10 }] },
+  { country: "Indonesia", flag: "🇮🇩", platforms: [{ name: "ChatGPT", pct: 52 }, { name: "Gemini", pct: 20 }, { name: "DeepSeek", pct: 12 }, { name: "Copilot", pct: 8 }] },
+  { country: "India", flag: "🇮🇳", platforms: [{ name: "ChatGPT", pct: 48 }, { name: "Gemini", pct: 25 }, { name: "Claude", pct: 12 }, { name: "Copilot", pct: 10 }] },
+  { country: "Thailand", flag: "🇹🇭", platforms: [{ name: "ChatGPT", pct: 55 }, { name: "Gemini", pct: 18 }, { name: "Claude", pct: 12 }, { name: "DeepSeek", pct: 8 }] },
+  { country: "South Korea", flag: "🇰🇷", platforms: [{ name: "ChatGPT", pct: 40 }, { name: "Claude", pct: 25 }, { name: "Gemini", pct: 18 }, { name: "Qwen", pct: 10 }] },
+  { country: "Vietnam", flag: "🇻🇳", platforms: [{ name: "ChatGPT", pct: 50 }, { name: "Gemini", pct: 22 }, { name: "DeepSeek", pct: 15 }, { name: "Claude", pct: 8 }] },
+];
+
+const INDUSTRY_STATS = [
+  { industry: "Marketing & Advertising", pct: 34, icon: Target },
+  { industry: "E-commerce & Retail", pct: 22, icon: Briefcase },
+  { industry: "Education & Training", pct: 16, icon: GraduationCap },
+  { industry: "Technology & Development", pct: 14, icon: Zap },
+  { industry: "Finance & Consulting", pct: 8, icon: BarChart3 },
+  { industry: "Healthcare & Wellness", pct: 6, icon: Heart },
+];
+
 const BRAND_WHITESPACE = [
   {
     title: 'APAC-first prompt library',
