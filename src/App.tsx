@@ -280,6 +280,7 @@ const AppContent = () => {
                 <Route path="/accessibility" element={<Accessibility />} />
                 <Route path="/partners" element={<Partners />} />
                 <Route path="/use-cases" element={<UseCasesPage />} />
+                <Route path="/status" element={<StatusPage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               </Suspense>
