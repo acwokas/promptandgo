@@ -607,6 +607,17 @@ const PromptOptimizer = () => {
               </Card>
             </div>
 
+            {/* Optimization Metrics */}
+            <OptimizationMetrics prompt={prompt} optimized={optimizedPrompt} />
+
+            {/* Platform-Specific Tabs */}
+            <PlatformTabs
+              originalPrompt={prompt}
+              optimizedPrompt={optimizedPrompt}
+              copiedId={copiedId}
+              onCopy={copyText}
+            />
+
             {/* Educational optimization insights */}
             <Card className="border-blue-500/20 bg-blue-500/5">
               <CardContent className="p-5 space-y-3">
