@@ -154,7 +154,7 @@ const Blog = () => {
         </Breadcrumb>
 
         {/* Featured article */}
-        <Link to={`/tips/${FEATURED.slug}`} className="group block mb-12">
+        <Link to={getArticleLink(FEATURED.slug)} className="group block mb-12">
           <Card className="overflow-hidden border-primary/20 hover:border-primary/40 transition-colors">
             <CardContent className="p-8 md:p-10">
               <div className="flex flex-wrap items-center gap-3 mb-4">
@@ -192,7 +192,7 @@ const Blog = () => {
         <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-12">
           {filtered.map((article, idx) => (
             <article key={`${article.slug}-${idx}`}>
-              <Link to={`/tips/${article.slug}`} className="group block h-full">
+              <Link to={getArticleLink(article.slug)} className="group block h-full">
                 <Card className="h-full overflow-hidden hover:border-primary/30 hover:shadow-lg transition-all">
                   <CardContent className="p-6">
                     <div className="flex items-center gap-2 mb-3">
