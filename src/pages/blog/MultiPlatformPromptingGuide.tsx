@@ -186,8 +186,8 @@ const MultiPlatformPromptingGuide = () => {
           </p>
         </article>
 
-        <AuthorBio author={AUTHOR_MAIN} publishDate={publishDate} />
-        <PrevNextNav currentPath="/tips/multi-platform-prompting-guide" />
+        <AuthorBio author={AUTHOR_MAIN} />
+        <PrevNextNav />
       </main>
     </>
   );

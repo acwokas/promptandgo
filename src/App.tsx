@@ -35,6 +35,8 @@ import AIPromptsForSocialMediaContent from "./pages/blog/AIPromptsForSocialMedia
 import AIPromptsForContentWriters from "./pages/blog/AIPromptsForContentWriters";
 import AIPromptsForBusinessStrategy from "./pages/blog/AIPromptsForBusinessStrategy";
 import BeginnersGuideMidjourneyPrompts from "./pages/blog/BeginnersGuideMidjourneyPrompts";
+import AIPromptsInAsianLanguages from "./pages/blog/AIPromptsInAsianLanguages";
+import MultiPlatformPromptingGuide from "./pages/blog/MultiPlatformPromptingGuide";
 import Auth from "./pages/Auth";
 import AdminBulkUpload from "./pages/AdminBulkUpload";
 import AdminTools from "./pages/AdminTools";
@@ -156,6 +158,8 @@ const AppContent = () => {
                 <Route path="/tips/ai-prompts-for-content-writers" element={<AIPromptsForContentWriters />} />
                 <Route path="/tips/ai-prompts-for-business-strategy" element={<AIPromptsForBusinessStrategy />} />
                 <Route path="/tips/beginners-guide-midjourney-prompts" element={<BeginnersGuideMidjourneyPrompts />} />
+                <Route path="/tips/ai-prompts-in-asian-languages" element={<AIPromptsInAsianLanguages />} />
+                <Route path="/tips/multi-platform-prompting-guide" element={<MultiPlatformPromptingGuide />} />
                 <Route path="/terms" element={<Terms />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/how-it-works" element={<HowItWorks />} />

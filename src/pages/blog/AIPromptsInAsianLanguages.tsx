@@ -166,8 +166,8 @@ const AIPromptsInAsianLanguages = () => {
           </p>
         </article>
 
-        <AuthorBio author={AUTHOR_MAIN} publishDate={publishDate} />
-        <PrevNextNav currentPath="/tips/ai-prompts-in-asian-languages" />
+        <AuthorBio author={AUTHOR_MAIN} />
+        <PrevNextNav />
       </main>
     </>
   );
