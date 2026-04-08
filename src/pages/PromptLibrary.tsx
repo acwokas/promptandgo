@@ -144,6 +144,8 @@ const PromptLibrary = () => {
   const [platform, setPlatform] = useState("all");
   const [language, setLanguage] = useState("all");
   const [asianContext, setAsianContext] = useState(false);
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [sortBy, setSortBy] = useState("popular");
 
   const {
     user,
