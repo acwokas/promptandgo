@@ -240,6 +240,9 @@ const AppContent = () => {
                 <Route path="/changelog" element={<Changelog />} />
                 <Route path="/integrations" element={<Integrations />} />
                 <Route path="/search" element={<SearchPage />} />
+                <Route path="/compare" element={<PlatformComparison />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/blog/:slug" element={<BlogArticle />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               </AnalyticsProvider>

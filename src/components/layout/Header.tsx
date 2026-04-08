@@ -13,6 +13,7 @@ import { SeoOptimizedImage } from "@/components/seo/SeoOptimizedImage";
 import { XPDisplay } from "../xp/XPDisplay";
 import { useIsCertified } from "@/hooks/useIsCertified";
 import { useTheme } from "@/hooks/useTheme";
+import NotificationCenter from "@/components/NotificationCenter";
 
 // Component to safely render SidebarTrigger only when context is available
 const SafeSidebarTrigger = () => {
