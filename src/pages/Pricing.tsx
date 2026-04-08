@@ -3,101 +3,92 @@ import { Button } from "@/components/ui/button";
 import SEO from "@/components/SEO";
 import {
   Check, X, Sparkles, Zap, Building2, Crown,
-  ChevronDown, Globe, Bot, Shield
+  ChevronDown, Globe
 } from "lucide-react";
 import { useState } from "react";
 
-const TIERS = [
-  {
-    name: "Free",
-    price: "$0",
-    period: "forever",
-    description: "Get started with core optimization across the top 3 global platforms.",
-    popular: false,
-    cta: "Start Free",
-    ctaLink: "/auth?mode=signup",
-    icon: Zap,
-    features: [
-      { text: "5 prompt optimizations per day", included: true },
-      { text: "3 platforms (ChatGPT, Claude, Gemini)", included: true },
-      { text: "English language only", included: true },
-      { text: "Basic optimization engine", included: true },
-      { text: "Community prompts library", included: true },
-      { text: "Asian AI platforms (DeepSeek, Qwen, Ernie)", included: false },
-      { text: "Multi-language with cultural context", included: false },
-      { text: "Advanced optimization with Asian context", included: false },
-      { text: "Priority support", included: false },
-    ],
-  },
-  {
-    name: "Pro",
-    price: "$9",
-    period: "/month",
-    description: "Unlock the full Asian AI ecosystem. Every platform, every language, every culture.",
-    popular: true,
-    cta: "Go Pro",
-    ctaLink: "/auth?mode=signup",
-    icon: Crown,
-    features: [
-      { text: "Unlimited prompt optimizations", included: true },
-      { text: "All global platforms (ChatGPT, Claude, Gemini, Copilot, MidJourney, Stable Diffusion)", included: true },
-      { text: "Asian AI platforms (DeepSeek, Qwen, Ernie, Baidu)", included: true },
-      { text: "10+ languages including CJK, Bahasa, Thai, Vietnamese, Hindi", included: true },
-      { text: "Advanced optimization with cultural context awareness", included: true },
-      { text: "Formality levels, honorifics, and regional business context", included: true },
-      { text: "Full Power Packs library", included: true },
-      { text: "Scout AI assistant", included: true },
-      { text: "Priority email support", included: true },
-    ],
-  },
-  {
-    name: "Enterprise",
-    price: "Custom",
-    period: "",
-    description: "For teams scaling AI across Asian markets with dedicated support and SLA.",
-    popular: false,
-    cta: "Contact Sales",
-    ctaLink: "/contact",
-    icon: Building2,
-    features: [
-      { text: "Everything in Pro", included: true },
-      { text: "API access for workflow integration", included: true },
-      { text: "Team management and user roles", included: true },
-      { text: "Custom platform integrations", included: true },
-      { text: "Dedicated account manager", included: true },
-      { text: "99.9% uptime SLA", included: true },
-      { text: "Custom prompt templates and training", included: true },
-      { text: "SSO and enterprise security", included: true },
-      { text: "Invoice billing", included: true },
-    ],
-  },
-];
-
 const FAQS = [
-  {
-    q: "What makes PromptAndGo different from other prompt tools?",
-    a: "We are the only prompt optimization platform built specifically for Asia. While other tools focus on English and Western contexts, we support 10+ Asian languages with deep cultural awareness, optimize for Asian AI platforms like DeepSeek, Qwen, and Ernie, and understand regional business contexts from Shopee to GrabFood to GCash.",
-  },
-  {
-    q: "Which AI platforms do you support?",
-    a: "Free users get access to ChatGPT, Claude, and Gemini. Pro users unlock the full ecosystem including DeepSeek, Qwen, Ernie, Baidu, Copilot, MidJourney, Stable Diffusion, and Perplexity. Each platform has unique optimization rules and we tailor prompts accordingly.",
-  },
-  {
-    q: "How does cultural context optimization work?",
-    a: "When you enable Asian Context mode, our optimizer adds cultural awareness to your prompts. This includes appropriate formality levels for Japanese business communication, honorifics for Korean contexts, regional business terminology for Southeast Asian markets, and tone adjustments for Mandarin. The result is prompts that feel native, not translated.",
-  },
-  {
-    q: "Can I use PromptAndGo in my language?",
-    a: "Yes. Pro users can optimize prompts in English, Mandarin, Japanese, Korean, Bahasa Indonesia, Bahasa Malay, Thai, Vietnamese, Hindi, and Tagalog. We do not just translate prompts. We reconstruct them with cultural nuance so they perform naturally in each language.",
-  },
-  {
-    q: "Is there a free trial for Pro?",
-    a: "You can start with our Free plan which gives you 5 optimizations per day on three major platforms. This lets you experience the core product before upgrading. When you are ready for the full Asian AI ecosystem, Pro is just $9/month with no long-term commitment.",
-  },
+  { q: "Can I switch plans anytime?", a: "Yes, you can upgrade or downgrade your plan at any time. Changes take effect at the start of your next billing cycle. No penalties or lock-in periods." },
+  { q: "Is there a free trial?", a: "Our Free plan lets you experience core features indefinitely with 10 optimizations per day. When you upgrade to Pro, you get a 7-day money-back guarantee." },
+  { q: "Do you offer refunds?", a: "We offer a 7-day money-back guarantee on Pro plans. If you're not satisfied within the first 7 days, contact us for a full refund. After 7 days, we prorate any remaining time." },
+  { q: "What payment methods do you accept?", a: "We accept all major credit cards (Visa, Mastercard, Amex), PayPal, and bank transfers for Enterprise plans. Payments are processed securely via Stripe." },
+  { q: "Do you offer student/nonprofit discounts?", a: "Yes! Students get 50% off Pro plans with a valid .edu email. Nonprofits serving Asian communities can apply for our community program. Contact us for details." },
 ];
 
 const Pricing = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [annual, setAnnual] = useState(false);
+
+  const proPrice = annual ? "$15" : "$19";
+  const proPeriod = annual ? "/month, billed annually" : "/month";
+  const proAnnualNote = annual ? "Save 20% — $180/year" : "$190/year (save 20%)";
+
+  const tiers = [
+    {
+      name: "Free",
+      price: "$0",
+      period: "forever",
+      description: "Get started with core optimization across the top 3 global platforms.",
+      popular: false,
+      cta: "Get Started",
+      ctaLink: "/auth?mode=signup",
+      icon: Zap,
+      ctaStyle: "outline" as const,
+      features: [
+        { text: "10 prompt optimizations / day", included: true },
+        { text: "Access to 50+ free prompts", included: true },
+        { text: "Basic platforms (ChatGPT, Claude, Gemini)", included: true },
+        { text: "Community support", included: true },
+        { text: "1 saved prompt collection", included: true },
+        { text: "Asian AI platforms", included: false },
+        { text: "Multi-language with cultural context", included: false },
+        { text: "Prompt history & analytics", included: false },
+      ],
+    },
+    {
+      name: "Pro",
+      price: proPrice,
+      period: proPeriod,
+      description: "Unlock the full Asian AI ecosystem. Every platform, every language, every culture.",
+      popular: true,
+      cta: "Start Free Trial",
+      ctaLink: "/auth?mode=signup",
+      icon: Crown,
+      ctaStyle: "default" as const,
+      annualNote: proAnnualNote,
+      features: [
+        { text: "Unlimited optimizations", included: true },
+        { text: "Access to all 150+ prompts", included: true },
+        { text: "All 12 platform optimizations", included: true },
+        { text: "Priority email support", included: true },
+        { text: "Unlimited saved collections", included: true },
+        { text: "Prompt history & analytics", included: true },
+        { text: "Advanced tone/formality controls", included: true },
+        { text: "Asian language priority", included: true },
+      ],
+    },
+    {
+      name: "Enterprise",
+      price: "Custom",
+      period: "",
+      description: "For teams scaling AI across Asian markets with dedicated support and SLA.",
+      popular: false,
+      cta: "Contact Sales",
+      ctaLink: "/contact",
+      icon: Building2,
+      ctaStyle: "outline" as const,
+      features: [
+        { text: "Everything in Pro", included: true },
+        { text: "Custom prompt packs", included: true },
+        { text: "Team collaboration", included: true },
+        { text: "API access", included: true },
+        { text: "Dedicated account manager", included: true },
+        { text: "Custom AI model training", included: true },
+        { text: "SLA guarantee", included: true },
+        { text: "SSO & advanced security", included: true },
+      ],
+    },
+  ];
 
   return (
     <>
@@ -117,19 +108,29 @@ const Pricing = () => {
 
           <div className="relative z-10 container max-w-5xl mx-auto px-4 pt-20 pb-8 md:pt-28 md:pb-12">
             <div className="text-center">
-              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/10 text-white/80 px-4 py-1.5 rounded-full text-sm mb-6">
-                <Sparkles className="h-3.5 w-3.5 text-accent" />
-                Simple, transparent pricing
-              </div>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight leading-[1.1] mb-6">
-                One tool. Every platform.<br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
-                  Built for Asia.
-                </span>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight leading-[1.1] mb-4">
+                Simple, Transparent Pricing
               </h1>
-              <p className="text-lg text-white/60 max-w-2xl mx-auto">
-                Start free. Upgrade when you need the full Asian AI ecosystem.
+              <p className="text-lg text-white/60 max-w-xl mx-auto mb-8">
+                Start free, upgrade when you're ready
               </p>
+
+              {/* Billing toggle */}
+              <div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/10 rounded-full px-1.5 py-1.5">
+                <button
+                  onClick={() => setAnnual(false)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${!annual ? "bg-white text-gray-900" : "text-white/70 hover:text-white"}`}
+                >
+                  Monthly
+                </button>
+                <button
+                  onClick={() => setAnnual(true)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${annual ? "bg-white text-gray-900" : "text-white/70 hover:text-white"}`}
+                >
+                  Annual
+                  <span className="ml-1.5 text-xs bg-accent/20 text-accent px-2 py-0.5 rounded-full">-20%</span>
+                </button>
+              </div>
             </div>
           </div>
         </section>
@@ -138,7 +139,7 @@ const Pricing = () => {
         <section className="relative bg-hero pb-24 md:pb-32">
           <div className="container max-w-6xl mx-auto px-4">
             <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
-              {TIERS.map((tier) => {
+              {tiers.map((tier) => {
                 const Icon = tier.icon;
                 return (
                   <div
@@ -157,19 +158,20 @@ const Pricing = () => {
 
                     <div className="mb-6">
                       <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${
-                        tier.popular
-                          ? "bg-gradient-to-br from-primary to-accent"
-                          : "bg-white/10"
+                        tier.popular ? "bg-gradient-to-br from-primary to-accent" : "bg-white/10"
                       }`}>
                         <Icon className="h-6 w-6 text-white" />
                       </div>
                       <h3 className="text-xl font-bold text-white mb-1">{tier.name}</h3>
-                      <div className="flex items-baseline gap-1 mb-3">
+                      <div className="flex items-baseline gap-1 mb-1">
                         <span className="text-4xl font-black text-white">{tier.price}</span>
                         {tier.period && (
                           <span className="text-white/50 text-sm">{tier.period}</span>
                         )}
                       </div>
+                      {"annualNote" in tier && tier.annualNote && (
+                        <p className="text-xs text-accent mb-2">{tier.annualNote}</p>
+                      )}
                       <p className="text-sm text-white/60 leading-relaxed">{tier.description}</p>
                     </div>
 
@@ -217,6 +219,18 @@ const Pricing = () => {
           </div>
         </section>
 
+        {/* Social proof */}
+        <section className="py-12 bg-muted/30 border-y border-border">
+          <div className="container max-w-4xl mx-auto px-4 text-center">
+            <p className="text-sm text-muted-foreground mb-6">Trusted by 500+ companies across Asia</p>
+            <div className="flex items-center justify-center gap-8 flex-wrap opacity-40">
+              {["Grab", "Shopee", "Tokopedia", "LINE", "Gojek", "Razorpay"].map((name) => (
+                <span key={name} className="text-lg font-bold text-foreground">{name}</span>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* FAQ */}
         <section className="py-20 md:py-28 bg-background">
           <div className="container max-w-3xl mx-auto px-4">
@@ -224,26 +238,18 @@ const Pricing = () => {
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4">
                 Frequently asked questions
               </h2>
-              <p className="text-muted-foreground">
-                Everything you need to know about PromptAndGo.
-              </p>
             </div>
 
             <div className="space-y-3">
               {FAQS.map((faq, i) => (
-                <div
-                  key={i}
-                  className="rounded-xl border border-border bg-card overflow-hidden"
-                >
+                <div key={i} className="rounded-xl border border-border bg-card overflow-hidden">
                   <button
                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
                     className="w-full flex items-center justify-between gap-4 p-5 text-left"
                   >
                     <span className="font-semibold text-foreground text-sm md:text-base">{faq.q}</span>
                     <ChevronDown
-                      className={`h-5 w-5 text-muted-foreground flex-shrink-0 transition-transform duration-200 ${
-                        openFaq === i ? "rotate-180" : ""
-                      }`}
+                      className={`h-5 w-5 text-muted-foreground flex-shrink-0 transition-transform duration-200 ${openFaq === i ? "rotate-180" : ""}`}
                     />
                   </button>
                   {openFaq === i && (
@@ -261,16 +267,16 @@ const Pricing = () => {
         <section className="bg-hero py-16 md:py-20">
           <div className="container max-w-3xl mx-auto px-4 text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-4">
-              Ready to optimize for Asia?
+              Not sure which plan? Talk to our team
             </h2>
             <p className="text-white/60 mb-8 max-w-xl mx-auto">
-              Join thousands of APAC professionals getting better results from every AI platform.
+              We'll help you find the right plan for your team and use case.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild size="lg" className="h-12 px-8 bg-white text-gray-900 hover:bg-white/90 font-semibold">
-                <Link to="/auth?mode=signup">
+                <Link to="/contact">
                   <Sparkles className="h-4 w-4 mr-2" />
-                  Start Free
+                  Contact Us
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="h-12 px-8 border-white/50 !text-white hover:bg-white/20 font-semibold bg-white/10">
