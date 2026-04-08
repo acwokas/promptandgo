@@ -282,10 +282,10 @@ const PromptOptimizer = () => {
   return (
     <>
       <SEO
-        title="AI Prompt Optimiser | Any Platform, Any Language | PromptAndGo"
-        description="Optimize any prompt for ChatGPT, Claude, Gemini, Copilot, MidJourney, or Stable Diffusion — in 10+ Asian languages with cultural context awareness. Free."
+        title="Free AI Prompt Optimizer | 12 Platforms, 12+ Asian Languages | PromptAndGo"
+        description="Optimize prompts for ChatGPT, Claude, Gemini, Qwen, DeepSeek & 7 more platforms in 12+ Asian languages. Cultural context awareness for Japanese, Mandarin, Bahasa & more."
         canonical="https://promptandgo.ai/optimize"
-        keywords="prompt optimiser, AI prompt improvement, prompt engineering tool, ChatGPT prompts, Claude prompts, Asian AI prompts, multilingual prompts"
+        keywords="prompt optimizer, AI prompt improvement, prompt engineering tool, ChatGPT prompts, Claude prompts, Gemini prompts, Qwen prompts, Asian language AI, multilingual prompt optimization"
       />
 
       {/* Hero */}

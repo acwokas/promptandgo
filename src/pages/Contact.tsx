@@ -199,7 +199,7 @@ const Contact = () => {
           </BreadcrumbList>
         </Breadcrumb>
 
-        <SEO title="Contact PromptandGo" description="Send us a message - we'd love to hear from you." />
+        <SEO title="Contact Us | PromptAndGo" description="Get in touch with the PromptAndGo team. Questions about AI prompts, Scout optimizer, Power Packs, or partnerships? We'd love to hear from you." canonical="https://promptandgo.ai/contact" />
 
         <div className="grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-7">
