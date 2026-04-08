@@ -11,6 +11,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { validateEmailInput, validatePromptInput, sanitizeInput } from "@/lib/inputValidation";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { MapPin, Clock, Mail, Phone } from "lucide-react";
 
 const Contact = () => {
   const { user } = useSupabaseAuth();
@@ -179,8 +181,8 @@ const Contact = () => {
   return (
     <>
       <PageHero
-        title={<><span className="text-brand">Got something</span> to share?</>}
-        subtitle={<>We'd love to hear from you, whether it's a fresh idea, feedback, a request for more of a certain prompt type, or a challenge you would like us to tackle. Drop us a message, and remember to subscribe to our newsletter for new prompts, tips, and inspiration straight to your inbox.</>}
+        title={<><span className="text-brand">Get in Touch</span></>}
+        subtitle={<>We'd love to hear from you — whether you're in Tokyo, Mumbai, or anywhere in between. Drop us a message and we'll get back to you promptly.</>}
         minHeightClass="min-h-[28svh]"
       />
       <main className="container py-10">
@@ -215,18 +217,49 @@ const Contact = () => {
               <Input 
                 required 
                 name="name" 
-                placeholder="Name" 
+                placeholder="Full Name" 
                 defaultValue={user ? (userProfile?.display_name || user.email?.split("@")[0] || "") : ""}
               />
               <Input 
                 required 
                 type="email" 
                 name="email" 
-                placeholder="Email" 
+                placeholder="Email Address" 
                 defaultValue={user?.email || ""}
                 readOnly={!!user}
                 className={user ? "bg-muted/50" : ""}
               />
+              <Input 
+                name="company_name" 
+                placeholder="Company (optional)" 
+              />
+              <select
+                name="country"
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                defaultValue=""
+              >
+                <option value="" disabled>Select country...</option>
+                <optgroup label="Asia-Pacific">
+                  <option value="SG">Singapore</option>
+                  <option value="JP">Japan</option>
+                  <option value="KR">South Korea</option>
+                  <option value="CN">China</option>
+                  <option value="IN">India</option>
+                  <option value="TH">Thailand</option>
+                  <option value="VN">Vietnam</option>
+                  <option value="ID">Indonesia</option>
+                  <option value="MY">Malaysia</option>
+                  <option value="PH">Philippines</option>
+                  <option value="TW">Taiwan</option>
+                  <option value="HK">Hong Kong</option>
+                  <option value="AU">Australia</option>
+                </optgroup>
+                <optgroup label="Other">
+                  <option value="US">United States</option>
+                  <option value="GB">United Kingdom</option>
+                  <option value="other">Other</option>
+                </optgroup>
+              </select>
               <select
                 name="subject"
                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
@@ -234,14 +267,12 @@ const Contact = () => {
               >
                 <option value="" disabled>Select a subject...</option>
                 <option value="general">General Inquiry</option>
-                <option value="support">Technical Support</option>
-                <option value="feedback">Feedback & Suggestions</option>
-                <option value="partnership">Partnership Opportunity</option>
-                <option value="enterprise">Enterprise / Business Inquiry</option>
-                <option value="bug">Report a Bug</option>
-                <option value="other">Other</option>
+                <option value="enterprise">Enterprise Plans</option>
+                <option value="partnership">Partnership</option>
+                <option value="bug">Bug Report</option>
+                <option value="feature">Feature Request</option>
               </select>
-              <Textarea required name="message" placeholder="Message" />
+              <Textarea required name="message" placeholder="Your message..." rows={5} />
 
               {/* Honeypot field */}
               <input type="text" name="company" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
@@ -337,7 +368,7 @@ const Contact = () => {
               <div className="space-y-4 text-sm">
                 <div className="flex items-start gap-3">
                   <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
-                    <span className="text-primary text-xs font-bold">⏱</span>
+                    <Clock className="w-4 h-4 text-primary" />
                   </div>
                   <div>
                     <p className="font-medium">Response Time</p>
@@ -346,7 +377,7 @@ const Contact = () => {
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center shrink-0 mt-0.5">
-                    <span className="text-accent text-xs font-bold">🌏</span>
+                    <MapPin className="w-4 h-4 text-accent" />
                   </div>
                   <div>
                     <p className="font-medium">Asia-Pacific Based</p>
@@ -355,7 +386,7 @@ const Contact = () => {
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
-                    <span className="text-primary text-xs font-bold">💬</span>
+                    <Mail className="w-4 h-4 text-primary" />
                   </div>
                   <div>
                     <p className="font-medium">Multilingual Support</p>
@@ -368,35 +399,92 @@ const Contact = () => {
                 <div className="flex gap-3">
                   <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground hover:text-primary transition-colors">LinkedIn</a>
                   <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground hover:text-primary transition-colors">X / Twitter</a>
+                  <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground hover:text-primary transition-colors">GitHub</a>
+                  <a href="https://discord.com" target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground hover:text-primary transition-colors">Discord</a>
                 </div>
               </div>
             </div>
-
-            <div className="sticky top-24">
-              <Link
-                to="/submit"
-                aria-label="Submit a Prompt"
-                className="group relative block aspect-square w-full max-w-sm rounded-lg overflow-hidden shadow-elegant mx-auto transition-transform duration-200 hover:scale-105 hover:shadow-glow"
-              >
-                <img
-                  src="/lovable-uploads/48df9644-8012-4209-b92b-e0e694b2a2f7.png"
-                  alt="Submit a prompt illustration"
-                  className="absolute inset-0 h-full w-full object-cover"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-transparent transition-colors group-hover:from-foreground/80" />
-                <div className="absolute inset-x-0 bottom-0 p-6">
-                  <div className="inline-block rounded-md bg-background/80 backdrop-blur-sm px-4 py-3 shadow-elegant">
-                    <p className="text-foreground text-lg md:text-xl font-semibold leading-snug">
-                      Send us your best prompt and help inspire the community.
-                    </p>
-                  </div>
-                </div>
-              </Link>
-            </div>
           </aside>
         </div>
+
+        {/* Our Offices */}
+        <section className="mt-16 mb-12">
+          <h2 className="text-2xl font-bold mb-8">Our Offices</h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { city: "Singapore", label: "HQ", address: "71 Robinson Road, #14-01", phone: "+65 6123 4567", email: "sg@promptandgo.ai", hours: "Mon-Fri 9am-6pm SGT" },
+              { city: "Tokyo", label: "Japan", address: "Shibuya-ku, Dogenzaka 1-10-8", phone: "+81 3-1234-5678", email: "jp@promptandgo.ai", hours: "Mon-Fri 9am-6pm JST" },
+              { city: "Mumbai", label: "India", address: "Bandra Kurla Complex, Unit 402", phone: "+91 22 1234 5678", email: "in@promptandgo.ai", hours: "Mon-Fri 9:30am-6:30pm IST" },
+              { city: "Seoul", label: "Korea", address: "Gangnam-gu, Teheran-ro 152", phone: "+82 2-1234-5678", email: "kr@promptandgo.ai", hours: "Mon-Fri 9am-6pm KST" },
+            ].map((office) => (
+              <div key={office.city} className="rounded-xl border border-border bg-card p-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <MapPin className="w-4 h-4 text-primary" />
+                  <h3 className="font-bold">{office.city}</h3>
+                  <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">{office.label}</span>
+                </div>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p>{office.address}</p>
+                  <div className="flex items-center gap-1.5">
+                    <Phone className="w-3 h-3" />
+                    <span>{office.phone}</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <Mail className="w-3 h-3" />
+                    <span>{office.email}</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <Clock className="w-3 h-3" />
+                    <span>{office.hours}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
+          <Accordion type="single" collapsible className="max-w-2xl">
+            <AccordionItem value="free">
+              <AccordionTrigger>Is PromptAndGo free?</AccordionTrigger>
+              <AccordionContent>
+                Yes! PromptAndGo offers a generous free tier that includes access to the prompt library, the optimizer tool, and Ask Scout. Power Packs and Pro features are available for users who want deeper capabilities.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="platforms">
+              <AccordionTrigger>Which AI platforms do you support?</AccordionTrigger>
+              <AccordionContent>
+                We support 12 major platforms including ChatGPT, Claude, Gemini, Qwen, DeepSeek, Ernie Bot, Copilot, Meta AI, Grok, MidJourney, Perplexity, and Stable Diffusion. Each prompt is optimized for the specific strengths of each platform.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="enterprise">
+              <AccordionTrigger>Do you offer enterprise plans?</AccordionTrigger>
+              <AccordionContent>
+                Yes, we offer custom enterprise plans for teams and organizations. Contact us with the Enterprise Plans subject to learn more about volume pricing, custom prompt libraries, and dedicated support.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="optimizer">
+              <AccordionTrigger>How does the prompt optimizer work?</AccordionTrigger>
+              <AccordionContent>
+                Our optimizer analyzes your prompt for clarity, specificity, and context, then restructures it using platform-specific best practices. It considers language nuances, cultural context, and the target AI platform to produce optimized results.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="contribute">
+              <AccordionTrigger>Can I contribute prompts?</AccordionTrigger>
+              <AccordionContent>
+                Absolutely! We welcome community contributions. Visit the Submit Prompt page to share your best prompts with the community and earn XP rewards.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="language">
+              <AccordionTrigger>Do you support my language?</AccordionTrigger>
+              <AccordionContent>
+                We currently support 12+ Asian languages including Mandarin, Japanese, Korean, Thai, Vietnamese, Bahasa Indonesia, Bahasa Melayu, Hindi, Tamil, Tagalog, Bengali, and Khmer, plus English. More languages are being added regularly.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </section>
       </main>
     </>
   );
