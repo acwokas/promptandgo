@@ -23,6 +23,7 @@ import { PlatformTabs } from "@/components/optimizer/PlatformTabs";
 import { OptimizationMetrics } from "@/components/optimizer/OptimizationMetrics";
 import { OptimizationHistory, type HistoryEntry } from "@/components/optimizer/OptimizationHistory";
 import { AdvancedOptions } from "@/components/optimizer/AdvancedOptions";
+import { PromptComparison } from "@/components/optimizer/PromptComparison";
 
 /* ─── Constants ─── */
 
@@ -808,6 +809,11 @@ const PromptOptimizer = () => {
             </div>
           </CardContent>
         </Card>
+      </section>
+
+      {/* Platform Comparison Tool */}
+      <section className="container max-w-4xl mx-auto px-4 pb-16">
+        <PromptComparison />
       </section>
     </>
   );

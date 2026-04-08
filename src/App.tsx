@@ -100,6 +100,7 @@ import Pricing from "./pages/Pricing";
 import AskScout from "./pages/AskScout";
 import HelpCenterPage from "./pages/HelpCenter";
 import Dashboard from "./pages/Dashboard";
+import LanguageLearning from "./pages/LanguageLearning";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
@@ -219,6 +220,7 @@ const AppContent = () => {
                 <Route path="/optimize" element={<PromptOptimizerPage />} />
                 <Route path="/help" element={<HelpCenterPage />} />
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/language-learning" element={<LanguageLearning />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               </AnalyticsProvider>

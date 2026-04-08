@@ -736,6 +736,101 @@ const MarketInsights = () => {
           </div>
         </section>
 
+        {/* ═══════════════ PLATFORM POPULARITY ═══════════════ */}
+        <section className="container max-w-5xl mx-auto px-4 py-16">
+          <h2 className="text-3xl font-bold mb-8 text-center">Platform Popularity Across Asia</h2>
+          <div className="space-y-4 max-w-2xl mx-auto">
+            {[
+              { name: 'ChatGPT', pct: 78, color: 'bg-emerald-500' },
+              { name: 'Gemini', pct: 52, color: 'bg-blue-500' },
+              { name: 'Claude', pct: 41, color: 'bg-orange-500' },
+              { name: 'Qwen', pct: 38, color: 'bg-indigo-500' },
+              { name: 'DeepSeek', pct: 29, color: 'bg-teal-500' },
+              { name: 'Copilot', pct: 25, color: 'bg-cyan-500' },
+              { name: 'Ernie Bot', pct: 22, color: 'bg-red-500' },
+              { name: 'Meta AI', pct: 18, color: 'bg-sky-500' },
+            ].map(p => (
+              <div key={p.name} className="flex items-center gap-3">
+                <span className="text-sm font-medium w-24 text-right shrink-0">{p.name}</span>
+                <div className="flex-1 bg-muted rounded-full h-6 overflow-hidden">
+                  <div className={`h-full ${p.color} rounded-full transition-all`} style={{ width: `${p.pct}%` }} />
+                </div>
+                <span className="text-sm font-semibold w-12 shrink-0">{p.pct}%</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ═══════════════ INDUSTRY ADOPTION ═══════════════ */}
+        <section className="container max-w-5xl mx-auto px-4 py-16">
+          <h2 className="text-3xl font-bold mb-8 text-center">Industry Adoption</h2>
+          <div className="flex flex-col md:flex-row items-center gap-10 justify-center">
+            {/* CSS pie chart */}
+            <div className="relative w-48 h-48">
+              <div
+                className="w-full h-full rounded-full"
+                style={{
+                  background: `conic-gradient(
+                    hsl(var(--primary)) 0% 35%,
+                    hsl(var(--accent)) 35% 60%,
+                    hsl(210 70% 50%) 60% 75%,
+                    hsl(150 60% 45%) 75% 85%,
+                    hsl(45 80% 55%) 85% 100%
+                  )`,
+                }}
+              />
+              <div className="absolute inset-4 rounded-full bg-card flex items-center justify-center">
+                <span className="text-sm font-bold text-foreground">100%</span>
+              </div>
+            </div>
+            <div className="space-y-2">
+              {[
+                { label: 'Technology', pct: 35, color: 'bg-primary' },
+                { label: 'E-commerce', pct: 25, color: 'bg-accent' },
+                { label: 'Finance', pct: 15, color: 'bg-blue-500' },
+                { label: 'Healthcare', pct: 10, color: 'bg-green-500' },
+                { label: 'Education', pct: 15, color: 'bg-yellow-500' },
+              ].map(s => (
+                <div key={s.label} className="flex items-center gap-3">
+                  <div className={`w-3 h-3 rounded-sm ${s.color} shrink-0`} />
+                  <span className="text-sm w-28">{s.label}</span>
+                  <span className="text-sm font-semibold">{s.pct}%</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════════ MONTHLY SPOTLIGHT ═══════════════ */}
+        <section className="container max-w-3xl mx-auto px-4 py-16">
+          <div className="rounded-2xl border border-primary/30 bg-primary/5 p-8">
+            <div className="flex items-center gap-2 mb-4">
+              <Sparkles className="h-5 w-5 text-primary" />
+              <span className="text-xs font-semibold uppercase tracking-wider text-primary">Monthly Spotlight</span>
+            </div>
+            <h2 className="text-2xl font-bold mb-3">Vietnam: Asia's Fastest-Growing AI Market</h2>
+            <p className="text-muted-foreground mb-6">
+              With 47% year-over-year growth in AI tool adoption, Vietnam is leading Southeast Asia's AI transformation. 
+              Ho Chi Minh City and Hanoi are emerging as tech hubs, with local startups increasingly leveraging AI for 
+              e-commerce (Shopee, Tiki) and fintech applications.
+            </p>
+            <div className="grid grid-cols-3 gap-4">
+              <div className="text-center">
+                <p className="text-2xl font-bold text-primary">47%</p>
+                <p className="text-xs text-muted-foreground">YoY Growth</p>
+              </div>
+              <div className="text-center">
+                <p className="text-2xl font-bold text-primary">68M</p>
+                <p className="text-xs text-muted-foreground">Internet Users</p>
+              </div>
+              <div className="text-center">
+                <p className="text-2xl font-bold text-primary">#1</p>
+                <p className="text-xs text-muted-foreground">SEA Growth Rate</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ═══════════════ FINAL CTA ═══════════════ */}
         <section className="relative bg-muted/50 border-t border-border py-20 md:py-24">
           <div className="container max-w-4xl mx-auto px-4">
