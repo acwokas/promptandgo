@@ -93,6 +93,7 @@ import VietnamInsights from "./pages/market/VietnamInsights";
 import AustraliaInsights from "./pages/market/AustraliaInsights";
 import SmallBusiness from "./pages/SmallBusiness";
 import About from "./pages/About";
+import Pricing from "./pages/Pricing";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
@@ -162,6 +163,7 @@ const AppContent = () => {
                 <Route path="/singapore-startups" element={<SingaporeStartups />} />
                 <Route path="/small-business" element={<SmallBusiness />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/pricing" element={<Pricing />} />
                 <Route path="/market-insights" element={<MarketInsights />} />
                 <Route path="/market-insights/malaysia" element={<MalaysiaInsights />} />
                 <Route path="/market-insights/indonesia" element={<IndonesiaInsights />} />
