@@ -145,6 +145,15 @@ const Header = () => {
         
         {/* Right Actions */}
         <div className="flex items-center gap-2 flex-shrink-0">
+          {/* Search */}
+          <Link
+            to="/search"
+            className="p-2 flex items-center justify-center text-foreground hover:text-primary transition-colors rounded-md hover:bg-muted/50"
+            aria-label="Search prompts and templates"
+          >
+            <Search size={18} />
+          </Link>
+
           {/* Dark mode toggle */}
           <button
             onClick={toggleTheme}
