@@ -104,6 +104,12 @@ const Header = () => {
             Power Packs
           </Link>
           <Link 
+            to="/pricing" 
+            className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+          >
+            Pricing
+          </Link>
+          <Link 
             to="/saved" 
             className="text-sm font-medium text-foreground hover:text-primary transition-colors flex items-center gap-1"
           >
