@@ -2,43 +2,89 @@ import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { PageSchema } from "@/components/seo/PageSchema";
 import { Button } from "@/components/ui/button";
-import { Globe, Languages, MapPin, Zap, Users, GraduationCap, Rocket, Code, Heart, Target, Lightbulb, ArrowRight } from "lucide-react";
+import { Globe, Heart, Shield, Users, ArrowRight, MapPin } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
-const platforms = [
-  "ChatGPT", "Claude", "Gemini", "DeepSeek", "Qwen", "Ernie Bot", "Copilot", "Perplexity", "MidJourney", "Grok", "Meta AI", "Stable Diffusion"
-];
-
-const languages = [
-  { flag: "🇬🇧", name: "English" },
-  { flag: "🇨🇳", name: "中文" },
-  { flag: "🇯🇵", name: "日本語" },
-  { flag: "🇰🇷", name: "한국어" },
-  { flag: "🇮🇩", name: "Bahasa" },
-  { flag: "🇹🇭", name: "ไทย" },
-  { flag: "🇻🇳", name: "Tiếng Việt" },
-  { flag: "🇮🇳", name: "हिन्दी" },
-  { flag: "🇵🇭", name: "Tagalog" },
-  { flag: "🇲🇾", name: "Malay" },
-  { flag: "🇧🇩", name: "বাংলা" },
-  { flag: "🇰🇭", name: "ខ្មែរ" },
-  { flag: "🇱🇰", name: "தமிழ்" },
+const MILESTONES = [
+  { date: "Jan 2024", jp: "2024年1月", title: "Founded in Singapore", desc: "PromptAndGo launched to bridge AI and Asian languages." },
+  { date: "Apr 2024", jp: "2024年4月", title: "Japanese Support Launched", desc: "Full keigo and casual Japanese prompt templates released." },
+  { date: "Jul 2024", jp: "2024年7月", title: "Korean Templates Added", desc: "Jondaetmal and banmal prompt systems for Korean users." },
+  { date: "Oct 2024", jp: "2024年10月", title: "Southeast Asia Expansion", desc: "Thai, Vietnamese, and Indonesian prompt packs launched." },
+  { date: "Jan 2025", jp: "2025年1月", title: "12 Languages Supported", desc: "Hindi, Tagalog, Bengali, Khmer, Tamil, and Malay added." },
+  { date: "Jun 2025", jp: "2025年6月", title: "AI Studio & Scout Launch", desc: "Interactive prompt builder and AI assistant Scout released." },
+  { date: "Oct 2025", jp: "2025年10月", title: "Enterprise Tier Launch", desc: "Custom solutions for Asian enterprises and government agencies." },
+  { date: "Mar 2026", jp: "2026年3月", title: "1 Million Prompts Generated", desc: "Community milestone — 1M+ prompts created across 15 countries." },
 ];
 
 const TEAM = [
-  { name: "Arjun Mehta", role: "Founder & CEO", location: "Singapore", flag: "🇸🇬", bio: "Former product lead at a Southeast Asian super-app. Saw first-hand how AI tools failed non-English speakers." },
-  { name: "Yuki Tanaka", role: "Head of Linguistics", location: "Tokyo", flag: "🇯🇵", bio: "Computational linguist specializing in CJK language processing. Built multilingual NLP systems at scale." },
-  { name: "Priya Sharma", role: "Head of Product", location: "Mumbai", flag: "🇮🇳", bio: "Product strategist who shipped AI tools to 50M+ users across India and Southeast Asia." },
-  { name: "David Chen", role: "CTO", location: "Taipei", flag: "🇹🇼", bio: "Full-stack engineer and open-source contributor. Previously built real-time translation systems." },
-  { name: "Rina Wijaya", role: "Content & Localization Lead", location: "Jakarta", flag: "🇮🇩", bio: "Multilingual content strategist fluent in 4 Asian languages. Ensures every prompt feels native." },
-  { name: "Somchai Patel", role: "Growth & Partnerships", location: "Bangkok", flag: "🇹🇭", bio: "Built growth engines for APAC SaaS companies. Connects PromptAndGo with enterprises across the region." },
+  { name: "Arjun Mehta", native: "अर्जुन मेहता", title: "Founder & CEO", city: "Singapore", flag: "🇸🇬", bio: "Former product lead at a Southeast Asian super-app. Expert in multilingual AI deployment." },
+  { name: "Yuki Tanaka", native: "田中 ゆき", title: "Head of Linguistics", city: "Tokyo", flag: "🇯🇵", bio: "Computational linguist specializing in CJK processing and keigo nuance detection." },
+  { name: "Kim Soo-jin", native: "김수진", title: "Korean Language Lead", city: "Seoul", flag: "🇰🇷", bio: "Korean NLP researcher with expertise in honorific systems and formal register." },
+  { name: "Somchai Rattana", native: "สมชาย รัตนา", title: "Growth & Partnerships", city: "Bangkok", flag: "🇹🇭", bio: "Built growth engines for APAC SaaS companies across 8 Asian markets." },
+  { name: "Nguyen Minh Trang", native: "Nguyễn Minh Trang", title: "Content Director", city: "Ho Chi Minh City", flag: "🇻🇳", bio: "Multilingual content strategist fluent in Vietnamese, English, and Mandarin." },
+  { name: "Rina Wijaya", native: "Rina Wijaya", title: "Engineering Lead", city: "Jakarta", flag: "🇮🇩", bio: "Full-stack engineer specializing in real-time translation and IME integration." },
 ];
+
+const VALUES = [
+  { icon: Globe, title: "Language First", desc: "Every feature starts with language. We build for CJK, Thai script, Devanagari, and beyond — never as an afterthought." },
+  { icon: Heart, title: "Cultural Sensitivity", desc: "We respect honorifics, formality levels, and regional nuances that make each Asian language unique." },
+  { icon: Shield, title: "AI Ethics", desc: "Responsible AI usage with transparent data handling, especially for sensitive cultural and linguistic content." },
+  { icon: Users, title: "Community Driven", desc: "Our roadmap is shaped by users across 15 Asian countries, ensuring every voice is heard." },
+];
+
+const STATS = [
+  { label: "Languages", value: 12 },
+  { label: "Users", value: 50000, suffix: "+" },
+  { label: "Prompts Generated", value: 1000000, suffix: "+" },
+  { label: "Asian Countries", value: 15 },
+];
+
+function CountUp({ target, suffix = "" }: { target: number; suffix?: string }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started.current) {
+          started.current = true;
+          const duration = 2000;
+          const steps = 60;
+          const increment = target / steps;
+          let current = 0;
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+              setCount(target);
+              clearInterval(timer);
+            } else {
+              setCount(Math.floor(current));
+            }
+          }, duration / steps);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [target]);
+
+  const formatted = count >= 1000000
+    ? `${(count / 1000000).toFixed(count >= target ? 0 : 1)}M`
+    : count >= 1000
+    ? `${(count / 1000).toFixed(count >= target ? 0 : 1)}K`
+    : count.toLocaleString();
+
+  return <span ref={ref}>{formatted}{suffix}</span>;
+}
 
 const About = () => {
   return (
-    <div className="dark bg-[hsl(240,28%,7%)] text-[hsl(28,76%,97%)] min-h-screen">
+    <div className="min-h-screen bg-background text-foreground">
       <SEO
-        title="About PromptAndGo | Built for Asia, Optimized for Every Platform"
-        description="PromptAndGo is the only AI prompt optimization tool built specifically for Asia. Multi-platform, multi-language, culturally aware."
+        title="About PromptAndGo | AI Prompts Built for Asia"
+        description="PromptAndGo bridges AI and Asian languages. Learn our mission, meet our team across Tokyo, Seoul, Singapore, Bangkok, and more."
         canonical="/about"
       />
       <PageSchema
@@ -52,234 +98,74 @@ const About = () => {
       />
 
       {/* Hero */}
-      <section className="relative py-24 md:py-32 px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[hsl(350,78%,59%,0.15)] via-transparent to-[hsl(174,82%,33%,0.1)]" />
-        <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[hsl(350,78%,59%,0.3)] bg-[hsl(350,78%,59%,0.08)] text-sm font-medium text-primary mb-8">
-            <MapPin className="w-4 h-4" />
-            Asia-First AI Prompt Tool
-          </div>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] mb-6">
-            Built for Asia.{" "}
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Optimized for Every Platform.
-            </span>
-          </h1>
-          <p className="text-lg md:text-xl text-[hsl(240,10%,65%)] max-w-2xl mx-auto mb-10 leading-relaxed">
-            The world has plenty of prompt tools. None of them understand Asia. We do.
+      <section className="relative py-20 px-4 text-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent" />
+        <div className="relative max-w-4xl mx-auto">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">About PromptAndGo</h1>
+          <p className="text-muted-foreground text-lg mb-2">
+            私たちについて | 회사 소개 | 关于我们 | เกี่ยวกับเรา
           </p>
-          <Button asChild variant="hero" size="lg" className="text-base px-8 py-6 h-auto">
-            <Link to="/optimize">Start Optimizing for Free</Link>
-          </Button>
-        </div>
-      </section>
-
-      {/* Origin Story */}
-      <section className="py-20 md:py-28 px-4">
-        <div className="max-w-4xl mx-auto">
-          <p className="text-sm font-semibold uppercase tracking-widest text-accent mb-4">Our Origin Story</p>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-8">
-            Born from a frustration shared by billions
-          </h2>
-          <div className="space-y-6 text-[hsl(240,10%,65%)] text-lg leading-relaxed">
-            <p>
-              In 2024, our founder Arjun was building AI-powered marketing tools for a Southeast Asian super-app.
-              The team used ChatGPT and Claude daily — but every prompt was in English, even when the output
-              needed to be in Thai, Bahasa, or Mandarin.
-            </p>
-            <p>
-              The translations felt robotic. The cultural nuances were wrong. A prompt that generated brilliant
-              ad copy for an American audience produced awkward, tone-deaf content for a Bangkok audience.
-              Formal Japanese prompts came back casual. Indonesian prompts missed local idioms entirely.
-            </p>
-            <p className="text-[hsl(28,76%,97%)] font-medium text-xl">
-              That's when it clicked: the entire prompt engineering ecosystem was built by and for English speakers.
-              4.7 billion people in Asia deserved better.
-            </p>
-            <p>
-              PromptAndGo launched as Asia's first prompt optimization platform — purpose-built to understand
-              the languages, cultures, and business contexts that make this region unique. Today, we support
-              12+ Asian languages across 12 AI platforms, helping professionals across ASEAN, East Asia,
-              and South Asia get results that actually resonate with their audiences.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Asia Needs PromptAndGo */}
-      <section className="py-20 md:py-28 px-4 bg-[hsl(240,25%,10%)]">
-        <div className="max-w-4xl mx-auto">
-          <p className="text-sm font-semibold uppercase tracking-widest text-primary mb-4">Why Asia Needs This</p>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-8">
-            AI tools weren't built for 4.7 billion people
-          </h2>
-          <div className="space-y-6 text-[hsl(240,10%,65%)] text-lg leading-relaxed">
-            <p>
-              Most AI prompt tools are built by Western companies, for Western users, in English.
-              They assume one language, one cultural context, one way of doing business.
-            </p>
-            <p>
-              But Asia is home to 4.7 billion people speaking dozens of languages, with unique cultural
-              contexts, business practices, and communication styles that shape how AI should respond.
-            </p>
-            <p className="text-[hsl(28,76%,97%)] font-medium text-xl">
-              Prompts that work in English often fail in Bahasa, Thai, Japanese, or Hindi.
-              Formality that lands in New York falls flat in Tokyo.
-              Marketing copy tuned for Amazon misses the mark on Shopee.
-            </p>
-          </div>
-
-          {/* Key stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
-            {[
-              { stat: "78%", label: "of APAC professionals use AI weekly" },
-              { stat: "12+", label: "Asian languages supported" },
-              { stat: "12", label: "AI platforms optimized" },
-              { stat: "1.9M+", label: "APAC professionals seeking better prompts" },
-            ].map((s) => (
-              <div key={s.label} className="text-center p-4 rounded-xl border border-[hsl(240,20%,16%)] bg-[hsl(240,28%,7%)]">
-                <div className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-2">{s.stat}</div>
-                <p className="text-xs text-[hsl(240,10%,55%)] leading-snug">{s.label}</p>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
       {/* Mission */}
-      <section className="py-20 md:py-28 px-4">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-8">
-            <Heart className="w-8 h-8 text-primary" />
-          </div>
-          <p className="text-sm font-semibold uppercase tracking-widest text-primary mb-4">Our Mission</p>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-6 leading-snug">
-            Make AI truly accessible across every Asian language and culture
+      <section className="py-16 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-pulse">
+              Bridging AI and Asian Languages
+            </span>
           </h2>
-          <p className="text-[hsl(240,10%,65%)] text-lg leading-relaxed">
-            We believe that speaking Thai, Vietnamese, Japanese, or Hindi shouldn't mean getting worse AI results.
-            Our mission is to ensure that every professional in Asia — regardless of their language — can harness
-            AI with the same confidence and quality as English speakers. We're building the bridge between
-            the world's most powerful AI tools and the world's most diverse region.
+          <p className="text-muted-foreground text-lg leading-relaxed max-w-2xl mx-auto">
+            Most AI tools are built for English speakers. PromptAndGo is the only prompt optimization platform designed from the ground up for Asia's diverse languages, scripts, and cultural contexts — from Japanese keigo to Thai tonal nuance.
           </p>
         </div>
       </section>
 
-      {/* 3 Pillars */}
-      <section className="py-20 md:py-28 px-4 bg-[hsl(240,25%,10%)]">
-        <div className="max-w-6xl mx-auto">
-          <p className="text-sm font-semibold uppercase tracking-widest text-accent mb-4 text-center">Our Solution</p>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-16 text-center">
-            Three pillars. Zero compromise.
-          </h2>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="rounded-2xl border border-[hsl(240,20%,16%)] bg-[hsl(240,28%,7%)] p-8 hover:border-primary/30 transition-colors">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
-                <Zap className="w-6 h-6 text-primary" />
+      {/* Timeline */}
+      <section className="py-16 px-4 bg-muted/20">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl font-bold text-center mb-12">Our Journey</h2>
+          <div className="relative">
+            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-border" />
+            {MILESTONES.map((m, i) => (
+              <div key={i} className={`relative flex items-start gap-6 mb-10 ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}>
+                <div className={`hidden md:block flex-1 ${i % 2 === 0 ? "text-right pr-8" : "text-left pl-8"}`}>
+                  <span className="text-xs text-muted-foreground">{m.date} · {m.jp}</span>
+                  <h3 className="text-lg font-semibold mt-1">{m.title}</h3>
+                  <p className="text-sm text-muted-foreground mt-1">{m.desc}</p>
+                </div>
+                <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-primary border-2 border-background z-10 mt-1.5" />
+                <div className="md:hidden flex-1 pl-10">
+                  <span className="text-xs text-muted-foreground">{m.date} · {m.jp}</span>
+                  <h3 className="text-lg font-semibold mt-1">{m.title}</h3>
+                  <p className="text-sm text-muted-foreground mt-1">{m.desc}</p>
+                </div>
+                <div className="hidden md:block flex-1" />
               </div>
-              <h3 className="text-xl font-bold mb-3">Multi-Platform Optimization</h3>
-              <p className="text-[hsl(240,10%,65%)] mb-6 leading-relaxed">
-                One prompt, perfectly optimized for any AI platform. Each model has different
-                strengths and prompting styles. We handle the translation.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {platforms.map((p) => (
-                  <span key={p} className="text-xs px-3 py-1.5 rounded-full bg-[hsl(240,20%,16%)] text-[hsl(240,10%,65%)] border border-[hsl(240,20%,20%)]">{p}</span>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-2xl border border-[hsl(240,20%,16%)] bg-[hsl(240,28%,7%)] p-8 hover:border-accent/30 transition-colors">
-              <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-6">
-                <Languages className="w-6 h-6 text-accent" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Any Language, Any Culture</h3>
-              <p className="text-[hsl(240,10%,65%)] mb-6 leading-relaxed">
-                12+ Asian languages with cultural awareness baked in. Not just translation.
-                True localization with proper tone, formality, and context.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {languages.map((l) => (
-                  <span key={l.name} className="text-xs px-3 py-1.5 rounded-full bg-[hsl(240,20%,16%)] text-[hsl(240,10%,65%)] border border-[hsl(240,20%,20%)]">{l.flag} {l.name}</span>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-2xl border border-[hsl(240,20%,16%)] bg-[hsl(240,28%,7%)] p-8 hover:border-primary/30 transition-colors">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
-                <Globe className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Asian Context Awareness</h3>
-              <p className="text-[hsl(240,10%,65%)] mb-6 leading-relaxed">
-                Understands local business contexts that generic tools miss entirely.
-                From Shopee product listings to GrabFood menus to GCash fintech flows.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {["Shopee", "Lazada", "Grab", "Gojek", "GCash", "Tokopedia", "LINE", "WeChat"].map((b) => (
-                  <span key={b} className="text-xs px-3 py-1.5 rounded-full bg-[hsl(240,20%,16%)] text-[hsl(240,10%,65%)] border border-[hsl(240,20%,20%)]">{b}</span>
-                ))}
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Team */}
-      <section className="py-20 md:py-28 px-4">
+      <section className="py-16 px-4">
         <div className="max-w-5xl mx-auto">
-          <p className="text-sm font-semibold uppercase tracking-widest text-primary mb-4 text-center">Our Team</p>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 text-center">
-            A team built across Asia
-          </h2>
-          <p className="text-[hsl(240,10%,65%)] text-center max-w-2xl mx-auto mb-16">
-            We're a diverse, distributed team spanning Singapore, Tokyo, Mumbai, Taipei, Jakarta, and Bangkok.
-            We live and work in the markets we serve.
-          </p>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <h2 className="text-2xl font-bold text-center mb-4">Our Team</h2>
+          <p className="text-center text-muted-foreground mb-12">Experts across Asia building the future of multilingual AI</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {TEAM.map((member) => (
-              <div key={member.name} className="rounded-xl border border-[hsl(240,20%,16%)] bg-[hsl(240,25%,10%,0.5)] p-6 hover:border-[hsl(240,20%,22%)] transition-colors">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center text-lg font-bold">
-                    {member.name.split(" ").map(n => n[0]).join("")}
-                  </div>
-                  <div>
-                    <h3 className="font-bold">{member.name}</h3>
-                    <p className="text-xs text-primary">{member.role}</p>
-                  </div>
+              <div key={member.name} className="rounded-xl border border-border bg-card p-6 hover:border-primary/50 transition-colors">
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-2xl mb-4">
+                  {member.flag}
                 </div>
-                <p className="text-sm text-[hsl(240,10%,65%)] leading-relaxed mb-3">{member.bio}</p>
-                <p className="text-xs text-[hsl(240,10%,50%)]">{member.flag} {member.location}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Who We Serve */}
-      <section className="py-20 md:py-28 px-4 bg-[hsl(240,25%,10%)]">
-        <div className="max-w-5xl mx-auto">
-          <p className="text-sm font-semibold uppercase tracking-widest text-primary mb-4 text-center">Who We Serve</p>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-16 text-center">
-            Built for the people building Asia's AI future
-          </h2>
-
-          <div className="grid sm:grid-cols-2 gap-6">
-            {[
-              { icon: Users, title: "Marketers Across ASEAN", desc: "Creating campaigns that resonate across Singapore, Indonesia, Thailand, Philippines, and beyond." },
-              { icon: Code, title: "Developers Building for Asia", desc: "Shipping AI products that need to work in multiple Asian languages and cultural contexts." },
-              { icon: GraduationCap, title: "Educators Adapting AI", desc: "Bringing AI tools into Asian classrooms with culturally relevant prompts and examples." },
-              { icon: Rocket, title: "Asia's Entrepreneurs", desc: "Founders and teams in the region's startup ecosystem using AI to move faster and smarter." },
-            ].map((item) => (
-              <div key={item.title} className="flex gap-5 p-6 rounded-xl border border-[hsl(240,20%,16%)] bg-[hsl(240,28%,7%,0.5)] hover:border-[hsl(240,20%,22%)] transition-colors">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 mt-1">
-                  <item.icon className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg mb-1">{item.title}</h3>
-                  <p className="text-[hsl(240,10%,65%)] leading-relaxed">{item.desc}</p>
-                </div>
+                <h3 className="font-semibold text-lg">{member.name}</h3>
+                <p className="text-sm text-muted-foreground">{member.native}</p>
+                <p className="text-sm text-primary font-medium mt-1">{member.title}</p>
+                <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
+                  <MapPin className="h-3 w-3" /> {member.city}
+                </p>
+                <p className="text-sm text-muted-foreground mt-3">{member.bio}</p>
               </div>
             ))}
           </div>
@@ -287,61 +173,51 @@ const About = () => {
       </section>
 
       {/* Values */}
-      <section className="py-20 md:py-28 px-4">
+      <section className="py-16 px-4 bg-muted/20">
         <div className="max-w-5xl mx-auto">
-          <p className="text-sm font-semibold uppercase tracking-widest text-accent mb-4 text-center">Our Values</p>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-16 text-center">
-            What drives everything we build
-          </h2>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { icon: Globe, title: "Cultural Intelligence", desc: "We don't just translate. We localize with deep awareness of cultural norms, formality, and context." },
-              { icon: Languages, title: "Language First", desc: "Every feature starts with the question: does this work in Japanese, Thai, Hindi, and Bahasa?" },
-              { icon: Target, title: "Platform Agnostic", desc: "We optimize for every major AI platform so you're never locked into a single ecosystem." },
-              { icon: Users, title: "Community Driven", desc: "Our best prompts come from real professionals across Asia sharing what works." },
-            ].map((item) => (
-              <div key={item.title} className="text-center p-6 rounded-xl border border-[hsl(240,20%,16%)] bg-[hsl(240,25%,10%,0.5)] hover:border-primary/20 transition-colors">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <item.icon className="w-6 h-6 text-primary" />
+          <h2 className="text-2xl font-bold text-center mb-12">Our Values</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {VALUES.map((v) => (
+              <div key={v.title} className="rounded-xl border border-border bg-card p-6 text-center hover:border-primary/50 transition-colors">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                  <v.icon className="h-6 w-6 text-primary" />
                 </div>
-                <h3 className="font-bold text-lg mb-2">{item.title}</h3>
-                <p className="text-sm text-[hsl(240,10%,65%)] leading-relaxed">{item.desc}</p>
+                <h3 className="font-semibold mb-2">{v.title}</h3>
+                <p className="text-sm text-muted-foreground">{v.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Final CTA with email signup */}
-      <section className="py-20 md:py-28 px-4 bg-[hsl(240,25%,10%)]">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-            Join 10,000+ Asian professionals optimizing their AI prompts
-          </h2>
-          <p className="text-[hsl(240,10%,65%)] text-lg mb-10 max-w-xl mx-auto">
-            Get weekly prompt techniques, platform updates, and cultural insights for AI in Asia.
-          </p>
-          <form onSubmit={(e) => e.preventDefault()} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-6">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 h-12 rounded-lg border border-[hsl(240,20%,20%)] bg-[hsl(240,28%,7%)] px-4 text-sm text-[hsl(28,76%,97%)] placeholder:text-[hsl(240,10%,45%)] focus:outline-none focus:border-primary transition-colors"
-            />
-            <Button variant="hero" size="lg" className="h-12 px-8 shrink-0">
-              Get Started Free
-            </Button>
-          </form>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-            <Button asChild variant="outline" size="lg" className="text-base px-8 py-6 h-auto border-[hsl(240,20%,22%)] text-[hsl(28,76%,97%)] hover:bg-[hsl(240,20%,16%)]">
-              <Link to="/optimize">Try the Optimizer</Link>
-            </Button>
-            <Button asChild variant="outline" size="lg" className="text-base px-8 py-6 h-auto border-[hsl(240,20%,22%)] text-[hsl(28,76%,97%)] hover:bg-[hsl(240,20%,16%)]">
-              <Link to="/market-insights">
-                View Market Intelligence <ArrowRight className="w-4 h-4 ml-2" />
-              </Link>
-            </Button>
+      {/* Stats */}
+      <section className="py-16 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {STATS.map((s) => (
+              <div key={s.label} className="text-center p-6 rounded-xl border border-border bg-card">
+                <div className="text-3xl md:text-4xl font-bold text-primary">
+                  <CountUp target={s.value} suffix={s.suffix} />
+                </div>
+                <p className="text-sm text-muted-foreground mt-2">{s.label}</p>
+              </div>
+            ))}
           </div>
+        </div>
+      </section>
+
+      {/* Join CTA */}
+      <section className="py-16 px-4 text-center">
+        <div className="max-w-2xl mx-auto">
+          <h2 className="text-2xl font-bold mb-4">Join Our Team</h2>
+          <p className="text-muted-foreground mb-6">
+            We're looking for passionate people who believe AI should work for every language.
+          </p>
+          <Link to="/contact">
+            <Button size="lg" className="gap-2">
+              Get in Touch <ArrowRight className="h-4 w-4" />
+            </Button>
+          </Link>
         </div>
       </section>
     </div>

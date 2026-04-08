@@ -131,6 +131,8 @@ const Footer = () => {
           <nav className="flex flex-col gap-3">
             <span className="text-xs font-semibold uppercase tracking-widest text-white/40 mb-1">Company</span>
             <Link to="/about" className="text-sm text-white/70 hover:text-white transition-colors">About Us</Link>
+            <Link to="/partners" className="text-sm text-white/70 hover:text-white transition-colors">Partners</Link>
+            <Link to="/use-cases" className="text-sm text-white/70 hover:text-white transition-colors">Use Cases</Link>
             <Link to="/contact" className="text-sm text-white/70 hover:text-white transition-colors">Contact</Link>
             <Link to="/tips" className="text-sm text-white/70 hover:text-white transition-colors">Blog</Link>
             <Link to="/market-insights" className="text-sm text-white/70 hover:text-white transition-colors">Market Intelligence</Link>
