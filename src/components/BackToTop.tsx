@@ -13,7 +13,6 @@ const BackToTop = () => {
   if (!visible) return null;
 
   return (
-    <div aria-live="polite">
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       className="fixed bottom-6 right-6 z-50 w-10 h-10 rounded-full bg-primary text-primary-foreground shadow-lg flex items-center justify-center hover:bg-primary/90 transition-all animate-fade-in"
