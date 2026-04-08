@@ -71,6 +71,33 @@ All colors MUST be HSL. */
     }
   }
 
+  /* Touch optimization — prevent 300ms click delay */
+  html {
+    touch-action: manipulation;
+  }
+
+  /* Mobile touch targets — ensure minimum 44px for interactive elements */
+  @media (max-width: 768px) {
+    a, button {
+      min-height: 44px;
+      min-width: 44px;
+    }
+
+    /* Except inline text links and badges */
+    a.inline-link, span > a, p > a, .text-xs a, .text-sm a {
+      min-height: auto;
+      min-width: auto;
+    }
+  }
+
+  /* Cookie banner stack on very small screens */
+  @media (max-width: 400px) {
+    .cookie-consent-buttons {
+      flex-direction: column;
+      width: 100%;
+    }
+  }
+
   :root {
     --background: 28 76% 97%;
     --foreground: 240 28% 14%;
