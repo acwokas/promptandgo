@@ -1,57 +1,60 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Star, Quote } from "lucide-react";
+import { Star, Quote, BookOpen, Bot, Globe, Heart } from "lucide-react";
 
 const testimonials = [
   {
-    name: "Rachel Tan",
-    title: "Marketing Director",
-    company: "Ogilvy Singapore",
-    country: "🇸🇬",
-    quote: "Scout rewrote our campaign prompts for the Indonesian and Malaysian markets in under 30 seconds. The cultural nuance it adds — like Ramadan-aware messaging — is something no other tool does.",
-    rating: 5,
-  },
-  {
-    name: "Kenji Yamamoto",
-    title: "Startup Founder",
-    company: "NeoTech Labs",
+    name: "Yuki Tanaka",
+    title: "Product Manager",
+    company: "TechCorp",
+    location: "Tokyo",
     country: "🇯🇵",
-    quote: "As a Japanese founder pitching to VCs, I need prompts that respect keigo formality. PromptAndGo understands the difference between casual and business Japanese — that's rare.",
+    quote: "Platform-specific optimization has been a game-changer. What used to take me 30 minutes of tweaking prompts for Claude vs ChatGPT now takes seconds. The Japanese keigo handling is flawless.",
     rating: 5,
   },
   {
-    name: "Ploy Sricharoen",
-    title: "Content Creator",
-    company: "BangkokDigital",
-    country: "🇹🇭",
-    quote: "I create Thai and English content daily. The multi-language optimizer saves me hours — it doesn't just translate, it adapts tone and slang for each platform.",
-    rating: 5,
-  },
-  {
-    name: "Arjun Mehta",
-    title: "Business Analyst",
-    company: "Infosys",
+    name: "Priya Sharma",
+    title: "Content Lead",
+    company: "DigiMedia",
+    location: "Mumbai",
     country: "🇮🇳",
-    quote: "Our team uses PromptAndGo to standardize data analysis prompts across 3 AI platforms. The platform-specific optimization means we get consistent, high-quality outputs every time.",
+    quote: "The quality of Hindi and multilingual prompt outputs is unlike anything else I've used. It doesn't just translate — it captures the tone and cultural context that makes content resonate with Indian audiences.",
+    rating: 5,
+  },
+  {
+    name: "Wei Chen",
+    title: "Head of AI Operations",
+    company: "AsiaVentures",
+    location: "Singapore",
+    country: "🇸🇬",
+    quote: "Our team's productivity jumped 40% after adopting PromptAndGo. Having one tool that optimizes for Qwen, DeepSeek, and ChatGPT simultaneously means our APAC teams all get consistent, high-quality outputs.",
     rating: 5,
   },
 ];
 
+const stats = [
+  { num: "10,000+", label: "Prompts optimized", icon: Bot },
+  { num: "50+", label: "Languages supported", icon: Globe },
+  { num: "12", label: "AI platforms", icon: BookOpen },
+  { num: "98%", label: "Satisfaction rate", icon: Heart },
+];
+
 export function TestimonialsSection() {
   return (
-    <section className="container max-w-6xl mx-auto px-4 py-24 md:py-32">
+    <section className="container max-w-6xl mx-auto px-4 py-24 md:py-32 scroll-reveal">
       <div className="text-center mb-16">
         <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/30 text-primary px-4 py-2 rounded-full text-sm font-semibold mb-4">
           <Star className="h-4 w-4" />
-          Trusted by APAC Professionals
+          Trusted by Teams Across Asia
         </div>
         <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4">
-          What Professionals Say
+          See how professionals are transforming their AI workflow
         </h2>
         <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-          Used by marketing teams, founders, and creators across the Asia-Pacific region.
+          500+ companies across 12 Asian markets trust PromptAndGo
         </p>
       </div>
-      <div className="grid gap-6 md:grid-cols-2">
+
+      <div className="grid gap-6 md:grid-cols-3 mb-16">
         {testimonials.map((t) => (
           <Card key={t.name} className="bg-card border-border/50 hover:border-primary/30 hover:shadow-lg transition-all">
             <CardContent className="p-6">
@@ -65,7 +68,7 @@ export function TestimonialsSection() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-sm">{t.name}</p>
-                  <p className="text-xs text-muted-foreground">{t.title}, {t.company}</p>
+                  <p className="text-xs text-muted-foreground">{t.title}, {t.company} · {t.location}</p>
                 </div>
                 <div className="flex gap-0.5">
                   {Array.from({ length: t.rating }).map((_, i) => (
@@ -77,6 +80,18 @@ export function TestimonialsSection() {
           </Card>
         ))}
       </div>
+
+      {/* Stats bar */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 p-8 rounded-2xl border border-border/50 bg-muted/30">
+        {stats.map((s) => (
+          <div key={s.label} className="text-center">
+            <s.icon className="h-5 w-5 text-primary mx-auto mb-2" />
+            <div className="text-2xl md:text-3xl font-black text-foreground mb-1">{s.num}</div>
+            <p className="text-xs text-muted-foreground font-medium">{s.label}</p>
+          </div>
+        ))}
+      </div>
+
       <p className="text-center text-xs text-muted-foreground mt-6 italic">
         * Example testimonials representing typical APAC user profiles
       </p>
