@@ -18,6 +18,11 @@ import {
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { supabase } from "@/integrations/supabase/client";
+import { TemplateQuickStart } from "@/components/optimizer/TemplateQuickStart";
+import { PlatformTabs } from "@/components/optimizer/PlatformTabs";
+import { OptimizationMetrics } from "@/components/optimizer/OptimizationMetrics";
+import { OptimizationHistory, type HistoryEntry } from "@/components/optimizer/OptimizationHistory";
+import { AdvancedOptions } from "@/components/optimizer/AdvancedOptions";
 
 /* ─── Constants ─── */
 
