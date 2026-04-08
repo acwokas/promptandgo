@@ -1,228 +1,257 @@
-import { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
-import { 
-  Zap, Bookmark, Monitor, Flame, TrendingUp, TrendingDown,
-  RotateCcw, FolderOpen, ArrowRight, Sparkles, MessageSquare,
-  CreditCard, Library, Mail, Lock
-} from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import SEO from '@/components/SEO';
+import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import SEO from "@/components/SEO";
+import {
+  Sparkles, BookOpen, GraduationCap, BookMarked,
+  DollarSign, Share2, Flame, Heart, Globe, Trophy,
+  FileText, Eye, CheckCircle2, Star,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-const getGreeting = () => {
-  const h = new Date().getHours();
-  if (h < 12) return 'Good morning';
-  if (h < 17) return 'Good afternoon';
-  return 'Good evening';
-};
+/* ───── helpers ───── */
+function useCountUp(target: number, active: boolean): number {
+  const [v, setV] = useState(0);
+  useEffect(() => {
+    if (!active) return;
+    let frame: number;
+    const start = performance.now();
+    const tick = (now: number) => {
+      const p = Math.min((now - start) / 1200, 1);
+      setV(Math.round(target * p));
+      if (p < 1) frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [target, active]);
+  return v;
+}
 
-const stats = [
-  { label: 'Prompts Optimized', value: '247', icon: Zap, trend: '+12%', up: true },
-  { label: 'Prompts Saved', value: '32', icon: Bookmark, trend: '+5', up: true },
-  { label: 'Platforms Used', value: '8', icon: Monitor, trend: '0', up: true },
-  { label: 'Streak Days', value: '14', icon: Flame, trend: '+3', up: true },
+function useInView(ref: React.RefObject<HTMLElement | null>) {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold: 0.2 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [ref]);
+  return visible;
+}
+
+/* ───── data ───── */
+const STATS = [
+  { label: "Prompts Created", value: 127, icon: FileText, color: "from-blue-500 to-cyan-400" },
+  { label: "Languages Used", value: 8, icon: Globe, color: "from-emerald-500 to-teal-400" },
+  { label: "Favorites Saved", value: 34, icon: Heart, color: "from-rose-500 to-pink-400" },
+  { label: "Streak Days", value: 12, icon: Flame, color: "from-amber-500 to-orange-400" },
 ];
 
-const recentActivity = [
-  { prompt: 'Write a professional email to a Japanese client about project delays...', platform: 'Claude', language: 'Japanese', time: '2 hours ago' },
-  { prompt: 'Create a product description for Shopee listing in Bahasa...', platform: 'ChatGPT', language: 'Bahasa', time: '5 hours ago' },
-  { prompt: 'Generate a WeChat customer service response template...', platform: 'Qwen', language: 'Mandarin', time: 'Yesterday' },
-  { prompt: 'Draft an investor pitch deck outline for a fintech startup...', platform: 'Gemini', language: 'English', time: '2 days ago' },
-  { prompt: 'Create training materials for new employees in Korean...', platform: 'DeepSeek', language: 'Korean', time: '3 days ago' },
+const ACTIVITIES = [
+  { icon: Eye, text: "Viewed Korean honorifics guide", time: "2 hours ago" },
+  { icon: Star, text: "Saved Mandarin business email template", time: "3 hours ago" },
+  { icon: CheckCircle2, text: "Completed Thai language tutorial", time: "5 hours ago" },
+  { icon: FileText, text: "Created new Japanese keigo prompt", time: "Yesterday" },
+  { icon: Heart, text: "Favorited Vietnamese formal tone pack", time: "Yesterday" },
+  { icon: Trophy, text: "Earned 'Multilingual Explorer' badge", time: "2 days ago" },
+  { icon: BookOpen, text: "Read 'Mandarin Tone Markers' article", time: "3 days ago" },
+  { icon: GraduationCap, text: "Started Indonesian cultural adaptation course", time: "4 days ago" },
 ];
 
-const collections = [
-  { name: 'Marketing Prompts', count: 12, color: 'bg-primary/20 text-primary' },
-  { name: 'Customer Service', count: 8, color: 'bg-accent/30 text-accent-foreground' },
-  { name: 'Technical Writing', count: 5, color: 'bg-secondary text-secondary-foreground' },
+const LANG_BARS = [
+  { lang: "Japanese", pct: 85, color: "bg-rose-500", flag: "🇯🇵" },
+  { lang: "Korean", pct: 72, color: "bg-blue-500", flag: "🇰🇷" },
+  { lang: "Mandarin", pct: 68, color: "bg-red-500", flag: "🇨🇳" },
+  { lang: "Indonesian", pct: 52, color: "bg-cyan-500", flag: "🇮🇩" },
+  { lang: "Thai", pct: 45, color: "bg-amber-500", flag: "🇹🇭" },
+  { lang: "Vietnamese", pct: 38, color: "bg-emerald-500", flag: "🇻🇳" },
 ];
 
-const quickActions = [
-  { label: 'Optimize New Prompt', icon: Zap, href: '/optimize', desc: 'AI-powered optimization' },
-  { label: 'Browse Library', icon: Library, href: '/library', desc: '150+ expert prompts' },
-  { label: 'Ask Scout', icon: MessageSquare, href: '/ask-scout', desc: 'AI chat assistant' },
-  { label: 'View Pricing', icon: CreditCard, href: '/pricing', desc: 'Plans & billing' },
+const QUICK_ACTIONS = [
+  { label: "New Prompt", icon: Sparkles, to: "/optimize" },
+  { label: "Browse Templates", icon: BookOpen, to: "/templates" },
+  { label: "Continue Tutorial", icon: GraduationCap, to: "/tutorial" },
+  { label: "View Glossary", icon: BookMarked, to: "/glossary" },
+  { label: "Check Pricing", icon: DollarSign, to: "/pricing" },
+  { label: "Share with Friend", icon: Share2, to: "/referral" },
 ];
 
-const weeklyData = [
-  { day: 'Mon', value: 12 },
-  { day: 'Tue', value: 18 },
-  { day: 'Wed', value: 8 },
-  { day: 'Thu', value: 24 },
-  { day: 'Fri', value: 15 },
-  { day: 'Sat', value: 6 },
-  { day: 'Sun', value: 10 },
+const GOAL_MESSAGES = [
+  "今週もがんばりましょう！", "이번 주도 파이팅!", "加油，继续努力！",
+  "สู้ๆ นะ!", "Cố lên bạn nhé!", "Semangat terus!",
 ];
 
-const recommended = [
-  { title: 'Customer Feedback Analysis', category: 'Data & Analytics', platform: 'Claude' },
-  { title: 'Social Media Calendar for LINE', category: 'Social Media', platform: 'ChatGPT' },
-  { title: 'Technical API Documentation', category: 'Technical', platform: 'Gemini' },
-];
-
+/* ───── component ───── */
 const Dashboard = () => {
-  const maxWeekly = useMemo(() => Math.max(...weeklyData.map(d => d.value)), []);
+  const statsRef = useRef<HTMLDivElement>(null);
+  const barsRef = useRef<HTMLDivElement>(null);
+  const statsVisible = useInView(statsRef);
+  const barsVisible = useInView(barsRef);
+
+  const s0 = useCountUp(STATS[0].value, statsVisible);
+  const s1 = useCountUp(STATS[1].value, statsVisible);
+  const s2 = useCountUp(STATS[2].value, statsVisible);
+  const s3 = useCountUp(STATS[3].value, statsVisible);
+  const counts = [s0, s1, s2, s3];
+
+  const [goalMsg, setGoalMsg] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setGoalMsg((p) => (p + 1) % GOAL_MESSAGES.length), 3000);
+    return () => clearInterval(id);
+  }, []);
+
+  const settings = (() => {
+    try { return JSON.parse(localStorage.getItem("pag_settings") || "{}"); } catch { return {}; }
+  })();
+  const displayName = settings.displayName || "Prompt Explorer";
+  const now = new Date();
+  const jpDate = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`;
+
+  const goalDone = 5;
+  const goalTotal = 7;
+  const goalPct = goalDone / goalTotal;
 
   return (
     <>
-      <SEO title="Dashboard" description="Your personal AI prompt dashboard." noindex />
+      <SEO title="Dashboard — PromptAndGo" description="Your personal PromptAndGo dashboard with stats, activity, and language progress." noindex />
 
-      <div className="container max-w-6xl mx-auto px-4 py-8 space-y-8">
-        {/* Login gate overlay */}
-        <Card className="border-primary/30 bg-primary/5">
-          <CardContent className="flex flex-col sm:flex-row items-center gap-4 py-6">
-            <Lock className="h-8 w-8 text-primary shrink-0" />
-            <div className="flex-1 text-center sm:text-left">
-              <h2 className="text-lg font-semibold">Sign up to access your personal dashboard</h2>
-              <p className="text-sm text-muted-foreground">Track your optimizations, manage collections, and unlock insights.</p>
-            </div>
-            <div className="flex gap-2 w-full sm:w-auto">
-              <Input placeholder="you@email.com" className="max-w-[220px]" aria-label="Email for signup" />
-              <Button asChild><Link to="/auth">Get Started</Link></Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl md:text-3xl font-bold">{getGreeting()}, User</h1>
-            <p className="text-muted-foreground">Here's your prompt engineering overview</p>
+      <main>
+        <section className="relative overflow-hidden bg-hero">
+          <div aria-hidden className="pointer-events-none absolute inset-0">
+            <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-primary/20 blur-[120px]" />
           </div>
-          <Badge className="bg-primary/20 text-primary border-primary/30">Pro</Badge>
-        </div>
-
-        {/* Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {stats.map((s) => (
-            <Card key={s.label}>
-              <CardContent className="pt-6">
-                <div className="flex items-center justify-between mb-2">
-                  <s.icon className="h-5 w-5 text-muted-foreground" />
-                  <span className={`text-xs flex items-center gap-1 ${s.up ? 'text-green-600' : 'text-red-500'}`}>
-                    {s.up ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
-                    {s.trend}
-                  </span>
-                </div>
-                <p className="text-2xl font-bold">{s.value}</p>
-                <p className="text-xs text-muted-foreground">{s.label}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Quick Actions */}
-        <section aria-label="Quick actions">
-          <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {quickActions.map((a) => (
-              <Link key={a.label} to={a.href}>
-                <Card className="hover:border-primary/40 transition-colors h-full cursor-pointer">
-                  <CardContent className="pt-6 text-center">
-                    <a.icon className="h-8 w-8 mx-auto mb-2 text-primary" />
-                    <p className="font-medium text-sm">{a.label}</p>
-                    <p className="text-xs text-muted-foreground">{a.desc}</p>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
+          <div className="relative z-10 container max-w-5xl mx-auto px-4 pt-16 pb-8 md:pt-24 md:pb-10">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-2">
+              Welcome back, <span className="text-primary">{displayName}</span>
+            </h1>
+            <p className="text-white/50 text-sm">{jpDate} — Your PromptAndGo Dashboard</p>
           </div>
         </section>
 
-        <div className="grid lg:grid-cols-3 gap-6">
-          {/* Recent Activity */}
-          <section className="lg:col-span-2" aria-label="Recent activity">
-            <h2 className="text-lg font-semibold mb-4">Recent Activity</h2>
-            <div className="space-y-3">
-              {recentActivity.map((item, i) => (
-                <Card key={i}>
-                  <CardContent className="py-4 flex items-center gap-4">
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium line-clamp-1">{item.prompt}</p>
-                      <div className="flex items-center gap-2 mt-1">
-                        <Badge variant="secondary" className="text-[10px]">{item.platform}</Badge>
-                        <Badge variant="outline" className="text-[10px]">{item.language}</Badge>
-                        <span className="text-xs text-muted-foreground">{item.time}</span>
-                      </div>
+        <section className="bg-background py-10 md:py-14">
+          <div className="container max-w-6xl mx-auto px-4 space-y-12">
+
+            {/* Stats */}
+            <div ref={statsRef} className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              {STATS.map((s, i) => {
+                const Icon = s.icon;
+                return (
+                  <div key={i} className="rounded-xl border border-border bg-card p-5 relative overflow-hidden">
+                    <div
+                      aria-hidden
+                      className="absolute bottom-0 left-0 right-0 h-10 opacity-10"
+                      style={{
+                        background: `linear-gradient(90deg, transparent 0%, hsl(var(--primary)) 30%, hsl(var(--accent)) 70%, transparent 100%)`,
+                        clipPath: "polygon(0% 80%, 15% 40%, 30% 60%, 45% 20%, 60% 50%, 75% 10%, 90% 45%, 100% 30%, 100% 100%, 0% 100%)",
+                      }}
+                    />
+                    <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${s.color} flex items-center justify-center mb-3`}>
+                      <Icon className="h-5 w-5 text-white" />
                     </div>
-                    <Button variant="ghost" size="sm" asChild>
-                      <Link to="/optimize"><RotateCcw className="h-3.5 w-3.5 mr-1" /> Re-optimize</Link>
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </section>
-
-          {/* Sidebar column */}
-          <div className="space-y-6">
-            {/* Weekly Progress */}
-            <section aria-label="Weekly progress">
-              <h2 className="text-lg font-semibold mb-4">Weekly Progress</h2>
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="flex items-end gap-2 h-32">
-                    {weeklyData.map((d) => (
-                      <div key={d.day} className="flex-1 flex flex-col items-center gap-1">
-                        <span className="text-[10px] text-muted-foreground">{d.value}</span>
-                        <div
-                          className="w-full rounded-sm bg-primary/80 transition-all"
-                          style={{ height: `${(d.value / maxWeekly) * 100}%` }}
-                        />
-                        <span className="text-[10px] text-muted-foreground">{d.day}</span>
-                      </div>
-                    ))}
+                    <p className="text-3xl font-black text-foreground">{counts[i]}</p>
+                    <p className="text-sm text-muted-foreground">{s.label}</p>
                   </div>
-                </CardContent>
-              </Card>
-            </section>
+                );
+              })}
+            </div>
 
-            {/* Collections */}
-            <section aria-label="Your collections">
-              <h2 className="text-lg font-semibold mb-4">Your Collections</h2>
-              <div className="space-y-3">
-                {collections.map((c) => (
-                  <Card key={c.name} className="hover:border-primary/30 transition-colors cursor-pointer">
-                    <CardContent className="py-4 flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className={`w-3 h-8 rounded-sm ${c.color.split(' ')[0]}`} />
-                        <div>
-                          <p className="text-sm font-medium">{c.name}</p>
-                          <p className="text-xs text-muted-foreground">{c.count} items</p>
+            <div className="grid lg:grid-cols-3 gap-8">
+              {/* Activity feed */}
+              <div className="lg:col-span-2 space-y-1">
+                <h2 className="text-xl font-bold text-foreground mb-4">Recent Activity</h2>
+                <div className="space-y-2">
+                  {ACTIVITIES.map((a, i) => {
+                    const Icon = a.icon;
+                    return (
+                      <div key={i} className="flex items-start gap-3 rounded-lg border border-border bg-card p-3.5 hover:border-primary/30 transition-colors">
+                        <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <Icon className="h-4 w-4 text-muted-foreground" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm text-foreground">{a.text}</p>
+                          <p className="text-xs text-muted-foreground mt-0.5">{a.time}</p>
                         </div>
                       </div>
-                      <Button variant="ghost" size="sm"><FolderOpen className="h-4 w-4" /></Button>
-                    </CardContent>
-                  </Card>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Right column */}
+              <div className="space-y-6">
+                {/* Weekly goal */}
+                <div className="rounded-xl border border-border bg-card p-6 text-center">
+                  <h3 className="font-bold text-foreground mb-4">Weekly Goal</h3>
+                  <div className="relative w-28 h-28 mx-auto mb-4">
+                    <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
+                      <circle cx="50" cy="50" r="42" fill="none" stroke="hsl(var(--muted))" strokeWidth="8" opacity={0.2} />
+                      <circle
+                        cx="50" cy="50" r="42" fill="none"
+                        stroke="hsl(var(--primary))"
+                        strokeWidth="8" strokeLinecap="round"
+                        strokeDasharray={`${2 * Math.PI * 42}`}
+                        strokeDashoffset={`${2 * Math.PI * 42 * (1 - goalPct)}`}
+                        className="transition-all duration-700"
+                      />
+                    </svg>
+                    <span className="absolute inset-0 flex flex-col items-center justify-center">
+                      <span className="text-2xl font-black text-foreground">{goalDone}</span>
+                      <span className="text-xs text-muted-foreground">of {goalTotal}</span>
+                    </span>
+                  </div>
+                  <p className="text-sm text-primary font-medium h-6" key={goalMsg}>
+                    {GOAL_MESSAGES[goalMsg]}
+                  </p>
+                </div>
+
+                {/* Quick actions */}
+                <div>
+                  <h3 className="font-bold text-foreground mb-3">Quick Actions</h3>
+                  <div className="grid grid-cols-2 gap-2">
+                    {QUICK_ACTIONS.map((a) => {
+                      const Icon = a.icon;
+                      return (
+                        <Button
+                          key={a.to}
+                          asChild
+                          variant="outline"
+                          className="h-auto py-3 flex-col gap-1.5 border-border hover:border-primary/30 text-foreground"
+                        >
+                          <Link to={a.to}>
+                            <Icon className="h-5 w-5 text-muted-foreground" />
+                            <span className="text-xs">{a.label}</span>
+                          </Link>
+                        </Button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Language proficiency */}
+            <div ref={barsRef}>
+              <h2 className="text-xl font-bold text-foreground mb-4">Language Proficiency</h2>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {LANG_BARS.map((l) => (
+                  <div key={l.lang} className="rounded-xl border border-border bg-card p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-foreground">{l.flag} {l.lang}</span>
+                      <span className="text-xs text-muted-foreground">{l.pct}%</span>
+                    </div>
+                    <div className="h-2 rounded-full bg-muted overflow-hidden">
+                      <div
+                        className={`h-full rounded-full ${l.color} transition-all duration-1000 ease-out`}
+                        style={{ width: barsVisible ? `${l.pct}%` : "0%" }}
+                      />
+                    </div>
+                  </div>
                 ))}
               </div>
-            </section>
-          </div>
-        </div>
+            </div>
 
-        {/* Recommended */}
-        <section aria-label="Recommended for you">
-          <h2 className="text-lg font-semibold mb-4">Recommended For You</h2>
-          <div className="grid sm:grid-cols-3 gap-4">
-            {recommended.map((r) => (
-              <Card key={r.title} className="hover:border-primary/30 transition-colors">
-                <CardContent className="pt-6">
-                  <Badge variant="secondary" className="mb-2 text-[10px]">{r.category}</Badge>
-                  <p className="font-medium text-sm mb-1">{r.title}</p>
-                  <div className="flex items-center justify-between mt-3">
-                    <Badge variant="outline" className="text-[10px]">{r.platform}</Badge>
-                    <Button variant="ghost" size="sm" asChild>
-                      <Link to="/library"><ArrowRight className="h-3.5 w-3.5" /></Link>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
           </div>
         </section>
-      </div>
+      </main>
     </>
   );
 };
