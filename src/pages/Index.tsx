@@ -119,6 +119,15 @@ const LIVE_ACTIVITIES = [
 
 
 
+const HERO_PHRASES = [
+  "Start Writing Phenomenal Prompts",
+  "开始写出色的提示词",
+  "素晴らしいプロンプトを書こう",
+  "Mulai Menulis Prompt Luar Biasa",
+  "เริ่มเขียนพรอมต์ที่ยอดเยี่ยม",
+  "탁월한 프롬프트를 작성하세요",
+];
+
 const Index = () => {
   const { user } = useSupabaseAuth();
   const { isNewsletterSubscribed } = useNewsletterStatus();
@@ -129,6 +138,7 @@ const Index = () => {
   const [copiedHero, setCopiedHero] = useState(false);
   const [activeLanguage, setActiveLanguage] = useState(0);
   const [liveActivityIndex, setLiveActivityIndex] = useState(0);
+  const [heroPhraseIndex, setHeroPhraseIndex] = useState(0);
   const charIndex = useRef(0);
 
   // Typing animation
