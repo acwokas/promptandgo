@@ -116,6 +116,8 @@ import ReferralPage from "./pages/Referral";
 import Testimonials from "./pages/Testimonials";
 import Tutorial from "./pages/Tutorial";
 import Glossary from "./pages/Glossary";
+import NewsletterArchive from "./pages/NewsletterArchive";
+import HtmlSitemap from "./pages/HtmlSitemap";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import BackToTop from "@/components/BackToTop";
@@ -253,6 +255,8 @@ const AppContent = () => {
                 <Route path="/testimonials" element={<Testimonials />} />
                 <Route path="/tutorial" element={<Tutorial />} />
                 <Route path="/glossary" element={<Glossary />} />
+                <Route path="/newsletter" element={<NewsletterArchive />} />
+                <Route path="/sitemap" element={<HtmlSitemap />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               </AnalyticsProvider>
