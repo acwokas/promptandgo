@@ -107,9 +107,11 @@ const PromptOptimizer = () => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [searchParams] = useSearchParams();
 
-  // Read ?lang= param for pre-selection
+  // Read ?lang= and ?platform= params for pre-selection
   const langParam = searchParams.get("lang");
+  const platformParam = searchParams.get("platform");
   const initialLang = OPTIMIZER_LANGUAGES.find((l) => l.code === langParam)?.code || "en";
+  const initialPlatform = AI_PLATFORMS.find((p) => p.id === platformParam)?.id || "chatgpt";
 
   const [prompt, setPrompt] = useState("");
   const [aiTool, setAiTool] = useState("");
@@ -117,7 +119,7 @@ const PromptOptimizer = () => {
   const [focusAreas, setFocusAreas] = useState<string[]>([]);
   const [contextOpen, setContextOpen] = useState(false);
 
-  const [selectedPlatform, setSelectedPlatform] = useState("chatgpt");
+  const [selectedPlatform, setSelectedPlatform] = useState(initialPlatform);
   const [selectedLanguage, setSelectedLanguage] = useState(initialLang);
   const [asianContext, setAsianContext] = useState(initialLang !== "en");
 
