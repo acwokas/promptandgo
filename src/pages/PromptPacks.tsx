@@ -1,4 +1,5 @@
 import SEO from "@/components/SEO";
+import { PowerPacksShowcase } from "@/components/library/PowerPacksShowcase";
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -637,6 +638,15 @@ const PromptPacks = () => {
         {/* Prompt Studio CTA */}
         <section className="mt-8">
           <PromptStudioCTA variant="default" />
+        </section>
+
+        {/* Showcase Power Packs */}
+        <section className="mt-12">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-black tracking-tight">Explore All Power Packs</h2>
+            <p className="text-sm text-muted-foreground mt-2">Curated prompt collections for every APAC business need</p>
+          </div>
+          <PowerPacksShowcase />
         </section>
       </main>
     </>

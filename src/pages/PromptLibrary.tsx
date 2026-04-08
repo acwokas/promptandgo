@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import PageHero from "@/components/layout/PageHero";
 import CountdownTimer from "@/components/conversion/CountdownTimer";
 import { Link } from "react-router-dom";
-import { Search, Heart, Globe, Sparkles, Flame, Monitor, Copy } from "lucide-react";
+import { Search, Heart, Globe, Sparkles, Flame, Monitor, Copy, LayoutGrid, List, ArrowUpDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "@/hooks/use-toast";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
@@ -21,6 +21,7 @@ import { Label } from "@/components/ui/label";
 import { usePromptLibrary, sortByComplexity } from "@/hooks/usePromptLibrary";
 import { PopularCategories } from "@/components/library/PopularCategories";
 import { QuickDiscoverySection } from "@/components/library/QuickDiscoverySection";
+import { CommunityFavorites } from "@/components/library/CommunityFavorites";
 
 const PLATFORMS = [
   { id: "all", name: "All Platforms" },
@@ -143,6 +144,8 @@ const PromptLibrary = () => {
   const [platform, setPlatform] = useState("all");
   const [language, setLanguage] = useState("all");
   const [asianContext, setAsianContext] = useState(false);
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [sortBy, setSortBy] = useState("popular");
 
   const {
     user,
@@ -289,8 +292,11 @@ const PromptLibrary = () => {
       />
       <PageHero
         variant="prompt"
-        title={<><span className="text-gradient-brand">Prompt</span> Library</>}
-        subtitle={<>Find the perfect prompt fast: browse free prompts by category, save your favourites in <Link to="/account/favorites" className="text-accent hover:underline">My Prompts</Link>, or <Link to="/cart" className="text-accent hover:underline">subscribe</Link> to unlock all premium items.</>}
+        title={<><span className="text-gradient-brand">Asia's Largest AI</span> Prompt Library</>}
+        subtitle={<>
+          <Badge variant="secondary" className="mr-2 mb-1">150+ Expert Prompts</Badge>
+          Find the perfect prompt fast: browse free prompts by category, save your favourites in <Link to="/account/favorites" className="text-accent hover:underline">My Prompts</Link>, or <Link to="/cart" className="text-accent hover:underline">subscribe</Link> to unlock all premium items.
+        </>}
       >
         <Button asChild size="lg" variant="hero" className="px-6">
           <a href="#library-filters"><Search className="h-4 w-4 mr-2" />Browse Prompt Library</a>
@@ -336,6 +342,9 @@ const PromptLibrary = () => {
             <BreadcrumbItem><BreadcrumbPage>Browse Library</BreadcrumbPage></BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+
+        {/* Community Favorites */}
+        <CommunityFavorites />
 
         {/* Category filter badges */}
         <section className="mb-6">
@@ -561,14 +570,56 @@ const PromptLibrary = () => {
           {(() => {
             const { title, description } = getTitleAndDescription();
             return (
-              <div className="mb-6">
-                <h2 className="text-xl font-semibold mb-2">{title}</h2>
-                <p className="text-muted-foreground text-sm">{description}</p>
+              <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div>
+                  <h2 className="text-xl font-semibold mb-1">{title}</h2>
+                  <p className="text-muted-foreground text-sm">{description}</p>
+                </div>
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  {/* Sort */}
+                  <Select value={sortBy} onValueChange={setSortBy}>
+                    <SelectTrigger className="h-8 text-xs w-[140px] bg-background">
+                      <ArrowUpDown className="h-3 w-3 mr-1" />
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="popular">Most Popular</SelectItem>
+                      <SelectItem value="newest">Newest</SelectItem>
+                      <SelectItem value="copied">Most Copied</SelectItem>
+                      <SelectItem value="rated">Highest Rated</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  {/* View toggle */}
+                  <div className="flex items-center border border-border rounded-lg overflow-hidden">
+                    <button
+                      onClick={() => setViewMode("grid")}
+                      className={`p-1.5 transition-colors ${viewMode === "grid" ? "bg-primary text-primary-foreground" : "bg-background text-muted-foreground hover:bg-muted"}`}
+                      aria-label="Grid view"
+                    >
+                      <LayoutGrid className="h-3.5 w-3.5" />
+                    </button>
+                    <button
+                      onClick={() => setViewMode("list")}
+                      className={`p-1.5 transition-colors ${viewMode === "list" ? "bg-primary text-primary-foreground" : "bg-background text-muted-foreground hover:bg-muted"}`}
+                      aria-label="List view"
+                    >
+                      <List className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                </div>
               </div>
             );
           })()}
 
-          <div id="library-results" ref={listRef} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 scroll-mt-40 md:scroll-mt-48">
+          <div
+            id="library-results"
+            ref={listRef}
+            className={`scroll-mt-40 md:scroll-mt-48 ${
+              viewMode === "grid"
+                ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                : "flex flex-col gap-3"
+            }`}
+          >
             {ribbon === "RECOMMENDED" && hasPersonalization && personalizedPrompts.length > 0 ? (
               sortByComplexity(personalizedPrompts).map((p) => (
                 <PromptCard key={p.id} prompt={p as any} categories={categories} defaultAIProvider={defaultAIProvider} />
@@ -577,7 +628,7 @@ const PromptLibrary = () => {
               items.map((p, index) => (
                 <Fragment key={p.id}>
                   <PromptCard prompt={p as any} categories={categories} defaultAIProvider={defaultAIProvider} />
-                  {(index + 1) % 6 === 0 && index < items.length - 1 && (
+                  {viewMode === "grid" && (index + 1) % 6 === 0 && index < items.length - 1 && (
                     <div className="sm:col-span-2 lg:col-span-3"><PromptStudioCTA variant="inline" /></div>
                   )}
                 </Fragment>
@@ -587,7 +638,8 @@ const PromptLibrary = () => {
         </section>
 
         {hasMore && (
-          <div className="flex justify-center mt-8 mb-4">
+          <div className="flex flex-col items-center gap-2 mt-8 mb-4">
+            <p className="text-xs text-muted-foreground">Showing {items.length} of 150+ prompts</p>
             <Button variant="secondary" onClick={loadMore} disabled={loading} className="sticky bottom-4 z-30 shadow-lg">
               {loading ? "Loading..." : "Load more"}
             </Button>
