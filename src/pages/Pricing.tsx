@@ -5,87 +5,108 @@ import {
   Check, X, Sparkles, Zap, Building2, Crown,
   ChevronDown, Globe
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const FAQS = [
-  { q: "Can I switch plans anytime?", a: "Yes, you can upgrade or downgrade your plan at any time. Changes take effect at the start of your next billing cycle. No penalties or lock-in periods." },
-  { q: "Is there a free trial?", a: "Our Free plan lets you experience core features indefinitely with 10 optimizations per day. When you upgrade to Pro, you get a 7-day money-back guarantee." },
-  { q: "Do you offer refunds?", a: "We offer a 7-day money-back guarantee on Pro plans. If you're not satisfied within the first 7 days, contact us for a full refund. After 7 days, we prorate any remaining time." },
-  { q: "What payment methods do you accept?", a: "We accept all major credit cards (Visa, Mastercard, Amex), PayPal, and bank transfers for Enterprise plans. Payments are processed securely via Stripe." },
-  { q: "Do you offer student/nonprofit discounts?", a: "Yes! Students get 50% off Pro plans with a valid .edu email. Nonprofits serving Asian communities can apply for our community program. Contact us for details." },
+  { q: "Can I switch plans anytime?", a: "Yes — upgrade or downgrade at any time. Changes take effect at the start of your next billing cycle with no penalties." },
+  { q: "Which Asian languages are included?", a: "Pro covers all 12 languages: Japanese, Mandarin, Cantonese, Korean, Hindi, Thai, Vietnamese, Bahasa Indonesia, Bahasa Malay, Tamil, Tagalog, and Khmer. Free includes Japanese, Mandarin, and Korean." },
+  { q: "Is there a free trial for Pro?", a: "The Free plan lets you try core features indefinitely. When you upgrade to Pro you get a 14-day money-back guarantee — no questions asked." },
+  { q: "Do you offer refunds?", a: "We offer a 14-day money-back guarantee on Pro. Enterprise contracts include custom cancellation terms agreed during onboarding." },
+  { q: "Can I add team members?", a: "Team collaboration is available on Enterprise plans. Contact our sales team for volume pricing and shared prompt libraries." },
+  { q: "What payment methods do you accept?", a: "We accept Visa, Mastercard, Amex, PayPal, Alipay, WeChat Pay, GrabPay, and bank transfer for Enterprise. All payments processed securely via Stripe." },
+];
+
+const COMPANIES = [
+  "Tokyo Tech Co", "Seoul AI Labs", "Singapore Prompt Studio",
+  "Bangkok Digital", "Jakarta Innovation Hub", "Taipei AI Works",
+];
+
+const COMPARISON_ROWS: { feature: string; free: string; pro: string; enterprise: string }[] = [
+  { feature: "Prompts per day", free: "5", pro: "Unlimited", enterprise: "Unlimited" },
+  { feature: "Asian languages", free: "3 (JP, ZH, KO)", pro: "All 12", enterprise: "All 12 + custom" },
+  { feature: "AI platforms", free: "ChatGPT, Claude, Gemini", pro: "All 10+", enterprise: "All + private models" },
+  { feature: "Prompt history", free: "—", pro: "✓", enterprise: "✓" },
+  { feature: "Export to PDF", free: "—", pro: "✓", enterprise: "✓" },
+  { feature: "Cultural context engine", free: "Basic", pro: "Advanced", enterprise: "Custom-tuned" },
+  { feature: "API access", free: "—", pro: "—", enterprise: "✓" },
+  { feature: "Team collaboration", free: "—", pro: "—", enterprise: "✓" },
+  { feature: "Custom prompt libraries", free: "—", pro: "—", enterprise: "✓" },
+  { feature: "Dedicated account manager", free: "—", pro: "—", enterprise: "✓" },
+  { feature: "SLA guarantee", free: "—", pro: "—", enterprise: "✓" },
+  { feature: "Support", free: "Community", pro: "Priority email", enterprise: "24/7 dedicated" },
 ];
 
 const Pricing = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [annual, setAnnual] = useState(false);
 
-  const proPrice = annual ? "$15" : "$19";
-  const proPeriod = annual ? "/month, billed annually" : "/month";
-  const proAnnualNote = annual ? "Save 20% — $180/year" : "$190/year (save 20%)";
+  const proUSD = annual ? "$7.99" : "$9.99";
+  const proJPY = annual ? "¥780" : "¥980";
+  const proPeriod = annual ? "/mo billed annually" : "/month";
+  const saveBadge = annual ? "Save 20%" : "Save 20% annually";
 
   const tiers = [
     {
       name: "Free",
-      price: "$0",
+      priceMain: "$0",
+      priceAlt: "",
       period: "forever",
-      description: "Get started with core optimization across the top 3 global platforms.",
+      description: "Get started with core optimization for 3 Asian languages.",
       popular: false,
-      cta: "Get Started",
+      cta: "Get Started Free",
       ctaLink: "/auth?mode=signup",
       icon: Zap,
-      ctaStyle: "outline" as const,
       features: [
-        { text: "10 prompt optimizations / day", included: true },
-        { text: "Access to 50+ free prompts", included: true },
-        { text: "Basic platforms (ChatGPT, Claude, Gemini)", included: true },
-        { text: "Community support", included: true },
-        { text: "1 saved prompt collection", included: true },
-        { text: "Asian AI platforms", included: false },
-        { text: "Multi-language with cultural context", included: false },
-        { text: "Prompt history & analytics", included: false },
+        { text: "5 prompt optimizations / day", ok: true },
+        { text: "3 languages (JP, ZH, KO)", ok: true },
+        { text: "Basic platforms (ChatGPT, Claude, Gemini)", ok: true },
+        { text: "Community support", ok: true },
+        { text: "1 saved collection", ok: true },
+        { text: "Full Asian language suite", ok: false },
+        { text: "Prompt history & export", ok: false },
+        { text: "Priority support", ok: false },
       ],
     },
     {
       name: "Pro",
-      price: proPrice,
+      priceMain: proUSD,
+      priceAlt: proJPY + "/月",
       period: proPeriod,
-      description: "Unlock the full Asian AI ecosystem. Every platform, every language, every culture.",
+      description: "Unlock every Asian language, every platform, with cultural context intelligence.",
       popular: true,
-      cta: "Start Free Trial",
+      cta: "Start 14-Day Free Trial",
       ctaLink: "/auth?mode=signup",
       icon: Crown,
-      ctaStyle: "default" as const,
-      annualNote: proAnnualNote,
       features: [
-        { text: "Unlimited optimizations", included: true },
-        { text: "Access to all 150+ prompts", included: true },
-        { text: "All 12 platform optimizations", included: true },
-        { text: "Priority email support", included: true },
-        { text: "Unlimited saved collections", included: true },
-        { text: "Prompt history & analytics", included: true },
-        { text: "Advanced tone/formality controls", included: true },
-        { text: "Asian language priority", included: true },
+        { text: "Unlimited prompt optimizations", ok: true },
+        { text: "All 12 Asian languages", ok: true },
+        { text: "All 10+ AI platforms", ok: true },
+        { text: "Priority email support", ok: true },
+        { text: "Unlimited saved collections", ok: true },
+        { text: "Prompt history & analytics", ok: true },
+        { text: "Export to PDF", ok: true },
+        { text: "Advanced tone & formality", ok: true },
       ],
     },
     {
       name: "Enterprise",
-      price: "Custom",
+      priceMain: "Custom",
+      priceAlt: "お問い合わせ",
       period: "",
-      description: "For teams scaling AI across Asian markets with dedicated support and SLA.",
+      description: "For teams scaling AI across Asian markets with SLA and dedicated support.",
       popular: false,
       cta: "Contact Sales",
       ctaLink: "/contact",
       icon: Building2,
-      ctaStyle: "outline" as const,
       features: [
-        { text: "Everything in Pro", included: true },
-        { text: "Custom prompt packs", included: true },
-        { text: "Team collaboration", included: true },
-        { text: "API access", included: true },
-        { text: "Dedicated account manager", included: true },
-        { text: "Custom AI model training", included: true },
-        { text: "SLA guarantee", included: true },
-        { text: "SSO & advanced security", included: true },
+        { text: "Everything in Pro", ok: true },
+        { text: "API access", ok: true },
+        { text: "Team collaboration", ok: true },
+        { text: "Custom prompt libraries", ok: true },
+        { text: "Dedicated account manager", ok: true },
+        { text: "Custom AI model training", ok: true },
+        { text: "SLA guarantee", ok: true },
+        { text: "SSO & advanced security", ok: true },
       ],
     },
   ];
@@ -93,8 +114,8 @@ const Pricing = () => {
   return (
     <>
       <SEO
-        title="Pricing | PromptAndGo"
-        description="Simple pricing for the only AI prompt optimizer built for Asia. Free to start, Pro for full Asian AI ecosystem access."
+        title="Pricing — PromptAndGo | AI Prompt Plans for Asia"
+        description="Simple, transparent pricing for the only AI prompt optimizer built for Asian languages. Free to start, Pro for the full 12-language ecosystem."
         canonical="https://promptandgo.ai/pricing"
       />
 
@@ -109,10 +130,10 @@ const Pricing = () => {
           <div className="relative z-10 container max-w-5xl mx-auto px-4 pt-20 pb-8 md:pt-28 md:pb-12">
             <div className="text-center">
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight leading-[1.1] mb-4">
-                Simple, Transparent Pricing
+                Choose Your PromptAndGo Plan
               </h1>
               <p className="text-lg text-white/60 max-w-xl mx-auto mb-8">
-                Start free, upgrade when you're ready
+                AI prompt optimization crafted for Asian languages — start free, upgrade when you're ready
               </p>
 
               {/* Billing toggle */}
@@ -136,7 +157,7 @@ const Pricing = () => {
         </section>
 
         {/* Pricing cards */}
-        <section className="relative bg-hero pb-24 md:pb-32">
+        <section className="relative bg-hero pb-16 md:pb-24">
           <div className="container max-w-6xl mx-auto px-4">
             <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
               {tiers.map((tier) => {
@@ -144,15 +165,15 @@ const Pricing = () => {
                 return (
                   <div
                     key={tier.name}
-                    className={`relative rounded-2xl border p-8 flex flex-col ${
+                    className={`relative rounded-2xl border p-8 flex flex-col transition-transform hover:scale-[1.02] ${
                       tier.popular
                         ? "border-primary bg-white/10 backdrop-blur-md ring-2 ring-primary/50 shadow-2xl shadow-primary/20"
                         : "border-white/10 bg-white/5 backdrop-blur-sm"
                     }`}
                   >
                     {tier.popular && (
-                      <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-white text-xs font-bold px-4 py-1.5 rounded-full">
-                        Most Popular
+                      <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-white text-xs font-bold px-4 py-1.5 rounded-full flex items-center gap-1">
+                        <Sparkles className="h-3 w-3" /> Recommended
                       </div>
                     )}
 
@@ -163,29 +184,28 @@ const Pricing = () => {
                         <Icon className="h-6 w-6 text-white" />
                       </div>
                       <h3 className="text-xl font-bold text-white mb-1">{tier.name}</h3>
-                      <div className="flex items-baseline gap-1 mb-1">
-                        <span className="text-4xl font-black text-white">{tier.price}</span>
-                        {tier.period && (
-                          <span className="text-white/50 text-sm">{tier.period}</span>
-                        )}
+                      <div className="flex items-baseline gap-1 mb-0.5">
+                        <span className="text-4xl font-black text-white">{tier.priceMain}</span>
+                        {tier.period && <span className="text-white/50 text-sm">{tier.period}</span>}
                       </div>
-                      {"annualNote" in tier && tier.annualNote && (
-                        <p className="text-xs text-accent mb-2">{tier.annualNote}</p>
+                      {tier.priceAlt && (
+                        <p className="text-xs text-accent">{tier.priceAlt}</p>
                       )}
-                      <p className="text-sm text-white/60 leading-relaxed">{tier.description}</p>
+                      {tier.popular && annual && (
+                        <span className="inline-block mt-1 text-xs bg-accent/20 text-accent px-2 py-0.5 rounded-full">{saveBadge}</span>
+                      )}
+                      <p className="text-sm text-white/60 leading-relaxed mt-2">{tier.description}</p>
                     </div>
 
                     <div className="flex-1 space-y-3 mb-8">
                       {tier.features.map((f, i) => (
                         <div key={i} className="flex items-start gap-3">
-                          {f.included ? (
+                          {f.ok ? (
                             <Check className="h-4 w-4 text-accent flex-shrink-0 mt-0.5" />
                           ) : (
                             <X className="h-4 w-4 text-white/20 flex-shrink-0 mt-0.5" />
                           )}
-                          <span className={`text-sm ${f.included ? "text-white/80" : "text-white/30"}`}>
-                            {f.text}
-                          </span>
+                          <span className={`text-sm ${f.ok ? "text-white/80" : "text-white/30"}`}>{f.text}</span>
                         </div>
                       ))}
                     </div>
@@ -206,26 +226,62 @@ const Pricing = () => {
               })}
             </div>
 
-            {/* Pro callout */}
+            {/* Callout */}
             <div className="mt-12 text-center">
               <div className="inline-flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl px-6 py-4">
                 <Globe className="h-5 w-5 text-accent" />
                 <p className="text-sm text-white/70">
-                  <span className="text-white font-semibold">Pro unlocks Asian AI.</span>{" "}
-                  DeepSeek, Qwen, Ernie, and 10+ languages with cultural context awareness.
+                  <span className="text-white font-semibold">Pro unlocks the full Asian AI ecosystem.</span>{" "}
+                  DeepSeek, Qwen, Ernie, and 12 languages with cultural context awareness.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Social proof */}
+        {/* Comparison table */}
+        <section className="py-16 md:py-24 bg-background">
+          <div className="container max-w-5xl mx-auto px-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-10">
+              Feature Comparison
+            </h2>
+            <div className="overflow-x-auto rounded-xl border border-border">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-muted/50">
+                    <th className="text-left p-4 font-semibold text-foreground">Feature</th>
+                    <th className="p-4 font-semibold text-foreground text-center">Free</th>
+                    <th className="p-4 font-semibold text-primary text-center">Pro</th>
+                    <th className="p-4 font-semibold text-foreground text-center">Enterprise</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {COMPARISON_ROWS.map((row, i) => (
+                    <tr key={i} className="border-t border-border">
+                      <td className="p-4 text-foreground font-medium">{row.feature}</td>
+                      <td className="p-4 text-center text-muted-foreground">{row.free}</td>
+                      <td className="p-4 text-center text-foreground font-medium">{row.pro}</td>
+                      <td className="p-4 text-center text-muted-foreground">{row.enterprise}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        {/* Trusted by */}
         <section className="py-12 bg-muted/30 border-y border-border">
-          <div className="container max-w-4xl mx-auto px-4 text-center">
-            <p className="text-sm text-muted-foreground mb-6">Trusted by 500+ companies across Asia</p>
-            <div className="flex items-center justify-center gap-8 flex-wrap opacity-40">
-              {["Grab", "Shopee", "Tokopedia", "LINE", "Gojek", "Razorpay"].map((name) => (
-                <span key={name} className="text-lg font-bold text-foreground">{name}</span>
+          <div className="container max-w-5xl mx-auto px-4 text-center">
+            <p className="text-sm text-muted-foreground mb-6">Trusted by teams across Asia</p>
+            <div className="flex items-center justify-center gap-6 flex-wrap">
+              {COMPANIES.map((name) => (
+                <span
+                  key={name}
+                  className="px-4 py-2 rounded-full border border-border bg-card text-sm font-semibold text-muted-foreground"
+                >
+                  {name}
+                </span>
               ))}
             </div>
           </div>
@@ -234,23 +290,19 @@ const Pricing = () => {
         {/* FAQ */}
         <section className="py-20 md:py-28 bg-background">
           <div className="container max-w-3xl mx-auto px-4">
-            <div className="text-center mb-14">
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4">
-                Frequently asked questions
-              </h2>
-            </div>
-
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-10 text-center">
+              Frequently Asked Questions
+            </h2>
             <div className="space-y-3">
               {FAQS.map((faq, i) => (
                 <div key={i} className="rounded-xl border border-border bg-card overflow-hidden">
                   <button
                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                    aria-expanded={openFaq === i}
                     className="w-full flex items-center justify-between gap-4 p-5 text-left"
                   >
                     <span className="font-semibold text-foreground text-sm md:text-base">{faq.q}</span>
-                    <ChevronDown
-                      className={`h-5 w-5 text-muted-foreground flex-shrink-0 transition-transform duration-200 ${openFaq === i ? "rotate-180" : ""}`}
-                    />
+                    <ChevronDown className={`h-5 w-5 text-muted-foreground flex-shrink-0 transition-transform duration-200 ${openFaq === i ? "rotate-180" : ""}`} />
                   </button>
                   {openFaq === i && (
                     <div className="px-5 pb-5">
@@ -270,7 +322,7 @@ const Pricing = () => {
               Not sure which plan? Talk to our team
             </h2>
             <p className="text-white/60 mb-8 max-w-xl mx-auto">
-              We'll help you find the right plan for your team and use case.
+              We'll help you find the right plan for your team and use case across Asian markets.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild size="lg" className="h-12 px-8 bg-white text-gray-900 hover:bg-white/90 font-semibold">
@@ -280,7 +332,7 @@ const Pricing = () => {
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="h-12 px-8 border-white/50 !text-white hover:bg-white/20 font-semibold bg-white/10">
-                <Link to="/optimize">Try the Optimizer</Link>
+                <Link to="/optimize">Try the Optimizer Free</Link>
               </Button>
             </div>
           </div>
