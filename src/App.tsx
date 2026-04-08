@@ -224,6 +224,9 @@ const AppContent = () => {
                 <Route path="/help" element={<HelpCenterPage />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/language-learning" element={<LanguageLearning />} />
+                <Route path="/templates" element={<PromptTemplates />} />
+                <Route path="/enterprise" element={<Enterprise />} />
+                <Route path="/api-docs" element={<ApiDocs />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               </AnalyticsProvider>
