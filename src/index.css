@@ -13,6 +13,30 @@ All colors MUST be HSL. */
   html {
     overflow-x: hidden;
     width: 100%;
+    scroll-behavior: smooth;
+  }
+  
+  /* Skip to content link */
+  .skip-to-content {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 9999;
+    padding: 0.5rem 1rem;
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    font-weight: 600;
+    border-radius: 0 0 0.375rem 0;
+  }
+  .skip-to-content:focus {
+    left: 0;
+  }
+  
+  /* Focus-visible outlines for keyboard navigation */
+  *:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+    border-radius: 2px;
   }
   
   body {

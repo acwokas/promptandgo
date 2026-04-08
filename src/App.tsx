@@ -99,6 +99,7 @@ import About from "./pages/About";
 import Pricing from "./pages/Pricing";
 import AskScout from "./pages/AskScout";
 import HelpCenterPage from "./pages/HelpCenter";
+import Dashboard from "./pages/Dashboard";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
@@ -135,10 +136,11 @@ const AppContent = () => {
         <GlobalStructuredData />
         
         <div className="flex min-h-screen w-full overflow-hidden">
+          <a href="#main-content" className="skip-to-content">Skip to content</a>
           <AppSidebar />
-          <main className="flex-1 flex flex-col min-w-0 w-full overflow-x-hidden">
+          <main id="main-content" className="flex-1 flex flex-col min-w-0 w-full overflow-x-hidden">
             <Header />
-            <div className="flex-1 w-full overflow-x-hidden max-w-full">
+            <div className="flex-1 w-full overflow-x-hidden max-w-full" role="main">
               <ScrollToTop />
               <AnalyticsProvider>
               <GAListener />
@@ -216,6 +218,7 @@ const AppContent = () => {
                 <Route path="/certification" element={<CertificationPage />} />
                 <Route path="/optimize" element={<PromptOptimizerPage />} />
                 <Route path="/help" element={<HelpCenterPage />} />
+                <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               </AnalyticsProvider>
