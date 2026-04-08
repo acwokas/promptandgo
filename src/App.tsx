@@ -125,6 +125,7 @@ const KeyboardShortcuts = lazy(() => import("./pages/KeyboardShortcuts"));
 const Accessibility = lazy(() => import("./pages/Accessibility"));
 const Partners = lazy(() => import("./pages/Partners"));
 const UseCasesPage = lazy(() => import("./pages/UseCases"));
+const StatusPage = lazy(() => import("./pages/StatusPage"));
 
 const queryClient = new QueryClient();
 
