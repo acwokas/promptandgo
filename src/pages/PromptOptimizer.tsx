@@ -10,11 +10,11 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Skeleton } from "@/components/ui/skeleton";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import {
   Wand2, Copy, Check, ChevronDown, Shield, Sparkles, RotateCcw,
   ArrowRight, BookOpen, Lightbulb, Settings2, Eye, Zap, Globe,
-  ShoppingCart, Utensils, Landmark, GraduationCap, TrendingUp,
+  ShoppingCart, Utensils, Landmark, GraduationCap, TrendingUp, Languages,
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { supabase } from "@/integrations/supabase/client";
@@ -32,7 +32,7 @@ const AI_PLATFORMS = [
   { id: "stable-diffusion", label: "Stable Diffusion", color: "bg-amber-500", tip: "Use comma-separated tags, weight important terms with (parentheses), specify negative prompts, and include model-specific tokens." },
 ];
 
-const LANGUAGES = [
+export const OPTIMIZER_LANGUAGES = [
   { code: "en", label: "English", flag: "🇬🇧" },
   { code: "zh", label: "中文 (Chinese)", flag: "🇨🇳" },
   { code: "ja", label: "日本語 (Japanese)", flag: "🇯🇵" },
@@ -43,6 +43,9 @@ const LANGUAGES = [
   { code: "vi", label: "Tiếng Việt", flag: "🇻🇳" },
   { code: "hi", label: "हिन्दी (Hindi)", flag: "🇮🇳" },
   { code: "tl", label: "Tagalog", flag: "🇵🇭" },
+  { code: "ta", label: "தமிழ் (Tamil)", flag: "🇱🇰" },
+  { code: "bn", label: "বাংলা (Bengali)", flag: "🇧🇩" },
+  { code: "km", label: "ភាសាខ្មែរ (Khmer)", flag: "🇰🇭" },
 ];
 
 const PLATFORM_COMPARISON = {
@@ -98,6 +101,11 @@ function parseSection(md: string, heading: string): string {
 const PromptOptimizer = () => {
   const { toast } = useToast();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [searchParams] = useSearchParams();
+
+  // Read ?lang= param for pre-selection
+  const langParam = searchParams.get("lang");
+  const initialLang = OPTIMIZER_LANGUAGES.find((l) => l.code === langParam)?.code || "en";
 
   const [prompt, setPrompt] = useState("");
   const [aiTool, setAiTool] = useState("");
@@ -106,8 +114,8 @@ const PromptOptimizer = () => {
   const [contextOpen, setContextOpen] = useState(false);
 
   const [selectedPlatform, setSelectedPlatform] = useState("chatgpt");
-  const [selectedLanguage, setSelectedLanguage] = useState("en");
-  const [asianContext, setAsianContext] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState(initialLang);
+  const [asianContext, setAsianContext] = useState(initialLang !== "en");
 
   const [result, setResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -117,7 +125,7 @@ const PromptOptimizer = () => {
   const [exampleIdx, setExampleIdx] = useState(0);
 
   const activePlatform = AI_PLATFORMS.find((p) => p.id === selectedPlatform)!;
-  const activeLanguageObj = LANGUAGES.find((l) => l.code === selectedLanguage)!;
+  const activeLanguageObj = OPTIMIZER_LANGUAGES.find((l) => l.code === selectedLanguage)!;
 
   const autoResize = useCallback(() => {
     const el = textareaRef.current;
@@ -350,7 +358,7 @@ const PromptOptimizer = () => {
               onChange={(e) => setSelectedLanguage(e.target.value)}
               className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              {LANGUAGES.map((lang) => (
+              {OPTIMIZER_LANGUAGES.map((lang) => (
                 <option key={lang.code} value={lang.code}>
                   {lang.flag} {lang.label}
                 </option>
@@ -537,6 +545,38 @@ const PromptOptimizer = () => {
                 </AccordionItem>
               )}
             </Accordion>
+
+            {/* Translate to... dropdown */}
+            <Card className="border-accent/30 bg-accent/5">
+              <CardContent className="p-4">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                  <div className="flex items-center gap-2 text-sm font-semibold">
+                    <Languages className="h-4 w-4 text-accent" />
+                    Translate to...
+                  </div>
+                  <select
+                    value=""
+                    onChange={(e) => {
+                      if (e.target.value) {
+                        setSelectedLanguage(e.target.value);
+                        setAsianContext(true);
+                        setPrompt(optimizedPrompt);
+                        setTimeout(() => optimize(), 100);
+                      }
+                    }}
+                    className="h-9 rounded-md border border-input bg-background px-3 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    <option value="">Select a language...</option>
+                    {OPTIMIZER_LANGUAGES.filter((l) => l.code !== "en").map((lang) => (
+                      <option key={lang.code} value={lang.code}>
+                        {lang.flag} {lang.label}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="text-xs text-muted-foreground">Re-optimizes your prompt in the selected language</span>
+                </div>
+              </CardContent>
+            </Card>
 
             <div className="flex flex-wrap gap-3">
               <Button onClick={() => copyText(optimizedPrompt, "opt-bottom")} className="gap-2">

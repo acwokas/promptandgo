@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Globe, ArrowRight, Copy, Check } from 'lucide-react';
@@ -73,6 +73,7 @@ const HERO_STATS = [
 ];
 
 export function MultiLanguageShowcase() {
+  const navigate = useNavigate();
   const [activeRegion, setActiveRegion] = useState(0);
   const [highlightedLang, setHighlightedLang] = useState<string | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
@@ -187,23 +188,34 @@ export function MultiLanguageShowcase() {
                     <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
                       "{lang.sample}"
                     </p>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleCopy(lang.sample, lang.code);
-                      }}
-                      className="inline-flex items-center gap-1.5 text-xs text-primary hover:text-primary/80 font-medium transition-colors"
-                    >
-                      {copied === lang.code ? (
-                        <>
-                          <Check className="h-3.5 w-3.5" /> Copied!
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="h-3.5 w-3.5" /> Copy sample
-                        </>
-                      )}
-                    </button>
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleCopy(lang.sample, lang.code);
+                        }}
+                        className="inline-flex items-center gap-1.5 text-xs text-primary hover:text-primary/80 font-medium transition-colors"
+                      >
+                        {copied === lang.code ? (
+                          <>
+                            <Check className="h-3.5 w-3.5" /> Copied!
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="h-3.5 w-3.5" /> Copy sample
+                          </>
+                        )}
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/optimize?lang=${lang.code}`);
+                        }}
+                        className="inline-flex items-center gap-1.5 text-xs text-accent hover:text-accent/80 font-medium transition-colors"
+                      >
+                        <ArrowRight className="h-3.5 w-3.5" /> Optimize in {lang.name}
+                      </button>
+                    </div>
                   </div>
                 ) : (
                   <p className="text-xs text-muted-foreground italic">
@@ -223,13 +235,14 @@ export function MultiLanguageShowcase() {
         </p>
         <div className="flex flex-wrap justify-center gap-2">
           {ALL_LANGUAGES.map((lang) => (
-            <span
+            <Link
               key={lang.code}
-              className="inline-flex items-center gap-1.5 bg-muted/50 border border-border rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground hover:border-primary/40 hover:text-foreground transition-colors"
+              to={`/optimize?lang=${lang.code}`}
+              className="inline-flex items-center gap-1.5 bg-muted/50 border border-border rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground hover:border-primary/40 hover:text-foreground hover:bg-primary/5 transition-colors cursor-pointer"
             >
               <span>{lang.flag}</span>
               {lang.nativeName}
-            </span>
+            </Link>
           ))}
         </div>
       </div>

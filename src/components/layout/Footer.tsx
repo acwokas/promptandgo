@@ -10,6 +10,21 @@ const PLATFORMS = [
   { name: "Ernie", letter: "E", bg: "bg-[hsl(210,80%,45%)]" },
 ];
 
+const FOOTER_LANGUAGES = [
+  { code: "zh", flag: "🇨🇳", label: "中文" },
+  { code: "ja", flag: "🇯🇵", label: "日本語" },
+  { code: "ko", flag: "🇰🇷", label: "한국어" },
+  { code: "id", flag: "🇮🇩", label: "Bahasa" },
+  { code: "vi", flag: "🇻🇳", label: "Tiếng Việt" },
+  { code: "th", flag: "🇹🇭", label: "ไทย" },
+  { code: "hi", flag: "🇮🇳", label: "हिन्दी" },
+  { code: "ta", flag: "🇱🇰", label: "தமிழ்" },
+  { code: "tl", flag: "🇵🇭", label: "Tagalog" },
+  { code: "bn", flag: "🇧🇩", label: "বাংলা" },
+  { code: "km", flag: "🇰🇭", label: "ខ្មែរ" },
+  { code: "ms", flag: "🇲🇾", label: "Melayu" },
+];
+
 const Footer = () => {
   return (
     <footer className="bg-hero text-white mt-16">
@@ -32,7 +47,7 @@ const Footer = () => {
             </p>
 
             {/* Platform logos */}
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 mb-4">
               {PLATFORMS.map((p) => (
                 <div
                   key={p.name}
@@ -41,6 +56,21 @@ const Footer = () => {
                 >
                   {p.letter}
                 </div>
+              ))}
+            </div>
+
+            {/* Language badges - clickable */}
+            <div className="flex flex-wrap gap-1.5">
+              {FOOTER_LANGUAGES.map((lang) => (
+                <Link
+                  key={lang.code}
+                  to={`/optimize?lang=${lang.code}`}
+                  title={`Optimize prompts in ${lang.label}`}
+                  className="inline-flex items-center gap-1 bg-white/5 border border-white/10 rounded-full px-2 py-1 text-[10px] text-white/50 hover:text-white/80 hover:border-white/30 hover:bg-white/10 transition-all"
+                >
+                  <span>{lang.flag}</span>
+                  {lang.label}
+                </Link>
               ))}
             </div>
           </div>
