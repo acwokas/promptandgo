@@ -18,6 +18,11 @@ import {
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { supabase } from "@/integrations/supabase/client";
+import { TemplateQuickStart } from "@/components/optimizer/TemplateQuickStart";
+import { PlatformTabs } from "@/components/optimizer/PlatformTabs";
+import { OptimizationMetrics } from "@/components/optimizer/OptimizationMetrics";
+import { OptimizationHistory, type HistoryEntry } from "@/components/optimizer/OptimizationHistory";
+import { AdvancedOptions } from "@/components/optimizer/AdvancedOptions";
 
 /* ─── Constants ─── */
 
@@ -129,6 +134,16 @@ const PromptOptimizer = () => {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [showExample, setShowExample] = useState(false);
   const [exampleIdx, setExampleIdx] = useState(0);
+
+  // Advanced options state
+  const [advTone, setAdvTone] = useState("professional");
+  const [advLength, setAdvLength] = useState("detailed");
+  const [advIndustry, setAdvIndustry] = useState("technology");
+  const [advOpen, setAdvOpen] = useState(false);
+
+  // History sidebar state
+  const [history, setHistory] = useState<HistoryEntry[]>([]);
+  const [historyOpen, setHistoryOpen] = useState(false);
 
   const activePlatform = AI_PLATFORMS.find((p) => p.id === selectedPlatform)!;
   const activeLanguageObj = OPTIMIZER_LANGUAGES.find((l) => l.code === selectedLanguage)!;
@@ -248,6 +263,27 @@ const PromptOptimizer = () => {
     }
   };
 
+  // Add to history after successful optimization
+  useEffect(() => {
+    const parsed = parseOptimizedPrompt(result);
+    if (parsed && prompt.trim() && !isLoading) {
+      const ratio = Math.min(parsed.length / Math.max(prompt.length, 1), 5);
+      const avgScore = Math.round(70 + ratio * 5);
+      const entry: HistoryEntry = {
+        id: Date.now().toString(),
+        originalPrompt: prompt,
+        platform: activePlatform.label,
+        score: Math.min(avgScore, 96),
+        timestamp: Date.now(),
+      };
+      setHistory((prev) => {
+        // Prevent duplicate entries for same result
+        if (prev.length > 0 && prev[0].originalPrompt === prompt) return prev;
+        return [entry, ...prev].slice(0, 5);
+      });
+    }
+  }, [isLoading]); // trigger when loading finishes
+
   const copyText = async (text: string, id: string) => {
     await navigator.clipboard.writeText(text);
     setCopiedId(id);
@@ -318,7 +354,21 @@ const PromptOptimizer = () => {
         </div>
       </section>
 
+      {/* Optimization History Sidebar */}
+      <OptimizationHistory
+        entries={history}
+        isOpen={historyOpen}
+        onToggle={() => setHistoryOpen(!historyOpen)}
+        onReuse={(p) => {
+          setPrompt(p);
+          setHistoryOpen(false);
+        }}
+      />
+
       <section className="container max-w-4xl mx-auto px-4 py-10 space-y-8">
+
+        {/* ═══ Template Quick Start ═══ */}
+        <TemplateQuickStart onSelect={(p) => setPrompt(p)} />
 
         {/* ═══ Platform Selector ═══ */}
         <div>
@@ -452,6 +502,18 @@ const PromptOptimizer = () => {
               </CollapsibleContent>
             </Collapsible>
 
+            {/* Advanced Options */}
+            <AdvancedOptions
+              tone={advTone}
+              setTone={setAdvTone}
+              outputLength={advLength}
+              setOutputLength={setAdvLength}
+              industry={advIndustry}
+              setIndustry={setAdvIndustry}
+              isOpen={advOpen}
+              setIsOpen={setAdvOpen}
+            />
+
             <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
               <Shield className="h-3.5 w-3.5" />
               Your prompts are analysed in real time and never stored.
@@ -549,6 +611,17 @@ const PromptOptimizer = () => {
                 </CardContent>
               </Card>
             </div>
+
+            {/* Optimization Metrics */}
+            <OptimizationMetrics prompt={prompt} optimized={optimizedPrompt} />
+
+            {/* Platform-Specific Tabs */}
+            <PlatformTabs
+              originalPrompt={prompt}
+              optimizedPrompt={optimizedPrompt}
+              copiedId={copiedId}
+              onCopy={copyText}
+            />
 
             {/* Educational optimization insights */}
             <Card className="border-blue-500/20 bg-blue-500/5">
