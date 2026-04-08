@@ -229,7 +229,7 @@ const Index = () => {
       />
       <AIOptimizedStructuredData pageType="HomePage" title="3,000+ Curated AI Prompts" description="Browse, copy, and run tested AI prompts." />
 
-      <main>
+      <main className="page-transition">
         {/* ═══════════════════════ HERO ═══════════════════════ */}
         <section className="relative overflow-hidden bg-hero-animated">
           {/* Ambient background effects */}
