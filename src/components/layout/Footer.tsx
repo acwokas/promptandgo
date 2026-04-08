@@ -124,6 +124,7 @@ const Footer = () => {
             <Link to="/enterprise" className="text-sm text-white/70 hover:text-white transition-colors">Enterprise</Link>
             <Link to="/templates" className="text-sm text-white/70 hover:text-white transition-colors">Templates</Link>
             <Link to="/integrations" className="text-sm text-white/70 hover:text-white transition-colors">Integrations</Link>
+            <Link to="/saved" className="text-sm text-white/70 hover:text-white transition-colors">Saved Prompts</Link>
           </nav>
 
           {/* Company */}

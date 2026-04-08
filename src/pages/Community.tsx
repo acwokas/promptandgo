@@ -1,151 +1,197 @@
-import { useState } from 'react';
-import { Users, MessageSquare, Globe, Calendar, ChevronDown, ChevronUp, Send } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import SEO from '@/components/SEO';
-import { toast } from 'sonner';
+import { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
+import { Search, Share2, Globe, Lightbulb, HelpCircle, MessageSquare, ChevronLeft, ChevronRight, Trophy } from "lucide-react";
 
-const STATS = [
-  { label: '15,000+ Members', icon: Users },
-  { label: '500+ Daily Discussions', icon: MessageSquare },
-  { label: '50+ Countries', icon: Globe },
+interface Thread {
+  id: number;
+  username: string;
+  avatar: string;
+  title: string;
+  preview: string;
+  category: string;
+  replies: number;
+  timeAgo: string;
+  flag: string;
+  language: string;
+}
+
+const CATEGORIES = [
+  { name: "All", icon: MessageSquare },
+  { name: "Prompt Sharing", icon: Share2 },
+  { name: "Language Tips", icon: Globe },
+  { name: "Feature Requests", icon: Lightbulb },
+  { name: "Help & Support", icon: HelpCircle },
 ];
 
-const TOPICS = [
-  { title: 'Japanese Business Prompts', desc: 'Keigo, business emails, and formal Japanese AI interactions.', discussions: 234, members: '1.2k', color: 'bg-red-500' },
-  { title: 'Mandarin Content Creation', desc: 'WeChat, Xiaohongshu, and Douyin content optimization.', discussions: 189, members: '980', color: 'bg-amber-500' },
-  { title: 'Korean Marketing AI', desc: 'Naver, KakaoTalk, and Korean digital marketing prompts.', discussions: 156, members: '750', color: 'bg-blue-500' },
-  { title: 'Hindi Technical Writing', desc: 'Technical documentation and Hinglish business content.', discussions: 142, members: '680', color: 'bg-orange-500' },
-  { title: 'Southeast Asian E-commerce', desc: 'Shopee, Lazada, Tokopedia listing and ad optimization.', discussions: 198, members: '890', color: 'bg-green-500' },
-  { title: 'Cross-Platform Tips', desc: 'Strategies for optimizing prompts across multiple AI platforms.', discussions: 312, members: '1.5k', color: 'bg-purple-500' },
+const THREADS: Thread[] = [
+  { id: 1, username: "Tanaka Yuki", avatar: "TY", title: "Best keigo prompts for business emails", preview: "I've compiled a set of 敬語 templates that work amazingly with GPT-5 for formal Japanese correspondence...", category: "Prompt Sharing", replies: 24, timeAgo: "2 hours ago", flag: "🇯🇵", language: "Japanese" },
+  { id: 2, username: "Kim Soo-jin", avatar: "KS", title: "Korean 존댓말 templates collection", preview: "Sharing my collection of formal Korean honorific templates. These cover business meetings, emails...", category: "Prompt Sharing", replies: 18, timeAgo: "3 hours ago", flag: "🇰🇷", language: "Korean" },
+  { id: 3, username: "Chen Wei", avatar: "CW", title: "Classical Chinese poetry prompt techniques", preview: "How to craft prompts that generate authentic 古诗 with proper tonal patterns and literary allusions...", category: "Language Tips", replies: 31, timeAgo: "5 hours ago", flag: "🇨🇳", language: "Mandarin" },
+  { id: 4, username: "Somchai P.", avatar: "SP", title: "How to handle Thai tones in prompts", preview: "Thai tonal markers are tricky for AI. Here's my approach to preserving tonal accuracy in generated text...", category: "Language Tips", replies: 12, timeAgo: "Yesterday", flag: "🇹🇭", language: "Thai" },
+  { id: 5, username: "Nguyen Thi Lan", avatar: "NL", title: "Vietnamese diacritical marks guide", preview: "A comprehensive guide to ensuring AI correctly handles Vietnamese diacriticals like ă, â, ơ, ư...", category: "Language Tips", replies: 15, timeAgo: "Yesterday", flag: "🇻🇳", language: "Vietnamese" },
+  { id: 6, username: "Budi Santoso", avatar: "BS", title: "Bahasa formal vs informal toggle request", preview: "Would love a one-click toggle between formal Bahasa Indonesia and bahasa gaul in the prompt builder...", category: "Feature Requests", replies: 27, timeAgo: "2 days ago", flag: "🇮🇩", language: "Indonesian" },
+  { id: 7, username: "Sato Haruki", avatar: "SH", title: "Trouble with katakana loan words in prompts", preview: "My prompts keep generating incorrect katakana for English loan words. Has anyone found a workaround?", category: "Help & Support", replies: 9, timeAgo: "2 days ago", flag: "🇯🇵", language: "Japanese" },
+  { id: 8, username: "Park Ji-hoon", avatar: "PJ", title: "K-drama dialogue prompt templates", preview: "I've been creating prompts that generate natural K-drama style dialogue with proper speech levels...", category: "Prompt Sharing", replies: 42, timeAgo: "3 days ago", flag: "🇰🇷", language: "Korean" },
+  { id: 9, username: "Lin Mei-ling", avatar: "LM", title: "Request: Traditional vs Simplified Chinese toggle", preview: "It would be great to have an option to switch between 繁體中文 and 简体中文 in prompt output...", category: "Feature Requests", replies: 19, timeAgo: "3 days ago", flag: "🇹🇼", language: "Mandarin" },
+  { id: 10, username: "Priya Sharma", avatar: "PS", title: "Hindi Devanagari script rendering issues", preview: "Some conjunct characters aren't rendering correctly in the prompt preview. Screenshots attached...", category: "Help & Support", replies: 7, timeAgo: "4 days ago", flag: "🇮🇳", language: "Hindi" },
+  { id: 11, username: "Tanaka Rina", avatar: "TR", title: "Prompt chain for Japanese document translation", preview: "A multi-step prompt chain that first identifies the formality level then translates accordingly...", category: "Prompt Sharing", replies: 33, timeAgo: "5 days ago", flag: "🇯🇵", language: "Japanese" },
+  { id: 12, username: "Tran Van Duc", avatar: "TD", title: "Vietnamese business letter format guide", preview: "Standard Vietnamese business letter structure with AI prompts that generate culturally appropriate...", category: "Language Tips", replies: 11, timeAgo: "1 week ago", flag: "🇻🇳", language: "Vietnamese" },
 ];
 
-const CONTRIBUTORS = [
-  { name: 'Yuki T.', initials: 'YT', flag: '🇯🇵', contributions: 87, badge: 'Gold', color: 'bg-amber-500' },
-  { name: 'Wei C.', initials: 'WC', flag: '🇸🇬', contributions: 64, badge: 'Gold', color: 'bg-amber-500' },
-  { name: 'Priya S.', initials: 'PS', flag: '🇮🇳', contributions: 52, badge: 'Silver', color: 'bg-slate-400' },
-  { name: 'Min-jun K.', initials: 'MK', flag: '🇰🇷', contributions: 41, badge: 'Silver', color: 'bg-slate-400' },
-  { name: 'Andi R.', initials: 'AR', flag: '🇮🇩', contributions: 35, badge: 'Bronze', color: 'bg-orange-700' },
+const LEADERBOARD = [
+  { name: "Tanaka Yuki", points: 2840, badge: "🥇", avatar: "TY" },
+  { name: "Chen Wei", points: 2210, badge: "🥈", avatar: "CW" },
+  { name: "Kim Soo-jin", points: 1980, badge: "🥉", avatar: "KS" },
+  { name: "Park Ji-hoon", points: 1650, badge: "⭐", avatar: "PJ" },
+  { name: "Nguyen Thi Lan", points: 1420, badge: "⭐", avatar: "NL" },
 ];
 
-const EVENTS = [
-  { date: 'Apr 15, 2026', title: 'Mastering Japanese Keigo in AI Prompts', type: 'Webinar', desc: 'Learn how to craft prompts that produce proper keigo-level Japanese output for business contexts.' },
-  { date: 'Apr 22, 2026', title: 'Building Multilingual Chatbots Workshop', type: 'Workshop', desc: 'Hands-on session building customer service chatbots that handle Thai, Vietnamese, and Bahasa.' },
-  { date: 'Apr 30, 2026', title: 'AMA with PromptAndGo Founders', type: 'AMA', desc: 'Ask our founders anything about the future of AI prompting in Asia and our product roadmap.' },
-];
-
-const EVENT_COLORS: Record<string, string> = {
-  Webinar: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-  Workshop: 'bg-green-500/20 text-green-400 border-green-500/30',
-  AMA: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+const CATEGORY_COLORS: Record<string, string> = {
+  "Prompt Sharing": "bg-blue-500/20 text-blue-400",
+  "Language Tips": "bg-emerald-500/20 text-emerald-400",
+  "Feature Requests": "bg-amber-500/20 text-amber-400",
+  "Help & Support": "bg-purple-500/20 text-purple-400",
 };
 
-const Community = () => (
-  <>
-    <SEO title="Community Hub" description="Join 15,000+ prompt engineers across Asia in the PromptAndGo community." />
+const PAGE_SIZE = 6;
 
-    <section className="relative py-16 md:py-24 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10" />
-      <div className="container max-w-5xl mx-auto px-4 relative text-center">
-        <Badge variant="secondary" className="mb-4">Community</Badge>
-        <h1 className="text-3xl md:text-5xl font-bold mb-4">Join the PromptAndGo Community</h1>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Connect with 10,000+ prompt engineers across Asia</p>
+const Community = () => {
+  const [search, setSearch] = useState("");
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [page, setPage] = useState(1);
+
+  const filtered = useMemo(() => {
+    return THREADS.filter((t) => {
+      const matchCat = activeCategory === "All" || t.category === activeCategory;
+      const matchSearch = !search || t.title.toLowerCase().includes(search.toLowerCase()) || t.preview.toLowerCase().includes(search.toLowerCase());
+      return matchCat && matchSearch;
+    });
+  }, [search, activeCategory]);
+
+  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+  const paged = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Hero */}
+      <section className="py-16 md:py-20 text-center px-4">
+        <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-3">PromptAndGo Community</h1>
+        <p className="text-primary/80 font-medium mb-2">コミュニティ | 커뮤니티 | 社区 | ชุมชน | Cộng đồng | Komunitas</p>
+        <p className="text-muted-foreground max-w-lg mx-auto">Connect with prompt engineers across Asia. Share, learn, and build together.</p>
+      </section>
+
+      {/* Category tabs */}
+      <div className="max-w-5xl mx-auto px-4 mb-8">
+        <div className="flex flex-wrap gap-2 mb-4">
+          {CATEGORIES.map((cat) => {
+            const Icon = cat.icon;
+            return (
+              <button
+                key={cat.name}
+                onClick={() => { setActiveCategory(cat.name); setPage(1); }}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
+                  activeCategory === cat.name
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "bg-card text-muted-foreground border-border hover:border-primary/50"
+                }`}
+              >
+                <Icon className="h-3.5 w-3.5" />
+                {cat.name}
+              </button>
+            );
+          })}
+        </div>
+        <div className="flex gap-3">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <input
+              type="text" placeholder="Search discussions..." value={search}
+              onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+              className="w-full h-10 pl-10 pr-4 rounded-lg bg-card border border-border text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:border-primary"
+            />
+          </div>
+          <Link to="/contact" className="h-10 px-5 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors inline-flex items-center gap-2">
+            <MessageSquare className="h-4 w-4" /> Start a Discussion
+          </Link>
+        </div>
       </div>
-    </section>
 
-    <div className="container max-w-6xl mx-auto px-4 pb-16 space-y-16">
-      {/* Stats */}
-      <div className="grid sm:grid-cols-3 gap-4">
-        {STATS.map(s => (
-          <Card key={s.label}>
-            <CardContent className="pt-6 text-center">
-              <s.icon className="h-8 w-8 mx-auto mb-2 text-primary" />
-              <p className="text-xl font-bold">{s.label}</p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {/* Discussion Topics */}
-      <section>
-        <h2 className="text-2xl font-bold mb-6">Discussion Topics</h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {TOPICS.map(t => (
-            <Card key={t.title} className="hover:border-primary/30 transition-colors">
-              <CardContent className="pt-6 space-y-3">
-                <div className="flex items-center gap-2">
-                  <div className={`w-3 h-3 rounded-full ${t.color}`} />
-                  <h3 className="font-bold text-sm">{t.title}</h3>
+      <div className="max-w-5xl mx-auto px-4 pb-20 flex gap-8">
+        {/* Threads */}
+        <div className="flex-1 min-w-0 space-y-3">
+          {paged.map((t) => (
+            <div key={t.id} className="bg-card border border-border rounded-xl p-4 hover:border-primary/30 transition-colors">
+              <div className="flex gap-3">
+                <div className="w-10 h-10 rounded-full bg-primary/10 text-primary text-sm font-bold flex items-center justify-center flex-shrink-0">
+                  {t.avatar}
                 </div>
-                <p className="text-sm text-muted-foreground">{t.desc}</p>
-                <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                  <span>{t.discussions} discussions</span>
-                  <span>{t.members} members</span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1 flex-wrap">
+                    <h3 className="text-sm font-semibold text-foreground">{t.title}</h3>
+                    <span className="text-sm">{t.flag}</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground line-clamp-2 mb-2">{t.preview}</p>
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${CATEGORY_COLORS[t.category]}`}>{t.category}</span>
+                    <span className="text-[10px] text-muted-foreground">{t.username}</span>
+                    <span className="text-[10px] text-muted-foreground">💬 {t.replies} replies</span>
+                    <span className="text-[10px] text-muted-foreground">{t.timeAgo}</span>
+                    <span className="text-[10px] bg-muted px-1.5 py-0.5 rounded text-muted-foreground">{t.language}</span>
+                  </div>
                 </div>
-                <Button size="sm" variant="outline" className="w-full" onClick={() => toast.success(`Joined "${t.title}"!`)}>Join Topic</Button>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           ))}
-        </div>
-      </section>
 
-      {/* Top Contributors */}
-      <section>
-        <h2 className="text-2xl font-bold mb-6">Top Contributors This Month</h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
-          {CONTRIBUTORS.map((c, i) => (
-            <Card key={c.name}>
-              <CardContent className="pt-6 text-center space-y-2">
-                <div className={`w-12 h-12 rounded-full ${c.color} mx-auto flex items-center justify-center text-white font-bold`}>{c.initials}</div>
-                <p className="font-semibold text-sm">{c.name} {c.flag}</p>
-                <p className="text-xs text-muted-foreground">{c.contributions} contributions</p>
-                <Badge variant="outline" className="text-[10px]">{c.badge}</Badge>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
+          {paged.length === 0 && (
+            <p className="text-center text-muted-foreground py-12">No discussions found.</p>
+          )}
 
-      {/* Upcoming Events */}
-      <section>
-        <h2 className="text-2xl font-bold mb-6">Upcoming Events</h2>
-        <div className="grid sm:grid-cols-3 gap-4">
-          {EVENTS.map(e => (
-            <Card key={e.title} className="hover:border-primary/30 transition-colors">
-              <CardContent className="pt-6 space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-muted-foreground">{e.date}</span>
-                  <Badge className={`text-[10px] border ${EVENT_COLORS[e.type]}`}>{e.type}</Badge>
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-2 pt-6">
+              <button
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={page === 1}
+                className="p-2 rounded-lg border border-border text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </button>
+              <span className="text-sm text-muted-foreground">Page {page} of {totalPages}</span>
+              <button
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                disabled={page === totalPages}
+                className="p-2 rounded-lg border border-border text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Leaderboard sidebar */}
+        <aside className="hidden lg:block w-64 flex-shrink-0">
+          <div className="sticky top-20 bg-card border border-border rounded-xl p-4">
+            <h3 className="text-sm font-semibold text-foreground flex items-center gap-2 mb-4">
+              <Trophy className="h-4 w-4 text-primary" /> Top Contributors
+            </h3>
+            <div className="space-y-3">
+              {LEADERBOARD.map((u, i) => (
+                <div key={i} className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-full bg-primary/10 text-primary text-xs font-bold flex items-center justify-center">{u.avatar}</div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-medium text-foreground truncate">{u.name}</p>
+                    <p className="text-[10px] text-muted-foreground">{u.points.toLocaleString()} pts</p>
+                  </div>
+                  <span className="text-sm">{u.badge}</span>
                 </div>
-                <h3 className="font-bold text-sm">{e.title}</h3>
-                <p className="text-sm text-muted-foreground">{e.desc}</p>
-                <Button size="sm" className="w-full" onClick={() => toast.success('Registered!')}>Register</Button>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* Community Guidelines */}
-      <section>
-        <h2 className="text-2xl font-bold mb-6">Community Guidelines</h2>
-        <Accordion type="single" collapsible className="w-full">
-          <AccordionItem value="1"><AccordionTrigger>Be respectful and inclusive</AccordionTrigger><AccordionContent className="text-muted-foreground">Treat all members with respect regardless of language, nationality, or experience level. Our community spans 50+ countries.</AccordionContent></AccordionItem>
-          <AccordionItem value="2"><AccordionTrigger>Share knowledge generously</AccordionTrigger><AccordionContent className="text-muted-foreground">Post your prompt discoveries, tips, and techniques. The community grows stronger when we share openly.</AccordionContent></AccordionItem>
-          <AccordionItem value="3"><AccordionTrigger>Keep discussions on topic</AccordionTrigger><AccordionContent className="text-muted-foreground">Stay focused on AI prompting, language optimization, and related topics. Off-topic posts may be moved or removed.</AccordionContent></AccordionItem>
-          <AccordionItem value="4"><AccordionTrigger>No spam or self-promotion</AccordionTrigger><AccordionContent className="text-muted-foreground">Avoid excessive promotion of products or services. Share genuinely useful resources instead.</AccordionContent></AccordionItem>
-        </Accordion>
-      </section>
-
-      <div className="text-center">
-        <Button size="lg" onClick={() => toast.info('Discussion forum coming soon!')}>
-          <Send className="h-4 w-4 mr-2" /> Start a Discussion
-        </Button>
+              ))}
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
-  </>
-);
+  );
+};
 
 export default Community;
