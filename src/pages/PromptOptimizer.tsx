@@ -30,6 +30,10 @@ const AI_PLATFORMS = [
   { id: "perplexity", label: "Perplexity", color: "bg-violet-500", tip: "Research-focused. Ask specific questions, request sources, and use it for fact-checking and exploration." },
   { id: "midjourney", label: "MidJourney", color: "bg-pink-500", tip: "Image generation. Use descriptive adjectives, specify style/medium/lighting, and include aspect ratio parameters." },
   { id: "stable-diffusion", label: "Stable Diffusion", color: "bg-amber-500", tip: "Use comma-separated tags, weight important terms with (parentheses), specify negative prompts, and include model-specific tokens." },
+  { id: "qwen", label: "Qwen", color: "bg-indigo-500", tip: "Alibaba's multilingual model. Excels at Chinese and Southeast Asian languages. Great for e-commerce, cross-border trade, and Asian market content." },
+  { id: "meta-ai", label: "Meta AI", color: "bg-sky-500", tip: "Built on Llama open-source models. Strong at conversational tasks, multilingual content, and social media-oriented prompts." },
+  { id: "ernie", label: "Ernie Bot", color: "bg-red-500", tip: "Baidu's AI model dominant in China. Best for Chinese-language content, Baidu SEO, and mainland China market context." },
+  { id: "grok", label: "Grok", color: "bg-slate-500", tip: "xAI's model with real-time knowledge. Direct, witty style. Good for current events, analysis, and unfiltered responses." },
 ];
 
 export const OPTIMIZER_LANGUAGES = [

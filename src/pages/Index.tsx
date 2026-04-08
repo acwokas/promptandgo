@@ -63,6 +63,48 @@ const MULTILINGUAL_EXAMPLES = [
     code: "th",
     example: "เขียนข้อความการตลาดสำหรับผลิตภัณฑ์ของฉัน"
   },
+  {
+    lang: "Japanese",
+    flag: "🇯🇵",
+    code: "ja",
+    example: "製品のマーケティングメールを書いてください"
+  },
+  {
+    lang: "Korean",
+    flag: "🇰🇷",
+    code: "ko",
+    example: "제품 마케팅 이메일을 작성해주세요"
+  },
+  {
+    lang: "Hindi",
+    flag: "🇮🇳",
+    code: "hi",
+    example: "मेरे उत्पाद के लिए मार्केटिंग ईमेल लिखें"
+  },
+  {
+    lang: "Tamil",
+    flag: "🇱🇰",
+    code: "ta",
+    example: "எனது தயாரிப்புக்கான சந்தைப்படுத்தல் மின்னஞ்சலை எழுதுங்கள்"
+  },
+  {
+    lang: "Tagalog",
+    flag: "🇵🇭",
+    code: "tl",
+    example: "Sumulat ng marketing email para sa aking produkto"
+  },
+  {
+    lang: "Bengali",
+    flag: "🇧🇩",
+    code: "bn",
+    example: "আমার পণ্যের জন্য একটি মার্কেটিং ইমেইল লিখুন"
+  },
+  {
+    lang: "Khmer",
+    flag: "🇰🇭",
+    code: "km",
+    example: "សរសេរអ៊ីមែលទីផ្សារសម្រាប់ផលិតផលរបស់ខ្ញុំ"
+  },
 ];
 
 
@@ -226,6 +268,10 @@ const Index = () => {
                 { name: "Perplexity", color: "text-violet-300" },
                 { name: "MidJourney", color: "text-pink-300" },
                 { name: "DeepSeek", color: "text-teal-300" },
+                { name: "Qwen", color: "text-indigo-300" },
+                { name: "Meta AI", color: "text-sky-300" },
+                { name: "Ernie Bot", color: "text-red-300" },
+                { name: "Grok", color: "text-slate-300" },
                 { name: "Local Models", color: "text-white/60" },
               ].map((p) => (
                 <span key={p.name} className={`text-xs font-bold ${p.color} bg-white/5 border border-white/10 px-3 py-1.5 rounded-full`}>
@@ -318,10 +364,10 @@ const Index = () => {
                 </div>
                 <h3 className="text-xl font-bold mb-3">Optimize for Any Platform</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed mb-5">
-                  Paste any prompt and get it rewritten specifically for ChatGPT, Claude, Gemini, Copilot, Perplexity, MidJourney, DeepSeek, or local models. Each platform has different strengths — Scout knows them all.
+                  Paste any prompt and get it rewritten specifically for ChatGPT, Claude, Gemini, Copilot, Perplexity, MidJourney, DeepSeek, Qwen, Meta AI, Ernie Bot, Grok, or local models. Each platform has different strengths — Scout knows them all.
                 </p>
                 <div className="flex flex-wrap gap-1.5 mb-5">
-                  {["ChatGPT", "Claude", "Gemini", "Copilot", "Perplexity", "MidJourney", "DeepSeek", "+More"].map((p) => (
+                  {["ChatGPT", "Claude", "Gemini", "Copilot", "Perplexity", "MidJourney", "DeepSeek", "Qwen", "Meta AI", "Ernie Bot", "Grok", "+More"].map((p) => (
                     <span key={p} className="text-[10px] font-bold bg-primary/10 text-primary border border-primary/20 px-2 py-0.5 rounded-full">{p}</span>
                   ))}
                 </div>
@@ -538,7 +584,7 @@ const Index = () => {
                 {
                   icon: Bot,
                   title: "12+ AI platforms",
-                  desc: "Scout rewrites prompts specifically for ChatGPT, Claude, Gemini, MidJourney, Perplexity, DeepSeek, and more.",
+                  desc: "Scout rewrites prompts specifically for ChatGPT, Claude, Gemini, MidJourney, Perplexity, DeepSeek, Qwen, Meta AI, Ernie Bot, Grok, and more.",
                 },
                 {
                   icon: Users,

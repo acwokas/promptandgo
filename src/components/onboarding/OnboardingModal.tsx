@@ -20,9 +20,12 @@ const AI_TOOLS = [
   { id: 'claude', name: 'Claude', color: '#E94560' },
   { id: 'gemini', name: 'Gemini', color: '#0F9B8E' },
   { id: 'midjourney', name: 'MidJourney', color: '#1A1A2E' },
-  { id: 'perplexity', name: 'Perplexity', color: '#E94560' },
-  { id: 'deepseek', name: 'DeepSeek', color: '#0F9B8E' },
-  { id: 'other', name: 'Other', color: '#6b7280' },
+  { id: 'perplexity', name: 'Perplexity', color: '#7C3AED' },
+  { id: 'deepseek', name: 'DeepSeek', color: '#0D9488' },
+  { id: 'qwen', name: 'Qwen', color: '#6366F1' },
+  { id: 'meta-ai', name: 'Meta AI', color: '#0EA5E9' },
+  { id: 'ernie', name: 'Ernie Bot', color: '#EF4444' },
+  { id: 'grok', name: 'Grok', color: '#475569' },
 ];
 
 const USE_CASES = [
