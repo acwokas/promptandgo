@@ -100,6 +100,7 @@ import Pricing from "./pages/Pricing";
 import AskScout from "./pages/AskScout";
 import HelpCenterPage from "./pages/HelpCenter";
 import Dashboard from "./pages/Dashboard";
+import LanguageLearning from "./pages/LanguageLearning";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
