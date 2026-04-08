@@ -213,7 +213,7 @@ const Index = () => {
 
       <main>
         {/* ═══════════════════════ HERO ═══════════════════════ */}
-        <section className="relative overflow-hidden bg-hero">
+        <section className="relative overflow-hidden bg-hero-animated">
           {/* Ambient background effects */}
           <div aria-hidden className="pointer-events-none absolute inset-0">
             <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-primary/25 blur-[120px] animate-pulse" style={{ animationDuration: "6s" }} />
