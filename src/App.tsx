@@ -126,6 +126,11 @@ const Accessibility = lazy(() => import("./pages/Accessibility"));
 const Partners = lazy(() => import("./pages/Partners"));
 const UseCasesPage = lazy(() => import("./pages/UseCases"));
 const StatusPage = lazy(() => import("./pages/StatusPage"));
+const JapaneseLanding = lazy(() => import("./pages/JapaneseLanding"));
+const KoreanLanding = lazy(() => import("./pages/KoreanLanding"));
+const ChineseLanding = lazy(() => import("./pages/ChineseLanding"));
+const CareersPage = lazy(() => import("./pages/Careers"));
+const CookiePolicyPage = lazy(() => import("./pages/CookiePolicy"));
 
 const queryClient = new QueryClient();
 
@@ -281,6 +286,11 @@ const AppContent = () => {
                 <Route path="/partners" element={<Partners />} />
                 <Route path="/use-cases" element={<UseCasesPage />} />
                 <Route path="/status" element={<StatusPage />} />
+                <Route path="/ja" element={<JapaneseLanding />} />
+                <Route path="/ko" element={<KoreanLanding />} />
+                <Route path="/zh" element={<ChineseLanding />} />
+                <Route path="/careers" element={<CareersPage />} />
+                <Route path="/cookies" element={<CookiePolicyPage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               </Suspense>

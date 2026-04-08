@@ -42,7 +42,7 @@ const COLUMNS = [
       { label: "About", to: "/about" },
       { label: "Contact", to: "/contact" },
       { label: "Status", to: "/status" },
-      { label: "Careers", to: "/contact" },
+      { label: "Careers", to: "/careers" },
     ],
   },
   {
@@ -52,7 +52,7 @@ const COLUMNS = [
       { label: "Privacy Policy", to: "/privacy" },
       { label: "Terms of Service", to: "/terms" },
       { label: "Accessibility", to: "/accessibility" },
-      { label: "Cookie Policy", to: "/privacy" },
+      { label: "Cookie Policy", to: "/cookies" },
     ],
   },
 ];
