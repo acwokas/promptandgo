@@ -296,7 +296,7 @@ const PromptOptimizer = () => {
           <div className="flex flex-wrap justify-center gap-2 mb-6">
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-primary/30 text-primary px-4 py-1.5 rounded-full text-sm font-bold">
               <Zap className="h-3.5 w-3.5" />
-              8+ AI Platforms
+              12 AI Platforms
             </div>
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-amber-400/30 text-amber-300 px-4 py-1.5 rounded-full text-sm font-bold">
               <Globe className="h-3.5 w-3.5" />

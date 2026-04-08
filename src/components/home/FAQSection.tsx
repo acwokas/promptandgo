@@ -6,7 +6,7 @@ const faqs = [
   { q: "What are battle-tested prompts?", a: "Our prompts are proven in real-world scenarios by professionals. No guesswork - just results that actually work." },
   { q: "What is Scout Studio?", a: "Our AI-powered prompt builder that creates custom prompts tailored to your specific needs using guided wizards." },
   { q: "Do I need to sign up?", a: "Nope! Browse and copy prompts for free. Sign up only to save favorites and access power packs." },
-  { q: "How does AI optimization work?", a: "Scout automatically tailors each prompt for ChatGPT, Claude, Gemini, and other AI platforms for best results." },
+  { q: "How does AI optimization work?", a: "Scout automatically tailors each prompt for ChatGPT, Claude, Gemini, Qwen, Meta AI, Ernie Bot, Grok, and other AI platforms for best results." },
   { q: "Works with free AI tools?", a: "Yes! Most prompts work perfectly with free versions of ChatGPT, Claude, and other AI tools." },
   { q: "Can I use them commercially?", a: "Yes! Use prompts and their outputs for any personal or commercial project." },
 ];
