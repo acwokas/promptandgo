@@ -64,7 +64,7 @@ const REGIONS: Region[] = [
 const ALL_LANGUAGES = REGIONS.flatMap((r) => r.languages);
 
 const HERO_STATS = [
-  { value: '20+', label: 'Asian Languages' },
+  { value: '23', label: 'Asian Languages' },
   { value: '4.7B', label: 'People Across Asia' },
   { value: '6', label: 'Regional Zones' },
 ];
