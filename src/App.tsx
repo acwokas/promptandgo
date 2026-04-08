@@ -107,6 +107,8 @@ import ApiDocs from "./pages/ApiDocs";
 import Community from "./pages/Community";
 import Changelog from "./pages/Changelog";
 import Integrations from "./pages/Integrations";
+import SearchPage from "./pages/Search";
+import OnboardingModal from "@/components/onboarding/OnboardingModal";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import BackToTop from "@/components/BackToTop";
@@ -235,6 +237,7 @@ const AppContent = () => {
                 <Route path="/community" element={<Community />} />
                 <Route path="/changelog" element={<Changelog />} />
                 <Route path="/integrations" element={<Integrations />} />
+                <Route path="/search" element={<SearchPage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               </AnalyticsProvider>
@@ -255,6 +258,7 @@ const AppContent = () => {
         <PWAInstallPrompt />
         <BackToTop />
         <CookieConsent />
+        <OnboardingModal />
       </LoginWidgetProvider>
     </SidebarProvider>
   );
