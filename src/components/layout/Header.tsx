@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { User, ShoppingCart, Sparkles, Search, Bookmark } from "lucide-react";
+import { User, ShoppingCart, Sparkles, Search, Bookmark, Sun, Moon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
 import { supabase } from "@/integrations/supabase/client";
@@ -12,6 +12,7 @@ import { getCartCount, clearCartOnLogout } from "@/lib/cart";
 import { SeoOptimizedImage } from "@/components/seo/SeoOptimizedImage";
 import { XPDisplay } from "../xp/XPDisplay";
 import { useIsCertified } from "@/hooks/useIsCertified";
+import { useTheme } from "@/hooks/useTheme";
 
 // Component to safely render SidebarTrigger only when context is available
 const SafeSidebarTrigger = () => {
@@ -29,6 +30,7 @@ const Header = () => {
   const { toast } = useToast();
   useEnsureProfile();
   const { isCertified } = useIsCertified();
+  const { theme, toggleTheme } = useTheme();
 
   const [cartCount, setCartCount] = useState<number>(getCartCount(!!user));
   
