@@ -189,6 +189,14 @@ const Index = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Hero multilingual phrase cycling
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setHeroPhraseIndex((prev) => (prev + 1) % HERO_PHRASES.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   const homeStructuredData = [
     {
       "@context": "https://schema.org",
