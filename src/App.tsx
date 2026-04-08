@@ -113,6 +113,7 @@ import BlogArticle from "@/components/blog/BlogArticle";
 import OnboardingModal from "@/components/onboarding/OnboardingModal";
 import SettingsPage from "./pages/Settings";
 import ReferralPage from "./pages/Referral";
+import Testimonials from "./pages/Testimonials";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import BackToTop from "@/components/BackToTop";
@@ -247,6 +248,7 @@ const AppContent = () => {
                 <Route path="/blog/:slug" element={<BlogArticle />} />
                 <Route path="/settings" element={<SettingsPage />} />
                 <Route path="/referral" element={<ReferralPage />} />
+                <Route path="/testimonials" element={<Testimonials />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               </AnalyticsProvider>
