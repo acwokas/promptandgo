@@ -91,11 +91,12 @@ const Header = () => {
             Browse Prompts
           </Link>
           <Link 
-            to="/scout" 
+            to="/ask-scout" 
             className="text-sm font-medium text-foreground hover:text-primary transition-colors flex items-center gap-1"
           >
             <Sparkles className="h-3 w-3" />
             Ask Scout
+            <span className="text-[10px] font-bold bg-accent/20 text-accent px-1.5 py-0.5 rounded-full leading-none">New</span>
           </Link>
           <Link 
             to="/packs" 
