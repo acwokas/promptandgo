@@ -8,7 +8,8 @@ import {
   Search, Copy, Check, ChevronRight, Star,
   BookOpen, Wand2, ShoppingBag, Award,
   MessageSquare, TrendingUp, Users, Flame,
-  Zap as ZapIcon, Volume2, Activity
+  Zap as ZapIcon, Volume2, Activity,
+  PenTool, Rocket
 } from "lucide-react";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useNewsletterStatus } from "@/hooks/useNewsletterStatus";
@@ -362,6 +363,46 @@ const Index = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* ═══════════════════════ SOCIAL PROOF MARQUEE ═══════════════════════ */}
+        <section className="py-12 border-b border-border/30 overflow-hidden">
+          <p className="text-center text-sm text-muted-foreground mb-6 font-medium">Trusted by teams across Asia</p>
+          <div className="relative">
+            <div className="flex animate-[marquee_25s_linear_infinite] gap-12 whitespace-nowrap">
+              {[...Array(2)].flatMap((_, rep) =>
+                ["TechCorp Tokyo", "Samsung AI Lab", "Alibaba Cloud", "Grab Engineering", "Tata Digital", "Sea Group"].map((name, i) => (
+                  <span key={`${rep}-${i}`} className="text-lg font-bold text-muted-foreground/40 tracking-wide shrink-0 px-4">{name}</span>
+                ))
+              )}
+            </div>
+          </div>
+          <style>{`@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}`}</style>
+        </section>
+
+        {/* ═══════════════════════ HOW IT WORKS ═══════════════════════ */}
+        <section className="container max-w-5xl mx-auto px-4 py-20">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-3">How It Works</h2>
+            <p className="text-muted-foreground">Three steps to culturally-aware AI prompts</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { step: 1, icon: Globe, title: "Choose Your Language", subtitle: "言語を選択 · 언어 선택 · 选择语言", desc: "12 Asian languages supported with native script and cultural context awareness." },
+              { step: 2, icon: PenTool, title: "Craft Your Prompt", subtitle: "プロンプト作成 · 프롬프트 작성 · 创建提示", desc: "AI-powered culturally-aware suggestions with keigo, honorifics, and regional nuance." },
+              { step: 3, icon: Rocket, title: "Export Anywhere", subtitle: "エクスポート · 내보내기 · 导出", desc: "One click to ChatGPT, Claude, Gemini, or any of 12+ supported AI platforms." },
+            ].map((s) => (
+              <div key={s.step} className="relative rounded-2xl border border-border bg-card p-8 text-center hover:border-primary/50 transition-colors group">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold">{s.step}</div>
+                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-5 mt-2 group-hover:scale-110 transition-transform">
+                  <s.icon className="h-7 w-7 text-primary" />
+                </div>
+                <h3 className="text-lg font-bold mb-1">{s.title}</h3>
+                <p className="text-xs text-muted-foreground mb-3">{s.subtitle}</p>
+                <p className="text-sm text-muted-foreground">{s.desc}</p>
+              </div>
+            ))}
           </div>
         </section>
 
