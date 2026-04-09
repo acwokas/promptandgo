@@ -387,13 +387,13 @@ const Index = () => {
             <h2 className="text-3xl md:text-4xl font-bold mb-3">How It Works</h2>
             <p className="text-muted-foreground">Three steps to culturally-aware AI prompts</p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-8 pt-5">
             {[
               { step: 1, icon: Globe, title: "Choose Your Language", subtitle: "言語を選択 · 언어 선택 · 选择语言", desc: "12 Asian languages supported with native script and cultural context awareness." },
               { step: 2, icon: PenTool, title: "Craft Your Prompt", subtitle: "プロンプト作成 · 프롬프트 작성 · 创建提示", desc: "AI-powered culturally-aware suggestions with keigo, honorifics, and regional nuance." },
               { step: 3, icon: Rocket, title: "Export Anywhere", subtitle: "エクスポート · 내보내기 · 导出", desc: "One click to ChatGPT, Claude, Gemini, or any of 12+ supported AI platforms." },
             ].map((s) => (
-              <div key={s.step} className="relative rounded-2xl border border-border bg-card p-8 text-center hover:border-primary/50 transition-colors group">
+              <div key={s.step} className="relative overflow-visible rounded-2xl border border-border bg-card p-8 text-center hover:border-primary/50 transition-colors group">
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold">{s.step}</div>
                 <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-5 mt-2 group-hover:scale-110 transition-transform">
                   <s.icon className="h-7 w-7 text-primary" />
