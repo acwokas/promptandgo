@@ -4,6 +4,8 @@
 DROP POLICY IF EXISTS "Users can view own subscription data only" ON public.subscribers;
 
 -- Add a stricter policy that only allows user_id-based lookups (no email lookups)
+DROP POLICY IF EXISTS "Users can view own subscription by user_id only" ON public.subscribers;
+DROP POLICY IF EXISTS "Users can view own subscription by user_id only" ON public.subscribers;
 CREATE POLICY "Users can view own subscription by user_id only" 
 ON public.subscribers 
 FOR SELECT 

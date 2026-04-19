@@ -8,8 +8,10 @@ WHERE email != '[encrypted]' AND email IS NOT NULL;
 
 -- 2. Add a constraint to prevent plain text emails from being stored in future
 -- This ensures all emails must use the '[encrypted]' placeholder
-ALTER TABLE public.subscribers 
-ADD CONSTRAINT check_email_encrypted 
+ALTER TABLE public.subscribers DROP CONSTRAINT IF EXISTS check_email_encrypted;
+ALTER TABLE public.subscribers DROP CONSTRAINT IF EXISTS check_email_encrypted;
+ALTER TABLE public.subscribers
+ADD CONSTRAINT check_email_encrypted
 CHECK (email = '[encrypted]' OR email IS NULL);
 
 -- 3. Create a secure view for admin access that doesn't expose raw encrypted data

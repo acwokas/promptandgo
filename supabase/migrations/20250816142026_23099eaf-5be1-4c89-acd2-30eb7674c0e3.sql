@@ -1,5 +1,17 @@
 -- Fix critical RLS security issues
 
+-- Create ai_usage table if not exists (may have been created outside of migrations on old project)
+CREATE TABLE IF NOT EXISTS public.ai_usage (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id uuid NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  usage_type text NOT NULL,
+  queries_used integer NOT NULL DEFAULT 0,
+  reset_date date NOT NULL DEFAULT CURRENT_DATE,
+  updated_at timestamptz NOT NULL DEFAULT now(),
+  UNIQUE (user_id, usage_type, reset_date)
+);
+ALTER TABLE public.ai_usage ENABLE ROW LEVEL SECURITY;
+
 -- 1. Fix subscribers table - remove user insert/update policies that allow privilege escalation
 DROP POLICY IF EXISTS "subscribers_insert_own_record" ON public.subscribers;
 DROP POLICY IF EXISTS "subscribers_update_own_record" ON public.subscribers;
@@ -18,6 +30,7 @@ DROP POLICY IF EXISTS "Users can update their own usage" ON public.ai_usage;
 DROP POLICY IF EXISTS "Users can create shared links" ON public.shared_links;
 
 -- Create new policy that requires authentication
+DROP POLICY IF EXISTS "Authenticated users can create shared links" ON public.shared_links;
 CREATE POLICY "Authenticated users can create shared links" ON public.shared_links
 FOR INSERT 
 WITH CHECK (auth.uid() IS NOT NULL AND shared_by = auth.uid());
@@ -33,6 +46,7 @@ DROP POLICY IF EXISTS "Users can update their own avatar" ON storage.objects;
 DROP POLICY IF EXISTS "Users can delete their own avatar" ON storage.objects;
 
 -- Create secure storage policies
+DROP POLICY IF EXISTS "Users can upload their own avatar" ON storage.objects;
 CREATE POLICY "Users can upload their own avatar" ON storage.objects
 FOR INSERT 
 WITH CHECK (
@@ -41,6 +55,7 @@ WITH CHECK (
   AND auth.uid()::text = (storage.foldername(name))[1]
 );
 
+DROP POLICY IF EXISTS "Users can update their own avatar" ON storage.objects;
 CREATE POLICY "Users can update their own avatar" ON storage.objects
 FOR UPDATE 
 USING (
@@ -49,6 +64,7 @@ USING (
   AND auth.uid()::text = (storage.foldername(name))[1]
 );
 
+DROP POLICY IF EXISTS "Users can delete their own avatar" ON storage.objects;
 CREATE POLICY "Users can delete their own avatar" ON storage.objects
 FOR DELETE 
 USING (

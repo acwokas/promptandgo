@@ -38,12 +38,16 @@ BEGIN
   END IF;
 END$$;
 
+DROP POLICY IF EXISTS "Authenticated can view shared links" ON public.shared_links;
+DROP POLICY IF EXISTS "Authenticated can view shared links" ON public.shared_links;
 CREATE POLICY "Authenticated can view shared links"
   ON public.shared_links
   FOR SELECT
   TO authenticated
   USING (true);
 
+DROP POLICY IF EXISTS "Service role can view shared links" ON public.shared_links;
+DROP POLICY IF EXISTS "Service role can view shared links" ON public.shared_links;
 CREATE POLICY "Service role can view shared links"
   ON public.shared_links
   FOR SELECT

@@ -1,7 +1,7 @@
 -- Add manual vote count fields to poll_options table
 ALTER TABLE public.poll_options 
-ADD COLUMN manual_vote_count integer DEFAULT NULL,
-ADD COLUMN use_manual_vote_count boolean DEFAULT false;
+ADD COLUMN IF NOT EXISTS manual_vote_count integer DEFAULT NULL,
+ADD COLUMN IF NOT EXISTS use_manual_vote_count boolean DEFAULT false;
 
 -- Update the get_poll_results_with_manual function to handle manual vote counts
 CREATE OR REPLACE FUNCTION public.get_poll_results_with_manual(poll_id_param uuid)

@@ -24,27 +24,36 @@ CREATE TABLE IF NOT EXISTS public.user_generated_prompts (
 ALTER TABLE public.user_generated_prompts ENABLE ROW LEVEL SECURITY;
 
 -- Create policies for user access
+DROP POLICY IF EXISTS "Users can view their own generated prompts" ON public.user_generated_prompts;
+DROP POLICY IF EXISTS "Users can view their own generated prompts" ON public.user_generated_prompts;
 CREATE POLICY "Users can view their own generated prompts" 
 ON public.user_generated_prompts 
 FOR SELECT 
 USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can create their own generated prompts" ON public.user_generated_prompts;
+DROP POLICY IF EXISTS "Users can create their own generated prompts" ON public.user_generated_prompts;
 CREATE POLICY "Users can create their own generated prompts" 
 ON public.user_generated_prompts 
 FOR INSERT 
 WITH CHECK (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can update their own generated prompts" ON public.user_generated_prompts;
+DROP POLICY IF EXISTS "Users can update their own generated prompts" ON public.user_generated_prompts;
 CREATE POLICY "Users can update their own generated prompts" 
 ON public.user_generated_prompts 
 FOR UPDATE 
 USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can delete their own generated prompts" ON public.user_generated_prompts;
+DROP POLICY IF EXISTS "Users can delete their own generated prompts" ON public.user_generated_prompts;
 CREATE POLICY "Users can delete their own generated prompts" 
 ON public.user_generated_prompts 
 FOR DELETE 
 USING (auth.uid() = user_id);
 
 -- Create trigger for automatic timestamp updates
+DROP TRIGGER IF EXISTS update_user_generated_prompts_updated_at ON public.user_generated_prompts;
 CREATE TRIGGER update_user_generated_prompts_updated_at
 BEFORE UPDATE ON public.user_generated_prompts
 FOR EACH ROW

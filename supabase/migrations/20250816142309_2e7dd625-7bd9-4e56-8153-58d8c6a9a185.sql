@@ -8,6 +8,7 @@ WHERE email != '[encrypted]' AND email IS NOT NULL;
 
 -- 2. Add a constraint to prevent plain text emails from being stored in future
 -- This ensures all emails must use the '[encrypted]' placeholder
+ALTER TABLE public.subscribers DROP CONSTRAINT IF EXISTS check_email_encrypted;
 ALTER TABLE public.subscribers 
 ADD CONSTRAINT check_email_encrypted 
 CHECK (email = '[encrypted]' OR email IS NULL);
@@ -32,9 +33,7 @@ SELECT
   END as stripe_status
 FROM public.subscribers;
 
--- 4. Create RLS policy for the admin view
-CREATE POLICY "Admins can view subscriber overview" ON public.subscribers_admin_view
-FOR SELECT USING (has_role(auth.uid(), 'admin'::app_role));
+-- 4. RLS policies on views are not supported in PostgreSQL; the underlying tables' RLS applies.
 
 -- 5. Create a function to safely decrypt email for authorized operations
 CREATE OR REPLACE FUNCTION public.get_decrypted_subscriber_email(p_user_id uuid, p_key text)

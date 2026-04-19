@@ -1,9 +1,11 @@
 -- Fix 1: Add encryption enforcement triggers on subscribers table
+DROP TRIGGER IF EXISTS enforce_subscriber_encryption_insert ON public.newsletter_rate_limits;
 CREATE TRIGGER enforce_subscriber_encryption_insert
   BEFORE INSERT ON public.subscribers
   FOR EACH ROW
   EXECUTE FUNCTION enforce_subscriber_encryption();
 
+DROP TRIGGER IF EXISTS enforce_subscriber_encryption_update ON public.subscribers;
 CREATE TRIGGER enforce_subscriber_encryption_update
   BEFORE UPDATE ON public.subscribers
   FOR EACH ROW
@@ -12,6 +14,8 @@ CREATE TRIGGER enforce_subscriber_encryption_update
 -- Fix 2: Lock down newsletter_rate_limits RLS to service-role only
 DROP POLICY IF EXISTS "rate_limits_service_role_only" ON public.newsletter_rate_limits;
 
+DROP POLICY IF EXISTS "newsletter_rate_limits_service_role_only" ON public.newsletter_rate_limits;
+DROP POLICY IF EXISTS "newsletter_rate_limits_service_role_only" ON public.newsletter_rate_limits;
 CREATE POLICY "newsletter_rate_limits_service_role_only"
   ON public.newsletter_rate_limits
   FOR ALL

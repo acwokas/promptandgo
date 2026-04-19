@@ -1,7 +1,7 @@
 -- Create XP system tables for gamification
 
 -- Table to track user's total XP
-CREATE TABLE public.user_xp (
+CREATE TABLE IF NOT EXISTS public.user_xp (
   id uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   user_id uuid NOT NULL UNIQUE,
   total_xp integer NOT NULL DEFAULT 0,
@@ -12,7 +12,7 @@ CREATE TABLE public.user_xp (
 );
 
 -- Table to define XP-earning activities
-CREATE TABLE public.xp_activities (
+CREATE TABLE IF NOT EXISTS public.xp_activities (
   id uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   activity_key text NOT NULL UNIQUE,
   activity_name text NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE public.xp_activities (
 );
 
 -- Table to log XP transactions
-CREATE TABLE public.xp_transactions (
+CREATE TABLE IF NOT EXISTS public.xp_transactions (
   id uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   user_id uuid NOT NULL,
   activity_key text,
@@ -38,7 +38,7 @@ CREATE TABLE public.xp_transactions (
 );
 
 -- Table to define rewards that can be redeemed
-CREATE TABLE public.xp_rewards (
+CREATE TABLE IF NOT EXISTS public.xp_rewards (
   id uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   reward_key text NOT NULL UNIQUE,
   reward_name text NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE public.xp_rewards (
 );
 
 -- Table to track reward redemptions
-CREATE TABLE public.xp_reward_redemptions (
+CREATE TABLE IF NOT EXISTS public.xp_reward_redemptions (
   id uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   user_id uuid NOT NULL,
   reward_id uuid NOT NULL,
@@ -70,46 +70,66 @@ ALTER TABLE public.xp_rewards ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.xp_reward_redemptions ENABLE ROW LEVEL SECURITY;
 
 -- RLS Policies for user_xp
+DROP POLICY IF EXISTS "Users can view their own XP" ON public.user_xp;
+DROP POLICY IF EXISTS "Users can view their own XP" ON public.user_xp;
 CREATE POLICY "Users can view their own XP"
   ON public.user_xp FOR SELECT
   USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can insert their own XP record" ON public.user_xp;
+DROP POLICY IF EXISTS "Users can insert their own XP record" ON public.user_xp;
 CREATE POLICY "Users can insert their own XP record"
   ON public.user_xp FOR INSERT
   WITH CHECK (auth.uid() = user_id);
 
 -- RLS Policies for xp_activities
+DROP POLICY IF EXISTS "Anyone can view active activities" ON public.xp_activities;
+DROP POLICY IF EXISTS "Anyone can view active activities" ON public.xp_activities;
 CREATE POLICY "Anyone can view active activities"
   ON public.xp_activities FOR SELECT
   USING (is_active = true);
 
+DROP POLICY IF EXISTS "Admins can manage activities" ON public.xp_activities;
+DROP POLICY IF EXISTS "Admins can manage activities" ON public.xp_activities;
 CREATE POLICY "Admins can manage activities"
   ON public.xp_activities FOR ALL
   USING (has_role(auth.uid(), 'admin'::app_role));
 
 -- RLS Policies for xp_transactions
+DROP POLICY IF EXISTS "Users can view their own transactions" ON public.xp_transactions;
+DROP POLICY IF EXISTS "Users can view their own transactions" ON public.xp_transactions;
 CREATE POLICY "Users can view their own transactions"
   ON public.xp_transactions FOR SELECT
   USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Service role can insert transactions" ON public.xp_transactions;
+DROP POLICY IF EXISTS "Service role can insert transactions" ON public.xp_transactions;
 CREATE POLICY "Service role can insert transactions"
   ON public.xp_transactions FOR INSERT
   WITH CHECK (auth.role() = 'service_role');
 
 -- RLS Policies for xp_rewards
+DROP POLICY IF EXISTS "Anyone can view active rewards" ON public.xp_rewards;
+DROP POLICY IF EXISTS "Anyone can view active rewards" ON public.xp_rewards;
 CREATE POLICY "Anyone can view active rewards"
   ON public.xp_rewards FOR SELECT
   USING (is_active = true);
 
+DROP POLICY IF EXISTS "Admins can manage rewards" ON public.xp_rewards;
+DROP POLICY IF EXISTS "Admins can manage rewards" ON public.xp_rewards;
 CREATE POLICY "Admins can manage rewards"
   ON public.xp_rewards FOR ALL
   USING (has_role(auth.uid(), 'admin'::app_role));
 
 -- RLS Policies for xp_reward_redemptions
+DROP POLICY IF EXISTS "Users can view their own redemptions" ON public.xp_reward_redemptions;
+DROP POLICY IF EXISTS "Users can view their own redemptions" ON public.xp_reward_redemptions;
 CREATE POLICY "Users can view their own redemptions"
   ON public.xp_reward_redemptions FOR SELECT
   USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Service role can manage redemptions" ON public.xp_reward_redemptions;
+DROP POLICY IF EXISTS "Service role can manage redemptions" ON public.xp_reward_redemptions;
 CREATE POLICY "Service role can manage redemptions"
   ON public.xp_reward_redemptions FOR ALL
   USING (auth.role() = 'service_role');
@@ -298,6 +318,7 @@ INSERT INTO public.xp_rewards (reward_key, reward_name, reward_description, xp_c
 ('free_pack', 'Free Pack', 'Get one pack completely free', 1000, 'pack_discount', '{"discount_percent": 100}'::jsonb, 'Gift');
 
 -- Trigger to update updated_at
+DROP TRIGGER IF EXISTS update_user_xp_updated_at ON public.user_xp;
 CREATE TRIGGER update_user_xp_updated_at
   BEFORE UPDATE ON public.user_xp
   FOR EACH ROW

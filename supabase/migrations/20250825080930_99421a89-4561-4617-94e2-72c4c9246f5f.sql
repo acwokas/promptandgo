@@ -28,10 +28,7 @@ SELECT
 FROM public.subscribers s;
 
 -- Ensure the view has proper RLS policy
-CREATE POLICY "Admin users can view subscriber admin data" 
-ON public.subscribers_admin_view 
-FOR SELECT 
-USING (public.has_role(auth.uid(), 'admin'::app_role));
+-- RLS policy on view subscribers_admin_view removed (views do not support RLS)
 
 -- Enable RLS on the view
-ALTER VIEW public.subscribers_admin_view ENABLE ROW LEVEL SECURITY;
+-- ENABLE ROW LEVEL SECURITY on view subscribers_admin_view removed (not supported)

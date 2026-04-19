@@ -1,5 +1,5 @@
 -- Create articles table for the CMS
-CREATE TABLE public.articles (
+CREATE TABLE IF NOT EXISTS public.articles (
   id uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   title text NOT NULL,
   slug text NOT NULL UNIQUE,
@@ -18,7 +18,7 @@ CREATE TABLE public.articles (
 );
 
 -- Create article_assets table for managing images and other assets
-CREATE TABLE public.article_assets (
+CREATE TABLE IF NOT EXISTS public.article_assets (
   id uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   article_id uuid NOT NULL REFERENCES public.articles(id) ON DELETE CASCADE,
   asset_type text NOT NULL, -- 'image', 'video', 'youtube', 'link'
@@ -34,11 +34,15 @@ ALTER TABLE public.articles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.article_assets ENABLE ROW LEVEL SECURITY;
 
 -- Create policies for articles
+DROP POLICY IF EXISTS "Public can view published articles" ON public.articles;
+DROP POLICY IF EXISTS "Public can view published articles" ON public.articles;
 CREATE POLICY "Public can view published articles"
 ON public.articles
 FOR SELECT
 USING (is_published = true);
 
+DROP POLICY IF EXISTS "Admins can manage all articles" ON public.articles;
+DROP POLICY IF EXISTS "Admins can manage all articles" ON public.articles;
 CREATE POLICY "Admins can manage all articles"
 ON public.articles
 FOR ALL
@@ -46,6 +50,8 @@ USING (has_role(auth.uid(), 'admin'::app_role))
 WITH CHECK (has_role(auth.uid(), 'admin'::app_role));
 
 -- Create policies for article_assets
+DROP POLICY IF EXISTS "Public can view assets of published articles" ON public.article_assets;
+DROP POLICY IF EXISTS "Public can view assets of published articles" ON public.article_assets;
 CREATE POLICY "Public can view assets of published articles"
 ON public.article_assets
 FOR SELECT
@@ -55,6 +61,8 @@ USING (EXISTS (
   AND articles.is_published = true
 ));
 
+DROP POLICY IF EXISTS "Admins can manage all article assets" ON public.article_assets;
+DROP POLICY IF EXISTS "Admins can manage all article assets" ON public.article_assets;
 CREATE POLICY "Admins can manage all article assets"
 ON public.article_assets
 FOR ALL
@@ -62,6 +70,7 @@ USING (has_role(auth.uid(), 'admin'::app_role))
 WITH CHECK (has_role(auth.uid(), 'admin'::app_role));
 
 -- Create trigger for updated_at
+DROP TRIGGER IF EXISTS update_articles_updated_at ON public.articles;
 CREATE TRIGGER update_articles_updated_at
 BEFORE UPDATE ON public.articles
 FOR EACH ROW

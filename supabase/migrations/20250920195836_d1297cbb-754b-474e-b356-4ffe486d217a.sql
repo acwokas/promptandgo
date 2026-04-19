@@ -17,6 +17,8 @@ ON CONFLICT DO NOTHING;
 ALTER TABLE public.countdown_settings ENABLE ROW LEVEL SECURITY;
 
 -- Create policies (admin only access)
+DROP POLICY IF EXISTS "Only admins can view countdown settings" ON public.countdown_settings;
+DROP POLICY IF EXISTS "Only admins can view countdown settings" ON public.countdown_settings;
 CREATE POLICY "Only admins can view countdown settings" 
 ON public.countdown_settings 
 FOR SELECT 
@@ -28,6 +30,8 @@ USING (
   )
 );
 
+DROP POLICY IF EXISTS "Only admins can update countdown settings" ON public.countdown_settings;
+DROP POLICY IF EXISTS "Only admins can update countdown settings" ON public.countdown_settings;
 CREATE POLICY "Only admins can update countdown settings" 
 ON public.countdown_settings 
 FOR UPDATE 
@@ -48,6 +52,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SET search_path = public;
 
+DROP TRIGGER IF EXISTS update_countdown_settings_updated_at ON public.countdown_settings;
 CREATE TRIGGER update_countdown_settings_updated_at
   BEFORE UPDATE ON public.countdown_settings
   FOR EACH ROW

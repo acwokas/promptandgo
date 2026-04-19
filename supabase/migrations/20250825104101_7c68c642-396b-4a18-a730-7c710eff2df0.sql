@@ -6,12 +6,16 @@ DROP POLICY IF EXISTS "Service role only can update subscriptions" ON public.sub
 DROP POLICY IF EXISTS "Users can view own subscription by user_id only" ON public.subscribers;
 
 -- Add single, clean, secure policies
+DROP POLICY IF EXISTS "Service role can manage subscriptions" ON public.subscribers;
+DROP POLICY IF EXISTS "Service role can manage subscriptions" ON public.subscribers;
 CREATE POLICY "Service role can manage subscriptions" 
 ON public.subscribers 
 FOR ALL 
 USING ((auth.jwt() ->> 'role'::text) = 'service_role'::text)
 WITH CHECK ((auth.jwt() ->> 'role'::text) = 'service_role'::text);
 
+DROP POLICY IF EXISTS "Users can view only their own subscription" ON public.subscribers;
+DROP POLICY IF EXISTS "Users can view only their own subscription" ON public.subscribers;
 CREATE POLICY "Users can view only their own subscription" 
 ON public.subscribers 
 FOR SELECT 

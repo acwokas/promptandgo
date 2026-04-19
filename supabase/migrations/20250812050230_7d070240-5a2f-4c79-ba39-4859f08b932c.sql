@@ -7,6 +7,8 @@ DROP POLICY IF EXISTS "update_own_subscription" ON public.subscribers;
 ALTER TABLE public.subscribers ENABLE ROW LEVEL SECURITY;
 
 -- Insert policy: only authenticated users can insert their own record
+DROP POLICY IF EXISTS "Users can insert their own subscription" ON public.subscribers;
+DROP POLICY IF EXISTS "Users can insert their own subscription" ON public.subscribers;
 CREATE POLICY "Users can insert their own subscription"
 ON public.subscribers
 FOR INSERT
@@ -20,6 +22,8 @@ WITH CHECK (
 );
 
 -- Update policy: only authenticated users can update their own record
+DROP POLICY IF EXISTS "Users can update their own subscription" ON public.subscribers;
+DROP POLICY IF EXISTS "Users can update their own subscription" ON public.subscribers;
 CREATE POLICY "Users can update their own subscription"
 ON public.subscribers
 FOR UPDATE

@@ -11,6 +11,8 @@ DROP POLICY IF EXISTS "Allow select for confirmation flow" ON public.pending_con
 DROP POLICY IF EXISTS "Allow update by own confirmation token" ON public.pending_contacts;
 
 -- Create a more restrictive update policy (admins only, since service role bypasses RLS)
+DROP POLICY IF EXISTS "Allow admin update of contacts" ON public.pending_contacts;
+DROP POLICY IF EXISTS "Allow admin update of contacts" ON public.pending_contacts;
 CREATE POLICY "Allow admin update of contacts" 
 ON public.pending_contacts 
 FOR UPDATE 

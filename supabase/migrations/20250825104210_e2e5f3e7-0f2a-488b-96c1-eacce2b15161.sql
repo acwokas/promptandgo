@@ -6,6 +6,8 @@ DROP POLICY IF EXISTS "Admin users can view all pending contacts" ON public.pend
 DROP POLICY IF EXISTS "Admin users can update pending contacts" ON public.pending_contacts;
 
 -- Add secure contact policies
+DROP POLICY IF EXISTS "Allow validated contact submissions" ON public.pending_contacts;
+DROP POLICY IF EXISTS "Allow validated contact submissions" ON public.pending_contacts;
 CREATE POLICY "Allow validated contact submissions" 
 ON public.pending_contacts 
 FOR INSERT 
@@ -19,11 +21,15 @@ WITH CHECK (
   email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'
 );
 
+DROP POLICY IF EXISTS "Admin only can view contacts" ON public.pending_contacts;
+DROP POLICY IF EXISTS "Admin only can view contacts" ON public.pending_contacts;
 CREATE POLICY "Admin only can view contacts" 
 ON public.pending_contacts 
 FOR SELECT 
 USING (has_role(auth.uid(), 'admin'::app_role));
 
+DROP POLICY IF EXISTS "Admin only can update contacts" ON public.pending_contacts;
+DROP POLICY IF EXISTS "Admin only can update contacts" ON public.pending_contacts;
 CREATE POLICY "Admin only can update contacts" 
 ON public.pending_contacts 
 FOR UPDATE 
@@ -34,6 +40,8 @@ DROP POLICY IF EXISTS "Service role can manage subscriptions" ON public.subscrib
 DROP POLICY IF EXISTS "Users can view only their own subscription" ON public.subscribers;
 
 -- Add single comprehensive policy for subscribers
+DROP POLICY IF EXISTS "Secure subscription access" ON public.subscribers;
+DROP POLICY IF EXISTS "Secure subscription access" ON public.subscribers;
 CREATE POLICY "Secure subscription access" 
 ON public.subscribers 
 FOR ALL 

@@ -3,12 +3,12 @@ DO $$
 BEGIN
     -- Add manual_vote_count column if it doesn't exist
     IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'poll_options' AND column_name = 'manual_vote_count') THEN
-        ALTER TABLE public.poll_options ADD COLUMN manual_vote_count integer DEFAULT NULL;
+        ALTER TABLE public.poll_options ADD COLUMN IF NOT EXISTS manual_vote_count integer DEFAULT NULL;
     END IF;
     
     -- Add use_manual_vote_count column if it doesn't exist
     IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'poll_options' AND column_name = 'use_manual_vote_count') THEN
-        ALTER TABLE public.poll_options ADD COLUMN use_manual_vote_count boolean DEFAULT false;
+        ALTER TABLE public.poll_options ADD COLUMN IF NOT EXISTS use_manual_vote_count boolean DEFAULT false;
     END IF;
 END $$;
 

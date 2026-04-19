@@ -4,6 +4,8 @@
 DROP POLICY IF EXISTS "contact_submissions_service_role_only" ON public.pending_contacts;
 
 -- Create a proper service-role-only INSERT policy
+DROP POLICY IF EXISTS "contact_submissions_service_role_only" ON public.pending_contacts;
+DROP POLICY IF EXISTS "contact_submissions_service_role_only" ON public.pending_contacts;
 CREATE POLICY "contact_submissions_service_role_only" 
 ON public.pending_contacts 
 FOR INSERT 
@@ -13,6 +15,8 @@ WITH CHECK (
 
 -- Add missing DELETE policy for security completeness
 -- Only admins should be able to delete contact submissions
+DROP POLICY IF EXISTS "pending_contacts_admin_delete_only" ON public.pending_contacts;
+DROP POLICY IF EXISTS "pending_contacts_admin_delete_only" ON public.pending_contacts;
 CREATE POLICY "pending_contacts_admin_delete_only" 
 ON public.pending_contacts 
 FOR DELETE 
@@ -24,6 +28,8 @@ USING (
 -- The existing policy looks correct but let's make sure it's properly named
 DROP POLICY IF EXISTS "Admin only can update contacts" ON public.pending_contacts;
 
+DROP POLICY IF EXISTS "pending_contacts_admin_update_only" ON public.pending_contacts;
+DROP POLICY IF EXISTS "pending_contacts_admin_update_only" ON public.pending_contacts;
 CREATE POLICY "pending_contacts_admin_update_only" 
 ON public.pending_contacts 
 FOR UPDATE 

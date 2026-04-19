@@ -9,6 +9,8 @@ DROP POLICY IF EXISTS "Anyone can view feedback" ON public.user_feedback;
 -- Ensure strict RLS policies for user_feedback
 -- Users can only see their own feedback
 DROP POLICY IF EXISTS "Users can view their own feedback" ON public.user_feedback;
+DROP POLICY IF EXISTS "Users can view their own feedback" ON public.user_feedback;
+DROP POLICY IF EXISTS "Users can view their own feedback" ON public.user_feedback;
 CREATE POLICY "Users can view their own feedback"
   ON public.user_feedback
   FOR SELECT
@@ -19,6 +21,8 @@ CREATE POLICY "Users can view their own feedback"
 
 -- Admins can view all feedback (but it's encrypted)
 DROP POLICY IF EXISTS "Admins can view all feedback" ON public.user_feedback;
+DROP POLICY IF EXISTS "Admins can view all feedback" ON public.user_feedback;
+DROP POLICY IF EXISTS "Admins can view all feedback" ON public.user_feedback;
 CREATE POLICY "Admins can view all feedback"
   ON public.user_feedback
   FOR SELECT
@@ -28,6 +32,8 @@ CREATE POLICY "Admins can view all feedback"
   );
 
 -- Block all anonymous access explicitly
+DROP POLICY IF EXISTS "user_feedback_deny_anonymous" ON public.user_feedback;
+DROP POLICY IF EXISTS "user_feedback_deny_anonymous" ON public.user_feedback;
 DROP POLICY IF EXISTS "user_feedback_deny_anonymous" ON public.user_feedback;
 CREATE POLICY "user_feedback_deny_anonymous"
   ON public.user_feedback
@@ -42,6 +48,8 @@ DROP POLICY IF EXISTS "Service role can view shared links" ON public.shared_link
 DROP POLICY IF EXISTS "Service role can insert shared links" ON public.shared_links;
 
 -- Recreate with proper restrictions
+DROP POLICY IF EXISTS "Authenticated users can create own links" ON public.shared_links;
+DROP POLICY IF EXISTS "Authenticated users can create own links" ON public.shared_links;
 CREATE POLICY "Authenticated users can create own links"
   ON public.shared_links
   FOR INSERT
@@ -50,11 +58,15 @@ CREATE POLICY "Authenticated users can create own links"
     AND shared_by = auth.uid()
   );
 
+DROP POLICY IF EXISTS "Service role can insert shared links" ON public.shared_links;
+DROP POLICY IF EXISTS "Service role can insert shared links" ON public.shared_links;
 CREATE POLICY "Service role can insert shared links"
   ON public.shared_links
   FOR INSERT
   WITH CHECK (auth.role() = 'service_role');
 
+DROP POLICY IF EXISTS "Users can view own shared links" ON public.shared_links;
+DROP POLICY IF EXISTS "Users can view own shared links" ON public.shared_links;
 CREATE POLICY "Users can view own shared links"
   ON public.shared_links
   FOR SELECT
@@ -66,6 +78,8 @@ CREATE POLICY "Users can view own shared links"
     )
   );
 
+DROP POLICY IF EXISTS "Service role can view shared links" ON public.shared_links;
+DROP POLICY IF EXISTS "Service role can view shared links" ON public.shared_links;
 CREATE POLICY "Service role can view shared links"
   ON public.shared_links
   FOR SELECT

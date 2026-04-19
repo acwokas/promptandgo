@@ -15,7 +15,9 @@ ALTER TABLE public.user_roles ENABLE ROW LEVEL SECURITY;
 
 -- Users can read their own roles
 DO $$ BEGIN
-  CREATE POLICY "Users can read their own roles"
+  DROP POLICY IF EXISTS "Users can read their own roles" ON public.user_roles;
+DROP POLICY IF EXISTS "Users can read their own roles" ON public.user_roles;
+CREATE POLICY "Users can read their own roles"
   ON public.user_roles FOR SELECT
   USING (auth.uid() = user_id);
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
@@ -44,21 +46,26 @@ CREATE TABLE IF NOT EXISTS public.categories (
 ALTER TABLE public.categories ENABLE ROW LEVEL SECURITY;
 
 DO $$ BEGIN
-  CREATE POLICY "Public can view categories" ON public.categories FOR SELECT USING (true);
+  DROP POLICY IF EXISTS "Public can view categories" ON public.categories;
+CREATE POLICY "Public can view categories" ON public.categories FOR SELECT USING (true);
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 DO $$ BEGIN
-  CREATE POLICY "Admins can insert categories" ON public.categories FOR INSERT
+  DROP POLICY IF EXISTS "Admins can insert categories" ON public.categories;
+CREATE POLICY "Admins can insert categories" ON public.categories FOR INSERT
   WITH CHECK (public.has_role(auth.uid(), 'admin'));
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 DO $$ BEGIN
-  CREATE POLICY "Admins can update categories" ON public.categories FOR UPDATE
+  DROP POLICY IF EXISTS "Admins can update categories" ON public.categories;
+CREATE POLICY "Admins can update categories" ON public.categories FOR UPDATE
   USING (public.has_role(auth.uid(), 'admin'));
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 DO $$ BEGIN
-  CREATE POLICY "Admins can delete categories" ON public.categories FOR DELETE
+  DROP POLICY IF EXISTS "Admins can delete categories" ON public.categories;
+CREATE POLICY "Admins can delete categories" ON public.categories FOR DELETE
   USING (public.has_role(auth.uid(), 'admin'));
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
+DROP TRIGGER IF EXISTS update_categories_updated_at ON public.categories;
 CREATE TRIGGER update_categories_updated_at
 BEFORE UPDATE ON public.categories
 FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
@@ -78,23 +85,28 @@ CREATE TABLE IF NOT EXISTS public.subcategories (
 ALTER TABLE public.subcategories ENABLE ROW LEVEL SECURITY;
 
 DO $$ BEGIN
-  CREATE POLICY "Public can view subcategories" ON public.subcategories FOR SELECT USING (true);
+  DROP POLICY IF EXISTS "Public can view subcategories" ON public.subcategories;
+CREATE POLICY "Public can view subcategories" ON public.subcategories FOR SELECT USING (true);
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 DO $$ BEGIN
-  CREATE POLICY "Admins can insert subcategories" ON public.subcategories FOR INSERT
+  DROP POLICY IF EXISTS "Admins can insert subcategories" ON public.subcategories;
+CREATE POLICY "Admins can insert subcategories" ON public.subcategories FOR INSERT
   WITH CHECK (public.has_role(auth.uid(), 'admin'));
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 DO $$ BEGIN
-  CREATE POLICY "Admins can update subcategories" ON public.subcategories FOR UPDATE
+  DROP POLICY IF EXISTS "Admins can update subcategories" ON public.subcategories;
+CREATE POLICY "Admins can update subcategories" ON public.subcategories FOR UPDATE
   USING (public.has_role(auth.uid(), 'admin'));
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 DO $$ BEGIN
-  CREATE POLICY "Admins can delete subcategories" ON public.subcategories FOR DELETE
+  DROP POLICY IF EXISTS "Admins can delete subcategories" ON public.subcategories;
+CREATE POLICY "Admins can delete subcategories" ON public.subcategories FOR DELETE
   USING (public.has_role(auth.uid(), 'admin'));
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
 CREATE INDEX IF NOT EXISTS idx_subcategories_category_id ON public.subcategories(category_id);
 
+DROP TRIGGER IF EXISTS update_subcategories_updated_at ON public.subcategories;
 CREATE TRIGGER update_subcategories_updated_at
 BEFORE UPDATE ON public.subcategories
 FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
@@ -110,21 +122,26 @@ CREATE TABLE IF NOT EXISTS public.tags (
 ALTER TABLE public.tags ENABLE ROW LEVEL SECURITY;
 
 DO $$ BEGIN
-  CREATE POLICY "Public can view tags" ON public.tags FOR SELECT USING (true);
+  DROP POLICY IF EXISTS "Public can view tags" ON public.tags;
+CREATE POLICY "Public can view tags" ON public.tags FOR SELECT USING (true);
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 DO $$ BEGIN
-  CREATE POLICY "Admins can insert tags" ON public.tags FOR INSERT
+  DROP POLICY IF EXISTS "Admins can insert tags" ON public.tags;
+CREATE POLICY "Admins can insert tags" ON public.tags FOR INSERT
   WITH CHECK (public.has_role(auth.uid(), 'admin'));
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 DO $$ BEGIN
-  CREATE POLICY "Admins can update tags" ON public.tags FOR UPDATE
+  DROP POLICY IF EXISTS "Admins can update tags" ON public.tags;
+CREATE POLICY "Admins can update tags" ON public.tags FOR UPDATE
   USING (public.has_role(auth.uid(), 'admin'));
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 DO $$ BEGIN
-  CREATE POLICY "Admins can delete tags" ON public.tags FOR DELETE
+  DROP POLICY IF EXISTS "Admins can delete tags" ON public.tags;
+CREATE POLICY "Admins can delete tags" ON public.tags FOR DELETE
   USING (public.has_role(auth.uid(), 'admin'));
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
+DROP TRIGGER IF EXISTS update_tags_updated_at ON public.tags;
 CREATE TRIGGER update_tags_updated_at
 BEFORE UPDATE ON public.tags
 FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
@@ -154,18 +171,22 @@ CREATE TABLE IF NOT EXISTS public.prompts (
 ALTER TABLE public.prompts ENABLE ROW LEVEL SECURITY;
 
 DO $$ BEGIN
-  CREATE POLICY "Public can view prompts" ON public.prompts FOR SELECT USING (true);
+  DROP POLICY IF EXISTS "Public can view prompts" ON public.prompts;
+CREATE POLICY "Public can view prompts" ON public.prompts FOR SELECT USING (true);
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 DO $$ BEGIN
-  CREATE POLICY "Admins can insert prompts" ON public.prompts FOR INSERT
+  DROP POLICY IF EXISTS "Admins can insert prompts" ON public.prompts;
+CREATE POLICY "Admins can insert prompts" ON public.prompts FOR INSERT
   WITH CHECK (public.has_role(auth.uid(), 'admin'));
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 DO $$ BEGIN
-  CREATE POLICY "Admins can update prompts" ON public.prompts FOR UPDATE
+  DROP POLICY IF EXISTS "Admins can update prompts" ON public.prompts;
+CREATE POLICY "Admins can update prompts" ON public.prompts FOR UPDATE
   USING (public.has_role(auth.uid(), 'admin'));
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 DO $$ BEGIN
-  CREATE POLICY "Admins can delete prompts" ON public.prompts FOR DELETE
+  DROP POLICY IF EXISTS "Admins can delete prompts" ON public.prompts;
+CREATE POLICY "Admins can delete prompts" ON public.prompts FOR DELETE
   USING (public.has_role(auth.uid(), 'admin'));
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
@@ -173,6 +194,7 @@ CREATE INDEX IF NOT EXISTS idx_prompts_category_id ON public.prompts(category_id
 CREATE INDEX IF NOT EXISTS idx_prompts_subcategory_id ON public.prompts(subcategory_id);
 CREATE INDEX IF NOT EXISTS idx_prompts_search ON public.prompts USING GIN (search_vector);
 
+DROP TRIGGER IF EXISTS update_prompts_updated_at ON public.prompts;
 CREATE TRIGGER update_prompts_updated_at
 BEFORE UPDATE ON public.prompts
 FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
@@ -188,9 +210,11 @@ CREATE TABLE IF NOT EXISTS public.prompt_tags (
 ALTER TABLE public.prompt_tags ENABLE ROW LEVEL SECURITY;
 
 DO $$ BEGIN
-  CREATE POLICY "Public can view prompt_tags" ON public.prompt_tags FOR SELECT USING (true);
+  DROP POLICY IF EXISTS "Public can view prompt_tags" ON public.prompt_tags;
+CREATE POLICY "Public can view prompt_tags" ON public.prompt_tags FOR SELECT USING (true);
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 DO $$ BEGIN
-  CREATE POLICY "Admins can modify prompt_tags" ON public.prompt_tags FOR ALL
+  DROP POLICY IF EXISTS "Admins can modify prompt_tags" ON public.prompt_tags;
+CREATE POLICY "Admins can modify prompt_tags" ON public.prompt_tags FOR ALL
   USING (public.has_role(auth.uid(), 'admin')) WITH CHECK (public.has_role(auth.uid(), 'admin'));
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;

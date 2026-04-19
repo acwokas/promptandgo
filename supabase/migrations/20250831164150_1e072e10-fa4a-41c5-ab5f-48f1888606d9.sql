@@ -2,6 +2,8 @@
 DROP POLICY IF EXISTS "users_vote_active_polls" ON poll_votes;
 
 -- Create a proper policy that allows voting on active polls for both authenticated and anonymous users
+DROP POLICY IF EXISTS "users_vote_active_polls" ON poll_votes;
+DROP POLICY IF EXISTS "users_vote_active_polls" ON poll_votes;
 CREATE POLICY "users_vote_active_polls" 
 ON poll_votes 
 FOR INSERT 

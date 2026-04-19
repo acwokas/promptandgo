@@ -1,5 +1,5 @@
 -- Create coupons table
-CREATE TABLE public.coupons (
+CREATE TABLE IF NOT EXISTS public.coupons (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   code TEXT NOT NULL UNIQUE,
   discount_type TEXT NOT NULL CHECK (discount_type IN ('percentage', 'fixed_amount', 'free_pack')),
@@ -17,7 +17,7 @@ CREATE TABLE public.coupons (
 );
 
 -- Create coupon_usage table to track who used which coupons
-CREATE TABLE public.coupon_usage (
+CREATE TABLE IF NOT EXISTS public.coupon_usage (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   coupon_id UUID NOT NULL REFERENCES public.coupons(id) ON DELETE CASCADE,
   user_id UUID NOT NULL,
@@ -32,27 +32,37 @@ ALTER TABLE public.coupons ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.coupon_usage ENABLE ROW LEVEL SECURITY;
 
 -- RLS Policies for coupons
+DROP POLICY IF EXISTS "Public can view active coupons" ON public.coupons;
+DROP POLICY IF EXISTS "Public can view active coupons" ON public.coupons;
 CREATE POLICY "Public can view active coupons"
   ON public.coupons
   FOR SELECT
   USING (is_active = true);
 
+DROP POLICY IF EXISTS "Admins can manage coupons" ON public.coupons;
+DROP POLICY IF EXISTS "Admins can manage coupons" ON public.coupons;
 CREATE POLICY "Admins can manage coupons"
   ON public.coupons
   FOR ALL
   USING (has_role(auth.uid(), 'admin'::app_role));
 
 -- RLS Policies for coupon_usage
+DROP POLICY IF EXISTS "Users can view their own coupon usage" ON public.coupon_usage;
+DROP POLICY IF EXISTS "Users can view their own coupon usage" ON public.coupon_usage;
 CREATE POLICY "Users can view their own coupon usage"
   ON public.coupon_usage
   FOR SELECT
   USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Service role can insert coupon usage" ON public.coupon_usage;
+DROP POLICY IF EXISTS "Service role can insert coupon usage" ON public.coupon_usage;
 CREATE POLICY "Service role can insert coupon usage"
   ON public.coupon_usage
   FOR INSERT
   WITH CHECK (auth.role() = 'service_role');
 
+DROP POLICY IF EXISTS "Admins can view all coupon usage" ON public.coupon_usage;
+DROP POLICY IF EXISTS "Admins can view all coupon usage" ON public.coupon_usage;
 CREATE POLICY "Admins can view all coupon usage"
   ON public.coupon_usage
   FOR SELECT

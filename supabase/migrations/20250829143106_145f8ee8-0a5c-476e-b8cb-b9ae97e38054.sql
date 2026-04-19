@@ -50,6 +50,7 @@ DROP POLICY IF EXISTS "Public can submit contact forms" ON public.pending_contac
 DROP POLICY IF EXISTS "Allow validated contact submissions" ON public.pending_contacts;
 
 -- Create more restrictive contact submission policy (INSERT only via edge function)
+DROP POLICY IF EXISTS "contact_submissions_service_role_only" ON public.pending_contacts;
 CREATE POLICY "contact_submissions_service_role_only" ON public.pending_contacts
 FOR INSERT TO service_role
 WITH CHECK (true);
@@ -62,6 +63,7 @@ DROP POLICY IF EXISTS "subscribers_service_role_update" ON public.subscribers;
 DROP POLICY IF EXISTS "subscribers_service_role_delete" ON public.subscribers;
 
 -- Ultra-restrictive subscribers policies - only service role and specific functions
+DROP POLICY IF EXISTS "subscribers_authenticated_own_data_only" ON public.subscribers;
 CREATE POLICY "subscribers_authenticated_own_data_only" ON public.subscribers
 FOR SELECT TO authenticated
 USING (
@@ -69,6 +71,7 @@ USING (
   auth.uid() = user_id AND user_id IS NOT NULL
 );
 
+DROP POLICY IF EXISTS "subscribers_service_role_all_operations" ON public.subscribers;
 CREATE POLICY "subscribers_service_role_all_operations" ON public.subscribers
 FOR ALL TO service_role
 USING (true)
@@ -76,11 +79,13 @@ WITH CHECK (true);
 
 -- Make sure poll_votes can only be read via aggregation functions, not directly
 DROP POLICY IF EXISTS "poll_votes_aggregated_access_only" ON public.poll_votes;
+DROP POLICY IF EXISTS "poll_votes_no_direct_access" ON public.poll_votes;
 CREATE POLICY "poll_votes_no_direct_access" ON public.poll_votes
 FOR SELECT TO authenticated
 USING (false); -- Completely block direct SELECT access
 
 -- Only allow poll votes through specific admin functions or aggregation
+DROP POLICY IF EXISTS "poll_votes_admin_only" ON public.poll_votes;
 CREATE POLICY "poll_votes_admin_only" ON public.poll_votes
 FOR ALL TO authenticated
 USING (has_role(auth.uid(), 'admin'::app_role))

@@ -11,12 +11,16 @@ DROP POLICY IF EXISTS "Allow update by specific confirmation token" ON public.pe
 
 -- Create secure policies
 -- 1. Allow public to insert new contact forms (needed for contact form functionality)
+DROP POLICY IF EXISTS "Allow public insert of contacts" ON public.pending_contacts;
+DROP POLICY IF EXISTS "Allow public insert of contacts" ON public.pending_contacts;
 CREATE POLICY "Allow public insert of contacts" 
 ON public.pending_contacts 
 FOR INSERT 
 WITH CHECK (true);
 
 -- 2. Allow admins to view all contacts for management purposes
+DROP POLICY IF EXISTS "Allow admins to view all contacts" ON public.pending_contacts;
+DROP POLICY IF EXISTS "Allow admins to view all contacts" ON public.pending_contacts;
 CREATE POLICY "Allow admins to view all contacts" 
 ON public.pending_contacts 
 FOR SELECT 
@@ -24,6 +28,8 @@ USING (has_role(auth.uid(), 'admin'::app_role));
 
 -- 3. Allow public to update only their own contact by confirmation token
 -- This is needed for the email confirmation flow
+DROP POLICY IF EXISTS "Allow update by own confirmation token" ON public.pending_contacts;
+DROP POLICY IF EXISTS "Allow update by own confirmation token" ON public.pending_contacts;
 CREATE POLICY "Allow update by own confirmation token" 
 ON public.pending_contacts 
 FOR UPDATE 
@@ -31,6 +37,8 @@ USING (confirmation_token IS NOT NULL);
 
 -- 4. Allow public to select only by their specific confirmation token for confirmation flow
 -- The edge function will handle the token validation logic
+DROP POLICY IF EXISTS "Allow select for confirmation flow" ON public.pending_contacts;
+DROP POLICY IF EXISTS "Allow select for confirmation flow" ON public.pending_contacts;
 CREATE POLICY "Allow select for confirmation flow" 
 ON public.pending_contacts 
 FOR SELECT 

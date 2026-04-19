@@ -15,30 +15,39 @@ ALTER TABLE public.packs ENABLE ROW LEVEL SECURITY;
 
 -- Policies for packs
 DO $$ BEGIN
-  CREATE POLICY "Public can view packs"
+  DROP POLICY IF EXISTS "Public can view packs" ON public.packs;
+DROP POLICY IF EXISTS "Public can view packs" ON public.packs;
+CREATE POLICY "Public can view packs"
   ON public.packs FOR SELECT
   USING (true);
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
 DO $$ BEGIN
-  CREATE POLICY "Admins can insert packs"
+  DROP POLICY IF EXISTS "Admins can insert packs" ON public.packs;
+DROP POLICY IF EXISTS "Admins can insert packs" ON public.packs;
+CREATE POLICY "Admins can insert packs"
   ON public.packs FOR INSERT
   WITH CHECK (public.has_role(auth.uid(), 'admin'::public.app_role));
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
 DO $$ BEGIN
-  CREATE POLICY "Admins can update packs"
+  DROP POLICY IF EXISTS "Admins can update packs" ON public.packs;
+DROP POLICY IF EXISTS "Admins can update packs" ON public.packs;
+CREATE POLICY "Admins can update packs"
   ON public.packs FOR UPDATE
   USING (public.has_role(auth.uid(), 'admin'::public.app_role));
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
 DO $$ BEGIN
-  CREATE POLICY "Admins can delete packs"
+  DROP POLICY IF EXISTS "Admins can delete packs" ON public.packs;
+DROP POLICY IF EXISTS "Admins can delete packs" ON public.packs;
+CREATE POLICY "Admins can delete packs"
   ON public.packs FOR DELETE
   USING (public.has_role(auth.uid(), 'admin'::public.app_role));
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
 DROP TRIGGER IF EXISTS update_packs_updated_at ON public.packs;
+DROP TRIGGER IF EXISTS update_packs_updated_at ON public.pack_prompts;
 CREATE TRIGGER update_packs_updated_at
 BEFORE UPDATE ON public.packs
 FOR EACH ROW
@@ -54,13 +63,17 @@ CREATE TABLE IF NOT EXISTS public.pack_prompts (
 ALTER TABLE public.pack_prompts ENABLE ROW LEVEL SECURITY;
 
 DO $$ BEGIN
-  CREATE POLICY "Public can view pack_prompts"
+  DROP POLICY IF EXISTS "Public can view pack_prompts" ON public.pack_prompts;
+DROP POLICY IF EXISTS "Public can view pack_prompts" ON public.pack_prompts;
+CREATE POLICY "Public can view pack_prompts"
   ON public.pack_prompts FOR SELECT
   USING (true);
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
 DO $$ BEGIN
-  CREATE POLICY "Admins can modify pack_prompts"
+  DROP POLICY IF EXISTS "Admins can modify pack_prompts" ON public.pack_prompts;
+DROP POLICY IF EXISTS "Admins can modify pack_prompts" ON public.pack_prompts;
+CREATE POLICY "Admins can modify pack_prompts"
   ON public.pack_prompts FOR ALL
   USING (public.has_role(auth.uid(), 'admin'::public.app_role))
   WITH CHECK (public.has_role(auth.uid(), 'admin'::public.app_role));
@@ -81,12 +94,15 @@ CREATE TABLE IF NOT EXISTS public.orders (
 ALTER TABLE public.orders ENABLE ROW LEVEL SECURITY;
 
 DO $$ BEGIN
-  CREATE POLICY "select_own_orders"
+  DROP POLICY IF EXISTS "select_own_orders" ON public.orders;
+DROP POLICY IF EXISTS "select_own_orders" ON public.orders;
+CREATE POLICY "select_own_orders"
   ON public.orders FOR SELECT
   USING (user_id = auth.uid());
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
 DROP TRIGGER IF EXISTS update_orders_updated_at ON public.orders;
+DROP TRIGGER IF EXISTS update_orders_updated_at ON public.order_items;
 CREATE TRIGGER update_orders_updated_at
 BEFORE UPDATE ON public.orders
 FOR EACH ROW
@@ -108,7 +124,9 @@ CREATE TABLE IF NOT EXISTS public.order_items (
 ALTER TABLE public.order_items ENABLE ROW LEVEL SECURITY;
 
 DO $$ BEGIN
-  CREATE POLICY "select_items_for_own_orders"
+  DROP POLICY IF EXISTS "select_items_for_own_orders" ON public.order_items;
+DROP POLICY IF EXISTS "select_items_for_own_orders" ON public.order_items;
+CREATE POLICY "select_items_for_own_orders"
   ON public.order_items FOR SELECT
   USING (
     EXISTS (
@@ -130,7 +148,9 @@ CREATE TABLE IF NOT EXISTS public.prompt_access (
 ALTER TABLE public.prompt_access ENABLE ROW LEVEL SECURITY;
 
 DO $$ BEGIN
-  CREATE POLICY "select_own_prompt_access"
+  DROP POLICY IF EXISTS "select_own_prompt_access" ON public.prompt_access;
+DROP POLICY IF EXISTS "select_own_prompt_access" ON public.prompt_access;
+CREATE POLICY "select_own_prompt_access"
   ON public.prompt_access FOR SELECT
   USING (user_id = auth.uid());
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
@@ -145,7 +165,9 @@ CREATE TABLE IF NOT EXISTS public.pack_access (
 ALTER TABLE public.pack_access ENABLE ROW LEVEL SECURITY;
 
 DO $$ BEGIN
-  CREATE POLICY "select_own_pack_access"
+  DROP POLICY IF EXISTS "select_own_pack_access" ON public.pack_access;
+DROP POLICY IF EXISTS "select_own_pack_access" ON public.pack_access;
+CREATE POLICY "select_own_pack_access"
   ON public.pack_access FOR SELECT
   USING (user_id = auth.uid());
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
@@ -165,19 +187,25 @@ CREATE TABLE IF NOT EXISTS public.subscribers (
 ALTER TABLE public.subscribers ENABLE ROW LEVEL SECURITY;
 
 DO $$ BEGIN
-  CREATE POLICY "select_own_subscription"
+  DROP POLICY IF EXISTS "select_own_subscription" ON public.subscribers;
+DROP POLICY IF EXISTS "select_own_subscription" ON public.subscribers;
+CREATE POLICY "select_own_subscription"
   ON public.subscribers FOR SELECT
   USING (user_id = auth.uid() OR email = auth.email());
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
 DO $$ BEGIN
-  CREATE POLICY "update_own_subscription"
+  DROP POLICY IF EXISTS "update_own_subscription" ON public.subscribers;
+DROP POLICY IF EXISTS "update_own_subscription" ON public.subscribers;
+CREATE POLICY "update_own_subscription"
   ON public.subscribers FOR UPDATE
   USING (true);
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
 DO $$ BEGIN
-  CREATE POLICY "insert_subscription"
+  DROP POLICY IF EXISTS "insert_subscription" ON public.subscribers;
+DROP POLICY IF EXISTS "insert_subscription" ON public.subscribers;
+CREATE POLICY "insert_subscription"
   ON public.subscribers FOR INSERT
   WITH CHECK (true);
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;

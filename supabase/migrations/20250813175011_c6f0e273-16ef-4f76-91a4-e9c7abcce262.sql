@@ -6,12 +6,16 @@ DROP POLICY IF EXISTS "Allow public select by confirmation token" ON public.pend
 
 -- Create a new policy that only allows selecting by specific confirmation token
 -- This is needed for the confirmation flow to work
+DROP POLICY IF EXISTS "Allow select by specific confirmation token" ON public.pending_contacts;
+DROP POLICY IF EXISTS "Allow select by specific confirmation token" ON public.pending_contacts;
 CREATE POLICY "Allow select by specific confirmation token" 
 ON public.pending_contacts 
 FOR SELECT 
 USING (confirmation_token = ANY(string_to_array(current_setting('request.headers', true)::json->>'confirmation-token', ',')));
 
 -- Alternative approach: Allow admins to view all contacts for management
+DROP POLICY IF EXISTS "Admins can view all contacts" ON public.pending_contacts;
+DROP POLICY IF EXISTS "Admins can view all contacts" ON public.pending_contacts;
 CREATE POLICY "Admins can view all contacts" 
 ON public.pending_contacts 
 FOR SELECT 
@@ -20,6 +24,8 @@ USING (has_role(auth.uid(), 'admin'::app_role));
 -- Also restrict the update policy to only allow updates by confirmation token
 DROP POLICY IF EXISTS "Allow public update by confirmation token" ON public.pending_contacts;
 
+DROP POLICY IF EXISTS "Allow update by specific confirmation token" ON public.pending_contacts;
+DROP POLICY IF EXISTS "Allow update by specific confirmation token" ON public.pending_contacts;
 CREATE POLICY "Allow update by specific confirmation token" 
 ON public.pending_contacts 
 FOR UPDATE 

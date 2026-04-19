@@ -229,6 +229,7 @@ WHERE
   OR message != '[encrypted]';
 
 -- Add check constraints to prevent NULL encrypted fields for new records
+ALTER TABLE public.pending_contacts DROP CONSTRAINT IF EXISTS check_contact_name_encrypted;
 ALTER TABLE public.pending_contacts
   ADD CONSTRAINT check_contact_name_encrypted 
     CHECK (name = '[encrypted]' OR name IS NULL),
@@ -330,6 +331,7 @@ WHERE
   OR stripe_customer_id IS NOT NULL;
 
 -- Add check constraints for subscribers
+ALTER TABLE public.subscribers DROP CONSTRAINT IF EXISTS check_subscriber_email_encrypted;
 ALTER TABLE public.subscribers
   ADD CONSTRAINT check_subscriber_email_encrypted 
     CHECK (email = '[encrypted]' OR email IS NULL),

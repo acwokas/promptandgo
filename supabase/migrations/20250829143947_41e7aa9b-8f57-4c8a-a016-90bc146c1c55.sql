@@ -10,12 +10,14 @@ DROP POLICY IF EXISTS "poll_votes_function_access_only" ON public.poll_votes;
 
 -- Create clean, secure policies for poll functionality
 -- Allow admins full access for poll management
+DROP POLICY IF EXISTS "admin_manage_poll_votes" ON public.poll_votes;
 CREATE POLICY "admin_manage_poll_votes" ON public.poll_votes
 FOR ALL TO authenticated
 USING (has_role(auth.uid(), 'admin'::app_role))
 WITH CHECK (has_role(auth.uid(), 'admin'::app_role));
 
 -- Allow users to vote on active polls only
+DROP POLICY IF EXISTS "users_vote_active_polls" ON public.poll_votes;
 CREATE POLICY "users_vote_active_polls" ON public.poll_votes
 FOR INSERT TO authenticated
 WITH CHECK (
@@ -28,6 +30,7 @@ WITH CHECK (
 
 -- Allow SELECT access for legitimate poll result functions only
 -- Users can read poll votes but only through security definer functions
+DROP POLICY IF EXISTS "secure_poll_results_access" ON public.poll_votes;
 CREATE POLICY "secure_poll_results_access" ON public.poll_votes
 FOR SELECT TO authenticated
 USING (

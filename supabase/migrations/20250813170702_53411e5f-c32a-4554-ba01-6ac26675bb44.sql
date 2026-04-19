@@ -10,11 +10,15 @@ CREATE TABLE IF NOT EXISTS public.pack_tags (
 ALTER TABLE public.pack_tags ENABLE ROW LEVEL SECURITY;
 
 -- Create policies for pack_tags
+DROP POLICY IF EXISTS "Public can view pack_tags" ON public.pack_tags;
+DROP POLICY IF EXISTS "Public can view pack_tags" ON public.pack_tags;
 CREATE POLICY "Public can view pack_tags" 
 ON public.pack_tags 
 FOR SELECT 
 USING (true);
 
+DROP POLICY IF EXISTS "Admins can modify pack_tags" ON public.pack_tags;
+DROP POLICY IF EXISTS "Admins can modify pack_tags" ON public.pack_tags;
 CREATE POLICY "Admins can modify pack_tags" 
 ON public.pack_tags 
 FOR ALL

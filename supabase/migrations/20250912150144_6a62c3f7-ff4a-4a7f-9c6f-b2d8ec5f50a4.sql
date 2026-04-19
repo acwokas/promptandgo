@@ -10,6 +10,8 @@ DROP POLICY IF EXISTS "pending_contacts_admin_update_only" ON public.pending_con
 
 -- Create new, strict policies for pending_contacts
 -- Only service role can insert (for edge functions processing contact forms)
+DROP POLICY IF EXISTS "pending_contacts_service_insert_only" ON public.pending_contacts;
+DROP POLICY IF EXISTS "pending_contacts_service_insert_only" ON public.pending_contacts;
 CREATE POLICY "pending_contacts_service_insert_only" 
 ON public.pending_contacts 
 FOR INSERT 
@@ -17,6 +19,8 @@ TO service_role
 WITH CHECK (auth.role() = 'service_role');
 
 -- Only admins can view contact submissions
+DROP POLICY IF EXISTS "pending_contacts_admin_select_only" ON public.pending_contacts;
+DROP POLICY IF EXISTS "pending_contacts_admin_select_only" ON public.pending_contacts;
 CREATE POLICY "pending_contacts_admin_select_only" 
 ON public.pending_contacts 
 FOR SELECT 
@@ -27,6 +31,8 @@ USING (
 );
 
 -- Only admins can update contact submissions (for marking as processed)
+DROP POLICY IF EXISTS "pending_contacts_admin_update_only" ON public.pending_contacts;
+DROP POLICY IF EXISTS "pending_contacts_admin_update_only" ON public.pending_contacts;
 CREATE POLICY "pending_contacts_admin_update_only" 
 ON public.pending_contacts 
 FOR UPDATE 
@@ -41,6 +47,8 @@ WITH CHECK (
 );
 
 -- Only admins can delete contact submissions
+DROP POLICY IF EXISTS "pending_contacts_admin_delete_only" ON public.pending_contacts;
+DROP POLICY IF EXISTS "pending_contacts_admin_delete_only" ON public.pending_contacts;
 CREATE POLICY "pending_contacts_admin_delete_only" 
 ON public.pending_contacts 
 FOR DELETE 
@@ -56,12 +64,16 @@ DROP POLICY IF EXISTS "subscribers_service_role_insert_only" ON public.subscribe
 DROP POLICY IF EXISTS "subscribers_service_role_update_only" ON public.subscribers;
 
 -- Only service role can insert/update subscribers (for payment processing)
+DROP POLICY IF EXISTS "subscribers_service_insert_only" ON public.subscribers;
+DROP POLICY IF EXISTS "subscribers_service_insert_only" ON public.subscribers;
 CREATE POLICY "subscribers_service_insert_only" 
 ON public.subscribers 
 FOR INSERT 
 TO service_role
 WITH CHECK (auth.role() = 'service_role');
 
+DROP POLICY IF EXISTS "subscribers_service_update_only" ON public.subscribers;
+DROP POLICY IF EXISTS "subscribers_service_update_only" ON public.subscribers;
 CREATE POLICY "subscribers_service_update_only" 
 ON public.subscribers 
 FOR UPDATE 
@@ -74,6 +86,8 @@ WITH CHECK (auth.role() = 'service_role');
 DROP POLICY IF EXISTS "Authenticated users can submit feedback" ON public.user_feedback;
 
 -- Users can only insert their own feedback
+DROP POLICY IF EXISTS "users_insert_own_feedback_only" ON public.user_feedback;
+DROP POLICY IF EXISTS "users_insert_own_feedback_only" ON public.user_feedback;
 CREATE POLICY "users_insert_own_feedback_only" 
 ON public.user_feedback 
 FOR INSERT 
@@ -107,6 +121,8 @@ ALTER TABLE public.orders ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.order_items ENABLE ROW LEVEL SECURITY;
 
 -- 6. Add explicit deny policies for anonymous users on sensitive tables
+DROP POLICY IF EXISTS "pending_contacts_deny_anonymous" ON public.pending_contacts;
+DROP POLICY IF EXISTS "pending_contacts_deny_anonymous" ON public.pending_contacts;
 CREATE POLICY "pending_contacts_deny_anonymous" 
 ON public.pending_contacts 
 FOR ALL 
@@ -114,6 +130,8 @@ TO anon
 USING (false)
 WITH CHECK (false);
 
+DROP POLICY IF EXISTS "subscribers_deny_anonymous" ON public.subscribers;
+DROP POLICY IF EXISTS "subscribers_deny_anonymous" ON public.subscribers;
 CREATE POLICY "subscribers_deny_anonymous" 
 ON public.subscribers 
 FOR ALL 
@@ -121,6 +139,8 @@ TO anon
 USING (false)
 WITH CHECK (false);
 
+DROP POLICY IF EXISTS "user_feedback_deny_anonymous" ON public.user_feedback;
+DROP POLICY IF EXISTS "user_feedback_deny_anonymous" ON public.user_feedback;
 CREATE POLICY "user_feedback_deny_anonymous" 
 ON public.user_feedback 
 FOR ALL 

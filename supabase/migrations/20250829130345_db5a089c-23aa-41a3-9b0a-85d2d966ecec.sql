@@ -1,7 +1,7 @@
 -- Add manual percentage override fields to poll_options
 ALTER TABLE public.poll_options 
-ADD COLUMN manual_percentage numeric DEFAULT NULL,
-ADD COLUMN use_manual_percentage boolean DEFAULT false;
+ADD COLUMN IF NOT EXISTS manual_percentage numeric DEFAULT NULL,
+ADD COLUMN IF NOT EXISTS use_manual_percentage boolean DEFAULT false;
 
 -- Create updated function to get poll results with manual percentage support
 CREATE OR REPLACE FUNCTION public.get_poll_results_with_manual(poll_id_param uuid)
@@ -48,4 +48,4 @@ AS $function$
       ELSE ROUND((vc.vote_count::NUMERIC / tv.total::NUMERIC) * 100, 1)
     END DESC, 
     vc.option_text;
-$function$
+$function$;

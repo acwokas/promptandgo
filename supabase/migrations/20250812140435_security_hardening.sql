@@ -12,16 +12,22 @@ DROP POLICY IF EXISTS "Users can update their own subscription" ON public.subscr
 DROP POLICY IF EXISTS "select_own_subscription" ON public.subscribers;
 
 -- Create strict policies using user_id only
+DROP POLICY IF EXISTS "subscribers_select_by_user_id" ON public.subscribers;
+DROP POLICY IF EXISTS "subscribers_select_by_user_id" ON public.subscribers;
 CREATE POLICY "subscribers_select_by_user_id"
 ON public.subscribers
 FOR SELECT
 USING (user_id = auth.uid());
 
+DROP POLICY IF EXISTS "subscribers_insert_own_row" ON public.subscribers;
+DROP POLICY IF EXISTS "subscribers_insert_own_row" ON public.subscribers;
 CREATE POLICY "subscribers_insert_own_row"
 ON public.subscribers
 FOR INSERT
 WITH CHECK (user_id = auth.uid());
 
+DROP POLICY IF EXISTS "subscribers_update_own_row" ON public.subscribers;
+DROP POLICY IF EXISTS "subscribers_update_own_row" ON public.subscribers;
 CREATE POLICY "subscribers_update_own_row"
 ON public.subscribers
 FOR UPDATE

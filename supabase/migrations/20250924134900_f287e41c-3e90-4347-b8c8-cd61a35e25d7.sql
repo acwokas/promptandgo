@@ -78,6 +78,8 @@ DROP POLICY IF EXISTS "Users can view their own subscription" ON public.subscrib
 DROP POLICY IF EXISTS "subscribers_authenticated_own_data_only" ON public.subscribers;
 
 -- Create new restrictive SELECT policy (CORRECTED - no WITH CHECK for SELECT)
+DROP POLICY IF EXISTS "users_safe_subscription_data_only" ON public.subscribers;
+DROP POLICY IF EXISTS "users_safe_subscription_data_only" ON public.subscribers;
 CREATE POLICY "users_safe_subscription_data_only" 
 ON public.subscribers 
 FOR SELECT 
@@ -88,6 +90,8 @@ USING (
 );
 
 -- Keep admin policy for full access
+DROP POLICY IF EXISTS "admins_full_subscriber_access" ON public.subscribers;
+DROP POLICY IF EXISTS "admins_full_subscriber_access" ON public.subscribers;
 CREATE POLICY "admins_full_subscriber_access"
 ON public.subscribers 
 FOR SELECT

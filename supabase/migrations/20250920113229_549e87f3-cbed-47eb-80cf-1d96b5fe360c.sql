@@ -1,5 +1,5 @@
--- Create table to track daily AI sends per user
-CREATE TABLE public.daily_ai_sends (
+-- CREATE TABLE IF NOT EXISTS to track daily AI sends per user
+CREATE TABLE IF NOT EXISTS public.daily_ai_sends (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   user_id UUID NOT NULL,
   send_date DATE NOT NULL DEFAULT CURRENT_DATE,
@@ -12,22 +12,29 @@ CREATE TABLE public.daily_ai_sends (
 ALTER TABLE public.daily_ai_sends ENABLE ROW LEVEL SECURITY;
 
 -- Create policies for daily AI sends
+DROP POLICY IF EXISTS "Users can view their own daily AI sends" ON public.daily_ai_sends;
+DROP POLICY IF EXISTS "Users can view their own daily AI sends" ON public.daily_ai_sends;
 CREATE POLICY "Users can view their own daily AI sends" 
 ON public.daily_ai_sends 
 FOR SELECT 
 USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can insert their own daily AI sends" ON public.daily_ai_sends;
+DROP POLICY IF EXISTS "Users can insert their own daily AI sends" ON public.daily_ai_sends;
 CREATE POLICY "Users can insert their own daily AI sends" 
 ON public.daily_ai_sends 
 FOR INSERT 
 WITH CHECK (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can update their own daily AI sends" ON public.daily_ai_sends;
+DROP POLICY IF EXISTS "Users can update their own daily AI sends" ON public.daily_ai_sends;
 CREATE POLICY "Users can update their own daily AI sends" 
 ON public.daily_ai_sends 
 FOR UPDATE 
 USING (auth.uid() = user_id);
 
 -- Create unique constraint to ensure one record per user per day
+ALTER TABLE public.daily_ai_sends DROP CONSTRAINT IF EXISTS unique_user_date;
 ALTER TABLE public.daily_ai_sends 
 ADD CONSTRAINT unique_user_date UNIQUE (user_id, send_date);
 
@@ -44,6 +51,7 @@ END;
 $$ LANGUAGE plpgsql SET search_path = public;
 
 -- Create trigger for automatic timestamp updates
+DROP TRIGGER IF EXISTS update_daily_ai_sends_updated_at ON public.daily_ai_sends;
 CREATE TRIGGER update_daily_ai_sends_updated_at
 BEFORE UPDATE ON public.daily_ai_sends
 FOR EACH ROW

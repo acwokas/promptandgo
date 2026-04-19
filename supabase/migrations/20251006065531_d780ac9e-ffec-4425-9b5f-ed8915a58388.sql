@@ -15,12 +15,16 @@ CREATE TABLE IF NOT EXISTS public.certification_completions (
 ALTER TABLE public.certification_completions ENABLE ROW LEVEL SECURITY;
 
 -- Users can view their own certifications
+DROP POLICY IF EXISTS "Users can view own certifications" ON public.certification_completions;
+DROP POLICY IF EXISTS "Users can view own certifications" ON public.certification_completions;
 CREATE POLICY "Users can view own certifications"
   ON public.certification_completions
   FOR SELECT
   USING (auth.uid() = user_id);
 
 -- Users can insert their own certifications
+DROP POLICY IF EXISTS "Users can insert own certifications" ON public.certification_completions;
+DROP POLICY IF EXISTS "Users can insert own certifications" ON public.certification_completions;
 CREATE POLICY "Users can insert own certifications"
   ON public.certification_completions
   FOR INSERT

@@ -115,7 +115,7 @@ $function$;
 REVOKE EXECUTE ON FUNCTION public.check_and_increment_usage(uuid, text) FROM anon;
 GRANT EXECUTE ON FUNCTION public.check_and_increment_usage(uuid, text) TO authenticated;
 
--- Create table for persistent rate limiting (better than in-memory)
+-- CREATE TABLE IF NOT EXISTS for persistent rate limiting (better than in-memory)
 CREATE TABLE IF NOT EXISTS public.rate_limits (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
   key text NOT NULL,
@@ -132,6 +132,7 @@ CREATE INDEX IF NOT EXISTS idx_rate_limits_key_window ON public.rate_limits(key,
 ALTER TABLE public.rate_limits ENABLE ROW LEVEL SECURITY;
 
 -- Rate limits should only be accessible by service role (used in edge functions)
+DROP POLICY IF EXISTS "Service role can manage rate limits" ON public.rate_limits;
 CREATE POLICY "Service role can manage rate limits" ON public.rate_limits
   FOR ALL USING (auth.jwt() ->> 'role' = 'service_role');
 
@@ -141,29 +142,34 @@ INSERT INTO storage.buckets (id, name, public) VALUES ('avatars', 'avatars', tru
 ON CONFLICT (id) DO NOTHING;
 
 -- Storage policies for avatar uploads
+DROP POLICY IF EXISTS "Users can upload their own avatars" ON storage.objects;
 CREATE POLICY "Users can upload their own avatars" ON storage.objects
   FOR INSERT WITH CHECK (
     bucket_id = 'avatars' 
     AND auth.uid()::text = (storage.foldername(name))[1]
   );
 
+DROP POLICY IF EXISTS "Users can update their own avatars" ON storage.objects;
 CREATE POLICY "Users can update their own avatars" ON storage.objects
   FOR UPDATE USING (
     bucket_id = 'avatars' 
     AND auth.uid()::text = (storage.foldername(name))[1]
   );
 
+DROP POLICY IF EXISTS "Users can delete their own avatars" ON storage.objects;
 CREATE POLICY "Users can delete their own avatars" ON storage.objects
   FOR DELETE USING (
     bucket_id = 'avatars' 
     AND auth.uid()::text = (storage.foldername(name))[1]
   );
 
+DROP POLICY IF EXISTS "Avatar images are publicly accessible" ON storage.objects;
 CREATE POLICY "Avatar images are publicly accessible" ON storage.objects
   FOR SELECT USING (bucket_id = 'avatars');
 
 -- Add constraint to validate shared link URLs (prevent open redirects)
 -- Using a check constraint for allowed domains
+ALTER TABLE public.shared_links DROP CONSTRAINT IF EXISTS check_allowed_domains;
 ALTER TABLE public.shared_links 
 ADD CONSTRAINT check_allowed_domains 
 CHECK (

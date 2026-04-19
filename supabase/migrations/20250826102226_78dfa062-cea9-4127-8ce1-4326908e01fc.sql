@@ -16,7 +16,8 @@ BEGIN
       AND tablename = 'pending_contacts' 
       AND policyname = 'Admins can view contacts (select)'
   ) THEN
-    CREATE POLICY "Admins can view contacts (select)" ON public.pending_contacts
+    DROP POLICY IF EXISTS "Admins can view contacts (select)" ON public.pending_contacts;
+CREATE POLICY "Admins can view contacts (select)" ON public.pending_contacts
     FOR SELECT
     TO authenticated
     USING (public.has_role(auth.uid(), 'admin'::app_role));

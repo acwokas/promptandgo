@@ -410,6 +410,8 @@ CREATE TABLE IF NOT EXISTS public.admin_rate_limits (
 ALTER TABLE public.admin_rate_limits ENABLE ROW LEVEL SECURITY;
 
 -- Only admins can view their own rate limits
+DROP POLICY IF EXISTS "admins_view_own_rate_limits" ON public.admin_rate_limits;
+DROP POLICY IF EXISTS "admins_view_own_rate_limits" ON public.admin_rate_limits;
 CREATE POLICY "admins_view_own_rate_limits" 
 ON public.admin_rate_limits 
 FOR SELECT 
@@ -420,6 +422,8 @@ USING (
 );
 
 -- Service role can manage rate limits
+DROP POLICY IF EXISTS "service_manage_admin_rate_limits" ON public.admin_rate_limits;
+DROP POLICY IF EXISTS "service_manage_admin_rate_limits" ON public.admin_rate_limits;
 CREATE POLICY "service_manage_admin_rate_limits" 
 ON public.admin_rate_limits 
 FOR ALL

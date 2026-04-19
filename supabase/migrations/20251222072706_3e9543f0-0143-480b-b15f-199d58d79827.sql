@@ -1,5 +1,5 @@
 -- Create analytics thresholds table for configuring alerts
-CREATE TABLE public.analytics_thresholds (
+CREATE TABLE IF NOT EXISTS public.analytics_thresholds (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   threshold_name TEXT NOT NULL,
   metric_type TEXT NOT NULL, -- 'sessions', 'conversions', 'page_views', 'events'
@@ -15,7 +15,7 @@ CREATE TABLE public.analytics_thresholds (
 );
 
 -- Create notifications log table
-CREATE TABLE public.analytics_notifications (
+CREATE TABLE IF NOT EXISTS public.analytics_notifications (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   threshold_id UUID REFERENCES public.analytics_thresholds(id) ON DELETE CASCADE,
   metric_type TEXT NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE public.analytics_notifications (
 );
 
 -- Create browser push subscriptions table
-CREATE TABLE public.push_subscriptions (
+CREATE TABLE IF NOT EXISTS public.push_subscriptions (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   user_id UUID NOT NULL,
   endpoint TEXT NOT NULL,
@@ -45,6 +45,8 @@ ALTER TABLE public.analytics_notifications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.push_subscriptions ENABLE ROW LEVEL SECURITY;
 
 -- RLS for analytics_thresholds
+DROP POLICY IF EXISTS "Admins can manage thresholds" ON public.analytics_thresholds;
+DROP POLICY IF EXISTS "Admins can manage thresholds" ON public.analytics_thresholds;
 CREATE POLICY "Admins can manage thresholds"
 ON public.analytics_thresholds
 FOR ALL
@@ -52,28 +54,38 @@ USING (has_role(auth.uid(), 'admin'::app_role))
 WITH CHECK (has_role(auth.uid(), 'admin'::app_role));
 
 -- RLS for analytics_notifications
+DROP POLICY IF EXISTS "Admins can view notifications" ON public.analytics_notifications;
+DROP POLICY IF EXISTS "Admins can view notifications" ON public.analytics_notifications;
 CREATE POLICY "Admins can view notifications"
 ON public.analytics_notifications
 FOR SELECT
 USING (has_role(auth.uid(), 'admin'::app_role));
 
+DROP POLICY IF EXISTS "Service role can insert notifications" ON public.analytics_notifications;
+DROP POLICY IF EXISTS "Service role can insert notifications" ON public.analytics_notifications;
 CREATE POLICY "Service role can insert notifications"
 ON public.analytics_notifications
 FOR INSERT
 WITH CHECK (auth.role() = 'service_role');
 
+DROP POLICY IF EXISTS "Admins can update notifications" ON public.analytics_notifications;
+DROP POLICY IF EXISTS "Admins can update notifications" ON public.analytics_notifications;
 CREATE POLICY "Admins can update notifications"
 ON public.analytics_notifications
 FOR UPDATE
 USING (has_role(auth.uid(), 'admin'::app_role));
 
 -- RLS for push_subscriptions
+DROP POLICY IF EXISTS "Users can manage their own subscriptions" ON public.push_subscriptions;
+DROP POLICY IF EXISTS "Users can manage their own subscriptions" ON public.push_subscriptions;
 CREATE POLICY "Users can manage their own subscriptions"
 ON public.push_subscriptions
 FOR ALL
 USING (auth.uid() = user_id)
 WITH CHECK (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Service role can read subscriptions" ON public.push_subscriptions;
+DROP POLICY IF EXISTS "Service role can read subscriptions" ON public.push_subscriptions;
 CREATE POLICY "Service role can read subscriptions"
 ON public.push_subscriptions
 FOR SELECT

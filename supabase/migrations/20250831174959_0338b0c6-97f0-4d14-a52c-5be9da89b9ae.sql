@@ -9,6 +9,8 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 DROP POLICY IF EXISTS "subscribers_service_role_all_operations" ON public.subscribers;
 
 -- Create secure, specific policies for subscribers table
+DROP POLICY IF EXISTS "subscribers_service_role_insert_only" ON public.subscribers;
+DROP POLICY IF EXISTS "subscribers_service_role_insert_only" ON public.subscribers;
 CREATE POLICY "subscribers_service_role_insert_only" 
 ON public.subscribers 
 FOR INSERT 
@@ -16,6 +18,8 @@ WITH CHECK (
   (auth.jwt() ->> 'role'::text) = 'service_role'::text
 );
 
+DROP POLICY IF EXISTS "subscribers_service_role_update_only" ON public.subscribers;
+DROP POLICY IF EXISTS "subscribers_service_role_update_only" ON public.subscribers;
 CREATE POLICY "subscribers_service_role_update_only" 
 ON public.subscribers 
 FOR UPDATE 
@@ -27,6 +31,8 @@ WITH CHECK (
 );
 
 -- Admin can view all subscriber data (for management purposes)
+DROP POLICY IF EXISTS "subscribers_admin_select_all" ON public.subscribers;
+DROP POLICY IF EXISTS "subscribers_admin_select_all" ON public.subscribers;
 CREATE POLICY "subscribers_admin_select_all" 
 ON public.subscribers 
 FOR SELECT 
@@ -36,6 +42,8 @@ USING (
 
 -- 3. Lock down avatars storage bucket with strict policies
 -- Users can only upload to their own folder and only specific file types
+DROP POLICY IF EXISTS "avatars_authenticated_insert_own_folder" ON storage.objects;
+DROP POLICY IF EXISTS "avatars_authenticated_insert_own_folder" ON storage.objects;
 CREATE POLICY "avatars_authenticated_insert_own_folder" 
 ON storage.objects 
 FOR INSERT 
@@ -46,6 +54,8 @@ WITH CHECK (
   AND lower(right(name, 4)) IN ('.jpg', '.png', '.gif', '.bmp')
 );
 
+DROP POLICY IF EXISTS "avatars_authenticated_update_own_files" ON storage.objects;
+DROP POLICY IF EXISTS "avatars_authenticated_update_own_files" ON storage.objects;
 CREATE POLICY "avatars_authenticated_update_own_files" 
 ON storage.objects 
 FOR UPDATE 
@@ -60,6 +70,8 @@ WITH CHECK (
   AND auth.uid()::text = (storage.foldername(name))[1]
 );
 
+DROP POLICY IF EXISTS "avatars_authenticated_delete_own_files" ON storage.objects;
+DROP POLICY IF EXISTS "avatars_authenticated_delete_own_files" ON storage.objects;
 CREATE POLICY "avatars_authenticated_delete_own_files" 
 ON storage.objects 
 FOR DELETE 
@@ -69,10 +81,7 @@ USING (
   AND auth.uid()::text = (storage.foldername(name))[1]
 );
 
--- Add security comments for documentation
+-- Add security comments for documentation (storage.objects excluded - not owner)
 COMMENT ON POLICY "subscribers_service_role_insert_only" ON public.subscribers IS 'SECURITY: Only service role can insert subscriber records';
 COMMENT ON POLICY "subscribers_service_role_update_only" ON public.subscribers IS 'SECURITY: Only service role can update subscriber records';
 COMMENT ON POLICY "subscribers_admin_select_all" ON public.subscribers IS 'SECURITY: Only admins can view subscriber data';
-COMMENT ON POLICY "avatars_authenticated_insert_own_folder" ON storage.objects IS 'SECURITY: Users can only upload avatars to their own folder with allowed extensions';
-COMMENT ON POLICY "avatars_authenticated_update_own_files" ON storage.objects IS 'SECURITY: Users can only update their own avatar files';
-COMMENT ON POLICY "avatars_authenticated_delete_own_files" ON storage.objects IS 'SECURITY: Users can only delete their own avatar files';

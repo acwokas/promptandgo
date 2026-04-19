@@ -15,20 +15,28 @@ CREATE TABLE IF NOT EXISTS public.packs (
 ALTER TABLE public.packs ENABLE ROW LEVEL SECURITY;
 
 -- Public can read packs
-CREATE POLICY IF NOT EXISTS "Public can view packs"
+DROP POLICY IF EXISTS "Public can view packs" ON public.packs;
+DROP POLICY IF EXISTS "Public can view packs" ON public.packs;
+create policy "Public can view packs"
 ON public.packs FOR SELECT
 USING (true);
 
 -- Admins can manage packs
-CREATE POLICY IF NOT EXISTS "Admins can insert packs"
+DROP POLICY IF EXISTS "Admins can insert packs" ON public.packs;
+DROP POLICY IF EXISTS "Admins can insert packs" ON public.packs;
+create policy "Admins can insert packs"
 ON public.packs FOR INSERT
 WITH CHECK (public.has_role(auth.uid(), 'admin'::public.app_role));
 
-CREATE POLICY IF NOT EXISTS "Admins can update packs"
+DROP POLICY IF EXISTS "Admins can update packs" ON public.packs;
+DROP POLICY IF EXISTS "Admins can update packs" ON public.packs;
+create policy "Admins can update packs"
 ON public.packs FOR UPDATE
 USING (public.has_role(auth.uid(), 'admin'::public.app_role));
 
-CREATE POLICY IF NOT EXISTS "Admins can delete packs"
+DROP POLICY IF EXISTS "Admins can delete packs" ON public.packs;
+DROP POLICY IF EXISTS "Admins can delete packs" ON public.packs;
+create policy "Admins can delete packs"
 ON public.packs FOR DELETE
 USING (public.has_role(auth.uid(), 'admin'::public.app_role));
 
@@ -51,12 +59,16 @@ CREATE TABLE IF NOT EXISTS public.pack_prompts (
 ALTER TABLE public.pack_prompts ENABLE ROW LEVEL SECURITY;
 
 -- Public can read mappings
-CREATE POLICY IF NOT EXISTS "Public can view pack_prompts"
+DROP POLICY IF EXISTS "Public can view pack_prompts" ON public.pack_prompts;
+DROP POLICY IF EXISTS "Public can view pack_prompts" ON public.pack_prompts;
+create policy "Public can view pack_prompts"
 ON public.pack_prompts FOR SELECT
 USING (true);
 
 -- Admins can manage mappings
-CREATE POLICY IF NOT EXISTS "Admins can modify pack_prompts"
+DROP POLICY IF EXISTS "Admins can modify pack_prompts" ON public.pack_prompts;
+DROP POLICY IF EXISTS "Admins can modify pack_prompts" ON public.pack_prompts;
+create policy "Admins can modify pack_prompts"
 ON public.pack_prompts FOR ALL
 USING (public.has_role(auth.uid(), 'admin'::public.app_role))
 WITH CHECK (public.has_role(auth.uid(), 'admin'::public.app_role));
@@ -78,7 +90,9 @@ CREATE TABLE IF NOT EXISTS public.orders (
 ALTER TABLE public.orders ENABLE ROW LEVEL SECURITY;
 
 -- Users can view their own orders
-CREATE POLICY IF NOT EXISTS "select_own_orders"
+DROP POLICY IF EXISTS "select_own_orders" ON public.orders;
+DROP POLICY IF EXISTS "select_own_orders" ON public.orders;
+create policy "select_own_orders"
 ON public.orders FOR SELECT
 USING (user_id = auth.uid());
 
@@ -109,7 +123,9 @@ CREATE TABLE IF NOT EXISTS public.order_items (
 ALTER TABLE public.order_items ENABLE ROW LEVEL SECURITY;
 
 -- Users can view items of their own orders
-CREATE POLICY IF NOT EXISTS "select_items_for_own_orders"
+DROP POLICY IF EXISTS "select_items_for_own_orders" ON public.order_items;
+DROP POLICY IF EXISTS "select_items_for_own_orders" ON public.order_items;
+create policy "select_items_for_own_orders"
 ON public.order_items FOR SELECT
 USING (
   EXISTS (
@@ -132,7 +148,9 @@ CREATE TABLE IF NOT EXISTS public.prompt_access (
 ALTER TABLE public.prompt_access ENABLE ROW LEVEL SECURITY;
 
 -- Users can view their own prompt access
-CREATE POLICY IF NOT EXISTS "select_own_prompt_access"
+DROP POLICY IF EXISTS "select_own_prompt_access" ON public.prompt_access;
+DROP POLICY IF EXISTS "select_own_prompt_access" ON public.prompt_access;
+create policy "select_own_prompt_access"
 ON public.prompt_access FOR SELECT
 USING (user_id = auth.uid());
 
@@ -148,7 +166,9 @@ CREATE TABLE IF NOT EXISTS public.pack_access (
 ALTER TABLE public.pack_access ENABLE ROW LEVEL SECURITY;
 
 -- Users can view their own pack access
-CREATE POLICY IF NOT EXISTS "select_own_pack_access"
+DROP POLICY IF EXISTS "select_own_pack_access" ON public.pack_access;
+DROP POLICY IF EXISTS "select_own_pack_access" ON public.pack_access;
+create policy "select_own_pack_access"
 ON public.pack_access FOR SELECT
 USING (user_id = auth.uid());
 
@@ -168,15 +188,21 @@ CREATE TABLE IF NOT EXISTS public.subscribers (
 
 ALTER TABLE public.subscribers ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY IF NOT EXISTS "select_own_subscription"
+DROP POLICY IF EXISTS "select_own_subscription" ON public.subscribers;
+DROP POLICY IF EXISTS "select_own_subscription" ON public.subscribers;
+create policy "select_own_subscription"
 ON public.subscribers FOR SELECT
 USING (user_id = auth.uid() OR email = auth.email());
 
-CREATE POLICY IF NOT EXISTS "update_own_subscription"
+DROP POLICY IF EXISTS "update_own_subscription" ON public.subscribers;
+DROP POLICY IF EXISTS "update_own_subscription" ON public.subscribers;
+create policy "update_own_subscription"
 ON public.subscribers FOR UPDATE
 USING (true);
 
-CREATE POLICY IF NOT EXISTS "insert_subscription"
+DROP POLICY IF EXISTS "insert_subscription" ON public.subscribers;
+DROP POLICY IF EXISTS "insert_subscription" ON public.subscribers;
+create policy "insert_subscription"
 ON public.subscribers FOR INSERT
 WITH CHECK (true);
 

@@ -10,6 +10,7 @@ DROP POLICY IF EXISTS "subscribers_select_own_record" ON public.subscribers;
 
 -- 2. Create new restrictive RLS policies for subscribers table
 -- Only allow users to view their own subscription data (no email/PII)
+DROP POLICY IF EXISTS "subscribers_select_own_safe_data" ON public.subscribers;
 CREATE POLICY "subscribers_select_own_safe_data" ON public.subscribers
 FOR SELECT TO authenticated
 USING (
@@ -17,6 +18,7 @@ USING (
 );
 
 -- Only allow admins to view all records (for admin dashboard)
+DROP POLICY IF EXISTS "subscribers_select_admin_only" ON public.subscribers;
 CREATE POLICY "subscribers_select_admin_only" ON public.subscribers
 FOR SELECT TO authenticated
 USING (
@@ -24,14 +26,17 @@ USING (
 );
 
 -- Only allow service role to INSERT/UPDATE/DELETE (for secure operations)
+DROP POLICY IF EXISTS "subscribers_service_role_insert" ON public.subscribers;
 CREATE POLICY "subscribers_service_role_insert" ON public.subscribers
 FOR INSERT TO service_role
 WITH CHECK (true);
 
+DROP POLICY IF EXISTS "subscribers_service_role_update" ON public.subscribers;
 CREATE POLICY "subscribers_service_role_update" ON public.subscribers
 FOR UPDATE TO service_role
 USING (true);
 
+DROP POLICY IF EXISTS "subscribers_service_role_delete" ON public.subscribers;
 CREATE POLICY "subscribers_service_role_delete" ON public.subscribers
 FOR DELETE TO service_role
 USING (true);
@@ -129,6 +134,7 @@ $$;
 
 -- 6. Restrict poll_votes access to prevent user tracking
 DROP POLICY IF EXISTS "Users can view poll votes" ON public.poll_votes;
+DROP POLICY IF EXISTS "poll_votes_aggregated_access_only" ON public.poll_votes;
 CREATE POLICY "poll_votes_aggregated_access_only" ON public.poll_votes
 FOR SELECT TO authenticated
 USING (
@@ -139,6 +145,7 @@ USING (
 -- 7. Restrict pending_contacts access
 DROP POLICY IF EXISTS "Admin only can view contacts" ON public.pending_contacts;
 DROP POLICY IF EXISTS "Admins can view contacts (select)" ON public.pending_contacts;
+DROP POLICY IF EXISTS "pending_contacts_admin_access_only" ON public.pending_contacts;
 CREATE POLICY "pending_contacts_admin_access_only" ON public.pending_contacts
 FOR SELECT TO authenticated
 USING (
@@ -158,6 +165,7 @@ CREATE TABLE IF NOT EXISTS public.newsletter_rate_limits (
 
 ALTER TABLE public.newsletter_rate_limits ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "rate_limits_service_role_only" ON public.newsletter_rate_limits;
 CREATE POLICY "rate_limits_service_role_only" ON public.newsletter_rate_limits
 FOR ALL TO service_role
 USING (true);

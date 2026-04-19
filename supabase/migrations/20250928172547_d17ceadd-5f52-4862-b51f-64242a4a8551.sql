@@ -91,6 +91,8 @@ CREATE TABLE IF NOT EXISTS public.api_key_rotation_log (
 ALTER TABLE public.api_key_rotation_log ENABLE ROW LEVEL SECURITY;
 
 -- Create policies for API key rotation log
+DROP POLICY IF EXISTS "Admins can manage API key rotation log" ON public.api_key_rotation_log;
+DROP POLICY IF EXISTS "Admins can manage API key rotation log" ON public.api_key_rotation_log;
 CREATE POLICY "Admins can manage API key rotation log"
 ON public.api_key_rotation_log
 FOR ALL

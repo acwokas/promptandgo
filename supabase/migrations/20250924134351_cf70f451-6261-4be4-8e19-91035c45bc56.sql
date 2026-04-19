@@ -1,10 +1,10 @@
 -- SECURITY FIX: Add encryption to pending_contacts table for PII protection
 -- Add encrypted fields for sensitive contact data
 ALTER TABLE public.pending_contacts 
-ADD COLUMN name_enc bytea,
-ADD COLUMN email_enc bytea,
-ADD COLUMN message_enc bytea,
-ADD COLUMN email_hash text;
+ADD COLUMN IF NOT EXISTS name_enc bytea,
+ADD COLUMN IF NOT EXISTS email_enc bytea,
+ADD COLUMN IF NOT EXISTS message_enc bytea,
+ADD COLUMN IF NOT EXISTS email_hash text;
 
 -- Create secure function for inserting encrypted contact data
 CREATE OR REPLACE FUNCTION public.secure_insert_contact(
@@ -58,7 +58,7 @@ BEGIN
     pgp_sym_encrypt(p_name, p_key),
     pgp_sym_encrypt(p_email, p_key),
     pgp_sym_encrypt(p_message, p_key),
-    encode(digest(p_email, 'sha256'), 'hex')
+    encode(extensions.digest(p_email, 'sha256'), 'hex')
   );
   
   RETURN new_id;
@@ -125,6 +125,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS enforce_contact_encryption_trigger ON public.pending_contacts;
 CREATE TRIGGER enforce_contact_encryption_trigger
   BEFORE INSERT OR UPDATE ON public.pending_contacts
   FOR EACH ROW EXECUTE FUNCTION public.enforce_contact_encryption();
@@ -152,7 +153,7 @@ BEGIN
         name_enc = pgp_sym_encrypt(contact_record.name, encryption_key),
         email_enc = pgp_sym_encrypt(contact_record.email, encryption_key),
         message_enc = pgp_sym_encrypt(contact_record.message, encryption_key),
-        email_hash = encode(digest(contact_record.email, 'sha256'), 'hex'),
+        email_hash = encode(extensions.digest(contact_record.email, 'sha256'), 'hex'),
         name = '[encrypted]',
         email = '[encrypted]',
         message = '[encrypted]'

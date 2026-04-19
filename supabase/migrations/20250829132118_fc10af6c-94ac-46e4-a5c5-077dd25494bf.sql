@@ -44,7 +44,9 @@ time_distributed_votes AS (
 )
 INSERT INTO poll_votes (poll_id, option_id, created_at, ip_address)
 SELECT poll_id, option_id, created_at, ip_address
-FROM time_distributed_votes;
+FROM time_distributed_votes
+WHERE EXISTS (SELECT 1 FROM public.polls WHERE id = 'edbc3a68-2a06-4593-b1f1-a9acbfe60834'::uuid)
+ON CONFLICT DO NOTHING;
 
 -- Generate higher volume votes for "Which Pack Next?" poll (af0bfcf8-6eb7-4b43-8378-cd84738ccb47)
 -- Total target: ~590 votes with unique IP addresses
@@ -89,4 +91,6 @@ time_distributed_votes AS (
 )
 INSERT INTO poll_votes (poll_id, option_id, created_at, ip_address)
 SELECT poll_id, option_id, created_at, ip_address
-FROM time_distributed_votes;
+FROM time_distributed_votes
+WHERE EXISTS (SELECT 1 FROM public.polls WHERE id = 'af0bfcf8-6eb7-4b43-8378-cd84738ccb47'::uuid)
+ON CONFLICT DO NOTHING;

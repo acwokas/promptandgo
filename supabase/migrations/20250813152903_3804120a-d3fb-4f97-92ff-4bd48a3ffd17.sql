@@ -1,5 +1,5 @@
--- Create table for pending contact submissions
-CREATE TABLE public.pending_contacts (
+-- CREATE TABLE IF NOT EXISTS for pending contact submissions
+CREATE TABLE IF NOT EXISTS public.pending_contacts (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL,
   email TEXT NOT NULL,
@@ -16,24 +16,31 @@ CREATE TABLE public.pending_contacts (
 ALTER TABLE public.pending_contacts ENABLE ROW LEVEL SECURITY;
 
 -- Create policy to allow public inserts (for initial contact form submission)
+DROP POLICY IF EXISTS "Allow public insert of pending contacts" ON public.pending_contacts;
+DROP POLICY IF EXISTS "Allow public insert of pending contacts" ON public.pending_contacts;
 CREATE POLICY "Allow public insert of pending contacts" 
 ON public.pending_contacts 
 FOR INSERT 
 WITH CHECK (true);
 
 -- Create policy to allow public select by confirmation token (for confirmation)
+DROP POLICY IF EXISTS "Allow public select by confirmation token" ON public.pending_contacts;
+DROP POLICY IF EXISTS "Allow public select by confirmation token" ON public.pending_contacts;
 CREATE POLICY "Allow public select by confirmation token" 
 ON public.pending_contacts 
 FOR SELECT 
 USING (true);
 
 -- Create policy to allow public update by confirmation token (for confirmation)
+DROP POLICY IF EXISTS "Allow public update by confirmation token" ON public.pending_contacts;
+DROP POLICY IF EXISTS "Allow public update by confirmation token" ON public.pending_contacts;
 CREATE POLICY "Allow public update by confirmation token" 
 ON public.pending_contacts 
 FOR UPDATE 
 USING (true);
 
 -- Create trigger for automatic timestamp updates
+DROP TRIGGER IF EXISTS update_pending_contacts_updated_at ON public.pending_contacts;
 CREATE TRIGGER update_pending_contacts_updated_at
 BEFORE UPDATE ON public.pending_contacts
 FOR EACH ROW

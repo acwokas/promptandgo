@@ -1,5 +1,5 @@
 -- Create user ratings table
-CREATE TABLE public.user_ratings (
+CREATE TABLE IF NOT EXISTS public.user_ratings (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   user_id UUID NOT NULL,
   prompt_id UUID NOT NULL,
@@ -13,27 +13,36 @@ CREATE TABLE public.user_ratings (
 ALTER TABLE public.user_ratings ENABLE ROW LEVEL SECURITY;
 
 -- Create policies for user ratings
+DROP POLICY IF EXISTS "Users can view their own ratings" ON public.user_ratings;
+DROP POLICY IF EXISTS "Users can view their own ratings" ON public.user_ratings;
 CREATE POLICY "Users can view their own ratings" 
 ON public.user_ratings 
 FOR SELECT 
 USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can insert their own ratings" ON public.user_ratings;
+DROP POLICY IF EXISTS "Users can insert their own ratings" ON public.user_ratings;
 CREATE POLICY "Users can insert their own ratings" 
 ON public.user_ratings 
 FOR INSERT 
 WITH CHECK (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can update their own ratings" ON public.user_ratings;
+DROP POLICY IF EXISTS "Users can update their own ratings" ON public.user_ratings;
 CREATE POLICY "Users can update their own ratings" 
 ON public.user_ratings 
 FOR UPDATE 
 USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can delete their own ratings" ON public.user_ratings;
+DROP POLICY IF EXISTS "Users can delete their own ratings" ON public.user_ratings;
 CREATE POLICY "Users can delete their own ratings" 
 ON public.user_ratings 
 FOR DELETE 
 USING (auth.uid() = user_id);
 
 -- Create function to update timestamps
+DROP TRIGGER IF EXISTS update_user_ratings_updated_at ON public.user_ratings;
 CREATE TRIGGER update_user_ratings_updated_at
 BEFORE UPDATE ON public.user_ratings
 FOR EACH ROW

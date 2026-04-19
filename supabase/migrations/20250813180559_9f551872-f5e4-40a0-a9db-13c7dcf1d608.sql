@@ -1,5 +1,5 @@
 -- Create feedback table for user submissions
-CREATE TABLE public.user_feedback (
+CREATE TABLE IF NOT EXISTS public.user_feedback (
   id uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   user_id uuid REFERENCES auth.users(id) ON DELETE SET NULL,
   feedback_type text NOT NULL CHECK (feedback_type IN ('bug', 'suggestion', 'rating', 'general')),
@@ -19,7 +19,7 @@ CREATE TABLE public.user_feedback (
 );
 
 -- Create widget settings table for admin control
-CREATE TABLE public.widget_settings (
+CREATE TABLE IF NOT EXISTS public.widget_settings (
   id uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   setting_key text NOT NULL UNIQUE,
   setting_value boolean NOT NULL DEFAULT true,
@@ -38,22 +38,28 @@ ALTER TABLE public.user_feedback ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.widget_settings ENABLE ROW LEVEL SECURITY;
 
 -- RLS Policies for feedback
+DROP POLICY IF EXISTS "Anyone can submit feedback" ON public.user_feedback;
 CREATE POLICY "Anyone can submit feedback" ON public.user_feedback
 FOR INSERT WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Users can view their own feedback" ON public.user_feedback;
 CREATE POLICY "Users can view their own feedback" ON public.user_feedback
 FOR SELECT USING (user_id = auth.uid() OR auth.uid() IS NULL);
 
+DROP POLICY IF EXISTS "Admins can view all feedback" ON public.user_feedback;
 CREATE POLICY "Admins can view all feedback" ON public.user_feedback
 FOR SELECT USING (has_role(auth.uid(), 'admin'::app_role));
 
+DROP POLICY IF EXISTS "Admins can update feedback" ON public.user_feedback;
 CREATE POLICY "Admins can update feedback" ON public.user_feedback
 FOR UPDATE USING (has_role(auth.uid(), 'admin'::app_role));
 
 -- RLS Policies for widget settings
+DROP POLICY IF EXISTS "Everyone can read widget settings" ON public.widget_settings;
 CREATE POLICY "Everyone can read widget settings" ON public.widget_settings
 FOR SELECT USING (true);
 
+DROP POLICY IF EXISTS "Admins can modify widget settings" ON public.widget_settings;
 CREATE POLICY "Admins can modify widget settings" ON public.widget_settings
 FOR ALL USING (has_role(auth.uid(), 'admin'::app_role));
 

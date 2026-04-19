@@ -1,5 +1,5 @@
 -- Create polls system tables
-CREATE TABLE public.polls (
+CREATE TABLE IF NOT EXISTS public.polls (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   title TEXT NOT NULL,
   description TEXT,
@@ -10,7 +10,7 @@ CREATE TABLE public.polls (
   updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 
-CREATE TABLE public.poll_options (
+CREATE TABLE IF NOT EXISTS public.poll_options (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   poll_id UUID NOT NULL REFERENCES public.polls(id) ON DELETE CASCADE,
   text TEXT NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE public.poll_options (
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 
-CREATE TABLE public.poll_votes (
+CREATE TABLE IF NOT EXISTS public.poll_votes (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   poll_id UUID NOT NULL REFERENCES public.polls(id) ON DELETE CASCADE,
   option_id UUID NOT NULL REFERENCES public.poll_options(id) ON DELETE CASCADE,
@@ -36,14 +36,17 @@ ALTER TABLE public.poll_options ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.poll_votes ENABLE ROW LEVEL SECURITY;
 
 -- Policies for polls
+DROP POLICY IF EXISTS "Public can view active polls" ON public.polls;
 CREATE POLICY "Public can view active polls" ON public.polls
 FOR SELECT USING (is_active = true);
 
+DROP POLICY IF EXISTS "Admins can manage polls" ON public.polls;
 CREATE POLICY "Admins can manage polls" ON public.polls
 FOR ALL USING (has_role(auth.uid(), 'admin'::app_role))
 WITH CHECK (has_role(auth.uid(), 'admin'::app_role));
 
 -- Policies for poll_options
+DROP POLICY IF EXISTS "Public can view poll options" ON public.poll_options;
 CREATE POLICY "Public can view poll options" ON public.poll_options
 FOR SELECT USING (
   EXISTS (
@@ -53,11 +56,13 @@ FOR SELECT USING (
   )
 );
 
+DROP POLICY IF EXISTS "Admins can manage poll options" ON public.poll_options;
 CREATE POLICY "Admins can manage poll options" ON public.poll_options
 FOR ALL USING (has_role(auth.uid(), 'admin'::app_role))
 WITH CHECK (has_role(auth.uid(), 'admin'::app_role));
 
 -- Policies for poll_votes
+DROP POLICY IF EXISTS "Users can view poll votes" ON public.poll_votes;
 CREATE POLICY "Users can view poll votes" ON public.poll_votes
 FOR SELECT USING (
   EXISTS (
@@ -67,6 +72,7 @@ FOR SELECT USING (
   )
 );
 
+DROP POLICY IF EXISTS "Users can vote on polls" ON public.poll_votes;
 CREATE POLICY "Users can vote on polls" ON public.poll_votes
 FOR INSERT WITH CHECK (
   EXISTS (
@@ -76,6 +82,7 @@ FOR INSERT WITH CHECK (
   )
 );
 
+DROP POLICY IF EXISTS "Admins can manage poll votes" ON public.poll_votes;
 CREATE POLICY "Admins can manage poll votes" ON public.poll_votes
 FOR ALL USING (has_role(auth.uid(), 'admin'::app_role))
 WITH CHECK (has_role(auth.uid(), 'admin'::app_role));
@@ -119,6 +126,7 @@ RETURNS TABLE(
 $$;
 
 -- Create trigger for updated_at
+DROP TRIGGER IF EXISTS update_polls_updated_at ON public.polls;
 CREATE TRIGGER update_polls_updated_at
   BEFORE UPDATE ON public.polls
   FOR EACH ROW

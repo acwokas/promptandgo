@@ -115,7 +115,7 @@ $function$;
 REVOKE EXECUTE ON FUNCTION public.check_and_increment_usage(uuid, text) FROM anon;
 GRANT EXECUTE ON FUNCTION public.check_and_increment_usage(uuid, text) TO authenticated;
 
--- Create table for persistent rate limiting (better than in-memory)
+-- CREATE TABLE IF NOT EXISTS for persistent rate limiting (better than in-memory)
 CREATE TABLE IF NOT EXISTS public.rate_limits (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
   key text NOT NULL,
@@ -132,6 +132,7 @@ CREATE INDEX IF NOT EXISTS idx_rate_limits_key_window ON public.rate_limits(key,
 ALTER TABLE public.rate_limits ENABLE ROW LEVEL SECURITY;
 
 -- Rate limits should only be accessible by service role (used in edge functions)
+DROP POLICY IF EXISTS "Service role can manage rate limits" ON public.rate_limits;
 CREATE POLICY "Service role can manage rate limits" ON public.rate_limits
   FOR ALL USING (auth.jwt() ->> 'role' = 'service_role');
 
@@ -144,6 +145,7 @@ BEGIN
   END IF;
 END $$;
 
+ALTER TABLE public.shared_links DROP CONSTRAINT IF EXISTS check_allowed_domains;
 ALTER TABLE public.shared_links 
 ADD CONSTRAINT check_allowed_domains 
 CHECK (

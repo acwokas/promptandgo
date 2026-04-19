@@ -10,6 +10,8 @@ DROP POLICY IF EXISTS "subscribers_deny_anonymous" ON public.subscribers;
 
 -- Create a single, clear admin SELECT policy that uses the secure view function
 -- This ensures admins can only access subscriber data through the controlled function
+DROP POLICY IF EXISTS "admins_use_secure_function_only" ON public.subscribers;
+DROP POLICY IF EXISTS "admins_use_secure_function_only" ON public.subscribers;
 CREATE POLICY "admins_use_secure_function_only"
 ON public.subscribers
 FOR SELECT
@@ -23,6 +25,8 @@ USING (
 -- Note: The existing 'users_own_subscription_status_only' policy already handles this correctly
 
 -- Add explicit deny for unauthenticated users on SELECT
+DROP POLICY IF EXISTS "subscribers_deny_unauthenticated_select" ON public.subscribers;
+DROP POLICY IF EXISTS "subscribers_deny_unauthenticated_select" ON public.subscribers;
 CREATE POLICY "subscribers_deny_unauthenticated_select"
 ON public.subscribers
 FOR SELECT
@@ -30,6 +34,8 @@ TO anon
 USING (false);
 
 -- Add explicit deny for unauthenticated users on INSERT
+DROP POLICY IF EXISTS "subscribers_deny_unauthenticated_insert" ON public.subscribers;
+DROP POLICY IF EXISTS "subscribers_deny_unauthenticated_insert" ON public.subscribers;
 CREATE POLICY "subscribers_deny_unauthenticated_insert"
 ON public.subscribers
 FOR INSERT
@@ -37,6 +43,8 @@ TO anon
 WITH CHECK (false);
 
 -- Add explicit deny for unauthenticated users on UPDATE  
+DROP POLICY IF EXISTS "subscribers_deny_unauthenticated_update" ON public.subscribers;
+DROP POLICY IF EXISTS "subscribers_deny_unauthenticated_update" ON public.subscribers;
 CREATE POLICY "subscribers_deny_unauthenticated_update"
 ON public.subscribers
 FOR UPDATE
@@ -45,6 +53,8 @@ USING (false)
 WITH CHECK (false);
 
 -- Add explicit deny for unauthenticated users on DELETE
+DROP POLICY IF EXISTS "subscribers_deny_unauthenticated_delete" ON public.subscribers;
+DROP POLICY IF EXISTS "subscribers_deny_unauthenticated_delete" ON public.subscribers;
 CREATE POLICY "subscribers_deny_unauthenticated_delete"
 ON public.subscribers
 FOR DELETE

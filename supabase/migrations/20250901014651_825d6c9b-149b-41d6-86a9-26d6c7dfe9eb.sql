@@ -2,6 +2,8 @@
 DROP POLICY IF EXISTS "Authenticated users can create shared links" ON public.shared_links;
 
 -- Create new policy that allows service role and handles null shared_by
+DROP POLICY IF EXISTS "Allow shared link creation" ON public.shared_links;
+DROP POLICY IF EXISTS "Allow shared link creation" ON public.shared_links;
 CREATE POLICY "Allow shared link creation" 
 ON public.shared_links 
 FOR INSERT 

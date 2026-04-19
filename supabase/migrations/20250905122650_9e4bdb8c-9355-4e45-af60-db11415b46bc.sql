@@ -6,6 +6,8 @@ DROP POLICY IF EXISTS "shared_links_insert_policy" ON public.shared_links;
 
 -- Create a new policy that allows the edge function to work properly
 -- Allow inserts for service_role OR when authenticated users create their own links OR anonymous users
+DROP POLICY IF EXISTS "shared_links_insert_policy" ON public.shared_links;
+DROP POLICY IF EXISTS "shared_links_insert_policy" ON public.shared_links;
 CREATE POLICY "shared_links_insert_policy" 
 ON public.shared_links 
 FOR INSERT 

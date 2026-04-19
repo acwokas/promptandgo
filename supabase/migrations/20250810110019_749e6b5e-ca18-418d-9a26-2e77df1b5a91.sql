@@ -11,19 +11,25 @@ create table if not exists public.profiles (
 alter table public.profiles enable row level security;
 
 -- Allow anyone to read profiles (public profiles)
-create policy if not exists "Profiles are viewable by everyone"
+DROP POLICY IF EXISTS "Profiles are viewable by everyone" ON public.profiles;
+DROP POLICY IF EXISTS "Profiles are viewable by everyone" ON public.profiles;
+create policy "Profiles are viewable by everyone"
   on public.profiles
   for select
   using (true);
 
 -- Allow users to insert their own profile (id must match auth uid)
-create policy if not exists "Users can insert their own profile"
+DROP POLICY IF EXISTS "Users can insert their own profile" ON public.profiles;
+DROP POLICY IF EXISTS "Users can insert their own profile" ON public.profiles;
+create policy "Users can insert their own profile"
   on public.profiles
   for insert
   with check (auth.uid() = id);
 
 -- Allow users to update their own profile
-create policy if not exists "Users can update their own profile"
+DROP POLICY IF EXISTS "Users can update their own profile" ON public.profiles;
+DROP POLICY IF EXISTS "Users can update their own profile" ON public.profiles;
+create policy "Users can update their own profile"
   on public.profiles
   for update
   using (auth.uid() = id);
@@ -38,6 +44,6 @@ end;
 $$ language plpgsql;
 
 -- Attach trigger to profiles
-create trigger if not exists update_profiles_updated_at
+create trigger update_profiles_updated_at
 before update on public.profiles
 for each row execute function public.update_updated_at_column();

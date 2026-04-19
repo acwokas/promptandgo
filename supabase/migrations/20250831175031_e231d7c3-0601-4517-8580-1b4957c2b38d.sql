@@ -9,6 +9,8 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 DROP POLICY IF EXISTS "subscribers_service_role_all_operations" ON public.subscribers;
 
 -- Create secure, specific policies for subscribers table
+DROP POLICY IF EXISTS "subscribers_service_role_insert_only" ON public.subscribers;
+DROP POLICY IF EXISTS "subscribers_service_role_insert_only" ON public.subscribers;
 CREATE POLICY "subscribers_service_role_insert_only" 
 ON public.subscribers 
 FOR INSERT 
@@ -16,6 +18,8 @@ WITH CHECK (
   (auth.jwt() ->> 'role'::text) = 'service_role'::text
 );
 
+DROP POLICY IF EXISTS "subscribers_service_role_update_only" ON public.subscribers;
+DROP POLICY IF EXISTS "subscribers_service_role_update_only" ON public.subscribers;
 CREATE POLICY "subscribers_service_role_update_only" 
 ON public.subscribers 
 FOR UPDATE 
@@ -27,6 +31,8 @@ WITH CHECK (
 );
 
 -- Admin can view all subscriber data (for management purposes)
+DROP POLICY IF EXISTS "subscribers_admin_select_all" ON public.subscribers;
+DROP POLICY IF EXISTS "subscribers_admin_select_all" ON public.subscribers;
 CREATE POLICY "subscribers_admin_select_all" 
 ON public.subscribers 
 FOR SELECT 

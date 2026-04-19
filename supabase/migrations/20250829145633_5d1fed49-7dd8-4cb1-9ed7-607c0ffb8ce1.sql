@@ -1,6 +1,6 @@
 -- Add total vote count override to polls table
-ALTER TABLE public.polls ADD COLUMN manual_total_votes integer DEFAULT NULL;
-ALTER TABLE public.polls ADD COLUMN use_manual_total_votes boolean DEFAULT false;
+ALTER TABLE public.polls ADD COLUMN IF NOT EXISTS manual_total_votes integer DEFAULT NULL;
+ALTER TABLE public.polls ADD COLUMN IF NOT EXISTS use_manual_total_votes boolean DEFAULT false;
 
 -- Update the get_poll_results_with_manual function to use manual total votes
 CREATE OR REPLACE FUNCTION public.get_poll_results_with_manual(poll_id_param uuid)

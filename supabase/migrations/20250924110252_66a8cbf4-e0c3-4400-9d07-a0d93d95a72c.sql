@@ -1,5 +1,5 @@
--- Create table for rotating featured categories with daily fake usage stats
-CREATE TABLE public.featured_categories (
+-- CREATE TABLE IF NOT EXISTS for rotating featured categories with daily fake usage stats
+CREATE TABLE IF NOT EXISTS public.featured_categories (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   title text NOT NULL,
   message text NOT NULL,
@@ -16,12 +16,16 @@ CREATE TABLE public.featured_categories (
 ALTER TABLE public.featured_categories ENABLE ROW LEVEL SECURITY;
 
 -- Allow public read access to active categories
+DROP POLICY IF EXISTS "Public can view active featured categories" ON public.featured_categories;
+DROP POLICY IF EXISTS "Public can view active featured categories" ON public.featured_categories;
 CREATE POLICY "Public can view active featured categories"
 ON public.featured_categories
 FOR SELECT
 USING (is_active = true);
 
 -- Only service role can manage categories
+DROP POLICY IF EXISTS "Service role can manage featured categories" ON public.featured_categories;
+DROP POLICY IF EXISTS "Service role can manage featured categories" ON public.featured_categories;
 CREATE POLICY "Service role can manage featured categories"
 ON public.featured_categories
 FOR ALL
@@ -116,6 +120,7 @@ END;
 $$;
 
 -- Set up the trigger to update timestamps
+DROP TRIGGER IF EXISTS update_featured_categories_updated_at ON public.featured_categories;
 CREATE TRIGGER update_featured_categories_updated_at
   BEFORE UPDATE ON public.featured_categories
   FOR EACH ROW

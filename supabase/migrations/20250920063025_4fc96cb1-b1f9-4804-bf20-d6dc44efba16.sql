@@ -1,5 +1,5 @@
 -- Add AI provider preferences for users
-CREATE TABLE public.user_ai_preferences (
+CREATE TABLE IF NOT EXISTS public.user_ai_preferences (
   id uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   user_id uuid NOT NULL,
   provider_id text NOT NULL,
@@ -13,27 +13,36 @@ CREATE TABLE public.user_ai_preferences (
 ALTER TABLE public.user_ai_preferences ENABLE ROW LEVEL SECURITY;
 
 -- Create policies
+DROP POLICY IF EXISTS "Users can view their own AI preferences" ON public.user_ai_preferences;
+DROP POLICY IF EXISTS "Users can view their own AI preferences" ON public.user_ai_preferences;
 CREATE POLICY "Users can view their own AI preferences" 
 ON public.user_ai_preferences 
 FOR SELECT 
 USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can insert their own AI preferences" ON public.user_ai_preferences;
+DROP POLICY IF EXISTS "Users can insert their own AI preferences" ON public.user_ai_preferences;
 CREATE POLICY "Users can insert their own AI preferences" 
 ON public.user_ai_preferences 
 FOR INSERT 
 WITH CHECK (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can update their own AI preferences" ON public.user_ai_preferences;
+DROP POLICY IF EXISTS "Users can update their own AI preferences" ON public.user_ai_preferences;
 CREATE POLICY "Users can update their own AI preferences" 
 ON public.user_ai_preferences 
 FOR UPDATE 
 USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can delete their own AI preferences" ON public.user_ai_preferences;
+DROP POLICY IF EXISTS "Users can delete their own AI preferences" ON public.user_ai_preferences;
 CREATE POLICY "Users can delete their own AI preferences" 
 ON public.user_ai_preferences 
 FOR DELETE 
 USING (auth.uid() = user_id);
 
 -- Add trigger for automatic timestamp updates
+DROP TRIGGER IF EXISTS update_user_ai_preferences_updated_at ON public.user_ai_preferences;
 CREATE TRIGGER update_user_ai_preferences_updated_at
 BEFORE UPDATE ON public.user_ai_preferences
 FOR EACH ROW

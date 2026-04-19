@@ -47,6 +47,7 @@ END;
 $$;
 
 -- Create the trigger to enforce encryption on all INSERT and UPDATE operations
+DROP TRIGGER IF EXISTS enforce_subscriber_encryption_trigger ON public.subscribers;
 CREATE TRIGGER enforce_subscriber_encryption_trigger
 BEFORE INSERT OR UPDATE ON public.subscribers
 FOR EACH ROW
@@ -55,7 +56,7 @@ EXECUTE FUNCTION public.enforce_subscriber_encryption();
 -- Update the table comment to reflect the strict security requirements
 COMMENT ON TABLE public.subscribers IS 'CRITICAL SECURITY: This table stores sensitive payment and customer data. All email and Stripe customer ID data MUST be encrypted using the secure_upsert_subscriber() function. Direct INSERT/UPDATE operations with plaintext data are blocked by trigger. Service role can insert/update only via secure_upsert_subscriber().';
 
--- Add column comments for clarity
+-- ADD COLUMN IF NOT EXISTS comments for clarity
 COMMENT ON COLUMN public.subscribers.email IS 'DEPRECATED: Must always be "[encrypted]" or empty. Use email_enc for actual data.';
 COMMENT ON COLUMN public.subscribers.stripe_customer_id IS 'DEPRECATED: Must always be NULL or empty. Use stripe_customer_id_enc for actual data.';
 COMMENT ON COLUMN public.subscribers.email_enc IS 'Encrypted email address (bytea). Decrypt only via get_admin_subscriber_data() with proper encryption key.';

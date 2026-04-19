@@ -9,14 +9,16 @@ CREATE TABLE IF NOT EXISTS public.pack_tags (
 -- Enable Row Level Security
 ALTER TABLE public.pack_tags ENABLE ROW LEVEL SECURITY;
 
--- Create policies for pack_tags
-CREATE POLICY "Public can view pack_tags" 
-ON public.pack_tags 
-FOR SELECT 
+-- Create policies for pack_tags (drop first in case they already exist)
+DROP POLICY IF EXISTS "Public can view pack_tags" ON public.pack_tags;
+CREATE POLICY "Public can view pack_tags"
+ON public.pack_tags
+FOR SELECT
 USING (true);
 
-CREATE POLICY "Admins can modify pack_tags" 
-ON public.pack_tags 
+DROP POLICY IF EXISTS "Admins can modify pack_tags" ON public.pack_tags;
+CREATE POLICY "Admins can modify pack_tags"
+ON public.pack_tags
 FOR ALL
 USING (has_role(auth.uid(), 'admin'::app_role))
 WITH CHECK (has_role(auth.uid(), 'admin'::app_role));

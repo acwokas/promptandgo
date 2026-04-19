@@ -17,6 +17,8 @@ DROP POLICY IF EXISTS "subscribers_update_own_row" ON public.subscribers;
 
 -- Create more secure RLS policies
 -- Only allow users to view their own subscriber record
+DROP POLICY IF EXISTS "subscribers_select_own_record" ON public.subscribers;
+DROP POLICY IF EXISTS "subscribers_select_own_record" ON public.subscribers;
 CREATE POLICY "subscribers_select_own_record" 
 ON public.subscribers 
 FOR SELECT 
@@ -24,6 +26,8 @@ TO authenticated
 USING (user_id = auth.uid());
 
 -- Only allow authenticated users to insert their own subscriber record
+DROP POLICY IF EXISTS "subscribers_insert_own_record" ON public.subscribers;
+DROP POLICY IF EXISTS "subscribers_insert_own_record" ON public.subscribers;
 CREATE POLICY "subscribers_insert_own_record" 
 ON public.subscribers 
 FOR INSERT 
@@ -31,6 +35,8 @@ TO authenticated
 WITH CHECK (user_id = auth.uid());
 
 -- Only allow users to update their own subscriber record
+DROP POLICY IF EXISTS "subscribers_update_own_record" ON public.subscribers;
+DROP POLICY IF EXISTS "subscribers_update_own_record" ON public.subscribers;
 CREATE POLICY "subscribers_update_own_record" 
 ON public.subscribers 
 FOR UPDATE 
@@ -83,6 +89,7 @@ AS $$
 $$;
 
 -- Ensure the subscribers table has proper constraints
+ALTER TABLE public.subscribers DROP CONSTRAINT IF EXISTS check_user_id_not_system_user;
 ALTER TABLE public.subscribers 
 ADD CONSTRAINT check_user_id_not_system_user 
 CHECK (user_id != '00000000-0000-0000-0000-000000000000'::uuid);

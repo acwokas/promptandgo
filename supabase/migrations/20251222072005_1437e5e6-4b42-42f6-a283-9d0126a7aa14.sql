@@ -1,5 +1,5 @@
 -- Create analytics events table for storing all tracked events
-CREATE TABLE public.site_analytics_events (
+CREATE TABLE IF NOT EXISTS public.site_analytics_events (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   session_id UUID,
   user_id UUID,
@@ -19,7 +19,7 @@ CREATE TABLE public.site_analytics_events (
 );
 
 -- Create user sessions table for tracking user journeys
-CREATE TABLE public.analytics_sessions (
+CREATE TABLE IF NOT EXISTS public.analytics_sessions (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   user_id UUID,
   session_start TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
@@ -47,7 +47,7 @@ CREATE TABLE public.analytics_sessions (
 );
 
 -- Create page views table for detailed page analytics
-CREATE TABLE public.analytics_page_views (
+CREATE TABLE IF NOT EXISTS public.analytics_page_views (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   session_id UUID REFERENCES public.analytics_sessions(id) ON DELETE CASCADE,
   user_id UUID,
@@ -60,7 +60,7 @@ CREATE TABLE public.analytics_page_views (
 );
 
 -- Create conversion funnels table
-CREATE TABLE public.analytics_funnels (
+CREATE TABLE IF NOT EXISTS public.analytics_funnels (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   funnel_name TEXT NOT NULL,
   funnel_steps JSONB NOT NULL DEFAULT '[]',
@@ -70,7 +70,7 @@ CREATE TABLE public.analytics_funnels (
 );
 
 -- Create funnel completions table
-CREATE TABLE public.analytics_funnel_completions (
+CREATE TABLE IF NOT EXISTS public.analytics_funnel_completions (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   funnel_id UUID REFERENCES public.analytics_funnels(id) ON DELETE CASCADE,
   session_id UUID REFERENCES public.analytics_sessions(id) ON DELETE CASCADE,
@@ -100,86 +100,118 @@ ALTER TABLE public.analytics_funnels ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.analytics_funnel_completions ENABLE ROW LEVEL SECURITY;
 
 -- RLS Policies for site_analytics_events
+DROP POLICY IF EXISTS "Anyone can insert events" ON public.site_analytics_events;
+DROP POLICY IF EXISTS "Anyone can insert events" ON public.site_analytics_events;
 CREATE POLICY "Anyone can insert events"
 ON public.site_analytics_events
 FOR INSERT
 WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Admins can view all events" ON public.site_analytics_events;
+DROP POLICY IF EXISTS "Admins can view all events" ON public.site_analytics_events;
 CREATE POLICY "Admins can view all events"
 ON public.site_analytics_events
 FOR SELECT
 USING (has_role(auth.uid(), 'admin'::app_role));
 
+DROP POLICY IF EXISTS "Users can view their own events" ON public.site_analytics_events;
+DROP POLICY IF EXISTS "Users can view their own events" ON public.site_analytics_events;
 CREATE POLICY "Users can view their own events"
 ON public.site_analytics_events
 FOR SELECT
 USING (auth.uid() = user_id);
 
 -- RLS Policies for analytics_sessions
+DROP POLICY IF EXISTS "Anyone can insert sessions" ON public.analytics_sessions;
+DROP POLICY IF EXISTS "Anyone can insert sessions" ON public.analytics_sessions;
 CREATE POLICY "Anyone can insert sessions"
 ON public.analytics_sessions
 FOR INSERT
 WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Anyone can update anonymous sessions" ON public.analytics_sessions;
+DROP POLICY IF EXISTS "Anyone can update anonymous sessions" ON public.analytics_sessions;
 CREATE POLICY "Anyone can update anonymous sessions"
 ON public.analytics_sessions
 FOR UPDATE
 USING (true);
 
+DROP POLICY IF EXISTS "Admins can view all sessions" ON public.analytics_sessions;
+DROP POLICY IF EXISTS "Admins can view all sessions" ON public.analytics_sessions;
 CREATE POLICY "Admins can view all sessions"
 ON public.analytics_sessions
 FOR SELECT
 USING (has_role(auth.uid(), 'admin'::app_role));
 
+DROP POLICY IF EXISTS "Users can view their own sessions" ON public.analytics_sessions;
+DROP POLICY IF EXISTS "Users can view their own sessions" ON public.analytics_sessions;
 CREATE POLICY "Users can view their own sessions"
 ON public.analytics_sessions
 FOR SELECT
 USING (auth.uid() = user_id);
 
 -- RLS Policies for analytics_page_views
+DROP POLICY IF EXISTS "Anyone can insert page views" ON public.analytics_page_views;
+DROP POLICY IF EXISTS "Anyone can insert page views" ON public.analytics_page_views;
 CREATE POLICY "Anyone can insert page views"
 ON public.analytics_page_views
 FOR INSERT
 WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Admins can view all page views" ON public.analytics_page_views;
+DROP POLICY IF EXISTS "Admins can view all page views" ON public.analytics_page_views;
 CREATE POLICY "Admins can view all page views"
 ON public.analytics_page_views
 FOR SELECT
 USING (has_role(auth.uid(), 'admin'::app_role));
 
+DROP POLICY IF EXISTS "Users can view their own page views" ON public.analytics_page_views;
+DROP POLICY IF EXISTS "Users can view their own page views" ON public.analytics_page_views;
 CREATE POLICY "Users can view their own page views"
 ON public.analytics_page_views
 FOR SELECT
 USING (auth.uid() = user_id);
 
 -- RLS Policies for analytics_funnels
+DROP POLICY IF EXISTS "Admins can manage funnels" ON public.analytics_funnels;
+DROP POLICY IF EXISTS "Admins can manage funnels" ON public.analytics_funnels;
 CREATE POLICY "Admins can manage funnels"
 ON public.analytics_funnels
 FOR ALL
 USING (has_role(auth.uid(), 'admin'::app_role))
 WITH CHECK (has_role(auth.uid(), 'admin'::app_role));
 
+DROP POLICY IF EXISTS "Anyone can view active funnels" ON public.analytics_funnels;
+DROP POLICY IF EXISTS "Anyone can view active funnels" ON public.analytics_funnels;
 CREATE POLICY "Anyone can view active funnels"
 ON public.analytics_funnels
 FOR SELECT
 USING (is_active = true);
 
 -- RLS Policies for analytics_funnel_completions
+DROP POLICY IF EXISTS "Anyone can insert funnel completions" ON public.analytics_funnel_completions;
+DROP POLICY IF EXISTS "Anyone can insert funnel completions" ON public.analytics_funnel_completions;
 CREATE POLICY "Anyone can insert funnel completions"
 ON public.analytics_funnel_completions
 FOR INSERT
 WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Anyone can update funnel completions" ON public.analytics_funnel_completions;
+DROP POLICY IF EXISTS "Anyone can update funnel completions" ON public.analytics_funnel_completions;
 CREATE POLICY "Anyone can update funnel completions"
 ON public.analytics_funnel_completions
 FOR UPDATE
 USING (true);
 
+DROP POLICY IF EXISTS "Admins can view all funnel completions" ON public.analytics_funnel_completions;
+DROP POLICY IF EXISTS "Admins can view all funnel completions" ON public.analytics_funnel_completions;
 CREATE POLICY "Admins can view all funnel completions"
 ON public.analytics_funnel_completions
 FOR SELECT
 USING (has_role(auth.uid(), 'admin'::app_role));
 
+DROP POLICY IF EXISTS "Users can view their own funnel completions" ON public.analytics_funnel_completions;
+DROP POLICY IF EXISTS "Users can view their own funnel completions" ON public.analytics_funnel_completions;
 CREATE POLICY "Users can view their own funnel completions"
 ON public.analytics_funnel_completions
 FOR SELECT

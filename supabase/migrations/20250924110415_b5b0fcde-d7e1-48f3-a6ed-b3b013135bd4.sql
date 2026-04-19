@@ -10,10 +10,10 @@ SELECT cron.schedule(
   $$
   SELECT
     net.http_post(
-        url:='https://mncxspmtqvqgvtrxbxzb.supabase.co/functions/v1/rotate-featured-categories',
-        headers:='{"Content-Type": "application/json", "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1uY3hzcG10cXZxZ3Z0cnhieHpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ4MjI0NjUsImV4cCI6MjA3MDM5ODQ2NX0.UjglB_MtyXQgsAHbdWKk_sn2hSyOX9iPWIU8EOayn2M"}'::jsonb,
+        url:='https://sszxxmxqidkpkhlkstgs.supabase.co/functions/v1/rotate-featured-categories',
+        headers:='{"Content-Type": "application/json", "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNzenh4bXhxaWRrcGtobGtzdGdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1OTAwMDgsImV4cCI6MjA5MjE2NjAwOH0.W8hk9iWryQ3HahjQg0md133uWJN4rqW4ZFpCpZdmt_g"}'::jsonb,
         body:=concat('{"timestamp": "', now(), '"}')::jsonb
-    ) as request_id;
+    ) as request_id
   $$
 );
 

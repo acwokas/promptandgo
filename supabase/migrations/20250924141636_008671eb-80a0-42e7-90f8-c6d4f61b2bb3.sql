@@ -23,7 +23,7 @@ BEGIN
     name_enc = pgp_sym_encrypt(name, p_encryption_key),
     email_enc = pgp_sym_encrypt(email, p_encryption_key),
     message_enc = pgp_sym_encrypt(message, p_encryption_key),
-    email_hash = encode(digest(email, 'sha256'), 'hex'),
+    email_hash = encode(extensions.digest(email, 'sha256'), 'hex'),
     name = '[encrypted]',
     email = '[encrypted]',
     message = '[encrypted]',
@@ -65,7 +65,7 @@ BEGIN
       ELSE stripe_customer_id_enc 
     END,
     email_hash = CASE 
-      WHEN email IS NOT NULL AND email != '[encrypted]' AND email != '' THEN encode(digest(email, 'sha256'), 'hex')
+      WHEN email IS NOT NULL AND email != '[encrypted]' AND email != '' THEN encode(extensions.digest(email, 'sha256'), 'hex')
       ELSE email_hash 
     END,
     email = '[encrypted]',
@@ -85,6 +85,8 @@ DROP POLICY IF EXISTS "users_safe_subscription_data_only" ON public.subscribers;
 DROP POLICY IF EXISTS "subscribers_admin_select_all" ON public.subscribers;
 
 -- Create more restrictive admin access policy
+DROP POLICY IF EXISTS "subscribers_admin_limited_access" ON public.subscribers;
+DROP POLICY IF EXISTS "subscribers_admin_limited_access" ON public.subscribers;
 CREATE POLICY "subscribers_admin_limited_access" 
 ON public.subscribers 
 FOR SELECT 
@@ -96,6 +98,8 @@ USING (
 );
 
 -- Users can only see their own basic subscription status (no sensitive data)
+DROP POLICY IF EXISTS "users_own_subscription_status_only" ON public.subscribers;
+DROP POLICY IF EXISTS "users_own_subscription_status_only" ON public.subscribers;
 CREATE POLICY "users_own_subscription_status_only" 
 ON public.subscribers 
 FOR SELECT 
@@ -223,6 +227,8 @@ CREATE TABLE IF NOT EXISTS public.security_audit_log (
 ALTER TABLE public.security_audit_log ENABLE ROW LEVEL SECURITY;
 
 -- Only admins can view audit logs
+DROP POLICY IF EXISTS "admins_view_audit_logs" ON public.security_audit_log;
+DROP POLICY IF EXISTS "admins_view_audit_logs" ON public.security_audit_log;
 CREATE POLICY "admins_view_audit_logs" 
 ON public.security_audit_log 
 FOR SELECT 
@@ -230,6 +236,8 @@ TO authenticated
 USING (has_role(auth.uid(), 'admin'::app_role));
 
 -- Service role can insert audit logs
+DROP POLICY IF EXISTS "service_insert_audit_logs" ON public.security_audit_log;
+DROP POLICY IF EXISTS "service_insert_audit_logs" ON public.security_audit_log;
 CREATE POLICY "service_insert_audit_logs" 
 ON public.security_audit_log 
 FOR INSERT 

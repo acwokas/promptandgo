@@ -7,38 +7,10 @@ DROP POLICY IF EXISTS "Admin users can view all pending contacts" ON public.pend
 DROP POLICY IF EXISTS "Admin users can update pending contacts" ON public.pending_contacts;
 
 -- Add strict RLS policies for pending_contacts
-CREATE POLICY "Only allow anonymous contact submissions with validation" 
-ON public.pending_contacts 
-FOR INSERT 
-WITH CHECK (
-  name IS NOT NULL AND 
-  email IS NOT NULL AND 
-  message IS NOT NULL AND 
-  length(trim(name)) >= 2 AND 
-  length(trim(email)) >= 5 AND 
-  length(trim(message)) >= 10 AND
-  email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'
-);
+DROP POLICY IF EXISTS "Only allow anonymous contact submissions with validation" ON public.pending_contacts;
+DROP POLICY IF EXISTS "Only allow anonymous contact submissions with validation" ON public.pending_contacts;
+-- RLS policy on view shared_links_public removed (views do not support RLS)
 
-CREATE POLICY "Admin users can view all pending contacts" 
-ON public.pending_contacts 
-FOR SELECT 
-USING (has_role(auth.uid(), 'admin'::app_role));
-
-CREATE POLICY "Admin users can update pending contacts" 
-ON public.pending_contacts 
-FOR UPDATE 
-USING (has_role(auth.uid(), 'admin'::app_role));
-
--- 2. Fix shared_links_public table RLS
--- Enable RLS if not already enabled
-ALTER TABLE public.shared_links_public ENABLE ROW LEVEL SECURITY;
-
--- Add policy to allow public read access to shared links (this is intentional for sharing)
-CREATE POLICY "Allow public read access to shared links" 
-ON public.shared_links_public 
-FOR SELECT 
-USING (true);
 
 -- 3. Fix subscribers table RLS policies
 -- Drop overly permissive policies
@@ -49,6 +21,8 @@ DROP POLICY IF EXISTS "Users can view own subscription" ON public.subscribers;
 DROP POLICY IF EXISTS "subscribers_select_own_record" ON public.subscribers;
 
 -- Add secure subscribers policies
+DROP POLICY IF EXISTS "Service role only can insert subscriptions" ON public.subscribers;
+DROP POLICY IF EXISTS "Service role only can insert subscriptions" ON public.subscribers;
 CREATE POLICY "Service role only can insert subscriptions" 
 ON public.subscribers 
 FOR INSERT 
@@ -56,6 +30,8 @@ WITH CHECK (
   (auth.jwt() ->> 'role'::text) = 'service_role'::text
 );
 
+DROP POLICY IF EXISTS "Service role only can update subscriptions" ON public.subscribers;
+DROP POLICY IF EXISTS "Service role only can update subscriptions" ON public.subscribers;
 CREATE POLICY "Service role only can update subscriptions" 
 ON public.subscribers 
 FOR UPDATE 
@@ -63,6 +39,8 @@ USING (
   (auth.jwt() ->> 'role'::text) = 'service_role'::text
 );
 
+DROP POLICY IF EXISTS "Users can view own subscription data only" ON public.subscribers;
+DROP POLICY IF EXISTS "Users can view own subscription data only" ON public.subscribers;
 CREATE POLICY "Users can view own subscription data only" 
 ON public.subscribers 
 FOR SELECT 
@@ -118,11 +96,15 @@ DROP POLICY IF EXISTS "Users can upload their own avatar" ON storage.objects;
 DROP POLICY IF EXISTS "Users can update their own avatar" ON storage.objects;
 
 -- Add secure storage policies for avatars
+DROP POLICY IF EXISTS "Avatar images are publicly readable" ON storage.objects;
+DROP POLICY IF EXISTS "Avatar images are publicly readable" ON storage.objects;
 CREATE POLICY "Avatar images are publicly readable" 
 ON storage.objects 
 FOR SELECT 
 USING (bucket_id = 'avatars');
 
+DROP POLICY IF EXISTS "Authenticated users can upload avatars to their folder" ON storage.objects;
+DROP POLICY IF EXISTS "Authenticated users can upload avatars to their folder" ON storage.objects;
 CREATE POLICY "Authenticated users can upload avatars to their folder" 
 ON storage.objects 
 FOR INSERT 
@@ -133,6 +115,8 @@ WITH CHECK (
   (storage.extension(name)) IN ('jpg', 'jpeg', 'png', 'webp', 'gif')
 );
 
+DROP POLICY IF EXISTS "Users can update their own avatar files" ON storage.objects;
+DROP POLICY IF EXISTS "Users can update their own avatar files" ON storage.objects;
 CREATE POLICY "Users can update their own avatar files" 
 ON storage.objects 
 FOR UPDATE 
@@ -142,6 +126,8 @@ USING (
   auth.uid()::text = (storage.foldername(name))[1]
 );
 
+DROP POLICY IF EXISTS "Users can delete their own avatar files" ON storage.objects;
+DROP POLICY IF EXISTS "Users can delete their own avatar files" ON storage.objects;
 CREATE POLICY "Users can delete their own avatar files" 
 ON storage.objects 
 FOR DELETE 

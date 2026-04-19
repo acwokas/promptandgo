@@ -7,11 +7,15 @@ DROP POLICY IF EXISTS "Allow public insert of contacts" ON public.pending_contac
 DROP POLICY IF EXISTS "Admins can update contacts" ON public.pending_contacts;
 
 -- Recreate with explicit, secure policies
+DROP POLICY IF EXISTS "Admin users can view all pending contacts" ON public.pending_contacts;
+DROP POLICY IF EXISTS "Admin users can view all pending contacts" ON public.pending_contacts;
 CREATE POLICY "Admin users can view all pending contacts" 
 ON public.pending_contacts 
 FOR SELECT 
 USING (public.has_role(auth.uid(), 'admin'::app_role));
 
+DROP POLICY IF EXISTS "Public can submit contact forms" ON public.pending_contacts;
+DROP POLICY IF EXISTS "Public can submit contact forms" ON public.pending_contacts;
 CREATE POLICY "Public can submit contact forms" 
 ON public.pending_contacts 
 FOR INSERT 
@@ -25,28 +29,38 @@ WITH CHECK (
   length(message) > 0
 );
 
+DROP POLICY IF EXISTS "Admin users can update pending contacts" ON public.pending_contacts;
+DROP POLICY IF EXISTS "Admin users can update pending contacts" ON public.pending_contacts;
 CREATE POLICY "Admin users can update pending contacts" 
 ON public.pending_contacts 
 FOR UPDATE 
 USING (public.has_role(auth.uid(), 'admin'::app_role));
 
 -- 2. Fix ai_usage table - add missing INSERT/UPDATE policies
+DROP POLICY IF EXISTS "Users can only insert their own usage records" ON public.ai_usage;
+DROP POLICY IF EXISTS "Users can only insert their own usage records" ON public.ai_usage;
 CREATE POLICY "Users can only insert their own usage records" 
 ON public.ai_usage 
 FOR INSERT 
 WITH CHECK (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can only update their own usage records" ON public.ai_usage;
+DROP POLICY IF EXISTS "Users can only update their own usage records" ON public.ai_usage;
 CREATE POLICY "Users can only update their own usage records" 
 ON public.ai_usage 
 FOR UPDATE 
 USING (auth.uid() = user_id);
 
 -- 3. Fix orders table - add comprehensive RLS policies
+DROP POLICY IF EXISTS "Users can view their own orders" ON public.orders;
+DROP POLICY IF EXISTS "Users can view their own orders" ON public.orders;
 CREATE POLICY "Users can view their own orders" 
 ON public.orders 
 FOR SELECT 
 USING (user_id = auth.uid());
 
+DROP POLICY IF EXISTS "Service role can insert orders" ON public.orders;
+DROP POLICY IF EXISTS "Service role can insert orders" ON public.orders;
 CREATE POLICY "Service role can insert orders" 
 ON public.orders 
 FOR INSERT 
@@ -55,6 +69,8 @@ WITH CHECK (
   (auth.jwt() ->> 'role')::text = 'service_role'
 );
 
+DROP POLICY IF EXISTS "Service role can update orders" ON public.orders;
+DROP POLICY IF EXISTS "Service role can update orders" ON public.orders;
 CREATE POLICY "Service role can update orders" 
 ON public.orders 
 FOR UPDATE 
@@ -64,6 +80,8 @@ USING (
 );
 
 -- 4. Ensure order_items follows the same pattern
+DROP POLICY IF EXISTS "Service role can insert order items" ON public.order_items;
+DROP POLICY IF EXISTS "Service role can insert order items" ON public.order_items;
 CREATE POLICY "Service role can insert order items" 
 ON public.order_items 
 FOR INSERT 
@@ -72,6 +90,8 @@ WITH CHECK (
   (auth.jwt() ->> 'role')::text = 'service_role'
 );
 
+DROP POLICY IF EXISTS "Service role can update order items" ON public.order_items;
+DROP POLICY IF EXISTS "Service role can update order items" ON public.order_items;
 CREATE POLICY "Service role can update order items" 
 ON public.order_items 
 FOR UPDATE 

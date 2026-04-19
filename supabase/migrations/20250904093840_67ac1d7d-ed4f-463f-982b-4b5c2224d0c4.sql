@@ -3,6 +3,8 @@
 
 -- First, let's add a policy that explicitly denies any public access
 -- This will act as a fallback to prevent any potential bypass of authentication
+DROP POLICY IF EXISTS "Deny all public access to pending_contacts" ON public.pending_contacts;
+DROP POLICY IF EXISTS "Deny all public access to pending_contacts" ON public.pending_contacts;
 CREATE POLICY "Deny all public access to pending_contacts" 
 ON public.pending_contacts 
 FOR ALL 
@@ -11,6 +13,8 @@ USING (false)
 WITH CHECK (false);
 
 -- Ensure the service role policy is more explicit about authentication requirements
+DROP POLICY IF EXISTS "contact_submissions_service_role_only" ON public.pending_contacts;
+DROP POLICY IF EXISTS "contact_submissions_service_role_only" ON public.pending_contacts;
 DROP POLICY IF EXISTS "contact_submissions_service_role_only" ON public.pending_contacts;
 CREATE POLICY "contact_submissions_service_role_only" 
 ON public.pending_contacts 
@@ -23,6 +27,8 @@ WITH CHECK (
 
 -- Update admin policies to be more explicit about authentication requirements
 DROP POLICY IF EXISTS "pending_contacts_admin_access_only" ON public.pending_contacts;
+DROP POLICY IF EXISTS "pending_contacts_admin_access_only" ON public.pending_contacts;
+DROP POLICY IF EXISTS "pending_contacts_admin_access_only" ON public.pending_contacts;
 CREATE POLICY "pending_contacts_admin_access_only" 
 ON public.pending_contacts 
 FOR SELECT 
@@ -33,6 +39,8 @@ USING (
   has_role(auth.uid(), 'admin'::app_role)
 );
 
+DROP POLICY IF EXISTS "pending_contacts_admin_update_only" ON public.pending_contacts;
+DROP POLICY IF EXISTS "pending_contacts_admin_update_only" ON public.pending_contacts;
 DROP POLICY IF EXISTS "pending_contacts_admin_update_only" ON public.pending_contacts;
 CREATE POLICY "pending_contacts_admin_update_only" 
 ON public.pending_contacts 
@@ -47,6 +55,8 @@ WITH CHECK (
   has_role(auth.uid(), 'admin'::app_role)
 );
 
+DROP POLICY IF EXISTS "pending_contacts_admin_delete_only" ON public.pending_contacts;
+DROP POLICY IF EXISTS "pending_contacts_admin_delete_only" ON public.pending_contacts;
 DROP POLICY IF EXISTS "pending_contacts_admin_delete_only" ON public.pending_contacts;
 CREATE POLICY "pending_contacts_admin_delete_only" 
 ON public.pending_contacts 

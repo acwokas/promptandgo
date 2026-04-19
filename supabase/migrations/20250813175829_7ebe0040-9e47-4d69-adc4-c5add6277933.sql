@@ -1,5 +1,5 @@
 -- Create shared_links table for tracking shared content
-CREATE TABLE public.shared_links (
+CREATE TABLE IF NOT EXISTS public.shared_links (
   id uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   short_code text NOT NULL UNIQUE,
   original_url text NOT NULL,
@@ -20,10 +20,12 @@ CREATE INDEX idx_shared_links_content ON public.shared_links(content_type, conte
 ALTER TABLE public.shared_links ENABLE ROW LEVEL SECURITY;
 
 -- Anyone can read shared links (needed for redirect function)
+DROP POLICY IF EXISTS "Anyone can read shared links" ON public.shared_links;
 CREATE POLICY "Anyone can read shared links" ON public.shared_links
 FOR SELECT USING (true);
 
 -- Users can create shared links
+DROP POLICY IF EXISTS "Users can create shared links" ON public.shared_links;
 CREATE POLICY "Users can create shared links" ON public.shared_links
 FOR INSERT WITH CHECK (auth.uid() IS NOT NULL OR shared_by IS NULL);
 

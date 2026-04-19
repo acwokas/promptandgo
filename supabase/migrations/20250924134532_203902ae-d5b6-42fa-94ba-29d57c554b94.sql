@@ -54,7 +54,7 @@ BEGIN
     pgp_sym_encrypt(p_name, p_key),
     pgp_sym_encrypt(p_email, p_key),
     pgp_sym_encrypt(p_message, p_key),
-    encode(digest(p_email, 'sha256'), 'hex')
+    encode(extensions.digest(p_email, 'sha256'), 'hex')
   );
   
   RETURN new_id;
