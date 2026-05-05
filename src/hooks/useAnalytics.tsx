@@ -413,7 +413,7 @@ export const useAnalytics = () => {
       
       // Try to update via beacon
       navigator.sendBeacon?.(
-        `https://mncxspmtqvqgvtrxbxzb.supabase.co/rest/v1/analytics_sessions?id=eq.${session.session_id}`,
+        `https://sszxxmxqidkpkhlkstgs.supabase.co/rest/v1/analytics_sessions?id=eq.${session.session_id}`,
         JSON.stringify(sessionUpdate)
       );
     };

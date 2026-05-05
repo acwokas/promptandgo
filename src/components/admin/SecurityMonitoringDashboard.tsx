@@ -221,7 +221,7 @@ export default function SecurityMonitoringDashboard() {
             </Button>
             <Button
               variant="outline"
-              onClick={() => window.open('https://supabase.com/dashboard/project/mncxspmtqvqgvtrxbxzb/auth/providers', '_blank')}
+              onClick={() => window.open('https://supabase.com/dashboard/project/sszxxmxqidkpkhlkstgs/auth/providers', '_blank')}
               className="h-auto p-4 flex-col items-start"
             >
               <Shield className="h-5 w-5 mb-2" />
@@ -232,7 +232,7 @@ export default function SecurityMonitoringDashboard() {
             </Button>
             <Button
               variant="outline"
-              onClick={() => window.open('https://supabase.com/dashboard/project/mncxspmtqvqgvtrxbxzb/settings/functions', '_blank')}
+              onClick={() => window.open('https://supabase.com/dashboard/project/sszxxmxqidkpkhlkstgs/settings/functions', '_blank')}
               className="h-auto p-4 flex-col items-start"
             >
               <Key className="h-5 w-5 mb-2" />
