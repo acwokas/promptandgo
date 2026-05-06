@@ -1,0 +1,11 @@
+{
+  "canonical": "https://promptandgo.ai/packs",
+  "title": "Power Packs – Curated bundles for specific goals",
+  "tldr": "Save time with themed packs of prompts for marketing, careers, productivity and more.",
+  "key_entities": ["prompt packs", "bundles", "offers"],
+  "questions": [
+    { "q": "What do I get in a pack?", "a": "A curated set of prompts focused on a single outcome or theme." },
+    { "q": "Can I use prompts commercially?", "a": "Yes, unless otherwise stated. Check each prompt’s guidance." }
+  ],
+  "lastmod": "2025-08-12"
+}

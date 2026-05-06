@@ -1,0 +1,11 @@
+{
+  "canonical": "https://promptandgo.ai/blog/ai-prompts-for-business-strategy",
+  "title": "AI Prompts for Business Strategy and Planning",
+  "tldr": "Generate SWOT analyses, growth strategies, financial projections, and market research insights faster with structured AI prompts.",
+  "key_entities": ["business strategy", "SWOT analysis", "growth planning"],
+  "questions": [
+    { "q": "Can AI help with strategic decisions?", "a": "AI provides data analysis and scenario planning to inform decisions, but strategic judgment remains human." },
+    { "q": "How accurate are AI market insights?", "a": "AI can identify patterns and trends, but validate insights with current market data and expert analysis." }
+  ],
+  "lastmod": "2025-07-19"
+}

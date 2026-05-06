@@ -1,0 +1,10 @@
+{
+  "canonical": "https://promptandgo.ai/tips/why-most-prompts-fail-before-you-even-press-enter",
+  "title": "Why Most Prompts Fail Before You Even Press Enter",
+  "tldr": "Prompts fail because of messy thinking, not weak AI. Clarity of intent and precision beat clever wording.",
+  "key_entities": ["prompt intent", "clarity", "prompt mistakes"],
+  "questions": [
+    { "q": "Why do most prompts fail?", "a": "Because people bundle multiple unclear problems into one sentence instead of defining a clear intent." }
+  ],
+  "lastmod": "2026-02-11"
+}

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>PromptAndGo Blog</title>
+    <link>https://promptandgo.ai/blog</link>
+    <description>Curated AI prompts, how-tos, and productivity guides.</description>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 12 Aug 2025 00:00:00 +0000</lastBuildDate>
+
+    <item>
+      <title>Welcome to PromptAndGo.ai – Smarter AI Prompts Fast</title>
+      <link>https://promptandgo.ai/blog/welcome-to-promptandgo-ai</link>
+      <guid isPermaLink="true">https://promptandgo.ai/blog/welcome-to-promptandgo-ai</guid>
+      <pubDate>Tue, 12 Aug 2025 00:00:00 +0000</pubDate>
+      <description>Ready-to-use, field-tested prompts for ChatGPT, Claude, and Gemini to get high-quality results instantly.</description>
+    </item>
+
+    <item>
+      <title>How to Write AI Prompts That Actually Work</title>
+      <link>https://promptandgo.ai/blog/how-to-write-ai-prompts</link>
+      <guid isPermaLink="true">https://promptandgo.ai/blog/how-to-write-ai-prompts</guid>
+      <pubDate>Tue, 12 Aug 2025 00:00:00 +0000</pubDate>
+      <description>Learn five rules to create prompts that produce accurate, useful, and consistent results.</description>
+    </item>
+
+    <item>
+      <title>AI Prompts That Save You Hours Every Week</title>
+      <link>https://promptandgo.ai/blog/ai-prompts-that-save-you-hours</link>
+      <guid isPermaLink="true">https://promptandgo.ai/blog/ai-prompts-that-save-you-hours</guid>
+      <pubDate>Tue, 12 Aug 2025 00:00:00 +0000</pubDate>
+      <description>Automate routine tasks, speed up decisions, and boost productivity with proven prompts.</description>
+    </item>
+
+    <item>
+      <title>AI Prompts for Customer Support Teams</title>
+      <link>https://promptandgo.ai/blog/ai-prompts-for-customer-support</link>
+      <guid isPermaLink="true">https://promptandgo.ai/blog/ai-prompts-for-customer-support</guid>
+      <pubDate>Tue, 12 Aug 2025 00:00:00 +0000</pubDate>
+      <description>Improve service with AI prompts to automate responses and handle complex queries faster.</description>
+    </item>
+
+    <item>
+      <title>Best AI Prompts for Small Business Owners (2025)</title>
+      <link>https://promptandgo.ai/blog/best-ai-prompts-for-small-business-2025</link>
+      <guid isPermaLink="true">https://promptandgo.ai/blog/best-ai-prompts-for-small-business-2025</guid>
+      <pubDate>Tue, 12 Aug 2025 00:00:00 +0000</pubDate>
+      <description>Prompts to boost sales, streamline operations, and save hours weekly.</description>
+    </item>
+
+    <item>
+      <title>AI Prompts for Marketing Campaigns That Convert</title>
+      <link>https://promptandgo.ai/blog/ai-prompts-for-marketing-campaigns</link>
+      <guid isPermaLink="true">https://promptandgo.ai/blog/ai-prompts-for-marketing-campaigns</guid>
+      <pubDate>Tue, 12 Aug 2025 00:00:00 +0000</pubDate>
+      <description>From ad copy to social captions — use these prompts to boost engagement and sales.</description>
+    </item>
+  </channel>
+</rss>

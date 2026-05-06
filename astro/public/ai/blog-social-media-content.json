@@ -1,0 +1,11 @@
+{
+  "canonical": "https://promptandgo.ai/blog/ai-prompts-for-social-media-content",
+  "title": "AI Prompts for Social Media Content That Stands Out",
+  "tldr": "Create engaging social media posts, captions, and content ideas that grab attention and drive engagement across all platforms.",
+  "key_entities": ["social media", "content creation", "engagement"],
+  "questions": [
+    { "q": "How do I make content platform-specific?", "a": "Adapt prompts for each platform's audience and format - Instagram stories vs LinkedIn posts require different approaches." },
+    { "q": "Can AI help with trending content?", "a": "Yes, use prompts that incorporate current events, hashtags, and seasonal themes relevant to your audience." }
+  ],
+  "lastmod": "2025-05-19"
+}

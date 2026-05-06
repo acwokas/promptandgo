@@ -1,0 +1,11 @@
+{
+  "canonical": "https://promptandgo.ai/faqs",
+  "title": "FAQs – PromptAndGo",
+  "tldr": "Answers to common questions about using prompts, payments, and support.",
+  "key_entities": ["FAQ", "support", "licensing"],
+  "questions": [
+    { "q": "Do prompts work with free tools?", "a": "Yes, most prompts work with free versions of major AI tools." },
+    { "q": "Do you store my chats?", "a": "No, we don’t store your AI conversations." }
+  ],
+  "lastmod": "2025-08-12"
+}

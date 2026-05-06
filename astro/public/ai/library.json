@@ -1,0 +1,11 @@
+{
+  "canonical": "https://promptandgo.ai/library",
+  "title": "Prompt Library – 1600+ free and pro prompts",
+  "tldr": "Find prompts by category and goal. Copy into your AI tool and go.",
+  "key_entities": ["prompt library", "categories", "use cases"],
+  "questions": [
+    { "q": "How do I use a prompt?", "a": "Copy and paste into ChatGPT or your AI tool, then tweak and regenerate." },
+    { "q": "Do I need an account?", "a": "Browsing is free. Save favorites or buy pro packs when ready." }
+  ],
+  "lastmod": "2025-08-12"
+}

@@ -1,0 +1,170 @@
+export interface AIProvider {
+  id: string;
+  name: string;
+  icon: string;
+  category: 'text' | 'image';
+  description: string;
+  rewritePattern: (prompt: string) => string;
+}
+
+export const AI_PROVIDERS: AIProvider[] = [
+  {
+    id: 'chatgpt',
+    name: 'ChatGPT',
+    icon: '🤖',
+    category: 'text',
+    description: 'OpenAI GPT models',
+    rewritePattern: (prompt: string) => {
+      // Creative three-paragraph description for writing/content, or clear structured steps for tasks
+      const sections = [
+        `**Objective**: ${prompt.split('.')[0] || prompt.substring(0, 100)}...`,
+        `**Approach**: Break this down into clear, actionable steps with specific examples and practical guidance.`,
+        `**Output**: Provide detailed, well-structured content that directly addresses the request with creative flair and practical value.`
+      ];
+      return sections.join('\n\n');
+    }
+  },
+  {
+    id: 'claude',
+    name: 'Claude',
+    icon: '🧠',
+    category: 'text',
+    description: 'Anthropic Claude models',
+    rewritePattern: (prompt: string) => {
+      // Narrative flow, vivid details, and filmic style; concise, elegant paragraphs
+      return `Create a response with narrative elegance and vivid detail. The approach should feel cinematic and flow naturally.\n\n${prompt}\n\nDevelop this with rich, descriptive language that paints a clear picture. Structure your response in concise, elegant paragraphs that build upon each other seamlessly.`;
+    }
+  },
+  {
+    id: 'gemini',
+    name: 'Gemini',
+    icon: '✨',
+    category: 'text',
+    description: 'Google Gemini models',
+    rewritePattern: (prompt: string) => {
+      // Analytical summary: bullet points for features, followed by concise summary paragraph
+      const bulletPoints = [
+        '• Core objective and key requirements',
+        '• Specific deliverables and format expectations',
+        '• Quality standards and success criteria',
+        '• Additional considerations and context'
+      ];
+      return `**Analysis Request**: ${prompt}\n\n**Key Components**:\n${bulletPoints.join('\n')}\n\n**Summary**: Provide a comprehensive analysis addressing each component above with practical insights and actionable recommendations.`;
+    }
+  },
+  {
+    id: 'midjourney',
+    name: 'MidJourney',
+    icon: '🎨',
+    category: 'image',
+    description: 'MidJourney image generation',
+    rewritePattern: (prompt: string) => {
+      // Direct, image-oriented command using art tags, ratio, and rendering cues
+      const cleanPrompt = prompt.replace(/create|generate|make|design/gi, '').trim();
+      return `${cleanPrompt}, professional photography, highly detailed, cinematic lighting, vibrant colors, ultra-realistic, 8k resolution --ar 16:9 --v 6`;
+    }
+  },
+  {
+    id: 'deepseek',
+    name: 'DeepSeek',
+    icon: '🔍',
+    category: 'text',
+    description: 'DeepSeek models',
+    rewritePattern: (prompt: string) => {
+      // Fact-driven, logical breakdown; each feature described with rationale
+      return `**Analytical Request**: ${prompt}\n\n**Logical Framework**:\n1. **Problem Definition**: Clearly identify the core challenge or objective\n2. **Reasoning Process**: Apply systematic analysis with supporting evidence\n3. **Technical Considerations**: Address implementation details and constraints\n4. **Validation Criteria**: Define measurable success indicators\n\n**Expected Output**: Provide a fact-driven response with logical reasoning supporting each conclusion.`;
+    }
+  },
+  {
+    id: 'ideogram',
+    name: 'Ideogram',
+    icon: '🎭',
+    category: 'image',
+    description: 'Ideogram AI image creation',
+    rewritePattern: (prompt: string) => {
+      // Artistic prompt for visual effect; fuse design intent with style cues
+      const cleanPrompt = prompt.replace(/create|generate|make|design/gi, '').trim();
+      return `${cleanPrompt}, artistic composition, bold visual impact, harmonious color palette, dynamic lighting, expressive mood, creative typography integration, modern aesthetic design`;
+    }
+  },
+  {
+    id: 'groq',
+    name: 'GroqChat',
+    icon: '⚡',
+    category: 'text',
+    description: 'Groq fast inference',
+    rewritePattern: (prompt: string) => {
+      // Ultra-concise, direct request; list 2-3 core features with clear language
+      const coreFeatures = [
+        'Primary objective',
+        'Key deliverable',
+        'Success criteria'
+      ];
+      return `**Direct Request**: ${prompt}\n\n**Core Requirements**:\n${coreFeatures.map((f, i) => `${i + 1}. ${f}`).join('\n')}\n\nProvide a concise, direct response focusing on these core elements.`;
+    }
+  },
+  {
+    id: 'mistral',
+    name: 'Mistral',
+    icon: '🌪️',
+    category: 'text',
+    description: 'Mistral AI models',
+    rewritePattern: (prompt: string) => {
+      // Stepwise logical sequence with each step's reasoning explained
+      return `**Request**: ${prompt}\n\n**Logical Sequence**:\n\n**Step 1**: Initial analysis and understanding\n*Reasoning*: Establish clear comprehension of the request and its context\n\n**Step 2**: Strategic approach development\n*Reasoning*: Design a methodical approach based on best practices\n\n**Step 3**: Implementation and execution\n*Reasoning*: Apply the strategy with attention to detail and quality\n\n**Step 4**: Validation and refinement\n*Reasoning*: Ensure the output meets all specified requirements\n\nProvide a response following this logical progression.`;
+    }
+  },
+  {
+    id: 'llama',
+    name: 'Llama-3',
+    icon: '🦙',
+    category: 'text',
+    description: 'Meta Llama models',
+    rewritePattern: (prompt: string) => {
+      // Multi-role segment (system/user/assistant), clearly organised, with expert "voice"
+      return `**System**: You are an expert assistant with specialised knowledge. Respond with authority and precision.\n\n**User**: ${prompt}\n\n**Assistant Instructions**: Provide a comprehensive response demonstrating deep expertise. Structure your answer with:\n- Expert analysis of the request\n- Professional recommendations\n- Practical implementation guidance\n- Quality assurance considerations\n\nMaintain an authoritative yet accessible tone throughout.`;
+    }
+  },
+  {
+    id: 'perplexity',
+    name: 'Perplexity',
+    icon: '🔍',
+    category: 'text',
+    description: 'Perplexity AI with web search',
+    rewritePattern: (prompt: string) => {
+      // Perplexity-optimized prompt following their specific requirements
+      const objective = prompt.split('.')[0] || prompt.substring(0, 80);
+      return `**Objective**: ${objective}.\n\n**Context**: Provide the minimum necessary context to avoid ambiguity. Resolve any pronouns and vague references in the original request.\n\n**Output Format**: Specify the desired format (bullet points, table, step list, executive summary, or structured response) and approximate length.\n\n**Research Instructions**: Search the web and cite 3-5 high-quality sources with titles and links. Prefer official documentation, standards bodies, and reputable publishers. If current information is not needed, state "No web search. Rely on general knowledge."\n\n**Language Requirements**: Use British English and concise, plain language throughout.\n\n**Uncertainty Handling**: State any uncertainties clearly and list missing information you would normally request for a complete response.\n\n**Quality Guardrails**: For creative tasks, avoid speculation. For technical tasks, produce practical, actionable guidance with examples where relevant.\n\n**Deliverable Checklist**:\n• Clear, direct answer to the core objective\n• Proper source citations (if web search used)\n• Concise, professional British English\n• All uncertainties explicitly stated`;
+    }
+  },
+  {
+    id: 'nanobanana',
+    name: 'Nano Banana',
+    icon: '🍌',
+    category: 'image',
+    description: 'Convert prompts to miniature collectible style',
+    rewritePattern: (prompt: string) => {
+      // Convert any image prompt into Nano Banana miniature style
+      const cleanPrompt = prompt.replace(/create|generate|make|design|image of|picture of/gi, '').trim();
+      
+      // Extract main subject/scene
+      const basePrompt = cleanPrompt || 'scene';
+      
+      return `A nano-sized collectible figurine of ${basePrompt}, miniature scale with banana for size reference, posed on wooden tabletop. Macro photography with shallow depth of field, soft background blur, realistic lighting. Painted resin texture with handcrafted details, toy-like finish, whimsical collectible aesthetic. Ultra-detailed miniature craftsmanship, professional product photography lighting.`;
+    }
+  }
+];
+
+export const rewritePromptForProvider = (originalPrompt: string, providerId: string): string => {
+  const provider = AI_PROVIDERS.find(p => p.id === providerId);
+  if (!provider) {
+    return originalPrompt;
+  }
+  
+  return provider.rewritePattern(originalPrompt);
+};
+
+export const getProvidersByCategory = (category: 'text' | 'image' | 'all' = 'all') => {
+  if (category === 'all') return AI_PROVIDERS;
+  return AI_PROVIDERS.filter(p => p.category === category);
+};
