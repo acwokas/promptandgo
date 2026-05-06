@@ -22,7 +22,7 @@ const articles = [
     </div>
     <div class="grid md:grid-cols-2 gap-5 max-w-5xl">
       {articles.map(a => (
-        <a href={`/tips/${a.slug}`} class="rounded-2xl border border-border/60 bg-card p-6 hover:border-primary/40 hover:shadow-glow transition-all">
+        <a href={`/tips/${a.slug}`} class="rounded-2xl border border-border/60 bg-card p-6 hover:border-primary/40 hover:shadow-brand transition-all">
           <h2 class="text-xl font-semibold">{a.title}</h2>
           <p class="mt-2 text-muted-foreground">{a.excerpt}</p>
           <div class="mt-4 text-primary font-medium">Read →</div>

@@ -10,23 +10,21 @@ interface Props {
   ogImage?: string;
   noIndex?: boolean;
 }
-
 const {
   title = "PromptAndGo — AI Prompts for Asian Languages",
-  description = "Create culturally-aware AI prompts in 12+ Asian languages. Optimize for ChatGPT, Claude, Gemini & more with keigo, honorifics, and regional context built in.",
+  description = "Culturally-aware AI prompts in 12+ Asian languages. Optimised for ChatGPT, Claude, Gemini and more.",
   canonical,
-  ogImage = "/og-image.png",
+  ogImage = "/brand/logo.png",
   noIndex = false,
 } = Astro.props;
-
 const url = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
 ---
 <!doctype html>
-<html lang="en" class="">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#0f0f23" />
+    <meta name="theme-color" content="#0e0a1f" />
     <meta name="color-scheme" content="light dark" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="author" content="PromptAndGo.ai" />
@@ -36,8 +34,8 @@ const url = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
     <link rel="canonical" href={url} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
-    <link rel="icon" type="image/png" href="/uploads/favicon.png" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
+    <link rel="icon" type="image/png" href="/brand/logo.png" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={url} />
@@ -59,7 +57,7 @@ const url = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
     </script>
   </head>
   <body class="min-h-screen flex flex-col">
-    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-primary focus:text-primary-foreground focus:px-4 focus:py-2 focus:rounded">Skip to content</a>
+    <a href="#main" class="skip-to-content">Skip to content</a>
     <Header />
     <main id="main" class="flex-1 w-full">
       <slot />
