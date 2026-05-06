@@ -8,7 +8,7 @@ const ShareRedirect = () => {
   useEffect(() => {
     if (shortCode) {
       // Directly redirect using the edge function URL
-      window.location.href = `https://sszxxmxqidkpkhlkstgs.supabase.co/functions/v1/share-redirect/${shortCode}`;
+      window.location.href = `https://dkdakwyrqyfdkyukqmqs.supabase.co/functions/v1/share-redirect/${shortCode}`;
     } else {
       // Fallback to homepage if no shortCode
       window.location.href = '/';

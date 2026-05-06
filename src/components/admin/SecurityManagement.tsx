@@ -163,7 +163,7 @@ export function SecurityManagement() {
                 </p>
                 <Button variant="outline" size="sm" className="mt-2" asChild>
                   <a 
-                    href="https://supabase.com/dashboard/project/sszxxmxqidkpkhlkstgs/auth/providers" 
+                    href="https://supabase.com/dashboard/project/dkdakwyrqyfdkyukqmqs/auth/providers" 
                     target="_blank" 
                     rel="noopener noreferrer"
                   >
@@ -179,7 +179,7 @@ export function SecurityManagement() {
                 </p>
                 <Button variant="outline" size="sm" className="mt-2" asChild>
                   <a 
-                    href="https://supabase.com/dashboard/project/sszxxmxqidkpkhlkstgs/settings/general" 
+                    href="https://supabase.com/dashboard/project/dkdakwyrqyfdkyukqmqs/settings/general" 
                     target="_blank" 
                     rel="noopener noreferrer"
                   >

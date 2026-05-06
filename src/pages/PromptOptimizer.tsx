@@ -204,7 +204,7 @@ const PromptOptimizer = () => {
       }
 
       const resp = await fetch(
-        `https://sszxxmxqidkpkhlkstgs.supabase.co/functions/v1/optimize-prompt`,
+        `https://dkdakwyrqyfdkyukqmqs.supabase.co/functions/v1/optimize-prompt`,
         {
           method: "POST",
           headers: {

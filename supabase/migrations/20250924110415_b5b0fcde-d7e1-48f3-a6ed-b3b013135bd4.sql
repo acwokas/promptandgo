@@ -10,7 +10,7 @@ SELECT cron.schedule(
   $$
   SELECT
     net.http_post(
-        url:='https://sszxxmxqidkpkhlkstgs.supabase.co/functions/v1/rotate-featured-categories',
+        url:='https://dkdakwyrqyfdkyukqmqs.supabase.co/functions/v1/rotate-featured-categories',
         headers:='{"Content-Type": "application/json", "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNzenh4bXhxaWRrcGtobGtzdGdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1OTAwMDgsImV4cCI6MjA5MjE2NjAwOH0.W8hk9iWryQ3HahjQg0md133uWJN4rqW4ZFpCpZdmt_g"}'::jsonb,
         body:=concat('{"timestamp": "', now(), '"}')::jsonb
     ) as request_id
