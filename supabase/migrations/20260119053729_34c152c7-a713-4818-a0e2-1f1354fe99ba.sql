@@ -19,7 +19,7 @@ INSERT INTO articles (
   'Avoid the four biggest prompting mistakes: vague questions, overloaded prompts, missing roles, and rewriting from scratch. Quick fixes for better AI results.',
   'prompting mistakes',
   ARRAY['AI prompting errors', 'fix prompts', 'better AI outputs', 'prompt clarity', 'assign AI roles'],
-  '/lovable-uploads/prompting-mistakes-mentor.png',
+  '/uploads/prompting-mistakes-mentor.png',
   true,
   now()
 );

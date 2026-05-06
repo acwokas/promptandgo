@@ -30,7 +30,7 @@ export function WelcomeStep({ onNext }: WelcomeStepProps) {
       {/* Logo */}
       <div className="mb-8 animate-float-in">
         <img
-          src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
+          src="/uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
           alt="PromptAndGo Logo"
           className="h-28 w-auto mx-auto mb-8 drop-shadow-lg"
         />

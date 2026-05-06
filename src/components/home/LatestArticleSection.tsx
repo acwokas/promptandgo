@@ -40,7 +40,7 @@ export function LatestArticleSection({ isReturningUser, latestArticle, articleLo
                   <Card className="overflow-hidden">
                     <div className="aspect-[16/9] w-full bg-muted overflow-hidden">
                       <img
-                        src={latestArticle.thumbnail_url || "/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png"}
+                        src={latestArticle.thumbnail_url || "/uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png"}
                         alt={latestArticle.title}
                         loading="eager"
                         width={800}
@@ -48,7 +48,7 @@ export function LatestArticleSection({ isReturningUser, latestArticle, articleLo
                         className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                         onError={(e) => {
                           const img = e.target as HTMLImageElement;
-                          img.src = "/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png";
+                          img.src = "/uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png";
                         }}
                       />
                     </div>
@@ -111,7 +111,7 @@ function FallbackArticle() {
     <Link to="/tips/beginners-guide-midjourney-prompts" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
       <Card className="overflow-hidden">
         <SeoOptimizedImage
-          src="/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png"
+          src="/uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png"
           alt="Beginner's Guide to MidJourney Prompts"
           loading="lazy"
           width={800}
@@ -138,7 +138,7 @@ function WelcomeArticle() {
     <Link to="/tips/welcome-to-promptandgo-ai" className="group block rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
       <Card className="overflow-hidden">
         <SeoOptimizedImage
-          src="/lovable-uploads/66b1134b-1d55-416b-b7ea-2719a1a22ec1.png"
+          src="/uploads/66b1134b-1d55-416b-b7ea-2719a1a22ec1.png"
           alt="Welcome to PromptandGo: Your Shortcut to Smarter AI Prompts"
           loading="lazy"
           fetchPriority="low"

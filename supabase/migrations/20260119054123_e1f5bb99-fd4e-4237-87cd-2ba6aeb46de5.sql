@@ -19,7 +19,7 @@ INSERT INTO articles (
   'Discover the real differences between beginner and advanced AI prompts. It''s not about length—it''s about structure, intent, and guided refinement.',
   'advanced prompts',
   ARRAY['beginner prompts', 'prompt structure', 'AI prompting skills', 'prompt refinement', 'prompting levels'],
-  '/lovable-uploads/beginner-vs-advanced-prompts.png',
+  '/uploads/beginner-vs-advanced-prompts.png',
   true,
   now()
 );

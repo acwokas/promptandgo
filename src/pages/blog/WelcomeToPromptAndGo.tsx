@@ -14,7 +14,7 @@ const WelcomeToPromptAndGo = () => {
   const title = "Welcome to PromptAndGo.ai: Your Shortcut to Smarter AI Prompts";
   const seoTitle = "Welcome to PromptAndGo.ai - Smarter AI Prompts Fast";
   const description = "Ready-to-use, field-tested prompts for ChatGPT, Claude, and Gemini to get high-quality results instantly.";
-  const imagePath = "/lovable-uploads/0d60754a-943c-420b-9b4c-ee1718135377.png";
+  const imagePath = "/uploads/0d60754a-943c-420b-9b4c-ee1718135377.png";
   const origin = typeof window !== "undefined" ? window.location.origin : "";
   const canonical = typeof window !== "undefined" ? window.location.href : undefined;
   const category = "PromtpAndGo";
@@ -142,7 +142,7 @@ const schema = {
 
           <h2 className="text-2xl font-bold mb-4">How the Prompt Library Works</h2>
           <img
-            src="/lovable-uploads/f78e24df-2952-481d-8924-76e902ee2000.png"
+            src="/uploads/f78e24df-2952-481d-8924-76e902ee2000.png"
             alt="How the PromptAndGo.ai prompt library works - AI prompts overview"
             className="mt-4 w-full rounded-lg border aspect-[16/9] object-cover"
             loading="lazy"

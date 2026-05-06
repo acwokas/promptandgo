@@ -74,7 +74,7 @@ const Header = () => {
           className="flex items-center flex-shrink-0 max-w-40 md:max-w-64"
         >
         <img
-          src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
+          src="/uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
           alt="PromptandGo - AI Prompt Library"
           width="256"
           height="80"

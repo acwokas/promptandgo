@@ -7,7 +7,7 @@ VALUES (
   'Most prompts fail because the thinking behind them is messy. Learn how clarity, intent, and momentum produce better AI outputs than clever wording ever will.',
   'prompts fail',
   ARRAY['prompt engineering', 'AI prompts', 'prompt mistakes', 'clarity prompting', 'better AI results', 'prompt intent'],
-  '/lovable-uploads/why-most-prompts-fail.png',
+  '/uploads/why-most-prompts-fail.png',
   '2026-02-11',
   true
 );

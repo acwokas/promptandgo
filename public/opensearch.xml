@@ -4,8 +4,8 @@
   <ShortName>PromptandGo</ShortName>
   <Description>Search 3,000+ curated AI prompts for ChatGPT, Claude, and more</Description>
   <InputEncoding>UTF-8</InputEncoding>
-  <Image width="16" height="16" type="image/x-icon">https://promptandgo.ai/lovable-uploads/favicon.png</Image>
-  <Image width="64" height="64" type="image/png">https://promptandgo.ai/lovable-uploads/favicon-large.png</Image>
+  <Image width="16" height="16" type="image/x-icon">https://promptandgo.ai/uploads/favicon.png</Image>
+  <Image width="64" height="64" type="image/png">https://promptandgo.ai/uploads/favicon-large.png</Image>
   <Url type="text/html" template="https://promptandgo.ai/library?q={searchTerms}"/>
   <Url type="application/x-suggestions+json" template="https://promptandgo.ai/api/search-suggestions?q={searchTerms}"/>
   <moz:SearchForm>https://promptandgo.ai/library</moz:SearchForm>

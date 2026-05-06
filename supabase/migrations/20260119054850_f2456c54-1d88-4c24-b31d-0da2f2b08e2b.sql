@@ -19,7 +19,7 @@ INSERT INTO articles (
   'Push past average AI outputs by defining what better means, giving clear direction, and using contrast. Stop chasing perfection—chase usefulness.',
   'AI outputs fine',
   ARRAY['improve AI outputs', 'better prompts', 'AI quality', 'prompt direction', 'contrast prompting'],
-  '/lovable-uploads/push-past-fine-ai-outputs.png',
+  '/uploads/push-past-fine-ai-outputs.png',
   true,
   now()
 );

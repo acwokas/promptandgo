@@ -10,7 +10,7 @@ VALUES
   'How to Write AI Prompts in Asian Languages | PromptAndGo',
   'AI prompts Asian languages',
   ARRAY['Asian languages', 'multilingual prompts', 'Chinese prompts', 'Japanese prompts', 'Korean prompts', 'Thai prompts', 'Hindi prompts', 'prompt engineering'],
-  '/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png',
+  '/uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png',
   '2026-04-07',
   true
 ),
@@ -23,7 +23,7 @@ VALUES
   'Multi-Platform Prompting Guide 2026 | PromptAndGo',
   'multi-platform prompting',
   ARRAY['multi-platform', 'ChatGPT', 'Claude', 'DeepSeek', 'Gemini', 'Qwen', 'MidJourney', 'Perplexity', 'prompt optimization'],
-  '/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png',
+  '/uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png',
   '2026-04-04',
   true
 );

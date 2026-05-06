@@ -14,9 +14,9 @@ const AIPromptsThatSaveYouHours = () => {
   const title = "AI Prompts That Save You Hours Every Week";
   const description =
     "Discover AI prompts that save you hours every week. Automate routine tasks, speed up decision-making, and boost productivity with these proven examples.";
-  const heroImage = "/lovable-uploads/07189309-a3ae-4520-988b-ea83220f5935.png";
-  const secondaryImage = "/lovable-uploads/94ca5534-1070-4bf0-a579-0445f417c302.png";
-  const thirdImage = "/lovable-uploads/c85bfc5c-8d77-4e8d-af37-6c58b9647269.png";
+  const heroImage = "/uploads/07189309-a3ae-4520-988b-ea83220f5935.png";
+  const secondaryImage = "/uploads/94ca5534-1070-4bf0-a579-0445f417c302.png";
+  const thirdImage = "/uploads/c85bfc5c-8d77-4e8d-af37-6c58b9647269.png";
   const origin = typeof window !== "undefined" ? window.location.origin : "";
   const canonical = origin ? `${origin}/tips/ai-prompts-that-save-you-hours` : undefined;
   const category = "Productivity";

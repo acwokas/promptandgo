@@ -52,7 +52,7 @@ const ReferralPage = () => {
     toast.success("Referral code copied!");
   };
 
-  const shareUrl = `https://promptandgo.lovable.app/?ref=${code}`;
+  const shareUrl = `https://promptandgo.ai/?ref=${code}`;
 
   const shareLinks = [
     { name: "WhatsApp", url: `https://wa.me/?text=${encodeURIComponent(`Check out PromptAndGo — AI prompts built for Asia! Use my referral: ${shareUrl}`)}`, icon: "💬" },

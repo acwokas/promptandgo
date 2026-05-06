@@ -14,7 +14,7 @@ const BestAIPromptsForSmallBusiness2025 = () => {
   const title = "Best AI Prompts for Small Business Owners in 2025";
   const seoTitle = "Best AI Prompts for Small Business Owners (2025)";
   const description = "Discover the best AI prompts for small business owners in 2025. Use these ready-to-run examples to boost sales, streamline operations, and save hours each week.";
-  const heroImage = "/lovable-uploads/f23788ee-b45e-4f84-808a-691c7e3c5e52.png";
+  const heroImage = "/uploads/f23788ee-b45e-4f84-808a-691c7e3c5e52.png";
   const origin = typeof window !== "undefined" ? window.location.origin : "";
   const canonical = origin ? `${origin}/tips/best-ai-prompts-for-small-business-2025` : undefined;
   const category = "Small Business";
@@ -120,7 +120,7 @@ const BestAIPromptsForSmallBusiness2025 = () => {
           <div>
             <h2 className="text-2xl font-bold mb-4">1. Marketing Prompts to Attract More Customers</h2>
             <img
-              src="/lovable-uploads/52cbbe6e-ce85-414e-a722-2d313ed8e827.png"
+              src="/uploads/52cbbe6e-ce85-414e-a722-2d313ed8e827.png"
               alt="Team planning marketing content with AI insights"
               className="mt-3 w-full rounded-lg border aspect-[16/9] object-cover"
               loading="lazy"
@@ -157,7 +157,7 @@ const BestAIPromptsForSmallBusiness2025 = () => {
           <div>
             <h2 className="text-2xl font-bold mb-4">3. Sales Prompts to Close More Deals</h2>
             <img
-              src="/lovable-uploads/d42c2e40-6ba5-4101-b1d5-e6dcec93dd18.png"
+              src="/uploads/d42c2e40-6ba5-4101-b1d5-e6dcec93dd18.png"
               alt="Happy customer with completed sale in a small business"
               className="mt-3 w-full rounded-lg border aspect-[16/9] object-cover"
               loading="lazy"

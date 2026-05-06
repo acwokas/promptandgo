@@ -73,8 +73,8 @@ export const useAnalyticsAlerts = () => {
     if (browserNotificationsEnabled && 'Notification' in window) {
       new Notification(title, {
         body,
-        icon: icon || '/lovable-uploads/favicon.png',
-        badge: '/lovable-uploads/favicon.png',
+        icon: icon || '/uploads/favicon.png',
+        badge: '/uploads/favicon.png',
         tag: 'analytics-alert',
         requireInteraction: true,
       });

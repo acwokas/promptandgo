@@ -118,7 +118,7 @@ const OnboardingFlow = () => {
       <div className="max-w-3xl mx-auto space-y-8">
         <div className="text-center">
           <img 
-            src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png" 
+            src="/uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png" 
             alt="PromptAndGo Logo" 
             className="h-16 w-auto mx-auto mb-4"
           />
@@ -224,7 +224,7 @@ const OnboardingFlow = () => {
     <div className="max-w-5xl mx-auto space-y-8">
       <div className="text-center">
         <img 
-          src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png" 
+          src="/uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png" 
           alt="PromptAndGo Logo" 
           className="h-16 w-auto mx-auto mb-6"
         />

@@ -138,7 +138,7 @@ serve(async (req) => {
         const items = order.order_items || [];
         const totalCents = items.reduce((sum: number, item: any) => sum + (item.unit_amount || 0), 0);
         
-        const checkoutUrl = `https://promptandgo.lovable.app/cart`;
+        const checkoutUrl = `https://promptandgo.ai/cart`;
 
         const html = generateEmailHtml(userName, items, totalCents, checkoutUrl);
 

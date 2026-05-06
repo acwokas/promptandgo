@@ -40,7 +40,7 @@ serve(async (req: Request) => {
       if (referer) {
         try {
           const refererUrl = new URL(referer);
-          if (refererUrl.hostname.endsWith('.lovableproject.com')) {
+          if (refererUrl.hostname.endsWith('.pages.dev')) {
             redirectUrl = `${refererUrl.protocol}//${refererUrl.hostname}`;
           }
         } catch {
@@ -78,7 +78,7 @@ serve(async (req: Request) => {
     if (referer) {
       try {
         const refererUrl = new URL(referer);
-        if (refererUrl.hostname.endsWith('.lovableproject.com')) {
+        if (refererUrl.hostname.endsWith('.pages.dev')) {
           redirectUrl = `${refererUrl.protocol}//${refererUrl.hostname}`;
         }
       } catch {

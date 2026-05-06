@@ -33,7 +33,7 @@ const handler = async (req: Request): Promise<Response> => {
     
     console.log("Sending subscription welcome email for:", userEmail, subscriptionTier);
 
-    const logoUrl = "https://promptandgo.ai/lovable-uploads/9e8de25b-d91c-445a-b211-d156a28e4b33.png";
+    const logoUrl = "https://promptandgo.ai/uploads/9e8de25b-d91c-445a-b211-d156a28e4b33.png";
     const formattedEndDate = subscriptionEnd ? new Date(subscriptionEnd).toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 

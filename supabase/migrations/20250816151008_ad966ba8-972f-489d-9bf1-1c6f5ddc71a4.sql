@@ -142,5 +142,5 @@ ALTER TABLE public.shared_links DROP CONSTRAINT IF EXISTS check_allowed_domains;
 ALTER TABLE public.shared_links 
 ADD CONSTRAINT check_allowed_domains 
 CHECK (
-  original_url ~* '^https?://(www\.)?(promptandgo\.ai|localhost|127\.0\.0\.1|.*\.lovableproject\.com)(/.*)?$'
+  original_url ~* '^https?://(www\.)?(promptandgo\.ai|localhost|127\.0\.0\.1|.*\.pages\.dev)(/.*)?$'
 );

@@ -40,7 +40,7 @@ const handler = async (req: Request): Promise<Response> => {
     
     console.log("Sending purchase confirmation emails for order:", orderId);
 
-    const logoUrl = "https://promptandgo.ai/lovable-uploads/9e8de25b-d91c-445a-b211-d156a28e4b33.png";
+    const logoUrl = "https://promptandgo.ai/uploads/9e8de25b-d91c-445a-b211-d156a28e4b33.png";
     const formattedAmount = (totalAmount / 100).toFixed(2);
     const date = new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 

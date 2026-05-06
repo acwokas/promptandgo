@@ -14,9 +14,9 @@ const AIPromptsForCustomerSupport = () => {
   const title = "AI Prompts for Customer Support Teams";
   const description =
     "Improve customer service with these AI prompts for support teams. Automate responses, generate FAQs, and handle complex queries faster.";
-  const heroImage = "/lovable-uploads/e141a9a1-b98c-4ba8-9401-2469670c9cca.png"; // hero
-  const imageTwo = "/lovable-uploads/e645ef3a-9d9a-40e8-9f29-bc98b810fe80.png"; // in-article image
-  const imageThree = "/lovable-uploads/b9bbcee0-042a-4751-9c30-dfc61fe9a846.png"; // also used as blog index thumbnail
+  const heroImage = "/uploads/e141a9a1-b98c-4ba8-9401-2469670c9cca.png"; // hero
+  const imageTwo = "/uploads/e645ef3a-9d9a-40e8-9f29-bc98b810fe80.png"; // in-article image
+  const imageThree = "/uploads/b9bbcee0-042a-4751-9c30-dfc61fe9a846.png"; // also used as blog index thumbnail
   const origin = typeof window !== "undefined" ? window.location.origin : "";
   const canonical = origin ? `${origin}/tips/ai-prompts-for-customer-support` : undefined;
   const category = "Customer Support";

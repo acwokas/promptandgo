@@ -12,9 +12,9 @@ const AIPromptsForContentWriters = () => {
   const title = "AI Prompts for Content Writers and Copywriters";
   const description =
     "Boost creativity and speed with these AI prompts for content writers and copywriters. From headlines to long-form articles, these examples get results.";
-  const heroImage = "/lovable-uploads/3f39df0f-d378-4f05-bd67-2399d5467ca8.png"; // Thumbnail (file 2)
-  const midImage1 = "/lovable-uploads/f32d80cf-413a-416b-958e-97f023e82320.png"; // Image 1 (file 1)
-  const midImage2 = "/lovable-uploads/cf547dfa-ef34-4643-811a-b6b8c6ef4c19.png"; // Image 2 (file 3)
+  const heroImage = "/uploads/3f39df0f-d378-4f05-bd67-2399d5467ca8.png"; // Thumbnail (file 2)
+  const midImage1 = "/uploads/f32d80cf-413a-416b-958e-97f023e82320.png"; // Image 1 (file 1)
+  const midImage2 = "/uploads/cf547dfa-ef34-4643-811a-b6b8c6ef4c19.png"; // Image 2 (file 3)
   const origin = typeof window !== "undefined" ? window.location.origin : "";
   const canonical = origin ? `${origin}/tips/ai-prompts-for-content-writers` : undefined;
   const category = "Copywriting";

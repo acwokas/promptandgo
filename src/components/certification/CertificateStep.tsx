@@ -57,7 +57,7 @@ export function CertificateStep({
 
   const handleDownloadCertificate = async () => {
     // Convert logo to base64 for embedding
-    const logoUrl = '/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png';
+    const logoUrl = '/uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png';
     let logoBase64 = '';
 
     try {
@@ -377,7 +377,7 @@ Ready to level up your AI game? Start here 👉 https://promptandgo.ai
             {/* Certificate Header */}
             <div className="text-center mb-8">
               <img
-                src="/lovable-uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
+                src="/uploads/99652d74-cac3-4e8f-ad70-8d2b77303b54.png"
                 alt="PromptAndGo Logo"
                 className="h-20 w-auto mx-auto mb-6"
               />

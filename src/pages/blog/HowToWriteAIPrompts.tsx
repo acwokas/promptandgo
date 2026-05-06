@@ -14,9 +14,9 @@ const HowToWriteAIPrompts = () => {
   const title = "How to Write AI Prompts That Actually Work";
   const description =
     "Learn how to write AI prompts that actually work. Follow these five rules to create prompts that produce accurate, useful, and consistent results every time.";
-  const heroImage = "/lovable-uploads/07a07e3c-270d-4267-9143-81615a2c1611.png"; // Image 1
-  const secondaryImage = "/lovable-uploads/cc4584af-ecc2-4ea7-9eb7-f6ec463c8ac6.png"; // Image 2
-  const thirdImage = "/lovable-uploads/dc900dd9-dbc7-43f2-a4d5-4fef2011cea4.png"; // Image 3
+  const heroImage = "/uploads/07a07e3c-270d-4267-9143-81615a2c1611.png"; // Image 1
+  const secondaryImage = "/uploads/cc4584af-ecc2-4ea7-9eb7-f6ec463c8ac6.png"; // Image 2
+  const thirdImage = "/uploads/dc900dd9-dbc7-43f2-a4d5-4fef2011cea4.png"; // Image 3
   const origin = typeof window !== "undefined" ? window.location.origin : "";
   const canonical = origin ? `${origin}/tips/how-to-write-ai-prompts` : undefined;
   const category = "Prompting";

@@ -33,7 +33,7 @@ Disallow: /*?*gclid=*
 
 # Allow important assets and resources
 Allow: /assets/
-Allow: /lovable-uploads/
+Allow: /uploads/
 Allow: /public/
 Allow: /*.css$
 Allow: /*.js$

@@ -1,4 +1,4 @@
-project_id = "sszxxmxqidkpkhlkstgs"
+project_id = "dkdakwyrqyfdkyukqmqs"
 
 [functions.send-to-ai-provider]
 verify_jwt = true

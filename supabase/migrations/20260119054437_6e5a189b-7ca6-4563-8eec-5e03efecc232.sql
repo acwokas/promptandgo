@@ -19,7 +19,7 @@ INSERT INTO articles (
   'Learn how to ask better AI questions. Focus on why, turn curiosity into constraints, ask for thinking, and treat prompting as a conversation.',
   'asking AI better questions',
   ARRAY['AI questioning skills', 'prompt thinking', 'better AI outputs', 'clear prompting', 'AI conversation'],
-  '/lovable-uploads/asking-ai-better-questions.png',
+  '/uploads/asking-ai-better-questions.png',
   true,
   now()
 );

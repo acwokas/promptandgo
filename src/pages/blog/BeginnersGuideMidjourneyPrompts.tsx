@@ -16,7 +16,7 @@ const BeginnersGuideMidjourneyPrompts = () => {
     "@type": "Article",
     "headline": "Beginner's Guide: Creating Detailed Prompts for MidJourney",
     "description": "Mastering MidJourney starts with the right words. This beginner's guide breaks down how to create detailed prompts that deliver consistent, creative results: with examples, pro tips, and parameters you can use today.",
-    "image": "/lovable-uploads/24c8f315-67e8-4022-abec-e096e61d0202.png",
+    "image": "/uploads/24c8f315-67e8-4022-abec-e096e61d0202.png",
     "datePublished": publishDate,
     "dateModified": lastModified,
     "author": {
@@ -107,7 +107,7 @@ const BeginnersGuideMidjourneyPrompts = () => {
           {/* Hero Image */}
           <div className="mb-8 static">
             <img 
-              src="/lovable-uploads/24c8f315-67e8-4022-abec-e096e61d0202.png"
+              src="/uploads/24c8f315-67e8-4022-abec-e096e61d0202.png"
               alt="Beginner's guide to MidJourney prompts - steampunk character with blueprint"
               className="w-full rounded-lg shadow-lg static"
             loading="eager"
@@ -158,7 +158,7 @@ const BeginnersGuideMidjourneyPrompts = () => {
             
             <div className="my-8">
               <img 
-                src="/lovable-uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png"
+                src="/uploads/62fad3e0-9f93-4964-8448-ab0375c35a17.png"
                 alt="Golden retriever puppy in flower field demonstrating detailed prompt results"
                 className="w-full rounded-lg shadow-lg"
                 loading="lazy"
@@ -232,7 +232,7 @@ const BeginnersGuideMidjourneyPrompts = () => {
 
           <div className="my-12">
             <img 
-              src="/lovable-uploads/99bf0dfb-e060-4107-b99e-72ccd5ec5ad7.png"
+              src="/uploads/99bf0dfb-e060-4107-b99e-72ccd5ec5ad7.png"
               alt="Medieval knight with glowing lightsaber demonstrating creative prompt combinations"
               className="w-full rounded-lg shadow-lg"
               loading="lazy"

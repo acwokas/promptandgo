@@ -12,7 +12,7 @@ const AIPromptsForSocialMediaContent = () => {
   const title = "AI Prompts for Social Media Content That Stands Out";
   const description =
     "Create social media content that gets noticed. These AI prompts help you generate posts, captions, and engagement ideas for any platform in minutes.";
-  const heroImage = "/lovable-uploads/a619c09b-001e-470b-beff-59e90dcd0a60.png"; // User image #3 (thumbnail/hero)
+  const heroImage = "/uploads/a619c09b-001e-470b-beff-59e90dcd0a60.png"; // User image #3 (thumbnail/hero)
   const origin = typeof window !== "undefined" ? window.location.origin : "";
   const canonical = origin ? `${origin}/tips/ai-prompts-for-social-media-content` : undefined;
   const category = "Social Media";
