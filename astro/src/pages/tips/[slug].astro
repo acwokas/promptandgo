@@ -1,28 +1,18 @@
 ---
 import Layout from "@astro/layouts/Layout.astro";
-import { createClient } from "@supabase/supabase-js";
-
-const SUPABASE_URL = import.meta.env.PUBLIC_SUPABASE_URL || "https://dkdakwyrqyfdkyukqmqs.supabase.co";
-const SUPABASE_KEY = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY || "";
+import { sbSelect } from "@astro/lib/supabase-rest";
 
 export async function getStaticPaths() {
-  const sb = createClient(
-    import.meta.env.PUBLIC_SUPABASE_URL || "https://dkdakwyrqyfdkyukqmqs.supabase.co",
-    import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY || ""
-  );
-  const { data, error } = await sb
-    .from("articles")
-    .select("slug, title, content, synopsis, meta_title, meta_description, thumbnail_url, focus_keyword, keyphrases, published_date")
-    .eq("is_published", true);
-
-  if (error || !data) {
-    console.error("Tip slug build error:", error);
+  try {
+    const articles = await sbSelect("articles", {
+      select: "slug,title,content,synopsis,meta_title,meta_description,thumbnail_url,focus_keyword,keyphrases,published_date",
+      filter: "is_published=eq.true",
+    });
+    return articles.map(a => ({ params: { slug: a.slug }, props: a }));
+  } catch (e) {
+    console.error("tips/[slug] getStaticPaths failed:", e);
     return [];
   }
-  return data.map(a => ({
-    params: { slug: a.slug },
-    props: a,
-  }));
 }
 
 const article = Astro.props as any;
@@ -38,11 +28,9 @@ function readingTime(text: string | null | undefined) {
 const read = readingTime(article.content);
 const date = article.published_date ? new Date(article.published_date).toLocaleDateString("en-GB", { year: "numeric", month: "short", day: "numeric" }) : null;
 
-// Detect content format — could be markdown or HTML
 const contentLooksLikeHtml = (article.content || "").trimStart().startsWith("<");
 let body: string = article.content || "";
 if (!contentLooksLikeHtml) {
-  // Minimal markdown -> HTML for headings, paragraphs, bold, italic, lists, code
   body = body
     .replace(/^### (.*)$/gm, '<h3>$1</h3>')
     .replace(/^## (.*)$/gm, '<h2>$1</h2>')

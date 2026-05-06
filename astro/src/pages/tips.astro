@@ -1,18 +1,18 @@
 ---
 import Layout from "@astro/layouts/Layout.astro";
-import { createClient } from "@supabase/supabase-js";
+import { sbSelect } from "@astro/lib/supabase-rest";
 
-const SUPABASE_URL = import.meta.env.PUBLIC_SUPABASE_URL || "https://dkdakwyrqyfdkyukqmqs.supabase.co";
-const SUPABASE_KEY = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY || "";
-
-const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
-const { data: articles, error } = await sb
-  .from("articles")
-  .select("slug, title, synopsis, meta_description, thumbnail_url, published_date, focus_keyword, keyphrases")
-  .eq("is_published", true)
-  .order("published_date", { ascending: false });
-
-const safe = articles ?? [];
+let articles: any[] = [];
+let fetchError: string | null = null;
+try {
+  articles = await sbSelect("articles", {
+    select: "slug,title,synopsis,meta_description,thumbnail_url,published_date,focus_keyword",
+    filter: "is_published=eq.true",
+    order: "published_date.desc",
+  });
+} catch (e: any) {
+  fetchError = e?.message || "Failed to load articles";
+}
 
 function readingTime(text: string | null | undefined) {
   if (!text) return "5 min";
@@ -34,11 +34,13 @@ function readingTime(text: string | null | undefined) {
   </section>
 
   <section class="container max-w-6xl pb-20">
-    {error && (
-      <div class="rounded-2xl border border-destructive/40 bg-destructive/5 text-destructive p-5 text-sm">Couldn't load articles: {error.message}</div>
+    {fetchError && (
+      <div class="rounded-2xl border border-destructive/40 bg-destructive/5 text-destructive p-5 text-sm">
+        Couldn't load articles: {fetchError}
+      </div>
     )}
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-      {safe.map(a => (
+      {articles.map(a => (
         <a href={`/tips/${a.slug}`} class="group card-lift rounded-2xl border border-border/60 bg-card overflow-hidden flex flex-col">
           {a.thumbnail_url && (
             <div class="aspect-[16/9] overflow-hidden bg-secondary/40">
@@ -65,10 +67,5 @@ function readingTime(text: string | null | undefined) {
 </Layout>
 
 <style>
-  .line-clamp-3 {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
+  .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 </style>
