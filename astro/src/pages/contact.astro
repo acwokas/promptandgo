@@ -1,0 +1,40 @@
+---
+import Layout from "@/layouts/Layout.astro";
+---
+<Layout title="Contact — PromptAndGo" description="Get in touch with the PromptAndGo team.">
+  <section class="container py-16 md:py-24 max-w-2xl">
+    <h1 class="text-4xl md:text-5xl font-bold tracking-tight">Contact us</h1>
+    <p class="mt-4 text-lg text-muted-foreground">We read every message. For support, partnerships, press, or ideas — write us a line.</p>
+    <form
+      method="POST"
+      action="https://dkdakwyrqyfdkyukqmqs.supabase.co/functions/v1/secure-contact-form"
+      class="mt-10 space-y-4"
+    >
+      <div>
+        <label class="block text-sm font-medium mb-1.5" for="c-name">Your name</label>
+        <input id="c-name" name="name" required class="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1.5" for="c-email">Email</label>
+        <input id="c-email" type="email" name="email" required class="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1.5" for="c-topic">Topic</label>
+        <select id="c-topic" name="topic" class="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm">
+          <option>Support</option>
+          <option>Sales / Team plan</option>
+          <option>Partnership</option>
+          <option>Press</option>
+          <option>Bug</option>
+          <option>Feature request</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1.5" for="c-msg">Message</label>
+        <textarea id="c-msg" name="message" rows="6" required class="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm"></textarea>
+      </div>
+      <button type="submit" class="inline-flex items-center justify-center rounded-lg bg-primary text-primary-foreground px-6 py-3 font-semibold hover:bg-primary/90">Send message</button>
+    </form>
+  </section>
+</Layout>

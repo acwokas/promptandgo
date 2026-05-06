@@ -1,0 +1,28 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import LandingHero from "@/components/LandingHero.astro";
+---
+<Layout
+  title="한국어 AI 프롬프트 | PromptAndGo"
+  description="존댓말, 비즈니스 매너, 한국 시장 맥락을 반영한 한국어 AI 프롬프트. ChatGPT, Claude, Gemini 최적화."
+>
+  <LandingHero
+    langTag="ko"
+    langLabel="한국어"
+    langSub="Korean"
+    hero={{
+      title: "존댓말과 한국 시장을 이해하는 AI 프롬프트.",
+      subtitle: "B2B 이메일, 사내 공지, 제안서, 고객 지원 — 격식과 친근함의 균형을 잘 맞춘 한국어 프롬프트 500여 개.",
+      cta: "무료로 최적화 시작하기"
+    }}
+    features={[
+      { title: "정확한 존댓말", desc: "상대와 상황에 맞춰 격식체·경어·반말을 자동 조정." },
+      { title: "산업별 템플릿", desc: "금융, IT/SaaS, 제조, 유통, 교육 — 한국 시장 맥락에 맞춘 프롬프트." },
+      { title: "모든 AI 플랫폼 지원", desc: "ChatGPT, Claude, Gemini, Mistral, Grok 별로 최적화된 출력." }
+    ]}
+    examples={[
+      { input: "신규 거래처 임원에게 첫 인사 이메일을 정중하게 작성해 주세요.", output: "안녕하십니까. 갑작스러운 연락 드려 송구합니다…" },
+      { input: "사내 공지: 다음 주 전사 회의 안내를 간결하고 따뜻하게.", output: "안녕하세요, 팀원 여러분. 다음 주 전사 회의를 안내드립니다…" }
+    ]}
+  />
+</Layout>

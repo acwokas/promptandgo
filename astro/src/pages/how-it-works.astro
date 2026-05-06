@@ -1,0 +1,30 @@
+---
+import Layout from "@/layouts/Layout.astro";
+const steps = [
+  { n: 1, title: "Browse or describe", desc: "Pick from 500+ vetted prompts, or describe what you're trying to do." },
+  { n: 2, title: "Pick your platform", desc: "Choose ChatGPT, Claude, Gemini, Mistral, Grok — or compare side-by-side." },
+  { n: 3, title: "Optimize", desc: "We rewrite the prompt for the chosen platform AND your target language/market." },
+  { n: 4, title: "Run it, save it, share it", desc: "Use your AI account to run, save successful prompts, share via shortlinks." },
+];
+---
+<Layout title="How PromptAndGo Works" description="From idea to optimized AI prompt in 4 steps.">
+  <section class="container py-16 md:py-24 max-w-3xl">
+    <h1 class="text-4xl md:text-5xl font-bold tracking-tight">How it works</h1>
+    <p class="mt-4 text-lg text-muted-foreground">Four steps from idea to AI output that actually ships.</p>
+    <ol class="mt-12 space-y-6">
+      {steps.map(s => (
+        <li class="rounded-2xl bg-card border border-border/60 p-6 flex gap-5">
+          <div class="shrink-0 w-12 h-12 rounded-full bg-gradient-primary text-primary-foreground font-bold text-lg grid place-items-center shadow-glow">{s.n}</div>
+          <div>
+            <h2 class="text-xl font-semibold">{s.title}</h2>
+            <p class="mt-1 text-muted-foreground">{s.desc}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+    <div class="mt-12 flex flex-col sm:flex-row gap-3">
+      <a href="/optimize" class="inline-flex items-center justify-center rounded-lg bg-primary text-primary-foreground px-6 py-3 font-semibold">Try the optimizer</a>
+      <a href="/library" class="inline-flex items-center justify-center rounded-lg border border-border px-6 py-3 font-semibold">Browse prompts</a>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,28 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import LandingHero from "@/components/LandingHero.astro";
+---
+<Layout
+  title="日本語向けAIプロンプト | PromptAndGo"
+  description="敬語、ビジネスマナー、業界文脈に対応した日本語AIプロンプト。ChatGPT・Claude・Gemini向けに最適化。"
+>
+  <LandingHero
+    langTag="ja"
+    langLabel="日本語"
+    langSub="Japanese"
+    hero={{
+      title: "敬語も業界文脈も理解する、日本語向けAIプロンプト。",
+      subtitle: "BtoBメール、社内告知、提案書、カスタマーサポート — 「いきなりカジュアル」にならない、すぐ使える日本語プロンプトを500本以上。",
+      cta: "無料で最適化を試す"
+    }}
+    features={[
+      { title: "敬語の精度", desc: "尊敬語・謙譲語・丁寧語を文脈に応じて自動調整。社外/社内/カスタマー対応で出力スタイルが変わります。" },
+      { title: "業界別テンプレート", desc: "金融、SaaS、製造、小売、教育 — 用語と慣習に合わせたプロンプト集。" },
+      { title: "全AIプラットフォーム対応", desc: "ChatGPT・Claude・Gemini・Mistral・Grok の各プラットフォームごとに最適化。" }
+    ]}
+    examples={[
+      { input: "新規取引先への初回ご挨拶メールを丁寧に作成してください。先方は製造業の役員クラス。", output: "拝啓 時下ますますご清祥のこととお慶び申し上げます。突然のご連絡、誠に恐縮でございます…" },
+      { input: "社内告知:来週の全社ミーティングについて、簡潔かつ温かみのある文章で。", output: "皆さまお疲れさまです。来週の全社ミーティングのご案内です…" }
+    ]}
+  />
+</Layout>

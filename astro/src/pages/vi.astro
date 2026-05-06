@@ -1,0 +1,28 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import LandingHero from "@/components/LandingHero.astro";
+---
+<Layout
+  title="Prompt AI Tiếng Việt | PromptAndGo"
+  description="Prompt AI hiểu ngữ cảnh và quy tắc giao tiếp tiếng Việt. Tối ưu cho ChatGPT, Claude, Gemini."
+>
+  <LandingHero
+    langTag="vi"
+    langLabel="Tiếng Việt"
+    langSub="Vietnamese"
+    hero={{
+      title: "Prompt AI hiểu tiếng Việt và thị trường Việt Nam.",
+      subtitle: "Email khách hàng, thông báo nội bộ, content marketing, hỗ trợ — lịch sự và tự nhiên, sẵn sàng dùng. 500+ prompt được tuyển chọn.",
+      cta: "Dùng thử miễn phí"
+    }}
+    features={[
+      { title: "Sắc thái lịch sự chuẩn", desc: "Tự động cân chỉnh đại từ và mức độ trang trọng theo bối cảnh." },
+      { title: "Mẫu theo ngành", desc: "Fintech, e-commerce, sản xuất, bán lẻ, giáo dục." },
+      { title: "Hỗ trợ mọi AI", desc: "ChatGPT, Claude, Gemini, Mistral, Grok." }
+    ]}
+    examples={[
+      { input: "Viết email cảm ơn khách hàng sau buổi họp giới thiệu giải pháp.", output: "Kính gửi anh/chị... Cảm ơn anh/chị đã dành thời gian..." },
+      { input: "Thông báo nghỉ Tết Nguyên đán cho team.", output: "Chào cả nhà, Tết Nguyên đán năm nay, công ty xin trân trọng thông báo..." }
+    ]}
+  />
+</Layout>

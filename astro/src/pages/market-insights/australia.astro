@@ -1,0 +1,22 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import MarketPage from "@/components/MarketPage.astro";
+---
+<Layout title="AI Market Insights — Australia | PromptAndGo" description="Australia's AI landscape: mature adoption, regulated industries, and AU English nuance.">
+  <MarketPage
+    market="Australia"
+    flag="🇦🇺"
+    intro="Australia has a mature AI adoption profile across financial services, government, professional services, and resources. Strong regulation and a privacy-conscious workforce shape practical deployment patterns."
+    stats={[
+      { label: "Population", value: "27M" },
+      { label: "AI-using businesses", value: "~46%" },
+      { label: "Regulatory regime", value: "OAIC + APRA + ACCC" },
+      { label: "Top AI use cases", value: "FS · Government · ProfServ" },
+    ]}
+    sections={[
+      { heading: "Language strategy", body: ["Australian English has its own conventions — colloquialisms, spelling (organisation, colour, recognise), and tonal preferences for plain-English communication. Prompts that ask for AU English explicitly avoid the default-American output most models produce."] },
+      { heading: "Sectors moving fastest", body: ["The Big Four banks and major insurers (CBA, Westpac, NAB, ANZ; Suncorp, IAG) lead in AI for fraud, KYC, and customer service. Government departments are deploying AI under the AI Ethics Framework. Mining, energy, and resources use AI for predictive maintenance and safety."] },
+      { heading: "Cultural and regulatory notes", body: ["Privacy Act reforms (Notifiable Data Breach scheme) and the proposed Privacy Act Review create real obligations. AI Safety Standard guidance and the voluntary AI Ethics Principles are increasingly referenced in procurement. Tall Poppy and plain-English instincts mean overly hyped AI outputs land poorly with AU audiences."] },
+    ]}
+  />
+</Layout>

@@ -1,0 +1,30 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import LandingHero from "@/components/LandingHero.astro";
+---
+<Layout
+  title="AI Prompts ภาษาไทย | PromptAndGo"
+  description="พรอมต์ AI ที่เข้าใจระดับความสุภาพและบริบทตลาดไทย ปรับแต่งสำหรับ ChatGPT, Claude, Gemini"
+>
+  <LandingHero
+    langTag="th"
+    langLabel="ภาษาไทย"
+    langSub="Thai"
+    hero={{
+      title: "พรอมต์ AI ที่เข้าใจภาษาไทยและตลาดไทย"
+,
+      subtitle: "อีเมลลูกค้า แจ้งภายในบริษัท คอนเทนต์การตลาด ซัพพอร์ต — สุภาพและเป็นธรรมชาติ พร้อมใช้งานทันที 500+ พรอมต์"
+,
+      cta: "ทดลองฟรี"
+    }}
+    features={[
+      { title: "ระดับความสุภาพแม่นยำ", desc: "ปรับ ครับ/ค่ะ และคำสุภาพอัตโนมัติตามบริบท" },
+      { title: "เทมเพลตเฉพาะอุตสาหกรรม", desc: "ฟินเทค, อีคอมเมิร์ซ, การผลิต, ค้าปลีก, การศึกษา" },
+      { title: "รองรับทุก AI", desc: "ChatGPT, Claude, Gemini, Mistral, Grok" }
+    ]}
+    examples={[
+      { input: "เขียนอีเมลขอบคุณลูกค้าหลังการประชุม", output: "เรียน คุณ... สวัสดีครับ/ค่ะ ขอขอบคุณที่ได้มีโอกาสพูดคุย..." },
+      { input: "ประกาศวันหยุดสงกรานต์ในกลุ่มไลน์บริษัท", output: "เรียนเพื่อนร่วมงานทุกท่าน สงกรานต์นี้..." }
+    ]}
+  />
+</Layout>

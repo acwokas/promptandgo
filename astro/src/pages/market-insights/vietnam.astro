@@ -1,0 +1,22 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import MarketPage from "@/components/MarketPage.astro";
+---
+<Layout title="AI Market Insights — Vietnam | PromptAndGo" description="Vietnam's AI landscape: fast-growing tech, Tiếng Việt nuance, and what prompts work best.">
+  <MarketPage
+    market="Vietnam"
+    flag="🇻🇳"
+    intro="Vietnam is one of Southeast Asia's fastest-growing digital economies, with strong manufacturing, fintech, and B2B SaaS sectors increasingly adopting AI for productivity and CX."
+    stats={[
+      { label: "Population", value: "100M" },
+      { label: "Internet penetration", value: "~79%" },
+      { label: "Median age", value: "32" },
+      { label: "Top AI use cases", value: "Manufacturing · Fintech · CX" },
+    ]}
+    sections={[
+      { heading: "Language strategy", body: ["Tiếng Việt has nuanced pronoun and politeness systems — addressing customers, peers, and seniors uses distinct registers. Prompts that specify the relationship and target audience produce noticeably better drafts than generic Vietnamese requests."] },
+      { heading: "Sectors moving fastest", body: ["Manufacturing and contract electronics use AI for quality QA assistance, supplier comms, and operations summarisation. Fintech and digital banks (TPBank, MB Bank, VPBank's Cake) ship AI features in the consumer app. B2B SaaS exporters embed AI for product enablement."] },
+      { heading: "Cultural and regulatory notes", body: ["Decree 13 (data protection) is now in effect with strict residency expectations. Prompts producing public-facing content should be calibrated to a younger, mobile-native audience that responds to clear, modern Vietnamese."] },
+    ]}
+  />
+</Layout>

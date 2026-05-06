@@ -1,0 +1,30 @@
+---
+import Layout from "@/layouts/Layout.astro";
+const markets = [
+  { href: "/market-insights/malaysia", flag: "🇲🇾", title: "Malaysia", desc: "Bahasa Malaysia + English. Multi-ethnic market dynamics." },
+  { href: "/market-insights/indonesia", flag: "🇮🇩", title: "Indonesia", desc: "World's 4th largest market. Bahasa Indonesia, mobile-first." },
+  { href: "/market-insights/vietnam", flag: "🇻🇳", title: "Vietnam", desc: "Fastest-growing SE Asian digital economy. Tiếng Việt." },
+  { href: "/market-insights/australia", flag: "🇦🇺", title: "Australia", desc: "Mature AI adoption, regulated industries, AU English nuance." },
+];
+---
+<Layout
+  title="AI Market Insights — Asia | PromptAndGo"
+  description="Market-by-market insights for AI deployment across Asia: Malaysia, Indonesia, Vietnam, Australia."
+>
+  <section class="container py-16 md:py-24">
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight">AI Market Insights</h1>
+      <p class="mt-4 text-lg text-muted-foreground">Country-by-country analysis of AI adoption, regulatory landscape, and prompt strategy across Asia.</p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-5 max-w-4xl mx-auto">
+      {markets.map(m => (
+        <a href={m.href} class="rounded-2xl border border-border/60 bg-card p-7 hover:border-primary/40 hover:shadow-glow transition-all">
+          <div class="text-4xl mb-3">{m.flag}</div>
+          <h2 class="text-2xl font-semibold">{m.title}</h2>
+          <p class="mt-2 text-muted-foreground">{m.desc}</p>
+          <div class="mt-4 text-primary font-medium">Read more →</div>
+        </a>
+      ))}
+    </div>
+  </section>
+</Layout>

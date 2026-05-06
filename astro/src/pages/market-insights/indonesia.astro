@@ -1,0 +1,22 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import MarketPage from "@/components/MarketPage.astro";
+---
+<Layout title="AI Market Insights — Indonesia | PromptAndGo" description="Indonesia's AI landscape: Bahasa Indonesia, mobile-first scale, and what prompts work.">
+  <MarketPage
+    market="Indonesia"
+    flag="🇮🇩"
+    intro="Indonesia is the fourth-largest population on earth and a mobile-first digital economy. AI adoption skews toward consumer apps and CX automation, with fast-growing fintech and agritech use cases."
+    stats={[
+      { label: "Population", value: "280M" },
+      { label: "Mobile users", value: "350M+ devices" },
+      { label: "Internet penetration", value: "~78%" },
+      { label: "Top AI use cases", value: "CX · Fintech · Logistics" },
+    ]}
+    sections={[
+      { heading: "Language strategy", body: ["Bahasa Indonesia is the lingua franca for nearly all professional and consumer work. Regional languages (Javanese, Sundanese, Batak, etc.) appear in marketing for specific demographics. Effective prompts often request a casual but respectful register — overly formal Indonesian reads stiff in consumer contexts."] },
+      { heading: "Sectors moving fastest", body: ["Super-apps (Gojek, Grab, GoTo) drive consumer AI experience standards. Banks and insurance are scaling document-intelligence and underwriting assistance. Logistics and 3PL operators use AI for routing and customer comms."] },
+      { heading: "Cultural and regulatory notes", body: ["UU PDP (data protection law) is now enforced; data residency conversations are routine. Prompts producing user-facing content should be explicit about local cultural references and avoid Jakarta-only assumptions when targeting other islands."] },
+    ]}
+  />
+</Layout>

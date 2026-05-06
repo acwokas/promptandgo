@@ -1,0 +1,33 @@
+---
+import Layout from "@/layouts/Layout.astro";
+const terms = [
+  { term: "Prompt", def: "The instruction or question you send to an AI model. Better prompts produce better outputs; the craft of writing them is sometimes called prompt engineering." },
+  { term: "System prompt", def: "An instruction that frames the AI's role, persona, or rules across the whole conversation, separately from the user's individual messages." },
+  { term: "Token", def: "A unit of text (roughly 3-4 characters in English, often a single character in CJK languages) that AI models read and generate. Pricing and context limits are usually denominated in tokens." },
+  { term: "Context window", def: "The maximum amount of text (in tokens) a model can consider at once. Larger windows let you feed in more documents or longer conversations." },
+  { term: "Temperature", def: "A model parameter controlling randomness. Lower = more deterministic, higher = more creative/variable." },
+  { term: "Few-shot prompting", def: "Including a small number of input/output examples in the prompt to teach the model the pattern you want." },
+  { term: "Chain of thought", def: "Instructing the model to reason step-by-step in writing before producing a final answer. Often improves accuracy on multi-step problems." },
+  { term: "Hallucination", def: "When a model generates content that sounds plausible but is factually wrong. Mitigated with retrieval (grounding the model in real documents) and careful prompt design." },
+  { term: "RAG (Retrieval-Augmented Generation)", def: "Architecture that retrieves relevant documents at query time and includes them in the prompt, so the model answers from your data." },
+  { term: "Fine-tuning", def: "Training a base model on extra examples to specialise it for a domain or style. Usually overkill compared to good prompting and RAG." },
+  { term: "Embedding", def: "A vector representation of text used to find semantically similar content. Powers most retrieval and search features." },
+  { term: "Keigo", def: "Japanese honorific language. Three layers — sonkeigo (respectful), kenjougo (humble), teineigo (polite) — applied based on relationships and context." },
+  { term: "Honorifics (Korean)", def: "Korean speech levels (-습니다, -해요, -해, etc.) that mark formality and the speaker-listener relationship. Vital in business communication." },
+  { term: "Code-switching", def: "Mixing languages within a sentence or paragraph, common in Singapore (Singlish), Malaysia (Manglish), Philippines (Taglish), and many other multilingual contexts." },
+];
+---
+<Layout title="AI Glossary — PromptAndGo" description="Plain-English definitions for AI prompting terms.">
+  <section class="container py-16 md:py-20 max-w-3xl">
+    <h1 class="text-4xl md:text-5xl font-bold tracking-tight">AI Glossary</h1>
+    <p class="mt-4 text-lg text-muted-foreground">Plain-English definitions for the terms you'll see across our prompts and guides.</p>
+    <dl class="mt-12 divide-y divide-border/60 rounded-2xl border border-border/60 bg-card">
+      {terms.map(t => (
+        <div class="p-6">
+          <dt class="font-semibold text-lg">{t.term}</dt>
+          <dd class="mt-1.5 text-muted-foreground leading-relaxed">{t.def}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+</Layout>

@@ -1,0 +1,22 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import MarketPage from "@/components/MarketPage.astro";
+---
+<Layout title="AI Market Insights — Malaysia | PromptAndGo" description="AI adoption, language strategy, and prompt practices for the Malaysian market.">
+  <MarketPage
+    market="Malaysia"
+    flag="🇲🇾"
+    intro="Malaysia's enterprise AI adoption is accelerating across financial services, fintech, and SME tooling — anchored by a multilingual workforce and the MyDIGITAL national agenda."
+    stats={[
+      { label: "Population", value: "33M" },
+      { label: "Languages used in business", value: "3+" },
+      { label: "Smartphone penetration", value: "~89%" },
+      { label: "Top AI use cases", value: "CX · Marketing · Ops" },
+    ]}
+    sections={[
+      { heading: "Language strategy", body: ["Bahasa Malaysia is the national language, but professional and B2B work happens in English. Tamil and Mandarin (with several Chinese dialects) feature prominently in customer-facing work for specific demographics. Effective prompts often request bilingual or multilingual output, with code-switching guidance for the right register."] },
+      { heading: "Sectors moving fastest", body: ["Banking and Islamic finance lead in customer service automation and compliance summarisation. Telcos and digital wallets (Touch 'n Go, GrabPay, Boost) are standardising AI for fraud and CX. Government and education are early in adoption but moving."] },
+      { heading: "Cultural and regulatory notes", body: ["Halal compliance, Bumiputera-aware marketing, and PDPA data residency are routine considerations. Prompts that surface these constraints up front produce stronger first drafts than prompts that omit them and require revision."] },
+    ]}
+  />
+</Layout>

@@ -1,0 +1,2 @@
+# Pages that Astro doesn't yet handle fall back to the live Vite app on www
+# (We override with specific routes when porting.)

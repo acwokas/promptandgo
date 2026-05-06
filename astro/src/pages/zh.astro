@@ -1,0 +1,30 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import LandingHero from "@/components/LandingHero.astro";
+---
+<Layout
+  title="中文AI提示词 | PromptAndGo"
+  description="理解中文语境与商业礼仪的AI提示词。针对ChatGPT、Claude、Gemini等平台优化。"
+>
+  <LandingHero
+    langTag="zh"
+    langLabel="中文"
+    langSub="Chinese (Simplified & Traditional)"
+    hero={{
+      title: "懂中文语境的AI提示词。"
+,
+      subtitle: "商务邮件、内部公告、营销文案、客户支持 — 让AI输出像中文母语者写的一样自然，500+ 精选提示词。"
+,
+      cta: "免费开始优化"
+    }}
+    features={[
+      { title: "语气精准", desc: "在正式、半正式与亲切之间自动切换，适配B2B、B2C、内部沟通等场景。" },
+      { title: "行业模板", desc: "金融、SaaS、制造、零售、教育 — 中文市场上下文。" },
+      { title: "全平台支持", desc: "ChatGPT、Claude、Gemini、Mistral、Grok 各自优化。" }
+    ]}
+    examples={[
+      { input: "为一家东南亚SaaS公司写一封首次合作邮件，对方是中国大陆制造企业的高管。", output: "尊敬的某总:您好。冒昧来信，特此致以诚挚问候…" },
+      { input: "撰写春节假期工厂停产通知。", output: "尊敬的合作伙伴:春节将至，特此通知本厂将于…" }
+    ]}
+  />
+</Layout>

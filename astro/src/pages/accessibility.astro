@@ -1,0 +1,18 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import SimplePage from "@/components/SimplePage.astro";
+---
+<Layout title="Accessibility — PromptAndGo" description="Our commitment to accessibility and how to report issues.">
+  <SimplePage title="Accessibility">
+    <p>We aim to meet WCAG 2.1 AA. Areas we focus on:</p>
+    <ul>
+      <li>Keyboard navigation across the entire app</li>
+      <li>Sufficient colour contrast in light and dark themes</li>
+      <li>Focus-visible outlines on all interactive elements</li>
+      <li>Semantic HTML and ARIA where needed</li>
+      <li>Skip-to-content links and clear heading structure</li>
+    </ul>
+    <h2>Found a problem?</h2>
+    <p>Please <a href="/contact?topic=accessibility">tell us</a> — we treat accessibility issues as bugs, not feature requests.</p>
+  </SimplePage>
+</Layout>

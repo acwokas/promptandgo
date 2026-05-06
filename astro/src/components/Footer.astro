@@ -1,0 +1,60 @@
+---
+const cols = [
+  { title: "Product", links: [
+    { href: "/library", label: "Browse Prompts" },
+    { href: "/packs", label: "Power Packs" },
+    { href: "/ai/studio", label: "Prompt Studio" },
+    { href: "/optimize", label: "Prompt Optimizer" },
+    { href: "/pricing", label: "Pricing" },
+  ]},
+  { title: "Company", links: [
+    { href: "/about", label: "About" },
+    { href: "/contact", label: "Contact" },
+    { href: "/careers", label: "Careers" },
+    { href: "/partners", label: "Partners" },
+    { href: "/changelog", label: "Changelog" },
+  ]},
+  { title: "Resources", links: [
+    { href: "/blog", label: "Blog" },
+    { href: "/tips", label: "Tips" },
+    { href: "/glossary", label: "Glossary" },
+    { href: "/help", label: "Help Center" },
+    { href: "/api-docs", label: "API Docs" },
+  ]},
+  { title: "Legal", links: [
+    { href: "/terms", label: "Terms" },
+    { href: "/privacy", label: "Privacy" },
+    { href: "/cookies", label: "Cookies" },
+    { href: "/accessibility", label: "Accessibility" },
+  ]},
+];
+const year = new Date().getFullYear();
+---
+<footer class="border-t border-border/40 mt-20 bg-secondary/30">
+  <div class="container py-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
+      {cols.map(c => (
+        <div>
+          <h3 class="font-semibold mb-3">{c.title}</h3>
+          <ul class="space-y-2 text-sm text-muted-foreground">
+            {c.links.map(l => (
+              <li><a href={l.href} class="hover:text-primary transition-colors">{l.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+    <div class="border-t border-border/40 pt-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-sm text-muted-foreground">
+      <div>© {year} PromptAndGo.ai · Built for Asia.</div>
+      <div class="flex flex-wrap gap-4">
+        <a href="/sitemap" class="hover:text-primary">Sitemap</a>
+        <a href="/status" class="hover:text-primary">Status</a>
+        <a href="/ja" class="hover:text-primary">日本語</a>
+        <a href="/ko" class="hover:text-primary">한국어</a>
+        <a href="/zh" class="hover:text-primary">中文</a>
+        <a href="/th" class="hover:text-primary">ไทย</a>
+        <a href="/vi" class="hover:text-primary">Tiếng Việt</a>
+      </div>
+    </div>
+  </div>
+</footer>

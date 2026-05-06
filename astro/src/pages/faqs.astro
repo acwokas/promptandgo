@@ -1,0 +1,30 @@
+---
+import Layout from "@/layouts/Layout.astro";
+const faqs = [
+  { q: "What's an AI prompt?", a: "A prompt is the instruction you give an AI model. Better prompts = better outputs. PromptAndGo provides vetted prompt templates and optimises them for the platform and language you're using." },
+  { q: "Which AI platforms do you support?", a: "ChatGPT (OpenAI), Claude (Anthropic), Gemini (Google), Mistral, Grok, plus open-source models. We're constantly adding more." },
+  { q: "Which languages do you support?", a: "12+ Asian languages including Japanese, Korean, Chinese (Simplified & Traditional), Thai, Vietnamese, Malay/Indonesian, Tagalog, plus English and the major European languages." },
+  { q: "Is there a free tier?", a: "Yes — browse the full library and run 5 optimisations per month for free. See pricing for the paid tiers." },
+  { q: "Do my prompts stay private?", a: "Yes. Saved prompts are private under your account unless you explicitly publish or share them." },
+  { q: "Do you store the AI outputs?", a: "Only if you choose to save them. The optimisation step rewrites your prompt; the AI's response stays between you and the AI provider." },
+  { q: "Can I cancel anytime?", a: "Yes. Cancel from your account; access continues to the end of the paid period." },
+  { q: "Do you offer team plans?", a: "Yes — see our Team tier on the pricing page, or talk to sales for enterprise." },
+];
+---
+<Layout title="FAQs — PromptAndGo" description="Common questions about PromptAndGo.">
+  <section class="container py-16 md:py-24 max-w-3xl">
+    <h1 class="text-4xl md:text-5xl font-bold tracking-tight">Frequently asked questions</h1>
+    <div class="mt-10 divide-y divide-border/60 rounded-2xl border border-border/60 bg-card">
+      {faqs.map(f => (
+        <details class="group p-6 cursor-pointer">
+          <summary class="flex items-center justify-between gap-4 list-none">
+            <span class="font-semibold">{f.q}</span>
+            <span class="text-muted-foreground transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <p class="mt-3 text-muted-foreground leading-relaxed">{f.a}</p>
+        </details>
+      ))}
+    </div>
+    <p class="mt-8 text-center text-muted-foreground">Still have questions? <a href="/contact" class="text-primary hover:underline">Get in touch</a>.</p>
+  </section>
+</Layout>

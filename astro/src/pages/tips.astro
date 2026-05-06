@@ -1,0 +1,33 @@
+---
+import Layout from "@/layouts/Layout.astro";
+const articles = [
+  { slug: "how-to-write-ai-prompts", title: "How to write AI prompts that actually work", excerpt: "Anatomy of a high-quality prompt — context, role, constraints, examples." },
+  { slug: "best-ai-prompts-for-small-business-2025", title: "Best AI prompts for small business in 2026", excerpt: "Marketing, ops, customer support — copy-paste ready." },
+  { slug: "ai-prompts-that-save-you-hours", title: "AI prompts that save you hours every week", excerpt: "10 templates that compress recurring work." },
+  { slug: "ai-prompts-for-marketing-campaigns", title: "AI prompts for marketing campaigns", excerpt: "Briefs, hooks, ad copy, social — at scale." },
+  { slug: "ai-prompts-for-customer-support", title: "AI prompts for customer support", excerpt: "Empathetic, accurate, and on-brand responses." },
+  { slug: "ai-prompts-for-social-media-content", title: "AI prompts for social media content", excerpt: "Platform-specific best practices that don't sound like a bot." },
+  { slug: "ai-prompts-for-content-writers", title: "AI prompts for content writers", excerpt: "From outline to final draft, across formats." },
+  { slug: "ai-prompts-for-business-strategy", title: "AI prompts for business strategy", excerpt: "Decision frameworks, market analysis, positioning." },
+  { slug: "beginners-guide-midjourney-prompts", title: "Beginner's guide to Midjourney prompts", excerpt: "Style, composition, parameters, iteration." },
+  { slug: "ai-prompts-in-asian-languages", title: "AI prompts in Asian languages", excerpt: "When and how to write the prompt in the target language vs translate." },
+  { slug: "multi-platform-prompting-guide", title: "Multi-platform prompting guide", excerpt: "Same idea, optimised for ChatGPT, Claude, Gemini, Mistral, Grok." },
+];
+---
+<Layout title="AI Tips & Tutorials — PromptAndGo" description="Practical guides to writing better AI prompts across platforms and languages.">
+  <section class="container py-16 md:py-20">
+    <div class="max-w-2xl mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight">Tips & guides</h1>
+      <p class="mt-4 text-lg text-muted-foreground">Practical pieces on writing better prompts. Read in 5–10 minutes each.</p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-5 max-w-5xl">
+      {articles.map(a => (
+        <a href={`/tips/${a.slug}`} class="rounded-2xl border border-border/60 bg-card p-6 hover:border-primary/40 hover:shadow-glow transition-all">
+          <h2 class="text-xl font-semibold">{a.title}</h2>
+          <p class="mt-2 text-muted-foreground">{a.excerpt}</p>
+          <div class="mt-4 text-primary font-medium">Read →</div>
+        </a>
+      ))}
+    </div>
+  </section>
+</Layout>

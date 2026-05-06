@@ -1,0 +1,39 @@
+---
+interface Props {
+  market: string;
+  flag: string;
+  intro: string;
+  stats: { label: string; value: string }[];
+  sections: { heading: string; body: string[] }[];
+}
+const { market, flag, intro, stats, sections } = Astro.props;
+---
+<section class="container py-16 md:py-20 max-w-3xl">
+  <div class="text-5xl mb-4">{flag}</div>
+  <h1 class="text-4xl md:text-5xl font-bold tracking-tight">AI Market Insights — {market}</h1>
+  <p class="mt-4 text-lg text-muted-foreground">{intro}</p>
+
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10">
+    {stats.map(s => (
+      <div class="rounded-xl bg-card border border-border/60 p-5 text-center">
+        <div class="text-2xl font-bold text-primary">{s.value}</div>
+        <div class="mt-1 text-xs text-muted-foreground">{s.label}</div>
+      </div>
+    ))}
+  </div>
+
+  <div class="prose prose-lg dark:prose-invert max-w-none mt-12">
+    {sections.map(sec => (
+      <>
+        <h2>{sec.heading}</h2>
+        {sec.body.map(p => <p>{p}</p>)}
+      </>
+    ))}
+  </div>
+
+  <div class="mt-12 rounded-2xl bg-gradient-primary text-primary-foreground p-8 text-center">
+    <h3 class="text-2xl font-bold">Targeting {market}? Use prompts that fit.</h3>
+    <p class="mt-2 opacity-90">Local language nuance, cultural context, regulatory awareness — built in.</p>
+    <a href="/library" class="mt-5 inline-flex items-center justify-center rounded-lg bg-white text-primary px-6 py-3 font-semibold">Browse {market}-relevant prompts</a>
+  </div>
+</section>
