@@ -1,0 +1,61 @@
+---
+import Layout from "@astro/layouts/Layout.astro";
+import LegacyApp from "@astro/components/LegacyApp.tsx";
+
+export function getStaticPaths() {
+  // Routes handled by the legacy React app (mounted as a single React island).
+  // Any route that has its own .astro file (index, about, pricing, terms, etc.) takes precedence over this catch-all.
+  const interactive = [
+    "auth",
+    "library", "packs", "saved", "submit", "submit-prompt", "templates", "history",
+    "optimize",
+    "ai/studio", "ai/assistant", "ai/generator", "ai-credits-exhausted",
+    "ask-scout", "scout", "certification",
+    "cart",
+    "checkout/success", "checkout/canceled",
+    "membership/success", "membership/canceled",
+    "email-confirmed",
+    "dashboard", "settings",
+    "account", "account/profile", "account/notifications", "account/security",
+    "account/purchases", "account/favorites", "account/ai-preferences", "account/xp",
+    "search", "referral", "help",
+    "community", "testimonials", "tutorial", "careers", "partners", "enterprise",
+    "api-docs", "integrations", "changelog", "status",
+    "sitemap", "shortcuts", "compare",
+    "small-business", "singapore-startups", "language-learning",
+    "newsletter", "use-cases",
+  ];
+  return interactive.map(p => ({ params: { path: p } }));
+}
+
+const path = "/" + Astro.params.path;
+// Per-route SEO defaults (the legacy page sets its own Helmet on the client; this is the static fallback)
+const titleByPath: Record<string, { title: string; description: string }> = {
+  "/auth": { title: "Sign in or create an account — PromptAndGo", description: "Sign in or sign up to PromptAndGo." },
+  "/library": { title: "Prompt Library — PromptAndGo", description: "Browse 500+ vetted AI prompts across categories and Asian languages." },
+  "/packs": { title: "Power Packs — PromptAndGo", description: "Curated bundles of prompts for specific roles and verticals." },
+  "/optimize": { title: "Prompt Optimiser — PromptAndGo", description: "Optimise your prompt for any AI platform — for free." },
+  "/ai/studio": { title: "Prompt Studio — PromptAndGo", description: "Build, refine, and run prompts across AI platforms." },
+  "/ai/assistant": { title: "AI Assistant — PromptAndGo", description: "Conversational AI assistant with cultural awareness." },
+  "/ai/generator": { title: "AI Prompt Generator — PromptAndGo", description: "Generate prompt templates from a brief description." },
+  "/dashboard": { title: "Dashboard — PromptAndGo", description: "Your AI prompt dashboard." },
+  "/cart": { title: "Cart — PromptAndGo", description: "Your cart." },
+  "/account": { title: "Account — PromptAndGo", description: "Manage your account." },
+  "/help": { title: "Help Center — PromptAndGo", description: "Get help with PromptAndGo." },
+  "/enterprise": { title: "Enterprise — PromptAndGo", description: "PromptAndGo for enterprise teams." },
+  "/api-docs": { title: "API Documentation — PromptAndGo", description: "Integrate PromptAndGo with your stack." },
+  "/changelog": { title: "Changelog — PromptAndGo", description: "Recent product updates from PromptAndGo." },
+  "/status": { title: "Status — PromptAndGo", description: "PromptAndGo service status." },
+  "/community": { title: "Community — PromptAndGo", description: "Join the PromptAndGo community." },
+  "/testimonials": { title: "Testimonials — PromptAndGo", description: "Hear from PromptAndGo users." },
+  "/tutorial": { title: "Tutorial — PromptAndGo", description: "Get started with PromptAndGo." },
+  "/careers": { title: "Careers — PromptAndGo", description: "Join the PromptAndGo team." },
+  "/partners": { title: "Partners — PromptAndGo", description: "PromptAndGo partner program." },
+  "/integrations": { title: "Integrations — PromptAndGo", description: "Integrations with the AI tools you use." },
+  "/use-cases": { title: "Use Cases — PromptAndGo", description: "How teams use PromptAndGo." },
+};
+const meta = titleByPath[path] || { title: "PromptAndGo", description: "AI prompts built for Asia." };
+---
+<Layout title={meta.title} description={meta.description} canonical={`https://www.promptandgo.ai${path}`}>
+  <LegacyApp client:only="react" initialPath={path} />
+</Layout>
