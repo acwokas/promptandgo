@@ -1,26 +1,60 @@
 ---
 import Layout from "@astro/layouts/Layout.astro";
+import { createClient } from "@supabase/supabase-js";
 
-export function getStaticPaths() {
-  const articles = [
-    { slug: "how-to-write-ai-prompts", title: "How to write AI prompts that actually work", read: "5 min", body: "<p>The best AI prompts share four moves: <strong>context</strong> (what's happening, who you are), <strong>role</strong> (who the AI should pretend to be), <strong>constraints</strong> (length, format, things to avoid), and <strong>examples</strong> (one or two shows of what 'good' looks like).</p><p>Skip the role if you don't need a persona. Always include constraints — they're the single biggest lever on output quality. Examples (called 'few-shot' prompts) are powerful but easy to overdo.</p><p>The combined template is roughly: <em>'You are a {role}. Help me {goal}. Constraints: {bullet list}. Format: {desired structure}. Example: {input → output}.'</em></p>" },
-    { slug: "best-ai-prompts-for-small-business-2025", title: "Best AI prompts for small business in 2026", read: "7 min", body: "<p>Small businesses get the biggest AI lift on three categories: <strong>content production</strong> (newsletters, blog posts, social), <strong>customer service</strong> (FAQ drafts, support reply templates), and <strong>operations</strong> (job descriptions, SOPs, meeting summaries).</p><p>The prompts that work best name the audience, the brand voice, and the platform constraints up front. A blog post prompt that says 'write in a warm, no-jargon tone for first-time SaaS buyers' beats a generic 'write a blog post' every time.</p>" },
-    { slug: "ai-prompts-that-save-you-hours", title: "AI prompts that save you hours every week", read: "6 min", body: "<p>The leverage points: <strong>recurring drafts</strong> (weekly updates, status emails), <strong>document distillation</strong> (meeting transcripts → action items), <strong>format conversion</strong> (notes → proposals; transcripts → blog posts), and <strong>research preludes</strong> (summarise five sources before deep-reading).</p>" },
-    { slug: "ai-prompts-for-marketing-campaigns", title: "AI prompts for marketing campaigns", read: "8 min", body: "<p>For campaign work, prompts should cite the <strong>customer's actual problem in their words</strong>, the <strong>moment of need</strong>, and the <strong>desired feeling after action</strong>. Then ask for outputs in your platform's shape: 6 hooks for Instagram, 3 subject lines for email, a 90-second VO script.</p>" },
-    { slug: "ai-prompts-for-customer-support", title: "AI prompts for customer support", read: "5 min", body: "<p>Support prompts win when they specify <strong>tone (warm, accurate, no jargon)</strong>, <strong>do/don't lists</strong> (don't promise refunds; do offer the help center link), and a <strong>fallback</strong> for cases the AI can't handle confidently.</p>" },
-    { slug: "ai-prompts-for-social-media-content", title: "AI prompts for social media content", read: "6 min", body: "<p>Different platforms reward different shapes. LinkedIn rewards hooks and numbered lists; X rewards punch lines and short threads; TikTok rewards a curiosity-gap opening. Tell the model the platform and the post type explicitly.</p>" },
-    { slug: "ai-prompts-for-content-writers", title: "AI prompts for content writers", read: "9 min", body: "<p>For long-form, work in passes: <strong>outline → expand → tighten → final read</strong>. Each pass deserves its own prompt with its own brief. Don't try to write a finished blog post in one shot.</p>" },
-    { slug: "ai-prompts-for-business-strategy", title: "AI prompts for business strategy", read: "8 min", body: "<p>Strategy prompts that work: 'Argue both sides of {decision}', 'List the top 3 risks of {plan} that founders typically miss', 'Stress-test these assumptions: {list}'. Use AI as a Socratic partner, not a strategist.</p>" },
-    { slug: "beginners-guide-midjourney-prompts", title: "Beginner's guide to Midjourney prompts", read: "10 min", body: "<p>Midjourney rewards specificity in <strong>subject + style + composition + lighting</strong>. Add parameters like <code>--ar 16:9</code> for aspect ratio and <code>--v 6.1</code> for the version. Iterate by varying one element at a time.</p>" },
-    { slug: "ai-prompts-in-asian-languages", title: "AI prompts in Asian languages", read: "7 min", body: "<p>Default rule: <strong>write the prompt in the target language</strong> when you want native-feeling output. Translation-as-prompt-input often produces stilted results, especially in Japanese and Korean where pragmatics matter as much as grammar.</p>" },
-    { slug: "multi-platform-prompting-guide", title: "Multi-platform prompting guide", read: "9 min", body: "<p>Same intent, different ergonomics. Claude likes structured XML-ish prompts. ChatGPT does well with concise instructions and few-shot examples. Gemini benefits from explicit roles. Test the same idea across all three before standardising.</p>" },
-  ];
-  return articles.map(a => ({ params: { slug: a.slug }, props: a }));
+const SUPABASE_URL = import.meta.env.PUBLIC_SUPABASE_URL || "https://dkdakwyrqyfdkyukqmqs.supabase.co";
+const SUPABASE_KEY = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY || "";
+
+export async function getStaticPaths() {
+  const sb = createClient(
+    import.meta.env.PUBLIC_SUPABASE_URL || "https://dkdakwyrqyfdkyukqmqs.supabase.co",
+    import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY || ""
+  );
+  const { data, error } = await sb
+    .from("articles")
+    .select("slug, title, content, synopsis, meta_title, meta_description, thumbnail_url, focus_keyword, keyphrases, published_date")
+    .eq("is_published", true);
+
+  if (error || !data) {
+    console.error("Tip slug build error:", error);
+    return [];
+  }
+  return data.map(a => ({
+    params: { slug: a.slug },
+    props: a,
+  }));
 }
 
-const { title, body, read } = Astro.props;
+const article = Astro.props as any;
+const title = article.meta_title || article.title;
+const description = article.meta_description || article.synopsis || article.title;
+
+function readingTime(text: string | null | undefined) {
+  if (!text) return "5 min";
+  const words = text.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
+  const mins = Math.max(2, Math.round(words / 220));
+  return `${mins} min`;
+}
+const read = readingTime(article.content);
+const date = article.published_date ? new Date(article.published_date).toLocaleDateString("en-GB", { year: "numeric", month: "short", day: "numeric" }) : null;
+
+// Detect content format — could be markdown or HTML
+const contentLooksLikeHtml = (article.content || "").trimStart().startsWith("<");
+let body: string = article.content || "";
+if (!contentLooksLikeHtml) {
+  // Minimal markdown -> HTML for headings, paragraphs, bold, italic, lists, code
+  body = body
+    .replace(/^### (.*)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.*)$/gm, '<h2>$1</h2>')
+    .replace(/^# (.*)$/gm, '<h1>$1</h1>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/^/, '<p>') + '</p>';
+}
 ---
-<Layout title={`${title} — PromptAndGo`} description={`Read: ${title}`}>
+<Layout title={`${title} — PromptAndGo`} description={description} ogImage={article.thumbnail_url || undefined}>
   <section class="relative overflow-hidden">
     <div class="brand-orb w-[300px] h-[300px] -top-20 -right-20" style="background: hsl(var(--brand-blue));"></div>
     <div class="relative container max-w-3xl pt-12 md:pt-16 pb-6">
@@ -28,21 +62,32 @@ const { title, body, read } = Astro.props;
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         All tips
       </a>
-      <div class="mt-6 flex items-center gap-2 text-xs text-muted-foreground">
+      <div class="mt-6 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
         <span class="font-semibold uppercase tracking-wider">Tip</span>
         <span>·</span>
         <span>{read}</span>
+        {date && <><span>·</span><span>{date}</span></>}
+        {article.focus_keyword && <><span>·</span><span class="rounded-full bg-secondary px-2 py-0.5">{article.focus_keyword}</span></>}
       </div>
-      <h1 class="mt-3 text-3xl md:text-5xl font-extrabold tracking-tight">{title}</h1>
+      <h1 class="mt-3 text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">{article.title}</h1>
+      {article.synopsis && <p class="mt-4 text-lg text-foreground/70 leading-relaxed">{article.synopsis}</p>}
     </div>
+    {article.thumbnail_url && (
+      <div class="container max-w-4xl pb-2">
+        <img src={article.thumbnail_url} alt={article.title} class="rounded-2xl w-full" loading="eager" />
+      </div>
+    )}
   </section>
 
   <article class="container max-w-3xl pb-20">
-    <div class="prose prose-lg dark:prose-invert max-w-none" set:html={body}></div>
-    <div class="mt-12 pt-8 border-t border-border/40">
+    <div class="prose prose-lg dark:prose-invert max-w-none mt-8" set:html={body}></div>
+    <div class="mt-12 pt-8 border-t border-border/40 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
       <a href="/tips" class="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         More tips
+      </a>
+      <a href="/optimize" class="inline-flex items-center justify-center rounded-xl bg-gradient-brand text-white px-5 h-11 font-semibold shadow-brand hover:shadow-brand-lg transition-all">
+        Try the optimiser →
       </a>
     </div>
   </article>

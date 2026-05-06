@@ -1,18 +1,25 @@
 ---
 import Layout from "@astro/layouts/Layout.astro";
-const articles = [
-  { slug: "how-to-write-ai-prompts", title: "How to write AI prompts that actually work", excerpt: "Anatomy of a high-quality prompt — context, role, constraints, examples.", read: "5 min" },
-  { slug: "best-ai-prompts-for-small-business-2025", title: "Best AI prompts for small business in 2026", excerpt: "Marketing, ops, customer support — copy-paste ready.", read: "7 min" },
-  { slug: "ai-prompts-that-save-you-hours", title: "AI prompts that save you hours every week", excerpt: "10 templates that compress recurring work.", read: "6 min" },
-  { slug: "ai-prompts-for-marketing-campaigns", title: "AI prompts for marketing campaigns", excerpt: "Briefs, hooks, ad copy, social — at scale.", read: "8 min" },
-  { slug: "ai-prompts-for-customer-support", title: "AI prompts for customer support", excerpt: "Empathetic, accurate, on-brand responses.", read: "5 min" },
-  { slug: "ai-prompts-for-social-media-content", title: "AI prompts for social media content", excerpt: "Platform-specific best practices that don't sound like a bot.", read: "6 min" },
-  { slug: "ai-prompts-for-content-writers", title: "AI prompts for content writers", excerpt: "From outline to final draft, across formats.", read: "9 min" },
-  { slug: "ai-prompts-for-business-strategy", title: "AI prompts for business strategy", excerpt: "Decision frameworks, market analysis, positioning.", read: "8 min" },
-  { slug: "beginners-guide-midjourney-prompts", title: "Beginner's guide to Midjourney prompts", excerpt: "Style, composition, parameters, iteration.", read: "10 min" },
-  { slug: "ai-prompts-in-asian-languages", title: "AI prompts in Asian languages", excerpt: "When to write the prompt in the target language vs translate.", read: "7 min" },
-  { slug: "multi-platform-prompting-guide", title: "Multi-platform prompting guide", excerpt: "Same idea, optimised for ChatGPT, Claude, Gemini, Mistral, Grok.", read: "9 min" },
-];
+import { createClient } from "@supabase/supabase-js";
+
+const SUPABASE_URL = import.meta.env.PUBLIC_SUPABASE_URL || "https://dkdakwyrqyfdkyukqmqs.supabase.co";
+const SUPABASE_KEY = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY || "";
+
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+const { data: articles, error } = await sb
+  .from("articles")
+  .select("slug, title, synopsis, meta_description, thumbnail_url, published_date, focus_keyword, keyphrases")
+  .eq("is_published", true)
+  .order("published_date", { ascending: false });
+
+const safe = articles ?? [];
+
+function readingTime(text: string | null | undefined) {
+  if (!text) return "5 min";
+  const words = text.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
+  const mins = Math.max(2, Math.round(words / 220));
+  return `${mins} min`;
+}
 ---
 <Layout title="AI Tips & Tutorials — PromptAndGo" description="Practical guides to writing better AI prompts across platforms and languages.">
   <section class="relative overflow-hidden">
@@ -27,22 +34,41 @@ const articles = [
   </section>
 
   <section class="container max-w-6xl pb-20">
+    {error && (
+      <div class="rounded-2xl border border-destructive/40 bg-destructive/5 text-destructive p-5 text-sm">Couldn't load articles: {error.message}</div>
+    )}
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-      {articles.map(a => (
-        <a href={`/tips/${a.slug}`} class="group card-lift rounded-2xl border border-border/60 bg-card p-6 flex flex-col">
-          <div class="flex items-center gap-2 text-xs text-muted-foreground mb-3">
-            <span class="font-semibold uppercase tracking-wider">Tip</span>
-            <span>·</span>
-            <span>{a.read}</span>
-          </div>
-          <h2 class="text-lg font-bold tracking-tight leading-snug">{a.title}</h2>
-          <p class="mt-2.5 text-sm text-foreground/70 leading-relaxed flex-1">{a.excerpt}</p>
-          <div class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
-            Read
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="transition-transform group-hover:translate-x-0.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      {safe.map(a => (
+        <a href={`/tips/${a.slug}`} class="group card-lift rounded-2xl border border-border/60 bg-card overflow-hidden flex flex-col">
+          {a.thumbnail_url && (
+            <div class="aspect-[16/9] overflow-hidden bg-secondary/40">
+              <img src={a.thumbnail_url} alt={a.title} loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+            </div>
+          )}
+          <div class="p-6 flex flex-col flex-1">
+            <div class="flex items-center gap-2 text-xs text-muted-foreground mb-3">
+              <span class="font-semibold uppercase tracking-wider">Tip</span>
+              <span>·</span>
+              <span>{readingTime(a.synopsis ?? a.meta_description ?? "")}</span>
+            </div>
+            <h2 class="text-lg font-bold tracking-tight leading-snug">{a.title}</h2>
+            <p class="mt-2.5 text-sm text-foreground/70 leading-relaxed flex-1 line-clamp-3">{a.synopsis ?? a.meta_description ?? ""}</p>
+            <div class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+              Read
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="transition-transform group-hover:translate-x-0.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </div>
           </div>
         </a>
       ))}
     </div>
   </section>
 </Layout>
+
+<style>
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
