@@ -3,32 +3,47 @@ import Layout from "@astro/layouts/Layout.astro";
 
 export function getStaticPaths() {
   const articles = [
-    { slug: "how-to-write-ai-prompts", title: "How to write AI prompts that actually work", body: "<p>The best AI prompts share four moves: <strong>context</strong> (what's happening, who you are), <strong>role</strong> (who the AI should pretend to be), <strong>constraints</strong> (length, format, things to avoid), and <strong>examples</strong> (one or two shows of what 'good' looks like).</p><p>Skip the role if you don't need a persona. Always include constraints — they're the single biggest lever on output quality. Examples (called 'few-shot' prompts) are powerful but easy to overdo.</p><p>The combined template is roughly: <em>'You are a {role}. Help me {goal}. Constraints: {bullet list}. Format: {desired structure}. Example: {input → output}.'</em></p>" },
-    { slug: "best-ai-prompts-for-small-business-2025", title: "Best AI prompts for small business in 2026", body: "<p>Small businesses get the biggest AI lift on three categories: <strong>content production</strong> (newsletters, blog posts, social), <strong>customer service</strong> (FAQ drafts, support reply templates), and <strong>operations</strong> (job descriptions, SOPs, meeting summaries).</p><p>The prompts that work best name the audience, the brand voice, and the platform constraints up front. A blog post prompt that says 'write in a warm, no-jargon tone for first-time SaaS buyers' beats a generic 'write a blog post' every time.</p>" },
-    { slug: "ai-prompts-that-save-you-hours", title: "AI prompts that save you hours every week", body: "<p>The leverage points: <strong>recurring drafts</strong> (weekly updates, status emails), <strong>document distillation</strong> (meeting transcripts → action items), <strong>format conversion</strong> (notes → proposals; transcripts → blog posts), and <strong>research preludes</strong> (summarise five sources before deep-reading).</p>" },
-    { slug: "ai-prompts-for-marketing-campaigns", title: "AI prompts for marketing campaigns", body: "<p>For campaign work, prompts should cite the <strong>customer's actual problem in their words</strong>, the <strong>moment of need</strong>, and the <strong>desired feeling after action</strong>. Then ask for outputs in your platform's shape: 6 hooks for Instagram, 3 subject lines for email, a 90-second VO script.</p>" },
-    { slug: "ai-prompts-for-customer-support", title: "AI prompts for customer support", body: "<p>Support prompts win when they specify <strong>tone (warm, accurate, no jargon)</strong>, <strong>do/don't lists</strong> (don't promise refunds; do offer the help center link), and a <strong>fallback</strong> for cases the AI can't handle confidently.</p>" },
-    { slug: "ai-prompts-for-social-media-content", title: "AI prompts for social media content", body: "<p>Different platforms reward different shapes. LinkedIn rewards hooks and numbered lists; X rewards punch lines and short threads; TikTok rewards a curiosity-gap opening. Tell the model the platform and the post type explicitly.</p>" },
-    { slug: "ai-prompts-for-content-writers", title: "AI prompts for content writers", body: "<p>For long-form, work in passes: <strong>outline → expand → tighten → final read</strong>. Each pass deserves its own prompt with its own brief. Don't try to write a finished blog post in one shot.</p>" },
-    { slug: "ai-prompts-for-business-strategy", title: "AI prompts for business strategy", body: "<p>Strategy prompts that work: 'Argue both sides of {decision}', 'List the top 3 risks of {plan} that founders typically miss', 'Stress-test these assumptions: {list}'. Use AI as a Socratic partner, not a strategist.</p>" },
-    { slug: "beginners-guide-midjourney-prompts", title: "Beginner's guide to Midjourney prompts", body: "<p>Midjourney rewards specificity in <strong>subject + style + composition + lighting</strong>. Add parameters like <code>--ar 16:9</code> for aspect ratio and <code>--v 6.1</code> for the version. Iterate by varying one element at a time.</p>" },
-    { slug: "ai-prompts-in-asian-languages", title: "AI prompts in Asian languages", body: "<p>Default rule: <strong>write the prompt in the target language</strong> when you want native-feeling output. Translation-as-prompt-input often produces stilted results, especially in Japanese and Korean where pragmatics matter as much as grammar.</p>" },
-    { slug: "multi-platform-prompting-guide", title: "Multi-platform prompting guide", body: "<p>Same intent, different ergonomics. Claude likes structured XML-ish prompts. ChatGPT does well with concise instructions and few-shot examples. Gemini benefits from explicit roles. Test the same idea across all three before standardising.</p>" },
+    { slug: "how-to-write-ai-prompts", title: "How to write AI prompts that actually work", read: "5 min", body: "<p>The best AI prompts share four moves: <strong>context</strong> (what's happening, who you are), <strong>role</strong> (who the AI should pretend to be), <strong>constraints</strong> (length, format, things to avoid), and <strong>examples</strong> (one or two shows of what 'good' looks like).</p><p>Skip the role if you don't need a persona. Always include constraints — they're the single biggest lever on output quality. Examples (called 'few-shot' prompts) are powerful but easy to overdo.</p><p>The combined template is roughly: <em>'You are a {role}. Help me {goal}. Constraints: {bullet list}. Format: {desired structure}. Example: {input → output}.'</em></p>" },
+    { slug: "best-ai-prompts-for-small-business-2025", title: "Best AI prompts for small business in 2026", read: "7 min", body: "<p>Small businesses get the biggest AI lift on three categories: <strong>content production</strong> (newsletters, blog posts, social), <strong>customer service</strong> (FAQ drafts, support reply templates), and <strong>operations</strong> (job descriptions, SOPs, meeting summaries).</p><p>The prompts that work best name the audience, the brand voice, and the platform constraints up front. A blog post prompt that says 'write in a warm, no-jargon tone for first-time SaaS buyers' beats a generic 'write a blog post' every time.</p>" },
+    { slug: "ai-prompts-that-save-you-hours", title: "AI prompts that save you hours every week", read: "6 min", body: "<p>The leverage points: <strong>recurring drafts</strong> (weekly updates, status emails), <strong>document distillation</strong> (meeting transcripts → action items), <strong>format conversion</strong> (notes → proposals; transcripts → blog posts), and <strong>research preludes</strong> (summarise five sources before deep-reading).</p>" },
+    { slug: "ai-prompts-for-marketing-campaigns", title: "AI prompts for marketing campaigns", read: "8 min", body: "<p>For campaign work, prompts should cite the <strong>customer's actual problem in their words</strong>, the <strong>moment of need</strong>, and the <strong>desired feeling after action</strong>. Then ask for outputs in your platform's shape: 6 hooks for Instagram, 3 subject lines for email, a 90-second VO script.</p>" },
+    { slug: "ai-prompts-for-customer-support", title: "AI prompts for customer support", read: "5 min", body: "<p>Support prompts win when they specify <strong>tone (warm, accurate, no jargon)</strong>, <strong>do/don't lists</strong> (don't promise refunds; do offer the help center link), and a <strong>fallback</strong> for cases the AI can't handle confidently.</p>" },
+    { slug: "ai-prompts-for-social-media-content", title: "AI prompts for social media content", read: "6 min", body: "<p>Different platforms reward different shapes. LinkedIn rewards hooks and numbered lists; X rewards punch lines and short threads; TikTok rewards a curiosity-gap opening. Tell the model the platform and the post type explicitly.</p>" },
+    { slug: "ai-prompts-for-content-writers", title: "AI prompts for content writers", read: "9 min", body: "<p>For long-form, work in passes: <strong>outline → expand → tighten → final read</strong>. Each pass deserves its own prompt with its own brief. Don't try to write a finished blog post in one shot.</p>" },
+    { slug: "ai-prompts-for-business-strategy", title: "AI prompts for business strategy", read: "8 min", body: "<p>Strategy prompts that work: 'Argue both sides of {decision}', 'List the top 3 risks of {plan} that founders typically miss', 'Stress-test these assumptions: {list}'. Use AI as a Socratic partner, not a strategist.</p>" },
+    { slug: "beginners-guide-midjourney-prompts", title: "Beginner's guide to Midjourney prompts", read: "10 min", body: "<p>Midjourney rewards specificity in <strong>subject + style + composition + lighting</strong>. Add parameters like <code>--ar 16:9</code> for aspect ratio and <code>--v 6.1</code> for the version. Iterate by varying one element at a time.</p>" },
+    { slug: "ai-prompts-in-asian-languages", title: "AI prompts in Asian languages", read: "7 min", body: "<p>Default rule: <strong>write the prompt in the target language</strong> when you want native-feeling output. Translation-as-prompt-input often produces stilted results, especially in Japanese and Korean where pragmatics matter as much as grammar.</p>" },
+    { slug: "multi-platform-prompting-guide", title: "Multi-platform prompting guide", read: "9 min", body: "<p>Same intent, different ergonomics. Claude likes structured XML-ish prompts. ChatGPT does well with concise instructions and few-shot examples. Gemini benefits from explicit roles. Test the same idea across all three before standardising.</p>" },
   ];
   return articles.map(a => ({ params: { slug: a.slug }, props: a }));
 }
 
-const { title, body } = Astro.props;
+const { title, body, read } = Astro.props;
 ---
 <Layout title={`${title} — PromptAndGo`} description={`Read: ${title}`}>
-  <article class="container py-16 md:py-20 max-w-3xl">
-    <header class="mb-10">
-      <a href="/tips" class="text-sm text-muted-foreground hover:text-primary">← All tips</a>
-      <h1 class="mt-4 text-3xl md:text-5xl font-bold tracking-tight">{title}</h1>
-    </header>
+  <section class="relative overflow-hidden">
+    <div class="brand-orb w-[300px] h-[300px] -top-20 -right-20" style="background: hsl(var(--brand-blue));"></div>
+    <div class="relative container max-w-3xl pt-12 md:pt-16 pb-6">
+      <a href="/tips" class="text-sm text-muted-foreground hover:text-primary inline-flex items-center gap-1.5">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        All tips
+      </a>
+      <div class="mt-6 flex items-center gap-2 text-xs text-muted-foreground">
+        <span class="font-semibold uppercase tracking-wider">Tip</span>
+        <span>·</span>
+        <span>{read}</span>
+      </div>
+      <h1 class="mt-3 text-3xl md:text-5xl font-extrabold tracking-tight">{title}</h1>
+    </div>
+  </section>
+
+  <article class="container max-w-3xl pb-20">
     <div class="prose prose-lg dark:prose-invert max-w-none" set:html={body}></div>
     <div class="mt-12 pt-8 border-t border-border/40">
-      <a href="/tips" class="text-primary font-medium">← More tips</a>
+      <a href="/tips" class="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        More tips
+      </a>
     </div>
   </article>
 </Layout>

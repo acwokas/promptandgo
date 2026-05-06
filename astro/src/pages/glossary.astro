@@ -12,22 +12,48 @@ const terms = [
   { term: "RAG (Retrieval-Augmented Generation)", def: "Architecture that retrieves relevant documents at query time and includes them in the prompt, so the model answers from your data." },
   { term: "Fine-tuning", def: "Training a base model on extra examples to specialise it for a domain or style. Usually overkill compared to good prompting and RAG." },
   { term: "Embedding", def: "A vector representation of text used to find semantically similar content. Powers most retrieval and search features." },
-  { term: "Keigo", def: "Japanese honorific language. Three layers — sonkeigo (respectful), kenjougo (humble), teineigo (polite) — applied based on relationships and context." },
+  { term: "Keigo (敬語)", def: "Japanese honorific language. Three layers — sonkeigo (respectful), kenjougo (humble), teineigo (polite) — applied based on relationships and context." },
   { term: "Honorifics (Korean)", def: "Korean speech levels (-습니다, -해요, -해, etc.) that mark formality and the speaker-listener relationship. Vital in business communication." },
   { term: "Code-switching", def: "Mixing languages within a sentence or paragraph, common in Singapore (Singlish), Malaysia (Manglish), Philippines (Taglish), and many other multilingual contexts." },
 ];
+const groups = terms.reduce((acc: Record<string, typeof terms>, t) => {
+  const k = t.term[0].toUpperCase();
+  acc[k] = acc[k] || [];
+  acc[k].push(t);
+  return acc;
+}, {});
+const letters = Object.keys(groups).sort();
 ---
 <Layout title="AI Glossary — PromptAndGo" description="Plain-English definitions for AI prompting terms.">
-  <section class="container py-16 md:py-20 max-w-3xl">
-    <h1 class="text-4xl md:text-5xl font-bold tracking-tight">AI Glossary</h1>
-    <p class="mt-4 text-lg text-muted-foreground">Plain-English definitions for the terms you'll see across our prompts and guides.</p>
-    <dl class="mt-12 divide-y divide-border/60 rounded-2xl border border-border/60 bg-card">
-      {terms.map(t => (
-        <div class="p-6">
-          <dt class="font-semibold text-lg">{t.term}</dt>
-          <dd class="mt-1.5 text-muted-foreground leading-relaxed">{t.def}</dd>
-        </div>
+  <section class="relative overflow-hidden">
+    <div class="brand-orb w-[400px] h-[400px] -top-20 -left-20" style="background: hsl(var(--brand-purple));"></div>
+    <div class="relative container max-w-4xl pt-16 md:pt-20 pb-8">
+      <span class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Glossary</span>
+      <h1 class="mt-3 text-4xl md:text-6xl font-extrabold tracking-tight">AI in <span class="text-gradient-brand">plain English</span>.</h1>
+      <p class="mt-5 text-lg text-foreground/70 max-w-xl">Definitions for the terms you'll see across our prompts and guides.</p>
+    </div>
+  </section>
+
+  <section class="container max-w-4xl pb-16">
+    <!-- Letter index -->
+    <nav class="flex flex-wrap gap-2 mb-10" aria-label="Glossary index">
+      {letters.map(L => (
+        <a href={`#letter-${L}`} class="w-9 h-9 rounded-lg border border-border/60 bg-card grid place-items-center font-semibold text-sm hover:border-primary/40 hover:text-primary transition-colors">{L}</a>
       ))}
-    </dl>
+    </nav>
+
+    {letters.map(L => (
+      <div id={`letter-${L}`} class="mb-10 scroll-mt-24">
+        <h2 class="text-2xl font-extrabold text-gradient-brand mb-4">{L}</h2>
+        <dl class="divide-y divide-border/60 rounded-2xl border border-border/60 bg-card">
+          {groups[L].map(t => (
+            <div class="p-5 md:p-6">
+              <dt class="font-semibold text-base md:text-lg">{t.term}</dt>
+              <dd class="mt-1.5 text-sm md:text-base text-foreground/70 leading-relaxed">{t.def}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    ))}
   </section>
 </Layout>

@@ -1,30 +1,52 @@
 ---
 import Layout from "@astro/layouts/Layout.astro";
 const markets = [
-  { href: "/market-insights/malaysia", flag: "🇲🇾", title: "Malaysia", desc: "Bahasa Malaysia + English. Multi-ethnic market dynamics." },
-  { href: "/market-insights/indonesia", flag: "🇮🇩", title: "Indonesia", desc: "World's 4th largest market. Bahasa Indonesia, mobile-first." },
-  { href: "/market-insights/vietnam", flag: "🇻🇳", title: "Vietnam", desc: "Fastest-growing SE Asian digital economy. Tiếng Việt." },
-  { href: "/market-insights/australia", flag: "🇦🇺", title: "Australia", desc: "Mature AI adoption, regulated industries, AU English nuance." },
+  { href: "/market-insights/malaysia", flag: "🇲🇾", title: "Malaysia", desc: "Bahasa Malaysia + English. Multi-ethnic market dynamics. Banking, fintech, SME.", stats: "33M · 3+ business languages" },
+  { href: "/market-insights/indonesia", flag: "🇮🇩", title: "Indonesia", desc: "World's 4th largest market. Mobile-first. Super-apps, fintech, logistics.", stats: "280M · 78% online" },
+  { href: "/market-insights/vietnam", flag: "🇻🇳", title: "Vietnam", desc: "Fastest-growing SE Asian digital economy. Manufacturing, fintech, B2B SaaS.", stats: "100M · median age 32" },
+  { href: "/market-insights/australia", flag: "🇦🇺", title: "Australia", desc: "Mature AI adoption, regulated industries, AU English. FS, government, ProfServ.", stats: "27M · 46% AI-using" },
 ];
 ---
-<Layout
-  title="AI Market Insights — Asia | PromptAndGo"
-  description="Market-by-market insights for AI deployment across Asia: Malaysia, Indonesia, Vietnam, Australia."
->
-  <section class="container py-16 md:py-24">
-    <div class="text-center max-w-2xl mx-auto mb-12">
-      <h1 class="text-4xl md:text-5xl font-bold tracking-tight">AI Market Insights</h1>
-      <p class="mt-4 text-lg text-muted-foreground">Country-by-country analysis of AI adoption, regulatory landscape, and prompt strategy across Asia.</p>
+<Layout title="AI Market Insights — Asia & Australia | PromptAndGo" description="Country-by-country AI deployment insights for Asia. Adoption, regulation, language strategy.">
+  <section class="relative overflow-hidden">
+    <div class="brand-orb w-[480px] h-[480px] -top-32 -left-24" style="background: hsl(var(--brand-purple));"></div>
+    <div class="brand-orb w-[400px] h-[400px] top-20 right-[-100px]" style="background: hsl(var(--brand-teal));"></div>
+    <div class="relative container max-w-7xl pt-16 md:pt-24 pb-10">
+      <div class="text-center max-w-2xl mx-auto">
+        <span class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Market Insights</span>
+        <h1 class="mt-3 text-4xl md:text-6xl font-extrabold tracking-tight">
+          AI deployment, <span class="text-gradient-brand">market by market</span>.
+        </h1>
+        <p class="mt-5 text-lg text-foreground/70">Adoption rates, regulatory landscape, language strategy. The context behind the prompts.</p>
+      </div>
     </div>
-    <div class="grid md:grid-cols-2 gap-5 max-w-4xl mx-auto">
+  </section>
+
+  <section class="container max-w-6xl py-12">
+    <div class="grid md:grid-cols-2 gap-5 md:gap-6">
       {markets.map(m => (
-        <a href={m.href} class="rounded-2xl border border-border/60 bg-card p-7 hover:border-primary/40 hover:shadow-brand transition-all">
-          <div class="text-4xl mb-3">{m.flag}</div>
-          <h2 class="text-2xl font-semibold">{m.title}</h2>
-          <p class="mt-2 text-muted-foreground">{m.desc}</p>
-          <div class="mt-4 text-primary font-medium">Read more →</div>
+        <a href={m.href} class="group card-lift relative rounded-3xl border border-border/60 bg-card p-7 md:p-8 overflow-hidden">
+          <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-brand-soft rounded-full blur-2xl opacity-60 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative">
+            <div class="text-5xl mb-4">{m.flag}</div>
+            <h2 class="text-2xl md:text-3xl font-bold tracking-tight">{m.title}</h2>
+            <p class="mt-2 text-foreground/70 leading-relaxed">{m.desc}</p>
+            <div class="mt-4 flex items-center justify-between gap-4">
+              <span class="text-xs text-muted-foreground font-medium">{m.stats}</span>
+              <span class="text-sm font-semibold text-primary inline-flex items-center gap-1.5">
+                Read the brief
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="transition-transform group-hover:translate-x-0.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+              </span>
+            </div>
+          </div>
         </a>
       ))}
+    </div>
+
+    <div class="mt-12 rounded-2xl border border-dashed border-border/60 bg-card p-7 text-center">
+      <h3 class="text-lg font-semibold">More markets coming</h3>
+      <p class="mt-2 text-sm text-foreground/70">Japan, Korea, Singapore, Thailand, Philippines, India — rolling out next.</p>
+      <a href="/contact?topic=market-request" class="mt-4 inline-flex text-sm font-semibold text-primary hover:underline">Request a specific market →</a>
     </div>
   </section>
 </Layout>
