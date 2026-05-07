@@ -10,7 +10,7 @@ export async function getStaticPaths() {
     const subById: Record<string, any> = Object.fromEntries(subs.map((s: any) => [s.id, s]));
     const catById: Record<string, any> = Object.fromEntries(cats.map((c: any) => [c.id, c]));
     const prompts: any[] = await sbFetch(
-      `/rest/v1/prompts?select=id,slug,title,what_for,prompt,excerpt,image_prompt,category_id,subcategory_id,is_pro,ribbon&review_status=eq.approved&order=created_at.desc&limit=1500`
+      `/rest/v1/prompts?select=id,slug,title,what_for,prompt,excerpt,image_prompt,category_id,subcategory_id,is_pro,ribbon&review_status=eq.approved&order=created_at.desc&limit=300`
     );
 
     // Pre-compute related per prompt: same subcategory if available, else same category, top 3
