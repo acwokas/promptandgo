@@ -33,7 +33,7 @@ export const AIOptimizedStructuredData = ({
         name: "What is PromptandGo.ai?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "PromptandGo.ai is a comprehensive AI productivity platform offering 50+ curated prompts, Scout AI optimization, and specialised Power Packs. It helps professionals, marketers, and creators get better results from AI tools like ChatGPT, Claude, Gemini, and others - completely free."
+          text: "PromptandGo.ai is a comprehensive AI productivity platform offering 1,000+ curated prompts, Scout AI optimization, and specialised Power Packs. It helps professionals, marketers, and creators get better results from AI tools like ChatGPT, Claude, Gemini, and others - completely free."
         }
       },
       {
@@ -49,7 +49,7 @@ export const AIOptimizedStructuredData = ({
         name: "Are the AI prompts really free?",
         acceptedAnswer: {
           "@type": "Answer", 
-          text: "Yes! Access to our 50+ prompt library (and growing), Scout AI optimization, and most Power Packs is completely free. We believe in democratizing AI productivity tools. Premium features are available for advanced users who need additional capabilities."
+          text: "Yes! Access to our 1,000+ prompt library, Scout AI optimization, and most Power Packs is completely free. We believe in democratizing AI productivity tools. Premium features are available for advanced users who need additional capabilities."
         }
       },
       {
@@ -90,9 +90,9 @@ export const AIOptimizedStructuredData = ({
       availability: "https://schema.org/InStock",
       category: "AI Productivity Tools"
     },
-    description: "Professional AI prompt library with 50+ curated prompts, Scout optimization, and Power Packs for ChatGPT, Claude, and other AI platforms.",
+    description: "Professional AI prompt library with 1,000+ curated prompts, Scout optimization, and Power Packs for ChatGPT, Claude, and other AI platforms.",
     featureList: [
-      "50+ tested AI prompts",
+      "1,000+ tested AI prompts",
       "Scout AI optimization engine", 
       "Platform-specific prompt adaptation",
       "Power Packs for specialised use cases",
@@ -156,7 +156,7 @@ export const AIOptimizedStructuredData = ({
     "@context": "https://schema.org",
     "@type": "Dataset",
     name: "Curated AI Prompt Library",
-    description: "Comprehensive collection of 50+ tested and optimized AI prompts for professional use across various industries and applications.",
+    description: "Comprehensive collection of 1,000+ tested and optimized AI prompts for professional use across various industries and applications.",
     keywords: ["AI prompts", "ChatGPT", "Claude", "business automation", "productivity", "content creation", "marketing"],
     creator: {
       "@type": "Organization",
@@ -174,7 +174,7 @@ export const AIOptimizedStructuredData = ({
       "@type": "DataDownload",
       contentUrl: `${origin}/library`,
       encodingFormat: "text/html",
-      contentSize: "50+ prompts (and growing)"
+      contentSize: "1,000+ prompts"
     },
     variableMeasured: [
       {
@@ -279,7 +279,7 @@ export const AIOptimizedStructuredData = ({
       <meta name="ai-audience" content="business professionals, marketers, content creators, entrepreneurs" />
       <meta name="ai-topic" content="AI prompts, productivity tools, business automation, content creation" />
       <meta name="ai-expertise" content="AI prompt engineering, optimization, platform-specific adaptation" />
-      <meta name="ai-value-proposition" content="Free access to 50+ tested prompts with AI-powered optimization" />
+      <meta name="ai-value-proposition" content="Free access to 1,000+ tested prompts with AI-powered optimization" />
       
       {/* Enhanced meta for AI chatbots */}
       <meta name="chatgpt-category" content="productivity-tools" />
