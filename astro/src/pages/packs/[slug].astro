@@ -1,0 +1,120 @@
+---
+import Layout from "@astro/layouts/Layout.astro";
+import { sbFetch } from "@astro/lib/supabase-rest";
+
+export async function getStaticPaths() {
+  try {
+    const packs: any[] = await sbFetch(`/rest/v1/packs?select=*&is_active=eq.true`);
+    const pp: any[] = await sbFetch(`/rest/v1/pack_prompts?select=pack_id,prompts(id,slug,title,what_for,excerpt,is_pro,category_id,subcategory_id)`);
+    const cats: any[] = await sbFetch(`/rest/v1/categories?select=id,name,slug`);
+    const subs: any[] = await sbFetch(`/rest/v1/subcategories?select=id,name,slug`);
+    const catById = Object.fromEntries(cats.map((c:any) => [c.id, c]));
+    const subById = Object.fromEntries(subs.map((s:any) => [s.id, s]));
+    const byPack: Record<string, any[]> = {};
+    for (const r of pp) {
+      if (!r.prompts) continue;
+      (byPack[r.pack_id] ||= []).push(r.prompts);
+    }
+    return packs.map(p => ({
+      params: { slug: p.slug },
+      props: { pack: p, prompts: byPack[p.id] || [], catById, subById },
+    }));
+  } catch (e) { return []; }
+}
+
+const { pack, prompts, catById, subById } = Astro.props as any;
+const promptsSorted = [...prompts].sort((a: any, b: any) => Number(a.is_pro) - Number(b.is_pro));
+const premium = prompts.filter((p: any) => p.is_pro);
+const free = prompts.filter((p: any) => !p.is_pro);
+---
+<Layout
+  title={`${pack.name} — Power Pack | PromptAndGo`}
+  description={pack.description}
+  canonical={`https://www.promptandgo.ai/packs/${pack.slug}`}
+>
+  <section class="container max-w-5xl pt-12 md:pt-16 pb-8">
+    <nav class="text-sm text-foreground/60 mb-6 flex items-center gap-2 flex-wrap" aria-label="Breadcrumb">
+      <a href="/packs" class="hover:text-foreground">Power Packs</a>
+      <span class="text-foreground/40">/</span>
+      <span class="text-foreground">{pack.name}</span>
+    </nav>
+    <div class="grid md:grid-cols-[2fr_1fr] gap-8 items-start">
+      <div>
+        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">{pack.name}</h1>
+        <p class="mt-4 text-lg text-foreground/80 leading-relaxed">{pack.description}</p>
+        <div class="mt-5 flex flex-wrap gap-2 text-sm text-foreground/70">
+          <span class="rounded-md bg-primary/10 text-primary px-2.5 py-1 font-medium">{prompts.length} prompts</span>
+          {premium.length > 0 && <span class="rounded-md bg-amber-500/10 text-amber-700 dark:text-amber-300 px-2.5 py-1 font-medium">{premium.length} premium</span>}
+          <span class="rounded-md bg-secondary px-2.5 py-1">{free.length} free</span>
+        </div>
+      </div>
+      <aside class="rounded-2xl border border-border bg-card p-6">
+        <div class="flex items-baseline justify-between mb-4">
+          <span class="text-3xl md:text-4xl font-extrabold">${(pack.price_cents / 100).toFixed(2)}</span>
+          <span class="text-sm text-foreground/60">one-off</span>
+        </div>
+        <p class="text-sm text-foreground/75 mb-5">Unlock <strong>all {prompts.length} prompts</strong> including the {premium.length} premium ones in this pack.</p>
+        <a href={`/auth?action=signup&buy_pack=${pack.slug}`} class="block w-full text-center rounded-xl bg-primary text-primary-foreground px-5 h-11 leading-[2.75rem] font-semibold hover:bg-primary/90 transition-colors">Buy this pack — ${(pack.price_cents / 100).toFixed(2)}</a>
+        <div class="my-4 flex items-center gap-3 text-xs text-foreground/55">
+          <span class="flex-1 h-px bg-border"></span>
+          <span>or</span>
+          <span class="flex-1 h-px bg-border"></span>
+        </div>
+        <a href="/auth?action=signup&plan=monthly" class="block w-full text-center rounded-xl border-2 border-primary/40 bg-primary/5 text-primary px-5 h-11 leading-[2.75rem] font-semibold hover:bg-primary/10 transition-colors">Subscribe — $12/mo (everything)</a>
+      </aside>
+    </div>
+  </section>
+
+  <section class="container max-w-5xl pb-16">
+    <h2 class="text-xl md:text-2xl font-bold tracking-tight mb-5">What's included</h2>
+    <div class="rounded-2xl border border-border bg-card divide-y divide-border">
+      {promptsSorted.map((p: any, i: number) => {
+        const cat = catById[p.category_id];
+        return (
+          <a href={`/library/${cat?.slug || 'uncategorised'}/${p.slug}`} class="flex items-start gap-4 p-5 md:p-6 hover:bg-secondary/40 transition-colors group">
+            <span class="shrink-0 w-8 h-8 rounded-lg bg-secondary text-foreground/70 grid place-items-center text-sm font-bold">{i + 1}</span>
+            <div class="flex-1 min-w-0">
+              <div class="flex flex-wrap items-center gap-2 text-xs text-foreground/55 mb-1">
+                {cat && <span class="rounded-md bg-primary/10 text-primary px-1.5 py-0.5 font-medium">{cat.name}</span>}
+                {p.is_pro && <span class="inline-flex items-center gap-1 rounded-md bg-amber-500/10 text-amber-700 dark:text-amber-300 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider">
+                  <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1l3 7h7l-5.5 4.5L18 20l-6-4-6 4 1.5-7.5L2 8h7z"/></svg>
+                  Premium
+                </span>}
+              </div>
+              <h3 class="text-base md:text-lg font-semibold text-foreground group-hover:text-primary transition-colors">{p.title}</h3>
+              {(p.what_for || p.excerpt) && <p class="mt-1 text-sm text-foreground/70 line-clamp-2">{p.what_for || p.excerpt}</p>}
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="shrink-0 mt-1 text-foreground/40 group-hover:text-primary group-hover:translate-x-0.5 transition-all"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="container max-w-5xl pb-16">
+    <div class="rounded-2xl border border-border bg-secondary p-8">
+      <h2 class="text-xl md:text-2xl font-bold tracking-tight">Three ways to unlock premium prompts</h2>
+      <ul class="mt-5 grid sm:grid-cols-3 gap-4">
+        <li class="rounded-xl bg-card border border-border p-5">
+          <div class="font-semibold">Single prompt</div>
+          <div class="mt-1 text-2xl font-extrabold">$1.99</div>
+          <div class="mt-2 text-sm text-foreground/70">Just want one? Pay micropayment per prompt.</div>
+        </li>
+        <li class="rounded-xl bg-card border border-primary/40 ring-1 ring-primary/20 p-5">
+          <div class="inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-primary text-primary-foreground mb-2">Best value</div>
+          <div class="font-semibold">This pack</div>
+          <div class="mt-1 text-2xl font-extrabold">${(pack.price_cents / 100).toFixed(2)}</div>
+          <div class="mt-2 text-sm text-foreground/70">Unlock all {prompts.length} prompts here.</div>
+        </li>
+        <li class="rounded-xl bg-card border border-border p-5">
+          <div class="font-semibold">Subscription</div>
+          <div class="mt-1 text-2xl font-extrabold">$12<span class="text-sm font-medium text-foreground/60">/mo</span></div>
+          <div class="mt-2 text-sm text-foreground/70">All packs + all premium prompts. Cancel anytime.</div>
+        </li>
+      </ul>
+    </div>
+  </section>
+</Layout>
+<style>
+  .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+</style>

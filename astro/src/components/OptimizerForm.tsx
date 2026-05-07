@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const PLATFORMS = [
   { id: "chatgpt",  label: "ChatGPT" },
@@ -30,6 +30,25 @@ export default function OptimizerForm() {
   const [tool, setTool] = useState("chatgpt");
   const [lang, setLang] = useState("en");
   const [goal, setGoal] = useState("");
+
+  // Pre-fill from URL params if user came from a prompt detail page
+  if (typeof window !== "undefined") {
+    // Run once on mount via useEffect
+  }
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const initialPrompt = params.get("prompt");
+    const initialTitle = params.get("title");
+    const initialCategory = params.get("category");
+    if (initialPrompt) setPrompt(initialPrompt);
+    if (initialTitle && initialCategory) {
+      setGoal(`Optimise "${initialTitle}" (${initialCategory}) for the chosen platform.`);
+    } else if (initialTitle) {
+      setGoal(`Optimise: ${initialTitle}`);
+    }
+  }, []);
   const [output, setOutput] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);

@@ -109,7 +109,8 @@ const ld = {
     )}
 
     <div class="mt-6 flex flex-wrap gap-3">
-      <a href="/optimize" class="inline-flex items-center justify-center rounded-xl bg-primary text-primary-foreground px-5 h-11 font-semibold hover:bg-primary/90 transition-colors">⚡ Optimise this for any AI →</a>
+      <a href={`/optimize?prompt=${encodeURIComponent(prompt.prompt || "")}&title=${encodeURIComponent(prompt.title || "")}&category=${encodeURIComponent(category.name || "")}`}
+         class="inline-flex items-center justify-center rounded-xl bg-primary text-primary-foreground px-5 h-11 font-semibold hover:bg-primary/90 transition-colors">⚡ Optimise this for any AI →</a>
       <a href={`/library/${category.slug}`} class="inline-flex items-center justify-center rounded-xl border-2 border-border bg-background hover:bg-secondary px-5 h-11 font-semibold transition-colors">More {category.name} prompts</a>
     </div>
   </article>
