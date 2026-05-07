@@ -10,16 +10,33 @@ export async function getStaticPaths() {
     const subById: Record<string, any> = Object.fromEntries(subs.map((s: any) => [s.id, s]));
     const catById: Record<string, any> = Object.fromEntries(cats.map((c: any) => [c.id, c]));
     const prompts: any[] = await sbFetch(
-      `/rest/v1/prompts?select=id,slug,title,what_for,prompt,excerpt,image_prompt,category_id,subcategory_id,is_pro,ribbon,created_at&review_status=eq.approved&order=created_at.desc&limit=1500`
+      `/rest/v1/prompts?select=id,slug,title,what_for,prompt,excerpt,image_prompt,category_id,subcategory_id,is_pro,ribbon&review_status=eq.approved&order=created_at.desc&limit=1500`
     );
+
+    // Pre-compute related per prompt: same subcategory if available, else same category, top 3
+    const bySub: Record<string, any[]> = {};
+    const byCat: Record<string, any[]> = {};
+    for (const p of prompts) {
+      if (p.subcategory_id) (bySub[p.subcategory_id] ||= []).push(p);
+      (byCat[p.category_id] ||= []).push(p);
+    }
+
     return prompts
       .filter((p: any) => catById[p.category_id] && p.slug)
       .map((p: any) => {
         const cat = catById[p.category_id];
         const sub = p.subcategory_id ? subById[p.subcategory_id] : null;
+        const pool = sub ? bySub[sub.id] : byCat[cat.id];
+        const related = (pool || [])
+          .filter((q: any) => q.slug !== p.slug)
+          .slice(0, 3)
+          .map((q: any) => ({
+            slug: q.slug, title: q.title, excerpt: q.excerpt, what_for: q.what_for,
+            category_id: q.category_id, subcategory_id: q.subcategory_id,
+          }));
         return {
           params: { category: cat.slug, slug: p.slug },
-          props: { prompt: p, category: cat, subcategory: sub, allCats: cats, allSubs: subs },
+          props: { prompt: p, category: cat, subcategory: sub, related, allCats: cats, allSubs: subs },
         };
       });
   } catch (e) {
@@ -28,20 +45,9 @@ export async function getStaticPaths() {
   }
 }
 
-const { prompt, category, subcategory, allCats, allSubs } = Astro.props as any;
+const { prompt, category, subcategory, related, allCats, allSubs } = Astro.props as any;
 const catById = Object.fromEntries(allCats.map((c: any) => [c.id, c]));
 const subById = Object.fromEntries(allSubs.map((s: any) => [s.id, s]));
-
-async function getRelated(): Promise<any[]> {
-  try {
-    const filter = subcategory ? `subcategory_id=eq.${subcategory.id}` : `category_id=eq.${category.id}`;
-    const data: any[] = await sbFetch(
-      `/rest/v1/prompts?select=slug,title,excerpt,what_for,subcategory_id,category_id&review_status=eq.approved&${filter}&order=created_at.desc&limit=4`
-    );
-    return data.filter((p: any) => p.slug !== prompt.slug).slice(0, 3);
-  } catch (e) { return []; }
-}
-const related = await getRelated();
 
 const ld = {
   "@context": "https://schema.org",
@@ -108,7 +114,7 @@ const ld = {
     </div>
   </article>
 
-  {related.length > 0 && (
+  {related && related.length > 0 && (
     <section class="container max-w-6xl pb-20">
       <h2 class="text-xl md:text-2xl font-bold tracking-tight mb-5">More like this</h2>
       <div class="grid md:grid-cols-3 gap-4">
@@ -131,7 +137,7 @@ const ld = {
       btn.addEventListener("click", async () => {
         await navigator.clipboard.writeText(body.textContent || "");
         const orig = btn.innerHTML;
-        btn.innerHTML = "<svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"><polyline points=\"20 6 9 17 4 12\"/></svg> Copied";
+        btn.innerHTML = "Copied";
         setTimeout(() => { btn.innerHTML = orig; }, 1500);
       });
     }
