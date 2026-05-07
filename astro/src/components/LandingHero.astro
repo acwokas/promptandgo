@@ -6,8 +6,26 @@ interface Props {
   hero: { title: string; subtitle: string; cta: string };
   features: { title: string; desc: string }[];
   examples: { input: string; output: string }[];
+  i18n?: {
+    browseCta?: string;
+    examplesEyebrow?: string;
+    examplesHeading?: string;
+    promptLabel?: string;
+    outputLabel?: string;
+    tryItNow?: string;
+    browseAll?: string;
+  };
 }
-const { langTag, langLabel, langSub, hero, features, examples } = Astro.props;
+const { langTag, langLabel, langSub, hero, features, examples, i18n = {} } = Astro.props;
+const t = {
+  browseCta: i18n.browseCta || "{t.browseCta}",
+  examplesEyebrow: i18n.examplesEyebrow || "Examples",
+  examplesHeading: i18n.examplesHeading || "Real prompts. Real outputs.",
+  promptLabel: i18n.promptLabel || "Prompt",
+  outputLabel: i18n.outputLabel || "Optimised output",
+  tryItNow: i18n.tryItNow || "Try it now",
+  browseAll: i18n.browseAll || "Browse all prompts",
+};
 ---
 <section class="relative overflow-hidden">
   <!-- Brand orbs -->
@@ -29,7 +47,7 @@ const { langTag, langLabel, langSub, hero, features, examples } = Astro.props;
           {hero.cta}
         </a>
         <a href="/library" class="inline-flex items-center justify-center rounded-xl border border-border bg-card hover:bg-secondary px-7 h-12 font-semibold transition-colors">
-          Browse prompts →
+          {t.browseCta}
         </a>
       </div>
     </div>
@@ -49,19 +67,19 @@ const { langTag, langLabel, langSub, hero, features, examples } = Astro.props;
 
 <section class="container max-w-4xl py-12 md:py-16">
   <div class="text-center mb-8">
-    <span class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Examples</span>
-    <h2 class="mt-2 text-2xl md:text-3xl font-bold tracking-tight">Real prompts. Real outputs.</h2>
+    <span class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{t.examplesEyebrow}</span>
+    <h2 class="mt-2 text-2xl md:text-3xl font-bold tracking-tight">{t.examplesHeading}</h2>
   </div>
   <div class="space-y-4">
     {examples.map(ex => (
       <div class="rounded-2xl border border-border/60 bg-card overflow-hidden">
         <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-border/50">
           <div class="p-5 md:p-6">
-            <div class="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-2">Prompt</div>
+            <div class="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-2">{t.promptLabel}</div>
             <div lang={langTag} class="text-sm md:text-base font-medium leading-relaxed">{ex.input}</div>
           </div>
           <div class="p-5 md:p-6 bg-gradient-brand-soft">
-            <div class="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-2">Optimised output</div>
+            <div class="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-2">{t.outputLabel}</div>
             <div lang={langTag} class="text-sm md:text-base text-foreground/80 leading-relaxed italic">{ex.output}</div>
           </div>
         </div>
@@ -69,7 +87,7 @@ const { langTag, langLabel, langSub, hero, features, examples } = Astro.props;
     ))}
   </div>
   <div class="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
-    <a href="/optimize" class="inline-flex items-center justify-center rounded-xl bg-gradient-brand text-white px-6 h-11 font-semibold shadow-brand hover:shadow-brand-lg transition-all">Try it now</a>
-    <a href="/library" class="inline-flex items-center justify-center rounded-xl border border-border bg-card hover:bg-secondary px-6 h-11 font-semibold transition-colors">Browse all prompts</a>
+    <a href="/optimize" class="inline-flex items-center justify-center rounded-xl bg-gradient-brand text-white px-6 h-11 font-semibold shadow-brand hover:shadow-brand-lg transition-all">{t.tryItNow}</a>
+    <a href="/library" class="inline-flex items-center justify-center rounded-xl border border-border bg-card hover:bg-secondary px-6 h-11 font-semibold transition-colors">{t.browseAll}</a>
   </div>
 </section>
