@@ -1,0 +1,106 @@
+---
+import Layout from "@astro/layouts/Layout.astro";
+import PromptCard from "@astro/components/PromptCard.astro";
+import { sbFetch } from "@astro/lib/supabase-rest";
+
+export async function getStaticPaths() {
+  try {
+    const cats: any[] = await sbFetch(`/rest/v1/categories?select=id,name,slug`);
+    const counts: any[] = await sbFetch(`/rest/v1/prompts?select=category_id&review_status=eq.approved`);
+    const byCat: Record<string, number> = {};
+    for (const r of counts) byCat[r.category_id] = (byCat[r.category_id] || 0) + 1;
+    return cats
+      .filter((c: any) => c.slug !== "user-generated" && byCat[c.id])
+      .map((c: any) => ({ params: { category: c.slug }, props: c }));
+  } catch (e) {
+    console.error("library/[category] getStaticPaths:", e);
+    return [];
+  }
+}
+
+const cat = Astro.props as any;
+const slug = (Astro.params as any).category;
+
+const data = await (async () => {
+  try {
+    const prompts: any[] = await sbFetch(
+      `/rest/v1/prompts?select=slug,title,what_for,excerpt,subcategory_id&review_status=eq.approved&category_id=eq.${cat.id}&order=created_at.desc&limit=500`
+    );
+    const subs: any[] = await sbFetch(`/rest/v1/subcategories?select=id,name,slug,category_id&category_id=eq.${cat.id}`);
+    return { prompts, subs };
+  } catch (e) {
+    return { prompts: [], subs: [] };
+  }
+})();
+
+const grouped: Record<string, any[]> = {};
+for (const p of data.prompts) {
+  const k = p.subcategory_id || "_none";
+  if (!grouped[k]) grouped[k] = [];
+  grouped[k].push(p);
+}
+const orderedGroups = data.subs
+  .map((s: any) => ({ sub: s, prompts: grouped[s.id] || [] }))
+  .filter((g: any) => g.prompts.length > 0)
+  .sort((a: any, b: any) => a.sub.name.localeCompare(b.sub.name));
+if (grouped["_none"]?.length) orderedGroups.push({ sub: { name: "Other", slug: "other" }, prompts: grouped["_none"] });
+---
+<Layout
+  title={`${cat.name} AI Prompts (${data.prompts.length}) | PromptAndGo Library`}
+  description={`${data.prompts.length} curated AI prompts for ${cat.name}. Optimised for ChatGPT, Claude, Gemini, Mistral, Grok and more.`}
+  canonical={`https://www.promptandgo.ai/library/${slug}`}
+>
+  <section class="container max-w-6xl pt-12 md:pt-16 pb-6">
+    <nav class="text-sm text-foreground/60 mb-6 flex items-center gap-2 flex-wrap" aria-label="Breadcrumb">
+      <a href="/library" class="hover:text-foreground">Library</a>
+      <span class="text-foreground/40">/</span>
+      <span class="text-foreground">{cat.name}</span>
+    </nav>
+    <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
+      {cat.name} <span class="text-gradient-brand">prompts</span>
+    </h1>
+    <p class="mt-4 text-lg text-foreground/75">{data.prompts.length} prompts across {orderedGroups.length} subcategories.</p>
+
+    <!-- Subcategory jump links -->
+    {orderedGroups.length > 1 && (
+      <div class="mt-7 flex flex-wrap gap-2">
+        {orderedGroups.map((g: any) => (
+          <a href={`#${g.sub.slug}`} class="inline-flex items-center rounded-full border border-border bg-card hover:border-primary/40 hover:text-primary px-3 py-1.5 text-sm transition-colors">
+            {g.sub.name} <span class="ml-1.5 text-foreground/55">{g.prompts.length}</span>
+          </a>
+        ))}
+      </div>
+    )}
+  </section>
+
+  <section class="container max-w-6xl pb-16">
+    {data.prompts.length === 0 && (
+      <div class="rounded-2xl border border-border bg-card p-10 text-center text-foreground/60">
+        No approved prompts yet in this category.
+      </div>
+    )}
+    {orderedGroups.map((g: any) => (
+      <div class="mt-12">
+        <h2 id={g.sub.slug} class="text-2xl md:text-3xl font-bold tracking-tight mb-1 scroll-mt-24">{g.sub.name}</h2>
+        <p class="text-sm text-foreground/60 mb-6">{g.prompts.length} prompts</p>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {g.prompts.map((p: any) => (
+            <PromptCard prompt={p} href={`/library/${cat.slug}/${p.slug}`} subcategory={g.sub.name} />
+          ))}
+        </div>
+      </div>
+    ))}
+  </section>
+
+  <section class="container max-w-7xl pb-16">
+    <div class="rounded-2xl border border-border bg-secondary p-8 md:p-10">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <h2 class="text-xl md:text-2xl font-bold tracking-tight">Tweak any prompt for your platform.</h2>
+          <p class="mt-2 text-foreground/75">Optimiser rewrites for ChatGPT, Claude, Gemini, MidJourney — and your target language.</p>
+        </div>
+        <a href="/optimize" class="inline-flex shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground px-6 h-11 font-semibold hover:bg-primary/90 transition-colors">Try the optimiser →</a>
+      </div>
+    </div>
+  </section>
+</Layout>

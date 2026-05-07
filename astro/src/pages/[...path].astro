@@ -7,7 +7,7 @@ export function getStaticPaths() {
   // Any route that has its own .astro file (index, about, pricing, terms, etc.) takes precedence over this catch-all.
   const interactive = [
     "auth",
-    "library", "packs", "saved", "submit", "submit-prompt", "templates", "history",
+    "saved", "submit", "submit-prompt", "templates", "history",
     "ai/studio", "ai/assistant", "ai/generator", "ai-credits-exhausted",
     "ask-scout", "scout", "certification",
     "cart",
@@ -23,6 +23,7 @@ export function getStaticPaths() {
     "sitemap", "shortcuts", "compare",
     "small-business", "singapore-startups", "language-learning",
     "newsletter", "use-cases",
+    "admin", "admin/review", "admin/prompts", "admin/upload", "admin/articles", "admin/articles/new", "admin/polls", "admin/coupons", "admin/feedback", "admin/widgets", "admin/security", "admin/countdown", "admin/analytics", "admin/export", "admin/tools",
   ];
   return interactive.map(p => ({ params: { path: p } }));
 }

@@ -3,54 +3,59 @@ const cur = Astro.url.pathname;
 const navLinks = [
   { href: "/library", label: "Browse" },
   { href: "/packs", label: "Power Packs" },
-  { href: "/optimize", label: "Optimizer" },
+  { href: "/optimize", label: "Optimiser" },
   { href: "/pricing", label: "Pricing" },
   { href: "/tips", label: "Guides" },
 ];
+function isActive(href: string): boolean {
+  if (href === "/") return cur === "/";
+  return cur === href || cur.startsWith(href + "/");
+}
 ---
-<header class="sticky top-0 z-40 w-full border-b border-border/50 bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60">
-  <div class="container max-w-7xl flex h-16 items-center justify-between gap-4">
-    <a href="/" class="flex items-center gap-2.5" aria-label="PromptAndGo home">
-      <img src="/brand/logo.png" alt="PromptAndGo.ai" width="160" height="32" class="h-7 md:h-8 w-auto" />
+<header class="sticky top-0 z-40 w-full border-b border-border bg-background">
+  <div class="container max-w-7xl flex h-16 md:h-18 items-center justify-between gap-4">
+    <a href="/" class="flex items-center" aria-label="PromptAndGo home">
+      <img src="/brand/logo.png" alt="PromptAndGo.ai" width="240" height="36" class="h-8 md:h-10 w-auto" />
     </a>
 
-    <nav class="hidden md:flex items-center gap-7 text-sm font-medium" aria-label="Main">
+    <nav class="hidden md:flex items-center gap-8 text-[15px] font-medium" aria-label="Main">
       {navLinks.map(l => (
         <a href={l.href}
-           class={`relative transition-colors hover:text-foreground ${cur.startsWith(l.href) ? 'text-foreground' : 'text-foreground/65'}`}>
+           class={`relative py-2 transition-colors ${isActive(l.href) ? "text-foreground" : "text-foreground/70 hover:text-foreground"}`}>
           {l.label}
-          {cur.startsWith(l.href) && <span class="absolute -bottom-[21px] left-0 right-0 h-px bg-gradient-brand"></span>}
+          {isActive(l.href) && <span class="absolute -bottom-[19px] left-0 right-0 h-0.5 bg-primary"></span>}
         </a>
       ))}
     </nav>
 
-    <div class="flex items-center gap-1.5">
+    <div class="flex items-center gap-2">
       <button id="theme-toggle" type="button" aria-label="Toggle theme"
-              class="inline-flex items-center justify-center rounded-lg w-9 h-9 hover:bg-secondary transition-colors">
+              class="inline-flex items-center justify-center rounded-lg w-10 h-10 hover:bg-secondary text-foreground/80 hover:text-foreground transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dark:hidden"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden dark:block"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
-      <a href="/auth" class="hidden sm:inline-flex items-center justify-center rounded-lg px-3.5 h-9 text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-secondary transition-colors">
+      <a href="/auth" class="hidden sm:inline-flex items-center justify-center rounded-lg px-3.5 h-10 text-[15px] font-medium text-foreground/80 hover:text-foreground hover:bg-secondary transition-colors">
         Sign in
       </a>
-      <a href="/auth?action=signup" class="hidden sm:inline-flex items-center justify-center rounded-lg bg-gradient-brand text-white px-4 h-9 text-sm font-semibold shadow-brand hover:shadow-brand-lg transition-shadow">
+      <a href="/auth?action=signup"
+         class="hidden sm:inline-flex items-center justify-center rounded-lg bg-primary text-primary-foreground px-5 h-10 text-[15px] font-semibold hover:bg-primary/90 transition-colors">
         Start free
       </a>
       <button id="mobile-toggle" type="button" aria-label="Open menu"
-              class="md:hidden inline-flex items-center justify-center rounded-lg w-9 h-9 hover:bg-secondary">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+              class="md:hidden inline-flex items-center justify-center rounded-lg w-10 h-10 hover:bg-secondary text-foreground">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
     </div>
   </div>
 
-  <div id="mobile-menu" class="md:hidden hidden border-t border-border/50 bg-background">
-    <nav class="container max-w-7xl py-3 flex flex-col gap-1 text-sm" aria-label="Mobile">
+  <div id="mobile-menu" class="md:hidden hidden border-t border-border bg-background">
+    <nav class="container max-w-7xl py-4 flex flex-col gap-1 text-base" aria-label="Mobile">
       {navLinks.map(l => (
-        <a href={l.href} class={`py-2.5 hover:text-primary ${cur.startsWith(l.href) ? 'text-primary' : ''}`}>{l.label}</a>
+        <a href={l.href} class={`py-2.5 ${isActive(l.href) ? "text-primary font-semibold" : "text-foreground/85"}`}>{l.label}</a>
       ))}
-      <div class="grid grid-cols-2 gap-2 pt-3">
-        <a href="/auth" class="inline-flex items-center justify-center rounded-lg border border-border h-10 font-medium">Sign in</a>
-        <a href="/auth?action=signup" class="inline-flex items-center justify-center rounded-lg bg-gradient-brand text-white h-10 font-semibold">Start free</a>
+      <div class="grid grid-cols-2 gap-2 pt-4">
+        <a href="/auth" class="inline-flex items-center justify-center rounded-lg border border-border h-11 font-medium">Sign in</a>
+        <a href="/auth?action=signup" class="inline-flex items-center justify-center rounded-lg bg-primary text-primary-foreground h-11 font-semibold">Start free</a>
       </div>
     </nav>
   </div>

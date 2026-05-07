@@ -1,0 +1,95 @@
+---
+import Layout from "@astro/layouts/Layout.astro";
+import PromptCard from "@astro/components/PromptCard.astro";
+import { sbFetch } from "@astro/lib/supabase-rest";
+
+const data = await (async () => {
+  try {
+    const allCats: any[] = await sbFetch(`/rest/v1/categories?select=id,name,slug&order=name.asc`);
+    const counts: any[] = await sbFetch(`/rest/v1/prompts?select=category_id,subcategory_id&review_status=eq.approved`);
+    const byCat: Record<string, number> = {};
+    for (const r of counts) byCat[r.category_id] = (byCat[r.category_id] || 0) + 1;
+    const cats = allCats
+      .map((c: any) => ({ ...c, count: byCat[c.id] || 0 }))
+      .filter((c: any) => c.slug !== "user-generated" && c.count > 0)
+      .sort((a: any, b: any) => b.count - a.count);
+    const total = counts.length;
+    const recent: any[] = await sbFetch(
+      `/rest/v1/prompts?select=slug,title,excerpt,what_for,category_id,subcategory_id&review_status=eq.approved&order=created_at.desc&limit=9`
+    );
+    const subs: any[] = await sbFetch(`/rest/v1/subcategories?select=id,name,slug,category_id`);
+    return { cats, total, recent, subs };
+  } catch (e) {
+    return { cats: [], total: 0, recent: [], subs: [] };
+  }
+})();
+const catById = Object.fromEntries(data.cats.map((c: any) => [c.id, c]));
+const subById = Object.fromEntries(data.subs.map((s: any) => [s.id, s]));
+---
+<Layout
+  title={`AI Prompt Library — ${data.total.toLocaleString()}+ Curated Prompts | PromptAndGo`}
+  description={`${data.total.toLocaleString()}+ vetted AI prompts across ${data.cats.length} categories. Optimised for ChatGPT, Claude, Gemini, Mistral, Grok and more.`}
+>
+  <!-- HERO — short, value-up-front -->
+  <section class="container max-w-5xl pt-14 md:pt-20 pb-10 text-center">
+    <span class="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/60 px-3.5 py-1.5 text-xs font-medium text-foreground/80 mb-6">
+      Prompt library
+    </span>
+    <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
+      {data.total.toLocaleString()} prompts. <span class="text-gradient-brand">Built for Asia.</span>
+    </h1>
+    <p class="mt-5 text-lg text-foreground/80 max-w-2xl mx-auto">
+      Free to browse. Copy any one. Optimise for any AI in any language.
+    </p>
+  </section>
+
+  <!-- CATEGORY GRID -->
+  <section class="container max-w-7xl pb-12">
+    <h2 class="text-sm font-semibold uppercase tracking-wider text-foreground/60 mb-4">Categories</h2>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      {data.cats.map((c: any) => (
+        <a href={`/library/${c.slug}`} class="group flex items-center justify-between gap-4 rounded-xl border border-border bg-card p-5 hover:border-primary/40 transition-colors">
+          <div>
+            <div class="text-base md:text-lg font-semibold text-foreground">{c.name}</div>
+            <div class="mt-0.5 text-sm text-foreground/60">{c.count} prompts</div>
+          </div>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="text-primary group-hover:translate-x-0.5 transition-transform"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- RECENTLY ADDED -->
+  {data.recent.length > 0 && (
+    <section class="container max-w-7xl pb-16">
+      <div class="flex items-end justify-between gap-4 mb-6">
+        <h2 class="text-2xl md:text-3xl font-bold tracking-tight">Recently added</h2>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {data.recent.map((p: any) => {
+          const cat = catById[p.category_id];
+          const sub = subById[p.subcategory_id];
+          if (!cat) return null;
+          return (
+            <PromptCard prompt={p} href={`/library/${cat.slug}/${p.slug}`} category={cat.name} subcategory={sub?.name} />
+          );
+        })}
+      </div>
+    </section>
+  )}
+
+  <!-- CTA -->
+  <section class="container max-w-7xl pb-20">
+    <div class="rounded-2xl border border-border bg-secondary p-8 md:p-10">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <h2 class="text-xl md:text-2xl font-bold tracking-tight">Need it your way?</h2>
+          <p class="mt-2 text-foreground/75">Use the optimiser to tailor any prompt for your platform and language.</p>
+        </div>
+        <a href="/optimize" class="inline-flex shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground px-6 h-11 font-semibold hover:bg-primary/90 transition-colors">
+          Optimise a prompt — free
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

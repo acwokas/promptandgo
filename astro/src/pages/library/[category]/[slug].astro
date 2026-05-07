@@ -1,0 +1,139 @@
+---
+import Layout from "@astro/layouts/Layout.astro";
+import PromptCard from "@astro/components/PromptCard.astro";
+import { sbFetch } from "@astro/lib/supabase-rest";
+
+export async function getStaticPaths() {
+  try {
+    const cats: any[] = await sbFetch(`/rest/v1/categories?select=id,name,slug`);
+    const subs: any[] = await sbFetch(`/rest/v1/subcategories?select=id,name,slug,category_id`);
+    const subById: Record<string, any> = Object.fromEntries(subs.map((s: any) => [s.id, s]));
+    const catById: Record<string, any> = Object.fromEntries(cats.map((c: any) => [c.id, c]));
+    const prompts: any[] = await sbFetch(
+      `/rest/v1/prompts?select=id,slug,title,what_for,prompt,excerpt,image_prompt,category_id,subcategory_id,is_pro,ribbon,created_at&review_status=eq.approved&order=created_at.desc&limit=200`
+    );
+    return prompts
+      .filter((p: any) => catById[p.category_id] && p.slug)
+      .map((p: any) => {
+        const cat = catById[p.category_id];
+        const sub = p.subcategory_id ? subById[p.subcategory_id] : null;
+        return {
+          params: { category: cat.slug, slug: p.slug },
+          props: { prompt: p, category: cat, subcategory: sub, allCats: cats, allSubs: subs },
+        };
+      });
+  } catch (e) {
+    console.error("getStaticPaths failed:", e);
+    return [];
+  }
+}
+
+const { prompt, category, subcategory, allCats, allSubs } = Astro.props as any;
+const catById = Object.fromEntries(allCats.map((c: any) => [c.id, c]));
+const subById = Object.fromEntries(allSubs.map((s: any) => [s.id, s]));
+
+async function getRelated(): Promise<any[]> {
+  try {
+    const filter = subcategory ? `subcategory_id=eq.${subcategory.id}` : `category_id=eq.${category.id}`;
+    const data: any[] = await sbFetch(
+      `/rest/v1/prompts?select=slug,title,excerpt,what_for,subcategory_id,category_id&review_status=eq.approved&${filter}&order=created_at.desc&limit=4`
+    );
+    return data.filter((p: any) => p.slug !== prompt.slug).slice(0, 3);
+  } catch (e) { return []; }
+}
+const related = await getRelated();
+
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  name: prompt.title,
+  description: prompt.what_for || prompt.excerpt,
+  text: prompt.prompt,
+  inLanguage: "en",
+  about: { "@type": "Thing", name: category.name },
+  isPartOf: {
+    "@type": "Collection",
+    name: "PromptAndGo AI Prompt Library",
+    url: "https://www.promptandgo.ai/library",
+  },
+  url: `https://www.promptandgo.ai/library/${category.slug}/${prompt.slug}`,
+};
+---
+<Layout
+  title={`${prompt.title} — ${category.name} AI Prompt | PromptAndGo`}
+  description={prompt.excerpt || prompt.what_for || `${prompt.title} — ready-to-use AI prompt from PromptAndGo.`}
+  canonical={`https://www.promptandgo.ai/library/${category.slug}/${prompt.slug}`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(ld)}></script>
+
+  <section class="container max-w-3xl pt-10 md:pt-14 pb-6">
+    <nav class="text-sm text-foreground/60 mb-6 flex items-center gap-2 flex-wrap" aria-label="Breadcrumb">
+      <a href="/library" class="hover:text-foreground">Library</a>
+      <span class="text-foreground/40">/</span>
+      <a href={`/library/${category.slug}`} class="hover:text-foreground">{category.name}</a>
+      {subcategory && <><span class="text-foreground/40">/</span><span class="text-foreground/85">{subcategory.name}</span></>}
+    </nav>
+    <div class="flex flex-wrap items-center gap-2 mb-4">
+      {category && <span class="rounded-md bg-primary/10 text-primary px-2 py-0.5 text-xs font-medium">{category.name}</span>}
+      {subcategory && <span class="text-xs text-foreground/55">{subcategory.name}</span>}
+      {prompt.is_pro && <span class="rounded-md bg-amber-500/10 text-amber-700 dark:text-amber-300 px-2 py-0.5 text-xs font-bold uppercase tracking-wider">Pro</span>}
+      {prompt.ribbon && <span class="rounded-md bg-secondary text-foreground/85 px-2 py-0.5 text-xs font-medium">{prompt.ribbon}</span>}
+    </div>
+    <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">{prompt.title}</h1>
+    {prompt.what_for && <p class="mt-4 text-lg text-foreground/80 leading-relaxed">{prompt.what_for}</p>}
+  </section>
+
+  <article class="container max-w-3xl pb-12">
+    <div class="rounded-2xl border border-border bg-card overflow-hidden">
+      <div class="flex items-center justify-between border-b border-border px-5 py-3 bg-secondary/40">
+        <span class="text-xs font-semibold uppercase tracking-wider text-foreground/60">Prompt</span>
+        <button id="copy-prompt" type="button" class="inline-flex items-center gap-1.5 rounded-md bg-primary text-primary-foreground px-3 py-1.5 text-xs font-semibold hover:bg-primary/90 transition-colors">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
+          Copy
+        </button>
+      </div>
+      <pre id="prompt-body" class="p-5 md:p-6 text-sm md:text-base whitespace-pre-wrap font-sans leading-relaxed text-foreground bg-card">{prompt.prompt}</pre>
+    </div>
+
+    {prompt.image_prompt && (
+      <div class="mt-5 rounded-2xl border border-border bg-secondary/40 p-5 md:p-6">
+        <div class="text-xs font-semibold uppercase tracking-wider text-foreground/60 mb-2">For image models</div>
+        <pre class="text-sm whitespace-pre-wrap font-mono leading-relaxed text-foreground">{prompt.image_prompt}</pre>
+      </div>
+    )}
+
+    <div class="mt-6 flex flex-wrap gap-3">
+      <a href="/optimize" class="inline-flex items-center justify-center rounded-xl bg-primary text-primary-foreground px-5 h-11 font-semibold hover:bg-primary/90 transition-colors">⚡ Optimise this for any AI →</a>
+      <a href={`/library/${category.slug}`} class="inline-flex items-center justify-center rounded-xl border-2 border-border bg-background hover:bg-secondary px-5 h-11 font-semibold transition-colors">More {category.name} prompts</a>
+    </div>
+  </article>
+
+  {related.length > 0 && (
+    <section class="container max-w-6xl pb-20">
+      <h2 class="text-xl md:text-2xl font-bold tracking-tight mb-5">More like this</h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        {related.map((r: any) => {
+          const c = catById[r.category_id];
+          const s = subById[r.subcategory_id];
+          if (!c) return null;
+          return <PromptCard prompt={r} href={`/library/${c.slug}/${r.slug}`} subcategory={s?.name} />;
+        })}
+      </div>
+    </section>
+  )}
+</Layout>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("copy-prompt");
+    const body = document.getElementById("prompt-body");
+    if (btn && body) {
+      btn.addEventListener("click", async () => {
+        await navigator.clipboard.writeText(body.textContent || "");
+        const orig = btn.innerHTML;
+        btn.innerHTML = "<svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"><polyline points=\"20 6 9 17 4 12\"/></svg> Copied";
+        setTimeout(() => { btn.innerHTML = orig; }, 1500);
+      });
+    }
+  });
+</script>

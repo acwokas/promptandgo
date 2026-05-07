@@ -14,6 +14,7 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 // Lazy-load every legacy page component
 const Index = lazy(() => import("@/pages/Index"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
+const AdminPromptReview = lazy(() => import("@/pages/AdminPromptReview"));
 const Auth = lazy(() => import("@/pages/Auth"));
 const PromptLibrary = lazy(() => import("@/pages/PromptLibrary"));
 const PromptPacks = lazy(() => import("@/pages/PromptPacks"));
@@ -147,6 +148,7 @@ export default function LegacyApp({ initialPath = "/" }: Props) {
                         <Route path="/language-learning" element={<LanguageLearning />} />
                         <Route path="/newsletter" element={<NewsletterArchive />} />
                         <Route path="/use-cases" element={<UseCases />} />
+                        <Route path="/admin/review" element={<AdminPromptReview />} />
                         <Route path="*" element={<NotFound />} />
                       </Routes>
                     </Suspense>

@@ -1,1 +1,41 @@
-/*    /index.html   200
+# === PromptAndGo redirects ===
+# Cloudflare Pages reads this top-down. First match wins.
+
+# === Lovable preview subdomain → www ===
+# (handled at DNS via GoDaddy CNAME removal; this is belt-and-braces only)
+
+# === Old blog URL pattern → new tips URL ===
+/blog/welcome-to-promptandgo-ai          /tips/welcome-to-promptandgo-ai          301
+/blog/best-ai-prompts-for-small-business-2025 /tips/best-ai-prompts-for-small-business-2025 301
+/blog/how-to-write-ai-prompts            /tips/how-to-write-ai-prompts            301
+/blog/ai-prompts-that-save-you-hours     /tips/ai-prompts-that-save-you-hours     301
+/blog/ai-prompts-for-marketing-campaigns /tips/ai-prompts-for-marketing-campaigns 301
+/blog/ai-prompts-for-customer-support    /tips/ai-prompts-for-customer-support    301
+/blog/ai-prompts-for-social-media-content /tips/ai-prompts-for-social-media-content 301
+/blog/ai-prompts-for-content-writers     /tips/ai-prompts-for-content-writers     301
+/blog/ai-prompts-for-business-strategy   /tips/ai-prompts-for-business-strategy   301
+/blog/beginners-guide-midjourney-prompts /tips/beginners-guide-midjourney-prompts 301
+/blog/ai-prompts-in-asian-languages      /tips/ai-prompts-in-asian-languages      301
+/blog/multi-platform-prompting-guide     /tips/multi-platform-prompting-guide     301
+/blog/:slug                              /tips/:slug                              301
+
+# === Old "lovable-uploads" path → new uploads path ===
+/lovable-uploads/*                       /uploads/:splat                          301
+
+# === Aliases that should resolve to canonical paths ===
+/scout                                   /optimize                                301
+/asia                                    /                                        301
+/sg                                      /singapore-startups                      301
+/jp                                      /ja                                      301
+/kr                                      /ko                                      301
+/cn                                      /zh                                      301
+
+# === Old admin route (Lovable preview) → new ===
+/lovable                                 /admin                                   301
+
+# === SPA fallback for the React island routes (catch-all behaviour) ===
+# Note: Astro static build produces index.html files for all known routes.
+# Unknown routes will fall through to the 404, which is fine for SEO.
+# We do NOT add a wildcard SPA fallback here because that would break
+# 404s for pages that don't exist (bad for SEO).
+

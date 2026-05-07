@@ -14,7 +14,7 @@ const {
   title = "PromptAndGo — AI Prompts for Asian Languages",
   description = "Culturally-aware AI prompts in 12+ Asian languages. Optimised for ChatGPT, Claude, Gemini and more.",
   canonical,
-  ogImage = "/brand/logo.png",
+  ogImage = "/brand/og-image.png",
   noIndex = false,
 } = Astro.props;
 const url = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
@@ -35,7 +35,8 @@ const url = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
-    <link rel="icon" type="image/png" href="/brand/logo.png" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={url} />

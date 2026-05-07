@@ -4,44 +4,45 @@
 
 @layer base {
   :root {
-    /* Surfaces — clean, slightly cool */
-    --background: 240 20% 98%;
-    --foreground: 240 30% 12%;
+    /* Surfaces — clean white & very subtle off-white */
+    --background: 0 0% 100%;
+    --foreground: 240 24% 12%;
     --card: 0 0% 100%;
-    --card-foreground: 240 30% 12%;
+    --card-foreground: 240 24% 12%;
     --popover: 0 0% 100%;
-    --popover-foreground: 240 30% 12%;
+    --popover-foreground: 240 24% 12%;
 
-    /* Brand palette extracted from the logo: purple → indigo → blue → teal */
+    /* Brand palette extracted from the logo */
     --brand-purple: 270 70% 55%;
     --brand-indigo: 248 70% 58%;
     --brand-blue:   220 80% 58%;
     --brand-teal:   188 80% 48%;
 
-    --primary: 270 70% 55%;
+    /* Primary = a single confident purple. We use solids over gradients. */
+    --primary: 264 70% 52%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 240 20% 95%;
-    --secondary-foreground: 240 30% 12%;
-    --muted: 240 20% 95%;
-    --muted-foreground: 240 10% 42%;
-    --accent: 188 80% 48%;
+
+    --secondary: 240 14% 96%;
+    --secondary-foreground: 240 24% 12%;
+    --muted: 240 14% 96%;
+    --muted-foreground: 240 8% 38%;
+    --accent: 188 80% 40%;
     --accent-foreground: 0 0% 100%;
-    --destructive: 0 80% 58%;
+    --destructive: 0 75% 52%;
     --destructive-foreground: 0 0% 100%;
-    --border: 240 15% 90%;
-    --input: 240 15% 90%;
-    --ring: 270 70% 55%;
+    --border: 240 12% 88%;
+    --input: 240 12% 88%;
+    --ring: 264 70% 52%;
     --radius: 0.875rem;
   }
 
   .dark {
-    /* Logo lives on near-black; honour that */
-    --background: 240 32% 5%;
-    --foreground: 240 20% 96%;
-    --card: 240 30% 8%;
-    --card-foreground: 240 20% 96%;
-    --popover: 240 30% 8%;
-    --popover-foreground: 240 20% 96%;
+    --background: 240 28% 6%;
+    --foreground: 240 12% 96%;
+    --card: 240 24% 9%;
+    --card-foreground: 240 12% 96%;
+    --popover: 240 24% 9%;
+    --popover-foreground: 240 12% 96%;
 
     --brand-purple: 270 80% 65%;
     --brand-indigo: 248 80% 68%;
@@ -49,17 +50,17 @@
     --brand-teal:   188 85% 55%;
 
     --primary: 270 80% 65%;
-    --primary-foreground: 240 30% 8%;
-    --secondary: 240 25% 12%;
-    --secondary-foreground: 240 20% 96%;
-    --muted: 240 25% 12%;
-    --muted-foreground: 240 15% 65%;
+    --primary-foreground: 240 28% 6%;
+    --secondary: 240 22% 14%;
+    --secondary-foreground: 240 12% 96%;
+    --muted: 240 22% 14%;
+    --muted-foreground: 240 10% 65%;
     --accent: 188 85% 55%;
-    --accent-foreground: 240 30% 8%;
+    --accent-foreground: 240 28% 6%;
     --destructive: 0 70% 55%;
     --destructive-foreground: 0 0% 100%;
-    --border: 240 25% 16%;
-    --input: 240 25% 16%;
+    --border: 240 18% 18%;
+    --input: 240 18% 18%;
     --ring: 270 80% 65%;
   }
 
@@ -71,23 +72,30 @@
     font-feature-settings: 'cv11', 'ss01', 'ss03';
     margin: 0;
   }
-  ::selection { background: hsl(var(--brand-purple) / 0.25); }
+  ::selection { background: hsl(var(--brand-purple) / 0.25); color: hsl(var(--foreground)); }
+
+  /* Skip-to-content link */
   .skip-to-content {
     position: absolute; left: -9999px; top: 0; z-index: 9999;
-    padding: 0.5rem 1rem; background: hsl(var(--primary)); color: hsl(var(--primary-foreground));
+    padding: 0.5rem 1rem;
+    background: hsl(var(--primary)); color: hsl(var(--primary-foreground));
     font-weight: 600; border-radius: 0 0 0.5rem 0;
   }
   .skip-to-content:focus { left: 0; }
+
+  /* Higher-contrast typography defaults */
+  h1, h2, h3, h4 { letter-spacing: -0.02em; }
+  p { color: hsl(var(--foreground) / 0.85); }
 }
 
 @layer utilities {
-  /* Brand gradient — the canonical purple → indigo → blue → teal sweep */
+  /* Brand accent — used sparingly: pills, keywords, decorative letterforms */
   .text-gradient-brand {
     background: linear-gradient(90deg,
       hsl(var(--brand-purple)) 0%,
       hsl(var(--brand-indigo)) 35%,
-      hsl(var(--brand-blue))   65%,
-      hsl(var(--brand-teal))   100%);
+      hsl(var(--brand-blue)) 65%,
+      hsl(var(--brand-teal)) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -97,54 +105,17 @@
     background: linear-gradient(90deg,
       hsl(var(--brand-purple)) 0%,
       hsl(var(--brand-indigo)) 35%,
-      hsl(var(--brand-blue))   65%,
-      hsl(var(--brand-teal))   100%);
+      hsl(var(--brand-blue)) 65%,
+      hsl(var(--brand-teal)) 100%);
   }
-  .bg-gradient-brand-soft {
-    background: linear-gradient(135deg,
-      hsl(var(--brand-purple) / 0.08) 0%,
-      hsl(var(--brand-blue) / 0.08) 50%,
-      hsl(var(--brand-teal) / 0.08) 100%);
-  }
-  /* Glow for brand CTAs */
-  .shadow-brand { box-shadow: 0 12px 40px -12px hsl(var(--brand-purple) / 0.55); }
-  .shadow-brand-lg { box-shadow: 0 20px 60px -12px hsl(var(--brand-purple) / 0.5), 0 8px 24px -8px hsl(var(--brand-teal) / 0.3); }
-  /* Glass surface for cards on dark */
-  .surface-glass {
-    background: hsl(var(--card) / 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid hsl(var(--border) / 0.7);
-  }
-  /* Shimmer for animated backgrounds */
-  @keyframes brand-shift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-  }
-  .bg-gradient-brand-animated {
-    background: linear-gradient(90deg,
-      hsl(var(--brand-purple)),
-      hsl(var(--brand-indigo)),
-      hsl(var(--brand-blue)),
-      hsl(var(--brand-teal)),
-      hsl(var(--brand-blue)),
-      hsl(var(--brand-purple)));
-    background-size: 300% 100%;
-    animation: brand-shift 8s ease infinite;
-  }
-  /* Subtle floating orb for hero background */
-  .brand-orb {
-    position: absolute; border-radius: 9999px; filter: blur(60px); opacity: 0.5;
-    pointer-events: none;
-  }
-  /* Card with hover lift */
+  /* Card with hover lift — used everywhere */
   .card-lift {
-    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
   }
   .card-lift:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 30px -16px hsl(var(--brand-purple) / 0.35);
-    border-color: hsl(var(--brand-purple) / 0.4);
+    border-color: hsl(var(--primary) / 0.45);
+    box-shadow: 0 6px 20px -10px hsl(var(--foreground) / 0.18);
+    transform: translateY(-1px);
   }
   /* Marquee for trust strip */
   @keyframes marquee {
@@ -152,17 +123,23 @@
     100% { transform: translateX(-50%); }
   }
   .marquee {
-    display: flex; width: max-content; animation: marquee 40s linear infinite;
+    display: flex; width: max-content; gap: 3rem;
+    animation: marquee 38s linear infinite;
   }
 }
 
-/* ============ Legacy aliases for React island components ============ */
+/* Legacy aliases used by the React island components */
 @layer utilities {
-  .bg-gradient-primary { @apply bg-gradient-brand; }
-  .bg-gradient-primary-hover { @apply bg-gradient-brand; filter: brightness(1.1); }
-  .shadow-glow { @apply shadow-brand; }
-  .shadow-glow-strong { @apply shadow-brand-lg; }
-  .conversion-glow { @apply bg-gradient-brand-soft; }
-  /* Legacy semantic tokens */
+  .bg-gradient-primary { @apply bg-primary; }
+  .bg-gradient-primary-hover { background: hsl(var(--primary) / 0.9); }
+  .shadow-glow { box-shadow: 0 6px 20px -10px hsl(var(--primary) / 0.4); }
+  .shadow-glow-strong { box-shadow: 0 12px 30px -12px hsl(var(--primary) / 0.5); }
+  .shadow-brand { box-shadow: 0 6px 20px -10px hsl(var(--primary) / 0.4); }
+  .shadow-brand-lg { box-shadow: 0 12px 30px -12px hsl(var(--primary) / 0.5); }
   .text-gradient-primary { @apply text-gradient-brand; }
+  .surface-glass { @apply bg-card border border-border; }
+  .conversion-glow { @apply bg-secondary; }
+  .bg-gradient-brand-soft { background: hsl(var(--secondary)); }
+  .bg-gradient-brand-animated { @apply bg-primary; }
+  .brand-orb { display: none; }
 }

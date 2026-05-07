@@ -58,6 +58,7 @@ const Auth = lazy(() => import("./pages/Auth"));
 const AdminBulkUpload = lazy(() => import("./pages/AdminBulkUpload"));
 const AdminTools = lazy(() => import("./pages/AdminTools"));
 const AdminPromptTool = lazy(() => import("./pages/AdminPromptTool"));
+const AdminPromptReview = lazy(() => import("./pages/AdminPromptReview"));
 const AdminExport = lazy(() => import("./pages/AdminExport"));
 const AdminWidgetSettings = lazy(() => import("./pages/AdminWidgetSettings"));
 const AdminFeedback = lazy(() => import("./pages/AdminFeedback"));
@@ -232,6 +233,7 @@ const AppContent = () => {
                 <Route path="/admin/polls" element={<AdminPolls />} />
                 <Route path="/admin/upload" element={<AdminBulkUpload />} />
                 <Route path="/admin/prompts" element={<AdminPromptTool />} />
+                <Route path="/admin/review" element={<AdminPromptReview />} />
                 <Route path="/admin/export" element={<AdminExport />} />
                 <Route path="/admin/widgets" element={<AdminWidgetSettings />} />
                 <Route path="/admin/feedback" element={<AdminFeedback />} />
