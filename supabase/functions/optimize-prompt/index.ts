@@ -56,7 +56,7 @@ serve(async (req) => {
 
     const toolInstruction = aiTool ? `Optimize specifically for ${aiTool}.` : '';
     const languageInstruction = targetLanguage && targetLanguage !== 'English'
-      ? `CRITICAL: The OPTIMIZED PROMPT section, KEY IMPROVEMENTS, EXPLANATION, and OPTIONAL ENHANCEMENTS must ALL be written in ${targetLanguage}. Section headings (## OPTIMIZED PROMPT etc.) must stay in English so the parser still works, but every sentence underneath must be in ${targetLanguage}. Do not output any text in English under those headings.`
+      ? `CRITICAL: Write the ENTIRE response in ${targetLanguage}, including the four section headings. Translate "OPTIMIZED PROMPT", "KEY IMPROVEMENTS", "EXPLANATION", and "OPTIONAL ENHANCEMENTS" into ${targetLanguage}, keeping the ## markdown prefix. Every word visible to the user must be in ${targetLanguage}.`
       : '';
     const goalInstruction = goal ? `The user's goal is: ${goal}. Focus on achieving this.` : '';
 

@@ -29,13 +29,16 @@ function isActive(href: string): boolean {
     </nav>
 
     <div class="flex items-center gap-2">
-      <a href="/auth" class="hidden sm:inline-flex items-center justify-center rounded-lg px-3.5 h-10 text-[15px] font-medium text-foreground/80 hover:text-foreground hover:bg-secondary transition-colors">
-        Sign in
-      </a>
-      <a href="/auth?action=signup"
-         class="hidden sm:inline-flex items-center justify-center rounded-lg bg-primary text-primary-foreground px-5 h-10 text-[15px] font-semibold hover:bg-primary/90 transition-colors">
-        Start free
-      </a>
+      <div id="auth-buttons-desktop" class="hidden sm:flex items-center gap-2">
+        <a href="/auth" class="inline-flex items-center justify-center rounded-lg px-3.5 h-10 text-[15px] font-medium text-foreground/80 hover:text-foreground hover:bg-secondary transition-colors">
+          Sign in
+        </a>
+        <a href="/auth?action=signup"
+           class="inline-flex items-center justify-center rounded-lg bg-primary text-primary-foreground px-5 h-10 text-[15px] font-semibold hover:bg-primary/90 transition-colors">
+          Start free
+        </a>
+      </div>
+      <div id="auth-user-desktop" class="hidden items-center gap-2"></div>
       <button id="mobile-toggle" type="button" aria-label="Open menu"
               class="md:hidden inline-flex items-center justify-center rounded-lg w-10 h-10 hover:bg-secondary text-foreground">
         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -48,10 +51,11 @@ function isActive(href: string): boolean {
       {navLinks.map(l => (
         <a href={l.href} class={`py-2.5 ${isActive(l.href) ? "text-primary font-semibold" : "text-foreground/85"}`}>{l.label}</a>
       ))}
-      <div class="grid grid-cols-2 gap-2 pt-4">
+      <div id="auth-buttons-mobile" class="grid grid-cols-2 gap-2 pt-4">
         <a href="/auth" class="inline-flex items-center justify-center rounded-lg border border-border h-11 font-medium">Sign in</a>
         <a href="/auth?action=signup" class="inline-flex items-center justify-center rounded-lg bg-primary text-primary-foreground h-11 font-semibold">Start free</a>
       </div>
+      <div id="auth-user-mobile" class="hidden flex-col gap-2 pt-4"></div>
     </nav>
   </div>
 </header>
@@ -62,4 +66,76 @@ function isActive(href: string): boolean {
     const mm = document.getElementById('mobile-menu');
     if (m && mm) m.addEventListener('click', () => mm.classList.toggle('hidden'));
   })();
+</script>
+
+<script>
+  // Auth state hydration: swap "Sign in / Start free" for the user's email + sign out
+  // when a Supabase session exists. Runs on every page so it works after the OAuth
+  // callback (which lands at /?... with #access_token=... in the hash).
+  import { sb } from "../lib/auth-client";
+
+  function paint(user) {
+    const desktopBtns = document.getElementById("auth-buttons-desktop");
+    const desktopUser = document.getElementById("auth-user-desktop");
+    const mobileBtns = document.getElementById("auth-buttons-mobile");
+    const mobileUser = document.getElementById("auth-user-mobile");
+    if (!desktopBtns || !desktopUser) return;
+
+    if (user) {
+      const email = user.email || "Account";
+      const initials = email.slice(0, 2).toUpperCase();
+      desktopBtns.classList.add("hidden");
+      desktopBtns.classList.remove("sm:flex");
+      desktopUser.classList.remove("hidden");
+      desktopUser.classList.add("sm:flex");
+      desktopUser.innerHTML = `
+        <a href="/account/saved" class="inline-flex items-center justify-center rounded-lg px-3.5 h-10 text-[15px] font-medium text-foreground/80 hover:text-foreground hover:bg-secondary transition-colors">
+          Saved
+        </a>
+        <button id="signout-desktop" type="button" class="inline-flex items-center gap-2 rounded-lg bg-secondary text-foreground px-3 h-10 text-[14px] font-semibold hover:bg-secondary/80 transition-colors" title="${email}">
+          <span class="w-7 h-7 rounded-full bg-primary text-primary-foreground inline-flex items-center justify-center text-xs font-bold">${initials}</span>
+          Sign out
+        </button>
+      `;
+      document.getElementById("signout-desktop")?.addEventListener("click", signOut);
+
+      if (mobileBtns && mobileUser) {
+        mobileBtns.classList.add("hidden");
+        mobileUser.classList.remove("hidden");
+        mobileUser.classList.add("flex");
+        mobileUser.innerHTML = `
+          <a href="/account/saved" class="inline-flex items-center justify-center rounded-lg border border-border h-11 font-medium">Saved prompts</a>
+          <button id="signout-mobile" type="button" class="inline-flex items-center justify-center rounded-lg bg-secondary text-foreground h-11 font-semibold">Sign out (${email})</button>
+        `;
+        document.getElementById("signout-mobile")?.addEventListener("click", signOut);
+      }
+    } else {
+      desktopBtns.classList.remove("hidden");
+      desktopBtns.classList.add("sm:flex");
+      desktopUser.classList.add("hidden");
+      desktopUser.classList.remove("sm:flex");
+      if (mobileBtns && mobileUser) {
+        mobileBtns.classList.remove("hidden");
+        mobileUser.classList.add("hidden");
+        mobileUser.classList.remove("flex");
+      }
+    }
+  }
+
+  async function signOut() {
+    try { await sb().auth.signOut(); } catch (e) {}
+    window.location.href = "/";
+  }
+
+  async function init() {
+    const c = sb();
+    // First read — synchronous from localStorage if a session exists.
+    const { data: { user } } = await c.auth.getUser();
+    paint(user);
+    // Stay reactive — covers the OAuth callback (Supabase emits SIGNED_IN once it parses #access_token=…).
+    c.auth.onAuthStateChange((_evt, session) => {
+      paint(session?.user || null);
+    });
+  }
+  init();
 </script>

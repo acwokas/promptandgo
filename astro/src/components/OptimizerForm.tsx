@@ -111,6 +111,73 @@ const MODEL_TIPS: Record<string, Record<string, string>> = {
 const SUPABASE_URL = (import.meta as any).env?.PUBLIC_SUPABASE_URL || "https://dkdakwyrqyfdkyukqmqs.supabase.co";
 const SUPABASE_ANON = (import.meta as any).env?.PUBLIC_SUPABASE_PUBLISHABLE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRrZGFrd3lycXlmZGt5dWtxbXFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgwMjI3ODEsImV4cCI6MjA5MzU5ODc4MX0.S-qUEvo5Xapb3h8CfEta0bDvYesAOTV_oUnnFpFb7Tc";
 
+
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function renderInline(s: string): string {
+  // **bold**  *italic*  `code`
+  s = escapeHtml(s);
+  s = s.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  s = s.replace(/(^|[^*])\*([^*]+)\*(?!\*)/g, "$1<em>$2</em>");
+  s = s.replace(/`([^`]+)`/g, "<code class=\"px-1.5 py-0.5 rounded bg-secondary text-foreground/90 text-[0.92em]\">$1</code>");
+  return s;
+}
+
+// Tiny markdown -> HTML for the optimiser output. Only handles the patterns the
+// model reliably emits: ## headings, bullet lists with - or *, numbered lists, **bold**, blank-line paragraphs.
+function renderMarkdown(md: string): string {
+  if (!md) return "";
+  const lines = md.split(/\r?\n/);
+  const out: string[] = [];
+  let inUl = false, inOl = false;
+  const closeLists = () => {
+    if (inUl) { out.push("</ul>"); inUl = false; }
+    if (inOl) { out.push("</ol>"); inOl = false; }
+  };
+  let para: string[] = [];
+  const flushPara = () => {
+    if (para.length) {
+      out.push(`<p class=\"mb-4 text-foreground/85\">${renderInline(para.join(" "))}</p>`);
+      para = [];
+    }
+  };
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (!line) { flushPara(); closeLists(); continue; }
+    // headings
+    let m = line.match(/^(#{1,4})\s+(.+)$/);
+    if (m) {
+      flushPara(); closeLists();
+      const lvl = Math.min(m[1].length + 1, 4); // ## -> h3 etc.
+      out.push(`<h${lvl} class=\"font-bold text-foreground mt-6 mb-3 ${lvl===3?'text-lg':'text-base'}\">${renderInline(m[2])}</h${lvl}>`);
+      continue;
+    }
+    // bullets
+    m = line.match(/^[-*]\s+(.+)$/);
+    if (m) {
+      flushPara();
+      if (!inUl) { closeLists(); out.push("<ul class=\"list-disc pl-6 space-y-1.5 mb-4 text-foreground/85\">"); inUl = true; }
+      out.push(`<li>${renderInline(m[1])}</li>`);
+      continue;
+    }
+    // numbered
+    m = line.match(/^\d+\.\s+(.+)$/);
+    if (m) {
+      flushPara();
+      if (!inOl) { closeLists(); out.push("<ol class=\"list-decimal pl-6 space-y-1.5 mb-4 text-foreground/85\">"); inOl = true; }
+      out.push(`<li>${renderInline(m[1])}</li>`);
+      continue;
+    }
+    // continuation of a list item or paragraph line
+    if (inUl || inOl) closeLists();
+    para.push(line);
+  }
+  flushPara(); closeLists();
+  return out.join("\n");
+}
+
 export default function OptimizerForm() {
   const [prompt, setPrompt] = useState("");
   const [tool, setTool] = useState("chatgpt");
@@ -154,7 +221,7 @@ export default function OptimizerForm() {
     // so it works whether the edge function has been updated to read targetLanguage or not.
     const languageDirective = lang === "en"
       ? ""
-      : `IMPORTANT: Write the entire optimised prompt and explanation in ${langLabel}. Only the section headings (## OPTIMIZED PROMPT etc.) stay in English.`;
+      : `IMPORTANT: Write the entire response in ${langLabel}, including the four section headings. Translate "OPTIMIZED PROMPT", "KEY IMPROVEMENTS", "EXPLANATION", and "OPTIONAL ENHANCEMENTS" into ${langLabel} (keep the ## markdown markers). Every word the user reads must be in ${langLabel}.`;
     const combinedGoal = [goal.trim(), languageDirective].filter(Boolean).join(" ");
 
     try {
@@ -307,7 +374,7 @@ export default function OptimizerForm() {
           {error ? (
             <p className="text-sm text-destructive">{error}</p>
           ) : (
-            <pre className="text-sm md:text-base whitespace-pre-wrap font-sans leading-relaxed">{output}</pre>
+            <div className="optimizer-output text-sm md:text-base font-sans leading-relaxed" dangerouslySetInnerHTML={{ __html: renderMarkdown(output) }} />
           )}
         </div>
       )}
