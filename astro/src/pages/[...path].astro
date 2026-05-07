@@ -16,7 +16,7 @@ export function getStaticPaths() {
     "email-confirmed",
     "dashboard", "settings",
     "account", "account/profile", "account/notifications", "account/security",
-    "account/purchases", "account/favorites", "account/ai-preferences", "account/xp",
+    "account/purchases", "account/ai-preferences", "account/xp",
     "search", "referral", "admin", "admin/review", "admin/prompts", "admin/upload", "admin/articles", "admin/articles/new", "admin/polls", "admin/coupons", "admin/feedback", "admin/widgets", "admin/security", "admin/countdown", "admin/analytics", "admin/export", "admin/tools"];
   return interactive.map(p => ({ params: { path: p } }));
 }

@@ -1,6 +1,8 @@
 ---
 import Layout from "@astro/layouts/Layout.astro";
 import PromptCard from "@astro/components/PromptCard.astro";
+import PromptLock from "@astro/components/PromptLock.tsx";
+import FavouriteButton from "@astro/components/FavouriteButton.tsx";
 import { sbFetch } from "@astro/lib/supabase-rest";
 
 export async function getStaticPaths() {
@@ -12,8 +14,17 @@ export async function getStaticPaths() {
     const prompts: any[] = await sbFetch(
       `/rest/v1/prompts?select=id,slug,title,what_for,prompt,excerpt,image_prompt,category_id,subcategory_id,is_pro,ribbon&review_status=eq.approved&order=created_at.desc&limit=1500`
     );
+    const allPacks: any[] = await sbFetch(`/rest/v1/packs?select=id,slug,name,price_cents&is_active=eq.true`);
+    const packPrompts: any[] = await sbFetch(`/rest/v1/pack_prompts?select=pack_id,prompt_id`);
+    const packsByPrompt: Record<string, any[]> = {};
+    const packById = Object.fromEntries(allPacks.map(p => [p.id, p]));
+    for (const r of packPrompts) {
+      const pk = packById[r.pack_id];
+      if (!pk) continue;
+      (packsByPrompt[r.prompt_id] ||= []).push(pk);
+    }
 
-    // Pre-compute related per prompt: same subcategory if available, else same category, top 3
+    // Pre-compute related per prompt
     const bySub: Record<string, any[]> = {};
     const byCat: Record<string, any[]> = {};
     for (const p of prompts) {
@@ -34,9 +45,11 @@ export async function getStaticPaths() {
             slug: q.slug, title: q.title, excerpt: q.excerpt, what_for: q.what_for,
             category_id: q.category_id, subcategory_id: q.subcategory_id,
           }));
+        const packsForThis = packsByPrompt[p.id] || [];
+        const cheapest = packsForThis.sort((a, b) => (a.price_cents || 0) - (b.price_cents || 0))[0] || null;
         return {
           params: { category: cat.slug, slug: p.slug },
-          props: { prompt: p, category: cat, subcategory: sub, related, allCats: cats, allSubs: subs },
+          props: { prompt: p, category: cat, subcategory: sub, related, allCats: cats, allSubs: subs, packIds: packsForThis.map(x => x.id), cheapestPack: cheapest },
         };
       });
   } catch (e) {
@@ -45,7 +58,7 @@ export async function getStaticPaths() {
   }
 }
 
-const { prompt, category, subcategory, related, allCats, allSubs } = Astro.props as any;
+const { prompt, category, subcategory, related, allCats, allSubs, packIds, cheapestPack } = Astro.props as any;
 const catById = Object.fromEntries(allCats.map((c: any) => [c.id, c]));
 const subById = Object.fromEntries(allSubs.map((s: any) => [s.id, s]));
 
@@ -54,15 +67,12 @@ const ld = {
   "@type": "CreativeWork",
   name: prompt.title,
   description: prompt.what_for || prompt.excerpt,
-  text: prompt.prompt,
+  text: prompt.is_pro ? undefined : prompt.prompt,
   inLanguage: "en",
   about: { "@type": "Thing", name: category.name },
-  isPartOf: {
-    "@type": "Collection",
-    name: "PromptAndGo AI Prompt Library",
-    url: "https://www.promptandgo.ai/library",
-  },
+  isPartOf: { "@type": "Collection", name: "PromptAndGo AI Prompt Library", url: "https://www.promptandgo.ai/library" },
   url: `https://www.promptandgo.ai/library/${category.slug}/${prompt.slug}`,
+  ...(prompt.is_pro ? { offers: { "@type": "Offer", price: "1.99", priceCurrency: "USD", availability: "https://schema.org/InStock" } } : {}),
 };
 ---
 <Layout
@@ -82,34 +92,33 @@ const ld = {
     <div class="flex flex-wrap items-center gap-2 mb-4">
       {category && <span class="rounded-md bg-primary/10 text-primary px-2 py-0.5 text-xs font-medium">{category.name}</span>}
       {subcategory && <span class="text-xs text-foreground/55">{subcategory.name}</span>}
-      {prompt.is_pro && <span class="rounded-md bg-amber-500/10 text-amber-700 dark:text-amber-300 px-2 py-0.5 text-xs font-bold uppercase tracking-wider">Pro</span>}
+      {prompt.is_pro && <span class="inline-flex items-center gap-1 rounded-md bg-amber-500/10 text-amber-700 dark:text-amber-300 px-2 py-0.5 text-xs font-bold uppercase tracking-wider">
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1l3 7h7l-5.5 4.5L18 20l-6-4-6 4 1.5-7.5L2 8h7z"/></svg>
+        Premium
+      </span>}
       {prompt.ribbon && <span class="rounded-md bg-secondary text-foreground/85 px-2 py-0.5 text-xs font-medium">{prompt.ribbon}</span>}
     </div>
-    <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">{prompt.title}</h1>
+    <div class="flex items-start justify-between gap-4">
+      <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">{prompt.title}</h1>
+      <div class="shrink-0 mt-1"><FavouriteButton client:load promptId={prompt.id} /></div>
+    </div>
     {prompt.what_for && <p class="mt-4 text-lg text-foreground/80 leading-relaxed">{prompt.what_for}</p>}
   </section>
 
   <article class="container max-w-3xl pb-12">
-    <div class="rounded-2xl border border-border bg-card overflow-hidden">
-      <div class="flex items-center justify-between border-b border-border px-5 py-3 bg-secondary/40">
-        <span class="text-xs font-semibold uppercase tracking-wider text-foreground/60">Prompt</span>
-        <button id="copy-prompt" type="button" class="inline-flex items-center gap-1.5 rounded-md bg-primary text-primary-foreground px-3 py-1.5 text-xs font-semibold hover:bg-primary/90 transition-colors">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
-          Copy
-        </button>
-      </div>
-      <pre id="prompt-body" class="p-5 md:p-6 text-sm md:text-base whitespace-pre-wrap font-sans leading-relaxed text-foreground bg-card">{prompt.prompt}</pre>
-    </div>
-
-    {prompt.image_prompt && (
-      <div class="mt-5 rounded-2xl border border-border bg-secondary/40 p-5 md:p-6">
-        <div class="text-xs font-semibold uppercase tracking-wider text-foreground/60 mb-2">For image models</div>
-        <pre class="text-sm whitespace-pre-wrap font-mono leading-relaxed text-foreground">{prompt.image_prompt}</pre>
-      </div>
-    )}
+    <PromptLock
+      client:load
+      promptId={prompt.id}
+      promptBody={prompt.prompt}
+      imagePrompt={prompt.image_prompt}
+      isPro={prompt.is_pro}
+      packIds={packIds || []}
+      cheapestPack={cheapestPack}
+      promptTitle={prompt.title}
+    />
 
     <div class="mt-6 flex flex-wrap gap-3">
-      <a href={`/optimize?prompt=${encodeURIComponent(prompt.prompt || "")}&title=${encodeURIComponent(prompt.title || "")}&category=${encodeURIComponent(category.name || "")}`}
+      <a href={`/optimize?prompt=${encodeURIComponent(prompt.is_pro ? "" : (prompt.prompt || ""))}&title=${encodeURIComponent(prompt.title || "")}&category=${encodeURIComponent(category.name || "")}`}
          class="inline-flex items-center justify-center rounded-xl bg-primary text-primary-foreground px-5 h-11 font-semibold hover:bg-primary/90 transition-colors">⚡ Optimise this for any AI →</a>
       <a href={`/library/${category.slug}`} class="inline-flex items-center justify-center rounded-xl border-2 border-border bg-background hover:bg-secondary px-5 h-11 font-semibold transition-colors">More {category.name} prompts</a>
     </div>
@@ -129,18 +138,3 @@ const ld = {
     </section>
   )}
 </Layout>
-
-<script is:inline>
-  document.addEventListener("DOMContentLoaded", () => {
-    const btn = document.getElementById("copy-prompt");
-    const body = document.getElementById("prompt-body");
-    if (btn && body) {
-      btn.addEventListener("click", async () => {
-        await navigator.clipboard.writeText(body.textContent || "");
-        const orig = btn.innerHTML;
-        btn.innerHTML = "Copied";
-        setTimeout(() => { btn.innerHTML = orig; }, 1500);
-      });
-    }
-  });
-</script>

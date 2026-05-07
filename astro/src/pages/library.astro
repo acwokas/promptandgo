@@ -1,6 +1,7 @@
 ---
 import Layout from "@astro/layouts/Layout.astro";
 import PromptCard from "@astro/components/PromptCard.astro";
+import LibrarySearch from "@astro/components/LibrarySearch.tsx";
 import { sbFetch } from "@astro/lib/supabase-rest";
 
 const data = await (async () => {
@@ -17,10 +18,11 @@ const data = await (async () => {
     const recent: any[] = await sbFetch(
       `/rest/v1/prompts?select=slug,title,excerpt,what_for,category_id,subcategory_id&review_status=eq.approved&order=created_at.desc&limit=9`
     );
+    const all: any[] = await sbFetch(`/rest/v1/prompts?select=id,slug,title,excerpt,what_for,is_pro,category_id,subcategory_id&review_status=eq.approved&order=title.asc&limit=2000`);
     const subs: any[] = await sbFetch(`/rest/v1/subcategories?select=id,name,slug,category_id`);
-    return { cats, total, recent, subs };
+    return { cats, total, recent, all, subs };
   } catch (e) {
-    return { cats: [], total: 0, recent: [], subs: [] };
+    return { cats: [], total: 0, recent: [], all: [], subs: [] };
   }
 })();
 const catById = Object.fromEntries(data.cats.map((c: any) => [c.id, c]));
@@ -57,6 +59,12 @@ const subById = Object.fromEntries(data.subs.map((s: any) => [s.id, s]));
         </a>
       ))}
     </div>
+  </section>
+
+  <!-- SEARCH + FILTER -->
+  <section class="container max-w-7xl pb-12">
+    <h2 class="text-sm font-semibold uppercase tracking-wider text-foreground/60 mb-4">Search & filter</h2>
+    <LibrarySearch client:load prompts={data.all || []} categories={data.cats} subcategories={data.subs} />
   </section>
 
   <!-- RECENTLY ADDED -->

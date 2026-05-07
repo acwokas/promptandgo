@@ -1,5 +1,6 @@
 ---
 import Layout from "@astro/layouts/Layout.astro";
+import BuyButton from "@astro/components/BuyButton.tsx";
 import { sbFetch } from "@astro/lib/supabase-rest";
 
 export async function getStaticPaths() {
@@ -54,13 +55,13 @@ const free = prompts.filter((p: any) => !p.is_pro);
           <span class="text-sm text-foreground/60">one-off</span>
         </div>
         <p class="text-sm text-foreground/75 mb-5">Unlock <strong>all {prompts.length} prompts</strong> including the {premium.length} premium ones in this pack.</p>
-        <a href={`/auth?action=signup&buy_pack=${pack.slug}`} class="block w-full text-center rounded-xl bg-primary text-primary-foreground px-5 h-11 leading-[2.75rem] font-semibold hover:bg-primary/90 transition-colors">Buy this pack — ${(pack.price_cents / 100).toFixed(2)}</a>
+        <BuyButton client:load type="pack" itemId={pack.id} title={pack.name} amountCents={pack.price_cents}>Buy this pack — ${(pack.price_cents / 100).toFixed(2)}</BuyButton>
         <div class="my-4 flex items-center gap-3 text-xs text-foreground/55">
           <span class="flex-1 h-px bg-border"></span>
           <span>or</span>
           <span class="flex-1 h-px bg-border"></span>
         </div>
-        <a href="/auth?action=signup&plan=monthly" class="block w-full text-center rounded-xl border-2 border-primary/40 bg-primary/5 text-primary px-5 h-11 leading-[2.75rem] font-semibold hover:bg-primary/10 transition-colors">Subscribe — $12/mo (everything)</a>
+        <BuyButton client:load type="subscription_monthly" variant="secondary">Subscribe — $12/mo (everything)</BuyButton>
       </aside>
     </div>
   </section>
