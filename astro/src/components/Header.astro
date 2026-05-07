@@ -69,9 +69,6 @@ function isActive(href: string): boolean {
 </script>
 
 <script>
-  // Auth state hydration: swap "Sign in / Start free" for the user's email + sign out
-  // when a Supabase session exists. Runs on every page so it works after the OAuth
-  // callback (which lands at /?... with #access_token=... in the hash).
   import { sb } from "../lib/auth-client";
 
   function paint(user) {
@@ -83,29 +80,78 @@ function isActive(href: string): boolean {
 
     if (user) {
       const email = user.email || "Account";
-      const initials = email.slice(0, 2).toUpperCase();
+      const avatar = user.user_metadata?.avatar_url || "";
+      const fullName = user.user_metadata?.full_name || user.user_metadata?.name || email.split("@")[0];
+      const initials = (fullName || email).slice(0, 2).toUpperCase();
+      const avatarMarkup = avatar
+        ? `<img src="${avatar}" alt="" class="w-8 h-8 rounded-full object-cover" referrerpolicy="no-referrer" />`
+        : `<span class="w-8 h-8 rounded-full bg-primary text-primary-foreground inline-flex items-center justify-center text-xs font-bold">${initials}</span>`;
+
       desktopBtns.classList.add("hidden");
       desktopBtns.classList.remove("sm:flex");
       desktopUser.classList.remove("hidden");
       desktopUser.classList.add("sm:flex");
       desktopUser.innerHTML = `
-        <a href="/account/saved" class="inline-flex items-center justify-center rounded-lg px-3.5 h-10 text-[15px] font-medium text-foreground/80 hover:text-foreground hover:bg-secondary transition-colors">
-          Saved
-        </a>
-        <button id="signout-desktop" type="button" class="inline-flex items-center gap-2 rounded-lg bg-secondary text-foreground px-3 h-10 text-[14px] font-semibold hover:bg-secondary/80 transition-colors" title="${email}">
-          <span class="w-7 h-7 rounded-full bg-primary text-primary-foreground inline-flex items-center justify-center text-xs font-bold">${initials}</span>
-          Sign out
-        </button>
+        <div class="relative">
+          <button id="account-trigger" type="button" aria-haspopup="menu" aria-expanded="false"
+                  class="inline-flex items-center gap-2 rounded-full pl-1 pr-3 h-10 hover:bg-secondary transition-colors text-[14px] font-semibold">
+            ${avatarMarkup}
+            <span class="hidden md:inline max-w-[140px] truncate">${fullName}</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div id="account-menu" role="menu"
+               class="hidden absolute right-0 top-full mt-2 w-64 rounded-xl border border-border bg-background shadow-lg overflow-hidden z-50">
+            <div class="px-4 py-3 border-b border-border bg-secondary/30">
+              <div class="text-sm font-semibold text-foreground truncate">${fullName}</div>
+              <div class="text-xs text-muted-foreground truncate">${email}</div>
+            </div>
+            <a href="/account/profile" role="menuitem" class="flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-secondary transition-colors">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              My account
+            </a>
+            <a href="/account/saved" role="menuitem" class="flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-secondary transition-colors">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              Saved prompts
+            </a>
+            <a href="/account/purchases" role="menuitem" class="flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-secondary transition-colors">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              Purchases
+            </a>
+            <button id="account-signout" role="menuitem" type="button"
+                    class="w-full flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-secondary transition-colors border-t border-border text-foreground/80">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              Sign out
+            </button>
+          </div>
+        </div>
       `;
-      document.getElementById("signout-desktop")?.addEventListener("click", signOut);
+
+      const trigger = document.getElementById("account-trigger");
+      const menu = document.getElementById("account-menu");
+      const closeMenu = () => { menu?.classList.add("hidden"); trigger?.setAttribute("aria-expanded","false"); };
+      const openMenu = () => { menu?.classList.remove("hidden"); trigger?.setAttribute("aria-expanded","true"); };
+      trigger?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (menu?.classList.contains("hidden")) openMenu(); else closeMenu();
+      });
+      document.addEventListener("click", (e) => {
+        if (!menu || !trigger) return;
+        if (menu.classList.contains("hidden")) return;
+        if (!menu.contains(e.target) && !trigger.contains(e.target)) closeMenu();
+      });
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeMenu(); });
+      document.getElementById("account-signout")?.addEventListener("click", signOut);
 
       if (mobileBtns && mobileUser) {
         mobileBtns.classList.add("hidden");
         mobileUser.classList.remove("hidden");
         mobileUser.classList.add("flex");
         mobileUser.innerHTML = `
+          <div class="px-3 py-2 rounded-lg bg-secondary/50 text-sm font-semibold truncate">${fullName}</div>
+          <a href="/account/profile" class="inline-flex items-center justify-center rounded-lg border border-border h-11 font-medium">My account</a>
           <a href="/account/saved" class="inline-flex items-center justify-center rounded-lg border border-border h-11 font-medium">Saved prompts</a>
-          <button id="signout-mobile" type="button" class="inline-flex items-center justify-center rounded-lg bg-secondary text-foreground h-11 font-semibold">Sign out (${email})</button>
+          <a href="/account/purchases" class="inline-flex items-center justify-center rounded-lg border border-border h-11 font-medium">Purchases</a>
+          <button id="signout-mobile" type="button" class="inline-flex items-center justify-center rounded-lg bg-secondary text-foreground h-11 font-semibold">Sign out</button>
         `;
         document.getElementById("signout-mobile")?.addEventListener("click", signOut);
       }
@@ -114,10 +160,12 @@ function isActive(href: string): boolean {
       desktopBtns.classList.add("sm:flex");
       desktopUser.classList.add("hidden");
       desktopUser.classList.remove("sm:flex");
+      desktopUser.innerHTML = "";
       if (mobileBtns && mobileUser) {
         mobileBtns.classList.remove("hidden");
         mobileUser.classList.add("hidden");
         mobileUser.classList.remove("flex");
+        mobileUser.innerHTML = "";
       }
     }
   }
@@ -129,13 +177,9 @@ function isActive(href: string): boolean {
 
   async function init() {
     const c = sb();
-    // First read — synchronous from localStorage if a session exists.
     const { data: { user } } = await c.auth.getUser();
     paint(user);
-    // Stay reactive — covers the OAuth callback (Supabase emits SIGNED_IN once it parses #access_token=…).
-    c.auth.onAuthStateChange((_evt, session) => {
-      paint(session?.user || null);
-    });
+    c.auth.onAuthStateChange((_evt, session) => paint(session?.user || null));
   }
   init();
 </script>

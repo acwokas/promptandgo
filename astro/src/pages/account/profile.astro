@@ -1,0 +1,15 @@
+---
+import Layout from "@astro/layouts/Layout.astro";
+import StaticHero from "@astro/components/StaticHero.astro";
+import AccountProfile from "@astro/components/AccountProfile.tsx";
+---
+<Layout title="My account — PromptAndGo" description="Manage your PromptAndGo account, profile and avatar." noIndex={true}>
+  <StaticHero
+    eyebrow="Account"
+    title="My account"
+    subtitle="Update your name, change your avatar, manage your sign-in details."
+  />
+  <section class="container max-w-3xl pb-20">
+    <AccountProfile client:load />
+  </section>
+</Layout>
