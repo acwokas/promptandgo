@@ -25,7 +25,7 @@ const url = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#0e0a1f" />
-    <meta name="color-scheme" content="light dark" />
+    <meta name="color-scheme" content="light only" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="author" content="PromptAndGo.ai" />
     <meta name="robots" content={noIndex ? "noindex, nofollow" : "index, follow"} />
@@ -47,12 +47,11 @@ const url = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
     <script is:inline>
+      // Site is light-only. Strip any legacy dark theme preference.
       (function(){
         try {
-          const t = localStorage.getItem('theme');
-          if (t === 'dark' || (!t && matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-          }
+          document.documentElement.classList.remove('dark');
+          localStorage.removeItem('theme');
         } catch(e) {}
       })();
     </script>
