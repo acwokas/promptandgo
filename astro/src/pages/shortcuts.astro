@@ -1,0 +1,41 @@
+---
+import Layout from "@astro/layouts/Layout.astro";
+import StaticHero from "@astro/components/StaticHero.astro";
+const sections = [
+  { title: "Global", items: [
+    ["⌘ K", "Open command palette"],
+    ["G + L", "Go to library"],
+    ["G + O", "Go to optimiser"],
+    ["G + S", "Go to saved"],
+    ["?", "Show this page"],
+  ]},
+  { title: "Library", items: [
+    ["/", "Focus search"],
+    ["1-9", "Jump to category"],
+    ["F", "Toggle favourite on hovered card"],
+  ]},
+  { title: "Optimiser", items: [
+    ["⌘ Enter", "Run optimisation"],
+    ["⌘ C", "Copy result"],
+    ["Esc", "Cancel running"],
+  ]},
+];
+---
+<Layout title="Keyboard shortcuts — PromptAndGo" description="Get around PromptAndGo with the keyboard.">
+  <StaticHero eyebrow="Reference" title="Keyboard shortcuts." />
+  <section class="container max-w-3xl pb-16 space-y-10">
+    {sections.map(s => (
+      <div>
+        <h2 class="text-lg font-semibold mb-3">{s.title}</h2>
+        <div class="rounded-2xl border border-border bg-card divide-y divide-border">
+          {s.items.map(([k, v]) => (
+            <div class="flex items-center justify-between gap-4 px-5 py-3">
+              <kbd class="font-mono text-sm bg-secondary border border-border rounded-md px-2 py-1">{k}</kbd>
+              <span class="text-foreground/85">{v}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </section>
+</Layout>

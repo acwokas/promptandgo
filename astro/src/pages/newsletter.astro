@@ -1,0 +1,14 @@
+---
+import Layout from "@astro/layouts/Layout.astro";
+import StaticHero from "@astro/components/StaticHero.astro";
+---
+<Layout title="Newsletter — PromptAndGo" description="Weekly: best new prompts, AI news for Asia, deep-dive guides.">
+  <StaticHero eyebrow="Newsletter" title="The weekly Prompt & Go." subtitle="Best new prompts, AI updates that matter for Asia, and one deep-dive guide. Every Thursday." />
+  <section class="container max-w-2xl pb-16">
+    <form action="https://dkdakwyrqyfdkyukqmqs.supabase.co/functions/v1/newsletter-subscribe" method="POST" class="flex flex-col sm:flex-row gap-3">
+      <input name="email" type="email" required placeholder="you@work.com" class="flex-1 rounded-xl border border-border bg-background px-4 h-12 text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
+      <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-primary text-primary-foreground px-6 h-12 font-semibold hover:bg-primary/90 transition-colors">Subscribe</button>
+    </form>
+    <p class="mt-3 text-sm text-foreground/60">No spam. Unsubscribe anytime. <a href="/privacy" class="hover:text-primary">Privacy</a>.</p>
+  </section>
+</Layout>

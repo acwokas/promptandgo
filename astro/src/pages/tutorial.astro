@@ -1,0 +1,30 @@
+---
+import Layout from "@astro/layouts/Layout.astro";
+import StaticHero from "@astro/components/StaticHero.astro";
+const steps = [
+  { n: 1, t: "Browse the library", d: "Pick a prompt that's close to what you need. Use category filters or search." },
+  { n: 2, t: "Copy or open the optimiser", d: "Either drop the prompt into your AI tool of choice, or click 'Optimise' to tailor it for your platform and language." },
+  { n: 3, t: "Run it, see results", d: "Run the prompt in your AI tool. The first output should already be 80% there." },
+  { n: 4, t: "Save what works", d: "Sign in (free) to favourite prompts and build your personal library." },
+];
+---
+<Layout title="Tutorial — PromptAndGo" description="Get started with PromptAndGo in 4 steps.">
+  <StaticHero eyebrow="Get started" title="Tutorial." subtitle="From zero to optimised AI workflow in 5 minutes." />
+  <section class="container max-w-3xl pb-16">
+    <ol class="space-y-3">
+      {steps.map(s => (
+        <li class="flex gap-5 rounded-xl border border-border bg-card p-5">
+          <div class="shrink-0 w-11 h-11 rounded-xl bg-primary/10 text-primary font-bold grid place-items-center">{s.n}</div>
+          <div>
+            <h3 class="font-semibold text-base md:text-lg">{s.t}</h3>
+            <p class="mt-1 text-foreground/75">{s.d}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+    <div class="mt-10 flex flex-wrap gap-3">
+      <a href="/library" class="inline-flex items-center justify-center rounded-xl bg-primary text-primary-foreground px-6 h-11 font-semibold hover:bg-primary/90 transition-colors">Browse the library</a>
+      <a href="/optimize" class="inline-flex items-center justify-center rounded-xl border-2 border-border bg-background hover:bg-secondary px-6 h-11 font-semibold transition-colors">Try the optimiser</a>
+    </div>
+  </section>
+</Layout>

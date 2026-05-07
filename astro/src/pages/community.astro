@@ -1,0 +1,25 @@
+---
+import Layout from "@astro/layouts/Layout.astro";
+import StaticHero from "@astro/components/StaticHero.astro";
+---
+<Layout title="Community — PromptAndGo" description="Join the PromptAndGo community: prompt sharing, AI tips, and discussion across Asia.">
+  <StaticHero eyebrow="Community" title="Join the conversation." subtitle="Share prompts, get feedback, and trade tips with a community of AI users across Asia." />
+  <section class="container max-w-4xl pb-16 grid md:grid-cols-2 gap-5">
+    <a href="https://twitter.com/promptandgoai" class="rounded-2xl border border-border bg-card p-6 hover:border-primary/40">
+      <h3 class="text-lg font-bold">X / Twitter</h3>
+      <p class="mt-2 text-foreground/75">Daily tips, new prompt drops, platform updates.</p>
+    </a>
+    <a href="https://linkedin.com/company/promptandgoai" class="rounded-2xl border border-border bg-card p-6 hover:border-primary/40">
+      <h3 class="text-lg font-bold">LinkedIn</h3>
+      <p class="mt-2 text-foreground/75">Long-form insights on AI in Asian businesses. Best for the B2B audience.</p>
+    </a>
+    <a href="/submit" class="rounded-2xl border border-border bg-card p-6 hover:border-primary/40">
+      <h3 class="text-lg font-bold">Submit a prompt</h3>
+      <p class="mt-2 text-foreground/75">Got a prompt that works? Share it for the community library.</p>
+    </a>
+    <a href="/newsletter" class="rounded-2xl border border-border bg-card p-6 hover:border-primary/40">
+      <h3 class="text-lg font-bold">Newsletter</h3>
+      <p class="mt-2 text-foreground/75">Weekly: best new prompts, AI news for Asia, deep-dive guides.</p>
+    </a>
+  </section>
+</Layout>

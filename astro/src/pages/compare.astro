@@ -1,0 +1,31 @@
+---
+import Layout from "@astro/layouts/Layout.astro";
+import StaticHero from "@astro/components/StaticHero.astro";
+const platforms = [
+  { name: "ChatGPT", strengths: "Structured output, function calling, plugin ecosystem.", weakness: "Verbose by default; needs explicit length constraints.", langStrong: "English, Spanish, Mandarin." },
+  { name: "Claude", strengths: "Long context, nuanced reasoning, careful tone.", weakness: "Slower than GPT for short prompts. Less mature plugin support.", langStrong: "English, French, Japanese." },
+  { name: "Gemini", strengths: "Multimodal, Google ecosystem integration.", weakness: "Tone can feel generic. Stricter content policies.", langStrong: "English, Hindi, Bahasa Indonesia." },
+  { name: "Mistral", strengths: "European, multilingual, fast.", weakness: "Smaller knowledge base than GPT/Claude.", langStrong: "French, German, Italian, English." },
+  { name: "Grok", strengths: "Real-time knowledge, blunt tone.", weakness: "Personality can leak into business outputs.", langStrong: "English." },
+  { name: "DeepSeek", strengths: "Cheap, strong technical/coding.", weakness: "Less polished UX. China-region context.", langStrong: "Mandarin, English." },
+  { name: "Qwen", strengths: "Best-in-class Chinese, e-commerce strong.", weakness: "Outside China, less integration support.", langStrong: "Mandarin (incl. Cantonese), English." },
+  { name: "Ernie Bot", strengths: "Mainland China dominant; Baidu integration.", weakness: "Outside China access limited; strict content policies.", langStrong: "Mandarin." },
+];
+---
+<Layout title="AI platform comparison — PromptAndGo" description="Compare ChatGPT, Claude, Gemini, Mistral, Grok, DeepSeek, Qwen, Ernie. Strengths, weaknesses, and which language they excel at.">
+  <StaticHero eyebrow="Compare" title="ChatGPT vs Claude vs everything else." subtitle="Strengths, weaknesses, and language strong-suits — so you pick the right tool for each job." />
+  <section class="container max-w-5xl pb-16">
+    <div class="grid md:grid-cols-2 gap-4">
+      {platforms.map(p => (
+        <article class="rounded-2xl border border-border bg-card p-6">
+          <h3 class="text-xl font-bold tracking-tight">{p.name}</h3>
+          <div class="mt-4 space-y-2.5 text-sm">
+            <div><span class="text-foreground/60 font-semibold">Strengths · </span><span class="text-foreground/85">{p.strengths}</span></div>
+            <div><span class="text-foreground/60 font-semibold">Weakness · </span><span class="text-foreground/85">{p.weakness}</span></div>
+            <div><span class="text-foreground/60 font-semibold">Language · </span><span class="text-foreground/85">{p.langStrong}</span></div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</Layout>

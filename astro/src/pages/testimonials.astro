@@ -1,0 +1,28 @@
+---
+import Layout from "@astro/layouts/Layout.astro";
+import StaticHero from "@astro/components/StaticHero.astro";
+const reviews = [
+  { quote: "The Japanese keigo prompts saved me from a dozen embarrassing emails to clients. They just sound right.", who: "Yuki S.", role: "Account Director, Tokyo" },
+  { quote: "We replaced our prompt-engineering doc with PromptAndGo. New hires onboard in days instead of weeks.", who: "Wei L.", role: "Marketing Lead, Singapore" },
+  { quote: "Optimiser nailed the difference between ChatGPT and Claude prompting. Our content quality jumped overnight.", who: "Min-jun K.", role: "Founder, Seoul" },
+  { quote: "The Indonesian and Vietnamese prompts capture the casual-respectful register that generic AI prompts always miss.", who: "Sari D.", role: "Content Manager, Jakarta" },
+  { quote: "Best $12/month I spend. The Pro tier pays for itself on the first campaign.", who: "Annie C.", role: "Solo founder, Taipei" },
+  { quote: "Our customer support team in 5 languages — same brand voice, no babysitting.", who: "Raj M.", role: "Head of CX, Mumbai" },
+];
+---
+<Layout title="Testimonials — PromptAndGo" description="Hear from teams across Asia using PromptAndGo to ship better AI work.">
+  <StaticHero eyebrow="Testimonials" title="What teams are saying." subtitle="Real users, real workflows, real ROI." />
+  <section class="container max-w-6xl pb-16">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {reviews.map(r => (
+        <figure class="rounded-2xl border border-border bg-card p-6">
+          <blockquote class="text-foreground/85 leading-relaxed">"{r.quote}"</blockquote>
+          <figcaption class="mt-4 text-sm">
+            <span class="font-semibold">{r.who}</span>
+            <span class="text-foreground/60"> · {r.role}</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
+</Layout>

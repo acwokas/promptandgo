@@ -1,0 +1,39 @@
+---
+import Layout from "@astro/layouts/Layout.astro";
+import StaticHero from "@astro/components/StaticHero.astro";
+const groups = [
+  { t: "Getting started", links: [
+    { href: "/tutorial", label: "Tutorial — 4-step start guide" },
+    { href: "/how-it-works", label: "How PromptAndGo works" },
+    { href: "/library", label: "Browse the library" },
+    { href: "/optimize", label: "Try the free optimiser" },
+  ]},
+  { t: "Account & billing", links: [
+    { href: "/pricing", label: "Pricing" },
+    { href: "/auth", label: "Sign in / sign up" },
+    { href: "/account", label: "Manage account" },
+    { href: "/contact?topic=billing", label: "Billing question" },
+  ]},
+  { t: "Troubleshooting", links: [
+    { href: "/status", label: "Service status" },
+    { href: "/contact?topic=bug", label: "Report a bug" },
+    { href: "/faqs", label: "FAQs" },
+  ]},
+];
+---
+<Layout title="Help Center — PromptAndGo" description="Get help with PromptAndGo.">
+  <StaticHero eyebrow="Help" title="How can we help?" />
+  <section class="container max-w-5xl pb-16 grid md:grid-cols-3 gap-6">
+    {groups.map(g => (
+      <div>
+        <h2 class="font-semibold mb-3">{g.t}</h2>
+        <ul class="space-y-2 text-foreground/85">
+          {g.links.map(l => <li><a href={l.href} class="hover:text-primary">{l.label}</a></li>)}
+        </ul>
+      </div>
+    ))}
+  </section>
+  <section class="container max-w-3xl pb-16">
+    <a href="/contact" class="inline-flex items-center justify-center rounded-xl bg-primary text-primary-foreground px-6 h-11 font-semibold hover:bg-primary/90 transition-colors">Contact support →</a>
+  </section>
+</Layout>

@@ -1,0 +1,37 @@
+---
+import Layout from "@astro/layouts/Layout.astro";
+import StaticHero from "@astro/components/StaticHero.astro";
+const entries = [
+  { date: "May 2026", items: [
+    "Astro rewrite: 4× faster page loads on the homepage and library",
+    "1,000+ prompts shipped (up from 50) across 11 categories",
+    "Prompt review queue and admin tools",
+    "Brand refresh: cleaner palette, bigger logo",
+  ]},
+  { date: "Apr 2026", items: [
+    "New market insights: Malaysia, Indonesia, Vietnam, Australia",
+    "Optimiser supports Mistral, Grok, DeepSeek, Qwen, Ernie",
+    "Power Packs preview",
+  ]},
+  { date: "Mar 2026", items: [
+    "Public launch on Lovable",
+    "First 50 hand-crafted prompts published",
+    "Asian-language landings (JA/KO/ZH/TH/VI)",
+  ]},
+];
+---
+<Layout title="Changelog — PromptAndGo" description="Recent product updates from PromptAndGo.">
+  <StaticHero eyebrow="Changelog" title="What's new." />
+  <section class="container max-w-3xl pb-16">
+    <ol class="space-y-8">
+      {entries.map(e => (
+        <li>
+          <h2 class="text-xl font-bold mb-3">{e.date}</h2>
+          <ul class="space-y-2 text-foreground/85">
+            {e.items.map(i => <li class="flex gap-2"><span class="text-primary mt-1">→</span><span>{i}</span></li>)}
+          </ul>
+        </li>
+      ))}
+    </ol>
+  </section>
+</Layout>
