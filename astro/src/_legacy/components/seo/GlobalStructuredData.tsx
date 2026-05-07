@@ -62,7 +62,7 @@ const GlobalStructuredData = () => {
       caption: "PromptandGo.ai - AI Prompt Library Logo"
     },
     image: `${origin}/og-default.png`,
-    description: "Curated AI prompts that get results. Browse 3,000+ tested prompts, use Scout AI optimization, and access specialized Power Packs for ChatGPT, Claude, and more.",
+    description: "Curated AI prompts that get results. Browse 50+ tested prompts, use Scout AI optimization, and access specialized Power Packs for ChatGPT, Claude, and more.",
     slogan: "Better and faster AI results, every time",
     foundingDate: "2024",
     numberOfEmployees: "1-10",
@@ -91,7 +91,7 @@ const GlobalStructuredData = () => {
     offers: [{
       "@type": "Offer",
       name: "Free AI Prompt Library",
-      description: "Access to 3,000+ curated AI prompts completely free",
+      description: "Access to 50+ curated AI prompts completely free",
       price: "0",
       priceCurrency: "USD",
       category: "AI Tools",
@@ -131,7 +131,7 @@ const GlobalStructuredData = () => {
     installUrl: `${origin}/`,
     screenshot: `${origin}/og-default.png`,
     featureList: [
-      "3000+ curated AI prompts",
+      "50+ curated AI prompts",
       "Scout AI optimization",
       "Power Packs collections", 
       "Multi-platform support",
@@ -146,7 +146,7 @@ const GlobalStructuredData = () => {
     name: SITE_NAME,
     alternateName: ["promptandgo", "Prompt and Go", "PromptAndGo"],
     url: `${origin}/`,
-    description: "Curated AI prompts that get results. Browse 3,000+ tested prompts, use Scout AI optimization, and access specialized Power Packs for ChatGPT, Claude, and more.",
+    description: "Curated AI prompts that get results. Browse 50+ tested prompts, use Scout AI optimization, and access specialized Power Packs for ChatGPT, Claude, and more.",
     inLanguage: "en-US",
     copyrightYear: new Date().getFullYear(),
     copyrightHolder: {
@@ -210,7 +210,7 @@ const GlobalStructuredData = () => {
         "@type": "WebPage",
         name: "Prompt Library",
         url: `${origin}/library`,
-        description: "Browse 3,000+ AI prompts by category"
+        description: "Browse 50+ AI prompts by category"
       },
       {
         "@type": "WebPage", 
