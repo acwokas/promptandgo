@@ -29,7 +29,7 @@ function isActive(href: string): boolean {
     </nav>
 
     <div class="flex items-center gap-2">
-      <div id="auth-buttons-desktop" class="hidden sm:flex items-center gap-2">
+      <div id="auth-buttons-desktop" class="hidden md:flex items-center gap-2">
         <a href="/auth" class="inline-flex items-center justify-center rounded-lg px-3.5 h-10 text-[15px] font-medium text-foreground/80 hover:text-foreground hover:bg-secondary transition-colors">
           Sign in
         </a>
@@ -88,9 +88,9 @@ function isActive(href: string): boolean {
         : `<span class="w-8 h-8 rounded-full bg-primary text-primary-foreground inline-flex items-center justify-center text-xs font-bold">${initials}</span>`;
 
       desktopBtns.classList.add("hidden");
-      desktopBtns.classList.remove("sm:flex");
+      desktopBtns.classList.remove("md:flex");
       desktopUser.classList.remove("hidden");
-      desktopUser.classList.add("sm:flex");
+      desktopUser.classList.add("md:flex");
       desktopUser.innerHTML = `
         <div class="relative">
           <button id="account-trigger" type="button" aria-haspopup="menu" aria-expanded="false"
@@ -157,9 +157,9 @@ function isActive(href: string): boolean {
       }
     } else {
       desktopBtns.classList.remove("hidden");
-      desktopBtns.classList.add("sm:flex");
+      desktopBtns.classList.add("md:flex");
       desktopUser.classList.add("hidden");
-      desktopUser.classList.remove("sm:flex");
+      desktopUser.classList.remove("md:flex");
       desktopUser.innerHTML = "";
       if (mobileBtns && mobileUser) {
         mobileBtns.classList.remove("hidden");
