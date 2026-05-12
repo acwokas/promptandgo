@@ -60,12 +60,13 @@ Not yet wired into `create-checkout` / `create-payment` — see TODOs.
 All six product IDs are **not secrets**, but the convention is to keep all Stripe runtime config in one place.
 
 ```bash
-supabase secrets set STRIPE_PROD_PER_PROMPT=prod_UUwoVQZwD8Omtq
-supabase secrets set STRIPE_PROD_PER_PACK=prod_UUwqS3OTIsHbOx
-supabase secrets set STRIPE_PROD_PRO_MONTHLY=prod_UUwrc0eL3HEP1q
-supabase secrets set STRIPE_PROD_PRO_ANNUAL=prod_UUwscktRrqBLyb
-supabase secrets set STRIPE_PROD_TEAM_MONTHLY=prod_UUwuYFNd2GyFQh
-supabase secrets set STRIPE_PROD_TEAM_ANNUAL=prod_UUwuSSl5aIkSaA
+supabase secrets set STRIPE_PROD_PER_PROMPT=prod_UUwoVQZwD8Omtq      # $1.99 / one-off
+supabase secrets set STRIPE_PROD_PER_PACK=prod_UUwqS3OTIsHbOx        # $9.99 / pack
+supabase secrets set STRIPE_PROD_PRO_MONTHLY=prod_UUwrc0eL3HEP1q     # $12 / month
+supabase secrets set STRIPE_PROD_PRO_ANNUAL=prod_UUwscktRrqBLyb      # $120 / year
+supabase secrets set STRIPE_PROD_TEAM_MONTHLY=prod_UUwuYFNd2GyFQh    # $32 / month, up to 10 seats flat
+supabase secrets set STRIPE_PROD_TEAM_ANNUAL=prod_UUwuSSl5aIkSaA     # $320 / year, up to 10 seats flat
+supabase secrets set STRIPE_PROD_LIFETIME=<prod_id_for_lifetime>     # $349 / one-off — CREATE in Stripe Dashboard, then set this
 
 # Set after registering the webhook in Stripe Dashboard:
 supabase secrets set STRIPE_WEBHOOK_SECRET=whsec_...
@@ -113,20 +114,15 @@ Reality check needed before deploying the webhook:
 6. ✅ **BuyButton.tsx fallback URL** updated from legacy `dkdakwyrqyfdkyukqmqs` to current `sszxxmxqidkpkhlkstgs`. Commit `be138d7`.
 7. ✅ **Tier vocab in check-subscription** rewritten to use `tierFromProductId()` from the shared resolver. `'Basic'/'Premium'/'Enterprise'` bucket-bucketing gone. Migration `20260511230000_backfill_subscription_tier_vocab.sql` maps existing rows (Basic → pro_monthly; Premium/Enterprise → NULL, repopulated on next API call). Commit `f54387f`.
 
-**Open — needs Adrian's call**:
+**All TODOs now closed**:
 
-5. 🔴 **Lifetime $349 tier** — currently lives in `create-payment` but not on the pricing page or in `_shared/stripe-prices.ts`. Three options:
-   - **(a) Keep hidden** — leave in `create-payment`, accessible via direct buy URL only, no pricing-page slot.
-   - **(b) Promote** — add `STRIPE_PROD_LIFETIME` env var + a `lifetime` tier to the resolver, wire a 7th card on the pricing page.
-   - **(c) Drop** — remove from `create-payment`, drop `'lifetime'` from any DB tier enum, remove the lifetime branch in `check-subscription`.
-
-   Which? The autonomous Stripe TODO pass parked this as the one decision-blocker. Until decided, the `create-payment` lifetime branch stays inline ($349) and `check-subscription` still has a `tier || 'lifetime'` orphan-fallback. Migration kept `'lifetime'` rows untouched in the backfill.
+5. ✅ **Lifetime $349 — Adrian's call 2026-05-11: PROMOTE.** Lifetime is now a first-class resolver tier (`STRIPE_PROD_LIFETIME` env var, `tierFromProductId()` returns `'lifetime'`, `_shared/stripe-prices.ts` lists it in PAYMENT_TIERS). The inline price_data $349 hardcode in `create-payment` is gone — Stripe Dashboard is source of truth via the resolver. The `tier || 'lifetime'` orphan-fallback in `check-subscription` is dropped. Pricing page renders Lifetime as its own visual band below the 6-tier subscription grid, with a "Best value" badge and 2-col layout (distinct from the stacked subscription cards because Lifetime is semantically a different purchase — one-off, future-included scope). Commits `f7f39a6` (resolver), `4a71755` (create-payment), `2d1effa` (check-subscription), `c7446eb` (pricing page).
 
 ## Pre-deploy checklist (programmatic — 2026-05-11)
 
 1. Confirm CF Pages `PUBLIC_SUPABASE_URL` project ref.
 2. `supabase functions deploy stripe-webhook --project-ref <ref>`
-3. Set the six `STRIPE_PROD_*` env vars on that project's Edge Functions.
+3. Set the seven `STRIPE_PROD_*` env vars on that project's Edge Functions (per_prompt, per_pack, pro_monthly, pro_annual, team_monthly, team_annual, lifetime). `STRIPE_PROD_LIFETIME` is the 2026-05-11 addition — create the $349 Lifetime product in the Stripe Dashboard first, copy its `prod_...` ID, then `supabase secrets set`.
 4. Mirror `STRIPE_SECRET_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `SUBSCRIBERS_ENCRYPTION_KEY` from CF Pages env to Supabase Edge Functions env if not already.
 5. **`deno run --allow-net --allow-env supabase/functions/_shared/register-stripe-webhook.ts`** — registers the webhook URL with Stripe and stores `STRIPE_WEBHOOK_SECRET` in Supabase secrets in one shot. Idempotent: re-runs are a no-op if the endpoint already exists with the right event set. (Replaces the prior manual Dashboard "Add endpoint → copy whsec → paste" flow that was steps 5 + 6.)
 6. Apply migration: `supabase migration up --project-ref <ref>` to backfill `subscribers.subscription_tier` to the new vocab.
