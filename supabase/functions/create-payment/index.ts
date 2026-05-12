@@ -48,9 +48,17 @@ serve(async (req) => {
     // up the live Stripe product's default_price so price changes in the
     // Dashboard propagate without a redeploy.
     //
-    // Lifetime stays as inline price_data $349 — TODO 5 is pending
-    // Adrian's call on whether Lifetime stays a tier, gets promoted to
-    // the pricing page, or gets dropped entirely.
+    // TODO 5 (b) shipped 2026-05-11: lifetime is now a first-class
+    // resolver tier (STRIPE_PROD_LIFETIME). The inline $349 hardcode is
+    // gone — Stripe Dashboard is source of truth for the lifetime price.
+    //
+    // Fallback unit_amounts in the resolver path are last-resort defaults
+    // that only fire if Stripe returns a price with null unit_amount
+    // (shouldn't happen for default_price on a real product). Updated
+    // 2026-05-11 to match Adrian's locked pricing:
+    //   per_prompt: $1.99 (was $0.99 placeholder)
+    //   per_pack:   $9.99 (was $4.99 placeholder)
+    //   lifetime:   $349.00
     //
     // Each entry produces both:
     //   - lineItem: what Stripe sees (either { price } or { price_data })
@@ -69,7 +77,7 @@ serve(async (req) => {
         }
         const priceId = await resolvePriceId(stripe, 'per_prompt');
         const price = await stripe.prices.retrieve(priceId);
-        return { lineItem: { quantity, price: priceId }, unitAmount: price.unit_amount ?? 99, quantity };
+        return { lineItem: { quantity, price: priceId }, unitAmount: price.unit_amount ?? 199, quantity };
       }
       if (i.type === 'pack') {
         const name = `Power Pack${i.title ? `: ${i.title}` : ''}`;
@@ -82,16 +90,22 @@ serve(async (req) => {
         }
         const priceId = await resolvePriceId(stripe, 'per_pack');
         const price = await stripe.prices.retrieve(priceId);
-        return { lineItem: { quantity, price: priceId }, unitAmount: price.unit_amount ?? 499, quantity };
+        return { lineItem: { quantity, price: priceId }, unitAmount: price.unit_amount ?? 999, quantity };
       }
-      // lifetime — TODO 5 pending, inline price_data for now
-      const name = "Lifetime All-Access";
-      const unit_amount = 34900; // $349.00
-      return {
-        lineItem: { quantity, price_data: { currency: "usd", product_data: { name }, unit_amount } },
-        unitAmount: unit_amount,
-        quantity,
-      };
+      // lifetime — resolver path. unitAmountCents override is still
+      // honoured for promotional pricing, otherwise resolver picks up
+      // the live Stripe price for STRIPE_PROD_LIFETIME.
+      if (i.unitAmountCents != null) {
+        const name = "Lifetime All-Access";
+        return {
+          lineItem: { quantity, price_data: { currency: "usd", product_data: { name }, unit_amount: i.unitAmountCents } },
+          unitAmount: i.unitAmountCents,
+          quantity,
+        };
+      }
+      const priceId = await resolvePriceId(stripe, 'lifetime');
+      const price = await stripe.prices.retrieve(priceId);
+      return { lineItem: { quantity, price: priceId }, unitAmount: price.unit_amount ?? 34900, quantity };
     }));
     const line_items = enriched.map((e) => e.lineItem);
     const orderAmount = enriched.reduce((sum, e) => sum + e.unitAmount * e.quantity, 0);
