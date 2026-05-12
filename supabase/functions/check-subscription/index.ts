@@ -140,14 +140,22 @@ serve(async (req) => {
         .maybeSingle();
         
       if (orphaned) {
-        // Update the orphaned record with the secure function
+        // Update the orphaned record with the secure function. Tier
+        // comes from tierFromProductId() upstream (now includes 'lifetime'
+        // as a first-class tier per TODO 5 (b)); the old `tier || 'lifetime'`
+        // orphan fallback is dropped because:
+        //   - if the customer has an active subscription, `tier` is set
+        //   - if not, the row should reflect that, not silently mislabel
+        //     unknown rows as lifetime
+        // null is fine — backfill migration (20260511230000) tolerates
+        // it, and the next call rewrites with the correct tier.
         await supabase.rpc('secure_upsert_subscriber', {
           p_key: encKey,
           p_user_id: user.id,
           p_email: user.email,
           p_stripe_customer_id: customerId,
           p_subscribed: true,
-          p_subscription_tier: tier || 'lifetime',
+          p_subscription_tier: tier,
           p_subscription_end: subEnd,
         });
         logStep('Fixed orphaned subscription record');
