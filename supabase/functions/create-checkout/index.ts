@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import Stripe from "https://esm.sh/stripe@14.21.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
+import { resolvePriceId, type TierKey } from "../_shared/stripe-prices.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -56,46 +57,42 @@ serve(async (req) => {
     logStep("Customer lookup completed", { customerId: customerId || "none" });
 
     const origin = req.headers.get('origin') || 'https://promptandgo.ai';
-    logStep("Creating checkout session", { origin });
-    
+
+    // TODO 2 + TODO 4 — tier is now a request param. Caller passes
+    // `tier: 'pro_monthly' | 'pro_annual' | 'team_monthly' | 'team_annual'`
+    // and we resolve the live Stripe price ID off the product's
+    // default_price. Default stays `pro_monthly` so existing clients
+    // that POST without a body keep working unchanged.
+    let body: any = {};
+    try { body = await req.json(); } catch { /* empty body is fine — falls through to pro_monthly */ }
+    const requestedTier: string = body?.tier ?? 'pro_monthly';
+    const SUBSCRIPTION_TIERS: TierKey[] = ['pro_monthly', 'pro_annual', 'team_monthly', 'team_annual'];
+    if (!SUBSCRIPTION_TIERS.includes(requestedTier as TierKey)) {
+      throw new Error(`Invalid tier '${requestedTier}'. Subscription tiers must be one of: ${SUBSCRIPTION_TIERS.join(', ')}. For prompt/pack/lifetime purchases use /functions/v1/create-payment instead.`);
+    }
+    const tier = requestedTier as TierKey;
+    logStep("Resolving price for tier", { tier });
+    const priceId = await resolvePriceId(stripe, tier);
+    logStep("Price resolved", { tier, priceId });
+
+    logStep("Creating checkout session", { origin, tier });
+
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       customer_email: customerId ? undefined : user.email,
       mode: 'subscription',
-      
-      line_items: [
-        {
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: 'Monthly All-Access Membership',
-              metadata: {
-                business_name: 'promptandgo.ai'
-              }
-            },
-            // Adrian's locked pricing 2026-05-10: $12/mo (was $12.99 in
-            // earlier drafts). Existing $12.99 cohort is NOT retroactively
-            // re-priced — Stripe doesn't propagate price changes to live
-            // subscriptions anyway, so the cohort difference is documented
-            // in the analytics view rather than migrated. See STRIPE_INTEGRATION.md.
-            // TODO 4 will migrate this whole price_data block to
-            // resolvePriceId(stripe, 'pro_monthly') from _shared/stripe-prices.ts;
-            // until then this is the inline price hardcode.
-            unit_amount: 1200,
-            recurring: { interval: 'month' },
-          },
-          quantity: 1,
-        }
-      ],
+      line_items: [{ price: priceId, quantity: 1 }],
       success_url: `${origin}/membership/success`,
       cancel_url: `${origin}/membership/canceled`,
       subscription_data: {
         metadata: {
-          business_name: 'promptandgo.ai'
+          business_name: 'promptandgo.ai',
+          tier,
         }
       },
       metadata: {
-        business_name: 'promptandgo.ai'
+        business_name: 'promptandgo.ai',
+        tier,
       }
     });
 

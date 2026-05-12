@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import Stripe from "https://esm.sh/stripe@14.21.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
+import { resolvePriceId } from "../_shared/stripe-prices.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -41,25 +42,59 @@ serve(async (req) => {
 
     const stripe = new Stripe(stripeKey, { apiVersion: "2023-10-16" });
 
-    const line_items = items.map((i) => {
+    // TODO 4 — default-price resolution via _shared/stripe-prices.ts.
+    // When the caller passes `unitAmountCents` we honour it (promotional
+    // pricing per item via inline price_data). When it's omitted we look
+    // up the live Stripe product's default_price so price changes in the
+    // Dashboard propagate without a redeploy.
+    //
+    // Lifetime stays as inline price_data $349 — TODO 5 is pending
+    // Adrian's call on whether Lifetime stays a tier, gets promoted to
+    // the pricing page, or gets dropped entirely.
+    //
+    // Each entry produces both:
+    //   - lineItem: what Stripe sees (either { price } or { price_data })
+    //   - unitAmount: what we write to order_items.unit_amount in the DB
+    //     (resolved by retrieving the Stripe price when we used `{ price }`)
+    const enriched = await Promise.all(items.map(async (i) => {
       const quantity = i.quantity && i.quantity > 0 ? i.quantity : 1;
       if (i.type === 'prompt') {
         const name = `PRO Prompt${i.title ? `: ${i.title}` : ''}`;
-        const unit_amount = i.unitAmountCents ?? 99;
-        return { quantity, price_data: { currency: "usd", product_data: { name }, unit_amount } };
+        if (i.unitAmountCents != null) {
+          return {
+            lineItem: { quantity, price_data: { currency: "usd", product_data: { name }, unit_amount: i.unitAmountCents } },
+            unitAmount: i.unitAmountCents,
+            quantity,
+          };
+        }
+        const priceId = await resolvePriceId(stripe, 'per_prompt');
+        const price = await stripe.prices.retrieve(priceId);
+        return { lineItem: { quantity, price: priceId }, unitAmount: price.unit_amount ?? 99, quantity };
       }
       if (i.type === 'pack') {
         const name = `Power Pack${i.title ? `: ${i.title}` : ''}`;
-        const unit_amount = i.unitAmountCents ?? 499;
-        return { quantity, price_data: { currency: "usd", product_data: { name }, unit_amount } };
+        if (i.unitAmountCents != null) {
+          return {
+            lineItem: { quantity, price_data: { currency: "usd", product_data: { name }, unit_amount: i.unitAmountCents } },
+            unitAmount: i.unitAmountCents,
+            quantity,
+          };
+        }
+        const priceId = await resolvePriceId(stripe, 'per_pack');
+        const price = await stripe.prices.retrieve(priceId);
+        return { lineItem: { quantity, price: priceId }, unitAmount: price.unit_amount ?? 499, quantity };
       }
-      // lifetime
+      // lifetime — TODO 5 pending, inline price_data for now
       const name = "Lifetime All-Access";
       const unit_amount = 34900; // $349.00
-      return { quantity, price_data: { currency: "usd", product_data: { name }, unit_amount } };
-    });
-
-    const orderAmount = line_items.reduce((sum: number, li: any) => sum + li.price_data.unit_amount * (li.quantity ?? 1), 0);
+      return {
+        lineItem: { quantity, price_data: { currency: "usd", product_data: { name }, unit_amount } },
+        unitAmount: unit_amount,
+        quantity,
+      };
+    }));
+    const line_items = enriched.map((e) => e.lineItem);
+    const orderAmount = enriched.reduce((sum, e) => sum + e.unitAmount * e.quantity, 0);
 
     const supabaseService = createClient(supabaseUrl, serviceRoleKey, { auth: { persistSession: false } });
 
@@ -72,13 +107,16 @@ serve(async (req) => {
     if (orderErr) throw new Error(`Failed to create order: ${orderErr.message}`);
     const orderId = orderInsert.id as string;
 
-    const orderItemsRows = items.map((i) => ({
+    // Use the unitAmount we already resolved (Stripe price for the
+    // resolver path, caller's override for the inline path, $349 for
+    // lifetime) — no more bucket-default guessing.
+    const orderItemsRows = items.map((i, idx) => ({
       order_id: orderId,
       item_type: i.type,
       item_id: i.id ?? null,
       title: i.title ?? null,
-      unit_amount: i.type === 'lifetime' ? 34900 : (i.unitAmountCents ?? (i.type === 'pack' ? 499 : 99)),
-      quantity: i.quantity && i.quantity > 0 ? i.quantity : 1,
+      unit_amount: enriched[idx].unitAmount,
+      quantity: enriched[idx].quantity,
     }));
     const { error: oiErr } = await supabaseService.from('order_items').insert(orderItemsRows);
     if (oiErr) throw new Error(`Failed to create order items: ${oiErr.message}`);
