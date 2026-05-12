@@ -67,13 +67,21 @@ serve(async (req) => {
         {
           price_data: {
             currency: 'usd',
-            product_data: { 
+            product_data: {
               name: 'Monthly All-Access Membership',
               metadata: {
                 business_name: 'promptandgo.ai'
               }
             },
-            unit_amount: 1299,
+            // Adrian's locked pricing 2026-05-10: $12/mo (was $12.99 in
+            // earlier drafts). Existing $12.99 cohort is NOT retroactively
+            // re-priced — Stripe doesn't propagate price changes to live
+            // subscriptions anyway, so the cohort difference is documented
+            // in the analytics view rather than migrated. See STRIPE_INTEGRATION.md.
+            // TODO 4 will migrate this whole price_data block to
+            // resolvePriceId(stripe, 'pro_monthly') from _shared/stripe-prices.ts;
+            // until then this is the inline price hardcode.
+            unit_amount: 1200,
             recurring: { interval: 'month' },
           },
           quantity: 1,

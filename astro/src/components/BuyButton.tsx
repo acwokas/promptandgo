@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { sb } from "@astro/lib/auth-client";
 
-const SUPA_URL = (import.meta as any).env?.PUBLIC_SUPABASE_URL || "https://dkdakwyrqyfdkyukqmqs.supabase.co";
+// Fallback project ref is the current (sszxxmxqidkpkhlkstgs) production
+// Supabase project, not the legacy dkdakwyrqyfdkyukqmqs which was retired
+// during the 2026-05-11 migration (commit bd682c1 on main).
+const SUPA_URL = (import.meta as any).env?.PUBLIC_SUPABASE_URL || "https://sszxxmxqidkpkhlkstgs.supabase.co";
 
 interface Props {
   type: "pack" | "prompt" | "subscription_monthly" | "subscription_annual";
