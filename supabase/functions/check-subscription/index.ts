@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import Stripe from "https://esm.sh/stripe@14.21.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
+import { tierFromProductId } from "../_shared/stripe-prices.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -82,10 +83,24 @@ serve(async (req) => {
     if (hasActive) {
       const sub = subs.data[0];
       subEnd = new Date(sub.current_period_end * 1000).toISOString();
-      const priceId = sub.items.data[0].price.id;
-      const price = await stripe.prices.retrieve(priceId);
-      const amount = price.unit_amount || 0;
-      tier = amount <= 1299 ? 'Basic' : amount <= 1999 ? 'Premium' : 'Enterprise';
+      // TODO 7 tier vocab: resolve via product ID against the STRIPE_PROD_*
+      // env vars instead of bucketing on price amount. The amount-bucket
+      // path (Basic/Premium/Enterprise) was unsafe — annual plans priced
+      // at 12*$12=$144 would have bucketed as Premium instead of pro_annual.
+      // Webhook + checkout already use product IDs; check-subscription
+      // now matches that vocab. See _shared/stripe-prices.ts.
+      const item = sub.items.data[0];
+      const productId = typeof item.price.product === 'string'
+        ? item.price.product
+        : item.price.product.id;
+      tier = tierFromProductId(productId);
+      // If the product ID isn't mapped (e.g. a legacy product still active
+      // for an existing subscriber), log loudly so the env var gap is visible
+      // — but don't 500 the request; downstream code only reads `subscribed`
+      // and `subscription_end`, not the tier label.
+      if (!tier) {
+        logStep('WARN: subscription product not in STRIPE_PROD_* env vars', { productId });
+      }
     }
 
     const encKey = Deno.env.get('SUBSCRIBERS_ENCRYPTION_KEY');
