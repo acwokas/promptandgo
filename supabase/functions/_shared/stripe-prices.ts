@@ -12,7 +12,16 @@ export type TierKey =
   | "pro_monthly"
   | "pro_annual"
   | "team_monthly"
-  | "team_annual";
+  | "team_annual"
+  | "lifetime";
+
+// Sub-grouping for callers that care whether a tier is a Stripe
+// subscription (mode='subscription' at checkout) or a one-off payment
+// (mode='payment'). lifetime joins per_prompt + per_pack on the
+// payment side per Adrian's 2026-05-11 TODO 5 decision (promote
+// Lifetime to a first-class pricing-page tier).
+export const SUBSCRIPTION_TIERS: TierKey[] = ["pro_monthly", "pro_annual", "team_monthly", "team_annual"];
+export const PAYMENT_TIERS: TierKey[] = ["per_prompt", "per_pack", "lifetime"];
 
 const ENV_VAR_BY_TIER: Record<TierKey, string> = {
   per_prompt: "STRIPE_PROD_PER_PROMPT",
@@ -21,6 +30,7 @@ const ENV_VAR_BY_TIER: Record<TierKey, string> = {
   pro_annual: "STRIPE_PROD_PRO_ANNUAL",
   team_monthly: "STRIPE_PROD_TEAM_MONTHLY",
   team_annual: "STRIPE_PROD_TEAM_ANNUAL",
+  lifetime: "STRIPE_PROD_LIFETIME",
 };
 
 export function getProductId(tier: TierKey): string {
