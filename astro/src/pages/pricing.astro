@@ -1,31 +1,36 @@
 ---
 import Layout from "@astro/layouts/Layout.astro";
 
-// TODO 3 rebuild 2026-05-11 — 6-tier structure aligned to the Stripe
-// products in supabase/functions/_shared/stripe-prices.ts:
-//   per_prompt | per_pack | pro_monthly | pro_annual | team_monthly | team_annual
-// Free tier rendered as a callout banner above the grid (not one of
-// the 6 paid rows — it's not a Stripe product). Lifetime $349 is
-// intentionally absent pending TODO 5 (Adrian's decision: keep hidden /
-// promote to a 7th tile / drop entirely).
+// TODO 3 + TODO 5 (b) — 8-tier pricing aligned to the Stripe products
+// in supabase/functions/_shared/stripe-prices.ts:
+//   per_prompt | per_pack | pro_monthly | pro_annual | team_monthly | team_annual | lifetime
+// Free is rendered as a callout banner above the grid (not a Stripe
+// product). Pro Monthly is the "most popular" highlight. Lifetime is
+// the "best value" highlight — distinct visual treatment from the
+// subscription cards per Adrian's 2026-05-11 brief.
 //
-// Display prices below are wired to the locked 2026-05-10 monthly
-// pricing ($12 Pro Monthly). Annual prices apply Stripe's 20% annual
-// discount convention from the FAQ. Adrian: review copy + feature
-// lists per row before launch — the structure + CTAs are correct, but
-// the feature bullets are placeholders extrapolated from the prior
-// 3-tier version and should be refined.
+// Adrian's locked 2026-05-11 pricing:
+//   per_prompt:   $1.99 each
+//   per_pack:     $9.99 / pack
+//   pro_monthly:  $12   / month
+//   pro_annual:   $120  / year
+//   team_monthly: $32   / month (flat, up to 10 seats — NOT per-seat)
+//   team_annual:  $320  / year  (flat, up to 10 seats)
+//   lifetime:     $349  one-off (all prompts + all packs + future included)
+//
+// Feature-bullet copy is editorial — refine in-place; structure + CTAs
+// match the locked pricing model.
 const tiers = [
   {
     tierKey: "per_prompt",
-    name: "Single Prompt",
-    price: "$0.99",
-    period: "each",
-    desc: "Buy individual PRO prompts as you need them.",
+    name: "Per-Prompt Unlock",
+    price: "$1.99",
+    period: "one-off",
+    desc: "Buy a single PRO prompt as you need it.",
     features: [
       "Pay only for what you use",
       "No subscription commitment",
-      "Lifetime access to purchased prompts",
+      "Lifetime access to that prompt",
       "Side-by-side platform output preview",
     ],
     cta: { label: "Browse PRO prompts", href: "/prompts?filter=pro" },
@@ -34,15 +39,15 @@ const tiers = [
   },
   {
     tierKey: "per_pack",
-    name: "Power Pack",
-    price: "$4.99",
-    period: "/ pack",
+    name: "Per-Pack Unlock",
+    price: "$9.99",
+    period: "one-off",
     desc: "Bundled prompt collections — better unit economics than buying singles.",
     features: [
-      "Curated multi-prompt bundles",
+      "Curated multi-prompt bundle",
       "Themed by workflow (research, sales, learning)",
-      "Average ~$0.50/prompt vs $0.99 single",
-      "Lifetime access",
+      "Roughly half the per-prompt cost",
+      "Lifetime access to the bundle",
     ],
     cta: { label: "See packs", href: "/packs" },
     purchase: "payment",
@@ -64,17 +69,17 @@ const tiers = [
     ],
     cta: { label: "Start Pro Monthly", href: "/auth?plan=pro_monthly" },
     purchase: "subscription",
-    highlight: true,
+    highlight: true,  // "most popular"
   },
   {
     tierKey: "pro_annual",
     name: "Pro Annual",
-    price: "$115",
+    price: "$120",
     period: "/ year",
-    desc: "Same as Pro Monthly, 20% off the annual cost.",
+    desc: "Two months free vs Pro Monthly.",
     features: [
       "Everything in Pro Monthly",
-      "Save ~$29/year vs monthly",
+      "Save $24/year vs monthly",
       "One bill, one tax invoice",
       "Cancel anytime, refund on remainder",
     ],
@@ -86,10 +91,12 @@ const tiers = [
     tierKey: "team_monthly",
     name: "Team Monthly",
     price: "$32",
-    period: "/ month / seat",
-    desc: "For teams shipping AI work daily.",
+    period: "/ month",
+    seats: "up to 10 seats",
+    desc: "For small teams shipping AI work daily.",
     features: [
       "Everything in Pro Monthly",
+      "Up to 10 seats included (flat)",
       "Shared prompt libraries",
       "Brand voice presets",
       "Usage analytics & audit log",
@@ -102,26 +109,47 @@ const tiers = [
   {
     tierKey: "team_annual",
     name: "Team Annual",
-    price: "$307",
-    period: "/ year / seat",
-    desc: "Same as Team Monthly with SSO + 20% off.",
+    price: "$320",
+    period: "/ year",
+    seats: "up to 10 seats",
+    desc: "Team Monthly, two months free.",
     features: [
       "Everything in Team Monthly",
-      "SSO & SCIM included",
-      "Save ~$77/seat/year vs monthly",
-      "Custom DPA on request",
-      "Annual security review",
+      "Up to 10 seats included (flat)",
+      "Save $64/year vs monthly",
+      "Annual invoice + DPA on request",
+      "SSO available on request",
     ],
-    cta: { label: "Talk to sales", href: "/contact?topic=team_annual" },
+    cta: { label: "Start Team Annual", href: "/auth?plan=team_annual" },
     purchase: "subscription",
     highlight: false,
   },
 ];
+
+// Lifetime is rendered as its own card OUTSIDE the 6-tier subscription
+// grid — visually distinct because it's a one-off purchase with
+// future-included scope (semantic difference, not just a 7th column).
+const lifetime = {
+  tierKey: "lifetime",
+  name: "Lifetime",
+  price: "$349",
+  period: "one-off",
+  desc: "All prompts, all packs, and every future addition. Forever.",
+  features: [
+    "Everything in Pro, forever",
+    "All current Power Packs included",
+    "All future packs + prompts included",
+    "Priority feature requests",
+    "One bill, no renewal",
+  ],
+  cta: { label: "Buy Lifetime", href: "/checkout?type=lifetime" },
+};
 const faqs = [
   { q: "Is there a free trial for Pro?", a: "Yes — you can cancel anytime during the first 14 days at no charge." },
-  { q: "Do you bill annually?", a: "Yes, with a 20% discount on annual plans. Switch from monthly anytime." },
-  { q: "What if my team is bigger than 50?", a: "Talk to sales — we have an Enterprise tier with custom pricing, SSO, and a DPA." },
-  { q: "Can I cancel anytime?", a: "Yes. Your access continues to the end of the paid period." },
+  { q: "Do you bill annually?", a: "Yes. Pro Annual is $120/year (two months free vs $12 × 12 = $144). Team Annual is $320/year on the same basis. Switch from monthly anytime." },
+  { q: "How many seats does Team cover?", a: "Up to 10 seats are included in the flat Team price (Monthly $32, Annual $320). For 11+ seats or SSO/DPA requirements, talk to sales." },
+  { q: "What does Lifetime include?", a: "All current PRO prompts, all current Power Packs, and every future prompt or pack added after your purchase. One $349 payment, no renewal." },
+  { q: "Can I cancel anytime?", a: "Yes. Your access continues to the end of the paid period. Lifetime is a one-off purchase — no cancellation needed." },
 ];
 ---
 <Layout title="Pricing — PromptAndGo" description="Simple, transparent pricing. Free tier, Pro for individuals, Team for orgs.">
@@ -158,6 +186,9 @@ const faqs = [
             <span class="text-4xl md:text-5xl font-extrabold tracking-tight">{t.price}</span>
             <span class="text-muted-foreground text-sm">{t.period}</span>
           </div>
+          {(t as any).seats && (
+            <div class="mt-1 text-xs font-medium text-muted-foreground uppercase tracking-wider">{(t as any).seats}</div>
+          )}
           <p class="mt-2 text-sm text-foreground/70">{t.desc}</p>
           <ul class="mt-6 space-y-2.5 text-sm flex-1">
             {t.features.map(f => (
@@ -172,6 +203,40 @@ const faqs = [
           </a>
         </div>
       ))}
+    </div>
+
+    <!-- Lifetime card — separate visual band beneath the 6-tier grid. One-off
+         purchase with future-included scope (semantic difference, not just a
+         7th column). Best-value badge + amber/gradient accent calls it out. -->
+    <div class="mt-12 max-w-5xl mx-auto">
+      <div class="relative rounded-2xl border-2 border-primary/60 bg-gradient-to-br from-card via-card to-primary/5 p-8 md:p-10 shadow-brand-lg">
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+          <span class="inline-block text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-gradient-brand text-white shadow-brand">Best value</span>
+        </div>
+        <div class="grid md:grid-cols-[1fr_auto] gap-6 md:gap-10 items-center">
+          <div>
+            <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight">{lifetime.name}</h2>
+            <p class="mt-2 text-base text-foreground/80">{lifetime.desc}</p>
+            <ul class="mt-5 grid sm:grid-cols-2 gap-x-6 gap-y-2.5 text-sm">
+              {lifetime.features.map(f => (
+                <li class="flex items-start gap-2.5">
+                  <svg class="shrink-0 mt-0.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color: hsl(var(--brand-teal))"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>{f}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="flex flex-col items-stretch md:items-end gap-3">
+            <div class="flex items-baseline gap-1.5 justify-center md:justify-end">
+              <span class="text-5xl md:text-6xl font-extrabold tracking-tight">{lifetime.price}</span>
+              <span class="text-muted-foreground text-sm">{lifetime.period}</span>
+            </div>
+            <a href={lifetime.cta.href} class="inline-flex items-center justify-center rounded-xl px-6 h-12 font-semibold bg-gradient-brand text-white shadow-brand hover:shadow-brand-lg transition-all whitespace-nowrap">
+              {lifetime.cta.label}
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="mt-10 text-center text-sm text-muted-foreground">
