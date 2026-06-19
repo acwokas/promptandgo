@@ -1,0 +1,40 @@
+---
+import type { ModelEntry } from "@astro/lib/languages";
+
+interface Props {
+  models: ModelEntry[];
+  /** "compact" = small inline row (homepage cards); "grid" = larger badges */
+  variant?: "compact" | "grid";
+  /** Show only the local Asian models (the differentiator) */
+  localOnly?: boolean;
+}
+const { models, variant = "grid", localOnly = false } = Astro.props;
+const list = localOnly ? models.filter((m) => m.local) : models;
+const compact = variant === "compact";
+---
+<div class={compact ? "flex flex-wrap items-center gap-1.5" : "flex flex-wrap items-center gap-2"}>
+  {list.map((m) => (
+    <span
+      class={[
+        "inline-flex items-center gap-1.5 rounded-full border font-semibold whitespace-nowrap",
+        compact ? "px-2 py-0.5 text-[11px]" : "px-3 py-1.5 text-sm",
+        m.local
+          ? "border-primary/30 bg-primary/10 text-primary"
+          : "border-border bg-secondary/50 text-foreground/70",
+      ].join(" ")}
+      title={m.vendor ? `${m.name} · ${m.vendor}` : m.name}
+    >
+      {m.slug && (
+        <img
+          src={`/brand/ai/${m.slug}.svg`}
+          alt=""
+          width="16"
+          height="16"
+          class={compact ? "w-3.5 h-3.5 opacity-80" : "w-4 h-4 opacity-80"}
+          loading="lazy"
+        />
+      )}
+      {m.name}
+    </span>
+  ))}
+</div>

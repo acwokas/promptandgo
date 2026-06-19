@@ -63,6 +63,57 @@ const platforms = [
     </div>
   </section>
 
+  <!-- OPERATOR USE CASES — rotating band, honest sketches not testimonials -->
+  <section class="container max-w-4xl py-14 md:py-20">
+    <div class="text-center mb-8">
+      <span class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Example use cases</span>
+      <h2 class="mt-2 text-3xl md:text-4xl font-bold tracking-tight">Built for Asian operators.</h2>
+    </div>
+    <div id="op-quotes" class="relative min-h-[120px] md:min-h-[100px]">
+      {[
+        { who: "A Jakarta marketing agency", what: "drafting Instagram captions in Bahasa Gaul on Sahabat-AI." },
+        { who: "A Tokyo HR team", what: "writing keigo-respectful onboarding messages on Claude." },
+        { who: "A Shanghai e-commerce team", what: "writing Tmall product descriptions on Qwen." },
+      ].map((q, i) => (
+        <figure
+          class="op-quote absolute inset-0 flex flex-col items-center justify-center text-center transition-opacity duration-500"
+          data-idx={i}
+          style={`opacity:${i === 0 ? 1 : 0}`}
+        >
+          <blockquote class="text-xl md:text-2xl font-semibold tracking-tight max-w-2xl">
+            <span class="text-primary">{q.who}</span> {q.what}
+          </blockquote>
+        </figure>
+      ))}
+    </div>
+    <div id="op-dots" class="mt-6 flex items-center justify-center gap-2">
+      {[0, 1, 2].map(i => (
+        <button type="button" class="op-dot w-2 h-2 rounded-full bg-border transition-colors" data-idx={i} aria-label={`Use case ${i + 1}`}></button>
+      ))}
+    </div>
+  </section>
+
+  <script is:inline>
+    (function(){
+      var quotes = Array.prototype.slice.call(document.querySelectorAll('#op-quotes .op-quote'));
+      var dots = Array.prototype.slice.call(document.querySelectorAll('#op-dots .op-dot'));
+      if (quotes.length < 2) return;
+      var cur = 0, timer = null;
+      function paint(n){
+        cur = (n + quotes.length) % quotes.length;
+        quotes.forEach(function(q, i){ q.style.opacity = i === cur ? '1' : '0'; });
+        dots.forEach(function(d, i){
+          d.classList.toggle('bg-primary', i === cur);
+          d.classList.toggle('bg-border', i !== cur);
+        });
+      }
+      function start(){ timer = setInterval(function(){ paint(cur + 1); }, 5000); }
+      function reset(){ if (timer) clearInterval(timer); start(); }
+      dots.forEach(function(d){ d.addEventListener('click', function(){ paint(parseInt(d.dataset.idx, 10)); reset(); }); });
+      paint(0); start();
+    })();
+  </script>
+
   <!-- VALUE — three reasons, plain card layout -->
   <section class="container max-w-7xl py-16 md:py-24">
     <div class="max-w-2xl mb-12">
@@ -77,13 +128,13 @@ const platforms = [
       </article>
       <article class="rounded-2xl border border-border bg-card p-7">
         <div class="w-11 h-11 rounded-xl bg-primary/10 text-primary grid place-items-center mb-5 text-xl">⚡</div>
-        <h3 class="text-xl font-bold tracking-tight">Any AI Platform</h3>
-        <p class="mt-3 text-foreground/75 leading-relaxed">ChatGPT, Claude, Gemini, Mistral, Grok, MidJourney — same intent, optimised for whichever model you use.</p>
+        <h3 class="text-xl font-bold tracking-tight">Local + frontier models</h3>
+        <p class="mt-3 text-foreground/75 leading-relaxed">Qwen, HyperCLOVA X, Sahabat-AI and Typhoon alongside ChatGPT, Claude and Gemini. Same intent, tuned for whichever model your market runs on.</p>
       </article>
       <article class="rounded-2xl border border-border bg-card p-7">
         <div class="w-11 h-11 rounded-xl bg-primary/10 text-primary grid place-items-center mb-5 text-xl">🚀</div>
         <h3 class="text-xl font-bold tracking-tight">Ship work, not demos</h3>
-        <p class="mt-3 text-foreground/75 leading-relaxed">Marketing, customer support, content, strategy — prompts vetted against the work professionals actually ship.</p>
+        <p class="mt-3 text-foreground/75 leading-relaxed">Marketing, customer support, content, strategy. Prompts vetted against the work professionals actually ship.</p>
       </article>
     </div>
   </section>
@@ -145,8 +196,8 @@ const platforms = [
       <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight">Ship better AI work, faster.</h2>
       <p class="mt-4 text-lg text-foreground/75 max-w-2xl mx-auto">Free to browse. Free to optimise. Sign up only when you want to save your favourites.</p>
       <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-        <a href="/library" class="inline-flex items-center justify-center rounded-xl bg-primary text-primary-foreground px-7 h-12 font-semibold hover:bg-primary/90 transition-colors">Browse the library →</a>
-        <a href="/optimize" class="inline-flex items-center justify-center rounded-xl border-2 border-border bg-background hover:bg-card px-7 h-12 font-semibold transition-colors">Optimise a prompt — free</a>
+        <a href="/optimize" class="inline-flex items-center justify-center rounded-xl bg-primary text-primary-foreground px-7 h-12 font-semibold hover:bg-primary/90 transition-colors">Try the optimiser for free</a>
+        <a href="/library" class="inline-flex items-center justify-center rounded-xl border-2 border-border bg-background hover:bg-card px-7 h-12 font-semibold transition-colors">Browse the library →</a>
       </div>
     </div>
   </section>

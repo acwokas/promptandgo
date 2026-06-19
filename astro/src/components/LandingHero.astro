@@ -1,4 +1,7 @@
 ---
+import { getLanguage } from "@astro/lib/languages";
+import ModelBadges from "@astro/components/ModelBadges.astro";
+
 interface Props {
   langTag: string;
   langLabel: string;
@@ -6,6 +9,10 @@ interface Props {
   hero: { title: string; subtitle: string; cta: string };
   features: { title: string; desc: string }[];
   examples: { input: string; output: string }[];
+  /** Cultural-register explainer: "How this language wants to be prompted" */
+  register?: { title: string; body: string };
+  /** Operator use-case sketches (honest, labelled as examples, not testimonials) */
+  useCases?: string[];
   i18n?: {
     browseCta?: string;
     examplesEyebrow?: string;
@@ -14,24 +21,25 @@ interface Props {
     outputLabel?: string;
     tryItNow?: string;
     browseAll?: string;
+    modelsLabel?: string;
+    getInspired?: string;
   };
 }
-const { langTag, langLabel, langSub, hero, features, examples, i18n = {} } = Astro.props;
+const { langTag, langLabel, langSub, hero, features, examples, register, useCases = [], i18n = {} } = Astro.props;
+const lang = getLanguage(langTag);
 const t = {
-  browseCta: i18n.browseCta || "{t.browseCta}",
+  browseCta: i18n.browseCta || "Browse the library",
   examplesEyebrow: i18n.examplesEyebrow || "Examples",
   examplesHeading: i18n.examplesHeading || "Real prompts. Real outputs.",
   promptLabel: i18n.promptLabel || "Prompt",
   outputLabel: i18n.outputLabel || "Optimised output",
   tryItNow: i18n.tryItNow || "Try it now",
   browseAll: i18n.browseAll || "Browse all prompts",
+  modelsLabel: i18n.modelsLabel || "Supported models",
+  getInspired: i18n.getInspired || "Get inspired",
 };
 ---
 <section class="relative overflow-hidden">
-  <!-- Brand orbs -->
-  
-  
-
   <div class="relative container max-w-6xl pt-16 md:pt-24 pb-10">
     <div class="text-center max-w-3xl mx-auto">
       <span class="inline-flex items-center gap-2 rounded-full surface-glass px-4 py-1.5 text-xs font-semibold mb-7" lang={langTag}>
@@ -46,15 +54,41 @@ const t = {
         <a href="/optimize" class="inline-flex items-center justify-center rounded-xl bg-gradient-brand text-white px-7 h-12 font-semibold shadow-brand hover:shadow-brand-lg transition-all">
           {hero.cta}
         </a>
-        <a href="/library" class="inline-flex items-center justify-center rounded-xl border border-border bg-card hover:bg-secondary px-7 h-12 font-semibold transition-colors">
-          {t.browseCta}
+        <a href="/models" class="inline-flex items-center justify-center rounded-xl border border-border bg-card hover:bg-secondary px-7 h-12 font-semibold transition-colors">
+          {t.modelsLabel} →
         </a>
       </div>
     </div>
   </div>
 </section>
 
-<section class="container max-w-6xl py-12">
+{lang && (
+  <!-- LOCAL AI MODELS — the marquee. Local models lead; frontier models follow. -->
+  <section class="container max-w-5xl pb-4">
+    <div class="rounded-2xl border border-border bg-secondary/40 p-6 md:p-8">
+      <div class="text-center mb-5">
+        <div class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Tested on the models {lang.market} actually uses</div>
+        <h2 class="mt-2 text-2xl md:text-3xl font-bold tracking-tight">Local AI models, first-class.</h2>
+      </div>
+      <div class="flex justify-center">
+        <ModelBadges models={lang.models} variant="grid" />
+      </div>
+      {lang.modelsNote && (
+        <p class="mt-5 text-center text-sm text-muted-foreground max-w-2xl mx-auto leading-relaxed">{lang.modelsNote}</p>
+      )}
+    </div>
+  </section>
+)}
+
+{register && (
+  <section class="container max-w-3xl py-10 md:py-14">
+    <span class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Cultural register</span>
+    <h2 class="mt-2 text-2xl md:text-3xl font-bold tracking-tight">{register.title}</h2>
+    <p class="mt-4 text-base md:text-lg text-foreground/75 leading-relaxed">{register.body}</p>
+  </section>
+)}
+
+<section class="container max-w-6xl py-8 md:py-10">
   <div class="grid md:grid-cols-3 gap-5 md:gap-6">
     {features.map(f => (
       <article class="rounded-2xl bg-card border border-border/60 p-7 card-lift">
@@ -65,7 +99,24 @@ const t = {
   </div>
 </section>
 
-<section class="container max-w-4xl py-12 md:py-16">
+{useCases.length > 0 && (
+  <section class="container max-w-6xl py-10 md:py-14">
+    <div class="text-center mb-8">
+      <span class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Example use cases</span>
+      <h2 class="mt-2 text-2xl md:text-3xl font-bold tracking-tight">Who this is for.</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-4 md:gap-5">
+      {useCases.map((u, i) => (
+        <article class="rounded-2xl border border-border/60 bg-card p-6 card-lift">
+          <div class="w-9 h-9 rounded-lg bg-primary/10 text-primary grid place-items-center font-bold mb-4">{i + 1}</div>
+          <p class="text-sm md:text-base text-foreground/80 leading-relaxed">{u}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+)}
+
+<section class="container max-w-4xl py-10 md:py-14">
   <div class="text-center mb-8">
     <span class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{t.examplesEyebrow}</span>
     <h2 class="mt-2 text-2xl md:text-3xl font-bold tracking-tight">{t.examplesHeading}</h2>
@@ -86,8 +137,16 @@ const t = {
       </div>
     ))}
   </div>
-  <div class="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
-    <a href="/optimize" class="inline-flex items-center justify-center rounded-xl bg-gradient-brand text-white px-6 h-11 font-semibold shadow-brand hover:shadow-brand-lg transition-all">{t.tryItNow}</a>
-    <a href="/library" class="inline-flex items-center justify-center rounded-xl border border-border bg-card hover:bg-secondary px-6 h-11 font-semibold transition-colors">{t.browseAll}</a>
+</section>
+
+<!-- LIBRARY LAST — positioned as inspiration, not the destination -->
+<section class="container max-w-4xl pb-16 md:pb-20">
+  <div class="rounded-3xl border border-border bg-secondary/50 p-8 md:p-10 text-center">
+    <span class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{t.getInspired}</span>
+    <h2 class="mt-2 text-2xl md:text-3xl font-bold tracking-tight">{t.browseAll}</h2>
+    <div class="mt-7 flex flex-col sm:flex-row gap-3 justify-center">
+      <a href="/optimize" class="inline-flex items-center justify-center rounded-xl bg-gradient-brand text-white px-6 h-11 font-semibold shadow-brand hover:shadow-brand-lg transition-all">{t.tryItNow}</a>
+      <a href="/library" class="inline-flex items-center justify-center rounded-xl border border-border bg-card hover:bg-secondary px-6 h-11 font-semibold transition-colors">{t.browseCta}</a>
+    </div>
   </div>
 </section>

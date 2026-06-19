@@ -4,27 +4,34 @@ import LandingHero from "@astro/components/LandingHero.astro";
 ---
 <Layout
   title="AI Prompts ภาษาไทย | PromptAndGo"
-  description="พรอมต์ AI ที่เข้าใจระดับความสุภาพและบริบทตลาดไทย ปรับแต่งสำหรับ ChatGPT, Claude, Gemini"
+  description="พรอมต์ AI ที่เข้าใจระดับความสุภาพและบริบทตลาดไทย ปรับแต่งสำหรับ Typhoon, OpenThaiGPT, Claude, ChatGPT"
 >
   <LandingHero
     langTag="th"
     langLabel="ภาษาไทย"
     langSub="Thai"
     hero={{
-      title: "พรอมต์ AI ที่เข้าใจภาษาไทยและตลาดไทย"
-,
-      subtitle: "อีเมลลูกค้า แจ้งภายในบริษัท คอนเทนต์การตลาด ซัพพอร์ต — สุภาพและเป็นธรรมชาติ พร้อมใช้งานทันที 500+ พรอมต์"
-,
+      title: "ภาษาไทยของคุณ บน AI ที่คุณใช้",
+      subtitle: "อีเมลลูกค้า แจ้งภายในบริษัท คอนเทนต์การตลาด ซัพพอร์ต สุภาพและเป็นธรรมชาติ พร้อมใช้งานทันที รองรับโมเดลในประเทศ",
       cta: "ทดลองฟรี"
     }}
     features={[
       { title: "ระดับความสุภาพแม่นยำ", desc: "ปรับ ครับ/ค่ะ และคำสุภาพอัตโนมัติตามบริบท" },
-      { title: "เทมเพลตเฉพาะอุตสาหกรรม", desc: "ฟินเทค, อีคอมเมิร์ซ, การผลิต, ค้าปลีก, การศึกษา" },
-      { title: "รองรับทุก AI", desc: "ChatGPT, Claude, Gemini, Mistral, Grok" }
+      { title: "เทมเพลตเฉพาะอุตสาหกรรม", desc: "ฟินเทค อีคอมเมิร์ซ การผลิต ค้าปลีก การศึกษา" },
+      { title: "รองรับโมเดลในประเทศ", desc: "Typhoon, OpenThaiGPT รวมถึง Claude และ ChatGPT" }
     ]}
     examples={[
       { input: "เขียนอีเมลขอบคุณลูกค้าหลังการประชุม", output: "เรียน คุณ... สวัสดีครับ/ค่ะ ขอขอบคุณที่ได้มีโอกาสพูดคุย..." },
       { input: "ประกาศวันหยุดสงกรานต์ในกลุ่มไลน์บริษัท", output: "เรียนเพื่อนร่วมงานทุกท่าน สงกรานต์นี้..." }
+    ]}
+    register={{
+      title: "How Thai actually wants to be prompted",
+      body: "Thai politeness lives in particles. ครับ (men) and ค่ะ (women) close polite sentences, and dropping them reads as blunt. Thai also separates everyday register from the elevated language used for royalty and formal ceremony. A LINE broadcast, a customer reply, and an official notice each sit at a different level. Our prompts add the right particles and register so the output sounds courteous and natural.",
+    }}
+    useCases={[
+      "A Bangkok agency writing LINE OA broadcasts with the right ครับ/ค่ะ particles on Typhoon.",
+      "A Chiang Mai hospitality team drafting guest messages in polite register on OpenThaiGPT.",
+      "A Thai e-commerce seller writing product copy that reads natural on Claude.",
     ]}
     i18n={{
       browseCta: "ดูพรอมต์ทั้งหมด →",
@@ -34,6 +41,8 @@ import LandingHero from "@astro/components/LandingHero.astro";
       outputLabel: "ผลลัพธ์ที่ปรับแต่งแล้ว",
       tryItNow: "ลองใช้เลย",
       browseAll: "ดูพรอมต์ทั้งหมด",
+      modelsLabel: "โมเดลที่รองรับ",
+      getInspired: "หาแรงบันดาลใจ",
     }}
   />
 </Layout>

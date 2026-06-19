@@ -4,27 +4,34 @@ import LandingHero from "@astro/components/LandingHero.astro";
 ---
 <Layout
   title="中文AI提示词 | PromptAndGo"
-  description="理解中文语境与商业礼仪的AI提示词。针对ChatGPT、Claude、Gemini等平台优化。"
+  description="理解中文语境与商业礼仪的AI提示词。针对通义千问、文心一言、DeepSeek等本地模型优化。"
 >
   <LandingHero
     langTag="zh"
     langLabel="中文"
     langSub="Chinese (Simplified & Traditional)"
     hero={{
-      title: "懂中文语境的AI提示词。"
-,
-      subtitle: "商务邮件、内部公告、营销文案、客户支持 — 让AI输出像中文母语者写的一样自然，500+ 精选提示词。"
-,
+      title: "用你的中文，在你用的AI上。",
+      subtitle: "商务邮件、内部公告、营销文案、客户支持。让AI输出像中文母语者写的一样自然，支持本地大模型。",
       cta: "免费开始优化"
     }}
     features={[
       { title: "语气精准", desc: "在正式、半正式与亲切之间自动切换，适配B2B、B2C、内部沟通等场景。" },
-      { title: "行业模板", desc: "金融、SaaS、制造、零售、教育 — 中文市场上下文。" },
-      { title: "全平台支持", desc: "ChatGPT、Claude、Gemini、Mistral、Grok 各自优化。" }
+      { title: "行业模板", desc: "金融、SaaS、制造、零售、教育，贴合中文市场上下文。" },
+      { title: "支持本地模型", desc: "通义千问、文心一言、DeepSeek、Kimi、Yi、智谱GLM，各自优化。" }
     ]}
     examples={[
       { input: "为一家东南亚SaaS公司写一封首次合作邮件，对方是中国大陆制造企业的高管。", output: "尊敬的某总:您好。冒昧来信，特此致以诚挚问候…" },
       { input: "撰写春节假期工厂停产通知。", output: "尊敬的合作伙伴:春节将至，特此通知本厂将于…" }
+    ]}
+    register={{
+      title: "How Chinese actually wants to be prompted",
+      body: "Chinese shifts with both address and script. 您 (nín) is the respectful 'you' for clients and elders; 你 (nǐ) is everyday. Mainland China writes Simplified, while Taiwan and Hong Kong write Traditional, and each region carries its own register and word choices. A Tmall listing, a WeChat post, and a formal notice are not the same voice. Our prompts pick the script, address, and tone for the market you are selling into.",
+    }}
+    useCases={[
+      "A Shanghai e-commerce team writing Tmall product descriptions on Qwen.",
+      "A Shenzhen hardware brand drafting WeChat announcements on Ernie.",
+      "A Beijing support team writing customer replies in formal 您 register on DeepSeek.",
     ]}
     i18n={{
       browseCta: "浏览提示词 →",
@@ -34,6 +41,8 @@ import LandingHero from "@astro/components/LandingHero.astro";
       outputLabel: "优化后的输出",
       tryItNow: "立即体验",
       browseAll: "浏览全部提示词",
+      modelsLabel: "支持的模型",
+      getInspired: "获取灵感",
     }}
   />
 </Layout>

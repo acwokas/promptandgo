@@ -4,25 +4,34 @@ import LandingHero from "@astro/components/LandingHero.astro";
 ---
 <Layout
   title="Prompt AI Tiếng Việt | PromptAndGo"
-  description="Prompt AI hiểu ngữ cảnh và quy tắc giao tiếp tiếng Việt. Tối ưu cho ChatGPT, Claude, Gemini."
+  description="Prompt AI hiểu ngữ cảnh và quy tắc giao tiếp tiếng Việt. Tối ưu cho PhoGPT, VinaLLaMA, Claude, ChatGPT."
 >
   <LandingHero
     langTag="vi"
     langLabel="Tiếng Việt"
     langSub="Vietnamese"
     hero={{
-      title: "Prompt AI hiểu tiếng Việt và thị trường Việt Nam.",
-      subtitle: "Email khách hàng, thông báo nội bộ, content marketing, hỗ trợ — lịch sự và tự nhiên, sẵn sàng dùng. 500+ prompt được tuyển chọn.",
+      title: "Tiếng Việt của bạn, trên AI bạn dùng.",
+      subtitle: "Email khách hàng, thông báo nội bộ, content marketing, hỗ trợ. Lịch sự và tự nhiên, sẵn sàng dùng. Hỗ trợ cả mô hình trong nước.",
       cta: "Dùng thử miễn phí"
     }}
     features={[
       { title: "Sắc thái lịch sự chuẩn", desc: "Tự động cân chỉnh đại từ và mức độ trang trọng theo bối cảnh." },
       { title: "Mẫu theo ngành", desc: "Fintech, e-commerce, sản xuất, bán lẻ, giáo dục." },
-      { title: "Hỗ trợ mọi AI", desc: "ChatGPT, Claude, Gemini, Mistral, Grok." }
+      { title: "Hỗ trợ mô hình trong nước", desc: "PhoGPT, VinaLLaMA, cùng với Claude và ChatGPT." }
     ]}
     examples={[
       { input: "Viết email cảm ơn khách hàng sau buổi họp giới thiệu giải pháp.", output: "Kính gửi anh/chị... Cảm ơn anh/chị đã dành thời gian..." },
       { input: "Thông báo nghỉ Tết Nguyên đán cho team.", output: "Chào cả nhà, Tết Nguyên đán năm nay, công ty xin trân trọng thông báo..." }
+    ]}
+    register={{
+      title: "How Vietnamese actually wants to be prompted",
+      body: "Vietnamese chooses pronouns by relationship and age. Anh, chị, em, cô, and chú each frame who is speaking to whom, and picking the wrong one can sound too familiar or too distant. Northern and Southern Vietnamese also differ in vocabulary and tone. A Hanoi audience and a Ho Chi Minh City audience hear copy differently. Our prompts set the address forms and regional voice that fit your readers.",
+    }}
+    useCases={[
+      "A Hanoi marketing team writing Zalo campaign copy with the right anh/chị address on PhoGPT.",
+      "A Ho Chi Minh City retailer drafting customer emails in Southern register on VinaLLaMA.",
+      "A Vietnamese SaaS team writing onboarding messages that respect hierarchy on Claude.",
     ]}
     i18n={{
       browseCta: "Xem tất cả prompt →",
@@ -32,6 +41,8 @@ import LandingHero from "@astro/components/LandingHero.astro";
       outputLabel: "Kết quả đã tối ưu",
       tryItNow: "Dùng thử ngay",
       browseAll: "Xem tất cả prompt",
+      modelsLabel: "Mô hình hỗ trợ",
+      getInspired: "Lấy cảm hứng",
     }}
   />
 </Layout>

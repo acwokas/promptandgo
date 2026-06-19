@@ -4,25 +4,34 @@ import LandingHero from "@astro/components/LandingHero.astro";
 ---
 <Layout
   title="AI Prompts Bahasa Indonesia & Malaysia | PromptAndGo"
-  description="Prompt AI yang paham nuansa Bahasa Indonesia dan Bahasa Melayu — dirancang untuk pasar Jakarta, Kuala Lumpur, Surabaya, Penang. Optimal untuk ChatGPT, Claude, Gemini."
+  description="Prompt AI yang paham nuansa Bahasa Indonesia dan Bahasa Melayu, dirancang untuk pasar Jakarta, Kuala Lumpur, Surabaya, Penang. Mendukung Sahabat-AI, Claude, ChatGPT."
 >
   <LandingHero
     langTag="id"
     langLabel="Bahasa"
     langSub="Indonesia / Malaysia"
     hero={{
-      title: "Prompt AI untuk pasar Bahasa Indonesia & Malaysia",
-      subtitle: "Email pelanggan, broadcast WhatsApp, copywriting marketplace, customer service — sopan dan natural. 1.000+ prompt siap pakai.",
+      title: "Bahasa kamu, di AI yang kamu pakai.",
+      subtitle: "Email pelanggan, broadcast WhatsApp, copywriting marketplace, customer service. Sopan dan natural, siap pakai. Mendukung model lokal.",
       cta: "Coba gratis"
     }}
     features={[
-      { title: "Register sopan yang tepat", desc: "Bapak/Ibu, Mas/Mbak, Encik/Puan — disesuaikan otomatis dengan konteks." },
+      { title: "Register sopan yang tepat", desc: "Bapak/Ibu, Mas/Mbak, Encik/Puan, disesuaikan otomatis dengan konteks." },
       { title: "Template per industri", desc: "E-commerce, fintech, F&B, HRD, edukasi, properti, logistik." },
-      { title: "Cocok untuk semua AI", desc: "ChatGPT, Claude, Gemini, Mistral, Grok, dan lainnya." }
+      { title: "Mendukung model lokal", desc: "Sahabat-AI, Merak, Komodo-7B, plus Claude dan ChatGPT." }
     ]}
     examples={[
       { input: "Tulis email tindak lanjut ke calon klien yang belum membalas selama dua minggu", output: "Selamat siang Bapak/Ibu... Mohon maaf mengganggu waktu Bapak/Ibu kembali..." },
       { input: "Buat broadcast WhatsApp promo Lebaran untuk pelanggan loyal", output: "Hai Kak! 🌙 Spesial menyambut Idulfitri, kami siapkan promo eksklusif untuk pelanggan setia..." }
+    ]}
+    register={{
+      title: "How Bahasa actually wants to be prompted",
+      body: "Bahasa Indonesia and Bahasa Melayu lean on address forms to set the tone. Bapak and Ibu are the formal, respectful forms; Mas, Mbak, and Kak are the warm, everyday ones. Marketplace copy, WhatsApp broadcasts, and customer service each call for a different level, and Bahasa Gaul (the colloquial register) lands well with younger audiences. Our prompts choose the right address and formality for who you are reaching.",
+    }}
+    useCases={[
+      "A Jakarta marketing agency drafting Instagram captions in Bahasa Gaul on Sahabat-AI.",
+      "A Surabaya seller writing WhatsApp broadcasts with Bapak/Ibu register on Merak.",
+      "A Kuala Lumpur team drafting bilingual customer service replies on Claude.",
     ]}
     i18n={{
       browseCta: "Lihat semua prompt →",
@@ -32,6 +41,8 @@ import LandingHero from "@astro/components/LandingHero.astro";
       outputLabel: "Hasil yang dioptimalkan",
       tryItNow: "Coba sekarang",
       browseAll: "Lihat semua prompt",
+      modelsLabel: "Model yang didukung",
+      getInspired: "Cari inspirasi",
     }}
   />
 </Layout>

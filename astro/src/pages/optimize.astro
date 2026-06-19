@@ -2,7 +2,7 @@
 import Layout from "@astro/layouts/Layout.astro";
 import OptimizerForm from "@astro/components/OptimizerForm.tsx";
 
-const platforms = ["ChatGPT", "Claude", "Gemini", "Mistral", "Grok", "DeepSeek", "Qwen", "Ernie Bot", "MidJourney"];
+const platforms = ["ChatGPT", "Claude", "Gemini", "Qwen", "HyperCLOVA X", "Typhoon", "Sahabat-AI", "Karakuri", "Ernie", "DeepSeek", "Mistral", "Grok"];
 const languages = [
   { code: "ja", label: "日本語", desc: "Keigo, sonkeigo, kenjougo — relationship-aware" },
   { code: "ko", label: "한국어", desc: "존댓말 / 격식체 — speech levels" },
@@ -29,8 +29,8 @@ const examples = [
 ];
 ---
 <Layout
-  title="Free AI Prompt Optimiser — Any Platform, Any Language | PromptAndGo"
-  description="Free AI prompt optimiser for ChatGPT, Claude, Gemini, Mistral, Grok, MidJourney, and more. Built for Asian languages — keigo, honorifics, market-aware tone. No signup required."
+  title="Free AI Prompt Optimiser for Local Asian Models | PromptAndGo"
+  description="Free AI prompt optimiser. Re-render any prompt in your language, register, and model, including local Asian models: Qwen, HyperCLOVA X, Sahabat-AI, Typhoon, plus ChatGPT, Claude and Gemini. No signup required."
   canonical="https://www.promptandgo.ai/optimize"
 >
   <!-- HERO -->
@@ -44,10 +44,10 @@ const examples = [
           ⚡ Free · No signup · Streams in real-time
         </span>
         <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05]">
-          Optimise any prompt for <span class="text-gradient-brand">any AI</span> in <span class="text-gradient-brand">any language</span>.
+          Re-render any prompt in <span class="text-gradient-brand">your language, register, and model</span>.
         </h1>
         <p class="mt-5 text-lg text-foreground/70 max-w-2xl mx-auto">
-          Paste a rough prompt, pick the platform and target language. We rewrite it with the right structure, register, and cultural awareness — explained.
+          Paste any prompt. The Optimiser re-renders it in your target language, your cultural register, and your AI model, including the local models your customers actually use: Qwen, HyperCLOVA X, Sahabat-AI, Typhoon, and more.
         </p>
       </div>
 
@@ -126,7 +126,7 @@ const examples = [
       {[
         { q: "Is it actually free?", a: "Yes. The web optimiser has a free tier (5 optimisations/month) with no signup. Pro accounts get unlimited use plus saved history and side-by-side platform compare." },
         { q: "Do you store my prompts?", a: "Anonymous use: nothing stored. Logged-in use: your saved prompts stay private under your account." },
-        { q: "Which AI platforms do you support?", a: "ChatGPT, Claude, Gemini, Mistral, Grok, DeepSeek, Perplexity, Copilot, MidJourney, Stable Diffusion, Qwen, Ernie, Meta AI." },
+        { q: "Which AI platforms do you support?", a: "Western frontier models (ChatGPT, Claude, Gemini, Mistral, Grok) plus the local Asian models your market actually uses: Qwen, Ernie, DeepSeek, Kimi (China), HyperCLOVA X, Solar, EXAONE (Korea), Karakuri, ELYZA (Japan), Typhoon, OpenThaiGPT (Thailand), PhoGPT (Vietnam), and Sahabat-AI (Indonesia). See the full list on the models page." },
         { q: "Why does Asian language nuance matter?", a: "Pragmatics and politeness in CJK and Southeast Asian languages aren't optional politeness — they encode the relationship and the situation. Get them wrong and your output reads as cold, presumptuous, or amateur." },
         { q: "Can I use this for image prompts (MidJourney, Stable Diffusion)?", a: "Yes. Pick the image model and we adjust the optimisation to focus on subject, style, composition, lighting, and platform-specific parameters." },
       ].map(f => (
