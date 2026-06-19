@@ -30,42 +30,109 @@ function isActive(href: string): boolean {
     </nav>
 
     <div class="flex items-center gap-2">
-      <div id="auth-buttons-desktop" class="hidden md:flex items-center gap-2">
-        <a href="/auth" class="inline-flex items-center justify-center rounded-lg px-3.5 h-10 text-[15px] font-medium text-foreground/80 hover:text-foreground hover:bg-secondary transition-colors">
-          Sign in
-        </a>
-        <a href="/auth?action=signup"
-           class="inline-flex items-center justify-center rounded-lg bg-primary text-primary-foreground px-5 h-10 text-[15px] font-semibold hover:bg-primary/90 transition-colors">
-          Start free
-        </a>
+      <!-- Desktop auth cluster. The wrapper is permanently hidden below md, so the
+           JS state toggle below can never leak these onto the mobile header. -->
+      <div class="hidden md:flex items-center gap-2">
+        <div id="auth-buttons-desktop" class="flex items-center gap-2">
+          <a href="/auth" class="inline-flex items-center justify-center rounded-lg px-3.5 h-10 text-[15px] font-medium text-foreground/80 hover:text-foreground hover:bg-secondary transition-colors">
+            Sign in
+          </a>
+          <a href="/auth?action=signup"
+             class="inline-flex items-center justify-center rounded-lg bg-primary text-primary-foreground px-5 h-10 text-[15px] font-semibold hover:bg-primary/90 transition-colors">
+            Start free
+          </a>
+        </div>
+        <div id="auth-user-desktop" class="hidden items-center gap-2"></div>
       </div>
-      <div id="auth-user-desktop" class="hidden items-center gap-2"></div>
-      <button id="mobile-toggle" type="button" aria-label="Open menu"
-              class="md:hidden inline-flex items-center justify-center rounded-lg w-10 h-10 hover:bg-secondary text-foreground">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+
+      <!-- Mobile: hamburger only -->
+      <button id="mobile-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-drawer"
+              class="md:hidden inline-flex items-center justify-center rounded-lg w-11 h-11 hover:bg-secondary text-foreground">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
     </div>
   </div>
 
-  <div id="mobile-menu" class="md:hidden hidden border-t border-border bg-background">
-    <nav class="container max-w-7xl py-4 flex flex-col gap-1 text-base" aria-label="Mobile">
+  <!-- Mobile drawer: overlay + right slide-in panel. Holds all nav + auth. -->
+  <div id="mobile-overlay" class="md:hidden fixed inset-0 z-50 bg-foreground/40 opacity-0 pointer-events-none transition-opacity duration-200"></div>
+  <aside id="mobile-drawer" aria-label="Site menu" aria-hidden="true"
+         class="md:hidden fixed top-0 right-0 z-50 h-[100dvh] w-[min(20rem,86vw)] bg-background border-l border-border shadow-xl flex flex-col translate-x-full transition-transform duration-200 ease-out">
+    <div class="flex items-center justify-between h-16 px-5 border-b border-border shrink-0">
+      <span class="text-sm font-semibold uppercase tracking-wider text-foreground/55">Menu</span>
+      <button id="mobile-close" type="button" aria-label="Close menu"
+              class="inline-flex items-center justify-center rounded-lg w-11 h-11 hover:bg-secondary text-foreground">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <nav class="flex-1 overflow-y-auto px-3 py-3 flex flex-col gap-0.5" aria-label="Mobile">
       {navLinks.map(l => (
-        <a href={l.href} class={`py-2.5 ${isActive(l.href) ? "text-primary font-semibold" : "text-foreground/85"}`}>{l.label}</a>
+        <a href={l.href}
+           class={`flex items-center min-h-[44px] px-3 rounded-lg text-base ${isActive(l.href) ? "text-primary font-semibold bg-secondary/60" : "text-foreground/85 hover:bg-secondary/50"}`}>
+          {l.label}
+        </a>
       ))}
-      <div id="auth-buttons-mobile" class="grid grid-cols-2 gap-2 pt-4">
-        <a href="/auth" class="inline-flex items-center justify-center rounded-lg border border-border h-11 font-medium">Sign in</a>
-        <a href="/auth?action=signup" class="inline-flex items-center justify-center rounded-lg bg-primary text-primary-foreground h-11 font-semibold">Start free</a>
-      </div>
-      <div id="auth-user-mobile" class="hidden flex-col gap-2 pt-4"></div>
     </nav>
-  </div>
+
+    <div class="px-5 py-5 border-t border-border shrink-0">
+      <div id="auth-buttons-mobile" class="flex flex-col gap-3">
+        <a href="/auth" class="inline-flex items-center justify-center min-h-[44px] text-base font-medium text-foreground/80 hover:text-foreground">Sign in</a>
+        <a href="/auth?action=signup" class="inline-flex items-center justify-center rounded-lg bg-primary text-primary-foreground min-h-[48px] text-base font-semibold hover:bg-primary/90 transition-colors">Start free</a>
+      </div>
+      <div id="auth-user-mobile" class="hidden flex-col gap-1"></div>
+    </div>
+  </aside>
 </header>
 
 <script is:inline>
   (function(){
-    const m = document.getElementById('mobile-toggle');
-    const mm = document.getElementById('mobile-menu');
-    if (m && mm) m.addEventListener('click', () => mm.classList.toggle('hidden'));
+    var toggle = document.getElementById('mobile-toggle');
+    var closeBtn = document.getElementById('mobile-close');
+    var drawer = document.getElementById('mobile-drawer');
+    var overlay = document.getElementById('mobile-overlay');
+    if (!toggle || !drawer || !overlay) return;
+    var open = false;
+
+    function show(){
+      drawer.classList.remove('translate-x-full');
+      overlay.classList.remove('opacity-0','pointer-events-none');
+      drawer.setAttribute('aria-hidden','false');
+      toggle.setAttribute('aria-expanded','true');
+      document.body.style.overflow = 'hidden';
+      open = true;
+    }
+    function hide(){
+      drawer.classList.add('translate-x-full');
+      overlay.classList.add('opacity-0','pointer-events-none');
+      drawer.setAttribute('aria-hidden','true');
+      toggle.setAttribute('aria-expanded','false');
+      document.body.style.overflow = '';
+      open = false;
+    }
+    function openDrawer(){
+      if (open) return;
+      show();
+      // Push a history entry so the device back gesture closes the drawer.
+      try { history.pushState({ pagDrawer: true }, ''); } catch(e){}
+    }
+    function dismiss(){
+      if (!open) return;
+      if (history.state && history.state.pagDrawer) { history.back(); }
+      else { hide(); }
+    }
+    toggle.addEventListener('click', openDrawer);
+    if (closeBtn) closeBtn.addEventListener('click', dismiss);
+    overlay.addEventListener('click', dismiss);
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') dismiss(); });
+    window.addEventListener('popstate', function(){ if (open) hide(); });
+    // Tapping any link inside the drawer closes it; navigation then follows.
+    drawer.addEventListener('click', function(e){
+      var t = e.target;
+      while (t && t !== drawer) {
+        if (t.tagName === 'A') { hide(); break; }
+        t = t.parentNode;
+      }
+    });
   })();
 </script>
 
@@ -88,10 +155,12 @@ function isActive(href: string): boolean {
         ? `<img src="${avatar}" alt="" class="w-8 h-8 rounded-full object-cover" referrerpolicy="no-referrer" />`
         : `<span class="w-8 h-8 rounded-full bg-primary text-primary-foreground inline-flex items-center justify-center text-xs font-bold">${initials}</span>`;
 
+      // Desktop: swap buttons -> account menu. The md gate lives on the wrapper,
+      // so we only toggle flex/hidden here (never the responsive prefix).
       desktopBtns.classList.add("hidden");
-      desktopBtns.classList.remove("md:flex");
+      desktopBtns.classList.remove("flex");
       desktopUser.classList.remove("hidden");
-      desktopUser.classList.add("md:flex");
+      desktopUser.classList.add("flex");
       desktopUser.innerHTML = `
         <div class="relative">
           <button id="account-trigger" type="button" aria-haspopup="menu" aria-expanded="false"
@@ -144,26 +213,29 @@ function isActive(href: string): boolean {
       document.getElementById("account-signout")?.addEventListener("click", signOut);
 
       if (mobileBtns && mobileUser) {
+        // Mobile drawer: swap the Sign in / Start free block for account links.
         mobileBtns.classList.add("hidden");
+        mobileBtns.classList.remove("flex");
         mobileUser.classList.remove("hidden");
         mobileUser.classList.add("flex");
         mobileUser.innerHTML = `
-          <div class="px-3 py-2 rounded-lg bg-secondary/50 text-sm font-semibold truncate">${fullName}</div>
-          <a href="/account/profile" class="inline-flex items-center justify-center rounded-lg border border-border h-11 font-medium">My account</a>
-          <a href="/account/saved" class="inline-flex items-center justify-center rounded-lg border border-border h-11 font-medium">Saved prompts</a>
-          <a href="/account/purchases" class="inline-flex items-center justify-center rounded-lg border border-border h-11 font-medium">Purchases</a>
-          <button id="signout-mobile" type="button" class="inline-flex items-center justify-center rounded-lg bg-secondary text-foreground h-11 font-semibold">Sign out</button>
+          <div class="px-1 pb-2 text-sm font-semibold text-foreground truncate">${fullName}</div>
+          <a href="/account/profile" class="flex items-center min-h-[44px] px-1 text-base text-foreground/85">My account</a>
+          <a href="/account/saved" class="flex items-center min-h-[44px] px-1 text-base text-foreground/85">Saved prompts</a>
+          <a href="/account/purchases" class="flex items-center min-h-[44px] px-1 text-base text-foreground/85">Purchases</a>
+          <button id="signout-mobile" type="button" class="mt-2 inline-flex items-center justify-center rounded-lg bg-secondary text-foreground min-h-[48px] text-base font-semibold">Sign out</button>
         `;
         document.getElementById("signout-mobile")?.addEventListener("click", signOut);
       }
     } else {
       desktopBtns.classList.remove("hidden");
-      desktopBtns.classList.add("md:flex");
+      desktopBtns.classList.add("flex");
       desktopUser.classList.add("hidden");
-      desktopUser.classList.remove("md:flex");
+      desktopUser.classList.remove("flex");
       desktopUser.innerHTML = "";
       if (mobileBtns && mobileUser) {
         mobileBtns.classList.remove("hidden");
+        mobileBtns.classList.add("flex");
         mobileUser.classList.add("hidden");
         mobileUser.classList.remove("flex");
         mobileUser.innerHTML = "";
