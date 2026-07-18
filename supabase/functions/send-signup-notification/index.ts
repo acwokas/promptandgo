@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "https://esm.sh/resend@2.0.0";
+import { escapeHtml } from "../_shared/escapeHtml.ts";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -44,7 +45,7 @@ const handler = async (req: Request): Promise<Response> => {
         <h3 style="margin: 0 0 15px 0; color: #333;">User Details:</h3>
         <table style="width: 100%; border-collapse: collapse;">
           <tr><td style="padding: 5px 10px 5px 0; font-weight: bold;">Email:</td><td style="padding: 5px 0;">${user.email}</td></tr>
-          <tr><td style="padding: 5px 10px 5px 0; font-weight: bold;">Name:</td><td style="padding: 5px 0;">${user.name || 'Not provided'}</td></tr>
+          <tr><td style="padding: 5px 10px 5px 0; font-weight: bold;">Name:</td><td style="padding: 5px 0;">${escapeHtml(user.name) || 'Not provided'}</td></tr>
           <tr><td style="padding: 5px 10px 5px 0; font-weight: bold;">Signup Method:</td><td style="padding: 5px 0;">${user.signupMethod}</td></tr>
           ${user.industry ? `<tr><td style="padding: 5px 10px 5px 0; font-weight: bold;">Industry:</td><td style="padding: 5px 0;">${user.industry}</td></tr>` : ''}
           ${user.projectType ? `<tr><td style="padding: 5px 10px 5px 0; font-weight: bold;">Use Case:</td><td style="padding: 5px 0;">${user.projectType}</td></tr>` : ''}

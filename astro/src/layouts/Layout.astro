@@ -46,15 +46,7 @@ const url = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
-    <script is:inline>
-      // Site is light-only. Strip any legacy dark theme preference.
-      (function(){
-        try {
-          document.documentElement.classList.remove('dark');
-          localStorage.removeItem('theme');
-        } catch(e) {}
-      })();
-    </script>
+    <script is:inline>(function(){try{document.documentElement.classList.remove("dark");localStorage.removeItem("theme");}catch(e){}})();</script>
   </head>
   <body class="min-h-screen flex flex-col">
     <a href="#main" class="skip-to-content">Skip to content</a>

@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "https://esm.sh/resend@2.0.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
+import { escapeHtml } from "../_shared/escapeHtml.ts";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -100,7 +101,7 @@ const handler = async (req: Request): Promise<Response> => {
               🎉 Welcome to ${tierInfo.title}!
             </h1>
             <p style="font-size: 18px; line-height: 1.6; margin: 0 0 15px 0;">
-              Hi ${userName || 'there'}! Your subscription is now active and ready to supercharge your AI prompting.
+              Hi ${escapeHtml(userName) || 'there'}! Your subscription is now active and ready to supercharge your AI prompting.
             </p>
             <p style="font-size: 16px; line-height: 1.5; margin: 0; opacity: 0.9;">
               ${tierInfo.description}
@@ -233,7 +234,7 @@ const handler = async (req: Request): Promise<Response> => {
               <table style="width: 100%; border-collapse: collapse;">
                 <tr>
                   <td style="padding: 8px 15px 8px 0; font-weight: bold;">Name:</td>
-                  <td style="padding: 8px 0;">${userName || 'Not provided'}</td>
+                  <td style="padding: 8px 0;">${escapeHtml(userName) || 'Not provided'}</td>
                 </tr>
                 <tr>
                   <td style="padding: 8px 15px 8px 0; font-weight: bold;">Email:</td>

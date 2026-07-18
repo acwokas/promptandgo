@@ -1,0 +1,17 @@
+# Cloudflare Pages reads this from the build output root.
+# https://developers.cloudflare.com/pages/configuration/headers/
+#
+# script-src hashes below cover Astro's own compiler-generated inline scripts
+# (island-hydration bootstraps for astro:load / astro:only / astro:visible,
+# plus our small static is:inline snippets in Layout.astro/Header.astro and
+# a one-off carousel script on /optimize). None of these can contain
+# user-controlled data. If you add/change/remove an is:inline script or a
+# client:* hydration directive anywhere in astro/src, rerun `npm run build`
+# and recompute the sha256 hashes of the new <script>...</script> bodies in
+# dist/**/*.html, or pages using it will silently fail to run under this CSP.
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-qidfndJv0jsHi6JIPQ48Zd1jD8nerieR5jqXx/XuO8M=' 'sha256-mt99WIE8ACQqziDjlVNt2cFYf2U6MW6u+iQmTV+nCWE=' 'sha256-xT5ridm9+sYoeC3RG9B/bNtihASOuh9rGgotWolnV/k=' 'sha256-eIXWvAmxkr251LJZkjniEK5LcPF3NkapbJepohwYRIc=' 'sha256-U7a72oKuFFz8D7GUHLA1NZ0ciymHmDOc9T9aVDg2rWU=' 'sha256-Q2BPg90ZMplYY+FSdApNErhpWafg2hcRRbndmvxuL/Q=' 'sha256-QzWFZi+FLIx23tnm9SBU4aEgx4x8DsuASP07mfqol/c='; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://dkdakwyrqyfdkyukqmqs.supabase.co; connect-src 'self' https://dkdakwyrqyfdkyukqmqs.supabase.co; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin

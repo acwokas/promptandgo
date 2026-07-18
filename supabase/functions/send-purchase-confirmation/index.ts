@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "https://esm.sh/resend@2.0.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
+import { escapeHtml } from "../_shared/escapeHtml.ts";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -87,7 +88,7 @@ const handler = async (req: Request): Promise<Response> => {
               🎉 Thank you for your purchase!
             </h1>
             <p style="font-size: 18px; line-height: 1.6; text-align: center; margin: 0;">
-              Hi ${userName || 'there'}! Your order has been processed successfully.
+              Hi ${escapeHtml(userName) || 'there'}! Your order has been processed successfully.
             </p>
           </div>
 
@@ -205,7 +206,7 @@ const handler = async (req: Request): Promise<Response> => {
               <table style="width: 100%; border-collapse: collapse;">
                 <tr>
                   <td style="padding: 8px 15px 8px 0; font-weight: bold;">Name:</td>
-                  <td style="padding: 8px 0;">${userName || 'Not provided'}</td>
+                  <td style="padding: 8px 0;">${escapeHtml(userName) || 'Not provided'}</td>
                 </tr>
                 <tr>
                   <td style="padding: 8px 15px 8px 0; font-weight: bold;">Email:</td>

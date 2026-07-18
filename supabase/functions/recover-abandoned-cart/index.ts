@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { Resend } from "npm:resend@2.0.0";
+import { escapeHtml } from "../_shared/escapeHtml.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -36,7 +37,7 @@ const generateEmailHtml = (
     </div>
     
     <p style="color: #4b5563; font-size: 16px; line-height: 1.6;">
-      Hi${userName ? ` ${userName}` : ''},
+      Hi${userName ? ` ${escapeHtml(userName)}` : ''},
     </p>
     
     <p style="color: #4b5563; font-size: 16px; line-height: 1.6;">

@@ -36,17 +36,18 @@ export default function AccountProfile() {
     const f = e.target.files?.[0];
     if (!f || !user) return;
     if (f.size > 4 * 1024 * 1024) { setErr("Image must be under 4 MB."); return; }
+    if (!["image/jpeg", "image/png", "image/webp", "image/gif"].includes(f.type)) {
+      setErr("Use a JPEG, PNG, WEBP or GIF image.");
+      return;
+    }
     setBusy(true); setErr(null); setMsg(null);
     try {
-      const ext = (f.name.split(".").pop() || "png").toLowerCase().replace(/[^a-z0-9]/g, "");
-      const path = `${user.id}/avatar-${Date.now()}.${ext}`;
-      const { error: upErr } = await sb().storage.from("avatars").upload(path, f, { upsert: true, contentType: f.type });
-      if (upErr) throw upErr;
-      const { data } = sb().storage.from("avatars").getPublicUrl(path);
-      const url = data.publicUrl;
-      setAvatarUrl(url);
-      const { error } = await sb().auth.updateUser({ data: { avatar_url: url } });
+      const form = new FormData();
+      form.append("file", f);
+      const { data, error } = await sb().functions.invoke("upload-avatar", { body: form });
       if (error) throw error;
+      if (!data?.url) throw new Error("Upload failed.");
+      setAvatarUrl(data.url);
       setMsg("Avatar updated.");
     } catch (e: any) {
       setErr(e?.message || "Upload failed.");

@@ -139,6 +139,25 @@ function isActive(href: string): boolean {
 <script>
   import { sb } from "../lib/auth-client";
 
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, (c) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+    })[c]);
+  }
+
+  // Only allow http(s) URLs into an <img src> attribute — blocks javascript:/data: URIs
+  // and (combined with escapeHtml below) neutralizes attribute-breakout via a crafted
+  // avatar_url value like `x" onerror="...`.
+  function safeAvatarUrl(url) {
+    try {
+      const u = new URL(url, window.location.origin);
+      if (u.protocol !== "http:" && u.protocol !== "https:") return "";
+      return u.href;
+    } catch {
+      return "";
+    }
+  }
+
   function paint(user) {
     const desktopBtns = document.getElementById("auth-buttons-desktop");
     const desktopUser = document.getElementById("auth-user-desktop");
@@ -147,12 +166,13 @@ function isActive(href: string): boolean {
     if (!desktopBtns || !desktopUser) return;
 
     if (user) {
-      const email = user.email || "Account";
-      const avatar = user.user_metadata?.avatar_url || "";
-      const fullName = user.user_metadata?.full_name || user.user_metadata?.name || email.split("@")[0];
-      const initials = (fullName || email).slice(0, 2).toUpperCase();
+      const email = escapeHtml(user.email || "Account");
+      const avatar = safeAvatarUrl(user.user_metadata?.avatar_url || "");
+      const rawName = user.user_metadata?.full_name || user.user_metadata?.name || (user.email || "Account").split("@")[0];
+      const fullName = escapeHtml(rawName);
+      const initials = escapeHtml((rawName || email).slice(0, 2).toUpperCase());
       const avatarMarkup = avatar
-        ? `<img src="${avatar}" alt="" class="w-8 h-8 rounded-full object-cover" referrerpolicy="no-referrer" />`
+        ? `<img src="${escapeHtml(avatar)}" alt="" class="w-8 h-8 rounded-full object-cover" referrerpolicy="no-referrer" />`
         : `<span class="w-8 h-8 rounded-full bg-primary text-primary-foreground inline-flex items-center justify-center text-xs font-bold">${initials}</span>`;
 
       // Desktop: swap buttons -> account menu. The md gate lives on the wrapper,
