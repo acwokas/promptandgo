@@ -3,6 +3,21 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 const URL = (import.meta.env.PUBLIC_SUPABASE_URL as string) || "https://dkdakwyrqyfdkyukqmqs.supabase.co";
 const KEY = (import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY as string) || "";
 
+// CDN-resilience: this client drives the client-side auth widget (the
+// auth-buttons-desktop/mobile islands in the header) - without a timeout, a
+// Supabase outage leaves that widget stuck mid-check forever instead of
+// failing fast. A custom fetch bounds every underlying call at 5s.
+const SUPABASE_FETCH_TIMEOUT_MS = 5000;
+
+function fetchWithTimeout(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), SUPABASE_FETCH_TIMEOUT_MS);
+  if (init?.signal) {
+    init.signal.addEventListener("abort", () => controller.abort());
+  }
+  return fetch(input, { ...init, signal: controller.signal }).finally(() => clearTimeout(timeout));
+}
+
 let client: SupabaseClient | null = null;
 export function sb(): SupabaseClient {
   if (!client) {
@@ -11,6 +26,9 @@ export function sb(): SupabaseClient {
         storage: typeof window !== "undefined" ? localStorage : undefined,
         persistSession: true,
         autoRefreshToken: true,
+      },
+      global: {
+        fetch: fetchWithTimeout,
       },
     });
   }
