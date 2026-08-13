@@ -1,0 +1,12 @@
+{
+  "canonical": "https://promptandgo.ai/blog/beginners-guide-midjourney-prompts",
+  "title": "Beginner's Guide: Creating Detailed Prompts for MidJourney",
+  "tldr": "Master MidJourney with structured prompts that combine subject, style, lighting, and mood for consistent creative results.",
+  "key_entities": ["MidJourney", "AI art", "prompt engineering", "image generation"],
+  "questions": [
+    { "q": "What makes a good MidJourney prompt?", "a": "Specific subjects with clear attributes, defined style and mood, detailed lighting and colors, plus exclusions for unwanted elements." },
+    { "q": "How do I improve my MidJourney results?", "a": "Use the prompt structure: [Subject] with [Attributes], in [Style], featuring [Lighting], including [Details]. Add parameters like --ar and --v 6." },
+    { "q": "What parameters should beginners use?", "a": "--ar for aspect ratio, --v 6 for latest model, --q 2 for higher quality, and --no to exclude unwanted elements." }
+  ],
+  "lastmod": "2025-01-19"
+}

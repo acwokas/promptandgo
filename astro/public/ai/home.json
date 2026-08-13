@@ -1,0 +1,11 @@
+{
+  "canonical": "https://promptandgo.ai/",
+  "title": "PromptAndGo – Curated AI prompts that get results",
+  "tldr": "Browse, copy, and run practical prompts for ChatGPT, Claude, and more. No jargon — just faster outcomes.",
+  "key_entities": ["PromptAndGo", "AI prompts", "ChatGPT", "Claude"],
+  "questions": [
+    { "q": "What is PromptAndGo?", "a": "A curated library of practical AI prompts tested for real tasks." },
+    { "q": "Who is it for?", "a": "Marketers, creators, job seekers, students, and busy professionals." }
+  ],
+  "lastmod": "2025-08-12"
+}

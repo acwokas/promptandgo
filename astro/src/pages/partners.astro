@@ -1,0 +1,24 @@
+---
+import Layout from "@astro/layouts/Layout.astro";
+import StaticHero from "@astro/components/StaticHero.astro";
+---
+<Layout title="Partners — PromptAndGo" description="Become a PromptAndGo partner. Resell, embed, or co-market.">
+  <StaticHero eyebrow="Partners" title="Build with us." subtitle="Resellers, agencies, training providers, and AI platform partners across Asia." />
+  <section class="container max-w-5xl pb-16 grid md:grid-cols-3 gap-5">
+    <div class="rounded-2xl border border-border bg-card p-6">
+      <h3 class="text-lg font-bold">Reseller</h3>
+      <p class="mt-2 text-foreground/75">Bundle PromptAndGo with your own services. Wholesale pricing on Pro and Team tiers.</p>
+    </div>
+    <div class="rounded-2xl border border-border bg-card p-6">
+      <h3 class="text-lg font-bold">Agency</h3>
+      <p class="mt-2 text-foreground/75">Run AI services for clients? Get team accounts, white-label options, and co-branded prompt packs.</p>
+    </div>
+    <div class="rounded-2xl border border-border bg-card p-6">
+      <h3 class="text-lg font-bold">Training</h3>
+      <p class="mt-2 text-foreground/75">Teach AI prompting? Use our curriculum and library in your courses; we handle the platform.</p>
+    </div>
+  </section>
+  <section class="container max-w-3xl pb-16">
+    <a href="/contact?topic=partner" class="inline-flex items-center justify-center rounded-xl bg-primary text-primary-foreground px-6 h-11 font-semibold hover:bg-primary/90 transition-colors">Tell us about your partnership →</a>
+  </section>
+</Layout>

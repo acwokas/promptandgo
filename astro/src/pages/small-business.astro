@@ -1,0 +1,22 @@
+---
+import Layout from "@astro/layouts/Layout.astro";
+import StaticHero from "@astro/components/StaticHero.astro";
+---
+<Layout title="AI Prompts for Small Business — PromptAndGo" description="Curated AI prompts for small business owners across Asia. Marketing, ops, customer service.">
+  <StaticHero eyebrow="For small business" title="Run your business with AI — without hiring a prompt engineer." subtitle="Vetted prompts for marketing, customer support, and ops. Free tier covers most needs." />
+  <section class="container max-w-5xl pb-16 grid md:grid-cols-3 gap-5">
+    {[
+      { t: "Marketing", d: "Newsletters, social posts, ad copy, product descriptions." },
+      { t: "Customer support", d: "Reply templates, FAQ drafts, complaint resolution." },
+      { t: "Operations", d: "Job descriptions, SOPs, meeting summaries, invoice memos." },
+    ].map(c => (
+      <div class="rounded-2xl border border-border bg-card p-6">
+        <h3 class="font-bold">{c.t}</h3>
+        <p class="mt-2 text-foreground/75">{c.d}</p>
+      </div>
+    ))}
+  </section>
+  <section class="container max-w-3xl pb-16">
+    <a href="/library" class="inline-flex items-center justify-center rounded-xl bg-primary text-primary-foreground px-6 h-11 font-semibold hover:bg-primary/90 transition-colors">Browse small-business prompts →</a>
+  </section>
+</Layout>

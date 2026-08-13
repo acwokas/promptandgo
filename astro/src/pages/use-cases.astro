@@ -1,0 +1,25 @@
+---
+import Layout from "@astro/layouts/Layout.astro";
+import StaticHero from "@astro/components/StaticHero.astro";
+const cases = [
+  { who: "Marketers", what: "Localise campaigns across 5+ Asian markets without losing voice." },
+  { who: "Support teams", what: "Reply in the customer's language, in your brand voice, instantly." },
+  { who: "Founders", what: "Stand up AI workflows without a research team." },
+  { who: "Content writers", what: "From outline to final draft, across formats." },
+  { who: "Educators", what: "Build AI fluency with structured curricula." },
+  { who: "Operators", what: "Document, summarise, and reformat at scale." },
+  { who: "HR teams", what: "Job descriptions, interview prep, performance review drafts." },
+  { who: "Sales", what: "Personalised cold emails and follow-up cadences." },
+];
+---
+<Layout title="Use cases — PromptAndGo" description="Eight teams that get the most out of PromptAndGo.">
+  <StaticHero eyebrow="Use cases" title="Built for the people doing the work." />
+  <section class="container max-w-5xl pb-16 grid md:grid-cols-2 gap-4">
+    {cases.map(c => (
+      <div class="rounded-2xl border border-border bg-card p-6">
+        <h3 class="font-bold text-lg">{c.who}</h3>
+        <p class="mt-2 text-foreground/75">{c.what}</p>
+      </div>
+    ))}
+  </section>
+</Layout>

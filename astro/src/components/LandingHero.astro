@@ -1,0 +1,93 @@
+---
+interface Props {
+  langTag: string;
+  langLabel: string;
+  langSub: string;
+  hero: { title: string; subtitle: string; cta: string };
+  features: { title: string; desc: string }[];
+  examples: { input: string; output: string }[];
+  i18n?: {
+    browseCta?: string;
+    examplesEyebrow?: string;
+    examplesHeading?: string;
+    promptLabel?: string;
+    outputLabel?: string;
+    tryItNow?: string;
+    browseAll?: string;
+  };
+}
+const { langTag, langLabel, langSub, hero, features, examples, i18n = {} } = Astro.props;
+const t = {
+  browseCta: i18n.browseCta || "{t.browseCta}",
+  examplesEyebrow: i18n.examplesEyebrow || "Examples",
+  examplesHeading: i18n.examplesHeading || "Real prompts. Real outputs.",
+  promptLabel: i18n.promptLabel || "Prompt",
+  outputLabel: i18n.outputLabel || "Optimised output",
+  tryItNow: i18n.tryItNow || "Try it now",
+  browseAll: i18n.browseAll || "Browse all prompts",
+};
+---
+<section class="relative overflow-hidden">
+  <!-- Brand orbs -->
+  
+  
+
+  <div class="relative container max-w-6xl pt-16 md:pt-24 pb-10">
+    <div class="text-center max-w-3xl mx-auto">
+      <span class="inline-flex items-center gap-2 rounded-full surface-glass px-4 py-1.5 text-xs font-semibold mb-7" lang={langTag}>
+        <span class="text-base">🌏</span>
+        <span class="font-bold">{langLabel}</span>
+        <span class="text-muted-foreground">·</span>
+        <span class="text-muted-foreground">{langSub}</span>
+      </span>
+      <h1 lang={langTag} class="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05]">{hero.title}</h1>
+      <p lang={langTag} class="mt-6 text-lg md:text-xl text-foreground/70 leading-relaxed">{hero.subtitle}</p>
+      <div class="mt-9 flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="/optimize" class="inline-flex items-center justify-center rounded-xl bg-gradient-brand text-white px-7 h-12 font-semibold shadow-brand hover:shadow-brand-lg transition-all">
+          {hero.cta}
+        </a>
+        <a href="/library" class="inline-flex items-center justify-center rounded-xl border border-border bg-card hover:bg-secondary px-7 h-12 font-semibold transition-colors">
+          {t.browseCta}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container max-w-6xl py-12">
+  <div class="grid md:grid-cols-3 gap-5 md:gap-6">
+    {features.map(f => (
+      <article class="rounded-2xl bg-card border border-border/60 p-7 card-lift">
+        <h3 class="text-lg font-bold tracking-tight" lang={langTag}>{f.title}</h3>
+        <p class="mt-3 text-sm text-foreground/70 leading-relaxed" lang={langTag}>{f.desc}</p>
+      </article>
+    ))}
+  </div>
+</section>
+
+<section class="container max-w-4xl py-12 md:py-16">
+  <div class="text-center mb-8">
+    <span class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{t.examplesEyebrow}</span>
+    <h2 class="mt-2 text-2xl md:text-3xl font-bold tracking-tight">{t.examplesHeading}</h2>
+  </div>
+  <div class="space-y-4">
+    {examples.map(ex => (
+      <div class="rounded-2xl border border-border/60 bg-card overflow-hidden">
+        <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-border/50">
+          <div class="p-5 md:p-6">
+            <div class="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-2">{t.promptLabel}</div>
+            <div lang={langTag} class="text-sm md:text-base font-medium leading-relaxed">{ex.input}</div>
+          </div>
+          <div class="p-5 md:p-6 bg-gradient-brand-soft">
+            <div class="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-2">{t.outputLabel}</div>
+            <div lang={langTag} class="text-sm md:text-base text-foreground/80 leading-relaxed italic">{ex.output}</div>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+  <div class="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
+    <a href="/optimize" class="inline-flex items-center justify-center rounded-xl bg-gradient-brand text-white px-6 h-11 font-semibold shadow-brand hover:shadow-brand-lg transition-all">{t.tryItNow}</a>
+    <a href="/library" class="inline-flex items-center justify-center rounded-xl border border-border bg-card hover:bg-secondary px-6 h-11 font-semibold transition-colors">{t.browseAll}</a>
+  </div>
+</section>

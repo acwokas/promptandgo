@@ -1,0 +1,27 @@
+---
+interface Props {
+  prompt: { slug: string; title: string; excerpt?: string | null; what_for?: string | null; prompt?: string | null };
+  href: string;
+  category?: string;
+  subcategory?: string | null;
+}
+const { prompt, href, category, subcategory } = Astro.props;
+const blurb = prompt.excerpt || prompt.what_for || (prompt.prompt ? prompt.prompt.slice(0, 140) + "…" : "");
+---
+<a href={href} class="group rounded-xl border border-border bg-card p-5 md:p-6 flex flex-col h-full hover:border-primary/40 transition-colors">
+  {(category || subcategory) && (
+    <div class="flex flex-wrap items-center gap-1.5 text-xs mb-3">
+      {category && <span class="rounded-md bg-primary/10 text-primary px-2 py-0.5 font-medium">{category}</span>}
+      {subcategory && <span class="text-foreground/55">{subcategory}</span>}
+    </div>
+  )}
+  <h3 class="text-base md:text-lg font-bold tracking-tight text-foreground leading-snug">{prompt.title}</h3>
+  {blurb && <p class="mt-2 text-sm text-foreground/70 leading-relaxed flex-1 line-clamp-3">{blurb}</p>}
+  <div class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+    Open
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="transition-transform group-hover:translate-x-0.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+  </div>
+</a>
+<style>
+  .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+</style>

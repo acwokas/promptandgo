@@ -1,0 +1,16 @@
+---
+interface Props {
+  title: string;
+  updated?: string;
+}
+const { title, updated } = Astro.props;
+---
+<section class="container py-16 md:py-20 max-w-3xl">
+  <header class="mb-10">
+    <h1 class="text-4xl md:text-5xl font-bold tracking-tight">{title}</h1>
+    {updated && <p class="mt-2 text-sm text-muted-foreground">Last updated: {updated}</p>}
+  </header>
+  <div class="prose prose-lg dark:prose-invert max-w-none">
+    <slot />
+  </div>
+</section>

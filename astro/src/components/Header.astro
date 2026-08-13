@@ -1,0 +1,185 @@
+---
+const cur = Astro.url.pathname;
+const navLinks = [
+  { href: "/library", label: "Browse" },
+  { href: "/packs", label: "Power Packs" },
+  { href: "/optimize", label: "Optimiser" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/tips", label: "Guides" },
+];
+function isActive(href: string): boolean {
+  if (href === "/") return cur === "/";
+  return cur === href || cur.startsWith(href + "/");
+}
+---
+<header class="sticky top-0 z-40 w-full border-b border-border bg-background">
+  <div class="container max-w-7xl flex h-16 md:h-18 items-center justify-between gap-4">
+    <a href="/" class="flex items-center" aria-label="PromptAndGo home">
+      <img src="/brand/logo.png" alt="PromptAndGo.ai" width="240" height="36" class="h-8 md:h-10 w-auto" />
+    </a>
+
+    <nav class="hidden md:flex items-center gap-8 text-[15px] font-medium" aria-label="Main">
+      {navLinks.map(l => (
+        <a href={l.href}
+           class={`relative py-2 transition-colors ${isActive(l.href) ? "text-foreground" : "text-foreground/70 hover:text-foreground"}`}>
+          {l.label}
+          {isActive(l.href) && <span class="absolute -bottom-[19px] left-0 right-0 h-0.5 bg-primary"></span>}
+        </a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <div id="auth-buttons-desktop" class="hidden md:flex items-center gap-2">
+        <a href="/auth" class="inline-flex items-center justify-center rounded-lg px-3.5 h-10 text-[15px] font-medium text-foreground/80 hover:text-foreground hover:bg-secondary transition-colors">
+          Sign in
+        </a>
+        <a href="/auth?action=signup"
+           class="inline-flex items-center justify-center rounded-lg bg-primary text-primary-foreground px-5 h-10 text-[15px] font-semibold hover:bg-primary/90 transition-colors">
+          Start free
+        </a>
+      </div>
+      <div id="auth-user-desktop" class="hidden items-center gap-2"></div>
+      <button id="mobile-toggle" type="button" aria-label="Open menu"
+              class="md:hidden inline-flex items-center justify-center rounded-lg w-10 h-10 hover:bg-secondary text-foreground">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="md:hidden hidden border-t border-border bg-background">
+    <nav class="container max-w-7xl py-4 flex flex-col gap-1 text-base" aria-label="Mobile">
+      {navLinks.map(l => (
+        <a href={l.href} class={`py-2.5 ${isActive(l.href) ? "text-primary font-semibold" : "text-foreground/85"}`}>{l.label}</a>
+      ))}
+      <div id="auth-buttons-mobile" class="grid grid-cols-2 gap-2 pt-4">
+        <a href="/auth" class="inline-flex items-center justify-center rounded-lg border border-border h-11 font-medium">Sign in</a>
+        <a href="/auth?action=signup" class="inline-flex items-center justify-center rounded-lg bg-primary text-primary-foreground h-11 font-semibold">Start free</a>
+      </div>
+      <div id="auth-user-mobile" class="hidden flex-col gap-2 pt-4"></div>
+    </nav>
+  </div>
+</header>
+
+<script is:inline>
+  (function(){
+    const m = document.getElementById('mobile-toggle');
+    const mm = document.getElementById('mobile-menu');
+    if (m && mm) m.addEventListener('click', () => mm.classList.toggle('hidden'));
+  })();
+</script>
+
+<script>
+  import { sb } from "../lib/auth-client";
+
+  function paint(user) {
+    const desktopBtns = document.getElementById("auth-buttons-desktop");
+    const desktopUser = document.getElementById("auth-user-desktop");
+    const mobileBtns = document.getElementById("auth-buttons-mobile");
+    const mobileUser = document.getElementById("auth-user-mobile");
+    if (!desktopBtns || !desktopUser) return;
+
+    if (user) {
+      const email = user.email || "Account";
+      const avatar = user.user_metadata?.avatar_url || "";
+      const fullName = user.user_metadata?.full_name || user.user_metadata?.name || email.split("@")[0];
+      const initials = (fullName || email).slice(0, 2).toUpperCase();
+      const avatarMarkup = avatar
+        ? `<img src="${avatar}" alt="" class="w-8 h-8 rounded-full object-cover" referrerpolicy="no-referrer" />`
+        : `<span class="w-8 h-8 rounded-full bg-primary text-primary-foreground inline-flex items-center justify-center text-xs font-bold">${initials}</span>`;
+
+      desktopBtns.classList.add("hidden");
+      desktopBtns.classList.remove("md:flex");
+      desktopUser.classList.remove("hidden");
+      desktopUser.classList.add("md:flex");
+      desktopUser.innerHTML = `
+        <div class="relative">
+          <button id="account-trigger" type="button" aria-haspopup="menu" aria-expanded="false"
+                  class="inline-flex items-center gap-2 rounded-full pl-1 pr-3 h-10 hover:bg-secondary transition-colors text-[14px] font-semibold">
+            ${avatarMarkup}
+            <span class="hidden md:inline max-w-[140px] truncate">${fullName}</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div id="account-menu" role="menu"
+               class="hidden absolute right-0 top-full mt-2 w-64 rounded-xl border border-border bg-background shadow-lg overflow-hidden z-50">
+            <div class="px-4 py-3 border-b border-border bg-secondary/30">
+              <div class="text-sm font-semibold text-foreground truncate">${fullName}</div>
+              <div class="text-xs text-muted-foreground truncate">${email}</div>
+            </div>
+            <a href="/account/profile" role="menuitem" class="flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-secondary transition-colors">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              My account
+            </a>
+            <a href="/account/saved" role="menuitem" class="flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-secondary transition-colors">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              Saved prompts
+            </a>
+            <a href="/account/purchases" role="menuitem" class="flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-secondary transition-colors">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              Purchases
+            </a>
+            <button id="account-signout" role="menuitem" type="button"
+                    class="w-full flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-secondary transition-colors border-t border-border text-foreground/80">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              Sign out
+            </button>
+          </div>
+        </div>
+      `;
+
+      const trigger = document.getElementById("account-trigger");
+      const menu = document.getElementById("account-menu");
+      const closeMenu = () => { menu?.classList.add("hidden"); trigger?.setAttribute("aria-expanded","false"); };
+      const openMenu = () => { menu?.classList.remove("hidden"); trigger?.setAttribute("aria-expanded","true"); };
+      trigger?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (menu?.classList.contains("hidden")) openMenu(); else closeMenu();
+      });
+      document.addEventListener("click", (e) => {
+        if (!menu || !trigger) return;
+        if (menu.classList.contains("hidden")) return;
+        if (!menu.contains(e.target) && !trigger.contains(e.target)) closeMenu();
+      });
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeMenu(); });
+      document.getElementById("account-signout")?.addEventListener("click", signOut);
+
+      if (mobileBtns && mobileUser) {
+        mobileBtns.classList.add("hidden");
+        mobileUser.classList.remove("hidden");
+        mobileUser.classList.add("flex");
+        mobileUser.innerHTML = `
+          <div class="px-3 py-2 rounded-lg bg-secondary/50 text-sm font-semibold truncate">${fullName}</div>
+          <a href="/account/profile" class="inline-flex items-center justify-center rounded-lg border border-border h-11 font-medium">My account</a>
+          <a href="/account/saved" class="inline-flex items-center justify-center rounded-lg border border-border h-11 font-medium">Saved prompts</a>
+          <a href="/account/purchases" class="inline-flex items-center justify-center rounded-lg border border-border h-11 font-medium">Purchases</a>
+          <button id="signout-mobile" type="button" class="inline-flex items-center justify-center rounded-lg bg-secondary text-foreground h-11 font-semibold">Sign out</button>
+        `;
+        document.getElementById("signout-mobile")?.addEventListener("click", signOut);
+      }
+    } else {
+      desktopBtns.classList.remove("hidden");
+      desktopBtns.classList.add("md:flex");
+      desktopUser.classList.add("hidden");
+      desktopUser.classList.remove("md:flex");
+      desktopUser.innerHTML = "";
+      if (mobileBtns && mobileUser) {
+        mobileBtns.classList.remove("hidden");
+        mobileUser.classList.add("hidden");
+        mobileUser.classList.remove("flex");
+        mobileUser.innerHTML = "";
+      }
+    }
+  }
+
+  async function signOut() {
+    try { await sb().auth.signOut(); } catch (e) {}
+    window.location.href = "/";
+  }
+
+  async function init() {
+    const c = sb();
+    const { data: { user } } = await c.auth.getUser();
+    paint(user);
+    c.auth.onAuthStateChange((_evt, session) => paint(session?.user || null));
+  }
+  init();
+</script>

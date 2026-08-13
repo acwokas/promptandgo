@@ -1,0 +1,82 @@
+---
+import Layout from "@astro/layouts/Layout.astro";
+import { sbSelect } from "@astro/lib/supabase-rest";
+
+export async function getStaticPaths() {
+  try {
+    const articles = await sbSelect("articles", {
+      select: "slug,title,content,synopsis,meta_title,meta_description,thumbnail_url,focus_keyword,keyphrases,published_date",
+      filter: "is_published=eq.true",
+    });
+    return articles.map(a => ({ params: { slug: a.slug }, props: a }));
+  } catch (e) {
+    console.error("tips/[slug] getStaticPaths failed:", e);
+    return [];
+  }
+}
+
+const article = Astro.props as any;
+const title = article.meta_title || article.title;
+const description = article.meta_description || article.synopsis || article.title;
+
+function readingTime(text: string | null | undefined) {
+  if (!text) return "5 min";
+  const words = text.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
+  const mins = Math.max(2, Math.round(words / 220));
+  return `${mins} min`;
+}
+const read = readingTime(article.content);
+const date = article.published_date ? new Date(article.published_date).toLocaleDateString("en-GB", { year: "numeric", month: "short", day: "numeric" }) : null;
+
+const contentLooksLikeHtml = (article.content || "").trimStart().startsWith("<");
+let body: string = article.content || "";
+if (!contentLooksLikeHtml) {
+  body = body
+    .replace(/^### (.*)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.*)$/gm, '<h2>$1</h2>')
+    .replace(/^# (.*)$/gm, '<h1>$1</h1>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/^/, '<p>') + '</p>';
+}
+---
+<Layout title={`${title} — PromptAndGo`} description={description} ogImage={article.thumbnail_url || undefined}>
+  <section class="relative overflow-hidden">
+    
+    <div class="relative container max-w-3xl pt-12 md:pt-16 pb-6">
+      <a href="/tips" class="text-sm text-muted-foreground hover:text-primary inline-flex items-center gap-1.5">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        All tips
+      </a>
+      <div class="mt-6 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+        <span class="font-semibold uppercase tracking-wider">Tip</span>
+        <span>·</span>
+        <span>{read}</span>
+        {date && <><span>·</span><span>{date}</span></>}
+        {article.focus_keyword && <><span>·</span><span class="rounded-full bg-secondary px-2 py-0.5">{article.focus_keyword}</span></>}
+      </div>
+      <h1 class="mt-3 text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">{article.title}</h1>
+      {article.synopsis && <p class="mt-4 text-lg text-foreground/70 leading-relaxed">{article.synopsis}</p>}
+    </div>
+    {article.thumbnail_url && (
+      <div class="container max-w-4xl pb-2">
+        <img src={article.thumbnail_url} alt={article.title} class="rounded-2xl w-full" loading="eager" />
+      </div>
+    )}
+  </section>
+
+  <article class="container max-w-3xl pb-20">
+    <div class="prose prose-lg dark:prose-invert max-w-none mt-8" set:html={body}></div>
+    <div class="mt-12 pt-8 border-t border-border/40 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+      <a href="/tips" class="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        More tips
+      </a>
+      <a href="/optimize" class="inline-flex items-center justify-center rounded-xl bg-gradient-brand text-white px-5 h-11 font-semibold shadow-brand hover:shadow-brand-lg transition-all">
+        Try the optimiser →
+      </a>
+    </div>
+  </article>
+</Layout>

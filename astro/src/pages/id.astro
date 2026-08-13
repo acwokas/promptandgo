@@ -1,0 +1,37 @@
+---
+import Layout from "@astro/layouts/Layout.astro";
+import LandingHero from "@astro/components/LandingHero.astro";
+---
+<Layout
+  title="AI Prompts Bahasa Indonesia & Malaysia | PromptAndGo"
+  description="Prompt AI yang paham nuansa Bahasa Indonesia dan Bahasa Melayu — dirancang untuk pasar Jakarta, Kuala Lumpur, Surabaya, Penang. Optimal untuk ChatGPT, Claude, Gemini."
+>
+  <LandingHero
+    langTag="id"
+    langLabel="Bahasa"
+    langSub="Indonesia / Malaysia"
+    hero={{
+      title: "Prompt AI untuk pasar Bahasa Indonesia & Malaysia",
+      subtitle: "Email pelanggan, broadcast WhatsApp, copywriting marketplace, customer service — sopan dan natural. 1.000+ prompt siap pakai.",
+      cta: "Coba gratis"
+    }}
+    features={[
+      { title: "Register sopan yang tepat", desc: "Bapak/Ibu, Mas/Mbak, Encik/Puan — disesuaikan otomatis dengan konteks." },
+      { title: "Template per industri", desc: "E-commerce, fintech, F&B, HRD, edukasi, properti, logistik." },
+      { title: "Cocok untuk semua AI", desc: "ChatGPT, Claude, Gemini, Mistral, Grok, dan lainnya." }
+    ]}
+    examples={[
+      { input: "Tulis email tindak lanjut ke calon klien yang belum membalas selama dua minggu", output: "Selamat siang Bapak/Ibu... Mohon maaf mengganggu waktu Bapak/Ibu kembali..." },
+      { input: "Buat broadcast WhatsApp promo Lebaran untuk pelanggan loyal", output: "Hai Kak! 🌙 Spesial menyambut Idulfitri, kami siapkan promo eksklusif untuk pelanggan setia..." }
+    ]}
+    i18n={{
+      browseCta: "Lihat semua prompt →",
+      examplesEyebrow: "Contoh",
+      examplesHeading: "Prompt asli, hasil asli.",
+      promptLabel: "Prompt",
+      outputLabel: "Hasil yang dioptimalkan",
+      tryItNow: "Coba sekarang",
+      browseAll: "Lihat semua prompt",
+    }}
+  />
+</Layout>

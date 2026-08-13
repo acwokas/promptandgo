@@ -34,7 +34,7 @@ serve(async (req) => {
       // If token is invalid (e.g. anon key), we continue as anonymous — no error
     }
 
-    const { prompt, aiTool, goal, focusAreas } = await req.json();
+    const { prompt, aiTool, goal, focusAreas, targetLanguage } = await req.json();
 
     if (!prompt || typeof prompt !== 'string' || prompt.trim().length === 0) {
       return new Response(JSON.stringify({ error: 'Prompt is required' }), {
@@ -55,6 +55,9 @@ serve(async (req) => {
       : 'Optimize all aspects equally.';
 
     const toolInstruction = aiTool ? `Optimize specifically for ${aiTool}.` : '';
+    const languageInstruction = targetLanguage && targetLanguage !== 'English'
+      ? `CRITICAL: Write the ENTIRE response in ${targetLanguage}, including the four section headings. Translate "OPTIMIZED PROMPT", "KEY IMPROVEMENTS", "EXPLANATION", and "OPTIONAL ENHANCEMENTS" into ${targetLanguage}, keeping the ## markdown prefix. Every word visible to the user must be in ${targetLanguage}.`
+      : '';
     const goalInstruction = goal ? `The user's goal is: ${goal}. Focus on achieving this.` : '';
 
     const systemPrompt = `You are a prompt engineering expert. Analyze the prompt provided and optimize it for better AI results.
@@ -93,6 +96,7 @@ Optimization principles to apply:
 ${toolInstruction}
 ${goalInstruction}
 ${focusInstruction}
+${languageInstruction}
 
 Make the optimized prompt copy-ready. Don't just describe improvements - actually rewrite it.
 Tone: Helpful, educational, specific. Explain WHY changes improve results.`;

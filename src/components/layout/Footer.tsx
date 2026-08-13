@@ -153,6 +153,8 @@ const Footer = () => {
             Part of the You.WithThePowerOf.AI ecosystem ·{" "}
             <a href="https://businessinabyte.com/" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white/60 underline underline-offset-2">BusinessInAByte</a>
             {" · "}
+            <a href="https://aiinasia.com" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white/60 underline underline-offset-2">AI in Asia</a>
+            {" · "}
             <a href="https://you.withthepowerof.ai" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white/60 underline underline-offset-2">Learn more →</a>
           </p>
         </div>

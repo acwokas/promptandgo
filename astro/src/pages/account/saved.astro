@@ -1,0 +1,11 @@
+---
+import Layout from "@astro/layouts/Layout.astro";
+import StaticHero from "@astro/components/StaticHero.astro";
+import SavedList from "@astro/components/SavedList.tsx";
+---
+<Layout title="Saved Prompts — PromptAndGo" description="Your favourited prompts on PromptAndGo." noIndex>
+  <StaticHero eyebrow="Account" title="Your saved prompts" subtitle="Everything you've heart-icon-tapped, in one place." />
+  <section class="container max-w-7xl pb-20">
+    <SavedList client:load />
+  </section>
+</Layout>

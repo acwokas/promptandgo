@@ -1,0 +1,15 @@
+---
+import Layout from "@astro/layouts/Layout.astro";
+import StaticHero from "@astro/components/StaticHero.astro";
+import PurchasesList from "@astro/components/PurchasesList.tsx";
+---
+<Layout title="My purchases — PromptAndGo" description="Prompts and Power Packs you've unlocked." noIndex={true}>
+  <StaticHero
+    eyebrow="Account"
+    title="My purchases"
+    subtitle="All the prompts and packs you've unlocked. Click any item to view it."
+  />
+  <section class="container max-w-5xl pb-20">
+    <PurchasesList client:load />
+  </section>
+</Layout>

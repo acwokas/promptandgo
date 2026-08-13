@@ -1,0 +1,178 @@
+import SEO from "@/components/SEO";
+import PageHero from "@/components/layout/PageHero";
+import { Button } from "@/components/ui/button";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
+import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
+import { Navigate, Link } from "react-router-dom";
+import { Upload, Plus, Download, Settings, MessageCircle, BarChart3, Clock, Shield, Tag, Activity } from "lucide-react";
+import RealTimeAnalyticsWidget from "@/components/admin/RealTimeAnalyticsWidget";
+
+const AdminTools = () => {
+  const { user, loading: authLoading } = useSupabaseAuth();
+  const { isAdmin, loading: adminLoading } = useIsAdmin();
+
+  console.log("AdminTools: Component state", { 
+    isAdmin, 
+    adminLoading, 
+    authLoading, 
+    userEmail: user?.email,
+    userId: user?.id 
+  });
+
+  // Wait for both auth and admin checks to complete
+  if (authLoading || adminLoading) {
+    console.log("AdminTools: Still loading", { authLoading, adminLoading });
+    return <div>Loading...</div>;
+  }
+
+  // Allowlisted email as a temporary safety net while we debug admin role checks
+  const emailAllow = ["me@adrianwatkins.com"];
+  const effectiveIsAdmin = isAdmin || (user?.email ? emailAllow.includes(user.email) : false);
+
+  console.log("AdminTools: Access decision", { isAdmin, effectiveIsAdmin, userEmail: user?.email });
+
+  if (!effectiveIsAdmin) {
+    console.log("AdminTools: User is not admin, redirecting to home");
+    return <Navigate to="/" replace />;
+  }
+
+  const tools = [
+    {
+      title: "Countdown Timer",
+      description: "Control promotional countdown timer display and settings",
+      icon: Clock,
+      href: "/admin/countdown",
+      color: "text-red-500"
+    },
+    {
+      title: "Poll Management",
+      description: "Create and manage polls, view voting results, and control poll display settings",
+      icon: BarChart3,
+      href: "/admin/polls",
+      color: "text-purple-500"
+    },
+    {
+      title: "Bulk Upload",
+      description: "Upload categories, subcategories, tags, and prompts in bulk via JSON or CSV",
+      icon: Upload,
+      href: "/admin/upload",
+      color: "text-blue-500"
+    },
+    {
+      title: "Prompt Tool",
+      description: "Create individual prompts with full control over categories, tags, packs, and ribbons",
+      icon: Plus,
+      href: "/admin/prompts",
+      color: "text-green-500"
+    },
+    {
+      title: "Export Data",
+      description: "Download complete CSV exports of all prompts and Power Packs for backup or analysis",
+      icon: Download,
+      href: "/admin/export",
+      color: "text-purple-500"
+    },
+    {
+      title: "Widget Settings",
+      description: "Control the visibility of feedback widgets and context popups across the platform",
+      icon: Settings,
+      href: "/admin/widgets",
+      color: "text-orange-500"
+    },
+    {
+      title: "User Feedback",
+      description: "Review and manage user feedback, bug reports, and feature requests",
+      icon: MessageCircle,
+      href: "/admin/feedback",
+      color: "text-cyan-500"
+    },
+    {
+      title: "Article Management",
+      description: "Create and manage blog articles for the /tips section with SEO optimization",
+      icon: Plus,
+      href: "/admin/articles",
+      color: "text-indigo-500"
+    },
+    {
+      title: "Security Monitoring",
+      description: "Monitor admin activity, API key rotation, and security events across the platform",
+      icon: Shield,
+      href: "/admin/security",
+      color: "text-red-600"
+    },
+    {
+      title: "Coupon Management",
+      description: "Create and manage discount codes, welcome bonuses, and promotional coupons",
+      icon: Tag,
+      href: "/admin/coupons",
+      color: "text-emerald-500"
+    },
+    {
+      title: "Analytics Dashboard",
+      description: "View detailed site analytics, user behavior, events, and conversion tracking",
+      icon: Activity,
+      href: "/admin/analytics",
+      color: "text-pink-500"
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-background">
+      <SEO 
+        title="Admin Tools"
+        description="Administrative tools for managing the platform"
+      />
+      
+      <PageHero
+        title="Admin Tools"
+        subtitle="Manage categories, prompts, and platform content"
+        variant="admin"
+      />
+
+      <div className="container mx-auto px-4 py-12">
+        {/* Breadcrumb */}
+        <Breadcrumb className="mb-6">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link to="/">Home</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Admin Tools</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+
+        {/* Real-Time Analytics Widget */}
+        <div className="max-w-6xl mx-auto mb-8">
+          <RealTimeAnalyticsWidget />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          {tools.map((tool) => (
+            <Card key={tool.href} className="hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <tool.icon className={`h-8 w-8 ${tool.color}`} />
+                  <CardTitle>{tool.title}</CardTitle>
+                </div>
+                <CardDescription>{tool.description}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button asChild className="w-full">
+                  <Link to={tool.href}>Open Tool</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AdminTools;

@@ -1,0 +1,29 @@
+---
+import Layout from "@astro/layouts/Layout.astro";
+import StaticHero from "@astro/components/StaticHero.astro";
+const platforms = [
+  { name: "ChatGPT", note: "Direct prompt format, system+user separation, function calling tips." },
+  { name: "Claude", note: "XML-tagged structures, system prompts, long-context strategies." },
+  { name: "Gemini", note: "Multimodal hints, Google ecosystem references." },
+  { name: "Mistral", note: "European model, multilingual, structured output." },
+  { name: "Grok", note: "Real-time knowledge, direct tone." },
+  { name: "DeepSeek", note: "Strong at technical and Chinese-market content." },
+  { name: "Qwen", note: "Alibaba's model — best-in-class for Chinese commerce." },
+  { name: "Ernie Bot", note: "Baidu's model dominant in mainland China." },
+  { name: "MidJourney", note: "Image — style/composition/lighting/aspect ratio params." },
+  { name: "Stable Diffusion", note: "Tag-weighted prompts, negative prompts, model tokens." },
+];
+---
+<Layout title="Integrations — PromptAndGo" description="AI platforms PromptAndGo supports.">
+  <StaticHero eyebrow="Integrations" title="Every AI platform we support." subtitle="Same prompt, optimised differently for each model. Pick yours and we adapt." />
+  <section class="container max-w-5xl pb-16">
+    <div class="grid sm:grid-cols-2 gap-3">
+      {platforms.map(p => (
+        <div class="rounded-xl border border-border bg-card p-5">
+          <h3 class="font-semibold text-base md:text-lg">{p.name}</h3>
+          <p class="mt-1 text-sm text-foreground/75">{p.note}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+</Layout>

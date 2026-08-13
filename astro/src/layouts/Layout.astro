@@ -1,0 +1,67 @@
+---
+import "@astro/styles/global.css";
+import Header from "@astro/components/Header.astro";
+import Footer from "@astro/components/Footer.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  ogImage?: string;
+  noIndex?: boolean;
+}
+const {
+  title = "PromptAndGo — AI Prompts for Asian Languages",
+  description = "Culturally-aware AI prompts in 12+ Asian languages. Optimised for ChatGPT, Claude, Gemini and more.",
+  canonical,
+  ogImage = "/brand/og-image.png",
+  noIndex = false,
+} = Astro.props;
+const url = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0e0a1f" />
+    <meta name="color-scheme" content="light only" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="author" content="PromptAndGo.ai" />
+    <meta name="robots" content={noIndex ? "noindex, nofollow" : "index, follow"} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={url} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={url} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <script is:inline>
+      // Site is light-only. Strip any legacy dark theme preference.
+      (function(){
+        try {
+          document.documentElement.classList.remove('dark');
+          localStorage.removeItem('theme');
+        } catch(e) {}
+      })();
+    </script>
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <a href="#main" class="skip-to-content">Skip to content</a>
+    <Header />
+    <main id="main" class="flex-1 w-full">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

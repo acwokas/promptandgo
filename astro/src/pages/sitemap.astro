@@ -1,0 +1,80 @@
+---
+import Layout from "@astro/layouts/Layout.astro";
+import StaticHero from "@astro/components/StaticHero.astro";
+import { sbFetch } from "@astro/lib/supabase-rest";
+
+const data = await (async () => {
+  try {
+    const cats: any[] = await sbFetch(`/rest/v1/categories?select=name,slug&order=name.asc`);
+    return { cats: cats.filter((c:any) => c.slug !== "user-generated") };
+  } catch (e) { return { cats: [] }; }
+})();
+
+const sections = [
+  { title: "Main", links: [
+    { href: "/", label: "Home" },
+    { href: "/library", label: "Prompt Library" },
+    { href: "/optimize", label: "Optimiser" },
+    { href: "/packs", label: "Power Packs" },
+    { href: "/pricing", label: "Pricing" },
+  ]},
+  { title: "Markets", links: [
+    { href: "/ja", label: "Japan / 日本" },
+    { href: "/ko", label: "Korea / 한국" },
+    { href: "/zh", label: "China / 中国" },
+    { href: "/th", label: "Thailand / ไทย" },
+    { href: "/vi", label: "Vietnam / Việt Nam" },
+    { href: "/market-insights", label: "Market insights index" },
+    { href: "/market-insights/malaysia", label: "Malaysia" },
+    { href: "/market-insights/indonesia", label: "Indonesia" },
+    { href: "/market-insights/vietnam", label: "Vietnam" },
+    { href: "/market-insights/australia", label: "Australia" },
+  ]},
+  { title: "Resources", links: [
+    { href: "/tips", label: "Tips & guides" },
+    { href: "/glossary", label: "Glossary" },
+    { href: "/help", label: "Help" },
+    { href: "/api-docs", label: "API docs" },
+    { href: "/changelog", label: "Changelog" },
+    { href: "/integrations", label: "Integrations" },
+    { href: "/community", label: "Community" },
+    { href: "/testimonials", label: "Testimonials" },
+    { href: "/tutorial", label: "Tutorial" },
+  ]},
+  { title: "Company", links: [
+    { href: "/about", label: "About" },
+    { href: "/contact", label: "Contact" },
+    { href: "/careers", label: "Careers" },
+    { href: "/partners", label: "Partners" },
+    { href: "/enterprise", label: "Enterprise" },
+    { href: "/status", label: "Status" },
+  ]},
+  { title: "Legal", links: [
+    { href: "/terms", label: "Terms of Service" },
+    { href: "/privacy", label: "Privacy Policy" },
+    { href: "/cookies", label: "Cookie Policy" },
+    { href: "/accessibility", label: "Accessibility" },
+  ]},
+];
+---
+<Layout title="Sitemap — PromptAndGo" description="All pages on PromptAndGo.ai.">
+  <StaticHero eyebrow="Sitemap" title="Every page on the site." subtitle="Use this to find anything quickly. The XML sitemap for crawlers is at /sitemap-index.xml." />
+  <section class="container max-w-6xl pb-16 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {sections.map(s => (
+      <div>
+        <h2 class="text-base font-semibold mb-3">{s.title}</h2>
+        <ul class="space-y-1.5 text-foreground/75">
+          {s.links.map(l => <li><a href={l.href} class="hover:text-primary">{l.label}</a></li>)}
+        </ul>
+      </div>
+    ))}
+    {data.cats.length > 0 && (
+      <div class="md:col-span-2 lg:col-span-3">
+        <h2 class="text-base font-semibold mb-3">Library categories</h2>
+        <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-1.5 text-foreground/75">
+          {data.cats.map((c: any) => <li><a href={`/library/${c.slug}`} class="hover:text-primary">{c.name}</a></li>)}
+        </ul>
+      </div>
+    )}
+  </section>
+</Layout>
