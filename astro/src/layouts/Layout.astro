@@ -18,6 +18,13 @@ const {
   noIndex = false,
 } = Astro.props;
 const url = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
+// og:image must be absolute. It was shipping as the relative "/brand/og-image.png",
+// which a crawler resolves against whichever host it happened to fetch, and the
+// apex only redirects "/" to www: apex sub-paths 404 outright. So every share
+// scraped from promptandgo.ai (rather than www.promptandgo.ai) resolved the card
+// to a 404 and rendered a bare link. Resolving against Astro.site pins it to the
+// canonical host regardless of where the page was fetched.
+const ogImageUrl = ogImage.startsWith('http') ? ogImage : new URL(ogImage, Astro.site).toString();
 ---
 <!doctype html>
 <html lang="en">
@@ -40,12 +47,12 @@ const url = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={url} />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:image" content={ogImageUrl} />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image" content={ogImageUrl} />
     <script is:inline>(function(){try{document.documentElement.classList.remove("dark");localStorage.removeItem("theme");}catch(e){}})();</script>
   </head>
   <body class="min-h-screen flex flex-col">
