@@ -717,7 +717,7 @@ ${safeExample ? `<p class="text-sm text-muted-foreground"><strong>Example:</stro
                                     ul: ({children}) => <ul className="list-disc pl-4 mb-2 space-y-1">{children}</ul>,
                                     ol: ({children}) => <ol className="list-decimal pl-4 mb-2 space-y-1">{children}</ol>,
                                     blockquote: ({children}) => (
-                                      <blockquote className="border-y border-primary/40 py-2 my-2 italic text-muted-foreground text-sm">
+                                      <blockquote className="border-l-2 border-primary pl-3 my-2 italic text-muted-foreground text-sm">
                                         {children}
                                       </blockquote>
                                     ),
@@ -829,7 +829,7 @@ ${safeExample ? `<p class="text-sm text-muted-foreground"><strong>Example:</stro
                             ul: ({children}) => <ul className="list-disc pl-6 mb-4 space-y-2">{children}</ul>,
                             ol: ({children}) => <ol className="list-decimal pl-6 mb-4 space-y-2">{children}</ol>,
                             blockquote: ({children}) => (
-                              <blockquote className="border-y border-primary/40 py-3 my-6 italic text-muted-foreground">
+                              <blockquote className="border-l-4 border-primary pl-4 my-6 italic text-muted-foreground">
                                 {children}
                               </blockquote>
                             ),

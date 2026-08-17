@@ -538,7 +538,7 @@ ${titleHtml}
                   </li>
                 ),
                 blockquote: ({ children, ...props }) => (
-                  <blockquote className="border-y border-primary/30 py-3 italic my-6 text-muted-foreground" {...props}>
+                  <blockquote className="border-l-4 border-primary/30 pl-4 italic my-6 text-muted-foreground" {...props}>
                     {children}
                   </blockquote>
                 ),
