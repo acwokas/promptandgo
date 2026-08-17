@@ -37,6 +37,7 @@ export const OptimizationHistory = ({ entries, isOpen, onToggle, onReuse }: Opti
 
       {/* Sidebar panel */}
       <div
+        // pipe-gate: allow - outer edge of a fixed right-hand drawer against the page, not an accent on a card
         className={`fixed right-0 top-0 h-full w-72 bg-card border-l border-border shadow-2xl z-30 transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}

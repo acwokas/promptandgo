@@ -11,12 +11,7 @@ interface Notification {
   read: boolean;
 }
 
-const BORDER_COLORS: Record<string, string> = {
-  feature: "border-l-blue-500",
-  content: "border-l-green-500",
-  tip: "border-l-primary",
-  system: "border-l-destructive",
-};
+// No per-type left bar: TYPE_ICONS already names the type on every row.
 
 const TYPE_ICONS: Record<string, string> = {
   feature: "🚀",
@@ -139,7 +134,7 @@ const NotificationCenter = () => {
               <button
                 key={n.id}
                 onClick={() => handleNotificationClick(n)}
-                className={`w-full text-left px-4 py-3 border-l-4 ${BORDER_COLORS[n.type]} hover:bg-muted/50 transition-colors flex gap-3 ${
+                className={`w-full text-left px-4 py-3 hover:bg-muted/50 transition-colors flex gap-3 ${
                   !n.read ? "bg-primary/5" : ""
                 }`}
               >

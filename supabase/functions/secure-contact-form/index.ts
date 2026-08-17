@@ -236,7 +236,7 @@ serve(async (req: Request): Promise<Response> => {
           
           <div>
             <p style="margin: 0 0 10px; font-weight: 600; color: #374151;">Message:</p>
-            <div style="background: #f9fafb; padding: 20px; border-radius: 6px; border-left: 4px solid #667eea; white-space: pre-wrap; line-height: 1.6; color: #374151;">
+            <div style="background: #f9fafb; padding: 20px; border-radius: 6px; border: 1px solid #667eea; white-space: pre-wrap; line-height: 1.6; color: #374151;">
 ${escapeHtml(sanitizedMessage)}
             </div>
           </div>

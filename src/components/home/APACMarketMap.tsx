@@ -216,7 +216,7 @@ export function APACMarketMap() {
           {currentData ? (
             <div className="space-y-4 h-full">
               {/* Main Card */}
-              <Card className="border-l-4 border-accent overflow-hidden bg-gradient-to-br from-accent/5 to-transparent sticky top-8">
+              <Card className="border border-accent/30 overflow-hidden bg-gradient-to-br from-accent/5 to-transparent sticky top-8">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between mb-4">
                     <div>

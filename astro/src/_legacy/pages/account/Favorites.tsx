@@ -785,7 +785,7 @@ const mapped: PromptUI[] = (data || []).map((r: any) => ({
                         </Accordion>
 
                         {/* Preview of prompt (first 150 characters) */}
-                        <div className="p-3 bg-muted/30 rounded-lg border-l-4 border-l-primary/20">
+                        <div className="p-3 bg-muted/30 rounded-lg">
                           <p className="text-sm text-muted-foreground italic">
                             "{prompt.prompt.substring(0, 150)}{prompt.prompt.length > 150 ? '...' : ''}"
                           </p>

@@ -687,34 +687,34 @@ const HowItWorks = () => {
             <h2 className="text-2xl font-semibold mb-8">Frequently Asked Questions</h2>
             <div className="grid gap-6 md:grid-cols-2">
               <div className="space-y-6">
-                <div className="border-l-4 border-primary pl-4 py-2">
+                <div className="py-2">
                   <h3 className="font-semibold mb-1">How does Scout optimization work?</h3>
                   <p className="text-sm text-muted-foreground">Scout analyses your prompt and rewrites it with platform-specific optimizations, better structure, and clearer instructions for improved results.</p>
                 </div>
                 
-                <div className="border-l-4 border-primary pl-4 py-2">
+                <div className="py-2">
                   <h3 className="font-semibold mb-1">Is everything really free?</h3>
                   <p className="text-sm text-muted-foreground">Yes! Core features including the library, Scout optimization, and many Power Packs are completely free. Premium options available for advanced features.</p>
                 </div>
                 
-                <div className="border-l-4 border-primary pl-4 py-2">
+                <div className="py-2">
                   <h3 className="font-semibold mb-1">Which AI platforms work with Scout?</h3>
                   <p className="text-sm text-muted-foreground">Scout optimizes for ChatGPT, Claude, Gemini, Perplexity, and virtually any text-based AI platform. Just select your platform and get optimised prompts.</p>
                 </div>
               </div>
               
               <div className="space-y-6">
-                <div className="border-l-4 border-primary pl-4 py-2">
+                <div className="py-2">
                   <h3 className="font-semibold mb-1">How are Power Packs different from the library?</h3>
                   <p className="text-sm text-muted-foreground">Power Packs are curated collections focused on specific goals like marketing campaigns or business strategy, while the library contains individual prompts by category.</p>
                 </div>
                 
-                <div className="border-l-4 border-primary pl-4 py-2">
+                <div className="py-2">
                   <h3 className="font-semibold mb-1">Do I need to create an account?</h3>
                   <p className="text-sm text-muted-foreground">No account needed to browse prompts or use Scout! Create a free account to save favorites, access premium Power Packs, and track usage.</p>
                 </div>
                 
-                <div className="border-l-4 border-primary pl-4 py-2">
+                <div className="py-2">
                   <h3 className="font-semibold mb-1">How fast will I see better results?</h3>
                   <p className="text-sm text-muted-foreground">Immediately! Users typically see 3x better results from their first optimised prompt. The difference is noticeable from the first use.</p>
                 </div>

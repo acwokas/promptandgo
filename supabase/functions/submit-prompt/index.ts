@@ -251,7 +251,7 @@ ${submissionBodyLines.join('\n\n')}
           
           <p>We've received your prompt submission "<strong>${escapeHtml(sanitizedTitle)}</strong>" and our team will review it shortly.</p>
           
-          <div style="background: #f8f9ff; padding: 20px; border-radius: 8px; border-left: 4px solid #6366f1; margin: 20px 0;">
+          <div style="background: #f8f9ff; padding: 20px; border-radius: 8px; border: 1px solid #6366f1; margin: 20px 0;">
             <h3 style="margin-top: 0; color: #4f46e5;">🎉 Win 1 Month Free Premium!</h3>
             <p style="margin-bottom: 0;">If your prompt is successfully added to our library, you'll receive <strong>1 month of free premium membership</strong> as a thank you!</p>
           </div>

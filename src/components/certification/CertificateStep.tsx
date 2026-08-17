@@ -215,7 +215,7 @@ export function CertificateStep({
             margin-top: 40px;
             padding: 15px;
             background: hsl(174, 82%, 95%);
-            border-left: 4px solid hsl(174, 82%, 33%);
+            border: 1px solid hsl(174, 82%, 33%);
             text-align: left;
             font-size: 12px;
             color: hsl(240, 28%, 14%);

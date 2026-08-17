@@ -22,7 +22,7 @@ export function FAQSection() {
             <div className="grid gap-6 md:grid-cols-2">
               <div className="space-y-4">
                 {faqs.slice(0, 3).map((faq) => (
-                  <div key={faq.q} className="border-l-4 border-primary pl-4 py-2">
+                  <div key={faq.q} className="py-2">
                     <h3 className="font-semibold mb-1">{faq.q}</h3>
                     <p className="text-sm text-muted-foreground">{faq.a}</p>
                   </div>
@@ -30,7 +30,7 @@ export function FAQSection() {
               </div>
               <div className="space-y-4">
                 {faqs.slice(3).map((faq) => (
-                  <div key={faq.q} className="border-l-4 border-primary pl-4 py-2">
+                  <div key={faq.q} className="py-2">
                     <h3 className="font-semibold mb-1">{faq.q}</h3>
                     <p className="text-sm text-muted-foreground">{faq.a}</p>
                   </div>

@@ -77,7 +77,7 @@ export function RulesStep({ onNext, onBack }: RulesStepProps) {
             </div>
 
             <div className="space-y-3 mt-4 ml-16">
-              <div className="border-l-2 border-green-500 pl-4 py-2 bg-green-50/50 dark:bg-green-950/20 rounded-r">
+              <div className="border border-green-500/30 px-4 py-2 bg-green-50/50 dark:bg-green-950/20 rounded-md">
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="h-4 w-4 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
                   <div>
@@ -87,7 +87,7 @@ export function RulesStep({ onNext, onBack }: RulesStepProps) {
                 </div>
               </div>
 
-              <div className="border-l-2 border-red-500 pl-4 py-2 bg-red-50/50 dark:bg-red-950/20 rounded-r">
+              <div className="border border-red-500/30 px-4 py-2 bg-red-50/50 dark:bg-red-950/20 rounded-md">
                 <div className="flex items-start gap-2">
                   <XCircle className="h-4 w-4 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
                   <div>
