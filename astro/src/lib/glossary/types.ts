@@ -27,7 +27,8 @@ export type GlossaryCategory =
   | "Fundamentals"
   | "Core Techniques"
   | "Parameters & Mechanics"
-  | "Advanced & Current";
+  | "Advanced & Current"
+  | "Language & Localisation";
 
 export interface GlossaryTerm {
   /** URL segment. Must be unique and stable; it is the permalink. */
