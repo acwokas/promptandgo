@@ -1,6 +1,34 @@
 import { useEffect, useRef, useState } from "react";
 import { sb } from "../lib/auth-client";
 
+// Avatars are served from a public bucket, so an uploaded SVG is a script that runs on
+// whatever origin serves it. Only raster formats are accepted, and the stored extension
+// comes from this map rather than the user-supplied filename.
+const SAFE_IMAGE_TYPES: Record<string, string> = {
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/webp": "webp",
+  "image/gif": "gif",
+};
+const SAFE_ACCEPT = Object.keys(SAFE_IMAGE_TYPES).join(",");
+
+// f.type is browser-reported and trivially spoofed, so also check the leading bytes.
+// Markup signatures are rejected outright; otherwise require a known raster magic number.
+async function looksLikeRasterImage(f: File): Promise<boolean> {
+  const head = new Uint8Array(await f.slice(0, 64).arrayBuffer());
+  const text = new TextDecoder("utf-8", { fatal: false }).decode(head).trimStart().toLowerCase();
+  if (text.startsWith("<svg") || text.startsWith("<?xml") || text.startsWith("<!doctype") || text.startsWith("<script") || text.startsWith("<html")) {
+    return false;
+  }
+  const b = head;
+  const jpeg = b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff;
+  const png = b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4e && b[3] === 0x47;
+  const gif = b[0] === 0x47 && b[1] === 0x49 && b[2] === 0x46 && b[3] === 0x38;
+  const webp = b[0] === 0x52 && b[1] === 0x49 && b[2] === 0x46 && b[3] === 0x46 &&
+               b[8] === 0x57 && b[9] === 0x45 && b[10] === 0x42 && b[11] === 0x50;
+  return jpeg || png || gif || webp;
+}
+
 export default function AccountProfile() {
   const [user, setUser] = useState<any>(null);
   const [fullName, setFullName] = useState("");
@@ -38,7 +66,14 @@ export default function AccountProfile() {
     if (f.size > 4 * 1024 * 1024) { setErr("Image must be under 4 MB."); return; }
     setBusy(true); setErr(null); setMsg(null);
     try {
-      const ext = (f.name.split(".").pop() || "png").toLowerCase().replace(/[^a-z0-9]/g, "");
+      // Extension and content type are derived from a whitelist, never from f.name or f.type.
+      // SVG is excluded: it is an executable document, and the bucket serves public URLs.
+      const ext = SAFE_IMAGE_TYPES[f.type];
+      if (!ext) { setErr("Please use a JPEG, PNG, WebP or GIF image."); return; }
+      if (!(await looksLikeRasterImage(f))) {
+        setErr("That file's contents don't match its image type.");
+        return;
+      }
       const path = `${user.id}/avatar-${Date.now()}.${ext}`;
       const { error: upErr } = await sb().storage.from("avatars").upload(path, f, { upsert: true, contentType: f.type });
       if (upErr) throw upErr;
@@ -67,7 +102,7 @@ export default function AccountProfile() {
             ? <img src={avatarUrl} alt="" className="w-24 h-24 rounded-full object-cover border-4 border-background shadow-md" referrerPolicy="no-referrer" />
             : <div className="w-24 h-24 rounded-full bg-primary text-primary-foreground inline-flex items-center justify-center text-2xl font-bold shadow-md">{initials}</div>
           }
-          <input ref={fileRef} type="file" accept="image/png,image/jpeg,image/webp" onChange={onPickFile} className="hidden" />
+          <input ref={fileRef} type="file" accept={SAFE_ACCEPT} onChange={onPickFile} className="hidden" />
           <button type="button" onClick={() => fileRef.current?.click()} disabled={busy}
                   className="absolute -bottom-1 -right-1 w-9 h-9 rounded-full bg-primary text-primary-foreground border-2 border-background inline-flex items-center justify-center hover:bg-primary/90 disabled:opacity-50">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>

@@ -26,13 +26,43 @@ export const AvatarUpload = ({ onAvatarUpdate }: AvatarUploadProps) => {
         throw new Error("No user found");
       }
 
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${user.id}/avatar.${fileExt}`;
+      // Whitelist MIME + extension. SVG is a scripting vector - never allow.
+      const MIME_TO_EXT: Record<string, string> = {
+        'image/jpeg': 'jpg',
+        'image/png': 'png',
+        'image/webp': 'webp',
+        'image/gif': 'gif',
+      };
+      const safeExt = MIME_TO_EXT[file.type];
+      if (!safeExt) {
+        throw new Error("Unsupported image format. Please use JPEG, PNG, WebP, or GIF.");
+      }
+
+      // Magic-byte sniff: reject anything that starts with an SVG/XML/script signature
+      // even if the browser reported a safe MIME.
+      const head = new Uint8Array(await file.slice(0, 512).arrayBuffer());
+      const asText = new TextDecoder('utf-8', { fatal: false }).decode(head).toLowerCase().trimStart();
+      if (
+        asText.startsWith('<svg') ||
+        asText.startsWith('<?xml') ||
+        asText.startsWith('<!doctype svg') ||
+        asText.includes('<script')
+      ) {
+        throw new Error("File content did not match its declared image type.");
+      }
+
+      // Force server-side extension + content-type using the whitelisted values,
+      // NOT the user-supplied filename. Prevents .svg smuggled under .jpg.
+      const fileName = `${user.id}/avatar.${safeExt}`;
 
       // Upload file to Supabase Storage
       const { error: uploadError } = await supabase.storage
         .from('avatars')
-        .upload(fileName, file, { upsert: true });
+        .upload(fileName, file, {
+          upsert: true,
+          contentType: file.type,
+          cacheControl: '3600',
+        });
 
       if (uploadError) throw uploadError;
 
@@ -90,10 +120,11 @@ export const AvatarUpload = ({ onAvatarUpdate }: AvatarUploadProps) => {
       return;
     }
 
-    if (!file.type.startsWith('image/')) {
+    const ALLOWED = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif']);
+    if (!ALLOWED.has(file.type)) {
       toast({
         title: "Invalid file type",
-        description: "Please select an image file.",
+        description: "Please use JPEG, PNG, WebP, or GIF. SVG uploads are not allowed.",
         variant: "destructive"
       });
       return;
@@ -131,7 +162,7 @@ export const AvatarUpload = ({ onAvatarUpdate }: AvatarUploadProps) => {
       <Input
         ref={fileInputRef}
         type="file"
-        accept="image/*"
+        accept="image/jpeg,image/png,image/webp,image/gif"
         onChange={handleFileSelect}
         className="hidden"
       />

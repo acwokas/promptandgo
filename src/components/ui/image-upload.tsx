@@ -16,12 +16,21 @@ interface ImageUploadProps {
   disabled?: boolean;
 }
 
+// SVG is a scripting vector when served with image/svg+xml Content-Type. Never allow.
+const SAFE_IMAGE_MIME: Record<string, string> = {
+  'image/jpeg': 'jpg',
+  'image/png': 'png',
+  'image/webp': 'webp',
+  'image/gif': 'gif',
+};
+const SAFE_ACCEPT = 'image/jpeg,image/png,image/webp,image/gif';
+
 export const ImageUpload = ({
   onUpload,
   onRemove,
   currentImage,
   className,
-  accept = "image/*",
+  accept = SAFE_ACCEPT,
   maxSize = 5,
   disabled = false
 }: ImageUploadProps) => {
@@ -41,12 +50,40 @@ export const ImageUpload = ({
       return;
     }
 
+    // MIME whitelist. Rejects image/svg+xml and everything else.
+    const safeExt = SAFE_IMAGE_MIME[file.type];
+    if (!safeExt) {
+      toast({
+        title: 'Unsupported image format',
+        description: 'Please use JPEG, PNG, WebP, or GIF.',
+        variant: 'destructive'
+      });
+      return;
+    }
+
+    // Magic-byte sniff to catch smuggled SVG under a raster MIME.
+    const head = new Uint8Array(await file.slice(0, 512).arrayBuffer());
+    const asText = new TextDecoder('utf-8', { fatal: false }).decode(head).toLowerCase().trimStart();
+    if (
+      asText.startsWith('<svg') ||
+      asText.startsWith('<?xml') ||
+      asText.startsWith('<!doctype svg') ||
+      asText.includes('<script')
+    ) {
+      toast({
+        title: 'File content did not match its declared type',
+        description: 'The uploaded file appears to contain scripting content.',
+        variant: 'destructive'
+      });
+      return;
+    }
+
     setUploading(true);
     setUploadProgress(0);
 
     try {
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+      // Use whitelisted extension and force Content-Type. Do NOT trust the user filename.
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${safeExt}`;
       const filePath = `articles/${fileName}`;
 
       // Simulate progress for better UX
@@ -56,7 +93,10 @@ export const ImageUpload = ({
 
       const { error } = await supabase.storage
         .from('article-images')
-        .upload(filePath, file);
+        .upload(filePath, file, {
+          contentType: file.type,
+          cacheControl: '3600',
+        });
 
       clearInterval(progressInterval);
       setUploadProgress(100);
@@ -93,12 +133,12 @@ export const ImageUpload = ({
   const handleFileSelect = (files: FileList | null) => {
     if (files && files.length > 0) {
       const file = files[0];
-      if (file.type.startsWith('image/')) {
+      if (SAFE_IMAGE_MIME[file.type]) {
         uploadImage(file);
       } else {
         toast({
           title: 'Invalid file type',
-          description: 'Please select an image file',
+          description: 'Please use JPEG, PNG, WebP, or GIF. SVG uploads are not allowed.',
           variant: 'destructive'
         });
       }

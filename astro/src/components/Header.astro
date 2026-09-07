@@ -6,6 +6,7 @@ const navLinks = [
   { href: "/optimize", label: "Optimiser" },
   { href: "/pricing", label: "Pricing" },
   { href: "/tips", label: "Guides" },
+  { href: "/glossary", label: "Glossary" },
 ];
 function isActive(href: string): boolean {
   if (href === "/") return cur === "/";
@@ -71,6 +72,34 @@ function isActive(href: string): boolean {
 <script>
   import { sb } from "../lib/auth-client";
 
+  // user_metadata (full_name, avatar_url) is attacker-controlled: any signed-in user can
+  // set it to arbitrary text via the profile form. It lands in innerHTML below, so every
+  // interpolation must be escaped. Escapes quotes too — some sinks are attribute context.
+  function esc(value) {
+    if (value == null) return "";
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  // Escaping alone doesn't make a URL safe in src=: javascript:/data: still execute.
+  // Allow only http(s) absolute URLs and site-relative paths, then escape for the attribute.
+  function safeImageUrl(value) {
+    if (!value) return "";
+    const raw = String(value).trim();
+    if (/^\//.test(raw) && !/^\/\//.test(raw)) return esc(raw);
+    try {
+      const u = new URL(raw, window.location.origin);
+      if (u.protocol !== "http:" && u.protocol !== "https:") return "";
+      return esc(u.href);
+    } catch {
+      return "";
+    }
+  }
+
   function paint(user) {
     const desktopBtns = document.getElementById("auth-buttons-desktop");
     const desktopUser = document.getElementById("auth-user-desktop");
@@ -79,10 +108,10 @@ function isActive(href: string): boolean {
     if (!desktopBtns || !desktopUser) return;
 
     if (user) {
-      const email = user.email || "Account";
-      const avatar = user.user_metadata?.avatar_url || "";
-      const fullName = user.user_metadata?.full_name || user.user_metadata?.name || email.split("@")[0];
-      const initials = (fullName || email).slice(0, 2).toUpperCase();
+      const email = esc(user.email || "Account");
+      const avatar = safeImageUrl(user.user_metadata?.avatar_url);
+      const fullName = esc(user.user_metadata?.full_name || user.user_metadata?.name || (user.email || "Account").split("@")[0]);
+      const initials = esc(((user.user_metadata?.full_name || user.email || "")).slice(0, 2).toUpperCase());
       const avatarMarkup = avatar
         ? `<img src="${avatar}" alt="" class="w-8 h-8 rounded-full object-cover" referrerpolicy="no-referrer" />`
         : `<span class="w-8 h-8 rounded-full bg-primary text-primary-foreground inline-flex items-center justify-center text-xs font-bold">${initials}</span>`;

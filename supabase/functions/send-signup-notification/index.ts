@@ -20,6 +20,20 @@ interface SignupNotificationRequest {
   };
 }
 
+// HTML-escape untrusted user input before interpolation.
+// Prevents attackers from injecting HTML/JS via profile fields into the notification email.
+const escapeHtml = (input: string | undefined | null): string => {
+  if (input == null) return '';
+  return String(input)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/`/g, '&#96;')
+    .replace(/=/g, '&#61;');
+};
+
 const handler = async (req: Request): Promise<Response> => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -27,29 +41,38 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   if (req.method !== "POST") {
-    return new Response("Method not allowed", { 
-      status: 405, 
-      headers: corsHeaders 
+    return new Response("Method not allowed", {
+      status: 405,
+      headers: corsHeaders
     });
   }
 
   try {
     const { user }: SignupNotificationRequest = await req.json();
-    
+
     console.log("New signup notification:", user);
+
+    // All user-supplied fields are escaped before interpolation.
+    const safeEmail = escapeHtml(user.email);
+    const safeName = escapeHtml(user.name) || 'Not provided';
+    const safeSignupMethod = escapeHtml(user.signupMethod);
+    const safeIndustry = escapeHtml(user.industry);
+    const safeProjectType = escapeHtml(user.projectType);
+    const safePreferredTone = escapeHtml(user.preferredTone);
+    const safeDesiredOutcome = escapeHtml(user.desiredOutcome);
 
     // Create email content with user details
     const userDetailsHtml = `
       <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
         <h3 style="margin: 0 0 15px 0; color: #333;">User Details:</h3>
         <table style="width: 100%; border-collapse: collapse;">
-          <tr><td style="padding: 5px 10px 5px 0; font-weight: bold;">Email:</td><td style="padding: 5px 0;">${user.email}</td></tr>
-          <tr><td style="padding: 5px 10px 5px 0; font-weight: bold;">Name:</td><td style="padding: 5px 0;">${user.name || 'Not provided'}</td></tr>
-          <tr><td style="padding: 5px 10px 5px 0; font-weight: bold;">Signup Method:</td><td style="padding: 5px 0;">${user.signupMethod}</td></tr>
-          ${user.industry ? `<tr><td style="padding: 5px 10px 5px 0; font-weight: bold;">Industry:</td><td style="padding: 5px 0;">${user.industry}</td></tr>` : ''}
-          ${user.projectType ? `<tr><td style="padding: 5px 10px 5px 0; font-weight: bold;">Use Case:</td><td style="padding: 5px 0;">${user.projectType}</td></tr>` : ''}
-          ${user.preferredTone ? `<tr><td style="padding: 5px 10px 5px 0; font-weight: bold;">Preferred Tone:</td><td style="padding: 5px 0;">${user.preferredTone}</td></tr>` : ''}
-          ${user.desiredOutcome ? `<tr><td style="padding: 5px 10px 5px 0; font-weight: bold;">Desired Outcome:</td><td style="padding: 5px 0;">${user.desiredOutcome}</td></tr>` : ''}
+          <tr><td style="padding: 5px 10px 5px 0; font-weight: bold;">Email:</td><td style="padding: 5px 0;">${safeEmail}</td></tr>
+          <tr><td style="padding: 5px 10px 5px 0; font-weight: bold;">Name:</td><td style="padding: 5px 0;">${safeName}</td></tr>
+          <tr><td style="padding: 5px 10px 5px 0; font-weight: bold;">Signup Method:</td><td style="padding: 5px 0;">${safeSignupMethod}</td></tr>
+          ${safeIndustry ? `<tr><td style="padding: 5px 10px 5px 0; font-weight: bold;">Industry:</td><td style="padding: 5px 0;">${safeIndustry}</td></tr>` : ''}
+          ${safeProjectType ? `<tr><td style="padding: 5px 10px 5px 0; font-weight: bold;">Use Case:</td><td style="padding: 5px 0;">${safeProjectType}</td></tr>` : ''}
+          ${safePreferredTone ? `<tr><td style="padding: 5px 10px 5px 0; font-weight: bold;">Preferred Tone:</td><td style="padding: 5px 0;">${safePreferredTone}</td></tr>` : ''}
+          ${safeDesiredOutcome ? `<tr><td style="padding: 5px 10px 5px 0; font-weight: bold;">Desired Outcome:</td><td style="padding: 5px 0;">${safeDesiredOutcome}</td></tr>` : ''}
         </table>
       </div>
     `;
@@ -57,7 +80,7 @@ const handler = async (req: Request): Promise<Response> => {
     const emailResponse = await resend.emails.send({
       from: "promptandgo <hello@promptandgo.ai>",
       to: ["hello@promptandgo.ai"],
-      subject: `🎉 New User Signup - ${user.name || user.email}`,
+      subject: `🎉 New User Signup - ${safeName === 'Not provided' ? safeEmail : safeName}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <h1 style="color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px;">

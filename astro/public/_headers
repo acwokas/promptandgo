@@ -1,0 +1,25 @@
+# === PromptAndGo security headers ===
+# Cloudflare Pages reads this file the same way it reads _redirects.
+#
+# ENFORCED policy below is deliberately narrower than a full lockdown. These directives
+# cannot break rendering: the site embeds no plugins, sets no <base>, and is never framed
+# by us. They close base-tag hijacking, plugin-based script execution, and clickjacking.
+#
+# REPORT-ONLY policy is the one we actually want (default-src 'self'; script-src 'self').
+# It is not enforced yet because the site still ships inline scripts that it would kill:
+#   - astro/src/components/Header.astro:63  (is:inline - mobile menu toggle)
+#   - astro/src/layouts/Layout.astro:49     (is:inline)
+#   - inline <script type="application/ld+json"> SEO blocks
+# Enforcing it as-is would break the mobile nav in production.
+#
+# To promote it: drop `is:inline` so Astro bundles those scripts to /_astro/*.js, confirm
+# the report-only policy logs zero violations, then replace the enforced value below with
+# the report-only value and delete the report-only line.
+
+/*
+  Content-Security-Policy: object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'
+  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://sszxxmxqidkpkhlkstgs.supabase.co; font-src 'self' data:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
