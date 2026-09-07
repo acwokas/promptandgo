@@ -5,9 +5,14 @@ import { sbSelect } from "@astro/lib/supabase-rest";
 let articles: any[] = [];
 let fetchError: string | null = null;
 try {
+  // Staggered publishing: a row can be is_published=true with a future
+  // published_date so it's queued, not live. It only becomes visible once a
+  // build runs on or after that date (this site is static output, so "now"
+  // is the build time, not request time). See docs/CONTENT_PIPELINE.md.
+  const nowIso = new Date().toISOString();
   articles = await sbSelect("articles", {
     select: "slug,title,synopsis,meta_description,thumbnail_url,published_date,focus_keyword",
-    filter: "is_published=eq.true",
+    filter: `is_published=eq.true&published_date=lte.${nowIso}`,
     order: "published_date.desc",
   });
 } catch (e: any) {
