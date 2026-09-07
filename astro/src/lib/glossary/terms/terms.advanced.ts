@@ -73,4 +73,38 @@ export const AdvancedTerms: GlossaryTerm[] = [
     related: ["hallucination", "context-window", "prompt-chaining"],
     updated: "2026-08-27",
   },
+  {
+    slug: "embedding",
+    term: "Embedding",
+    aliases: ["Embedding vector", "Vector embedding"],
+    category: "Advanced & Current",
+    shortDefinition: "An embedding is a list of numbers that represents a piece of text so that pieces with similar meaning end up numerically close together, which is what lets AI systems search and compare text by meaning rather than exact keywords.",
+    body: [
+      "Google's Machine Learning Glossary defines an embedding vector simply as a representation of an input as an array of floating-point values. What makes that useful is that the position of those numbers is not arbitrary: text with related meaning gets placed near other related text in that numerical space, so a search for 'cheap flights to Tokyo' can match a document that says 'affordable airfare to Japan' even though barely a word overlaps.",
+      "This is the mechanism behind most modern AI search and retrieval features, including retrieval-augmented generation. When you upload documents to a chatbot or use a 'search my files' feature, the system is typically converting your documents into embeddings once, then converting your question into an embedding at query time and finding the closest matches by distance in that numerical space, rather than by literal keyword matching.",
+      "You don't need to generate embeddings yourself to benefit from them. They matter to know about because they explain why AI search tools can find relevant information even when you don't use the exact words in the source document, and why the quality of that underlying embedding step affects how good the retrieval feels.",
+    ],
+    sources: [
+      { label: "Google: Machine Learning Glossary, embedding vector", url: "https://developers.google.com/machine-learning/glossary/language#embedding-vector" },
+    ],
+    related: ["retrieval-augmented-generation", "context-window"],
+    updated: "2026-09-07",
+  },
+  {
+    slug: "fine-tuning",
+    term: "Fine-Tuning",
+    aliases: ["Model fine-tuning"],
+    category: "Advanced & Current",
+    shortDefinition: "Fine-tuning means training an existing AI model further on your own examples so it consistently produces a specific style, format, or behaviour, instead of relying on instructions or examples in every prompt.",
+    body: [
+      "Where prompting and few-shot examples steer a model at the moment you ask it something, fine-tuning changes the model itself ahead of time, using a set of your own input and output pairs. OpenAI describes the goal directly: fine-tuning lets you take a base model, provide the kinds of inputs and outputs you expect in your application, and get a model that excels at that task without needing the instructions repeated every time.",
+      "For most people writing prompts day to day, fine-tuning is not the first tool to reach for. A well-built system prompt with a few good examples solves the majority of formatting and tone problems, and it's far faster to change than a fine-tuned model, which needs a fresh training run every time you want to adjust it. Fine-tuning tends to make more sense once you're sending the same kind of request thousands of times and want to shrink the prompt itself (and its token cost), or once you need a smaller, cheaper model to reliably match the quality of a larger one on one narrow task.",
+      "In practice, most small businesses and individual users never need to fine-tune anything. It's worth knowing the term mainly so you can recognise when a vendor or developer proposes it instead of the much cheaper option of simply writing a better prompt.",
+    ],
+    sources: [
+      { label: "OpenAI: Model optimization guide (fine-tuning)", url: "https://developers.openai.com/api/docs/guides/model-optimization" },
+    ],
+    related: ["prompt-engineering", "few-shot-prompting"],
+    updated: "2026-09-07",
+  },
 ];
