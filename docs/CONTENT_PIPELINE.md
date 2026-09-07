@@ -135,6 +135,54 @@ Builds & deployments > Deploy hooks). The workflow fails loudly with an
 explanatory error if that secret is missing; nothing was set up here that
 could touch the live site without that key existing first.
 
+## Automated generation
+
+Added 7 Sept 2026. Until this point every draft in the pipeline had been
+produced by hand, one Agent dispatch at a time, in an interactive Claude
+Code session. That's the gap the 27 Aug work left open: a working gate and
+a working migration builder, but nothing that ran itself.
+
+**Generation must never call the metered Anthropic API directly.** That
+key is dead by design on this machine; anything that calls it fails
+silently rather than billing per token. All drafting happens through the
+subscription OAuth route instead, which in practice means: a scheduled
+Claude Code task dispatches an `Agent` (model `claude-sonnet-5`, the
+default tier per the estate's model-choice policy; content generation is
+ordinary multi-file feature work, not a case for Opus) to research and
+draft, exactly the way the two existing tips were produced on 27 Aug.
+
+A scheduled task named `promptandgo-weekly-tip` runs this every week (see
+`docs/CONTENT_PLAN.md` for the cadence reasoning). Each run:
+
+1. Fetches `origin/astro` fresh (the task has no memory of prior runs).
+2. Reads `content/tips/CALENDAR.md`, takes the next undrafted backlog
+   entry, and checks it against every already-published slug listed at
+   the bottom of that file.
+3. Dispatches one `Agent` (model `claude-sonnet-5`) with a brief matching
+   the shape used for the first two tips: the topic, the hard gate
+   requirements verbatim, and an explicit instruction to use
+   WebSearch/WebFetch for real citations rather than inventing figures.
+4. Saves the result to `content/tips/drafts/<slug>.json`, runs
+   `node scripts/content/build-tip-migration.mjs` against it.
+5. On a gate failure, attempts exactly one repair pass addressing the
+   specific failing checks, then re-gates. A second failure stops the
+   run; it does not retry indefinitely or loosen anything.
+6. On success: creates a branch off the freshly-fetched `astro`
+   (`content/tip-<date>`), commits the draft, the migration, and the
+   updated `CALENDAR.md` (entry moved from backlog to queued), pushes it,
+   and opens a pull request against `astro`. It does not merge its own
+   PR and does not run `supabase db push` — see "Publishing stays a
+   separate, deliberate step" in `docs/CONTENT_PLAN.md`.
+7. Writes a one-line result (pass and PR link, or the specific failure)
+   to `content/tips/generation-log.md` in the same commit, so the outcome
+   is visible in the repo rather than only in a chat transcript that may
+   not survive a crashed session.
+
+To change the cadence, edit the scheduled task directly (list it with
+`mcp__scheduled-tasks__list_scheduled_tasks`, or from a fresh Claude Code
+session ask to see/update the `promptandgo-weekly-tip` task) and update
+the reasoning in `docs/CONTENT_PLAN.md` to match.
+
 ## Files
 
 ```
