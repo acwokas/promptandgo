@@ -4,9 +4,13 @@ import { sbSelect } from "@astro/lib/supabase-rest";
 
 export async function getStaticPaths() {
   try {
+    // Keep in sync with the same staggered-publishing filter in tips.astro:
+    // a row can be is_published=true with a future published_date so it's
+    // queued, not live, until a build runs on or after that date.
+    const nowIso = new Date().toISOString();
     const articles = await sbSelect("articles", {
       select: "slug,title,content,synopsis,meta_title,meta_description,thumbnail_url,focus_keyword,keyphrases,published_date",
-      filter: "is_published=eq.true",
+      filter: `is_published=eq.true&published_date=lte.${nowIso}`,
     });
     return articles.map(a => ({ params: { slug: a.slug }, props: a }));
   } catch (e) {

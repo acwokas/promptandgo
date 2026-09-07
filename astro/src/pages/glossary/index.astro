@@ -1,0 +1,62 @@
+---
+import Layout from "@astro/layouts/Layout.astro";
+import { ALL_TERMS, CATEGORY_ORDER, termsByCategory } from "@astro/lib/glossary";
+
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "DefinedTermSet",
+  name: "AI Prompting Glossary",
+  description: "Plain-language definitions of AI prompting terms: prompting techniques, model parameters, and the vocabulary used across ChatGPT, Claude, and Gemini.",
+  url: "https://www.promptandgo.ai/glossary",
+  hasDefinedTerm: ALL_TERMS.map((t) => ({
+    "@type": "DefinedTerm",
+    name: t.term,
+    url: `https://www.promptandgo.ai/glossary/${t.slug}`,
+  })),
+};
+---
+<Layout
+  title="AI Prompting Glossary: Plain-Language Definitions — PromptAndGo"
+  description="Clear, sourced definitions of AI prompting terms: zero-shot, few-shot, chain-of-thought, system prompts, temperature, and more. For ChatGPT, Claude, and Gemini."
+  canonical="https://www.promptandgo.ai/glossary"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(ld)}></script>
+
+  <section class="relative overflow-hidden">
+    <div class="relative container max-w-6xl pt-16 md:pt-24 pb-10">
+      <div class="max-w-2xl">
+        <span class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Reference</span>
+        <h1 class="mt-3 text-4xl md:text-6xl font-extrabold tracking-tight">Prompting <span class="text-gradient-brand">glossary</span>.</h1>
+        <p class="mt-5 text-lg text-foreground/70">Plain-language, sourced definitions of the terms that come up when you're writing prompts for ChatGPT, Claude, Gemini, and other AI models.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container max-w-6xl pb-20">
+    {CATEGORY_ORDER.map((category) => {
+      const terms = termsByCategory(category);
+      if (terms.length === 0) return null;
+      return (
+        <div class="mb-14">
+          <h2 class="text-xl md:text-2xl font-bold tracking-tight mb-5">{category}</h2>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {terms.map((t) => (
+              <a href={`/glossary/${t.slug}`} class="group card-lift rounded-2xl border border-border/60 bg-card p-5 flex flex-col">
+                <h3 class="text-base font-bold tracking-tight">{t.term}</h3>
+                <p class="mt-2 text-sm text-foreground/70 leading-relaxed flex-1 line-clamp-3">{t.shortDefinition}</p>
+                <div class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+                  Read definition
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="transition-transform group-hover:translate-x-0.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      );
+    })}
+  </section>
+
+  <style>
+    .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  </style>
+</Layout>

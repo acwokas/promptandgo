@@ -1,0 +1,36 @@
+name: Scheduled rebuild for staggered content
+
+# Content is scheduled by published_date on rows already in the articles
+# table (see docs/CONTENT_PIPELINE.md): a row can be is_published=true with
+# a future published_date, and astro/src/pages/tips.astro and
+# tips/[slug].astro only show rows where published_date <= build time.
+# Because the site builds to static output, "now" only advances on a
+# rebuild, so a queued piece needs a rebuild after its date to actually go
+# live. This workflow is that rebuild, three times a week, matching the
+# 2-3 pieces/week cadence the pipeline is designed for.
+#
+# SETUP NEEDED (one-time, manual): add a repository secret named
+# CLOUDFLARE_DEPLOY_HOOK_URL with a Cloudflare Pages deploy hook URL for the
+# promptandgo project (Cloudflare Pages > your project > Settings > Builds &
+# deployments > Deploy hooks). This workflow cannot create that secret or
+# the hook itself; nothing runs until it's added.
+on:
+  schedule:
+    - cron: "0 1 * * 1,3,5" # Mon/Wed/Fri, 01:00 UTC
+  workflow_dispatch: {}
+
+jobs:
+  trigger-rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Cloudflare Pages deploy hook
+        run: |
+          if [ -z "${{ secrets.CLOUDFLARE_DEPLOY_HOOK_URL }}" ]; then
+            echo "::error::CLOUDFLARE_DEPLOY_HOOK_URL secret is not set. See the comment at the top of this workflow for setup."
+            exit 1
+          fi
+          status=$(curl -s -o /dev/null -w "%{http_code}" -X POST "${{ secrets.CLOUDFLARE_DEPLOY_HOOK_URL }}")
+          echo "deploy hook responded with HTTP $status"
+          if [ "$status" -ge 300 ]; then
+            exit 1
+          fi
