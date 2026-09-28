@@ -1,22 +1,9 @@
 ---
 import Layout from "@astro/layouts/Layout.astro";
-type GlossaryTerm = { term: string; def: string; source?: string };
-const terms: GlossaryTerm[] = [
-  { term: "Prompt", def: "The instruction or question you send to an AI model. Better prompts produce better outputs; the craft of writing them is sometimes called prompt engineering." },
-  { term: "System prompt", def: "An instruction that frames the AI's role, persona, or rules across the whole conversation, separately from the user's individual messages." },
-  {"term": "Token", "def": "A unit a model uses to process text, such as a character, part of a word, a word or punctuation. The count depends on the model, encoding and language.", "source": "https://help.openai.com/en/articles/4936856-understanding-and-counting-tokens"} as GlossaryTerm,
-  {"term": "Context window", "def": "The token limit for information a model can work with in a request. Check the model documentation for how input, output and any internal reasoning tokens count towards its limits.", "source": "https://help.openai.com/en/articles/4936856-understanding-and-counting-tokens"} as GlossaryTerm,
-  {"term": "Temperature", "def": "A sampling setting, where supported, that changes output variability. Higher values generally increase randomness; lower values favour more predictable choices. It is not a factual-accuracy score.", "source": "https://developers.openai.com/api/reference/cli/resources/responses/methods/create"} as GlossaryTerm,
-  { term: "Few-shot prompting", def: "Including a small number of input/output examples in the prompt to teach the model the pattern you want." },
-  {"term": "Chain of thought", "def": "Intermediate reasoning steps used to work towards an answer. Prompting for written steps is model-dependent: OpenAI advises that its reasoning models do not need instructions to think step by step.", "source": "https://developers.openai.com/api/docs/guides/reasoning-best-practices"} as GlossaryTerm,
-  {"term": "Hallucination", "def": "A plausible-sounding but inaccurate or fabricated model output. Providing sources can help, but a citation or confident answer does not establish that a claim is correct.", "source": "https://openai.com/index/webgpt/"} as GlossaryTerm,
-  {"term": "RAG (Retrieval-Augmented Generation)", "def": "An approach that retrieves relevant information and supplies it as context for generation. The retrieved material gives the model evidence to use; it does not by itself verify the answer.", "source": "https://developers.openai.com/api/docs/guides/prompt-engineering"} as GlossaryTerm,
-  {"term": "Fine-tuning", "def": "Additional training that adapts a pretrained model for a task or desired behaviour. Whether it helps should be assessed with representative evaluations alongside prompting and retrieval options.", "source": "https://developers.openai.com/api/docs/guides/model-optimization"} as GlossaryTerm,
-  {"term": "Embedding", "def": "A numerical vector representation of content. Text embeddings can support semantic search by comparing representations of a query and candidate passages.", "source": "https://developers.openai.com/api/docs/guides/embeddings"} as GlossaryTerm,
-  {"term": "Keigo (敬語)", "def": "Japanese respectful and polite language. Japan's Agency for Cultural Affairs distinguishes five categories: respectful language, humble language I, humble language II, polite language and beautifying language.", "source": "https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/keigo/chapter2/detail.html"} as GlossaryTerm,
-  { term: "Honorifics (Korean)", def: "Korean speech levels (-습니다, -해요, -해, etc.) that mark formality and the speaker-listener relationship. Vital in business communication." },
-  { term: "Code-switching", def: "Mixing languages within a sentence or paragraph, common in Singapore (Singlish), Malaysia (Manglish), Philippines (Taglish), and many other multilingual contexts." },
-];
+import { loadApprovedGlossary } from "../../scripts/glossary-approval.mjs";
+const glossary = loadApprovedGlossary();
+type GlossaryTerm = { term: string; def: string; source: string };
+const terms: GlossaryTerm[] = glossary.terms;
 const groups = terms.reduce((acc: Record<string, typeof terms>, t) => {
   const k = t.term[0].toUpperCase();
   acc[k] = acc[k] || [];
@@ -25,13 +12,13 @@ const groups = terms.reduce((acc: Record<string, typeof terms>, t) => {
 }, {});
 const letters = Object.keys(groups).sort();
 ---
-<Layout title="AI Glossary | PromptAndGo" description="Plain-English definitions for AI prompting terms.">
+<Layout title={glossary.title} description={glossary.description}>
   <section class="relative overflow-hidden">
     <div class="brand-orb w-[400px] h-[400px] -top-20 -left-20" style="background: hsl(var(--brand-purple));"></div>
     <div class="relative container max-w-4xl pt-16 md:pt-20 pb-8">
       <span class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Glossary</span>
-      <h1 class="mt-3 text-4xl md:text-6xl font-extrabold tracking-tight">AI in <span class="text-gradient-brand">plain English</span>.</h1>
-      <p class="mt-5 text-lg text-foreground/70 max-w-xl">Definitions for the terms you'll see across our prompts and guides.</p>
+      <h1 class="mt-3 text-4xl md:text-6xl font-extrabold tracking-tight">{glossary.heading}</h1>
+      <p class="mt-5 text-lg text-foreground/70 max-w-xl">{glossary.introduction}</p>
     </div>
   </section>
 

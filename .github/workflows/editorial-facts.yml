@@ -1,0 +1,19 @@
+name: Editorial factual integrity
+on:
+  pull_request:
+    branches: [astro]
+  push:
+    branches: [astro]
+permissions:
+  contents: read
+jobs:
+  glossary-facts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          package-manager-cache: false
+      - run: node --test astro/scripts/glossary-approval.test.mjs
+      - run: node astro/scripts/check-glossary-facts.mjs
