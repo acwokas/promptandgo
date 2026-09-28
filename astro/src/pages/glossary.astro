@@ -1,7 +1,10 @@
 ---
 import Layout from "@astro/layouts/Layout.astro";
-import { loadApprovedGlossary } from "../../scripts/glossary-approval.mjs";
-const glossary = loadApprovedGlossary();
+import { verifiedGlossary } from "../../scripts/glossary-approval.mjs";
+import raw from "../content/editorial/glossary.json?raw";
+import receipt from "../../ops/editorial/approvals/glossary.json";
+import publicKey from "../../ops/editorial/static-editorial-public-key.pem?raw";
+const glossary = verifiedGlossary({raw,receipt,publicKey});
 type GlossaryTerm = { term: string; def: string; source: string };
 const terms: GlossaryTerm[] = glossary.terms;
 const groups = terms.reduce((acc: Record<string, typeof terms>, t) => {

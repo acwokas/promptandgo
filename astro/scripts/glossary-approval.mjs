@@ -7,6 +7,9 @@ export function loadApprovedGlossary({root=fileURLToPath(new URL('../',import.me
  const raw=readFileSync(join(root,'src/content/editorial/glossary.json'),'utf8');
  const receipt=JSON.parse(readFileSync(join(root,'ops/editorial/approvals/glossary.json'),'utf8'));
  const publicKey=readFileSync(join(root,'ops/editorial/static-editorial-public-key.pem'),'utf8');
+ return verifiedGlossary({raw,receipt,publicKey,now});
+}
+export function verifiedGlossary({raw,receipt,publicKey,now=new Date()}) {
  verifyStaticProof({raw,repository:'acwokas/promptandgo',path:GLOSSARY_PATH,receipt,publicKey,now});
  const data=JSON.parse(raw);
  for(const key of ['title','description','heading','introduction'])if(typeof data[key]!=='string'||!data[key].trim())throw Error('Missing glossary '+key);
