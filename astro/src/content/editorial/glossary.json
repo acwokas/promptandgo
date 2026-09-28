@@ -26,7 +26,7 @@
     },
     {
       "term": "Temperature",
-      "def": "A sampling setting, where supported, that changes output variability. Higher values generally increase randomness; lower values favour more predictable choices. It is not a factual-accuracy score.",
+      "def": "A sampling setting, where supported, that changes output variability. Higher values generally increase randomness; lower values favour more predictable choices. Check factual claims separately against reliable sources.",
       "source": "https://developers.openai.com/api/reference/cli/resources/responses/methods/create"
     },
     {
