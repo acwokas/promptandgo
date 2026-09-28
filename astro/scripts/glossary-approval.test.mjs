@@ -17,3 +17,14 @@ test('expired, different-repository and different-path approvals hold',()=>fixtu
 test('forged signature and duplicate JSON keys are held',()=>fixture(({approve,file,receiptPath,opts})=>{approve();const receipt=JSON.parse(readFileSync(receiptPath));receipt.signature=Buffer.alloc(64).toString('base64');writeFileSync(receiptPath,JSON.stringify(receipt));assert.throws(()=>loadApprovedGlossary(opts));approve();writeFileSync(file,'{"title":"First","title":"Second"}\n');assert.throws(()=>loadApprovedGlossary(opts));}));
 test('even signed malformed or unsourced entries cannot render',()=>fixture(({data,approve,opts})=>{for(const change of [d=>delete d.terms[0].source,d=>d.terms.push({...d.terms[0]}),d=>d.terms[0].source='javascript:alert(1)',d=>d.heading='']){const changed=structuredClone(data);change(changed);approve(changed);assert.throws(()=>loadApprovedGlossary(opts));}}));
 test('normal build and direct Astro page both enforce approval',()=>{const pkg=JSON.parse(readFileSync(new URL('../package.json',import.meta.url)));assert.match(pkg.scripts.build,/check-glossary-facts.mjs && astro build/);const page=readFileSync(new URL('../src/pages/glossary.astro',import.meta.url),'utf8');assert.match(page,/const glossary = verifiedGlossary\(\{raw,receipt,publicKey\}\)/);assert.match(page,/const terms: GlossaryTerm\[\] = glossary.terms/);assert.doesNotMatch(page,/const terms.*= \[/);});
+
+
+test('text-only approvals cannot cover reference graphics or nested visual metadata',()=>{
+ const body='---\ntitle: Synthetic test\ndraft: true\n---\nFictional prose.\n';
+ for(const media of ['![chart][ref]','![chart]','<svg></svg>','<canvas></canvas>','<object data="x"></object>'])assert.throws(()=>staticDocument(body+media),/visual media/);
+ for(const metadata of ['images: ["https://example.com/x.png"]','"heroImage": "https://example.com/x.png"',"assets: {cover: 'https://example.com/x.png'}",'hero-image: "https://example.com/x.png"'])assert.throws(()=>staticDocument(body.replace('draft: true','draft: true\n'+metadata)),/image metadata/);
+});
+
+test('nested JSON image metadata cannot inherit a text-only glossary proof',()=>{
+ for(const value of [{images:['https://example.com/x.png']},{terms:[{heroImage:'https://example.com/x.png'}]},{assets:{'hero-image':'https://example.com/x.png'}}])assert.throws(()=>staticDocument(JSON.stringify(value,null,2)+'\n',GLOSSARY_PATH),/image metadata/);
+});

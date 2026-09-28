@@ -3,12 +3,21 @@
 // quotations, reference links and all other frontmatter remain in the digest.
 import {createHash, verify} from 'node:crypto';
 export const STATIC_PROOF_VERSION='estate-static-editorial-v1';
+function assertStaticTextMedia(raw, value) {
+ if(/<(?:script|style|iframe|audio|video|svg|picture|canvas|object|embed)\b|!\[[^\]]*\]|<img\b/i.test(raw))throw Error('Static text review cannot certify executable or visual media');
+ const mediaKey=key=>/(?:^|_)(?:images?|imgs?|photos?|cover|hero|thumbnail|thumb|gallery)(?:_url|_src)?$/.test(key.replace(/[A-Z]/g,c=>'_'+c.toLowerCase()).replaceAll('-','_'));
+ function visit(node){if(!node||typeof node!=='object')return;for(const [key,item]of Object.entries(node)){if(mediaKey(key)&&item!=null&&item!==''&&!(Array.isArray(item)&&!item.length))throw Error('Static text review cannot certify image metadata');visit(item);}}
+ if(value)visit(value);
+ const frontmatter=raw.match(/^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/)?.[1];
+ if(frontmatter)for(const pair of frontmatter.matchAll(/(?:^|[\s,{])["']?([A-Za-z_][\w-]*)["']?\s*:/g)){if(mediaKey(pair[1]))throw Error('Static text review cannot certify image metadata');}
+}
+
 export function staticDocument(raw, path = '') {
  if(typeof raw!=='string'||Buffer.byteLength(raw)>48000||raw.includes('\0'))throw Error('Unsupported static document');
  if(path==='astro/src/content/editorial/glossary.json'){
   const value=JSON.parse(raw);
   if(!value||Array.isArray(value)||typeof value!=='object'||raw!==JSON.stringify(value,null,2)+'\n')throw Error('Canonical JSON object required; duplicate or ambiguous keys are not allowed');
-  if(/<(?:script|style|iframe|audio|video)\b|!\[[^\]]*\]\(|<img\b/i.test(raw))throw Error('Static text review cannot certify executable or visual media');
+ assertStaticTextMedia(raw,value);
   return {canonical:raw,draft:false,sha256:createHash('sha256').update(raw).digest('hex')};
  }
  const match=raw.match(/^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/);
@@ -18,7 +27,7 @@ export function staticDocument(raw, path = '') {
  // Preserve all bytes except this single exact field value. Even whitespace
  // elsewhere changes the proof. Do not parse YAML and silently omit fields.
  const canonical=raw.slice(0,match[0].length).replace(/^draft: (?:true|false)$/m,'draft: [operational]')+raw.slice(match[0].length);
- if(/<(?:script|style|iframe|audio|video)\b|!\[[^\]]*\]\(|<img\b/i.test(raw))throw Error('Static text review cannot certify executable or visual media');
+ assertStaticTextMedia(raw);
  return {canonical,draft:drafts[0]==='draft: true',sha256:createHash('sha256').update(canonical).digest('hex')};
 }
 export function staticIdentity(repository,path) {
