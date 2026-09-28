@@ -1,0 +1,13 @@
+{
+  "proof": {
+    "version": "estate-static-editorial-v1",
+    "repository": "acwokas/promptandgo",
+    "path": "astro/src/content/editorial/glossary.json",
+    "document_sha256": "a35aaf08c4c4fc2fbf26c1ec51863c3724634ec90a91bd7b16d45a021f21c31f",
+    "review_sha256": "e7ee53b488c9492ff3c17a88323dc21ca26060d12dbbb6feeb14c417a38fc4f4",
+    "source_sha256": "a264460797e44c4dd1c5c92299f6256442184ba0ac01c978b8123094dba06a4c",
+    "reviewed_at": "2026-09-28T07:41:40.858Z",
+    "expires_at": "2026-10-05T07:41:40.858Z"
+  },
+  "signature": "PU19xYZz70lJuPUx6La4pP1/mqEQJYyWJQMZYHSDt9U1W13+2oOBqGr89fbGbfq3WRQamy6sFxqk2z5wPfPDCA=="
+}
