@@ -94,9 +94,7 @@ User-agent: MJ12bot
 Disallow: /
 
 # Sitemap locations
-Sitemap: https://promptandgo.ai/sitemap.xml
-Sitemap: https://promptandgo.ai/rss.xml
+Sitemap: https://www.promptandgo.ai/sitemap-index.xml
 
 # Request rate
 Request-rate: 1/1s
-
