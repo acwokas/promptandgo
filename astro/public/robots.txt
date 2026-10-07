@@ -49,23 +49,6 @@ Allow: /*.woff2$
 Allow: /*.ttf$
 Allow: /*.eot$
 
-# Specific rules for major search engines
-User-agent: Googlebot
-Crawl-delay: 1
-Allow: /
-
-User-agent: Bingbot
-Crawl-delay: 1
-Allow: /
-
-User-agent: Slurp
-Crawl-delay: 2
-Allow: /
-
-User-agent: DuckDuckBot
-Crawl-delay: 1
-Allow: /
-
 # AI Chatbot crawlers
 User-agent: ChatGPT-User
 Allow: /
