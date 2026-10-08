@@ -38,4 +38,4 @@
 # Unknown routes will fall through to the 404, which is fine for SEO.
 # We do NOT add a wildcard SPA fallback here because that would break
 # 404s for pages that don't exist (bad for SEO).
-
+/sitemap.xml /sitemap-index.xml 301
