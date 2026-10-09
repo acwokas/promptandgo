@@ -3,16 +3,14 @@ import Layout from "@astro/layouts/Layout.astro";
 import { sbSelect } from "@astro/lib/supabase-rest";
 
 export async function getStaticPaths() {
-  try {
-    const articles = await sbSelect("articles", {
-      select: "slug,title,content,synopsis,meta_title,meta_description,thumbnail_url,focus_keyword,keyphrases,published_date",
-      filter: "is_published=eq.true",
-    });
-    return articles.map(a => ({ params: { slug: a.slug }, props: a }));
-  } catch (e) {
-    console.error("tips/[slug] getStaticPaths failed:", e);
-    return [];
+  const articles = await sbSelect("articles", {
+    select: "slug,title,content,synopsis,meta_title,meta_description,thumbnail_url,focus_keyword,keyphrases,published_date",
+    filter: "is_published=eq.true",
+  });
+  if (!Array.isArray(articles) || articles.length === 0) {
+    throw new Error("Refusing to deploy an empty published tips archive");
   }
+  return articles.map(a => ({ params: { slug: a.slug }, props: a }));
 }
 
 const article = Astro.props as any;
@@ -42,7 +40,7 @@ if (!contentLooksLikeHtml) {
     .replace(/^/, '<p>') + '</p>';
 }
 ---
-<Layout title={`${title} — PromptAndGo`} description={description} ogImage={article.thumbnail_url || undefined}>
+<Layout title={`${title} | PromptAndGo`} description={description} ogImage={article.thumbnail_url || undefined}>
   <section class="relative overflow-hidden">
     
     <div class="relative container max-w-3xl pt-12 md:pt-16 pb-6">

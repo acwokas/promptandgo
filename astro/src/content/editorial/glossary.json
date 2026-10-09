@@ -1,0 +1,78 @@
+{
+  "title": "AI Glossary | PromptAndGo",
+  "description": "Plain-English definitions for AI prompting terms.",
+  "heading": "AI in plain English.",
+  "introduction": "Definitions for the terms you'll see across our prompts and guides.",
+  "terms": [
+    {
+      "term": "Prompt",
+      "def": "Input supplied to an AI model, which can include instructions, a question, examples and supporting context.",
+      "source": "https://developers.openai.com/api/docs/guides/prompt-engineering.md"
+    },
+    {
+      "term": "System prompt",
+      "def": "Instructions supplied separately from the user’s message to guide an AI assistant’s behaviour. Message roles and how to use them depend on the model and API.",
+      "source": "https://developers.openai.com/api/docs/guides/prompt-engineering.md"
+    },
+    {
+      "term": "Token",
+      "def": "A chunk of text processed by a model. A token can represent a whole word or part of a word; token boundaries do not necessarily match word boundaries.",
+      "source": "https://developers.openai.com/api/docs/concepts.md"
+    },
+    {
+      "term": "Context window",
+      "def": "The token limit for information a model can work with in a request. Check the model documentation for how input, output and any internal reasoning tokens count towards its limits.",
+      "source": "https://developers.openai.com/api/docs/guides/conversation-state.md"
+    },
+    {
+      "term": "Temperature",
+      "def": "A sampling setting, where supported, that changes output variability. Higher values generally increase randomness; lower values favour more predictable choices. Check factual claims separately against reliable sources.",
+      "source": "https://developers.openai.com/api/reference/cli/resources/responses/methods/create"
+    },
+    {
+      "term": "Few-shot prompting",
+      "def": "Providing a small number of examples in the prompt to demonstrate the desired response pattern.",
+      "source": "https://developers.openai.com/api/docs/guides/prompt-engineering.md"
+    },
+    {
+      "term": "Chain of thought",
+      "def": "Intermediate reasoning steps used to work towards an answer. Prompting for written steps is model-dependent: OpenAI advises that its reasoning models do not need instructions to think step by step.",
+      "source": "https://developers.openai.com/api/docs/guides/reasoning-best-practices.md"
+    },
+    {
+      "term": "Hallucination",
+      "def": "A plausible-sounding but inaccurate or fabricated model output. Providing sources can help, but a citation or confident answer does not establish that a claim is correct.",
+      "source": "https://cdn.openai.com/pdf/d04913be-3f6f-4d2b-b283-ff432ef4aaa5/why-language-models-hallucinate.pdf"
+    },
+    {
+      "term": "RAG (Retrieval-Augmented Generation)",
+      "def": "An approach that retrieves relevant information and supplies it as context for generation. The retrieved material gives the model evidence to use; it does not by itself verify the answer.",
+      "source": "https://developers.openai.com/api/docs/guides/prompt-engineering.md"
+    },
+    {
+      "term": "Fine-tuning",
+      "def": "Additional training that adapts a pretrained model for a task or desired behaviour. Whether it helps should be assessed with representative evaluations alongside prompting and retrieval options.",
+      "source": "https://developers.openai.com/api/docs/guides/model-optimization.md"
+    },
+    {
+      "term": "Embedding",
+      "def": "A numerical vector representation of content. Text embeddings can support semantic search by comparing representations of a query and candidate passages.",
+      "source": "https://developers.openai.com/api/docs/guides/embeddings.md"
+    },
+    {
+      "term": "Keigo (敬語)",
+      "def": "Japanese respectful and polite language. Japan's Agency for Cultural Affairs distinguishes five categories: respectful language, humble language I, humble language II, polite language and beautifying language.",
+      "source": "https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/keigo/chapter2/detail.html"
+    },
+    {
+      "term": "Honorifics (Korean)",
+      "def": "Korean words and forms used to convey respect when referring to a person or thing.",
+      "source": "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=24607"
+    },
+    {
+      "term": "Code-switching",
+      "def": "Alternating between languages in speech or writing, including within an utterance or across utterances.",
+      "source": "https://aclanthology.org/2021.acl-long.131.pdf"
+    }
+  ]
+}
