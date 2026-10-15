@@ -1,0 +1,24 @@
+<section id="analytics-choice" hidden role="dialog" aria-label="Analytics preferences" aria-describedby="analytics-description" class="analytics-choice">
+  <div>
+    <strong>Help us improve PromptAndGo</strong>
+    <p id="analytics-description">With your permission, Google Analytics measures visits to our public pages. Advertising cookies stay off. <a href="/cookies">Cookie policy</a>.</p>
+    <p id="analytics-status" aria-live="polite"></p>
+  </div>
+  <div class="analytics-buttons">
+    <button type="button" data-analytics-choice="declined">Decline analytics</button>
+    <button type="button" data-analytics-choice="accepted">Allow analytics</button>
+  </div>
+</section>
+<script is:inline defer src="/analytics-consent.js"></script>
+<style>
+  .analytics-choice[hidden] { display:none; }
+  .analytics-choice { position:fixed; z-index:60; bottom:16px; left:16px; right:16px; max-width:1000px; margin:auto; padding:20px; background:#fff; color:#211b35; border:1px solid #d8d2e4; border-radius:12px; box-shadow:0 4px 30px #211b3526; display:flex; align-items:center; gap:24px; font:15px/1.5 system-ui,sans-serif; }
+  .analytics-choice p { margin:6px 0 0; }
+  .analytics-choice a { color:inherit; text-decoration:underline; }
+  .analytics-buttons { display:flex; gap:10px; flex-shrink:0; }
+  .analytics-buttons button { padding:10px 14px; border:1px solid #57417d; border-radius:8px; background:#fff; color:#35234f; cursor:pointer; font:600 14px/1.4 system-ui,sans-serif; }
+  .analytics-buttons button:last-child { background:#57417d; color:white; }
+  .analytics-buttons button:focus-visible { outline:3px solid #b286ed; outline-offset:3px; }
+  #analytics-status:empty { display:none; }
+  @media(max-width:700px) { .analytics-choice { flex-direction:column; align-items:stretch; gap:12px; } .analytics-buttons button { flex:1; } }
+</style>
