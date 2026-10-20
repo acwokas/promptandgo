@@ -51,10 +51,12 @@ All colors MUST be HSL. */
     box-sizing: border-box;
   }
   
-  /* Ensure all containers respect viewport width */
-  .container, main, section, div, header, footer {
+  /* Ensure page-level containers respect viewport width.
+     Note: never apply overflow-x:hidden to every div - it forces
+     overflow-y:auto and causes stray vertical scrollbars. */
+  main, footer {
     max-width: 100vw;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
   
   /* Specific mobile fixes */
