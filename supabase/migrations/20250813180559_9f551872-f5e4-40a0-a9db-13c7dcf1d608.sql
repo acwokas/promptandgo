@@ -69,3 +69,27 @@ CREATE INDEX idx_feedback_status ON public.user_feedback(status);
 CREATE INDEX idx_feedback_priority ON public.user_feedback(priority);
 CREATE INDEX idx_feedback_prompt_id ON public.user_feedback(prompt_id);
 CREATE INDEX idx_feedback_created_at ON public.user_feedback(created_at DESC);
+
+-- Explicit Data API privileges (Supabase new-table defaults, 30 October 2026).
+-- Per-table rights accompany existing RLS and policies; no default privileges change.
+ALTER TABLE public."user_feedback" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT, INSERT ON TABLE public."user_feedback" TO anon;
+GRANT SELECT, INSERT, UPDATE ON TABLE public."user_feedback" TO authenticated;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."user_feedback"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."user_feedback"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO anon, authenticated',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."widget_settings" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."widget_settings" TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public."widget_settings" TO authenticated;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."widget_settings"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."widget_settings"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO authenticated',seq);
+  END IF; END LOOP;
+END $grants_sequence$;

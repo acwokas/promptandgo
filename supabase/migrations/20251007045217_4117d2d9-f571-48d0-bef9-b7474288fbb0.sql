@@ -63,3 +63,9 @@ USING (false);
 
 -- Add comment explaining the security model
 COMMENT ON TABLE public.subscribers IS 'Sensitive customer subscription data. Access is controlled through RLS policies: authenticated users can only view their own data, admins must use secure functions like get_safe_subscriber_view() or get_admin_subscriber_data() for decryption, and service role can insert/update for Stripe integration.';
+
+-- Explicit Data API privileges (Supabase new-table defaults, 30 October 2026).
+-- Per-table rights accompany existing RLS and policies; no default privileges change.
+ALTER TABLE public."subscribers" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."subscribers" TO authenticated;
+GRANT SELECT, UPDATE ON TABLE public."subscribers" TO service_role;

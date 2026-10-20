@@ -215,3 +215,84 @@ CREATE TRIGGER update_subscribers_updated_at
 BEFORE UPDATE ON public.subscribers
 FOR EACH ROW
 EXECUTE FUNCTION public.update_updated_at_column();
+
+
+-- Explicit Data API privileges (Supabase new-table defaults, 30 October 2026).
+-- Per-table rights accompany existing RLS and policies; no default privileges change.
+ALTER TABLE public."order_items" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."order_items" TO authenticated;
+GRANT SELECT, INSERT ON TABLE public."order_items" TO service_role;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."order_items"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."order_items"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO service_role',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."orders" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."orders" TO authenticated;
+GRANT SELECT, INSERT, UPDATE ON TABLE public."orders" TO service_role;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."orders"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."orders"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO service_role',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."pack_access" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."pack_access" TO authenticated;
+GRANT SELECT, INSERT, UPDATE ON TABLE public."pack_access" TO service_role;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."pack_access"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."pack_access"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO service_role',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."pack_prompts" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."pack_prompts" TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public."pack_prompts" TO authenticated;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."pack_prompts"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."pack_prompts"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO authenticated',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."packs" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."packs" TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public."packs" TO authenticated;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."packs"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."packs"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO authenticated',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."prompt_access" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."prompt_access" TO authenticated;
+GRANT SELECT, INSERT, UPDATE ON TABLE public."prompt_access" TO service_role;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."prompt_access"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."prompt_access"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO service_role',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."subscribers" ENABLE ROW LEVEL SECURITY;
+GRANT INSERT ON TABLE public."subscribers" TO anon;
+GRANT SELECT, INSERT, UPDATE ON TABLE public."subscribers" TO authenticated;
+GRANT SELECT, UPDATE ON TABLE public."subscribers" TO service_role;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."subscribers"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."subscribers"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO anon, authenticated',seq);
+  END IF; END LOOP;
+END $grants_sequence$;

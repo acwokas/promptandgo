@@ -90,3 +90,35 @@ CREATE POLICY "poll_votes_admin_only" ON public.poll_votes
 FOR ALL TO authenticated
 USING (has_role(auth.uid(), 'admin'::app_role))
 WITH CHECK (has_role(auth.uid(), 'admin'::app_role));
+
+-- Explicit Data API privileges (Supabase new-table defaults, 30 October 2026).
+-- Per-table rights accompany existing RLS and policies; no default privileges change.
+GRANT INSERT ON TABLE public."pending_contacts" TO service_role;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."pending_contacts"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."pending_contacts"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO service_role',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."poll_votes" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public."poll_votes" TO authenticated;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."poll_votes"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."poll_votes"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO authenticated',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."subscribers" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."subscribers" TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public."subscribers" TO service_role;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."subscribers"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."subscribers"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO service_role',seq);
+  END IF; END LOOP;
+END $grants_sequence$;

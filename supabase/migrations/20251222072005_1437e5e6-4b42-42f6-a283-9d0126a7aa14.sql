@@ -307,3 +307,60 @@ BEGIN
   ORDER BY event_count DESC;
 END;
 $$;
+
+-- Explicit Data API privileges (Supabase new-table defaults, 30 October 2026).
+-- Per-table rights accompany existing RLS and policies; no default privileges change.
+ALTER TABLE public."analytics_funnel_completions" ENABLE ROW LEVEL SECURITY;
+GRANT INSERT ON TABLE public."analytics_funnel_completions" TO anon;
+GRANT SELECT, INSERT, UPDATE ON TABLE public."analytics_funnel_completions" TO authenticated;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."analytics_funnel_completions"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."analytics_funnel_completions"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO anon, authenticated',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."analytics_funnels" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."analytics_funnels" TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public."analytics_funnels" TO authenticated;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."analytics_funnels"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."analytics_funnels"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO authenticated',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."analytics_page_views" ENABLE ROW LEVEL SECURITY;
+GRANT INSERT ON TABLE public."analytics_page_views" TO anon;
+GRANT SELECT, INSERT ON TABLE public."analytics_page_views" TO authenticated;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."analytics_page_views"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."analytics_page_views"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO anon, authenticated',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."analytics_sessions" ENABLE ROW LEVEL SECURITY;
+GRANT INSERT ON TABLE public."analytics_sessions" TO anon;
+GRANT SELECT, INSERT, UPDATE ON TABLE public."analytics_sessions" TO authenticated;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."analytics_sessions"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."analytics_sessions"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO anon, authenticated',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."site_analytics_events" ENABLE ROW LEVEL SECURITY;
+GRANT INSERT ON TABLE public."site_analytics_events" TO anon;
+GRANT SELECT, INSERT ON TABLE public."site_analytics_events" TO authenticated;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."site_analytics_events"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."site_analytics_events"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO anon, authenticated',seq);
+  END IF; END LOOP;
+END $grants_sequence$;

@@ -7,3 +7,9 @@ CREATE POLICY "Users can view their own profile"
 ON public.profiles
 FOR SELECT
 USING (auth.uid() = id);
+
+
+-- Explicit Data API privileges (Supabase new-table defaults, 30 October 2026).
+-- Per-table rights accompany existing RLS and policies; no default privileges change.
+ALTER TABLE public."profiles" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."profiles" TO authenticated;
