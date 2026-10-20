@@ -160,3 +160,27 @@ INSERT INTO public.coupons (
 
 -- Create index for faster coupon lookups
 CREATE INDEX idx_coupons_code ON public.coupons(UPPER(code)) WHERE is_active = true;
+
+-- Explicit Data API privileges (Supabase new-table defaults, 30 October 2026).
+-- Per-table rights accompany existing RLS and policies; no default privileges change.
+ALTER TABLE public."coupon_usage" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."coupon_usage" TO authenticated;
+GRANT INSERT ON TABLE public."coupon_usage" TO service_role;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."coupon_usage"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."coupon_usage"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO service_role',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."coupons" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."coupons" TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public."coupons" TO authenticated;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."coupons"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."coupons"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO authenticated',seq);
+  END IF; END LOOP;
+END $grants_sequence$;

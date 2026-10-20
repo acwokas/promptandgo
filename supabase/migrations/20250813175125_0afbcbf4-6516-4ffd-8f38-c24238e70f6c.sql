@@ -17,3 +17,8 @@ CREATE POLICY "Allow admin update of contacts"
 ON public.pending_contacts 
 FOR UPDATE 
 USING (has_role(auth.uid(), 'admin'::app_role));
+
+-- Explicit Data API privileges (Supabase new-table defaults, 30 October 2026).
+-- Per-table rights accompany existing RLS and policies; no default privileges change.
+ALTER TABLE public."pending_contacts" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT, UPDATE ON TABLE public."pending_contacts" TO authenticated;

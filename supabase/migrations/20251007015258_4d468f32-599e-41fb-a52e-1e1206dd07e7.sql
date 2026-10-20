@@ -323,3 +323,60 @@ CREATE TRIGGER update_user_xp_updated_at
   BEFORE UPDATE ON public.user_xp
   FOR EACH ROW
   EXECUTE FUNCTION public.update_updated_at_column();
+
+
+-- Explicit Data API privileges (Supabase new-table defaults, 30 October 2026).
+-- Per-table rights accompany existing RLS and policies; no default privileges change.
+ALTER TABLE public."user_xp" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT, INSERT ON TABLE public."user_xp" TO authenticated;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."user_xp"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."user_xp"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO authenticated',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."xp_activities" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."xp_activities" TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public."xp_activities" TO authenticated;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."xp_activities"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."xp_activities"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO authenticated',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."xp_reward_redemptions" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."xp_reward_redemptions" TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public."xp_reward_redemptions" TO service_role;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."xp_reward_redemptions"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."xp_reward_redemptions"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO service_role',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."xp_rewards" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."xp_rewards" TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public."xp_rewards" TO authenticated;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."xp_rewards"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."xp_rewards"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO authenticated',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."xp_transactions" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."xp_transactions" TO authenticated;
+GRANT INSERT ON TABLE public."xp_transactions" TO service_role;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."xp_transactions"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."xp_transactions"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO service_role',seq);
+  END IF; END LOOP;
+END $grants_sequence$;

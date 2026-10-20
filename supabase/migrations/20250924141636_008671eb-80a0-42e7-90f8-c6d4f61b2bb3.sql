@@ -274,3 +274,20 @@ BEGIN
   );
 END;
 $function$;
+
+-- Explicit Data API privileges (Supabase new-table defaults, 30 October 2026).
+-- Per-table rights accompany existing RLS and policies; no default privileges change.
+ALTER TABLE public."security_audit_log" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."security_audit_log" TO authenticated;
+GRANT INSERT ON TABLE public."security_audit_log" TO service_role;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."security_audit_log"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."security_audit_log"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO service_role',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."subscribers" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."subscribers" TO authenticated;
+GRANT SELECT, UPDATE ON TABLE public."subscribers" TO service_role;

@@ -53,3 +53,16 @@ ON public.pending_contacts(confirmation_token);
 -- Create an index on email for admin lookups (if not exists) 
 CREATE INDEX IF NOT EXISTS idx_pending_contacts_email 
 ON public.pending_contacts(email);
+
+-- Explicit Data API privileges (Supabase new-table defaults, 30 October 2026).
+-- Per-table rights accompany existing RLS and policies; no default privileges change.
+ALTER TABLE public."pending_contacts" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT, UPDATE, DELETE ON TABLE public."pending_contacts" TO authenticated;
+GRANT INSERT ON TABLE public."pending_contacts" TO service_role;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."pending_contacts"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."pending_contacts"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO service_role',seq);
+  END IF; END LOOP;
+END $grants_sequence$;

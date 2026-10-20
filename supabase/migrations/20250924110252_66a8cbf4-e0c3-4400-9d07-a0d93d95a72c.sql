@@ -125,3 +125,17 @@ CREATE TRIGGER update_featured_categories_updated_at
   BEFORE UPDATE ON public.featured_categories
   FOR EACH ROW
   EXECUTE FUNCTION public.update_updated_at_column();
+
+-- Explicit Data API privileges (Supabase new-table defaults, 30 October 2026).
+-- Per-table rights accompany existing RLS and policies; no default privileges change.
+ALTER TABLE public."featured_categories" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."featured_categories" TO anon;
+GRANT SELECT ON TABLE public."featured_categories" TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public."featured_categories" TO service_role;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."featured_categories"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."featured_categories"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO service_role',seq);
+  END IF; END LOOP;
+END $grants_sequence$;

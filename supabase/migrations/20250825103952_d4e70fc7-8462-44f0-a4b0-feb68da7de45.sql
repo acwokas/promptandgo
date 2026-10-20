@@ -55,3 +55,9 @@ BEGIN
   FROM public.subscribers s;
 END;
 $$;
+
+-- Explicit Data API privileges (Supabase new-table defaults, 30 October 2026).
+-- Per-table rights accompany existing RLS and policies; no default privileges change.
+ALTER TABLE public."subscribers" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."subscribers" TO authenticated;
+GRANT SELECT, UPDATE ON TABLE public."subscribers" TO service_role;
