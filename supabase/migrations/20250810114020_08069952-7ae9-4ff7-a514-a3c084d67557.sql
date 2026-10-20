@@ -218,3 +218,64 @@ DO $$ BEGIN
 CREATE POLICY "Admins can modify prompt_tags" ON public.prompt_tags FOR ALL
   USING (public.has_role(auth.uid(), 'admin')) WITH CHECK (public.has_role(auth.uid(), 'admin'));
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+
+-- Explicit Data API privileges (Supabase new-table defaults, 30 October 2026).
+-- Per-table rights accompany existing RLS and policies; no default privileges change.
+ALTER TABLE public."categories" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."categories" TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public."categories" TO authenticated;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."categories"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."categories"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO authenticated',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."prompt_tags" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."prompt_tags" TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public."prompt_tags" TO authenticated;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."prompt_tags"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."prompt_tags"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO authenticated',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."prompts" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."prompts" TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public."prompts" TO authenticated;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."prompts"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."prompts"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO authenticated',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."subcategories" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."subcategories" TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public."subcategories" TO authenticated;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."subcategories"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."subcategories"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO authenticated',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."tags" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."tags" TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public."tags" TO authenticated;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."tags"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."tags"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO authenticated',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."user_roles" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."user_roles" TO authenticated;
+GRANT SELECT ON TABLE public."user_roles" TO service_role;

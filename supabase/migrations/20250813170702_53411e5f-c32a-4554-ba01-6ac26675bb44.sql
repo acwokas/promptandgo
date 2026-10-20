@@ -68,3 +68,16 @@ FROM public.packs p, public.tags t
 WHERE p.name ILIKE '%career%' 
   AND t.name IN ('career', 'business', 'productivity', 'planning', 'strategy')
 ON CONFLICT DO NOTHING;
+
+-- Explicit Data API privileges (Supabase new-table defaults, 30 October 2026).
+-- Per-table rights accompany existing RLS and policies; no default privileges change.
+ALTER TABLE public."pack_tags" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."pack_tags" TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public."pack_tags" TO authenticated;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."pack_tags"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."pack_tags"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO authenticated',seq);
+  END IF; END LOOP;
+END $grants_sequence$;

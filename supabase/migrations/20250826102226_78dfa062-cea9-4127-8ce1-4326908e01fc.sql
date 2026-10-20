@@ -23,3 +23,8 @@ CREATE POLICY "Admins can view contacts (select)" ON public.pending_contacts
     USING (public.has_role(auth.uid(), 'admin'::app_role));
   END IF;
 END$$;
+
+-- Explicit Data API privileges (Supabase new-table defaults, 30 October 2026).
+-- Per-table rights accompany existing RLS and policies; no default privileges change.
+ALTER TABLE public."pending_contacts" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT ON TABLE public."pending_contacts" TO authenticated;

@@ -57,3 +57,8 @@ CREATE TRIGGER update_countdown_settings_updated_at
   BEFORE UPDATE ON public.countdown_settings
   FOR EACH ROW
   EXECUTE FUNCTION public.update_updated_at_column();
+
+-- Explicit Data API privileges (Supabase new-table defaults, 30 October 2026).
+-- Per-table rights accompany existing RLS and policies; no default privileges change.
+ALTER TABLE public."countdown_settings" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT, UPDATE ON TABLE public."countdown_settings" TO authenticated;
