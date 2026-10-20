@@ -6,6 +6,9 @@ class Grants(unittest.TestCase):
   s='CREATE TABLE public.x(id int); GRANT SELECT ON TABLE public.x TO anon;'
   self.assertEqual(len(g.validate(s,'x')),2)
   self.assertEqual(g.validate(s+' ALTER TABLE public.x ENABLE ROW LEVEL SECURITY; CREATE POLICY p ON public.x FOR SELECT TO anon USING(true);','x'),[])
+ def test_deny_policy_is_not_positive_access(self):
+  s='CREATE TABLE public.x(id int); ALTER TABLE public.x ENABLE ROW LEVEL SECURITY; CREATE POLICY deny ON public.x FOR SELECT TO anon USING(false); GRANT SELECT ON public.x TO anon;'
+  self.assertTrue(g.validate(s,'x'))
  def test_quoted_identifiers(self):
   self.assertEqual(g.validate('CREATE TABLE public."x"(id int); GRANT SELECT ON TABLE public."x" TO anon; ALTER TABLE public."x" ENABLE ROW LEVEL SECURITY; CREATE POLICY p ON public."x" FOR SELECT TO anon USING(true);','x'),[])
  def test_private_named_table_and_schema_boundary(self):

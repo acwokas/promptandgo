@@ -17,7 +17,9 @@ def validate(s,table):
  errors=[]
  if re.search(r'\b(anon|authenticated)\b',roles,re.I):
   if not re.search(r'\balter\s+table\s+(?:only\s+)?'+q+r'\s+enable\s+row\s+level\s+security\b',clean,re.I):errors.append('client grant without RLS in same migration')
-  if not re.search(r'\bcreate\s+policy\b[^;]+\bon\s+'+q+r'\s',clean,re.I):errors.append('client grant without policy in same migration')
+  policies=re.findall(r'\bcreate\s+policy\b[^;]+\bon\s+'+q+r'\s[^;]*;',clean,re.I)
+  positive=[p for p in policies if not re.search(r'\b(?:using|with\s+check)\s*\(\s*false\s*\)',p,re.I)]
+  if not positive:errors.append('client grant without positive policy in same migration')
  if private and re.search(r'\b(anon|authenticated)\b',roles,re.I):errors.append('private disposition conflicts with client grants')
  # Inserts backed by SERIAL/nextval need explicit owned-sequence permissions.
  if any(re.search(r'\binsert\b',g[1],re.I) for g in grants) and re.search(r'\b(?:bigserial|serial|smallserial|nextval)\b',clean,re.I):
