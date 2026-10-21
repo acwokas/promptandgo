@@ -33,3 +33,8 @@ USING (confirmation_token = ANY(string_to_array(current_setting('request.headers
 
 -- Keep the public insert policy as it's needed for the contact form
 -- The existing "Allow public insert of pending contacts" policy is fine
+
+-- Explicit Data API privileges (Supabase new-table defaults, 30 October 2026).
+-- Per-table rights accompany existing RLS and policies; no default privileges change.
+ALTER TABLE public."pending_contacts" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT, UPDATE ON TABLE public."pending_contacts" TO authenticated;

@@ -173,3 +173,37 @@ BEGIN
   AND (tc.last_triggered_at IS NULL OR tc.last_triggered_at < now() - interval '30 minutes');
 END;
 $$;
+
+-- Explicit Data API privileges (Supabase new-table defaults, 30 October 2026).
+-- Per-table rights accompany existing RLS and policies; no default privileges change.
+ALTER TABLE public."analytics_notifications" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT, UPDATE ON TABLE public."analytics_notifications" TO authenticated;
+GRANT INSERT ON TABLE public."analytics_notifications" TO service_role;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."analytics_notifications"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."analytics_notifications"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO service_role',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."analytics_thresholds" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public."analytics_thresholds" TO authenticated;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."analytics_thresholds"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."analytics_thresholds"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO authenticated',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
+
+ALTER TABLE public."push_subscriptions" ENABLE ROW LEVEL SECURITY;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public."push_subscriptions" TO authenticated;
+GRANT SELECT ON TABLE public."push_subscriptions" TO service_role;
+DO $grants_sequence$ DECLARE seq text; BEGIN
+  FOR seq IN SELECT pg_get_serial_sequence('public."push_subscriptions"', a.attname)
+    FROM pg_attribute a WHERE a.attrelid='public."push_subscriptions"'::regclass AND a.attnum>0 AND NOT a.attisdropped
+  LOOP IF seq IS NOT NULL THEN
+    EXECUTE format('GRANT USAGE ON SEQUENCE %s TO authenticated',seq);
+  END IF; END LOOP;
+END $grants_sequence$;
