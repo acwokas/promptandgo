@@ -9,7 +9,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "test:analytics": "node --test tests/analytics-consent.test.mjs",
-    "prebuild": "npm run test:analytics"
+    "test:sitemap": "node --test tests/sitemap-policy.test.mjs",
+    "prebuild": "npm run test:analytics && npm run test:sitemap"
   },
   "dependencies": {
     "@astrojs/react": "^4.2.0",
