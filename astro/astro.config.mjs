@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
+import { canonicalSitemapEntry } from './src/lib/sitemap-policy.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -11,6 +12,7 @@ export default defineConfig({
     react(),
     tailwind({ applyBaseStyles: false }),
     sitemap({
+      serialize: canonicalSitemapEntry,
       // The legacy app renders these routes as an empty React shell or
       // personal account content. They are not public landing pages.
       filter: (page) => !/^\/(?:account|admin|auth|checkout|membership|api|cart|dashboard|email-confirmed|history|referral|saved|search|settings|submit-prompt|ai-credits-exhausted|ai|ask-scout|certification|scout|templates|submit)(?:\/|$)/.test(new URL(page).pathname),
